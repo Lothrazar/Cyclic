@@ -29,9 +29,9 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
 
@@ -39,9 +39,9 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   private ButtonMachineField btnRedstone;
   private TimerBar timer;
 
-  public ScreenCrafter(ContainerCrafter screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenCrafter(ContainerCrafter screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.ySize = 256;
+    this.imageHeight = 256;
     this.energy = new EnergyBar(this, TileCrafter.MAX);
     this.energy.setHeight(120);
     this.timer = new TimerBar(this, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ + 2, TileCrafter.TIMER_FULL);
@@ -51,33 +51,33 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   protected void init() {
     super.init();
     int x, y;
-    energy.guiLeft = timer.guiLeft = guiLeft;
-    energy.guiTop = timer.guiTop = guiTop;
+    energy.guiLeft = timer.guiLeft = leftPos;
+    energy.guiTop = timer.guiTop = topPos;
     energy.visible = TileCrafter.POWERCONF.get() > 0;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileCrafter.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileCrafter.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     super.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
+    this.renderTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    btnRedstone.onValueUpdate(container.tile);
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+    btnRedstone.onValueUpdate(menu.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
-    energy.draw(ms, container.tile.getEnergy());
+    energy.draw(ms, menu.tile.getEnergy());
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
       for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
         this.drawSlot(ms, ContainerCrafter.INPUT_START_X - 1 + colPos * Const.SQ,
@@ -93,6 +93,6 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
             ContainerCrafter.GRID_START_Y - 1 + rowPos * Const.SQ);
       }
     }
-    timer.draw(ms, container.tile.getField(TileCrafter.Fields.TIMER.ordinal()));
+    timer.draw(ms, menu.tile.getField(TileCrafter.Fields.TIMER.ordinal()));
   }
 }

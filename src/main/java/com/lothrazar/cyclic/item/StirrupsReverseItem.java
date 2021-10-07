@@ -24,11 +24,13 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class StirrupsReverseItem extends ItemBase {
 
@@ -37,13 +39,13 @@ public class StirrupsReverseItem extends ItemBase {
   }
 
   @Override
-  public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
-    playerIn.swingArm(hand);
-    if (playerIn.isPassenger(target)) {
-      target.dismount();
-      playerIn.dismount();
-      return ActionResultType.SUCCESS;
+  public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
+    playerIn.swing(hand);
+    if (playerIn.hasPassenger(target)) {
+      target.removeVehicle();
+      playerIn.removeVehicle();
+      return InteractionResult.SUCCESS;
     }
-    return target.startRiding(playerIn, true) ? ActionResultType.SUCCESS : super.itemInteractionForEntity(stack, playerIn, target, hand);
+    return target.startRiding(playerIn, true) ? InteractionResult.SUCCESS : super.interactLivingEntity(stack, playerIn, target, hand);
   }
 }

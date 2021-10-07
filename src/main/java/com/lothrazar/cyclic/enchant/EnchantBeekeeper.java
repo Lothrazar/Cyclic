@@ -24,12 +24,12 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -38,9 +38,11 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantBeekeeper extends EnchantBase {
 
-  public EnchantBeekeeper(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantBeekeeper(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -60,13 +62,13 @@ public class EnchantBeekeeper extends EnchantBase {
 
   @SubscribeEvent
   public void onLivingSetAttackTargetEvent(LivingSetAttackTargetEvent event) {
-    if (event.getTarget() instanceof PlayerEntity && event.getEntityLiving().getType() == EntityType.BEE) {
+    if (event.getTarget() instanceof Player && event.getEntityLiving().getType() == EntityType.BEE) {
       int level = this.getCurrentArmorLevel(event.getTarget());
       if (level > 0) {
-        BeeEntity bee = (BeeEntity) event.getEntityLiving();
-        bee.setAggroed(false);
-        bee.setAngerTime(0);
-        bee.setAngerTarget(null);
+        Bee bee = (Bee) event.getEntityLiving();
+        bee.setAggressive(false);
+        bee.setRemainingPersistentAngerTime(0);
+        bee.setPersistentAngerTarget(null);
         event.setResult(Result.DENY);
       }
     }
@@ -76,9 +78,9 @@ public class EnchantBeekeeper extends EnchantBase {
   public void onLivingDamageEvent(LivingDamageEvent event) {
     int level = this.getCurrentArmorLevel(event.getEntityLiving());
     if (level >= 1 && event.getSource() != null
-        && event.getSource().getImmediateSource() != null) {
+        && event.getSource().getDirectEntity() != null) {
       // Beekeeper I+
-      Entity esrc = event.getSource().getImmediateSource();
+      Entity esrc = event.getSource().getDirectEntity();
       if (esrc.getType() == EntityType.BEE ||
           esrc.getType() == EntityType.BAT ||
           esrc.getType() == EntityType.LLAMA_SPIT) {

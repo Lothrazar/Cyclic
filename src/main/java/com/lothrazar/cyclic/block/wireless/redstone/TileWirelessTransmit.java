@@ -5,26 +5,26 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessTransmit extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileWirelessTransmit extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     RENDER;
@@ -44,13 +44,13 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerTransmit(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerTransmit(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -62,27 +62,27 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   private void toggleTarget(BlockPos targetPos) {
-    BlockState target = world.getBlockState(targetPos);
+    BlockState target = level.getBlockState(targetPos);
     if (target.hasProperty(BlockStateProperties.POWERED)) {
-      boolean targetPowered = target.get(BlockStateProperties.POWERED);
+      boolean targetPowered = target.getValue(BlockStateProperties.POWERED);
       //update target based on my state
-      boolean isPowered = world.isBlockPowered(pos);
+      boolean isPowered = level.hasNeighborSignal(worldPosition);
       if (targetPowered != isPowered) {
-        world.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
+        level.setBlockAndUpdate(targetPos, target.setValue(BlockStateProperties.POWERED, isPowered));
         //and update myself too   
-        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
+        level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
         //TODO: send exact 1-16 power level
         //        world.getTileEntity(targetPos) instanceof TileWirelessRec
         //        && target.getBlock() instanceof BlockWirelessRec
@@ -95,7 +95,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     for (int s = 0; s < inventory.getSlots(); s++) {
       BlockPosDim targetPos = getTargetInSlot(s);
       if (targetPos == null ||
-          UtilWorld.dimensionIsEqual(targetPos, world) == false) {
+          UtilWorld.dimensionIsEqual(targetPos, level) == false) {
         continue;
       }
       toggleTarget(targetPos.getPos());

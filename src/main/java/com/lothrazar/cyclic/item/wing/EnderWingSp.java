@@ -29,13 +29,15 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.storage.IWorldInfo;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.LevelData;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EnderWingSp extends ItemBase implements IHasClickToggle {
 
@@ -46,30 +48,30 @@ public class EnderWingSp extends ItemBase implements IHasClickToggle {
   private static final int cooldown = 600;
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (playerIn.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemRightClick(worldIn, playerIn, handIn);
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (playerIn.getCooldowns().isOnCooldown(this)) {
+      return super.use(worldIn, playerIn, handIn);
     }
-    attemptTeleport(worldIn, playerIn, playerIn.getHeldItem(handIn));
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    attemptTeleport(worldIn, playerIn, playerIn.getItemInHand(handIn));
+    return super.use(worldIn, playerIn, handIn);
   }
 
-  private void attemptTeleport(World worldIn, PlayerEntity playerIn, ItemStack held) {
-    IWorldInfo worldInfo = worldIn.getWorldInfo();
+  private void attemptTeleport(Level worldIn, Player playerIn, ItemStack held) {
+    LevelData worldInfo = worldIn.getLevelData();
     if (worldInfo != null) {
-      BlockPos spawn = new BlockPos(worldInfo.getSpawnX(), worldInfo.getSpawnY(), worldInfo.getSpawnZ());
+      BlockPos spawn = new BlockPos(worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn());
       if (spawn != null) {
         UtilEntity.enderTeleportEvent(playerIn, worldIn, spawn);
         UtilSound.playSound(playerIn, SoundRegistry.WARP_ECHO);
         UtilItemStack.damageItem(playerIn, held);
-        playerIn.getCooldownTracker().setCooldown(this, cooldown);
+        playerIn.getCooldowns().addCooldown(this, cooldown);
       }
     }
   }
 
   @Override
-  public void toggle(PlayerEntity player, ItemStack held) {
-    this.attemptTeleport(player.world, player, held);
+  public void toggle(Player player, ItemStack held) {
+    this.attemptTeleport(player.level, player, held);
   }
 
   @Override

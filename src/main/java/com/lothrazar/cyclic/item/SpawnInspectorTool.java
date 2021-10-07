@@ -3,20 +3,22 @@ package com.lothrazar.cyclic.item;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.List;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.spawner.WorldEntitySpawner;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.NaturalSpawner;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SpawnInspectorTool extends ItemBase {
 
@@ -25,10 +27,10 @@ public class SpawnInspectorTool extends ItemBase {
   }
 
   @SuppressWarnings("deprecation")
-  private static BlockPos getTopSolidOrLiquidBlock(IWorldReader worldIn, EntityType<?> etype, int x, int z) {
-    int i = worldIn.getHeight(EntitySpawnPlacementRegistry.func_209342_b(etype), x, z);
-    BlockPos.Mutable mutable = new BlockPos.Mutable(x, i, z);
-    if (worldIn.getDimensionType().getHasCeiling()) {
+  private static BlockPos getTopSolidOrLiquidBlock(LevelReader worldIn, EntityType<?> etype, int x, int z) {
+    int i = worldIn.getHeight(SpawnPlacements.getHeightmapType(etype), x, z);
+    BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, i, z);
+    if (worldIn.dimensionType().hasCeiling()) {
       do {
         mutable.move(Direction.DOWN);
       }
@@ -38,42 +40,42 @@ public class SpawnInspectorTool extends ItemBase {
       }
       while (worldIn.getBlockState(mutable).isAir() && mutable.getY() > 0);
     }
-    if (EntitySpawnPlacementRegistry.getPlacementType(etype) == EntitySpawnPlacementRegistry.PlacementType.ON_GROUND) {
-      BlockPos blockpos = mutable.down();
-      if (worldIn.getBlockState(blockpos).allowsMovement(worldIn, blockpos, PathType.LAND)) {
+    if (SpawnPlacements.getPlacementType(etype) == SpawnPlacements.Type.ON_GROUND) {
+      BlockPos blockpos = mutable.below();
+      if (worldIn.getBlockState(blockpos).isPathfindable(worldIn, blockpos, PathComputationType.LAND)) {
         return blockpos;
       }
     }
-    return mutable.toImmutable();
+    return mutable.immutable();
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    BlockPos pos = context.getPos();
-    World world = context.getWorld();
-    if (context.getPlayer().getCooldownTracker().hasCooldown(this)) {
-      return ActionResultType.PASS;
+  public InteractionResult useOn(UseOnContext context) {
+    BlockPos pos = context.getClickedPos();
+    Level world = context.getLevel();
+    if (context.getPlayer().getCooldowns().isOnCooldown(this)) {
+      return InteractionResult.PASS;
     }
-    context.getPlayer().getCooldownTracker().setCooldown(this, 10);
+    context.getPlayer().getCooldowns().addCooldown(this, 10);
     //    EntityClassification classif = context.getPlayer().isCrouching() ? EntityClassification.CREATURE : EntityClassification.MONSTER;
-    for (EntityClassification classif : EntityClassification.values()) {
+    for (MobCategory classif : MobCategory.values()) {
       //      UtilChat.addChatMessage(context.getPlayer(), new StringTextComponent(classif.getName()).mergeStyle(TextFormatting.DARK_PURPLE));
-      List<MobSpawnInfo.Spawners> list = context.getWorld().getBiome(pos).getMobSpawnInfo().getSpawners(classif);
+      List<MobSpawnSettings.SpawnerData> list = context.getLevel().getBiome(pos).getMobSettings().getMobs(classif);
       //lop on abobe 
-      for (MobSpawnInfo.Spawners spawnerInfo : list) {
+      for (MobSpawnSettings.SpawnerData spawnerInfo : list) {
         //        int weight = mobspawninfo$spawners.itemWeight;
-        StringTextComponent str = new StringTextComponent("[" + classif.getName() + "] ");
+        TextComponent str = new TextComponent("[" + classif.getName() + "] ");
         BlockPos top = getTopSolidOrLiquidBlock(world, spawnerInfo.type, pos.getX(), pos.getZ());
-        if (spawnerInfo.type.isSummonable() && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementType(spawnerInfo.type), world, top, spawnerInfo.type)) {
-          str.append(new StringTextComponent(spawnerInfo.type.getName().getString()).mergeStyle(TextFormatting.BLUE));
+        if (spawnerInfo.type.canSummon() && NaturalSpawner.isSpawnPositionOk(SpawnPlacements.getPlacementType(spawnerInfo.type), world, top, spawnerInfo.type)) {
+          str.append(new TextComponent(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.BLUE));
         }
         else {
-          str.append(new StringTextComponent(spawnerInfo.type.getName().getString()).mergeStyle(TextFormatting.RED));
+          str.append(new TextComponent(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.RED));
         }
         UtilChat.addServerChatMessage(context.getPlayer(), str);
       }
     }
-    context.getPlayer().swingArm(context.getHand());
-    return ActionResultType.PASS;
+    context.getPlayer().swing(context.getHand());
+    return InteractionResult.PASS;
   }
 }

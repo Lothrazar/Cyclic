@@ -25,11 +25,11 @@ package com.lothrazar.cyclic.item.transporter;
 
 import com.lothrazar.cyclic.base.PacketBase;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketChestSack extends PacketBase {
@@ -40,20 +40,20 @@ public class PacketChestSack extends PacketBase {
     pos = mouseover;
   }
 
-  public static PacketChestSack decode(PacketBuffer buf) {
+  public static PacketChestSack decode(FriendlyByteBuf buf) {
     return new PacketChestSack(buf.readBlockPos());
   }
 
-  public static void encode(PacketChestSack msg, PacketBuffer buf) {
+  public static void encode(PacketChestSack msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.pos);
   }
 
   public static void handle(PacketChestSack message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      ServerPlayerEntity player = ctx.get().getSender();
+      ServerPlayer player = ctx.get().getSender();
       BlockPos position = message.pos;
-      World world = player.getEntityWorld();
-      TileEntity tile = world.getTileEntity(position);
+      Level world = player.getCommandSenderWorld();
+      BlockEntity tile = world.getBlockEntity(position);
       TileTransporterEmptyItem.gatherTileEntity(position, player, world, tile);
     });
     message.done(ctx);

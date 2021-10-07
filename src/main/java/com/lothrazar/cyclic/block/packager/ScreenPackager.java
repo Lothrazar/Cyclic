@@ -5,9 +5,9 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenPackager extends ScreenBase<ContainerPackager> {
 
@@ -15,7 +15,7 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
   private EnergyBar energy;
   private TimerBar timer;
 
-  public ScreenPackager(ContainerPackager screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenPackager(ContainerPackager screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TilePackager.MAX);
     this.timer = new TimerBar(this, 70, 60, 1);
@@ -25,38 +25,38 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
   public void init() {
     super.init();
     energy.visible = TilePackager.POWERCONF.get() > 0;
-    timer.guiLeft = energy.guiLeft = guiLeft;
-    timer.guiTop = energy.guiTop = guiTop;
+    timer.guiLeft = energy.guiLeft = leftPos;
+    timer.guiTop = energy.guiTop = topPos;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TilePackager.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TilePackager.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
-    timer.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TilePackager.Fields.TIMER.ordinal()));
-    btnRedstone.onValueUpdate(container.tile);
+    this.renderTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
+    timer.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
+    btnRedstone.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 50, 40);
     this.drawSlotLarge(ms, 90, 36);
-    energy.draw(ms, container.tile.getEnergy());
-    timer.capacity = container.tile.getField(TilePackager.Fields.BURNMAX.ordinal());
+    energy.draw(ms, menu.tile.getEnergy());
+    timer.capacity = menu.tile.getField(TilePackager.Fields.BURNMAX.ordinal());
     timer.visible = (timer.capacity > 0);
-    timer.draw(ms, container.tile.getField(TilePackager.Fields.TIMER.ordinal()));
+    timer.draw(ms, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
   }
 }

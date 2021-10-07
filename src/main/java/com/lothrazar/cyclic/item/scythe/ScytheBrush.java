@@ -26,10 +26,12 @@ package com.lothrazar.cyclic.item.scythe;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ScytheBrush extends ItemBase {
 
@@ -41,19 +43,19 @@ public class ScytheBrush extends ItemBase {
   private static final int RADIUS_SNEAKING = 2; //2x2
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    BlockPos pos = context.getPos();
-    Direction side = context.getFace();
+  public InteractionResult useOn(UseOnContext context) {
+    BlockPos pos = context.getClickedPos();
+    Direction side = context.getClickedFace();
     if (side != null) {
-      pos = pos.offset(side);
+      pos = pos.relative(side);
     }
     // send work packet
     int radius = (context.getPlayer().isCrouching()) ? RADIUS_SNEAKING : RADIUS;
-    if (context.getWorld().isRemote) {
+    if (context.getLevel().isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
     }
-    context.getPlayer().swingArm(context.getHand());
-    UtilItemStack.damageItem(context.getItem());
-    return super.onItemUse(context);
+    context.getPlayer().swing(context.getHand());
+    UtilItemStack.damageItem(context.getItemInHand());
+    return super.useOn(context);
   }
 }

@@ -3,38 +3,38 @@ package com.lothrazar.cyclic.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class UtilEnchant {
 
-  public static List<Effect> getNegativeEffects() {
-    return getEffects(EffectType.HARMFUL);
+  public static List<MobEffect> getNegativeEffects() {
+    return getEffects(MobEffectCategory.HARMFUL);
   }
 
-  public static List<Effect> getBeneficialEffects() {
-    return getEffects(EffectType.BENEFICIAL);
+  public static List<MobEffect> getBeneficialEffects() {
+    return getEffects(MobEffectCategory.BENEFICIAL);
   }
 
-  public static List<Effect> getNeutralEffects() {
-    return getEffects(EffectType.NEUTRAL);
+  public static List<MobEffect> getNeutralEffects() {
+    return getEffects(MobEffectCategory.NEUTRAL);
   }
 
-  public static List<Effect> getAllEffects() {
+  public static List<MobEffect> getAllEffects() {
     return getEffects(null);
   }
 
-  public static List<Effect> getEffects(EffectType effectType) {
-    Collection<Effect> effects = ForgeRegistries.POTIONS.getValues();
-    List<Effect> effectsList = new ArrayList<>();
-    for (Effect effect : effects) {
-      if (effectType == null || effect.getEffectType() == effectType) {
+  public static List<MobEffect> getEffects(MobEffectCategory effectType) {
+    Collection<MobEffect> effects = ForgeRegistries.POTIONS.getValues();
+    List<MobEffect> effectsList = new ArrayList<>();
+    for (MobEffect effect : effects) {
+      if (effectType == null || effect.getCategory() == effectType) {
         effectsList.add(effect);
       }
     }
@@ -45,8 +45,8 @@ public class UtilEnchant {
     Item item1 = stack1.getItem();
     Item item2 = stack2.getItem();
     if (item1 == Items.ENCHANTED_BOOK && item2 == Items.ENCHANTED_BOOK) {
-      ListNBT ench1 = EnchantedBookItem.getEnchantments(stack1);
-      ListNBT ench2 = EnchantedBookItem.getEnchantments(stack2);
+      ListTag ench1 = EnchantedBookItem.getEnchantments(stack1);
+      ListTag ench2 = EnchantedBookItem.getEnchantments(stack2);
       if (ench1 == null || ench2 == null) {
         return false;
       }

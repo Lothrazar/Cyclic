@@ -6,20 +6,20 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -29,7 +29,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileDropper extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileDropper extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, RENDER;
@@ -75,24 +75,24 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
     if (amtDrop > 0) {
       energy.extractEnergy(cost, false);
       dropMe.setCount(amtDrop);
-      UtilItemStack.dropItemStackMotionless(world, target, dropMe);
+      UtilItemStack.dropItemStackMotionless(level, target, dropMe);
       inventory.getStackInSlot(0).shrink(amtDrop);
     }
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerDropper(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerDropper(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -107,27 +107,27 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.delay = tag.getInt("delay");
     this.dropCount = tag.getInt("dropCount");
     this.hOffset = tag.getInt("hOffset");
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("delay", delay);
     tag.putInt("dropCount", dropCount);
     tag.putInt("hOffset", hOffset);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   private BlockPos getTargetPos() {
-    BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
+    BlockPos target = this.getCurrentFacingPos().relative(this.getCurrentFacing(), hOffset);
     return target;
   }
 

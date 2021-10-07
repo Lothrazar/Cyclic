@@ -1,17 +1,17 @@
 package com.lothrazar.cyclic.fluid.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
-public class HoneyFluidBlock extends FlowingFluidBlock {
+public class HoneyFluidBlock extends LiquidBlock {
 
   public HoneyFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
     super(supplier, props);
@@ -19,14 +19,14 @@ public class HoneyFluidBlock extends FlowingFluidBlock {
 
   @SuppressWarnings("deprecation")
   @Override
-  public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (entityIn instanceof LivingEntity) {
       LivingEntity ent = (LivingEntity) entityIn;
-      ent.addPotionEffect(new EffectInstance(Effects.REGENERATION, 40, 1));
-      ent.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 40, 1));
-      ent.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 40, 5));
-      ent.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 40, 5));
+      ent.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 1));
+      ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
+      ent.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 5));
+      ent.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 5));
     }
-    super.onEntityCollision(state, worldIn, pos, entityIn);
+    super.entityInside(state, worldIn, pos, entityIn);
   }
 }

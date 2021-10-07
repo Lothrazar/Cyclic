@@ -29,11 +29,11 @@ import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketCraftAction extends PacketBase {
@@ -44,28 +44,28 @@ public class PacketCraftAction extends PacketBase {
     action = s;
   }
 
-  public static PacketCraftAction decode(PacketBuffer buf) {
+  public static PacketCraftAction decode(FriendlyByteBuf buf) {
     return new PacketCraftAction(CraftingActionEnum.values()[buf.readInt()]);
   }
 
-  public static void encode(PacketCraftAction msg, PacketBuffer buf) {
+  public static void encode(PacketCraftAction msg, FriendlyByteBuf buf) {
     buf.writeInt(msg.action.ordinal());
   }
 
   public static void handle(PacketCraftAction message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      ServerPlayerEntity sender = ctx.get().getSender();
-      if (sender.openContainer instanceof IContainerCraftingAction) {
+      ServerPlayer sender = ctx.get().getSender();
+      if (sender.containerMenu instanceof IContainerCraftingAction) {
         //do the thing
-        IContainerCraftingAction c = (IContainerCraftingAction) sender.openContainer;
+        IContainerCraftingAction c = (IContainerCraftingAction) sender.containerMenu;
         performAction(c, sender, message.action);
       }
     });
     message.done(ctx);
   }
 
-  private static void performAction(IContainerCraftingAction c, PlayerEntity player, CraftingActionEnum action) {
+  private static void performAction(IContainerCraftingAction c, Player player, CraftingActionEnum action) {
     //call this serverside from a packet
     switch (action) {
       case EMPTY:
@@ -73,7 +73,7 @@ public class PacketCraftAction extends PacketBase {
         for (int i = 1; i <= 9; i++) {
           c.transferStack(player, i);
         }
-        c.getCraftResult().clear();
+        c.getCraftResult().clearContent();
       break;
       case SPREAD:
         balanceLargestSlot(c, false);
@@ -89,7 +89,7 @@ public class PacketCraftAction extends PacketBase {
     ItemStack biggest = ItemStack.EMPTY;
     int foundSlot = -1;
     for (int i = 0; i <= 8; i++) {
-      ItemStack tmp = c.getCraftMatrix().getStackInSlot(i);
+      ItemStack tmp = c.getCraftMatrix().getItem(i);
       if (!tmp.isEmpty() && tmp.getCount() > biggest.getCount()) {
         foundSlot = i;
         biggest = tmp;
@@ -102,11 +102,11 @@ public class PacketCraftAction extends PacketBase {
     Set<Integer> slotTargest = new HashSet<>();
     int totalQuantity = 0;
     for (int i = 0; i <= 8; i++) {
-      ItemStack tmp = c.getCraftMatrix().getStackInSlot(i);
+      ItemStack tmp = c.getCraftMatrix().getItem(i);
       if (tmp.isEmpty() && !onlyExisting) {
         slotTargest.add(i);
       }
-      if (Container.areItemsAndTagsEqual(tmp, biggest)) {
+      if (AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
         slotTargest.add(i);
         totalQuantity += tmp.getCount();
       }
@@ -127,7 +127,7 @@ public class PacketCraftAction extends PacketBase {
       int size = (slot == foundSlot) ? avg + remainder : avg;
       ItemStack copy = biggest.copy();
       copy.setCount(size);
-      c.getCraftMatrix().setInventorySlotContents(slot, copy);
+      c.getCraftMatrix().setItem(slot, copy);
     }
   }
 }

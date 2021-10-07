@@ -8,17 +8,17 @@ import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import java.util.function.Predicate;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -33,7 +33,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
-public class TileMelter extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileMelter extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER, RENDER;
@@ -110,31 +110,31 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerMelter(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerMelter(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -170,13 +170,13 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, world)) {
+    if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeMelter<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.MELTER);
+    List<RecipeMelter<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER);
     for (RecipeMelter rec : recipes) {
-      if (rec.matches(this, world)) {
+      if (rec.matches(this, level)) {
         if (this.tank.getFluid() != null && !this.tank.getFluid().isEmpty()) {
           if (rec.getRecipeFluid().getFluid() != this.tank.getFluid().getFluid()) {
             continue;
@@ -192,7 +192,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   private boolean tryProcessRecipe() {
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()
-        && currentRecipe.matches(this, world)) {
+        && currentRecipe.matches(this, level)) {
       //ok it has room for all the fluid none will be wasted
       inventory.getStackInSlot(0).shrink(1);
       inventory.getStackInSlot(1).shrink(1);

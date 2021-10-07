@@ -6,23 +6,23 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -36,7 +36,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileFluidCollect extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileFluidCollect extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT;
@@ -57,7 +57,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return Block.getBlockFromItem(stack.getItem()) != Blocks.AIR;
+      return Block.byItem(stack.getItem()) != Blocks.AIR;
     }
   };
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -81,7 +81,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
+    if (stack.isEmpty() || Block.byItem(stack.getItem()) == Blocks.AIR) {
       return;
     }
     this.setLitProperty(true);
@@ -93,13 +93,13 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     incrementShapePtr(shape);
     targetPos = shape.get(shapeIndex);
     //ok on this target get fluid check it out
-    FluidState fluidState = world.getFluidState(targetPos);
+    FluidState fluidState = level.getFluidState(targetPos);
     if (fluidState.isSource()) {
-      FluidStack fstack = new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME);
+      FluidStack fstack = new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME);
       int result = tank.fill(fstack, FluidAction.SIMULATE);
       if (result == FluidAttributes.BUCKET_VOLUME) {
         //we got enough  
-        if (world.setBlockState(targetPos, Block.getBlockFromItem(stack.getItem()).getDefaultState())) {
+        if (level.setBlockAndUpdate(targetPos, Block.byItem(stack.getItem()).defaultBlockState())) {
           //build the block, shrink the item
           stack.shrink(1);
           //drink fluid
@@ -115,8 +115,8 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
   private BlockPos getTargetCenter() {
@@ -127,7 +127,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   //for render
   public List<BlockPos> getShapeHollow() {
     BlockPos ctr = getTargetCenter();
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(ctr.down(height), this.size);
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(ctr.below(height), this.size);
     shape = UtilShape.repeatShapeByHeight(shape, height);
     if (targetPos != null) {
       shape.add(targetPos);
@@ -138,19 +138,19 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   //for harvest
   public List<BlockPos> getShapeFilled() {
     BlockPos ctr = getTargetCenter();
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(ctr.down(height), this.size);
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(ctr.below(height), this.size);
     shape = UtilShape.repeatShapeByHeight(shape, height - 1);
     return shape;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerFluidCollect(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerFluidCollect(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -168,23 +168,23 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     shapeIndex = tag.getInt("shapeIndex");
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    CompoundNBT fluid = new CompoundNBT();
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("shapeIndex", shapeIndex);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   private void incrementShapePtr(List<BlockPos> shape) {

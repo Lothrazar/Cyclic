@@ -5,15 +5,15 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
 
   private ButtonMachineField btnRender;
 
-  public ScreenTransmit(ContainerTransmit screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenTransmit(ContainerTransmit screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
   }
 
@@ -22,28 +22,28 @@ public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
     super.init();
     super.init();
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 16;
+    x = leftPos + 8;
+    y = topPos + 16;
     btnRender = addButton(new ButtonMachineField(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+        menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
+    this.renderTooltip(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
-    btnRender.onValueUpdate(container.tile);
+    btnRender.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     for (int s = 0; s < 9; s++) {
       this.drawSlot(ms, 8 + 18 * s, 48, TextureRegistry.SLOT_GPS, Const.SQ);

@@ -22,6 +22,8 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
+
+import net.minecraft.world.item.Item.Properties;
 public class CharmAntidote extends CharmBase {
 
   public CharmAntidote(Properties properties) {

@@ -7,20 +7,20 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -32,7 +32,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileAnvilVoid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileAnvilVoid extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -57,18 +57,18 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
     super(TileRegistry.ANVILVOID.get());
     this.needsRedstone = 1;
     tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().isIn(DataTags.EXPERIENCE);
+      return p.getFluid().is(DataTags.EXPERIENCE);
     });
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerAnvilVoid(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerAnvilVoid(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -83,19 +83,19 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
-    CompoundNBT fluid = new CompoundNBT();
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -117,7 +117,7 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
       outputSlots.insertItem(0, new ItemStack(Items.BOOK), false);
       doCost = true;
     }
-    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.getItem().isIn(DataTags.ANVIL_IMMUNE)) {
+    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.getItem().is(DataTags.ANVIL_IMMUNE)) {
       //is enchanted
       stack.getTag().remove("Enchantments");
       outputSlots.insertItem(0, stack.copy(), false);
@@ -125,7 +125,7 @@ public class TileAnvilVoid extends TileEntityBase implements INamedContainerProv
       doCost = true;
     }
     if (doCost && FLUIDPAY.get() > 0) {
-      UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+      UtilSound.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
       Fluid newFluid = FluidXpJuiceHolder.STILL.get();
       if (!this.getFluid().isEmpty()) {
         //if its holding a tag compatible but different fluid, just fill 

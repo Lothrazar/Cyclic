@@ -1,54 +1,56 @@
 package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GhostBlock extends BlockBase {
 
   private boolean isInvisible;
 
   public GhostBlock(Properties properties, boolean isInvisible) {
-    super(properties.hardnessAndResistance(2.0F, 1200.0F).notSolid());
+    super(properties.strength(2.0F, 1200.0F).noOcclusion());
     this.isInvisible = isInvisible;
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 
   @Override
   @Deprecated
-  public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+  public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
     //    this.onFallenUpon(null, pos, null, blastResistance);
     return isPassable(worldIn, pos) ? 1 : 0;
   }
 
   @Override
-  public VoxelShape getRayTraceShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return isPassable(worldIn, pos) ? VoxelShapes.empty() : VoxelShapes.fullCube();
+  public VoxelShape getVisualShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    return isPassable(worldIn, pos) ? Shapes.empty() : Shapes.block();
   }
 
   @Override
-  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+  public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
     return true;
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+  public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     if (isInvisible) {
       return true;
     }
@@ -56,17 +58,17 @@ public class GhostBlock extends BlockBase {
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return isPassable(worldIn, pos) ? VoxelShapes.empty() : VoxelShapes.fullCube();
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    return isPassable(worldIn, pos) ? Shapes.empty() : Shapes.block();
   }
 
-  private boolean isPassable(IBlockReader worldIn, BlockPos pos) {
+  private boolean isPassable(BlockGetter worldIn, BlockPos pos) {
     boolean powered = false;
-    if ((worldIn instanceof World) == false) {
+    if ((worldIn instanceof Level) == false) {
       return powered;
     }
-    World world = (World) worldIn;
-    powered = world.getRedstonePowerFromNeighbors(pos) > 0;
+    Level world = (Level) worldIn;
+    powered = world.getBestNeighborSignal(pos) > 0;
     return powered;
   }
 }

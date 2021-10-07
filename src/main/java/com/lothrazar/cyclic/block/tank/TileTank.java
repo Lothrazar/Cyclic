@@ -4,18 +4,18 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileTank extends TileEntityBase implements ITickableTileEntity {
+public class TileTank extends TileEntityBase implements TickableBlockEntity {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
@@ -27,18 +27,18 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    CompoundNBT fluid = tag.getCompound(NBTFLUID);
+  public void load(BlockState bs, CompoundTag tag) {
+    CompoundTag fluid = tag.getCompound(NBTFLUID);
     tank.readFromNBT(fluid);
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -65,9 +65,9 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void tick() {
     //drain below but only to one of myself
-    TileEntity below = this.world.getTileEntity(this.pos.down());
+    BlockEntity below = this.level.getBlockEntity(this.worldPosition.below());
     if (below != null && below instanceof TileTank) {
-      UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
+      UtilFluid.tryFillPositionFromTank(level, this.worldPosition.below(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
     }
     //TESTING ONLY  
     //    if (below != null && below instanceof TileCableFluid) {

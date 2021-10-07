@@ -5,16 +5,18 @@ import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
+
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class EnchantCurse extends EnchantBase {
 
@@ -24,7 +26,7 @@ public class EnchantCurse extends EnchantBase {
   private static final double MAX_EFFECTS = 3;
   private static final int EFFECT_DURATION = 20 * 5;
 
-  public EnchantCurse(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantCurse(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -43,13 +45,13 @@ public class EnchantCurse extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     return stack.getItem() instanceof ArmorItem;
   }
 
   @Override
-  public void onUserHurt(LivingEntity user, Entity attacker, int level) {
-    if (user.world.isRemote || !(attacker instanceof LivingEntity)
+  public void doPostHurt(LivingEntity user, Entity attacker, int level) {
+    if (user.level.isClientSide || !(attacker instanceof LivingEntity)
         || UtilFakePlayer.isFakePlayer(attacker)) {
       //do nothing on clientside, server only
       //only trigger if attacker is alive and not a fakeplayer
@@ -57,26 +59,26 @@ public class EnchantCurse extends EnchantBase {
     }
     LivingEntity livingAttacker = (LivingEntity) attacker;
     //only allow activation once
-    int totalLevels = getCurrentArmorLevelSlot(user, EquipmentSlotType.HEAD)
-        + getCurrentArmorLevelSlot(user, EquipmentSlotType.CHEST)
-        + getCurrentArmorLevelSlot(user, EquipmentSlotType.LEGS)
-        + getCurrentArmorLevelSlot(user, EquipmentSlotType.FEET);
+    int totalLevels = getCurrentArmorLevelSlot(user, EquipmentSlot.HEAD)
+        + getCurrentArmorLevelSlot(user, EquipmentSlot.CHEST)
+        + getCurrentArmorLevelSlot(user, EquipmentSlot.LEGS)
+        + getCurrentArmorLevelSlot(user, EquipmentSlot.FEET);
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
     //does it pass the chance
-    if (adjustedActivationChance > user.world.rand.nextDouble()) {
-      List<Effect> negativeEffects = UtilEnchant.getNegativeEffects();
+    if (adjustedActivationChance > user.level.random.nextDouble()) {
+      List<MobEffect> negativeEffects = UtilEnchant.getNegativeEffects();
       Collections.shuffle(negativeEffects);
       int appliedEffects = 0;
-      for (Effect effect : negativeEffects) {
+      for (MobEffect effect : negativeEffects) {
         if (effect == null) {
           continue;
           //should be impossible, but i had a random NPE crash log
         }
         if (appliedEffects < MIN_EFFECTS
-            || BASE_APPLY_CHANCE > user.world.rand.nextDouble()) {
+            || BASE_APPLY_CHANCE > user.level.random.nextDouble()) {
           //the OR means, if we are under minimum, always go thru
           //if we are beyond minimum, check the random chance
-          livingAttacker.addPotionEffect(new EffectInstance(effect, EFFECT_DURATION));
+          livingAttacker.addEffect(new MobEffectInstance(effect, EFFECT_DURATION));
           appliedEffects++;
           if (appliedEffects >= MAX_EFFECTS) {
             break;
@@ -84,6 +86,6 @@ public class EnchantCurse extends EnchantBase {
         }
       }
     }
-    super.onUserHurt(user, attacker, level);
+    super.doPostHurt(user, attacker, level);
   }
 }

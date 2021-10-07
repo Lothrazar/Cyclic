@@ -6,21 +6,21 @@ import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -30,7 +30,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePotion extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TilePotion extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     TIMER, REDSTONE, RANGE, ENTITYTYPE;
@@ -48,13 +48,13 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   /** Primary potion effect given by this beacon. */
-  private List<EffectInstance> effects = new ArrayList<>();
+  private List<MobEffectInstance> effects = new ArrayList<>();
   EntityFilterType entityFilter = EntityFilterType.PLAYERS;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(stack);
+      List<MobEffectInstance> newEffects = PotionUtils.getMobEffects(stack);
       return newEffects.size() > 0;
     }
   };
@@ -91,20 +91,20 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
     if (s.isEmpty()) {
       return;
     }
-    List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(s);
+    List<MobEffectInstance> newEffects = PotionUtils.getMobEffects(s);
     if (newEffects.size() > 0) {
       pullFromItem(newEffects);
     }
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerPotion(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerPotion(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -119,50 +119,50 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("Effects", 9)) {
-      ListNBT listnbt = tag.getList("Effects", 10);
+      ListTag listnbt = tag.getList("Effects", 10);
       this.effects.clear();
       for (int i = 0; i < listnbt.size(); ++i) {
-        EffectInstance effectinstance = EffectInstance.read(listnbt.getCompound(i));
+        MobEffectInstance effectinstance = MobEffectInstance.load(listnbt.getCompound(i));
         if (effectinstance != null) {
           effects.add(effectinstance);
         }
       }
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("radius", radius);
     tag.putInt("entityFilter", entityFilter.ordinal());
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     //
     if (!this.effects.isEmpty()) {
-      ListNBT listnbt = new ListNBT();
-      for (EffectInstance effectinstance : this.effects) {
-        listnbt.add(effectinstance.write(new CompoundNBT()));
+      ListTag listnbt = new ListTag();
+      for (MobEffectInstance effectinstance : this.effects) {
+        listnbt.add(effectinstance.save(new CompoundTag()));
       }
       tag.put("Effects", listnbt);
     }
-    return super.write(tag);
+    return super.save(tag);
   }
 
-  private void pullFromItem(List<EffectInstance> newEffects) {
+  private void pullFromItem(List<MobEffectInstance> newEffects) {
     //add new effects
     this.timer = TICKS_PER_DURATION;
     setLitProperty(true);
     //first read all potins
     int maxDur = 0;
-    for (EffectInstance eff : newEffects) {
+    for (MobEffectInstance eff : newEffects) {
       if (this.isPotionValid(eff)) { //cannot set the duration time so we must copy it
-        effects.add(new EffectInstance(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, false));
+        effects.add(new MobEffectInstance(eff.getEffect(), POTION_TICKS, eff.getAmplifier(), true, false));
         maxDur = Math.max(eff.getDuration(), maxDur);
       }
     }
@@ -183,19 +183,19 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   private int affectEntities() {
     boolean showParticles = false;
     int affecdted = 0;
-    List<? extends LivingEntity> list = this.entityFilter.getEntities(world, pos, radius);
+    List<? extends LivingEntity> list = this.entityFilter.getEntities(level, worldPosition, radius);
     for (LivingEntity entity : list) {
       if (entity == null) {
         continue;
       }
-      for (EffectInstance eff : this.effects) {
+      for (MobEffectInstance eff : this.effects) {
         affecdted++;
-        if (entity.isPotionActive(eff.getPotion())) {
+        if (entity.hasEffect(eff.getEffect())) {
           //important to use combine for thing effects that apply attributes such as health
-          entity.getActivePotionEffect(eff.getPotion()).combine(eff);
+          entity.getEffect(eff.getEffect()).update(eff);
         }
         else {
-          entity.addPotionEffect(new EffectInstance(eff.getPotion(), POTION_TICKS, eff.getAmplifier(), true, showParticles));
+          entity.addEffect(new MobEffectInstance(eff.getEffect(), POTION_TICKS, eff.getAmplifier(), true, showParticles));
         }
       }
     }
@@ -205,8 +205,8 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   /**
    * non-harmful, non-instant
    */
-  private boolean isPotionValid(EffectInstance eff) {
-    return eff.getPotion().isBeneficial() && !eff.getPotion().isInstant();
+  private boolean isPotionValid(MobEffectInstance eff) {
+    return eff.getEffect().isBeneficial() && !eff.getEffect().isInstantenous();
   }
 
   @Override
@@ -250,8 +250,8 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
 
   public List<String> getPotionDisplay() {
     List<String> list = new ArrayList<>();
-    for (EffectInstance eff : this.effects) {
-      list.add(eff.getEffectName());
+    for (MobEffectInstance eff : this.effects) {
+      list.add(eff.getDescriptionId());
     }
     return list;
   }

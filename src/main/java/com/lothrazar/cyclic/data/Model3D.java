@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.data;
 
 import java.util.Arrays;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 
 /**
  * Source from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x

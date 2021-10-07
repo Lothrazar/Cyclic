@@ -27,10 +27,10 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.util.UtilScythe;
 import java.util.List;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketScythe extends PacketBase {
@@ -49,8 +49,8 @@ public class PacketScythe extends PacketBase {
 
   public static void handle(PacketScythe message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      ServerPlayerEntity player = ctx.get().getSender();
-      World world = player.getEntityWorld();
+      ServerPlayer player = ctx.get().getSender();
+      Level world = player.getCommandSenderWorld();
       List<BlockPos> shape = ScytheType.getShape(message.pos, message.radius);
       for (BlockPos posCurrent : shape) {
         UtilScythe.harvestSingle(world, player, posCurrent, message.type);
@@ -59,12 +59,12 @@ public class PacketScythe extends PacketBase {
     message.done(ctx);
   }
 
-  public static PacketScythe decode(PacketBuffer buf) {
+  public static PacketScythe decode(FriendlyByteBuf buf) {
     PacketScythe p = new PacketScythe(buf.readBlockPos(), ScytheType.values()[buf.readInt()], buf.readInt());
     return p;
   }
 
-  public static void encode(PacketScythe msg, PacketBuffer buf) {
+  public static void encode(PacketScythe msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.type.ordinal());
     buf.writeInt(msg.radius);

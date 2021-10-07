@@ -2,18 +2,20 @@ package com.lothrazar.cyclic.block.battery;
 
 import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemBlockBattery extends BlockItem {
 
@@ -33,14 +35,14 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     if (storage != null) {
-      TranslationTextComponent t = new TranslationTextComponent(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
-      t.mergeStyle(TextFormatting.RED);
+      TranslatableComponent t = new TranslatableComponent(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
+      t.withStyle(ChatFormatting.RED);
       tooltip.add(t);
     }
-    super.addInformation(stack, worldIn, tooltip, flagIn);
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
   /**
@@ -61,7 +63,7 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new EnergyCapabilityItemStack(stack, TileBattery.MAX);
   }
 }

@@ -3,11 +3,13 @@ package com.lothrazar.cyclic.item.bauble;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class AirAntiGravity extends ItemBaseToggle {
 
@@ -19,33 +21,33 @@ public class AirAntiGravity extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
     if (!this.canUse(stack)) {
       return;
     }
     if (!this.isOn(stack)) {
       return;
     }
-    if (entity instanceof PlayerEntity == false) {
+    if (entity instanceof Player == false) {
       return;
     }
-    PlayerEntity player = (PlayerEntity) entity;
-    BlockPos belowMe = player.getPosition().down();
+    Player player = (Player) entity;
+    BlockPos belowMe = player.blockPosition().below();
     //sneak on air, or a nonsolid block like a flower
-    boolean isAirBorne = (world.isAirBlock(belowMe) || world.isTopSolid(belowMe, player) == false);
+    boolean isAirBorne = (world.isEmptyBlock(belowMe) || world.loadedAndEntityCanStandOn(belowMe, player) == false);
     //
-    if (isAirBorne && player.getMotion().y < 0) { //player.isSneaking() &&
+    if (isAirBorne && player.getDeltaMovement().y < 0) { //player.isSneaking() &&
       double y = (player.isCrouching()) ? DOWNWARD_SPEED_SNEAKING : 0;
-      player.setMotion(player.getMotion().x, y, player.getMotion().z);
-      player.isAirBorne = false;
+      player.setDeltaMovement(player.getDeltaMovement().x, y, player.getDeltaMovement().z);
+      player.hasImpulse = false;
       //if we set onGround->true all the time, it blocks fwd movement anywya
       player.setOnGround(true);
       // (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
-      if (player.getEntityWorld().rand.nextDouble() < 0.1) {
+      if (player.getCommandSenderWorld().random.nextDouble() < 0.1) {
         //        super.damageCharm(player, stack);
         UtilItemStack.damageItem(player, stack);
       }
-      if (world.isRemote && player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+      if (world.isClientSide && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
       }
     }

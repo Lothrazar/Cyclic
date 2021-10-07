@@ -4,12 +4,12 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -26,14 +26,14 @@ public class SoundmuffTile extends TileEntityBase {
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     notInventory.deserializeNBT(tag.getCompound(NBTINV));
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTINV, notInventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -45,8 +45,8 @@ public class SoundmuffTile extends TileEntityBase {
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
@@ -59,7 +59,7 @@ public class SoundmuffTile extends TileEntityBase {
 
   public List<BlockPos> getShape() {
     List<BlockPos> lis = new ArrayList<BlockPos>();
-    lis.add(pos);
+    lis.add(worldPosition);
     return lis;
   }
 }

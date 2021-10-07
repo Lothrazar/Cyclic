@@ -9,13 +9,13 @@ import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.settings.IKeyConflictContext;
@@ -32,7 +32,7 @@ import org.lwjgl.glfw.GLFW;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
 
-  public static KeyBinding CAKE;
+  public static KeyMapping CAKE;
 
   public ClientRegistryCyclic() {
     //fired by mod constructor  DistExecutor.safeRunForDist
@@ -52,14 +52,14 @@ public class ClientRegistryCyclic {
   }
 
   private static void initKeybindings() {
-    CAKE = new KeyBinding("key." + ModCyclic.MODID + ".cake", new IKeyConflictContext() {
+    CAKE = new KeyMapping("key." + ModCyclic.MODID + ".cake", new IKeyConflictContext() {
 
       @Override
       public boolean isActive() {
         //client side cant know when active. stored on server player file 
         //maybe when no gui is open
-        PlayerEntity player = Minecraft.getInstance().player;
-        ModCyclic.LOGGER.info("only active when this is null? " + player.openContainer);
+        Player player = Minecraft.getInstance().player;
+        ModCyclic.LOGGER.info("only active when this is null? " + player.containerMenu);
         return true;
       }
 
@@ -67,7 +67,7 @@ public class ClientRegistryCyclic {
       public boolean conflicts(IKeyConflictContext other) {
         return this == other || KeyConflictContext.IN_GAME == other;
       }
-    }, InputMappings.Type.KEYSYM.getOrMakeInput(GLFW.GLFW_KEY_X), "key." + ModCyclic.MODID + ".category");
+    }, InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_X), "key." + ModCyclic.MODID + ".category");
     ClientRegistry.registerKeyBinding(CAKE);
   }
 
@@ -88,7 +88,7 @@ public class ClientRegistryCyclic {
           //what entity is inside
           EntityType<?> thing = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
           //pull the colours from the egg
-          for (SpawnEggItem spawneggitem : SpawnEggItem.getEggs()) {
+          for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
             if (spawneggitem.getType(null) == thing) {
               return spawneggitem.getColor(tintIndex - 1);
             }
@@ -103,17 +103,17 @@ public class ClientRegistryCyclic {
   @SubscribeEvent
   public static void registerModels(FMLClientSetupEvent event) {
     // TODO: build list in EntityRegistry and loop it here since they are same SpriteRends
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.snowbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lightningbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_stun, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_carry, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_damage, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.NETBALL, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.torchbolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.DUNGEON, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.eye, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.fire_bolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.snowbolt, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.lightningbolt, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_stun, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_carry, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.boomerang_damage, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.NETBALL, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.torchbolt, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.DUNGEON, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.eye, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.fire_bolt, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
     RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.conveyor_item, render -> new ConveyorItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.stone_bolt, render -> new SpriteRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
+    RenderingRegistry.registerEntityRenderingHandler(EntityRegistry.stone_bolt, render -> new ThrownItemRenderer<>(render, Minecraft.getInstance().getItemRenderer()));
   }
 }

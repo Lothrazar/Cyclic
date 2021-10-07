@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.builder;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 
 public enum BuilderActionType {
 
@@ -22,7 +22,7 @@ public enum BuilderActionType {
   }
 
   public static void tickTimeout(ItemStack wand) {
-    CompoundNBT tags = wand.getOrCreateTag();
+    CompoundTag tags = wand.getOrCreateTag();
     int t = tags.getInt(NBTTIMEOUT);
     if (t > 0) {
       wand.getOrCreateTag().putInt(NBTTIMEOUT, t - 1);
@@ -33,13 +33,13 @@ public enum BuilderActionType {
     if (wand.isEmpty()) {
       return 0;
     }
-    CompoundNBT tags = wand.getOrCreateTag();
+    CompoundTag tags = wand.getOrCreateTag();
     return tags.getInt(NBT);
   }
 
   public static String getName(ItemStack wand) {
     try {
-      CompoundNBT tags = wand.getOrCreateTag();
+      CompoundTag tags = wand.getOrCreateTag();
       return "tool.action." + values()[tags.getInt(NBT)].toString().toLowerCase();
     }
     catch (Exception e) {
@@ -48,7 +48,7 @@ public enum BuilderActionType {
   }
 
   public static void toggle(ItemStack wand) {
-    CompoundNBT tags = wand.getOrCreateTag();
+    CompoundTag tags = wand.getOrCreateTag();
     int type = tags.getInt(NBT);
     type++;
     if (type >= values().length) {
@@ -59,7 +59,7 @@ public enum BuilderActionType {
   }
 
   public static void setBlockState(ItemStack wand, BlockState target) {
-    CompoundNBT encoded = NBTUtil.writeBlockState(target);
+    CompoundTag encoded = NbtUtils.writeBlockState(target);
     wand.getOrCreateTag().put(NBTBLOCKSTATE, encoded);
   }
 
@@ -67,6 +67,6 @@ public enum BuilderActionType {
     if (!wand.getOrCreateTag().contains(NBTBLOCKSTATE)) {
       return null;
     }
-    return NBTUtil.readBlockState(wand.getOrCreateTag().getCompound(NBTBLOCKSTATE));
+    return NbtUtils.readBlockState(wand.getOrCreateTag().getCompound(NBTBLOCKSTATE));
   }
 }

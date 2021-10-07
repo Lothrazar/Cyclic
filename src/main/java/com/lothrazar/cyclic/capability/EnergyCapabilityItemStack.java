@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.capability;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -33,7 +33,7 @@ public class EnergyCapabilityItemStack implements ICapabilityProvider {
       @Override
       public void setEnergy(int energy) {
         if (!stack.hasTag()) {
-          stack.setTag(new CompoundNBT());
+          stack.setTag(new CompoundTag());
         }
         stack.getTag().putInt(NBTENERGY, energy);
         super.setEnergy(energy);

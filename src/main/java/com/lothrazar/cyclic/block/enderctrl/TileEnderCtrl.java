@@ -9,12 +9,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -47,7 +47,7 @@ public class TileEnderCtrl extends TileEntityBase {
    */
   public void setShelves(Set<BlockPos> shelvesIn) {
     ModCyclic.LOGGER.info("resetting and sorting the shelves " + shelvesIn.size());
-    this.connectedShelves = shelvesIn.stream().sorted(Comparator.comparing(o -> o.distanceSq(this.pos))).collect(Collectors.toList());
+    this.connectedShelves = shelvesIn.stream().sorted(Comparator.comparing(o -> o.distSqr(this.worldPosition))).collect(Collectors.toList());
   }
 
   public List<BlockPos> getShelves() {
@@ -66,30 +66,30 @@ public class TileEnderCtrl extends TileEntityBase {
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
     }
     if (tag.contains(NBT_SHELVES)) {
-      ListNBT shelves = tag.getList(NBT_SHELVES, Constants.NBT.TAG_COMPOUND);
+      ListTag shelves = tag.getList(NBT_SHELVES, Constants.NBT.TAG_COMPOUND);
       for (int i = 0; i < shelves.size(); i++) {
-        BlockPos pos = NBTUtil.readBlockPos(shelves.getCompound(i));
+        BlockPos pos = NbtUtils.readBlockPos(shelves.getCompound(i));
         this.connectedShelves.add(pos);
       }
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    ListNBT shelves = new ListNBT();
+    ListTag shelves = new ListTag();
     for (BlockPos pos : this.connectedShelves) {
-      shelves.add(NBTUtil.writeBlockPos(pos));
+      shelves.add(NbtUtils.writeBlockPos(pos));
     }
     tag.put(NBT_SHELVES, shelves);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   public void toggleShowText() {

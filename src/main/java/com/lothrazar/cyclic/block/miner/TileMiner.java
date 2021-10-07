@@ -11,24 +11,24 @@ import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.Property;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -39,7 +39,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileMiner extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileMiner extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
@@ -91,18 +91,18 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerMiner(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerMiner(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -117,25 +117,25 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     radius = tag.getInt("size");
     height = tag.getInt("height");
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
     directionIsUp = tag.getBoolean("directionIsUp");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("size", radius);
     tag.putInt("height", height);
     tag.putBoolean("isCurrentlyMining", isCurrentlyMining);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -145,11 +145,11 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       setLitProperty(false);
       return;
     }
-    if ((world instanceof ServerWorld) && fakePlayer == null) {
-      fakePlayer = setupBeforeTrigger((ServerWorld) world, "miner");
+    if ((level instanceof ServerLevel) && fakePlayer == null) {
+      fakePlayer = setupBeforeTrigger((ServerLevel) level, "miner");
     }
     try {
-      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
+      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       List<BlockPos> shape = getShape();
       if (shape.size() == 0) {
         return;
@@ -184,17 +184,17 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     }
     //currentlyMining may have changed, and we are still turned on:
     if (isCurrentlyMining) {
-      BlockState targetState = world.getBlockState(targetPos);
-      float relative = targetState.getPlayerRelativeBlockHardness(fakePlayer.get(), world, targetPos);
+      BlockState targetState = level.getBlockState(targetPos);
+      float relative = targetState.getDestroyProgress(fakePlayer.get(), level, targetPos);
       //state.getPlayerRelativeBlockHardness(player, worldIn, pos);UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
       curBlockDamage += relative;
       //
       //if hardness is relative, jus fekin break it like air eh
       if (curBlockDamage >= 1.0f || relative == 0) {
-        boolean harvested = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+        boolean harvested = fakePlayer.get().gameMode.destroyBlock(targetPos);
         if (!harvested) {
           //            world.destroyBlock(targetPos, true, fakePlayer.get()); 
-          harvested = world.getBlockState(targetPos).removedByPlayer(world, pos, fakePlayer.get(), true, world.getFluidState(pos));
+          harvested = level.getBlockState(targetPos).removedByPlayer(level, worldPosition, fakePlayer.get(), true, level.getFluidState(worldPosition));
           //   ModCyclic.LOGGER.info("Miner:removedByPlayer hacky workaround " + targetPos);
         }
         if (harvested) {
@@ -203,12 +203,12 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
           resetProgress();
         }
         else {
-          world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+          level.destroyBlockProgress(fakePlayer.get().getUUID().hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
     }
     else { //is mining is false 
-      world.sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+      level.destroyBlockProgress(fakePlayer.get().getUUID().hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
     }
     return false;
   }
@@ -235,7 +235,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   private boolean propertiesMatch(BlockState targetState, BlockState st) {
     try {
       for (Property<?> p : st.getProperties()) {
-        if (!st.get(p).equals(targetState.get(p))) {
+        if (!st.getValue(p).equals(targetState.getValue(p))) {
           return false;
         }
       }
@@ -251,12 +251,12 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
    * Unbreakable blocks and fluid blocks are not valid. Otherwise checks if player:canHarvestBlock using its equipped item
    */
   private boolean isTargetValid() {
-    if (targetPos == null || world.isAirBlock(targetPos) || fakePlayer == null) {
+    if (targetPos == null || level.isEmptyBlock(targetPos) || fakePlayer == null) {
       return false; //dont mine air or liquid. 
     }
     //is this valid
-    BlockState blockSt = world.getBlockState(targetPos);
-    if (blockSt.hardness < 0) {
+    BlockState blockSt = level.getBlockState(targetPos);
+    if (blockSt.destroySpeed < 0) {
       return false; //unbreakable 
     }
     //water logged is 
@@ -272,7 +272,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
       return false;
     }
     //its a solid non-air, non-fluid block (but might be like waterlogged stairs or something)
-    boolean canHarvest = blockSt.canHarvestBlock(world, targetPos, fakePlayer.get());
+    boolean canHarvest = blockSt.canHarvestBlock(level, targetPos, fakePlayer.get());
     if (!canHarvest) {
       //      ModCyclic.LOGGER.info(targetPos + " Mining target is not valid  " + blockSt);
     }
@@ -292,7 +292,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     curBlockDamage = 0;
     if (fakePlayer != null && targetPos != null) {
       //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
-      getWorld().sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, -1);
+      getLevel().destroyBlockProgress(fakePlayer.get().getUUID().hashCode(), targetPos, -1);
     }
   }
 

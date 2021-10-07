@@ -9,28 +9,30 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EnderBookItem extends ItemBase {
 
@@ -47,58 +49,58 @@ public class EnderBookItem extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag()) {
-      CompoundNBT stackTag = stack.getOrCreateTag();
+      CompoundTag stackTag = stack.getOrCreateTag();
       if (stackTag.contains(ITEMCOUNT)) {
         int itemCount = stackTag.getInt(ITEMCOUNT);
-        TranslationTextComponent t = new TranslationTextComponent("cyclic.screen.filter.item.count");
-        t.appendString("" + itemCount);
-        t.mergeStyle(TextFormatting.GRAY);
+        TranslatableComponent t = new TranslatableComponent("cyclic.screen.filter.item.count");
+        t.append("" + itemCount);
+        t.withStyle(ChatFormatting.GRAY);
         tooltip.add(t);
       }
     }
   }
 
   @Override
-  public boolean hasEffect(ItemStack stack) {
+  public boolean isFoil(ItemStack stack) {
     if (stack.hasTag() && stack.getTag().contains(TELEPORT_COUNTDOWN)) {
       return true;
     }
-    return super.hasEffect(stack);
+    return super.isFoil(stack);
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (!worldIn.isRemote && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayerEntity) playerIn, new ContainerProviderEnderBook(), playerIn.getPosition());
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+      NetworkHooks.openGui((ServerPlayer) playerIn, new ContainerProviderEnderBook(), playerIn.blockPosition());
     }
-    if (!worldIn.isRemote && playerIn.isCrouching()) {
+    if (!worldIn.isClientSide && playerIn.isCrouching()) {
       //any damage?
-      ItemStack stack = playerIn.getHeldItem(handIn);
-      if (stack.getDamage() < stack.getMaxDamage() - 1) {
+      ItemStack stack = playerIn.getItemInHand(handIn);
+      if (stack.getDamageValue() < stack.getMaxDamage() - 1) {
         int enderslot = stack.getTag().getInt(ENDERSLOT);
         BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
         if (loc != null) {
-          UtilChat.addServerChatMessage(playerIn, new TranslationTextComponent("item.cyclic.ender_book.start").appendString(loc.toString()));
+          UtilChat.addServerChatMessage(playerIn, new TranslatableComponent("item.cyclic.ender_book.start").append(loc.toString()));
           stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, TP_COUNTDOWN);
         }
       }
     }
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    return super.use(worldIn, playerIn, handIn);
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (stack.hasTag() && stack.getTag().contains(TELEPORT_COUNTDOWN) && entityIn instanceof LivingEntity) {
       int ct = stack.getOrCreateTag().getInt(TELEPORT_COUNTDOWN);
       if (ct < 0) {
         cancelTeleport(stack);
         return;
       }
-      if (ct == 0 && entityIn instanceof PlayerEntity) {
-        PlayerEntity p = (PlayerEntity) entityIn;
+      if (ct == 0 && entityIn instanceof Player) {
+        Player p = (Player) entityIn;
         cancelTeleport(stack);
         int enderslot = stack.getTag().getInt(ENDERSLOT);
         BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
@@ -116,8 +118,8 @@ public class EnderBookItem extends ItemBase {
           return;
         }
       }
-      else if (ct % 20 == 0 && entityIn instanceof PlayerEntity) {
-        UtilChat.sendStatusMessage((PlayerEntity) entityIn, new TranslationTextComponent("item.cyclic.ender_book.countdown").appendString("" + (ct / 20)));
+      else if (ct % 20 == 0 && entityIn instanceof Player) {
+        UtilChat.sendStatusMessage((Player) entityIn, new TranslatableComponent("item.cyclic.ender_book.countdown").append("" + (ct / 20)));
       }
       ct--;
       stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, ct);
@@ -125,7 +127,7 @@ public class EnderBookItem extends ItemBase {
   }
 
   @Override
-  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+  public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
     return repair.getItem() == Items.ENDER_PEARL;
   }
 
@@ -147,19 +149,19 @@ public class EnderBookItem extends ItemBase {
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new CapabilityProviderEnderBook();
   }
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.ender_book, ScreenEnderBook::new);
+    MenuScreens.register(ContainerScreenRegistry.ender_book, ScreenEnderBook::new);
   }
 
   // ShareTag for server->client capability data sync
   @Override
-  public CompoundNBT getShareTag(ItemStack stack) {
-    CompoundNBT nbt = stack.getOrCreateTag();
+  public CompoundTag getShareTag(ItemStack stack) {
+    CompoundTag nbt = stack.getOrCreateTag();
     IItemHandler cap = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
     //on server  this runs . also has correct values.
     //set data for sync to client
@@ -176,16 +178,16 @@ public class EnderBookItem extends ItemBase {
   }
 
   @Override
-  public void readShareTag(ItemStack stack, CompoundNBT nbt) {
+  public void readShareTag(ItemStack stack, CompoundTag nbt) {
     if (nbt != null) {
-      CompoundNBT stackTag = stack.getOrCreateTag();
+      CompoundTag stackTag = stack.getOrCreateTag();
       stackTag.putInt(ITEMCOUNT, nbt.getInt(ITEMCOUNT));
     }
     super.readShareTag(stack, nbt);
   }
 
-  public static void scroll(ServerPlayerEntity player, int slot, boolean isDown) {
-    ItemStack book = player.inventory.getStackInSlot(slot);
+  public static void scroll(ServerPlayer player, int slot, boolean isDown) {
+    ItemStack book = player.inventory.getItem(slot);
     if (book.hasTag()) {
       int enderslot = book.getTag().getInt(ENDERSLOT);
       enderslot = scrollSlot(isDown, enderslot);
@@ -196,7 +198,7 @@ public class EnderBookItem extends ItemBase {
       if (loc != null) {
         msg = loc.getDisplayString();
       }
-      UtilChat.addServerChatMessage(player, new StringTextComponent(book.getTag().getInt(ENDERSLOT) + " : ").appendString(msg));
+      UtilChat.addServerChatMessage(player, new TextComponent(book.getTag().getInt(ENDERSLOT) + " : ").append(msg));
     }
   }
 

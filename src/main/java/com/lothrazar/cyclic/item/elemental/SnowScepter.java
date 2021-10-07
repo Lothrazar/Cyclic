@@ -4,11 +4,13 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SnowScepter extends ItemBase {
 
@@ -19,17 +21,17 @@ public class SnowScepter extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
-    ItemStack stack = player.getHeldItem(handIn);
-    if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemRightClick(world, player, handIn);
+  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
+    ItemStack stack = player.getItemInHand(handIn);
+    if (player.getCooldowns().isOnCooldown(this)) {
+      return super.use(world, player, handIn);
     }
     shootMe(world, player, new SnowEntity(player, world), 0, ItemBase.VELOCITY_MAX);
     shootMe(world, player, new SnowEntity(player, world), 10, ItemBase.VELOCITY_MAX);
     shootMe(world, player, new SnowEntity(player, world), -10, ItemBase.VELOCITY_MAX);
-    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
+    player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, stack);
     UtilSound.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH);
-    return super.onItemRightClick(world, player, handIn);
+    return super.use(world, player, handIn);
   }
 }

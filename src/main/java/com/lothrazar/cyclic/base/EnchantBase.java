@@ -1,16 +1,18 @@
 package com.lothrazar.cyclic.base;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public abstract class EnchantBase extends Enchantment {
 
-  protected EnchantBase(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+  protected EnchantBase(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot[] slots) {
     super(rarityIn, typeIn, slots);
   }
 
@@ -24,8 +26,8 @@ public abstract class EnchantBase extends Enchantment {
     return -1;
   }
 
-  protected int getCurrentArmorLevelSlot(LivingEntity player, EquipmentSlotType type) {
-    ItemStack armor = player.getItemStackFromSlot(type);
+  protected int getCurrentArmorLevelSlot(LivingEntity player, EquipmentSlot type) {
+    ItemStack armor = player.getItemBySlot(type);
     int level = 0;
     if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
         && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
@@ -35,12 +37,12 @@ public abstract class EnchantBase extends Enchantment {
   }
 
   protected int getCurrentArmorLevel(LivingEntity player) {
-    EquipmentSlotType[] armors = new EquipmentSlotType[] {
-        EquipmentSlotType.CHEST, EquipmentSlotType.FEET, EquipmentSlotType.HEAD, EquipmentSlotType.LEGS
+    EquipmentSlot[] armors = new EquipmentSlot[] {
+        EquipmentSlot.CHEST, EquipmentSlot.FEET, EquipmentSlot.HEAD, EquipmentSlot.LEGS
     };
     int level = 0;
-    for (EquipmentSlotType slot : armors) {
-      ItemStack armor = player.getItemStackFromSlot(slot);
+    for (EquipmentSlot slot : armors) {
+      ItemStack armor = player.getItemBySlot(slot);
       if (armor.isEmpty() == false
           && EnchantmentHelper.getEnchantments(armor) != null
           && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
@@ -61,7 +63,7 @@ public abstract class EnchantBase extends Enchantment {
     if (player == null) {
       return ItemStack.EMPTY;
     }
-    for (ItemStack main : player.getArmorInventoryList()) {
+    for (ItemStack main : player.getArmorSlots()) {
       if ((main.isEmpty() == false) && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
         return main;
       }
@@ -73,8 +75,8 @@ public abstract class EnchantBase extends Enchantment {
     if (player == null) {
       return -1;
     }
-    ItemStack main = player.getHeldItemMainhand();
-    ItemStack off = player.getHeldItemOffhand();
+    ItemStack main = player.getMainHandItem();
+    ItemStack off = player.getOffhandItem();
     return Math.max(getCurrentLevelTool(main), getCurrentLevelTool(off));
   }
 }

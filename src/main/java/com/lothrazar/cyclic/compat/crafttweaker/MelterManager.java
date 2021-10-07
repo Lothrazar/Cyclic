@@ -10,8 +10,8 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -21,7 +21,7 @@ import org.openzen.zencode.java.ZenCodeType;
 public class MelterManager implements IRecipeManager {
 
   @Override
-  public IRecipeType<?> getRecipeType() {
+  public RecipeType<?> getRecipeType() {
     return CyclicRecipeType.MELTER;
   }
 

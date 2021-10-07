@@ -1,15 +1,17 @@
 package com.lothrazar.cyclic.item.slingshot;
 
 import com.lothrazar.cyclic.base.ItemBase;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SlingshotItem extends ItemBase {
 
@@ -20,8 +22,8 @@ public class SlingshotItem extends ItemBase {
   }
 
   @Override
-  public UseAction getUseAction(ItemStack stack) {
-    return UseAction.BOW;
+  public UseAnim getUseAnimation(ItemStack stack) {
+    return UseAnim.BOW;
   }
 
   @Override
@@ -30,26 +32,26 @@ public class SlingshotItem extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    ItemStack itemstack = playerIn.getHeldItem(handIn);
-    playerIn.setActiveHand(handIn);
-    return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    ItemStack itemstack = playerIn.getItemInHand(handIn);
+    playerIn.startUsingItem(handIn);
+    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
   }
 
   @Override
-  public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entity, int chargeTimer) {
+  public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
     int charge = this.getUseDuration(stack) - chargeTimer;
-    float percentageCharged = BowItem.getArrowVelocity(charge); //never zero, its from [0.03,1];
+    float percentageCharged = BowItem.getPowerForTime(charge); //never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
       return; //not enough force to go with any realistic path 
     }
-    if (entity instanceof PlayerEntity == false) {
+    if (entity instanceof Player == false) {
       return;
     }
-    PlayerEntity player = (PlayerEntity) entity;
+    Player player = (Player) entity;
     shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBase.VELOCITY_MAX);
-    stack.damageItem(1, player, (p) -> {
-      p.sendBreakAnimation(Hand.MAIN_HAND);
+    stack.hurtAndBreak(1, player, (p) -> {
+      p.broadcastBreakEvent(InteractionHand.MAIN_HAND);
     });
     //    player.setHeldItem(player.getActiveHand(), ItemStack.EMPTY);
     //    e.setBoomerangThrown(stack.copy());

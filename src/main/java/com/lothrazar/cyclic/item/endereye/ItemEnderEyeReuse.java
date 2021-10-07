@@ -4,27 +4,29 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemEnderEyeReuse extends ItemBase {
 
   public ItemEnderEyeReuse(Properties properties) {
-    super(properties.maxDamage(256));
+    super(properties.durability(256));
   }
 
   //compat with Repurposed Structures Mod see #1517
@@ -35,49 +37,49 @@ public class ItemEnderEyeReuse extends ItemBase {
   private static final ResourceLocation RS_NETHER_RESOURCE_LOCATION = new ResourceLocation(RS_MODID, RS_NETHER_STRONGHOLD_ID);
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-    ItemStack stack = player.getHeldItem(hand);
-    if (!worldIn.isRemote && worldIn instanceof ServerWorld) {
-      ServerWorld sw = (ServerWorld) worldIn;
-      ChunkGenerator chunkGenerator = sw.getChunkProvider().getChunkGenerator();
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
+    ItemStack stack = player.getItemInHand(hand);
+    if (!worldIn.isClientSide && worldIn instanceof ServerLevel) {
+      ServerLevel sw = (ServerLevel) worldIn;
+      ChunkGenerator chunkGenerator = sw.getChunkSource().getGenerator();
       //compat with Repurposed Structures Mod see #1517
-      Structure<?> vanillaStronghold = Structure.STRONGHOLD;
-      Structure<?> rsStronghold;
-      Structure<?> rsNetherStronghold;
-      BlockPos closestBlockPos = chunkGenerator.func_235956_a_(sw, vanillaStronghold, new BlockPos(player.getPosition()), 100, false);
+      StructureFeature<?> vanillaStronghold = StructureFeature.STRONGHOLD;
+      StructureFeature<?> rsStronghold;
+      StructureFeature<?> rsNetherStronghold;
+      BlockPos closestBlockPos = chunkGenerator.findNearestMapFeature(sw, vanillaStronghold, new BlockPos(player.blockPosition()), 100, false);
       BlockPos rsBlockPos;
       if (ModList.get().isLoaded(RS_MODID)) {
         if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_RESOURCE_LOCATION)) {
           rsStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_RESOURCE_LOCATION);
-          rsBlockPos = chunkGenerator.func_235956_a_(sw, rsStronghold, new BlockPos(player.getPosition()), 100, false);
-          closestBlockPos = returnClosest(player.getPosition(), closestBlockPos, rsBlockPos);
+          rsBlockPos = chunkGenerator.findNearestMapFeature(sw, rsStronghold, new BlockPos(player.blockPosition()), 100, false);
+          closestBlockPos = returnClosest(player.blockPosition(), closestBlockPos, rsBlockPos);
         }
         if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_NETHER_RESOURCE_LOCATION)) {
           rsNetherStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_NETHER_RESOURCE_LOCATION);
-          rsBlockPos = chunkGenerator.func_235956_a_(sw, rsNetherStronghold, new BlockPos(player.getPosition()), 100, false);
-          closestBlockPos = returnClosest(player.getPosition(), closestBlockPos, rsBlockPos);
+          rsBlockPos = chunkGenerator.findNearestMapFeature(sw, rsNetherStronghold, new BlockPos(player.blockPosition()), 100, false);
+          closestBlockPos = returnClosest(player.blockPosition(), closestBlockPos, rsBlockPos);
         }
       }
       if (closestBlockPos != null) {
-        double posX = player.getPosX();
-        double posY = player.getPosY();
-        double posZ = player.getPosZ();
-        EyeOfEnderEntityNodrop eyeofenderentity = new EyeOfEnderEntityNodrop(worldIn, posX, posY + player.getHeight() / 2.0F, posZ);
-        eyeofenderentity.moveTowards(closestBlockPos);
-        worldIn.addEntity(eyeofenderentity);
-        if (player instanceof ServerPlayerEntity) {
-          CriteriaTriggers.USED_ENDER_EYE.trigger((ServerPlayerEntity) player, closestBlockPos);
+        double posX = player.getX();
+        double posY = player.getY();
+        double posZ = player.getZ();
+        EyeOfEnderEntityNodrop eyeofenderentity = new EyeOfEnderEntityNodrop(worldIn, posX, posY + player.getBbHeight() / 2.0F, posZ);
+        eyeofenderentity.signalTo(closestBlockPos);
+        worldIn.addFreshEntity(eyeofenderentity);
+        if (player instanceof ServerPlayer) {
+          CriteriaTriggers.USED_ENDER_EYE.trigger((ServerPlayer) player, closestBlockPos);
         }
-        worldIn.playSound((PlayerEntity) null, posX, posY, posZ, SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.NEUTRAL, 0.5F,
+        worldIn.playSound((Player) null, posX, posY, posZ, SoundEvents.ENDER_EYE_LAUNCH, SoundSource.NEUTRAL, 0.5F,
             0.4F / (random.nextFloat() * 0.4F + 0.8F));
-        worldIn.playEvent((PlayerEntity) null, 1003, new BlockPos(player.getPosition()), 0);
+        worldIn.levelEvent((Player) null, 1003, new BlockPos(player.blockPosition()), 0);
         UtilItemStack.damageItem(player, stack);
-        player.addStat(Stats.ITEM_USED.get(this));
-        player.getCooldownTracker().setCooldown(stack.getItem(), 10);
-        return ActionResult.resultSuccess(player.getHeldItem(hand));
+        player.awardStat(Stats.ITEM_USED.get(this));
+        player.getCooldowns().addCooldown(stack.getItem(), 10);
+        return InteractionResultHolder.success(player.getItemInHand(hand));
       }
     }
-    return super.onItemRightClick(worldIn, player, hand);
+    return super.use(worldIn, player, hand);
   }
 
   private BlockPos returnClosest(BlockPos playerPos, BlockPos pos1, BlockPos pos2) {

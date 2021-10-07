@@ -6,12 +6,14 @@ import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilStepHeight;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class LoftyStatureApple extends ItemBase {
 
@@ -25,34 +27,34 @@ public class LoftyStatureApple extends ItemBase {
   }
 
   @Override
-  public boolean hasEffect(ItemStack stack) {
+  public boolean isFoil(ItemStack stack) {
     return true;
   }
 
   @Override
-  public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-    if (entityLiving instanceof PlayerEntity == false) {
-      return super.onItemUseFinish(stack, worldIn, entityLiving);
+  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+    if (entityLiving instanceof Player == false) {
+      return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    PlayerEntity player = (PlayerEntity) entityLiving;
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
-      return super.onItemUseFinish(stack, worldIn, entityLiving);
+    Player player = (Player) entityLiving;
+    if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+      return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    player.getCooldownTracker().setCooldown(stack.getItem(), 40); // 2seconds
-    if (!worldIn.isRemote) {
+    player.getCooldowns().addCooldown(stack.getItem(), 40); // 2seconds
+    if (!worldIn.isClientSide) {
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
       datFile.toggleStepHeight();
       UtilChat.addServerChatMessage(player, "cyclic.unlocks.stepheight." + datFile.stepHeight);
     }
-    return super.onItemUseFinish(stack, worldIn, entityLiving);
+    return super.finishUsingItem(stack, worldIn, entityLiving);
   }
 
   @Override
-  public SoundEvent getEatSound() {
+  public SoundEvent getEatingSound() {
     return SoundRegistry.STEP_HEIGHT_UP;
   }
 
-  public static void onUpdate(PlayerEntity player) {
+  public static void onUpdate(Player player) {
     CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
     if (datFile.stepHeight) {
       UtilStepHeight.enableStepHeight(player);

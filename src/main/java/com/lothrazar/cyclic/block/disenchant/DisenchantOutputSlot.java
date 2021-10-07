@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.disenchant;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -11,7 +11,7 @@ public class DisenchantOutputSlot extends SlotItemHandler {
   }
 
   @Override
-  public boolean isItemValid(ItemStack stack) {
+  public boolean mayPlace(ItemStack stack) {
     return false;
   }
 }

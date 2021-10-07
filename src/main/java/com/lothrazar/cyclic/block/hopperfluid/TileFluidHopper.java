@@ -4,15 +4,15 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileFluidHopper extends TileEntityBase implements ITickableTileEntity {
+public class TileFluidHopper extends TileEntityBase implements TickableBlockEntity {
 
   private static final int FLOW = FluidAttributes.BUCKET_VOLUME;
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
@@ -44,15 +44,15 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
     if (this.isPowered()) {
       return;
     }
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     //first pull down from above
     tryExtract(Direction.UP);
     //then pull from hopper facey side
-    Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
+    Direction exportToSide = this.getBlockState().getValue(BlockFluidHopper.FACING);
     if (exportToSide != null && exportToSide != Direction.UP) {
-      moveFluids(exportToSide, pos.offset(exportToSide), FLOW, tank);
+      moveFluids(exportToSide, worldPosition.relative(exportToSide), FLOW, tank);
     }
   }
 
@@ -60,16 +60,16 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
     if (extractSide == null || tank == null) {
       return;
     }
-    BlockPos target = this.pos.offset(extractSide);
+    BlockPos target = this.worldPosition.relative(extractSide);
     Direction incomingSide = extractSide.getOpposite();
-    IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
+    IFluidHandler stuff = UtilFluid.getTank(level, target, incomingSide);
     boolean success = false;
     if (stuff != null) {
-      success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, FLOW);
+      success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, FLOW);
     }
     if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       //test if its a source block, or a waterlogged block
-      BlockState targetState = world.getBlockState(target);
+      BlockState targetState = level.getBlockState(target);
       FluidState fluid = targetState.getFluidState();
       //cauldron WORKS but eh. idk. maybe config
       //      if (targetState.getBlock() == Blocks.CAULDRON &&
@@ -81,13 +81,13 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
       //      }
       if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
         //not just water. any fluid source block
-        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-          tank.fill(new FluidStack(fluid.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        if (level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState())) {
+          tank.fill(new FluidStack(fluid.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
-      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
+      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
         //for waterlogged it is hardcoded to water
-        if (world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
+        if (level.setBlockAndUpdate(target, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
           tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
@@ -95,17 +95,17 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   public int getFill() {

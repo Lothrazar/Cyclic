@@ -8,9 +8,9 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
 
@@ -18,7 +18,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   private EnergyBar energy;
   private ButtonMachineField btnRedstone;
 
-  public ScreenUncraft(ContainerUncraft screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenUncraft(ContainerUncraft screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileUncraft.MAX);
     this.timer = new TimerBar(this, 58, 20, TileUncraft.TIMER.get());
@@ -27,46 +27,46 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   @Override
   public void init() {
     super.init();
-    energy.guiLeft = timer.guiLeft = guiLeft;
-    energy.guiTop = timer.guiTop = guiTop;
+    energy.guiLeft = timer.guiLeft = leftPos;
+    energy.guiTop = timer.guiTop = topPos;
     energy.visible = TileUncraft.POWERCONF.get() > 0;
     timer.visible = TileUncraft.TIMER.get() > 1;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileUncraft.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileUncraft.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
+    this.renderTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    btnRedstone.onValueUpdate(container.tile);
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+    btnRedstone.onValueUpdate(menu.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    if (container.tile.getStatus() != UncraftStatusEnum.EMPTY) {
+    if (menu.tile.getStatus() != UncraftStatusEnum.EMPTY) {
       String name = UtilChat.lang(
-          ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
-      int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;
+          ModCyclic.MODID + ".gui.uncrafter." + menu.tile.getStatus().name().toLowerCase());
+      int center = (this.getXSize() - this.font.width(name)) / 2;
       drawString(ms, name, center + 37, 24);
     }
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    energy.draw(ms, container.tile.getEnergy());
+    energy.draw(ms, menu.tile.getEnergy());
     this.drawSlot(ms, 38, 18);
     for (int i = 0; i < 8; i++) {
       this.drawSlot(ms, 7 + i * Const.SQ, 44);
       this.drawSlot(ms, 7 + i * Const.SQ, 44 + Const.SQ);
     }
-    timer.draw(ms, container.tile.getField(TileUncraft.Fields.TIMER.ordinal()));
+    timer.draw(ms, menu.tile.getField(TileUncraft.Fields.TIMER.ordinal()));
   }
 }

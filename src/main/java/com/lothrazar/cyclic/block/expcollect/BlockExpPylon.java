@@ -4,44 +4,46 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockExpPylon extends BlockBase {
 
   public BlockExpPylon(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.GLASS).notSolid());
+    super(properties.strength(1.8F).sound(SoundType.GLASS).noOcclusion());
     this.setHasGui();
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
   @Override
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.EXPERIENCE_PYLON, ScreenExpPylon::new);
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
+    MenuScreens.register(ContainerScreenRegistry.EXPERIENCE_PYLON, ScreenExpPylon::new);
   }
 
   @Override
@@ -50,33 +52,33 @@ public class BlockExpPylon extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileExpPylon();
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-    if (!world.isRemote) {
-      TileExpPylon pylon = (TileExpPylon) world.getTileEntity(pos);
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+    if (!world.isClientSide) {
+      TileExpPylon pylon = (TileExpPylon) world.getBlockEntity(pos);
       int fluidPerAction = ExpItemGain.EXP_PER_FOOD * ExpItemGain.FLUID_PER_EXP;
-      if (player.getHeldItemMainhand().getItem() == Items.SUGAR) {
+      if (player.getMainHandItem().getItem() == Items.SUGAR) {
         if (pylon.tank.getFluidAmount() >= fluidPerAction) {
           pylon.tank.drain(fluidPerAction, IFluidHandler.FluidAction.EXECUTE);
-          player.addItemStackToInventory(new ItemStack(ItemRegistry.experience_food, 1));
-          player.getHeldItemMainhand().shrink(1);
-          world.playSound((PlayerEntity) null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 0.5F, world.rand.nextFloat());
+          player.addItem(new ItemStack(ItemRegistry.experience_food, 1));
+          player.getMainHandItem().shrink(1);
+          world.playSound((Player) null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 0.5F, world.random.nextFloat());
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
       }
-      else if (player.getHeldItemMainhand().getItem() == ItemRegistry.experience_food) {
+      else if (player.getMainHandItem().getItem() == ItemRegistry.experience_food) {
         if (pylon.tank.getFluidAmount() + fluidPerAction < pylon.tank.getCapacity()) {
           pylon.tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), fluidPerAction), IFluidHandler.FluidAction.EXECUTE);
-          player.getHeldItemMainhand().shrink(1);
-          world.playSound((PlayerEntity) null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 0.2F, world.rand.nextFloat());
+          player.getMainHandItem().shrink(1);
+          world.playSound((Player) null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 0.2F, world.random.nextFloat());
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
       }
     }
-    return super.onBlockActivated(state, world, pos, player, hand, result);
+    return super.use(state, world, pos, player, hand, result);
   }
 }

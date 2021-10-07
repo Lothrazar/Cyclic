@@ -1,25 +1,25 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 
 public class UtilItemStack {
 
-  public static void dropAll(IItemHandler items, World world, BlockPos pos) {
+  public static void dropAll(IItemHandler items, Level world, BlockPos pos) {
     if (items == null) {
       return;
     }
     for (int i = 0; i < items.getSlots(); i++) {
-      InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
+      Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
     }
   }
 
@@ -28,71 +28,71 @@ public class UtilItemStack {
   }
 
   public static void repairItem(ItemStack s, int amount) {
-    s.setDamage(Math.max(0, s.getDamage() - amount));
+    s.setDamageValue(Math.max(0, s.getDamageValue() - amount));
   }
 
   public static void damageItem(ItemStack s) {
-    s.setDamage(s.getDamage() + 1);
-    if (s.getDamage() >= s.getMaxDamage()) {
+    s.setDamageValue(s.getDamageValue() + 1);
+    if (s.getDamageValue() >= s.getMaxDamage()) {
       s.shrink(1);
     }
   }
 
   public static void damageItem(LivingEntity player, ItemStack stack) {
-    stack.damageItem(1, player, (p) -> {
-      p.sendBreakAnimation(Hand.MAIN_HAND);
+    stack.hurtAndBreak(1, player, (p) -> {
+      p.broadcastBreakEvent(InteractionHand.MAIN_HAND);
     });
-    if (stack.getDamage() >= stack.getMaxDamage()) {
+    if (stack.getDamageValue() >= stack.getMaxDamage()) {
       stack.setCount(0);
       stack = ItemStack.EMPTY;
     }
   }
 
   public static void damageItemRandomly(LivingEntity player, ItemStack stack) {
-    if (player.world.rand.nextDouble() < 0.001) {
+    if (player.level.random.nextDouble() < 0.001) {
       damageItem(player, stack);
     }
   }
 
-  public static void drop(World world, BlockPos pos, Block drop) {
-    if (!world.isRemote) {
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(drop.asItem())));
+  public static void drop(Level world, BlockPos pos, Block drop) {
+    if (!world.isClientSide) {
+      world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(drop.asItem())));
     }
   }
 
-  public static void drop(World world, BlockPos pos, ItemStack drop) {
-    if (!world.isRemote) {
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
+  public static void drop(Level world, BlockPos pos, ItemStack drop) {
+    if (!world.isClientSide) {
+      world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), drop));
     }
   }
 
   public static boolean matches(ItemStack current, ItemStack in) {
     //first one fails if size is off
-    return ItemStack.areItemsEqualIgnoreDurability(current, in)
-        && ItemStack.areItemStackTagsEqual(current, in);
+    return ItemStack.isSameIgnoreDurability(current, in)
+        && ItemStack.tagMatches(current, in);
   }
 
-  public static void shrink(PlayerEntity player, ItemStack stac) {
+  public static void shrink(Player player, ItemStack stac) {
     if (!player.isCreative()) {
       stac.shrink(1);
     }
   }
 
-  public static void drop(World world, BlockPos center, List<ItemStack> lootDrops) {
+  public static void drop(Level world, BlockPos center, List<ItemStack> lootDrops) {
     for (ItemStack dropMe : lootDrops) {
       UtilItemStack.drop(world, center, dropMe);
     }
   }
 
-  public static void dropItemStackMotionless(World world, BlockPos pos, ItemStack stack) {
+  public static void dropItemStackMotionless(Level world, BlockPos pos, ItemStack stack) {
     if (stack.isEmpty()) {
       return;
     }
-    if (world.isRemote == false) {
+    if (world.isClientSide == false) {
       ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
       // do not spawn a second 'ghost' one onclient side
-      world.addEntity(entityItem);
-      entityItem.setMotion(0, 0, 0);
+      world.addFreshEntity(entityItem);
+      entityItem.setDeltaMovement(0, 0, 0);
       //      entityItem.motionX = entityItem.motionY = entityItem.motionZ = 0;
     }
   }
@@ -103,8 +103,8 @@ public class UtilItemStack {
    * @param itemstack
    */
   public static void deleteTag(ItemStack itemstack) {
-    int dmg = itemstack.getDamage();
+    int dmg = itemstack.getDamageValue();
     itemstack.setTag(null);
-    itemstack.setDamage(dmg);
+    itemstack.setDamageValue(dmg);
   }
 }

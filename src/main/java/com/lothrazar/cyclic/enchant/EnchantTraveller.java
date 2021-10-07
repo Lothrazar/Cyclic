@@ -27,29 +27,31 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilParticle;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ElytraItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ElytraItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @SuppressWarnings("deprecation")
 public class EnchantTraveller extends EnchantBase {
 
   public static final List<String> PROTS = Arrays.asList(new String[] {
-      "sting", DamageSource.FLY_INTO_WALL.damageType,
-      DamageSource.CACTUS.damageType,
-      DamageSource.SWEET_BERRY_BUSH.damageType
+      "sting", DamageSource.FLY_INTO_WALL.msgId,
+      DamageSource.CACTUS.msgId,
+      DamageSource.SWEET_BERRY_BUSH.msgId
   });
 
-  public EnchantTraveller(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantTraveller(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -68,20 +70,20 @@ public class EnchantTraveller extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     boolean yes = (stack.getItem() instanceof ArmorItem)
-        && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
+        && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.LEGS;
     return yes;
   }
 
   @Override
   public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canApply(stack);
+    return this.canEnchant(stack);
   }
 
   @SubscribeEvent
   public void onEnderTeleportEvent(EnderTeleportEvent event) {
-    int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlotType.LEGS);
+    int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
     if (level > 0) {
       event.setAttackDamage(0F);
     }
@@ -89,8 +91,8 @@ public class EnchantTraveller extends EnchantBase {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent event) {
-    int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlotType.LEGS);
-    if (level > 0 && PROTS.contains(event.getSource().damageType)) {
+    int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
+    if (level > 0 && PROTS.contains(event.getSource().msgId)) {
       event.setAmount(0.1F);
     }
     if (level > 0 && event.getSource() == DamageSource.FALL) {
@@ -101,12 +103,12 @@ public class EnchantTraveller extends EnchantBase {
         event.setAmount(0.1F);
         //but then 9 and onward falls back to original formula 
       }
-      else if (event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() instanceof ElytraItem) { //== Items.ELYTRA
+      else if (event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ElytraItem) { //== Items.ELYTRA
         //this leg enchant combos with any elytra, so never die from any fall damage, at worst it maxes out at leaving you alive at 1/2 heart
         if (event.getAmount() > event.getEntityLiving().getHealth() - 0.5F) {
           //either you crashed flying straight into the ground, or just fell while wearing elytra (you still die to void tho)
           event.setAmount(event.getEntityLiving().getHealth() - 1F);
-          UtilParticle.spawnParticle(event.getEntity().world, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().getPosition(), 4);
+          UtilParticle.spawnParticle(event.getEntity().level, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().blockPosition(), 4);
         }
       }
     }

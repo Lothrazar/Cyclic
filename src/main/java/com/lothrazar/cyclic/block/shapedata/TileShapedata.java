@@ -9,25 +9,25 @@ import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileShapedata extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileShapedata extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   private static final int SLOT_A = 0;
   private static final int SLOT_B = 1;
@@ -79,7 +79,7 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
         BlockPos invB = getTarget(SLOT_B);
         if (invA != null && invB != null) {
           List<BlockPos> shape = UtilShape.rect(invA, invB);
-          RelativeShape worldShape = new RelativeShape(world, shape, this.pos);
+          RelativeShape worldShape = new RelativeShape(level, shape, this.worldPosition);
           //read from WORLD to CARD
           //only works if all three cards set
           worldShape.write(shapeCard);
@@ -122,13 +122,13 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerShapedata(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerShapedata(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -140,30 +140,30 @@ public class TileShapedata extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("copiedShape")) {
-      CompoundNBT cs = (CompoundNBT) tag.get("copiedShape");
+      CompoundTag cs = (CompoundTag) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
     }
     hasStashIfOne = tag.getInt("stashToggle");
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("stashToggle", hasStashIfOne);
     if (this.copiedShape != null) {
-      CompoundNBT copiedShapeTags = this.copiedShape.write(new CompoundNBT());
+      CompoundTag copiedShapeTags = this.copiedShape.write(new CompoundTag());
       tag.put("copiedShape", copiedShapeTags);
     }
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
   public void tick() {
-    if (world.isRemote == false) {
+    if (level.isClientSide == false) {
       hasStashIfOne = (this.copiedShape == null) ? 0 : 1;
     }
   }

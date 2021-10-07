@@ -3,19 +3,19 @@ package com.lothrazar.cyclic.block.detectoritem;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class ContainerDetectorItem extends ContainerBase {
 
   protected TileDetectorItem tile;
 
-  public ContainerDetectorItem(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerDetectorItem(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.DETECTOR_ITEM, windowId);
-    tile = (TileDetectorItem) world.getTileEntity(pos);
+    tile = (TileDetectorItem) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     //    layoutPlayerInventorySlots(8, 84);
@@ -23,7 +23,7 @@ public class ContainerDetectorItem extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.detector_item);
+  public boolean stillValid(Player playerIn) {
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.detector_item);
   }
 }

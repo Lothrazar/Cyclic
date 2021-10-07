@@ -1,15 +1,15 @@
 package com.lothrazar.cyclic.block.cable;
 
 import java.util.Locale;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.core.Direction;
+import net.minecraft.util.StringRepresentable;
 
-public enum DirectionNullable implements IStringSerializable {
+public enum DirectionNullable implements StringRepresentable {
 
   DOWN, UP, NORTH, SOUTH, WEST, EAST, NONE;
 
   @Override
-  public String getString() {
+  public String getSerializedName() {
     return this.name().toLowerCase(Locale.ENGLISH);
   }
 

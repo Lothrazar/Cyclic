@@ -9,8 +9,8 @@ import com.lothrazar.cyclic.util.UtilChat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -34,7 +34,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public String getTitle() {
-    return UtilChat.lang(BlockRegistry.SOLIDIFIER.getTranslationKey());
+    return UtilChat.lang(BlockRegistry.SOLIDIFIER.getDescriptionId());
   }
 
   @Override
@@ -73,7 +73,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     Collections.addAll(stuff, recipe.ingredientAt(2));
     in.add(stuff);
     ingredients.setInputLists(VanillaTypes.ITEM, in);
-    ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+    ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
   }
 
   @Override
@@ -83,7 +83,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     guiItemStacks.init(1, true, 33, 6 + Const.SQ);
     guiItemStacks.init(2, true, 33, 6 + 2 * Const.SQ);
     guiItemStacks.init(3, false, 104, 6 + Const.SQ);
-    guiItemStacks.set(3, recipe.getRecipeOutput());
+    guiItemStacks.set(3, recipe.getResultItem());
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     List<ItemStack> input = null;
     for (int i = 0; i <= 2; i++) {

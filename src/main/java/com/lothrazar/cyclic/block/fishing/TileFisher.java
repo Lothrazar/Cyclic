@@ -7,37 +7,37 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTableManager;
-import net.minecraft.loot.LootTables;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileFisher extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileFisher extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   private static final int RADIUS = 12;
   private static final double CHANCE = 0.1;
@@ -45,7 +45,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem().isIn(DataTags.FISHING_RODS);
+      return stack.getItem().is(DataTags.FISHING_RODS);
     }
   };
   LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -60,13 +60,13 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerFisher(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerFisher(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -78,15 +78,15 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -95,10 +95,10 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
       return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.getItem().isIn(DataTags.FISHING_RODS)) {
-      int x = pos.getX() + world.rand.nextInt(RADIUS * 2) - RADIUS;
-      int y = pos.getY();
-      int z = pos.getZ() + world.rand.nextInt(RADIUS * 2) - RADIUS;
+    if (stack.getItem().is(DataTags.FISHING_RODS)) {
+      int x = worldPosition.getX() + level.random.nextInt(RADIUS * 2) - RADIUS;
+      int y = worldPosition.getY();
+      int z = worldPosition.getZ() + level.random.nextInt(RADIUS * 2) - RADIUS;
       BlockPos center = new BlockPos(x, y, z);
       if (this.isWater(center)) {
         try {
@@ -112,30 +112,30 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   }
 
   private boolean isWater(BlockPos center) {
-    return this.world.getBlockState(center).getBlock() == Blocks.WATER;
+    return this.level.getBlockState(center).getBlock() == Blocks.WATER;
   }
 
   private void doFishing(ItemStack fishingRod, BlockPos center) {
-    World world = this.getWorld();
-    Random rand = world.rand;
-    if (rand.nextDouble() < CHANCE && world instanceof ServerWorld) {
-      LootTableManager manager = world.getServer().getLootTableManager();
+    Level world = this.getLevel();
+    Random rand = world.random;
+    if (rand.nextDouble() < CHANCE && world instanceof ServerLevel) {
+      LootTables manager = world.getServer().getLootTables();
       if (manager == null) {
         return;
       }
-      LootTable table = manager.getLootTableFromLocation(LootTables.GAMEPLAY_FISHING);
+      LootTable table = manager.get(BuiltInLootTables.FISHING);
       if (table == null) {
         return;
       }
       //got it
-      int luck = EnchantmentHelper.getEnchantmentLevel(
-          Enchantments.LUCK_OF_THE_SEA, fishingRod) + 1;
-      Vector3d fffffffffff = new Vector3d(center.getX(), center.getY(), center.getZ());
-      LootContext lootContext = new LootContext.Builder((ServerWorld) world)
-          .withLuck(luck).withRandom(rand).withParameter(LootParameters.field_237457_g_, fffffffffff)
-          .withParameter(LootParameters.TOOL, fishingRod)
-          .build(LootParameterSets.FISHING);
-      List<ItemStack> lootDrops = table.generate(lootContext);
+      int luck = EnchantmentHelper.getItemEnchantmentLevel(
+          Enchantments.FISHING_LUCK, fishingRod) + 1;
+      Vec3 fffffffffff = new Vec3(center.getX(), center.getY(), center.getZ());
+      LootContext lootContext = new LootContext.Builder((ServerLevel) world)
+          .withLuck(luck).withRandom(rand).withParameter(LootContextParams.ORIGIN, fffffffffff)
+          .withParameter(LootContextParams.TOOL, fishingRod)
+          .create(LootContextParamSets.FISHING);
+      List<ItemStack> lootDrops = table.getRandomItems(lootContext);
       if (lootDrops != null && lootDrops.size() > 0) {
         UtilItemStack.damageItem(fishingRod);
         UtilItemStack.drop(world, center, lootDrops);

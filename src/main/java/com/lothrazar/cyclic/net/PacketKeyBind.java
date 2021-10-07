@@ -29,8 +29,8 @@ import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.item.inventorycake.ContainerProviderCake;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -42,22 +42,22 @@ public class PacketKeyBind extends PacketBase {
     action = s;
   }
 
-  public static PacketKeyBind decode(PacketBuffer buf) {
-    return new PacketKeyBind(buf.readString());
+  public static PacketKeyBind decode(FriendlyByteBuf buf) {
+    return new PacketKeyBind(buf.readUtf());
   }
 
-  public static void encode(PacketKeyBind msg, PacketBuffer buf) {
-    buf.writeString(msg.action);
+  public static void encode(PacketKeyBind msg, FriendlyByteBuf buf) {
+    buf.writeUtf(msg.action);
   }
 
   public static void handle(PacketKeyBind message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      ServerPlayerEntity sender = ctx.get().getSender();
+      ServerPlayer sender = ctx.get().getSender();
       // datfile
       CyclicFile datFile = PlayerDataEvents.getOrCreate(sender);
       if (datFile.storageVisible) {
-        NetworkHooks.openGui(sender, new ContainerProviderCake(), sender.getPosition());
+        NetworkHooks.openGui(sender, new ContainerProviderCake(), sender.blockPosition());
       }
       else {
         UtilChat.addServerChatMessage(sender, "cyclic.unlocks.extended.locked");

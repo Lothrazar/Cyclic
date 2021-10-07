@@ -6,17 +6,17 @@ import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -26,7 +26,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileAnvilAuto extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileAnvilAuto extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -40,7 +40,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isRepairable() && stack.getDamage() > 0;
+      return stack.isRepairable() && stack.getDamageValue() > 0;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
@@ -52,13 +52,13 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerAnvil(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerAnvil(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -73,17 +73,17 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -96,7 +96,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     setLitProperty(true);
     //
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().isIn(DataTags.ANVIL_IMMUNE)) {
+    if (stack.isEmpty() || stack.getItem().is(DataTags.ANVIL_IMMUNE)) {
       return;
     }
     final int repair = POWERCONF.get();
@@ -104,7 +104,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     if (repair > 0 &&
         energy.getEnergyStored() >= repair &&
         stack.isRepairable() &&
-        stack.getDamage() > 0) {
+        stack.getDamageValue() > 0) {
       //we can repair so steal some power 
       //ok drain power  
       energy.extractEnergy(repair, false);
@@ -113,7 +113,7 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     //shift to other slot
     if (work) {
       UtilItemStack.repairItem(stack);
-      boolean done = stack.getDamage() == 0;
+      boolean done = stack.getDamageValue() == 0;
       if (done && outputSlots.getStackInSlot(0).isEmpty()) {
         outputSlots.insertItem(0, stack.copy(), false);
         inputSlots.extractItem(0, stack.getCount(), false);

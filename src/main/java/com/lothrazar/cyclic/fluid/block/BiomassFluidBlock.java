@@ -1,17 +1,17 @@
 package com.lothrazar.cyclic.fluid.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
-public class BiomassFluidBlock extends FlowingFluidBlock {
+public class BiomassFluidBlock extends LiquidBlock {
 
   public BiomassFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
     super(supplier, props);
@@ -19,11 +19,11 @@ public class BiomassFluidBlock extends FlowingFluidBlock {
 
   @SuppressWarnings("deprecation")
   @Override
-  public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-    if (entityIn instanceof LivingEntity && worldIn.rand.nextDouble() < 000.1F) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+    if (entityIn instanceof LivingEntity && worldIn.random.nextDouble() < 000.1F) {
       LivingEntity ent = (LivingEntity) entityIn;
-      ent.addPotionEffect(new EffectInstance(Effects.POISON, 40, 0));
+      ent.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 0));
     }
-    super.onEntityCollision(state, worldIn, pos, entityIn);
+    super.entityInside(state, worldIn, pos, entityIn);
   }
 }

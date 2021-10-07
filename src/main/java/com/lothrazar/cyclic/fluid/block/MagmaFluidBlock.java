@@ -1,25 +1,27 @@
 package com.lothrazar.cyclic.fluid.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
-public class MagmaFluidBlock extends FlowingFluidBlock {
+import net.minecraftforge.fluids.ForgeFlowingFluid.Properties;
+
+public class MagmaFluidBlock extends LiquidBlock {
 
   public static class Flowing extends ForgeFlowingFluid.Flowing {
 
@@ -28,12 +30,12 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     }
 
     @Override
-    public int getSlopeFindDistance(IWorldReader worldIn) {
+    public int getSlopeFindDistance(LevelReader worldIn) {
       return 2;
     }
 
     @Override
-    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+    public int getDropOff(LevelReader worldIn) {
       return 7;
     }
   }
@@ -45,12 +47,12 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     }
 
     @Override
-    public int getSlopeFindDistance(IWorldReader worldIn) {
+    public int getSlopeFindDistance(LevelReader worldIn) {
       return 2;
     }
 
     @Override
-    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+    public int getDropOff(LevelReader worldIn) {
       return 1;
     }
   }
@@ -62,35 +64,35 @@ public class MagmaFluidBlock extends FlowingFluidBlock {
     int max = 15; //max of the property LEVEL.getAllowedValues()
     float offset = 0.875F;
     for (int i = 0; i <= max; i++) { //x and z go from [0,1] 
-      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset - i / 8F, 1));
+      shapes[i] = Shapes.create(new AABB(0, 0, 0, 1, offset - i / 8F, 1));
     }
   }
 
   @Override
   @Deprecated
-  public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return shapes[state.get(LEVEL).intValue()];
+  public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    return shapes[state.getValue(LEVEL).intValue()];
   }
 
   @Override
   @Deprecated
-  public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return shapes[state.get(LEVEL).intValue()];
+  public VoxelShape getOcclusionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    return shapes[state.getValue(LEVEL).intValue()];
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (entityIn instanceof LivingEntity) {
       LivingEntity ent = (LivingEntity) entityIn;
-      if (ent.isBurning() == false
-          && ent.isImmuneToFire() == false) {
-        int level = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FIRE_PROTECTION, ent);
+      if (ent.isOnFire() == false
+          && ent.fireImmune() == false) {
+        int level = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_PROTECTION, ent);
         if (level < 4) {
-          ent.setFire(MathHelper.floor(worldIn.rand.nextDouble() * 10));
+          ent.setSecondsOnFire(Mth.floor(worldIn.random.nextDouble() * 10));
         }
       }
     }
-    super.onEntityCollision(state, worldIn, pos, entityIn);
+    super.entityInside(state, worldIn, pos, entityIn);
   }
 }

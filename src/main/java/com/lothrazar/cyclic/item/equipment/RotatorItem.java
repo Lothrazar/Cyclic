@@ -3,8 +3,10 @@ package com.lothrazar.cyclic.item.equipment;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class RotatorItem extends ItemBase {
 
@@ -13,11 +15,11 @@ public class RotatorItem extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    if (context.getWorld().isRemote) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketRotateBlock(context.getPos(), context.getFace(), context.getHand()));
-      context.getPlayer().swingArm(context.getHand());
+  public InteractionResult useOn(UseOnContext context) {
+    if (context.getLevel().isClientSide) {
+      PacketRegistry.INSTANCE.sendToServer(new PacketRotateBlock(context.getClickedPos(), context.getClickedFace(), context.getHand()));
+      context.getPlayer().swing(context.getHand());
     }
-    return super.onItemUse(context);
+    return super.useOn(context);
   }
 }

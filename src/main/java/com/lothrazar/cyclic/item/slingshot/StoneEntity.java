@@ -3,29 +3,29 @@ package com.lothrazar.cyclic.item.slingshot;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class StoneEntity extends ProjectileItemEntity {
+public class StoneEntity extends ThrowableItemProjectile {
 
-  public StoneEntity(EntityType<? extends ProjectileItemEntity> entityType, World world) {
+  public StoneEntity(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
     super(entityType, world);
   }
 
-  public StoneEntity(LivingEntity livingEntityIn, World worldIn) {
+  public StoneEntity(LivingEntity livingEntityIn, Level worldIn) {
     super(EntityRegistry.stone_bolt, livingEntityIn, worldIn);
   }
 
@@ -35,22 +35,22 @@ public class StoneEntity extends ProjectileItemEntity {
   }
 
   @Override
-  protected void onImpact(RayTraceResult result) {
-    RayTraceResult.Type type = result.getType();
-    if (type == RayTraceResult.Type.ENTITY) {
+  protected void onHit(HitResult result) {
+    HitResult.Type type = result.getType();
+    if (type == HitResult.Type.ENTITY) {
       //damage entity by zero
       //drop torch
-      EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
+      EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
-      Entity owner = func_234616_v_();
+      Entity owner = getOwner();
       if (target.isAlive()) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, owner), MathHelper.nextInt(world.rand, 2, 6));
+        target.hurt(DamageSource.thrown(this, owner), Mth.nextInt(level.random, 2, 6));
         // 50% chance to stun for 2sec TODO: config
-        if (target.world.rand.nextDouble() < 0.5F && !target.world.isRemote && target instanceof LivingEntity) {
+        if (target.level.random.nextDouble() < 0.5F && !target.level.isClientSide && target instanceof LivingEntity) {
           LivingEntity living = (LivingEntity) target;
-          EffectInstance effect = new EffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 2, 1);
-          effect.showParticles = false;
-          living.addPotionEffect(effect);
+          MobEffectInstance effect = new MobEffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 2, 1);
+          effect.visible = false;
+          living.addEffect(effect);
         }
       }
     }
@@ -58,17 +58,17 @@ public class StoneEntity extends ProjectileItemEntity {
   }
 
   @Override
-  public void writeAdditional(CompoundNBT tag) {
-    super.writeAdditional(tag);
+  public void addAdditionalSaveData(CompoundTag tag) {
+    super.addAdditionalSaveData(tag);
   }
 
   @Override
-  public void readAdditional(CompoundNBT tag) {
-    super.readAdditional(tag);
+  public void readAdditionalSaveData(CompoundTag tag) {
+    super.readAdditionalSaveData(tag);
   }
 
   @Override
-  public IPacket<?> createSpawnPacket() {
+  public Packet<?> getAddEntityPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
   }
 }

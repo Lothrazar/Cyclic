@@ -4,18 +4,18 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.function.Predicate;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TilePlacerFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TilePlacerFluid extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   FluidTankBase tank;
@@ -47,14 +47,14 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
     setLitProperty(true);
     FluidStack test = tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.SIMULATE);
     if (test.getAmount() == FluidAttributes.BUCKET_VOLUME
-        && test.getFluid().getDefaultState() != null &&
-        test.getFluid().getDefaultState().getBlockState() != null) {
+        && test.getFluid().defaultFluidState() != null &&
+        test.getFluid().defaultFluidState().createLegacyBlock() != null) {
       //we got enough
-      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
-      BlockPos offset = pos.offset(dir);
-      BlockState state = test.getFluid().getDefaultState().getBlockState();
-      if (world.isAirBlock(offset) &&
-          world.setBlockState(offset, state)) {
+      Direction dir = this.getBlockState().getValue(BlockStateProperties.FACING);
+      BlockPos offset = worldPosition.relative(dir);
+      BlockState state = test.getFluid().defaultFluidState().createLegacyBlock();
+      if (level.isEmptyBlock(offset) &&
+          level.setBlockAndUpdate(offset, state)) {
         //pay
         tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.EXECUTE);
       }
@@ -70,13 +70,13 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerPlacerFluid(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerPlacerFluid(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -89,17 +89,17 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

@@ -1,32 +1,32 @@
 package com.lothrazar.cyclic.util;
 
 import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class UtilChat {
 
-  public static void addChatMessage(PlayerEntity player, IFormattableTextComponent message) {
-    if (player.world.isRemote) {
-      player.sendMessage(message, player.getUniqueID());
+  public static void addChatMessage(Player player, MutableComponent message) {
+    if (player.level.isClientSide) {
+      player.sendMessage(message, player.getUUID());
     }
   }
 
-  public static void addChatMessage(PlayerEntity player, String message) {
-    addChatMessage(player, new TranslationTextComponent(message));
+  public static void addChatMessage(Player player, String message) {
+    addChatMessage(player, new TranslatableComponent(message));
   }
 
-  public static void addServerChatMessage(PlayerEntity player, String message) {
-    addServerChatMessage(player, new TranslationTextComponent(message));
+  public static void addServerChatMessage(Player player, String message) {
+    addServerChatMessage(player, new TranslatableComponent(message));
   }
 
-  public static void addServerChatMessage(PlayerEntity player, IFormattableTextComponent message) {
-    if (!player.world.isRemote) {
-      player.sendMessage(message, player.getUniqueID());
+  public static void addServerChatMessage(Player player, MutableComponent message) {
+    if (!player.level.isClientSide) {
+      player.sendMessage(message, player.getUUID());
     }
   }
 
@@ -34,26 +34,26 @@ public class UtilChat {
     return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
   }
 
-  public static void sendStatusMessage(PlayerEntity player, String message) {
-    player.sendStatusMessage(new TranslationTextComponent(message), true);
+  public static void sendStatusMessage(Player player, String message) {
+    player.displayClientMessage(new TranslatableComponent(message), true);
   }
 
-  public static void sendStatusMessage(PlayerEntity player, ITextComponent nameTextComponent) {
-    if (player.world.isRemote) {
-      player.sendStatusMessage(nameTextComponent, true);
+  public static void sendStatusMessage(Player player, Component nameTextComponent) {
+    if (player.level.isClientSide) {
+      player.displayClientMessage(nameTextComponent, true);
     }
   }
 
-  public static TranslationTextComponent ilang(String message) {
-    return new TranslationTextComponent(message);
+  public static TranslatableComponent ilang(String message) {
+    return new TranslatableComponent(message);
   }
 
   public static String lang(String message) {
-    TranslationTextComponent t = new TranslationTextComponent(message);
+    TranslatableComponent t = new TranslatableComponent(message);
     return t.getString();
   }
 
-  public static void sendFeedback(CommandContext<CommandSource> ctx, String string) {
-    ctx.getSource().sendFeedback(new TranslationTextComponent(string), false);
+  public static void sendFeedback(CommandContext<CommandSourceStack> ctx, String string) {
+    ctx.getSource().sendSuccess(new TranslatableComponent(string), false);
   }
 }

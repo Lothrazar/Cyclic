@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.cable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * At some point either Forge or Mojang made some changes that makes using more than 2 voxel shapes at once explode and die and kill your server completely with no logs or no errors. But it doesnt

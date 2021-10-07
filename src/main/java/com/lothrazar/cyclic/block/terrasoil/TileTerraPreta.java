@@ -2,16 +2,16 @@ package com.lothrazar.cyclic.block.terrasoil;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class TileTerraPreta extends TileEntityBase implements ITickableTileEntity {
+public class TileTerraPreta extends TileEntityBase implements TickableBlockEntity {
 
   public static final int TIMER_FULL = 100;
   public static final int HEIGHT = 16;
@@ -29,13 +29,13 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
     }
     timer = TIMER_FULL;
     for (int h = 0; h < HEIGHT; h++) {
-      BlockPos current = this.getPos().up(h);
-      grow(world, current, 0.5);
+      BlockPos current = this.getBlockPos().above(h);
+      grow(level, current, 0.5);
     }
   }
 
   @SuppressWarnings("deprecation")
-  public static boolean grow(World world, BlockPos current, double d) {
+  public static boolean grow(Level world, BlockPos current, double d) {
     BlockState bState = world.getBlockState(current);
     if (bState == null || bState.getBlock() == null) {
       return false;
@@ -44,12 +44,12 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
     if (!isValidGrow(world, current, bState)) {
       return false;
     }
-    if (world instanceof ServerWorld) {
+    if (world instanceof ServerLevel) {
       try {
-        ServerWorld sw = (ServerWorld) world;
-        block.randomTick(bState, sw, current, world.rand);
-        if (world.rand.nextDouble() < d) {
-          block.randomTick(bState, sw, current, world.rand);
+        ServerLevel sw = (ServerLevel) world;
+        block.randomTick(bState, sw, current, world.random);
+        if (world.random.nextDouble() < d) {
+          block.randomTick(bState, sw, current, world.random);
         }
       }
       catch (Exception e) {
@@ -59,15 +59,15 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
     return true;
   }
 
-  private static boolean isValidGrow(World world, BlockPos current, BlockState bState) {
-    if (bState.getBlock() instanceof IGrowable) {
-      IGrowable crop = ((IGrowable) bState.getBlock());
-      if (!crop.canGrow(world, current, bState, world.isRemote) || !crop.canUseBonemeal(world, world.rand, current, bState)) {
+  private static boolean isValidGrow(Level world, BlockPos current, BlockState bState) {
+    if (bState.getBlock() instanceof BonemealableBlock) {
+      BonemealableBlock crop = ((BonemealableBlock) bState.getBlock());
+      if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide) || !crop.isBonemealSuccess(world, world.random, current, bState)) {
         return false; //cant grow, or cant bonemeal. no
       }
     }
     //check tags
-    return bState.isIn(BlockTags.CROPS) || bState.isIn(BlockTags.SAPLINGS);
+    return bState.is(BlockTags.CROPS) || bState.is(BlockTags.SAPLINGS);
   }
 
   @Override

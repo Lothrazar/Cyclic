@@ -5,15 +5,15 @@ import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.core.Registry;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RecipeRegistry {
 
-  public static void registerRecipeSerializers(Register<IRecipeSerializer<?>> event) {
+  public static void registerRecipeSerializers(Register<RecipeSerializer<?>> event) {
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.SOLID.toString(), CyclicRecipeType.SOLID);
     event.getRegistry().register(RecipeSolidifier.SERIALIZER);
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.MELTER.toString(), CyclicRecipeType.MELTER);

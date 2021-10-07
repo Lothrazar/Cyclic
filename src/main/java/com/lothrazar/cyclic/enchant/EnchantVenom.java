@@ -26,22 +26,24 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantVenom extends EnchantBase {
 
-  public EnchantVenom(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantVenom(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -66,9 +68,9 @@ public class EnchantVenom extends EnchantBase {
       return;
     }
     LivingEntity target = (LivingEntity) event.getTarget();
-    PlayerEntity attacker = event.getPlayer();
-    ItemStack main = attacker.getHeldItemMainhand();
-    ItemStack off = attacker.getHeldItemOffhand();
+    Player attacker = event.getPlayer();
+    ItemStack main = attacker.getMainHandItem();
+    ItemStack off = attacker.getOffhandItem();
     int mainLevel = -1, offLevel = -1;
     if (main != null && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
       mainLevel = EnchantmentHelper.getEnchantments(main).get(this);
@@ -80,7 +82,7 @@ public class EnchantVenom extends EnchantBase {
     if (level > 0) {
       // we -1  since potion level 1 is Poison II
       //so that means enchantment I giving poison I means this
-      UtilEntity.addOrMergePotionEffect(target, new EffectInstance(Effects.POISON, durationTicksPerLevel * level, level - 1));
+      UtilEntity.addOrMergePotionEffect(target, new MobEffectInstance(MobEffects.POISON, durationTicksPerLevel * level, level - 1));
     }
   }
 }

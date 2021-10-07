@@ -1,17 +1,19 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemScaffolding extends BlockItem {
 
@@ -20,43 +22,43 @@ public class ItemScaffolding extends BlockItem {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
     if (player.isCrouching()) {
       // || worldIn.getBlockState(context.getPos()).isAir() == false) {
-      return super.onItemRightClick(worldIn, player, hand);
+      return super.use(worldIn, player, hand);
     }
     //NOT crouchign so this is the MID AIR PLACEMENT section
     //skip if sneaking
-    BlockPos pos = player.getPosition().up();
+    BlockPos pos = player.blockPosition().above();
     // at eye level
-    int direction = MathHelper.floor((player.rotationYaw * 4F) / 360F + 0.5D) & 3;
+    int direction = Mth.floor((player.yRot * 4F) / 360F + 0.5D) & 3;
     //imported from my scaffolding spell https://github.com/PrinceOfAmber/CyclicMagic/blob/37ebb722378cbf940aa9cfb4fa99ce0e80127533/src/main/java/com/lothrazar/cyclicmagic/spell/SpellScaffolding.java
     // -45 is up
     // +45 is pitch down
     // first; is it up or down?
     boolean doHoriz = true;
     //    Direction facing = Direction.UP;
-    if (player.rotationPitch < -82) {
+    if (player.xRot < -82) {
       // really really up
       doHoriz = false;
-      pos = pos.up().up();
+      pos = pos.above().above();
       //      facing = Direction.UP;
     }
-    else if (player.rotationPitch > 82) {
+    else if (player.xRot > 82) {
       // really really down
       doHoriz = false;
-      pos = pos.down();
+      pos = pos.below();
       //      facing = Direction.DOWN;
     }
-    else if (player.rotationPitch < -45) {
+    else if (player.xRot < -45) {
       // angle is pretty high up. so offset up again
-      pos = pos.up();
+      pos = pos.above();
       //      facing = Direction.UP;
       doHoriz = true;
     }
-    else if (player.rotationPitch > 45) {
+    else if (player.xRot > 45) {
       // you are angled down, so bring down from eye level
-      pos = pos.down();
+      pos = pos.below();
       //      facing = Direction.DOWN;
       doHoriz = true;
     }
@@ -80,13 +82,13 @@ public class ItemScaffolding extends BlockItem {
         //        facing = Direction.NORTH;
       }
     }
-    if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) {
-      ItemStack stac = player.getHeldItem(hand);
-      if (worldIn.setBlockState(pos, Block.getBlockFromItem(this).getDefaultState())) {
+    if (worldIn.isClientSide == false && worldIn.isEmptyBlock(pos)) {
+      ItemStack stac = player.getItemInHand(hand);
+      if (worldIn.setBlockAndUpdate(pos, Block.byItem(this).defaultBlockState())) {
         UtilItemStack.shrink(player, stac);
       }
-      return new ActionResult<>(ActionResultType.SUCCESS, stac);
+      return new InteractionResultHolder<>(InteractionResult.SUCCESS, stac);
     }
-    return super.onItemRightClick(worldIn, player, hand);
+    return super.use(worldIn, player, hand);
   }
 }

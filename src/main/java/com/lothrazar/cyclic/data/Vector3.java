@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.data;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 
 /**
  * This class was created by <ChickenBones>. It's distributed as part of the Botania Mod. Get the Source Code in github: https://github.com/Vazkii/Botania
@@ -28,7 +28,7 @@ public class Vector3 {
   }
 
   public Vector3(Entity e) {
-    this(e.lastTickPosX, e.lastTickPosY, e.lastTickPosZ);
+    this(e.xOld, e.yOld, e.zOld);
   }
 
   public double mag() {

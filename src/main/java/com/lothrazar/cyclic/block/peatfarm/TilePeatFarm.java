@@ -32,21 +32,21 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import java.util.function.Predicate;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -60,7 +60,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TilePeatFarm extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER;
@@ -78,7 +78,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return Block.getBlockFromItem(stack.getItem()) == BlockRegistry.peat_unbaked;
+      return Block.byItem(stack.getItem()) == BlockRegistry.peat_unbaked;
     }
   };
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
@@ -86,13 +86,13 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   private int blockPointer = 0;
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerPeatFarm(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerPeatFarm(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   private void init() {
@@ -104,7 +104,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     }
     if (outer == null) {
       outer = getShape();
-      List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.pos, 6);
+      List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.worldPosition, 6);
       outer.addAll(waterShape);
     }
   }
@@ -130,8 +130,8 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     for (int i = 0; i < PER_TICK; i++) {
       if (blockPointer < outer.size()) {
         BlockPos target = outer.get(blockPointer);
-        boolean placeWater = (target.getX() - pos.getX()) % 3 == 0
-            && (target.getZ() - pos.getZ()) % 3 == 0;
+        boolean placeWater = (target.getX() - worldPosition.getX()) % 3 == 0
+            && (target.getZ() - worldPosition.getZ()) % 3 == 0;
         if (placeWater) {
           if (tryPlaceWater(target)) {
             energy.extractEnergy(cost, false);
@@ -186,13 +186,13 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public boolean isItemValidForSlot(int index, ItemStack stack) {
-    return Block.getBlockFromItem(stack.getItem()) == unbaked;
+  public boolean canPlaceItem(int index, ItemStack stack) {
+    return Block.byItem(stack.getItem()) == unbaked;
   }
 
   List<BlockPos> getShape() {
-    List<BlockPos> outer = UtilShape.squareHorizontalHollow(this.pos, 7);
-    outer.addAll(UtilShape.squareHorizontalHollow(this.pos, 5));
+    List<BlockPos> outer = UtilShape.squareHorizontalHollow(this.worldPosition, 7);
+    outer.addAll(UtilShape.squareHorizontalHollow(this.worldPosition, 5));
     return outer;
   }
 
@@ -207,17 +207,17 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   private boolean tryPlacePeat(BlockPos target) {
     for (int i = 0; i < inventory.getSlots(); i++) {
       ItemStack itemStack = inventory.getStackInSlot(i);
-      BlockState state = Block.getBlockFromItem(itemStack.getItem()).getDefaultState();
+      BlockState state = Block.byItem(itemStack.getItem()).defaultBlockState();
       if (itemStack.getCount() == 0) {
         continue;
       }
-      if (world.getBlockState(target).getBlock() instanceof PeatFuelBlock) {
-        world.destroyBlock(target, true);
+      if (level.getBlockState(target).getBlock() instanceof PeatFuelBlock) {
+        level.destroyBlock(target, true);
       }
-      if ((world.isAirBlock(target)
-          || world.getFluidState(target).getFluid() == Fluids.WATER
-          || world.getFluidState(target).getFluid() == Fluids.FLOWING_WATER)
-          && world.setBlockState(target, state)) {
+      if ((level.isEmptyBlock(target)
+          || level.getFluidState(target).getType() == Fluids.WATER
+          || level.getFluidState(target).getType() == Fluids.FLOWING_WATER)
+          && level.setBlockAndUpdate(target, state)) {
         itemStack.shrink(1);
         return true;
       }
@@ -226,11 +226,11 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   }
 
   private boolean tryPlaceWater(BlockPos target) {
-    if (world.getBlockState(target).isReplaceable(Fluids.WATER)
-        && world.getBlockState(target).getBlock() != Blocks.WATER
+    if (level.getBlockState(target).canBeReplaced(Fluids.WATER)
+        && level.getBlockState(target).getBlock() != Blocks.WATER
         && tank.getFluidAmount() >= FluidAttributes.BUCKET_VOLUME
         && tank.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE) != null) {
-      world.setBlockState(target, Blocks.WATER.getDefaultState());
+      level.setBlockAndUpdate(target, Blocks.WATER.defaultBlockState());
       return true;
     }
     return false;
@@ -251,20 +251,20 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 }

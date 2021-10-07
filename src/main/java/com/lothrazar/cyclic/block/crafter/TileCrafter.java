@@ -33,23 +33,23 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.item.crafting.ShapelessRecipe;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -61,7 +61,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("unchecked")
-public class TileCrafter extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileCrafter extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
@@ -91,7 +91,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   private boolean hasValidRecipe = false;
   public boolean shouldSearch = true;
   private ArrayList<ItemStack> lastRecipeGrid = null;
-  private IRecipe<?> lastValidRecipe = null;
+  private Recipe<?> lastValidRecipe = null;
   private ItemStack recipeOutput = ItemStack.EMPTY;
 
   public enum ItemHandlers {
@@ -107,10 +107,10 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public boolean isItemValidForSlot(int index, ItemStack stack) {
+  public boolean canPlaceItem(int index, ItemStack stack) {
     if (index != PREVIEW_SLOT &&
         (index < OUTPUT_SLOT_START || index > OUTPUT_SLOT_STOP)) {
-      super.isItemValidForSlot(index, stack);
+      super.canPlaceItem(index, stack);
     }
     return false;
   }
@@ -118,10 +118,10 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   @Override
   public void tick() {
     this.syncEnergy();
-    if (world == null || world.getServer() == null) {
+    if (level == null || level.getServer() == null) {
       return;
     }
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     IItemHandler previewHandler = this.preview.orElse(null);
@@ -141,14 +141,14 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       shouldSearch = true;
     }
     if (!hasValidRecipe && shouldSearch) {
-      IRecipe<?> recipe = tryRecipes(itemStacksInGrid);
+      Recipe<?> recipe = tryRecipes(itemStacksInGrid);
       if (recipe != null) {
         hasValidRecipe = true;
         lastValidRecipe = recipe;
         lastRecipeGrid = itemStacksInGrid;
-        recipeOutput = lastValidRecipe.getRecipeOutput();
+        recipeOutput = lastValidRecipe.getResultItem();
         shouldSearch = false;
-        setPreviewSlot(previewHandler, lastValidRecipe.getRecipeOutput());
+        setPreviewSlot(previewHandler, lastValidRecipe.getResultItem());
       }
       else {
         reset();
@@ -187,8 +187,8 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
           energy.extractEnergy(cost, false);
           //compare to what it was
           ArrayList<ItemStack> itemStacksInGridBackup = getItemsInCraftingGrid();
-          for (int i = 0; i < this.craftMatrix.getSizeInventory(); i++) {
-            ItemStack recipeLeftover = this.craftMatrix.getStackInSlot(i);
+          for (int i = 0; i < this.craftMatrix.getContainerSize(); i++) {
+            ItemStack recipeLeftover = this.craftMatrix.getItem(i);
             if (!recipeLeftover.isEmpty()) {
               if (recipeLeftover.getContainerItem().isEmpty() == false) {
                 // TODO: shared code refactor
@@ -256,7 +256,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   private boolean hasFreeSpace(IItemHandler inv, ItemStack output) {
     for (int slotId = 0; slotId < IO_SIZE; slotId++) {
       if (inv.getStackInSlot(slotId) == ItemStack.EMPTY
-          || (inv.getStackInSlot(slotId).isItemEqual(output)
+          || (inv.getStackInSlot(slotId).sameItem(output)
               && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize())) {
         return true;
       }
@@ -309,12 +309,12 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     }
   }
 
-  private IRecipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
-    if (world == null || world.getServer() == null) {
+  private Recipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
+    if (level == null || level.getServer() == null) {
       return null;
     }
-    Collection<IRecipe<?>> recipes = world.getServer().getRecipeManager().getRecipes();
-    for (IRecipe<?> recipe : recipes) {
+    Collection<Recipe<?>> recipes = level.getServer().getRecipeManager().getRecipes();
+    for (Recipe<?> recipe : recipes) {
       if (recipe instanceof ShapelessRecipe) {
         ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
         if (tryMatchShapelessRecipe(itemStacksInGrid, shapelessRecipe)) {
@@ -365,19 +365,19 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     return countNonEmptyStacks(itemStacksCopy) == 0;
   }
 
-  public static class FakeContainer extends Container {
+  public static class FakeContainer extends AbstractContainerMenu {
 
-    protected FakeContainer(ContainerType<?> type, int id) {
+    protected FakeContainer(MenuType<?> type, int id) {
       super(type, id);
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
       return true;
     }
   }
 
-  private final CraftingInventory craftMatrix = new CraftingInventory(new FakeContainer(ContainerType.CRAFTING, 18291238), 3, 3);
+  private final CraftingContainer craftMatrix = new CraftingContainer(new FakeContainer(MenuType.CRAFTING, 18291238), 3, 3);
 
   private boolean tryMatchShapedRecipeRegion(ArrayList<ItemStack> itemStacks, ShapedRecipe recipe, int offsetX, int offsetY) {
     for (int i = 0; i < recipe.getWidth(); i++) {
@@ -385,7 +385,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         try {
           int indexInArray = i + j * 3;
           ItemStack itemStack = itemStacks.get(indexInArray);
-          craftMatrix.setInventorySlotContents(indexInArray, itemStack.copy());
+          craftMatrix.setItem(indexInArray, itemStack.copy());
         }
         catch (Exception e) {
           //breakpoint 
@@ -393,7 +393,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         }
       }
     }
-    boolean matched = recipe.matches(craftMatrix, world);
+    boolean matched = recipe.matches(craftMatrix, level);
     //    ModCyclic.LOGGER.info(recipe.getRecipeOutput() + " -0 matched recipe and getRemainingItems " + matched);
     return matched;
   }
@@ -437,13 +437,13 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerCrafter(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerCrafter(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -474,38 +474,38 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    energyCap.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("energy")));
-    input.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("input")));
-    output.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("output")));
-    gridCap.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("grid")));
-    preview.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("preview")));
-    super.read(bs, tag);
+  public void load(BlockState bs, CompoundTag tag) {
+    energyCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("energy")));
+    input.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("input")));
+    output.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("output")));
+    gridCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("grid")));
+    preview.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("preview")));
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     energyCap.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
       tag.put("energy", compound);
     });
     input.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
       tag.put("input", compound);
     });
     output.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
       tag.put("output", compound);
     });
     gridCap.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
       tag.put("grid", compound);
     });
     preview.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
       tag.put("preview", compound);
     });
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

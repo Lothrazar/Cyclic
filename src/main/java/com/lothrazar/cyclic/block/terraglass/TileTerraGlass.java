@@ -4,12 +4,12 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
-public class TileTerraGlass extends TileEntityBase implements ITickableTileEntity {
+public class TileTerraGlass extends TileEntityBase implements TickableBlockEntity {
 
   private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL / 2;
   private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
@@ -21,7 +21,7 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
   @Override
   public void tick() {
     //sprinkler to ONLY whats directly above/below
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     timer--;
@@ -29,33 +29,33 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
       return;
     }
     timer = TIMER_FULL;
-    boolean lit = this.getBlockState().get(BlockBase.LIT);
-    boolean newLit = canBlockSeeSky(world, pos);
+    boolean lit = this.getBlockState().getValue(BlockBase.LIT);
+    boolean newLit = canBlockSeeSky(level, worldPosition);
     if (lit != newLit) {
       this.setLitProperty(newLit);
-      world.notifyNeighborsOfStateChange(pos, this.getBlockState().getBlock());
+      level.updateNeighborsAt(worldPosition, this.getBlockState().getBlock());
     }
     if (!newLit) {
       return;
     }
     for (int h = 0; h < DISTANCE; h++) {
-      BlockPos current = pos.down(h);
-      TileTerraPreta.grow(world, current, 0.25);
+      BlockPos current = worldPosition.below(h);
+      TileTerraPreta.grow(level, current, 0.25);
     }
   }
 
-  private boolean canBlockSeeSky(World world, BlockPos pos) {
+  private boolean canBlockSeeSky(Level world, BlockPos pos) {
     if (world.canSeeSky(pos)) {
       return true;
     }
     //    world.isOutsideBuildHeight(pos)
     //    else {
-    for (BlockPos blockpos1 = pos.up(); blockpos1.getY() < 256; blockpos1 = blockpos1.up()) {
-      if (World.isYOutOfBounds(blockpos1.getY())) {
+    for (BlockPos blockpos1 = pos.above(); blockpos1.getY() < 256; blockpos1 = blockpos1.above()) {
+      if (Level.isOutsideBuildHeight(blockpos1.getY())) {
         continue;
       }
       BlockState blockstate = world.getBlockState(blockpos1);
-      int opa = blockstate.getOpacity(world, blockpos1);
+      int opa = blockstate.getLightBlock(world, blockpos1);
       if (opa > 0 && !blockstate.getMaterial().isLiquid()) {
         return false;
       }

@@ -4,16 +4,16 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -35,7 +35,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
+  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
     try {
       TileMelter tile = (TileMelter) inv;
       //if first one matches check second
@@ -62,7 +62,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
   public ItemStack[] ingredientAt(int slot) {
     Ingredient ing = ingredients.get(slot);
-    return ing.getMatchingStacks();
+    return ing.getItems();
   }
 
   @Override
@@ -71,7 +71,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public ItemStack getRecipeOutput() {
+  public ItemStack getResultItem() {
     return ItemStack.EMPTY;
   }
 
@@ -81,18 +81,18 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public IRecipeType<?> getType() {
+  public RecipeType<?> getType() {
     return CyclicRecipeType.MELTER;
   }
 
   @Override
-  public IRecipeSerializer<?> getSerializer() {
+  public RecipeSerializer<?> getSerializer() {
     return SERIALMELTER;
   }
 
   public static final SerializeMelter SERIALMELTER = new SerializeMelter();
 
-  public static class SerializeMelter extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
+  public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
 
     SerializeMelter() {
       // This registry name is what people will specify in their json files.
@@ -104,17 +104,17 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
+    public RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeMelter r = null;
       try {
-        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputFirst"));
+        Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputFirst"));
         Ingredient inputSecond = Ingredient.EMPTY;
-        if (JSONUtils.hasField(json, "inputSecond")) {
-          inputSecond = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputSecond"));
+        if (GsonHelper.isValidNode(json, "inputSecond")) {
+          inputSecond = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputSecond"));
         }
         JsonObject result = json.get("result").getAsJsonObject();
         int count = result.get("count").getAsInt();
-        String fluidId = JSONUtils.getString(result, "fluid");
+        String fluidId = GsonHelper.getAsString(result, "fluid");
         ResourceLocation resourceLocation = new ResourceLocation(fluidId);
         Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
         r = new RecipeMelter(recipeId, inputFirst, inputSecond, new FluidStack(fluid, count));
@@ -127,19 +127,19 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeMelter read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public RecipeMelter fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
       RecipeMelter r = new RecipeMelter(recipeId,
-          Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer));
+          Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), FluidStack.readFromPacket(buffer));
       //server reading recipe from client or vice/versa 
       return r;
     }
 
     @Override
-    public void write(PacketBuffer buffer, RecipeMelter recipe) {
+    public void toNetwork(FriendlyByteBuf buffer, RecipeMelter recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       Ingredient one = (Ingredient) recipe.ingredients.get(1);
-      zero.write(buffer);
-      one.write(buffer);
+      zero.toNetwork(buffer);
+      one.toNetwork(buffer);
       recipe.outFluid.writeToPacket(buffer);
     }
   }

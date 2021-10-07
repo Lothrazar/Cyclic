@@ -1,23 +1,25 @@
 package com.lothrazar.cyclic.fluid.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
-public class SlimeFluidBlock extends FlowingFluidBlock {
+import net.minecraftforge.fluids.ForgeFlowingFluid.Properties;
+
+public class SlimeFluidBlock extends LiquidBlock {
 
   public static class Flowing extends ForgeFlowingFluid.Flowing {
 
@@ -26,12 +28,12 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
     }
 
     @Override
-    public int getSlopeFindDistance(IWorldReader worldIn) {
+    public int getSlopeFindDistance(LevelReader worldIn) {
       return 1;
     }
 
     @Override
-    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+    public int getDropOff(LevelReader worldIn) {
       return 2;
     }
   }
@@ -43,12 +45,12 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
     }
 
     @Override
-    public int getSlopeFindDistance(IWorldReader worldIn) {
+    public int getSlopeFindDistance(LevelReader worldIn) {
       return 1;
     }
 
     @Override
-    public int getLevelDecreasePerBlock(IWorldReader worldIn) {
+    public int getDropOff(LevelReader worldIn) {
       return 6;
     }
   }
@@ -60,36 +62,36 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
     int max = 15; //max of the property LEVEL.getAllowedValues()
     float offset = 0.875F;
     for (int i = 0; i <= max; i++) { //x and z go from [0,1] 
-      shapes[i] = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, offset - i / 8F, 1));
+      shapes[i] = Shapes.create(new AABB(0, 0, 0, 1, offset - i / 8F, 1));
     }
   }
 
   @Override
   @Deprecated
-  public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return shapes[state.get(LEVEL).intValue()];
+  public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    return shapes[state.getValue(LEVEL).intValue()];
   }
 
   @Override
   @Deprecated
-  public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return shapes[state.get(LEVEL).intValue()];
+  public VoxelShape getOcclusionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    return shapes[state.getValue(LEVEL).intValue()];
   }
 
   @Override
-  public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+  public void fallOn(Level worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
     if (entityIn.isSuppressingBounce()) {
-      super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
+      super.fallOn(worldIn, pos, entityIn, fallDistance);
     }
     else {
-      entityIn.onLivingFall(fallDistance, 0.0F);
+      entityIn.causeFallDamage(fallDistance, 0.0F);
     }
   }
 
   @Override
-  public void onLanded(IBlockReader worldIn, Entity entityIn) {
+  public void updateEntityAfterFallOn(BlockGetter worldIn, Entity entityIn) {
     if (entityIn.isSuppressingBounce()) {
-      super.onLanded(worldIn, entityIn);
+      super.updateEntityAfterFallOn(worldIn, entityIn);
     }
     else {
       this.collision(entityIn);
@@ -97,15 +99,15 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
   }
 
   /**
-   * From SlimeBlock.java func_226946_a_
+   * From SlimeBlock.java bounceUp
    * 
    * @param entity
    */
   private void collision(Entity entity) {
-    Vector3d vec3d = entity.getMotion();
+    Vec3 vec3d = entity.getDeltaMovement();
     if (vec3d.y < 0.0D) {
       double d0 = entity instanceof LivingEntity ? 1.0D : 0.8D;
-      entity.setMotion(vec3d.x, -vec3d.y * d0, vec3d.z);
+      entity.setDeltaMovement(vec3d.x, -vec3d.y * d0, vec3d.z);
     }
   }
 }

@@ -2,27 +2,29 @@ package com.lothrazar.cyclic.item.enderpearl;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.entity.item.EnderPearlEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.projectile.ThrownEnderpearl;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EnderPearlMount extends ItemBase {
 
   public EnderPearlMount(Properties properties) {
-    super(properties.maxDamage(256));
+    super(properties.durability(256));
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    ItemStack stack = playerIn.getHeldItem(handIn);
-    EnderPearlEntity ent = new EnderPearlEntity(worldIn, playerIn);
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    ItemStack stack = playerIn.getItemInHand(handIn);
+    ThrownEnderpearl ent = new ThrownEnderpearl(worldIn, playerIn);
     shootMe(worldIn, playerIn, ent, 0, ItemBase.VELOCITY_MAX);
     playerIn.startRiding(ent, true);
-    playerIn.getCooldownTracker().setCooldown(stack.getItem(), 10);
+    playerIn.getCooldowns().addCooldown(stack.getItem(), 10);
     UtilItemStack.damageItem(playerIn, stack);
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    return super.use(worldIn, playerIn, handIn);
   }
 }

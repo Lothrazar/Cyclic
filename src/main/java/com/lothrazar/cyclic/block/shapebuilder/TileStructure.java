@@ -11,22 +11,22 @@ import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -36,7 +36,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileStructure extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileStructure extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   public static IntValue POWERCONF;
   static final int SLOT_BUILD = 0;
@@ -63,7 +63,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       if (slot == SLOT_BUILD) {
-        return Block.getBlockFromItem(stack.getItem()) != null;
+        return Block.byItem(stack.getItem()) != null;
       }
       else if (slot == SLOT_SHAPE) {
         return stack.getItem() instanceof ShapeCard;
@@ -87,7 +87,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     int t = tag.getInt("buildType");
@@ -95,33 +95,33 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     buildSize = tag.getInt("buildSize");
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("buildType", buildType.ordinal());
     tag.putInt("buildSize", buildSize);
     tag.putInt("height", height);
     tag.putInt("shapeIndex", shapeIndex);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerStructure(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerStructure(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -204,7 +204,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
     //    if (stack.isEmpty()) {
     //      return;
     //    }
-    Block stuff = Block.getBlockFromItem(stack.getItem());
+    Block stuff = Block.byItem(stack.getItem());
     if (stuff == null) {
       return;
     }
@@ -216,10 +216,10 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       }
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
-      if (!World.isOutsideBuildHeight(nextPos)
-          && world.isAirBlock(nextPos)) { // check if this spot is even valid
-        BlockState placeState = stuff.getDefaultState();
-        if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+      if (!Level.isOutsideBuildHeight(nextPos)
+          && level.isEmptyBlock(nextPos)) { // check if this spot is even valid
+        BlockState placeState = stuff.defaultBlockState();
+        if (level.isClientSide == false && UtilPlaceBlocks.placeStateSafe(level, null, nextPos, placeState)) {
           //build success
           this.incrementPosition(shape);
           stack.shrink(1);
@@ -260,12 +260,12 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         return loc.getPos();
       }
     }
-    return this.getPos();
+    return this.getBlockPos();
   }
 
   public BlockPos getTargetFacing() {
     //move center over that much, not including exact horizontal
-    return this.getPosTarget().offset(this.getCurrentFacing(), this.buildSize + 1);
+    return this.getPosTarget().relative(this.getCurrentFacing(), this.buildSize + 1);
   }
 
   public List<BlockPos> getShape() {
@@ -274,7 +274,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       if (shapeCard.getItem() instanceof ShapeCard) {
         RelativeShape shape = RelativeShape.read(shapeCard);
         if (shape != null) {
-          shape.setWorldCenter(world, getPosTarget());
+          shape.setWorldCenter(level, getPosTarget());
           if (shape.getShape() != null && shape.getShape().size() > 0) {
             return shape.getShape();
           }
@@ -308,7 +308,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         shape = UtilShape.sphereDome(this.getPosTarget(), this.getSize());
       break;
       case CUP:
-        shape = UtilShape.sphereCup(this.getPosTarget().up(this.getSize()), this.getSize());
+        shape = UtilShape.sphereCup(this.getPosTarget().above(this.getSize()), this.getSize());
       break;
       case DIAGONAL:
         shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getSize() * 2, true);

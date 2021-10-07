@@ -6,10 +6,10 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -33,7 +33,7 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   @Override
   public String getTitle() {
-    return UtilChat.lang(BlockRegistry.GENERATOR_FLUID.get().getTranslationKey());
+    return UtilChat.lang(BlockRegistry.GENERATOR_FLUID.get().getDescriptionId());
   }
 
   @Override
@@ -62,10 +62,10 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
   }
 
   @Override
-  public void draw(RecipeGeneratorFluid recipe, MatrixStack ms, double mouseX, double mouseY) {
-    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getTicks() + " t", 60, 0, FONT);
-    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
-    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getRfTotal() + " RF", 60, 20, FONT);
+  public void draw(RecipeGeneratorFluid recipe, PoseStack ms, double mouseX, double mouseY) {
+    Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", 60, 0, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getRfTotal() + " RF", 60, 20, FONT);
   }
 
   @Override

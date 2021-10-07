@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.scythe;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public enum ScytheType {
 
@@ -11,11 +11,11 @@ public enum ScytheType {
 
   public static List<BlockPos> getShape(BlockPos center, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape.addAll(UtilShape.squareHorizontalFull(center.down().down(), radius));
-    shape.addAll(UtilShape.squareHorizontalFull(center.down(), radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center.below().below(), radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center.below(), radius));
     shape.addAll(UtilShape.squareHorizontalFull(center, radius));
-    shape.addAll(UtilShape.squareHorizontalFull(center.up(), radius));
-    shape.addAll(UtilShape.squareHorizontalFull(center.up().up(), radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center.above(), radius));
+    shape.addAll(UtilShape.squareHorizontalFull(center.above().above(), radius));
     return shape;
   }
 }

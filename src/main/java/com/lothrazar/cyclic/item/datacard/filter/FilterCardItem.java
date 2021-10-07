@@ -4,18 +4,18 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.List;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -26,6 +26,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class FilterCardItem extends ItemBase {
 
   public static final int SLOT_FLUID = 8;
@@ -33,57 +35,57 @@ public class FilterCardItem extends ItemBase {
   // TODO: could match on tags, nbt exact match like enchants, 
 
   public FilterCardItem(Properties properties) {
-    super(properties.maxStackSize(1));
+    super(properties.stacksTo(1));
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
       boolean isIgnore = getIsIgnoreList(stack);
-      TranslationTextComponent t = new TranslationTextComponent("cyclic.screen.filter." + isIgnore);
-      t.mergeStyle(isIgnore ? TextFormatting.DARK_GRAY : TextFormatting.DARK_BLUE);
+      TranslatableComponent t = new TranslatableComponent("cyclic.screen.filter." + isIgnore);
+      t.withStyle(isIgnore ? ChatFormatting.DARK_GRAY : ChatFormatting.DARK_BLUE);
       tooltip.add(t);
       // caps arent synced from server very well
       //
-      CompoundNBT stackTag = stack.getOrCreateTag();
+      CompoundTag stackTag = stack.getOrCreateTag();
       if (stackTag.contains("fluidTooltip")) {
         String fluidTooltip = stackTag.getString("fluidTooltip");
-        tooltip.add(new TranslationTextComponent(fluidTooltip).mergeStyle(TextFormatting.AQUA));
+        tooltip.add(new TranslatableComponent(fluidTooltip).withStyle(ChatFormatting.AQUA));
       }
       if (stackTag.contains("itemTooltip")) {
         String itemTooltip = stackTag.getString("itemTooltip");
-        tooltip.add(new TranslationTextComponent(itemTooltip).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(itemTooltip).withStyle(ChatFormatting.GRAY));
       }
       if (stackTag.contains("itemCount")) {
         int itemCount = stackTag.getInt("itemCount");
-        t = new TranslationTextComponent("cyclic.screen.filter.item.count");
-        t.appendString("" + itemCount);
-        t.mergeStyle(TextFormatting.GRAY);
+        t = new TranslatableComponent("cyclic.screen.filter.item.count");
+        t.append("" + itemCount);
+        t.withStyle(ChatFormatting.GRAY);
         tooltip.add(t);
       }
     }
     else {
-      super.addInformation(stack, worldIn, tooltip, flagIn);
+      super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (!worldIn.isRemote && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayerEntity) playerIn, new ContainerProviderFilterCard(), playerIn.getPosition());
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+      NetworkHooks.openGui((ServerPlayer) playerIn, new ContainerProviderFilterCard(), playerIn.blockPosition());
     }
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    return super.use(worldIn, playerIn, handIn);
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new CapabilityProviderFilterCard();
   }
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.filter_data, ScreenFilterCard::new);
+    MenuScreens.register(ContainerScreenRegistry.filter_data, ScreenFilterCard::new);
   }
 
   public static void toggleFilterType(ItemStack filter) {
@@ -161,8 +163,8 @@ public class FilterCardItem extends ItemBase {
 
   // ShareTag for server->client capability data sync
   @Override
-  public CompoundNBT getShareTag(ItemStack stack) {
-    CompoundNBT nbt = stack.getOrCreateTag();
+  public CompoundTag getShareTag(ItemStack stack) {
+    CompoundTag nbt = stack.getOrCreateTag();
     FluidStack fluidStack = FilterCardItem.getFluidStack(stack);
     if (!fluidStack.isEmpty()) {
       nbt.putString("fluidTooltip", fluidStack.getDisplayName().getString());
@@ -172,13 +174,13 @@ public class FilterCardItem extends ItemBase {
     //set data for sync to client
     if (cap != null) {
       int count = 0;
-      ITextComponent first = null;
+      Component first = null;
       for (int i = 0; i < cap.getSlots(); i++) {
         if (!cap.getStackInSlot(i).isEmpty()) {
           //non empty stack eh
           count++;
           if (first == null) {
-            first = cap.getStackInSlot(i).getDisplayName();
+            first = cap.getStackInSlot(i).getHoverName();
           }
         }
       }
@@ -191,9 +193,9 @@ public class FilterCardItem extends ItemBase {
   }
 
   @Override
-  public void readShareTag(ItemStack stack, CompoundNBT nbt) {
+  public void readShareTag(ItemStack stack, CompoundTag nbt) {
     if (nbt != null) {
-      CompoundNBT stackTag = stack.getOrCreateTag();
+      CompoundTag stackTag = stack.getOrCreateTag();
       stackTag.putString("itemTooltip", nbt.getString("itemTooltip"));
       stackTag.putString("fluidTooltip", nbt.getString("fluidTooltip"));
       stackTag.putInt("itemCount", nbt.getInt("itemCount"));

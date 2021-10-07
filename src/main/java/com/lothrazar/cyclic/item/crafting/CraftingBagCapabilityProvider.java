@@ -1,15 +1,15 @@
 package com.lothrazar.cyclic.item.crafting;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class CraftingBagCapabilityProvider implements ICapabilitySerializable<CompoundNBT> {
+public class CraftingBagCapabilityProvider implements ICapabilitySerializable<CompoundTag> {
 
   private final int slots = 9;
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(slots) {
@@ -33,15 +33,15 @@ public class CraftingBagCapabilityProvider implements ICapabilitySerializable<Co
   }
 
   @Override
-  public CompoundNBT serializeNBT() {
+  public CompoundTag serializeNBT() {
     if (inventory.isPresent()) {
       return inventory.resolve().get().serializeNBT();
     }
-    return new CompoundNBT();
+    return new CompoundTag();
   }
 
   @Override
-  public void deserializeNBT(CompoundNBT nbt) {
+  public void deserializeNBT(CompoundTag nbt) {
     inventory.ifPresent(h -> h.deserializeNBT(nbt));
   }
 }

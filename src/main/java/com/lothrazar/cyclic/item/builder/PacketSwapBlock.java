@@ -12,16 +12,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketSwapBlock extends PacketBase {
@@ -29,23 +29,23 @@ public class PacketSwapBlock extends PacketBase {
   private BlockPos pos;
   private BuilderActionType actionType;
   private Direction side;
-  private Hand hand;
+  private InteractionHand hand;
 
-  public PacketSwapBlock(BlockPos readBlockPos, BuilderActionType type, Direction dir, Hand h) {
+  public PacketSwapBlock(BlockPos readBlockPos, BuilderActionType type, Direction dir, InteractionHand h) {
     pos = readBlockPos;
     actionType = type;
     side = dir;
     hand = h;
   }
 
-  public static PacketSwapBlock decode(PacketBuffer buf) {
+  public static PacketSwapBlock decode(FriendlyByteBuf buf) {
     return new PacketSwapBlock(buf.readBlockPos(),
         BuilderActionType.values()[buf.readInt()],
         Direction.values()[buf.readInt()],
-        Hand.values()[buf.readInt()]);
+        InteractionHand.values()[buf.readInt()]);
   }
 
-  public static void encode(PacketSwapBlock msg, PacketBuffer buf) {
+  public static void encode(PacketSwapBlock msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.actionType.ordinal());
     buf.writeInt(msg.side.ordinal());
@@ -54,14 +54,14 @@ public class PacketSwapBlock extends PacketBase {
 
   public static void handle(PacketSwapBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      ServerPlayerEntity player = ctx.get().getSender();
-      ItemStack itemStackHeld = player.getHeldItem(message.hand);
+      ServerPlayer player = ctx.get().getSender();
+      ItemStack itemStackHeld = player.getItemInHand(message.hand);
       BlockState targetState = BuilderActionType.getBlockState(itemStackHeld);
       if (targetState == null || itemStackHeld.getItem() instanceof BuilderItem == false) {
         return;
       }
       BuildStyle buildStyle = ((BuilderItem) itemStackHeld.getItem()).style;
-      World world = player.getEntityWorld();
+      Level world = player.getCommandSenderWorld();
       BlockState replacedBlockState;
       List<BlockPos> places = getSelectedBlocks(world, message.pos, message.actionType, message.side, buildStyle);
       Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
@@ -86,7 +86,7 @@ public class PacketSwapBlock extends PacketBase {
               //you have no materials left
             }
           }
-          if (world.getTileEntity(curPos) != null) {
+          if (world.getBlockEntity(curPos) != null) {
             continue;
             //ignore tile entities IE do not break chests / etc
           }
@@ -102,7 +102,7 @@ public class PacketSwapBlock extends PacketBase {
           if (isInBlacklist) {
             continue;
           }
-          if (replacedBlockState.getBlockHardness(world, curPos) < 0) {
+          if (replacedBlockState.getDestroySpeed(world, curPos) < 0) {
             continue; //since we know -1 is unbreakable
           }
           //wait, do they match? are they the same? do not replace myself
@@ -111,7 +111,7 @@ public class PacketSwapBlock extends PacketBase {
           }
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
-          world.setBlockState(curPos, Blocks.AIR.getDefaultState(), 0);
+          world.setBlock(curPos, Blocks.AIR.defaultBlockState(), 0);
           boolean success = false;
           //place item block gets slabs in top instead of bottom. but tries to do facing stairs
           // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
@@ -121,9 +121,9 @@ public class PacketSwapBlock extends PacketBase {
           if (success) {
             atLeastOne = true;
             UtilPlayer.decrStackSize(player, slot);
-            world.playEvent(2001, curPos, Block.getStateId(targetState));
+            world.levelEvent(2001, curPos, Block.getId(targetState));
             //always break with PLAYER CONTEXT in mind
-            replacedBlock.harvestBlock(world, player, curPos, replacedBlockState, null, itemStackHeld);
+            replacedBlock.playerDestroy(world, player, curPos, replacedBlockState, null, itemStackHeld);
           }
         } // close off the for loop   
       }
@@ -134,7 +134,7 @@ public class PacketSwapBlock extends PacketBase {
     message.done(ctx);
   }
 
-  public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, BuilderActionType actionType, Direction side, BuildStyle style) {
+  public static List<BlockPos> getSelectedBlocks(Level world, BlockPos pos, BuilderActionType actionType, Direction side, BuildStyle style) {
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = pos.getX();
     int yMin = pos.getY();

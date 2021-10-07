@@ -6,10 +6,10 @@ import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.util.UtilEnchant;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class EnderControllerItemHandler extends ItemStackHandler {
@@ -37,11 +37,11 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   }
 
   private ItemStack insertItemElsewhere(ItemStack stack, boolean insertWhenEmpty, boolean simulate) {
-    if (controller.getWorld() == null) {
+    if (controller.getLevel() == null) {
       return stack;
     }
     for (BlockPos shelfPos : controller.getShelves()) {
-      TileEntity te = controller.getWorld().getTileEntity(shelfPos);
+      BlockEntity te = controller.getLevel().getBlockEntity(shelfPos);
       if (te != null && EnderShelfHelper.isShelf(te.getBlockState())) {
         TileEnderShelf shelf = (TileEnderShelf) te;
         try {
@@ -86,7 +86,7 @@ public class EnderControllerItemHandler extends ItemStackHandler {
 
   @Override
   public ItemStack getStackInSlot(int slot) {
-    if (this.controller.getShelves().size() == 0 || this.controller.getWorld() == null) {
+    if (this.controller.getShelves().size() == 0 || this.controller.getLevel() == null) {
       return ItemStack.EMPTY;
     }
     int shelf = slot / SLOTS_PER_SHELF;
@@ -105,7 +105,7 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   }
 
   private ItemStack extractItemElsewhere(int slot, int amount, boolean simulate) {
-    if (this.controller.getShelves().size() == 0 || this.controller.getWorld() == null) {
+    if (this.controller.getShelves().size() == 0 || this.controller.getLevel() == null) {
       return ItemStack.EMPTY;
     }
     int shelf = slot / SLOTS_PER_SHELF;
@@ -124,7 +124,7 @@ public class EnderControllerItemHandler extends ItemStackHandler {
   private EnderShelfItemHandler getHandlerAt(int shelf) {
     try {
       BlockPos extractPos = this.controller.getShelves().get(shelf);
-      TileEntity te = this.controller.getWorld().getTileEntity(extractPos);
+      BlockEntity te = this.controller.getLevel().getBlockEntity(extractPos);
       return EnderShelfHelper.getShelfHandler(te);
     }
     catch (Exception e) {

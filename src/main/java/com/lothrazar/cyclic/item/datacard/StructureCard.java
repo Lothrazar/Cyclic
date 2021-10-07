@@ -2,16 +2,18 @@ package com.lothrazar.cyclic.item.datacard;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import java.util.List;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class StructureCard extends ItemBase {
 
@@ -22,11 +24,11 @@ public class StructureCard extends ItemBase {
   }
 
   public static ResourceLocation readDisk(ItemStack item) {
-    CompoundNBT tag = item.getOrCreateTag();
+    CompoundTag tag = item.getOrCreateTag();
     if (!tag.contains(NBTSTRUCTURE)) {
       return null;
     }
-    return ResourceLocation.tryCreate(tag.getString(NBTSTRUCTURE));
+    return ResourceLocation.tryParse(tag.getString(NBTSTRUCTURE));
   }
 
   public static void deleteDisk(ItemStack item) {
@@ -34,18 +36,18 @@ public class StructureCard extends ItemBase {
   }
 
   public static void saveDisk(ItemStack item, ResourceLocation saved) {
-    CompoundNBT tag = item.getOrCreateTag();
+    CompoundTag tag = item.getOrCreateTag();
     tag.putString(NBTSTRUCTURE, saved.toString());
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag()) {
-      TranslationTextComponent t = new TranslationTextComponent(
+      TranslatableComponent t = new TranslatableComponent(
           stack.getTag().getString(NBTSTRUCTURE));
-      t.mergeStyle(TextFormatting.GRAY);
+      t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }
   }

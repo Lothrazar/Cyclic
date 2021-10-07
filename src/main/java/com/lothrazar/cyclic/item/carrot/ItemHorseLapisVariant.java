@@ -25,9 +25,11 @@ package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.InteractionResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemHorseLapisVariant extends ItemEntityInteractable {
 
@@ -38,18 +40,18 @@ public class ItemHorseLapisVariant extends ItemEntityInteractable {
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
-        && event.getTarget() instanceof HorseEntity
+        && event.getTarget() instanceof Horse
         //        && event.getWorld().isRemote == false
-        && !event.getPlayer().getCooldownTracker().hasCooldown(this)) {
+        && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
       // lets go 
-      HorseEntity ahorse = (HorseEntity) event.getTarget();
-      int seed = event.getWorld().rand.nextInt(7);
+      Horse ahorse = (Horse) event.getTarget();
+      int seed = event.getWorld().random.nextInt(7);
       //setHorseVariant
       //  access transformers
-      ahorse.getDataManager().set(HorseEntity.HORSE_VARIANT, (seed | event.getWorld().rand.nextInt(5) << 8));
+      ahorse.getEntityData().set(Horse.DATA_ID_TYPE_VARIANT, (seed | event.getWorld().random.nextInt(5) << 8));
       event.setCanceled(true);
-      event.setCancellationResult(ActionResultType.SUCCESS);
-      event.getPlayer().getCooldownTracker().setCooldown(this, 10);
+      event.setCancellationResult(InteractionResult.SUCCESS);
+      event.getPlayer().getCooldowns().addCooldown(this, 10);
       event.getItemStack().shrink(1);
       UtilEntity.eatingHorse(ahorse);
     }

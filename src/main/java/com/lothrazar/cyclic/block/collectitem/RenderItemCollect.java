@@ -2,22 +2,22 @@ package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.util.UtilRender;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 
-public class RenderItemCollect extends TileEntityRenderer<TileItemCollector> {
+public class RenderItemCollect extends BlockEntityRenderer<TileItemCollector> {
 
-  public RenderItemCollect(TileEntityRendererDispatcher d) {
+  public RenderItemCollect(BlockEntityRenderDispatcher d) {
     super(d);
   }
 
   @Override
-  public void render(TileItemCollector te, float v, MatrixStack matrix,
-      IRenderTypeBuffer ibuffer, int partialTicks, int destroyStage) {
+  public void render(TileItemCollector te, float v, PoseStack matrix,
+      MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
     if (1 == te.getField(TileItemCollector.Fields.RENDER.ordinal())) {
-      UtilRender.renderOutline(te.getPos(), te.getShape(), matrix, 0.7F, ClientConfigCyclic.getColor(te));
+      UtilRender.renderOutline(te.getBlockPos(), te.getShape(), matrix, 0.7F, ClientConfigCyclic.getColor(te));
     }
   }
 }

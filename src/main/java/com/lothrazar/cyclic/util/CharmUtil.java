@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.compat.CompatConstants;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
@@ -12,7 +12,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 public class CharmUtil {
 
-  public static ItemStack getIfEnabled(PlayerEntity player, Item match) {
+  public static ItemStack getIfEnabled(Player player, Item match) {
     Triple<String, Integer, ItemStack> found = isCurioOrInventory(player, match);
     ItemStack stack = found == null ? ItemStack.EMPTY : found.getRight();
     if (stack.getItem() instanceof IHasClickToggle) {
@@ -31,7 +31,7 @@ public class CharmUtil {
    * @param match
    * @return
    */
-  public static Triple<String, Integer, ItemStack> isCurioOrInventory(PlayerEntity player, Item match) {
+  public static Triple<String, Integer, ItemStack> isCurioOrInventory(Player player, Item match) {
     Triple<String, Integer, ItemStack> stackFound = Triple.of("", -1, ItemStack.EMPTY);
     if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
       //check curios slots IF mod is loaded
@@ -60,8 +60,8 @@ public class CharmUtil {
     //        return Triple.of("ender", i, temp);
     //      }
     //    }
-    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-      ItemStack temp = player.inventory.getStackInSlot(i);
+    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+      ItemStack temp = player.inventory.getItem(i);
       if (isMatching(temp, match)) {
         if (temp.getItem() instanceof IHasClickToggle) {
           IHasClickToggle testMe = (IHasClickToggle) temp.getItem();
@@ -72,11 +72,11 @@ public class CharmUtil {
       }
     }
     //default
-    if (isMatching(player.getHeldItemOffhand(), match)) {
-      return Triple.of("offhand", -1, player.getHeldItemOffhand());
+    if (isMatching(player.getOffhandItem(), match)) {
+      return Triple.of("offhand", -1, player.getOffhandItem());
     }
-    if (isMatching(player.getHeldItemMainhand(), match)) {
-      return Triple.of("hand", -1, player.getHeldItemMainhand());
+    if (isMatching(player.getMainHandItem(), match)) {
+      return Triple.of("hand", -1, player.getMainHandItem());
     }
     return stackFound;
   }

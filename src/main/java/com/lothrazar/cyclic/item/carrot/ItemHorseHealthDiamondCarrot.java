@@ -25,10 +25,12 @@ package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.InteractionResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemHorseHealthDiamondCarrot extends ItemEntityInteractable {
 
@@ -41,16 +43,16 @@ public class ItemHorseHealthDiamondCarrot extends ItemEntityInteractable {
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() instanceof ItemHorseHealthDiamondCarrot
-        && event.getTarget() instanceof HorseEntity) {
+        && event.getTarget() instanceof Horse) {
       // lets go 
-      HorseEntity ahorse = (HorseEntity) event.getTarget();
+      Horse ahorse = (Horse) event.getTarget();
       float mh = (float) ahorse.getAttribute(Attributes.MAX_HEALTH).getValue();
       if (mh < 2 * ItemHorseHealthDiamondCarrot.HEARTS_MAX) { // 20 hearts == 40 health points
         ahorse.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mh + 2);
         event.setCanceled(true);
-        event.setCancellationResult(ActionResultType.SUCCESS);
+        event.setCancellationResult(InteractionResult.SUCCESS);
         event.getItemStack().shrink(1);
-        ahorse.func_230254_b_(event.getPlayer(), event.getHand());
+        ahorse.mobInteract(event.getPlayer(), event.getHand());
         //processInteract
         //trigger eatingHorse
         UtilEntity.eatingHorse(ahorse);

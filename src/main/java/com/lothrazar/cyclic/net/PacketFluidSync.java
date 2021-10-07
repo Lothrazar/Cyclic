@@ -27,10 +27,10 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -52,24 +52,24 @@ public class PacketFluidSync extends PacketBase {
   }
 
   private static void doWork(PacketFluidSync message) {
-    TileEntity te = Minecraft.getInstance().world.getTileEntity(message.pos);
+    BlockEntity te = Minecraft.getInstance().level.getBlockEntity(message.pos);
     if (te instanceof TileEntityBase) {
       ((TileEntityBase) te).setFluid(message.fluid);
     }
   }
 
-  public static PacketFluidSync decode(PacketBuffer buf) {
+  public static PacketFluidSync decode(FriendlyByteBuf buf) {
     PacketFluidSync msg = new PacketFluidSync(buf.readBlockPos(),
-        FluidStack.loadFluidStackFromNBT(buf.readCompoundTag()));
+        FluidStack.loadFluidStackFromNBT(buf.readNbt()));
     return msg;
   }
 
-  public static void encode(PacketFluidSync msg, PacketBuffer buf) {
+  public static void encode(PacketFluidSync msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.pos);
-    CompoundNBT tags = new CompoundNBT();
+    CompoundTag tags = new CompoundTag();
     if (msg.fluid != null) {
       msg.fluid.writeToNBT(tags);
     }
-    buf.writeCompoundTag(tags);
+    buf.writeNbt(tags);
   }
 }

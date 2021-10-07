@@ -11,20 +11,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
@@ -36,7 +36,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileUncraft extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileUncraft extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE, STATUS, TIMER;
@@ -82,16 +82,16 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       return;
     }
     timer = TIMER.get();
-    if (world.isRemote || world.getServer() == null) {
+    if (level.isClientSide || level.getServer() == null) {
       return;
     }
-    IRecipe<?> match = this.findMatchingRecipe(world, dropMe);
+    Recipe<?> match = this.findMatchingRecipe(level, dropMe);
     if (match != null) {
       if (uncraftRecipe(match)) {
         this.status = UncraftStatusEnum.MATCH;
         //pay cost
         // ModCyclic.LOGGER.info("before extract cost" + inputSlots.getStackInSlot(0));
-        inputSlots.extractItem(0, match.getRecipeOutput().getCount(), false);
+        inputSlots.extractItem(0, match.getResultItem().getCount(), false);
         // ModCyclic.LOGGER.info("AFTER  extract cost" + inputSlots.getStackInSlot(0));
         energy.extractEnergy(cost, false);
       }
@@ -108,13 +108,13 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerUncraft(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerUncraft(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -129,23 +129,23 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("ucstats", status.ordinal());
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
-  private boolean uncraftRecipe(IRecipe<?> match) {
-    List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getMatchingStacks())
+  private boolean uncraftRecipe(Recipe<?> match) {
+    List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())
         .filter(stack -> !stack.hasContainerItem())
         .findAny()
         .map(Stream::of)
@@ -185,10 +185,10 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     return true;
   }
 
-  public IRecipe<?> findMatchingRecipe(World world, ItemStack dropMe) {
-    Collection<IRecipe<?>> list = world.getServer().getRecipeManager().getRecipes();
-    for (IRecipe<?> recipe : list) {
-      if (recipe.getType() == IRecipeType.CRAFTING) {
+  public Recipe<?> findMatchingRecipe(Level world, ItemStack dropMe) {
+    Collection<Recipe<?>> list = world.getServer().getRecipeManager().getRecipes();
+    for (Recipe<?> recipe : list) {
+      if (recipe.getType() == RecipeType.CRAFTING) {
         //actual uncraft, ie not furnace recipe or anything
         if (recipeMatches(dropMe, recipe)) {
           return recipe;
@@ -200,7 +200,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
 
   // matches count and has enough
   @SuppressWarnings("unchecked")
-  private boolean recipeMatches(ItemStack stack, IRecipe<?> recipe) {
+  private boolean recipeMatches(ItemStack stack, Recipe<?> recipe) {
     //    if (stack.getTag() != null && stack.getTag().keySet().size() == 1 && stack.getTag().keySet().contains(Const.NBT_REPAIR_COST)) {
     //      //what is it
     //      stack.setTag(null);
@@ -209,8 +209,8 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     //    ModCyclic.LOGGER.info("recipe id" + recipe.getId());
     if (stack.isEmpty() ||
         recipe == null ||
-        recipe.getRecipeOutput().isEmpty() ||
-        recipe.getRecipeOutput().getCount() > stack.getCount()) {
+        recipe.getResultItem().isEmpty() ||
+        recipe.getResultItem().getCount() > stack.getCount()) {
       this.status = UncraftStatusEnum.NORECIPE;
       return false;
     }
@@ -230,11 +230,11 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     boolean matches = false;
     if (TileUncraft.IGNORE_NBT.get()) {
       ModCyclic.LOGGER.info("Uncrafter NBT ignored " + stack.getTag());
-      matches = stack.getItem() == recipe.getRecipeOutput().getItem();
+      matches = stack.getItem() == recipe.getResultItem().getItem();
     }
     else {
-      matches = stack.getItem() == recipe.getRecipeOutput().getItem() &&
-          ItemStack.areItemStackTagsEqual(stack, recipe.getRecipeOutput());
+      matches = stack.getItem() == recipe.getResultItem().getItem() &&
+          ItemStack.tagMatches(stack, recipe.getResultItem());
     }
     if (!matches) {
       this.status = UncraftStatusEnum.NORECIPE;

@@ -2,21 +2,21 @@ package com.lothrazar.cyclic.gui;
 
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.AbstractSlider;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 
-public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
+public class GuiSliderInteger extends AbstractSliderButton implements IHasTooltip {
 
   public static final int ARROW_LEFT = 263;
   public static final int ARROW_RIGHT = 262;
@@ -25,12 +25,12 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   private final double max;
   private final BlockPos pos; // Tile entity location
   private final int field; // field ID for saving value
-  private List<ITextComponent> tooltip;
+  private List<Component> tooltip;
 
   public GuiSliderInteger(int x, int y, int width, int height, int field,
       BlockPos pos, int min, int max,
       double initialVal) {
-    super(x, y, width, height, StringTextComponent.EMPTY, 0);
+    super(x, y, width, height, TextComponent.EMPTY, 0);
     this.field = field;
     this.pos = pos;
     this.min = min;
@@ -43,19 +43,19 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
    */
   //  @SuppressWarnings("deprecation")
   @Override
-  protected void renderBg(MatrixStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
-    minecraft.getTextureManager().bindTexture(WIDGETS_LOCATION);
+  protected void renderBg(PoseStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
+    minecraft.getTextureManager().bind(WIDGETS_LOCATION);
     //    RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     int i = (this.isHovered() ? 2 : 1) * 20;
-    this.blit(matrixStack, this.x + (int) (this.sliderValue * (this.width - 8)), this.y, 0, 46 + i, 4, this.height);
-    this.blit(matrixStack, this.x + (int) (this.sliderValue * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, this.height);
+    this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i, 4, this.height);
+    this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, this.height);
   }
 
   /**
    * Call from Screen class to render tooltip during mouseover
    */
   @Override
-  public List<ITextComponent> getTooltip() {
+  public List<Component> getTooltip() {
     return tooltip;
   }
 
@@ -67,8 +67,8 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     //    if (tooltip == null) {
     tooltip = new ArrayList<>();
     //    }
-    this.tooltip.add(new TranslationTextComponent(tt));
-    this.tooltip.add(new TranslationTextComponent("cyclic.gui.sliderkeys").mergeStyle(TextFormatting.DARK_GRAY));
+    this.tooltip.add(new TranslatableComponent(tt));
+    this.tooltip.add(new TranslatableComponent("cyclic.gui.sliderkeys").withStyle(ChatFormatting.DARK_GRAY));
   }
 
   /**
@@ -78,7 +78,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
     if (delta != 0) {
       setSliderValueActual(this.getSliderValueActual() + (int) delta);
-      this.func_230979_b_();
+      this.updateMessage();
       return true;
     }
     return super.mouseScrolled(mouseX, mouseY, delta);
@@ -91,9 +91,9 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
     if (keyCode == ESC) {
       //close
-      ClientPlayerEntity pl = Minecraft.getInstance().player;
+      LocalPlayer pl = Minecraft.getInstance().player;
       if (pl != null) {
-        pl.closeScreen();
+        pl.closeContainer();
       }
       return true;
     }
@@ -107,7 +107,7 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
         delta = delta * 10;
       }
       setSliderValueActual(this.getSliderValueActual() + delta);
-      this.func_230979_b_();
+      this.updateMessage();
       return true;
     }
     return super.keyPressed(keyCode, scanCode, modifiers);
@@ -117,16 +117,16 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
    * Refresh display message
    */
   @Override
-  protected void func_230979_b_() {
+  protected void updateMessage() {
     int val = getSliderValueActual();
-    this.setMessage(new TranslationTextComponent("" + val));
+    this.setMessage(new TranslatableComponent("" + val));
   }
 
   /**
    * SAVE to tile entity with packet
    */
   @Override
-  protected void func_230972_a_() {
+  protected void applyValue() {
     int val = getSliderValueActual();
     PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.field, val, pos));
   }
@@ -136,21 +136,21 @@ public class GuiSliderInteger extends AbstractSlider implements IHasTooltip {
     //    this.changeSliderValueActual(mouseX);
     super.onDrag(mouseX, mouseY, dragX, dragY);
     //     ("ondrag" + mouseX);
-    func_230972_a_();
-    func_230979_b_();
+    applyValue();
+    updateMessage();
   }
 
   /**
    * Set inner [0,1] value relative to maximum and trigger save/ & refresh
    */
   private void setSliderValueActual(int val) {
-    this.sliderValue = val / max;
-    this.func_230979_b_();
-    this.func_230972_a_();
+    this.value = val / max;
+    this.updateMessage();
+    this.applyValue();
   }
 
   public int getSliderValueActual() {
-    return MathHelper.floor(MathHelper.clampedLerp(min, max, this.sliderValue));
+    return Mth.floor(Mth.clampedLerp(min, max, this.value));
   }
 
   public int getField() {

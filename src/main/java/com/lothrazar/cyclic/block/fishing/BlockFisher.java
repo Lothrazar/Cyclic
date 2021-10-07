@@ -3,34 +3,36 @@ package com.lothrazar.cyclic.block.fishing;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockFisher extends BlockBase {
 
   public BlockFisher(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).notSolid());
+    super(properties.strength(1.8F).noOcclusion());
     this.setHasGui();
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
   @Override
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     ClientRegistry.bindTileEntityRenderer(TileRegistry.fisher, RenderFisher::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.fisher, ScreenFisher::new);
+    MenuScreens.register(ContainerScreenRegistry.fisher, ScreenFisher::new);
   }
 
   @Override
@@ -39,7 +41,7 @@ public class BlockFisher extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileFisher();
   }
 }

@@ -2,34 +2,36 @@ package com.lothrazar.cyclic.block.generatorfluid;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockGeneratorFluid extends BlockBase {
 
   public BlockGeneratorFluid(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
-    setDefaultState(getDefaultState().with(LIT, false));
+    super(properties.strength(1.8F));
+    registerDefaultState(defaultBlockState().setValue(LIT, false));
     this.setHasGui();
     this.setHasFluidInteract();
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(BlockStateProperties.FACING).add(LIT);
   }
 
   @Override
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.GENERATOR_FLUID, ScreenGeneratorFluid::new);
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
+    MenuScreens.register(ContainerScreenRegistry.GENERATOR_FLUID, ScreenGeneratorFluid::new);
   }
 
   @Override
@@ -38,7 +40,7 @@ public class BlockGeneratorFluid extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileGeneratorFluid();
   }
 }

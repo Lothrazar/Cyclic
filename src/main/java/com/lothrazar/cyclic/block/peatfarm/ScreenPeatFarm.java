@@ -8,9 +8,9 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
 
@@ -19,7 +19,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
   private ButtonMachineField btnRedstone;
   private ButtonMachineField btnRender;
 
-  public ScreenPeatFarm(ContainerPeatFarm screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenPeatFarm(ContainerPeatFarm screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     fluid = new FluidBar(this, 132, 8, TilePeatFarm.CAPACITY);
     energy = new EnergyBar(this, TilePeatFarm.MAX);
@@ -28,39 +28,39 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
   @Override
   public void init() {
     super.init();
-    fluid.guiLeft = energy.guiLeft = guiLeft;
-    fluid.guiTop = energy.guiTop = guiTop;
+    fluid.guiLeft = energy.guiLeft = leftPos;
+    fluid.guiTop = energy.guiTop = topPos;
     energy.visible = TileSolidifier.POWERCONF.get() > 0;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     btnRender = addButton(new ButtonMachineField(x, y + 20, TilePeatFarm.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+        menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
-    fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
+    this.renderTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.getEnergy());
+    fluid.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getFluid());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
-    btnRedstone.onValueUpdate(container.tile);
-    btnRender.onValueUpdate(container.tile);
+    btnRedstone.onValueUpdate(menu.tile);
+    btnRender.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
+  protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    energy.draw(ms, container.getEnergy());
-    fluid.draw(ms, container.tile.getFluid());
+    energy.draw(ms, menu.getEnergy());
+    fluid.draw(ms, menu.tile.getFluid());
     int rowSize = 6;
     int x1 = ContainerPeatFarm.SLOTX_START;
     int y1 = ContainerPeatFarm.SLOTY;

@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.block.battery;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum EnumBatteryPercent implements IStringSerializable {
+public enum EnumBatteryPercent implements StringRepresentable {
 
   ZERO, TWENTY, FOURTY, SIXTY, EIGHTY, NINETY, ONEHUNDRED;
 
   @Override
-  public String getString() {
+  public String getSerializedName() {
     if (this.name().equals(ONEHUNDRED.name())) {
       return String.valueOf(100);
     }

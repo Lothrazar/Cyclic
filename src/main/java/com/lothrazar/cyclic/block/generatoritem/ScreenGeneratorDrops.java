@@ -10,9 +10,9 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenGeneratorDrops extends ScreenBase<ContainerGeneratorDrops> {
 
@@ -21,7 +21,7 @@ public class ScreenGeneratorDrops extends ScreenBase<ContainerGeneratorDrops> {
   private EnergyBar energy;
   private TimerBar timer;
 
-  public ScreenGeneratorDrops(ContainerGeneratorDrops screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenGeneratorDrops(ContainerGeneratorDrops screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileGeneratorDrops.MAX);
     this.timer = new TimerBar(this, 70, 60, 1);
@@ -31,48 +31,48 @@ public class ScreenGeneratorDrops extends ScreenBase<ContainerGeneratorDrops> {
   public void init() {
     super.init();
     energy.visible = true; //TileGeneratorFuel.POWERCONF.get() > 0;
-    timer.guiLeft = energy.guiLeft = guiLeft;
-    timer.guiTop = energy.guiTop = guiTop;
+    timer.guiLeft = energy.guiLeft = leftPos;
+    timer.guiTop = energy.guiTop = topPos;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileGeneratorDrops.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    x = guiLeft + 132;
-    y = guiTop + 8;
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileGeneratorDrops.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    x = leftPos + 132;
+    y = topPos + 8;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       int f = TileGeneratorDrops.Fields.FLOWING.ordinal();
-      int tog = (container.tile.getField(f) + 1) % 2;
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, tog, container.tile.getPos()));
+      int tog = (menu.tile.getField(f) + 1) % 2;
+      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));
     }));
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
-    timer.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TileGeneratorDrops.Fields.TIMER.ordinal()));
-    btnRedstone.onValueUpdate(container.tile);
+    this.renderTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
+    timer.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getField(TileGeneratorDrops.Fields.TIMER.ordinal()));
+    btnRedstone.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     int fld = TileGeneratorDrops.Fields.FLOWING.ordinal();
-    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.tile.getField(fld)));
-    btnToggle.setTextureId(container.tile.getField(fld) == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
+    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + menu.tile.getField(fld)));
+    btnToggle.setTextureId(menu.tile.getField(fld) == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     //    this.drawSlot(ms, 54, 34); 
     this.drawSlotLarge(ms, 70, 30);
-    energy.draw(ms, container.tile.getEnergy());
-    timer.capacity = container.tile.getField(TileGeneratorDrops.Fields.BURNMAX.ordinal());
+    energy.draw(ms, menu.tile.getEnergy());
+    timer.capacity = menu.tile.getField(TileGeneratorDrops.Fields.BURNMAX.ordinal());
     timer.visible = (timer.capacity > 0);
-    timer.draw(ms, container.tile.getField(TileGeneratorDrops.Fields.TIMER.ordinal()));
+    timer.draw(ms, menu.tile.getField(TileGeneratorDrops.Fields.TIMER.ordinal()));
   }
 }

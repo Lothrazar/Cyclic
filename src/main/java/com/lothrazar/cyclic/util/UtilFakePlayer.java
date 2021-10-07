@@ -27,12 +27,12 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.authlib.GameProfile;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.PacketDirection;
-import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.PacketFlow;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
@@ -42,7 +42,7 @@ public class UtilFakePlayer {
     return attacker instanceof FakePlayer;
   }
 
-  public static WeakReference<FakePlayer> initFakePlayer(ServerWorld ws, UUID uname, String blockName) {
+  public static WeakReference<FakePlayer> initFakePlayer(ServerLevel ws, UUID uname, String blockName) {
     GameProfile breakerProfile = new GameProfile(uname, ModCyclic.MODID + ".fake_player." + blockName);
     WeakReference<FakePlayer> fakePlayer;
     try {
@@ -58,10 +58,10 @@ public class UtilFakePlayer {
     }
     fakePlayer.get().setOnGround(true);
     //    fakePlayer.get().onGround = true;
-    fakePlayer.get().connection = new ServerPlayNetHandler(ws.getServer(), new NetworkManager(PacketDirection.SERVERBOUND), fakePlayer.get()) {
+    fakePlayer.get().connection = new ServerGamePacketListenerImpl(ws.getServer(), new Connection(PacketFlow.SERVERBOUND), fakePlayer.get()) {
 
       @Override
-      public void sendPacket(IPacket<?> packetIn) {}
+      public void send(Packet<?> packetIn) {}
     };
     fakePlayer.get().setSilent(true);
     return fakePlayer;

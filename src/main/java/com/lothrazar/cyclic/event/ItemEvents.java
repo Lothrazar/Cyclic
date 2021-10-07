@@ -28,30 +28,30 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -77,22 +77,22 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onLivingJumpEvent(LivingJumpEvent event) {
-    if (!(event.getEntityLiving() instanceof PlayerEntity)) {
+    if (!(event.getEntityLiving() instanceof Player)) {
       return;
     }
-    PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-    if (player.getHeldItemMainhand().getItem() == ItemRegistry.ENDER_BOOK.get()) {
-      EnderBookItem.cancelTeleport(player.getHeldItemMainhand());
+    Player player = (Player) event.getEntityLiving();
+    if (player.getMainHandItem().getItem() == ItemRegistry.ENDER_BOOK.get()) {
+      EnderBookItem.cancelTeleport(player.getMainHandItem());
     }
-    if (player.getHeldItemOffhand().getItem() == ItemRegistry.ENDER_BOOK.get()) {
-      EnderBookItem.cancelTeleport(player.getHeldItemOffhand());
+    if (player.getOffhandItem().getItem() == ItemRegistry.ENDER_BOOK.get()) {
+      EnderBookItem.cancelTeleport(player.getOffhandItem());
     }
   }
 
   @SubscribeEvent
   public void onCriticalHitEvent(CriticalHitEvent event) {
-    if (event.getEntityLiving() instanceof PlayerEntity) {
-      PlayerEntity ply = (PlayerEntity) event.getEntityLiving();
+    if (event.getEntityLiving() instanceof Player) {
+      Player ply = (Player) event.getEntityLiving();
       //      ply.getAttribute(Attributes.)
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_CRIT.get());
       if (!find.isEmpty()) {
@@ -110,13 +110,13 @@ public class ItemEvents {
     if (level <= 0) {
       return;
     }
-    PlayerEntity player = event.getPlayer();
-    World worldIn = player.world;
-    if (worldIn.isRemote == false) {
+    Player player = event.getPlayer();
+    Level worldIn = player.level;
+    if (worldIn.isClientSide == false) {
       //use cross product to push arrows out to left and right
-      Vector3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
-      Vector3d left = playerDirection.crossProduct(new Vector3d(0, 1, 0));
-      Vector3d right = playerDirection.crossProduct(new Vector3d(0, -1, 0));
+      Vec3 playerDirection = UtilEntity.lookVector(player.yRot, player.xRot);
+      Vec3 left = playerDirection.cross(new Vec3(0, 1, 0));
+      Vec3 right = playerDirection.cross(new Vec3(0, -1, 0));
       EnchantMultishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
       EnchantMultishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
     }
@@ -124,8 +124,8 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
-    if (event.getEntityLiving() instanceof PlayerEntity) {
-      PlayerEntity ply = (PlayerEntity) event.getEntityLiving();
+    if (event.getEntityLiving() instanceof Player) {
+      Player ply = (Player) event.getEntityLiving();
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_KNOCKBACK_RESIST.get());
       if (!find.isEmpty()) {
         event.setCanceled(true);
@@ -143,31 +143,31 @@ public class ItemEvents {
     if (event.getArrow() == null || event.getRayTraceResult() == null) {
       return;
     }
-    World world = event.getArrow().world;
+    Level world = event.getArrow().level;
     Type hit = event.getRayTraceResult().getType();
-    Entity shooter = event.getArrow().func_234616_v_(); // getShooter
-    if (shooter instanceof PlayerEntity) {
-      PlayerEntity ply = (PlayerEntity) shooter;
+    Entity shooter = event.getArrow().getOwner(); // getShooter
+    if (shooter instanceof Player) {
+      Player ply = (Player) shooter;
       //      ply.isSprinting()
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_DMG.get());
       if (!find.isEmpty()) {
         //        ModCyclic.LOGGER.info("before " + event.getArrow().getDamage());
-        AbstractArrowEntity arrow = event.getArrow();
-        double boost = arrow.getDamage() / 2;
-        arrow.setDamage(arrow.getDamage() + boost);
+        AbstractArrow arrow = event.getArrow();
+        double boost = arrow.getBaseDamage() / 2;
+        arrow.setBaseDamage(arrow.getBaseDamage() + boost);
         UtilItemStack.damageItem(ply, find);
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_LIT.get());
-      if (!find.isEmpty() && world.rand.nextDouble() < 0.25) {
-        if (hit == RayTraceResult.Type.ENTITY && ((EntityRayTraceResult) event.getRayTraceResult()).getEntity() instanceof LivingEntity) {
-          LivingEntity target = (LivingEntity) ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
+      if (!find.isEmpty() && world.random.nextDouble() < 0.25) {
+        if (hit == HitResult.Type.ENTITY && ((EntityHitResult) event.getRayTraceResult()).getEntity() instanceof LivingEntity) {
+          LivingEntity target = (LivingEntity) ((EntityHitResult) event.getRayTraceResult()).getEntity();
           target.setGlowing(true);
           //          ModCyclic.LOGGER.info(event.getEntity() + " eeeee" + event.getArrow().getDamage());
-          BlockPos p = target.getPosition();
+          BlockPos p = target.blockPosition();
           // lightning? 
-          LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
-          lightningboltentity.moveForced(p.getX(), p.getY(), p.getZ());
-          world.addEntity(lightningboltentity);
+          LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+          lightningboltentity.moveTo(p.getX(), p.getY(), p.getZ());
+          world.addFreshEntity(lightningboltentity);
           UtilItemStack.damageItem(ply, find);
         }
       }
@@ -176,8 +176,8 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onPotionAddedEvent(PotionAddedEvent event) {
-    if (event.getEntityLiving() instanceof PlayerEntity) {
-      PlayerEntity ply = (PlayerEntity) event.getEntityLiving();
+    if (event.getEntityLiving() instanceof Player) {
+      Player ply = (Player) event.getEntityLiving();
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_ANTIPOTION.get());
       if (!find.isEmpty()) {
         event.getPotionEffect().duration = 0;
@@ -186,9 +186,9 @@ public class ItemEvents {
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_STEALTHPOTION.get());
       if (!find.isEmpty()) {
         if (event.getOldPotionEffect() != null) {
-          event.getOldPotionEffect().showParticles = false;
+          event.getOldPotionEffect().visible = false;
         }
-        event.getPotionEffect().showParticles = false;
+        event.getPotionEffect().visible = false;
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_BOOSTPOTION.get());
       if (!find.isEmpty()) {
@@ -202,8 +202,8 @@ public class ItemEvents {
   @SubscribeEvent
   public void onEntityDamage(LivingDamageEvent event) {
     DamageSource src = event.getSource();
-    if (event.getEntityLiving() instanceof PlayerEntity) {
-      PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+    if (event.getEntityLiving() instanceof Player) {
+      Player player = (Player) event.getEntityLiving();
       if (src.isExplosion()) {
         //explosion thingy
         this.damageFinder(event, player, ItemRegistry.CHARM_CREEPER.get(), 0);
@@ -222,38 +222,38 @@ public class ItemEvents {
       }
       else if (src == DamageSource.STARVE) {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_STARVATION.get(), 0)) {
-          player.getFoodStats().addStats(0, 0.2F);
+          player.getFoodData().eat(0, 0.2F);
         }
       }
       else if (src == DamageSource.DROWN) {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_WATER.get(), 0)) {
           //and a holdover bonus
-          EffectInstance eff = new EffectInstance(Effects.WATER_BREATHING, 20 * 10, 1);
-          eff.showParticles = false;
+          MobEffectInstance eff = new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 10, 1);
+          eff.visible = false;
           eff.showIcon = false;
-          player.addPotionEffect(eff);
+          player.addEffect(eff);
         }
       }
       else if (src == DamageSource.LAVA || src == DamageSource.IN_FIRE || src == DamageSource.ON_FIRE) {
         this.damageFinder(event, player, ItemRegistry.charm_fire, 0);
       }
     }
-    else if (src.getTrueSource() instanceof PlayerEntity) {
+    else if (src.getEntity() instanceof Player) {
       //player DEALING damage
-      PlayerEntity ply = (PlayerEntity) src.getTrueSource();
+      Player ply = (Player) src.getEntity();
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_VENOM.get());
-      if (!find.isEmpty() && ply.world.rand.nextDouble() < 0.25F) {
-        int seconds = 2 + ply.world.rand.nextInt(4);
-        event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.POISON, 20 * seconds, 0));
+      if (!find.isEmpty() && ply.level.random.nextDouble() < 0.25F) {
+        int seconds = 2 + ply.level.random.nextInt(4);
+        event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.POISON, 20 * seconds, 0));
         UtilItemStack.damageItem(ply, find);
       }
-      if (ply.getActiveHand() != null && ply.getHeldItem(ply.getActiveHand()).isEmpty()) {
+      if (ply.getUsedItemHand() != null && ply.getItemInHand(ply.getUsedItemHand()).isEmpty()) {
         //            ModCyclic.LOGGER.info("EMPTY hand damage");
       }
     }
   }
 
-  private boolean damageFinder(LivingDamageEvent event, PlayerEntity player, Item item, float factor) {
+  private boolean damageFinder(LivingDamageEvent event, Player player, Item item, float factor) {
     ItemStack find = CharmUtil.getIfEnabled(player, item);
     if (!find.isEmpty()) {
       float amt = event.getAmount() * factor;
@@ -270,8 +270,8 @@ public class ItemEvents {
   @SubscribeEvent
   public void onPlayerDeath(LivingDeathEvent event) {
     //
-    if (event.getEntityLiving() instanceof PlayerEntity) {
-      PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+    if (event.getEntityLiving() instanceof Player) {
+      Player player = (Player) event.getEntityLiving();
       //      Items.TOTEM_OF_UNDYING
       ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.SOULSTONE.get());
       if (SoulstoneCharm.checkTotemDeathProtection(event.getSource(), player, charmStack)) {
@@ -282,11 +282,11 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onPlayerCloneDeath(PlayerEvent.Clone event) {
-    ModifiableAttributeInstance original = event.getOriginal().getAttribute(Attributes.MAX_HEALTH);
+    AttributeInstance original = event.getOriginal().getAttribute(Attributes.MAX_HEALTH);
     if (original != null) {
       AttributeModifier healthModifier = original.getModifier(HeartItem.ID);
       if (healthModifier != null) {
-        event.getPlayer().getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(healthModifier);
+        event.getPlayer().getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(healthModifier);
       }
     }
   }
@@ -295,8 +295,8 @@ public class ItemEvents {
   public void onEntityUpdate(LivingUpdateEvent event) {
     LivingEntity liv = event.getEntityLiving();
     tryItemHorseEnder(liv);
-    if (liv instanceof PlayerEntity) {
-      PlayerEntity player = (PlayerEntity) liv;
+    if (liv instanceof Player) {
+      Player player = (Player) liv;
       CharmBase.charmSpeed(player);
       CharmBase.charmLuck(player);
       CharmBase.charmAttackSpeed(player);
@@ -308,7 +308,7 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onXpPickup(PlayerXpEvent.PickupXp event) {
-    PlayerEntity player = event.getPlayer();
+    Player player = event.getPlayer();
     ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSTOPPER.get());
     if (!charmStack.isEmpty()) {
       event.setCanceled(true);
@@ -321,30 +321,30 @@ public class ItemEvents {
       // 
       if (liv.isInWater()
           && liv.canBreatheUnderwater() == false
-          && liv.getAir() < liv.getMaxAir()
-          && !liv.isPotionActive(Effects.WATER_BREATHING)) {
-        liv.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 20 * 60, 4));
-        liv.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, 20 * 60, 1));
+          && liv.getAirSupply() < liv.getMaxAirSupply()
+          && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
+        liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60, 4));
+        liv.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.swimspeed, 20 * 60, 1));
         ItemHorseEnder.onSuccess(liv);
       }
-      if (liv.isBurning()
-          && !liv.isPotionActive(Effects.FIRE_RESISTANCE)) {
-        liv.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 20 * 60, 4));
-        liv.extinguish();
+      if (liv.isOnFire()
+          && !liv.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+        liv.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20 * 60, 4));
+        liv.clearFire();
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.fallDistance > 12
-          && !liv.isPotionActive(Effects.SLOW_FALLING)) {
-        liv.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20 * 60, 4));
+          && !liv.hasEffect(MobEffects.SLOW_FALLING)) {
+        liv.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20 * 60, 4));
         //        if (liv.getPassengers().size() > 0) {
         //          liv.getPassengers().get(0).addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20 * 60, 1));
         //        }
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.getHealth() < 6
-          && !liv.isPotionActive(Effects.ABSORPTION)) {
-        liv.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 20 * 60, 4));
-        liv.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 20 * 60, 4));
+          && !liv.hasEffect(MobEffects.ABSORPTION)) {
+        liv.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 20 * 60, 4));
+        liv.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20 * 60, 4));
         ItemHorseEnder.onSuccess(liv);
       }
     }
@@ -352,16 +352,16 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onBonemealEvent(BonemealEvent event) {
-    World world = event.getWorld();
+    Level world = event.getWorld();
     BlockPos pos = event.getPos();
     if (world.getBlockState(pos).getBlock() == Blocks.PODZOL
-        && world.isAirBlock(pos.up())) {
-      world.setBlockState(pos.up(), BlockRegistry.FLOWER_CYAN.get().getDefaultState());
+        && world.isEmptyBlock(pos.above())) {
+      world.setBlockAndUpdate(pos.above(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState());
       event.setResult(Result.ALLOW);
     }
     else if (world.getBlockState(pos).getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setResult(Result.ALLOW);
-      if (world.rand.nextDouble() < 0.5) {
+      if (world.random.nextDouble() < 0.5) {
         UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_CYAN.get()));
       }
     }
@@ -369,8 +369,8 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onBedCheck(SleepingLocationCheckEvent event) {
-    if (event.getEntity() instanceof PlayerEntity) {
-      PlayerEntity p = (PlayerEntity) event.getEntity();
+    if (event.getEntity() instanceof Player) {
+      Player p = (Player) event.getEntity();
       if (p.getPersistentData().getBoolean("cyclic_sleeping")) { // TODO: const in sleeping mat
         event.setResult(Result.ALLOW);
       }
@@ -386,11 +386,11 @@ public class ItemEvents {
         && event.getPlayer().isCrouching()) {
       scaffoldHit(event);
     }
-    if (event.getPlayer().isCrouching() && event.getItemStack().getItem().isIn(DataTags.WRENCH)) {
+    if (event.getPlayer().isCrouching() && event.getItemStack().getItem().is(DataTags.WRENCH)) {
       if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof CableBase) {
         //cyclic cable
         //test? maybe config disable? 
-        event.getPlayer().swingArm(event.getHand());
+        event.getPlayer().swing(event.getHand());
         event.getWorld().destroyBlock(event.getPos(), true);
       }
     }
@@ -400,9 +400,9 @@ public class ItemEvents {
     ItemScaffolding item = (ItemScaffolding) event.getItemStack().getItem();
     Direction opp = event.getFace().getOpposite();
     BlockPos dest = UtilWorld.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, item.getBlock());
-    if (event.getWorld().isAirBlock(dest)) {
-      event.getWorld().setBlockState(dest, item.getBlock().getDefaultState());
-      ItemStack stac = event.getPlayer().getHeldItem(event.getHand());
+    if (event.getWorld().isEmptyBlock(dest)) {
+      event.getWorld().setBlockAndUpdate(dest, item.getBlock().defaultBlockState());
+      ItemStack stac = event.getPlayer().getItemInHand(event.getHand());
       UtilItemStack.shrink(event.getPlayer(), stac);
       event.setCanceled(true);
     }
@@ -418,17 +418,17 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
-    PlayerEntity player = event.getPlayer();
-    ItemStack held = player.getHeldItem(event.getHand());
+    Player player = event.getPlayer();
+    ItemStack held = player.getItemInHand(event.getHand());
     if (held.isEmpty()) {
       return;
     }
-    World world = player.getEntityWorld();
+    Level world = player.getCommandSenderWorld();
     ///////////// shape
     if (held.getItem() instanceof ShapeCard && player.isCrouching()) {
       BlockState target = world.getBlockState(event.getPos());
       ShapeCard.setBlockState(held, target);
-      UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
+      UtilChat.sendStatusMessage(player, target.getBlock().getDescriptionId());
     }
     ///////////////// builders
     if (held.getItem() instanceof BuilderItem) {
@@ -442,13 +442,13 @@ public class ItemEvents {
         //pick out target block
         BlockState target = world.getBlockState(event.getPos());
         BuilderActionType.setBlockState(held, target);
-        UtilChat.sendStatusMessage(player, target.getBlock().getTranslationKey());
+        UtilChat.sendStatusMessage(player, target.getBlock().getDescriptionId());
         event.setCanceled(true);
         UtilSound.playSound(player, SoundRegistry.DCOIN, 0.3F, 1F);
       }
       else {
         //change size
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
           BuilderActionType.toggle(held);
         }
         UtilSound.playSound(player, SoundRegistry.TOOL_MODE);
@@ -463,13 +463,13 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onPlayerPickup(EntityItemPickupEvent event) {
-    if (event.getEntityLiving() instanceof PlayerEntity) {
-      PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+    if (event.getEntityLiving() instanceof Player) {
+      Player player = (Player) event.getEntityLiving();
       ItemEntity itemEntity = event.getItem();
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();
       for (Integer i : ItemStorageBag.getAllBagSlots(player)) {
-        ItemStack bag = player.inventory.getStackInSlot(i);
+        ItemStack bag = player.inventory.getItem(i);
         switch (ItemStorageBag.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = ItemStorageBag.tryInsert(bag, resultStack);

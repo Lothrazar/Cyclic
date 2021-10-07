@@ -7,20 +7,20 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
@@ -31,7 +31,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePackager extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TilePackager extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX;
@@ -76,29 +76,29 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     //shapeless recipes / shaped check either
-    List<ICraftingRecipe> recipes = world.getRecipeManager().getRecipesForType(IRecipeType.CRAFTING);
-    for (ICraftingRecipe rec : recipes) {
+    List<CraftingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
+    for (CraftingRecipe rec : recipes) {
       if (!isRecipeValid(rec)) {
         continue;
       }
       //test matching recipe and its size
       int total = getCostIfMatched(stack, rec);
       if (total > 0 &&
-          outputSlots.insertItem(0, rec.getRecipeOutput().copy(), true).isEmpty()) {
-        ModCyclic.LOGGER.info("Packager recipe match of size " + total + " producing -> " + rec.getRecipeOutput().copy());
+          outputSlots.insertItem(0, rec.getResultItem().copy(), true).isEmpty()) {
+        ModCyclic.LOGGER.info("Packager recipe match of size " + total + " producing -> " + rec.getResultItem().copy());
         //consume items, produce output
         inputSlots.extractItem(0, total, false);
-        outputSlots.insertItem(0, rec.getRecipeOutput().copy(), false);
+        outputSlots.insertItem(0, rec.getResultItem().copy(), false);
         energy.extractEnergy(POWERCONF.get(), false);
       }
     }
   }
 
-  public static boolean isRecipeValid(ICraftingRecipe recipe) {
+  public static boolean isRecipeValid(CraftingRecipe recipe) {
     int total = 0, matched = 0;
     Ingredient first = null;
     for (Ingredient ingr : recipe.getIngredients()) {
-      if (ingr == Ingredient.EMPTY || ingr.getMatchingStacks().length == 0) {
+      if (ingr == Ingredient.EMPTY || ingr.getItems().length == 0) {
         continue;
       }
       total++;
@@ -107,31 +107,31 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
         matched = 1;
         continue;
       }
-      if (first.test(ingr.getMatchingStacks()[0])) {
+      if (first.test(ingr.getItems()[0])) {
         matched++;
       }
     }
-    if (first == null || first.getMatchingStacks() == null || first.getMatchingStacks().length == 0) {
+    if (first == null || first.getItems() == null || first.getItems().length == 0) {
       return false; //nothing here
     }
-    boolean outIsStorage = recipe.getRecipeOutput().getItem().isIn(Tags.Items.STORAGE_BLOCKS);
-    boolean inIsIngot = first.getMatchingStacks()[0].getItem().isIn(Tags.Items.INGOTS);
+    boolean outIsStorage = recipe.getResultItem().getItem().is(Tags.Items.STORAGE_BLOCKS);
+    boolean inIsIngot = first.getItems()[0].getItem().is(Tags.Items.INGOTS);
     if (!outIsStorage && inIsIngot) {
       //ingots can only go to storage blocks, nothing else
       //avoids armor/ iron trap doors. kinda hacky
       return false;
     }
     if (total > 0 && total == matched &&
-        recipe.getRecipeOutput().getMaxStackSize() > 1 && //aka not tools/boots/etc
+        recipe.getResultItem().getMaxStackSize() > 1 && //aka not tools/boots/etc
         //        stack.getCount() >= total &&
         (total == 4 || total == 9) &&
-        (recipe.getRecipeOutput().getCount() == 1 || recipe.getRecipeOutput().getCount() == total)) {
+        (recipe.getResultItem().getCount() == 1 || recipe.getResultItem().getCount() == total)) {
       return true;
     }
     return false;
   }
 
-  private int getCostIfMatched(ItemStack stack, ICraftingRecipe recipe) {
+  private int getCostIfMatched(ItemStack stack, CraftingRecipe recipe) {
     int total = 0, matched = 0;
     for (Ingredient ingr : recipe.getIngredients()) {
       if (ingr == Ingredient.EMPTY) {
@@ -145,20 +145,20 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
     if (total == matched &&
         stack.getCount() >= total &&
         (total == 4 || total == 9) &&
-        (recipe.getRecipeOutput().getCount() == 1 || recipe.getRecipeOutput().getCount() == total)) {
+        (recipe.getResultItem().getCount() == 1 || recipe.getResultItem().getCount() == total)) {
       return total;
     }
     return -1;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerPackager(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerPackager(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -173,17 +173,17 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

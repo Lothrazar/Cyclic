@@ -25,10 +25,12 @@ package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.InteractionResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemHorseRedstoneSpeed extends ItemEntityInteractable {
 
@@ -42,15 +44,15 @@ public class ItemHorseRedstoneSpeed extends ItemEntityInteractable {
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
-        && event.getTarget() instanceof HorseEntity) {
+        && event.getTarget() instanceof Horse) {
       // lets go 
-      HorseEntity ahorse = (HorseEntity) event.getTarget();
+      Horse ahorse = (Horse) event.getTarget();
       double speed = ahorse.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
       double newSpeed = speed + SPEED_AMT;
       if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
         ahorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         event.setCanceled(true);
-        event.setCancellationResult(ActionResultType.SUCCESS);
+        event.setCancellationResult(InteractionResult.SUCCESS);
         event.getItemStack().shrink(1);
         UtilEntity.eatingHorse(ahorse);
       }

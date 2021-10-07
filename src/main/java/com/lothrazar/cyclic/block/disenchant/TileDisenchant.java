@@ -11,22 +11,22 @@ import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Map;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -40,7 +40,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileDisenchant extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileDisenchant extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     REDSTONE, TIMER;
@@ -76,7 +76,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   public TileDisenchant() {
     super(TileRegistry.disenchanter);
     tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().isIn(DataTags.EXPERIENCE);
+      return p.getFluid().is(DataTags.EXPERIENCE);
     });
   }
 
@@ -87,7 +87,7 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return;
     }
     ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
-    if (input.isEmpty() || input.getItem().isIn(DataTags.DISENCHANTER_IMMUNE)) {
+    if (input.isEmpty() || input.getItem().is(DataTags.DISENCHANTER_IMMUNE)) {
       return;
     }
     Integer cost = POWERCONF.get();
@@ -118,11 +118,11 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     }
     //and input has at least one enchantment 
     //success happening
-    if (world.rand.nextDouble() < 0.5) {
-      UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+    if (level.random.nextDouble() < 0.5) {
+      UtilSound.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
     }
     else {
-      UtilSound.playSound(world, pos, SoundEvents.BLOCK_ANVIL_USE);
+      UtilSound.playSound(level, worldPosition, SoundEvents.ANVIL_USE);
     }
     energy.extractEnergy(cost, false);
     if (FLUIDCOST.get() > 0) {
@@ -182,13 +182,13 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerDisenchant(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerDisenchant(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -206,21 +206,21 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    CompoundNBT fluid = new CompoundNBT();
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

@@ -27,10 +27,10 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketFilterCard extends PacketBase {
@@ -41,19 +41,19 @@ public class PacketFilterCard extends PacketBase {
     action = s;
   }
 
-  public static PacketFilterCard decode(PacketBuffer buf) {
+  public static PacketFilterCard decode(FriendlyByteBuf buf) {
     return new PacketFilterCard(CraftingActionEnum.values()[buf.readInt()]);
   }
 
-  public static void encode(PacketFilterCard msg, PacketBuffer buf) {
+  public static void encode(PacketFilterCard msg, FriendlyByteBuf buf) {
     buf.writeInt(msg.action.ordinal());
   }
 
   public static void handle(PacketFilterCard message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      ServerPlayerEntity sender = ctx.get().getSender();
-      ItemStack filter = sender.getHeldItem(Hand.MAIN_HAND);
+      ServerPlayer sender = ctx.get().getSender();
+      ItemStack filter = sender.getItemInHand(InteractionHand.MAIN_HAND);
       FilterCardItem.toggleFilterType(filter);
     });
     message.done(ctx);

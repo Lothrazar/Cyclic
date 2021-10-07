@@ -6,16 +6,16 @@ import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -37,7 +37,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
+  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
       return matchFluid(tile.getFluid()) && matchItems(tile);
@@ -82,11 +82,11 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   public ItemStack[] ingredientAt(int slot) {
     Ingredient ing = ingredients.get(slot);
-    return ing.getMatchingStacks();
+    return ing.getItems();
   }
 
   @Override
-  public ItemStack getRecipeOutput() {
+  public ItemStack getResultItem() {
     return result.copy();
   }
 
@@ -96,19 +96,19 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public IRecipeType<?> getType() {
+  public RecipeType<?> getType() {
     return CyclicRecipeType.SOLID;
   }
 
   @Override
-  public IRecipeSerializer<?> getSerializer() {
+  public RecipeSerializer<?> getSerializer() {
     return SERIALIZER;
   }
 
   public static final SerializeSolidifier SERIALIZER = new SerializeSolidifier();
 
   @SuppressWarnings("rawtypes")
-  public static class SerializeSolidifier extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
+  public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
 
     SerializeSolidifier() {
       // This registry name is what people will specify in their json files.
@@ -117,20 +117,20 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
     @SuppressWarnings("unchecked")
     @Override
-    public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
+    public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
         //TODO: in 1.17 make array
-        Ingredient inputTop = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputTop"));
+        Ingredient inputTop = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputTop"));
         Ingredient inputMiddle = Ingredient.EMPTY;
-        if (JSONUtils.hasField(json, "inputMiddle")) {
-          inputMiddle = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputMiddle"));
+        if (GsonHelper.isValidNode(json, "inputMiddle")) {
+          inputMiddle = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputMiddle"));
         }
         Ingredient inputBottom = Ingredient.EMPTY;
-        if (JSONUtils.hasField(json, "inputBottom")) {
-          inputBottom = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputBottom"));
+        if (GsonHelper.isValidNode(json, "inputBottom")) {
+          inputBottom = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputBottom"));
         }
-        ItemStack resultStack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+        ItemStack resultStack = ShapedRecipe.itemFromJson(GsonHelper.getAsJsonObject(json, "result"));
         if (inputTop == Ingredient.EMPTY) {
           throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
         }
@@ -146,23 +146,23 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeSolidifier read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public RecipeSolidifier fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
-          Ingredient.read(buffer), Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer),
-          buffer.readItemStack());
+          Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), FluidStack.readFromPacket(buffer),
+          buffer.readItem());
       return r;
     }
 
     @Override
-    public void write(PacketBuffer buffer, RecipeSolidifier recipe) {
+    public void toNetwork(FriendlyByteBuf buffer, RecipeSolidifier recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       Ingredient one = (Ingredient) recipe.ingredients.get(1);
       Ingredient two = (Ingredient) recipe.ingredients.get(2);
-      zero.write(buffer);
-      one.write(buffer);
-      two.write(buffer);
+      zero.toNetwork(buffer);
+      one.toNetwork(buffer);
+      two.toNetwork(buffer);
       recipe.fluidInput.writeToPacket(buffer);
-      buffer.writeItemStack(recipe.getRecipeOutput());
+      buffer.writeItem(recipe.getResultItem());
     }
   }
 }

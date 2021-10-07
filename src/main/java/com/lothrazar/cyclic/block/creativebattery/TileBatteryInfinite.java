@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileBatteryInfinite extends TileEntityBase implements ITickableTileEntity {
+public class TileBatteryInfinite extends TileEntityBase implements TickableBlockEntity {
 
   static final int MAX = 960000000;
 
@@ -61,26 +61,26 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
+      poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
+      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   //  @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override

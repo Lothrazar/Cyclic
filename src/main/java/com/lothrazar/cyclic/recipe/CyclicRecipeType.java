@@ -6,9 +6,9 @@ import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
-import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.world.item.crafting.RecipeType;
 
-public class CyclicRecipeType<RECIPE_TYPE extends CyclicRecipe> implements IRecipeType<RECIPE_TYPE> {
+public class CyclicRecipeType<RECIPE_TYPE extends CyclicRecipe> implements RecipeType<RECIPE_TYPE> {
 
   public static final CyclicRecipeType<RecipeSolidifier<TileEntityBase>> SOLID = create("solidifier");
   public static final CyclicRecipeType<RecipeMelter<TileEntityBase>> MELTER = create("melter");

@@ -31,27 +31,29 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class TileTransporterItem extends ItemBase {
 
@@ -68,29 +70,29 @@ public class TileTransporterItem extends ItemBase {
    * Called when a Block is right-clicked with this Item
    */
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
     //
-    ItemStack stack = context.getItem();
-    BlockPos pos = context.getPos();
-    Direction side = context.getFace();
-    World world = context.getWorld();
-    BlockPos offset = pos.offset(side);
-    if (world.isAirBlock(offset) == false) {
-      return ActionResultType.FAIL;
+    ItemStack stack = context.getItemInHand();
+    BlockPos pos = context.getClickedPos();
+    Direction side = context.getClickedFace();
+    Level world = context.getLevel();
+    BlockPos offset = pos.relative(side);
+    if (world.isEmptyBlock(offset) == false) {
+      return InteractionResult.FAIL;
     }
     if (placeStoredTileEntity(player, stack, offset)) {
-      player.setHeldItem(context.getHand(), ItemStack.EMPTY);
+      player.setItemInHand(context.getHand(), ItemStack.EMPTY);
       UtilSound.playSound(player, SoundRegistry.THUNK);
       if (player.isCreative() == false) {
-        UtilItemStack.drop(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
+        UtilItemStack.drop(world, player.blockPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
       }
     }
-    return ActionResultType.SUCCESS;
+    return InteractionResult.SUCCESS;
   }
 
-  private boolean placeStoredTileEntity(PlayerEntity player, ItemStack heldChestSack, BlockPos pos) {
-    CompoundNBT itemData = heldChestSack.getOrCreateTag();
+  private boolean placeStoredTileEntity(Player player, ItemStack heldChestSack, BlockPos pos) {
+    CompoundTag itemData = heldChestSack.getOrCreateTag();
     ResourceLocation res = new ResourceLocation(itemData.getString(KEY_BLOCKID));
     Block block = ForgeRegistries.BLOCKS.getValue(res);
     if (block == null) {
@@ -98,27 +100,27 @@ public class TileTransporterItem extends ItemBase {
       UtilChat.addChatMessage(player, "Invalid block id " + res);
       return false;
     }
-    BlockState toPlace = NBTUtil.readBlockState(itemData.getCompound(KEY_BLOCKSTATE));
+    BlockState toPlace = NbtUtils.readBlockState(itemData.getCompound(KEY_BLOCKSTATE));
     //maybe get from player direction or offset face, but instead rely on that from saved data
-    World world = player.getEntityWorld();
+    Level world = player.getCommandSenderWorld();
     try {
-      world.setBlockState(pos, toPlace);
-      TileEntity tile = world.getTileEntity(pos);
+      world.setBlockAndUpdate(pos, toPlace);
+      BlockEntity tile = world.getBlockEntity(pos);
       if (tile != null) {
-        CompoundNBT tileData = itemData.getCompound(TileTransporterItem.KEY_BLOCKTILE);
+        CompoundTag tileData = itemData.getCompound(TileTransporterItem.KEY_BLOCKTILE);
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
-        tile.read(toPlace, tileData); // can cause errors in 3rd party mod
+        tile.load(toPlace, tileData); // can cause errors in 3rd party mod
         //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
-        tile.markDirty();
-        world.markChunkDirty(pos, tile);
+        tile.setChanged();
+        world.blockEntityChanged(pos, tile);
       }
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Error attempting to place block in world", e);
       UtilChat.sendStatusMessage(player, "chest_sack.error.place");
-      world.setBlockState(pos, Blocks.AIR.getDefaultState());
+      world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
       return false;
     }
     //    heldChestSack.stackSize = 0;
@@ -129,25 +131,25 @@ public class TileTransporterItem extends ItemBase {
 
   @OnlyIn(Dist.CLIENT)
   @Override
-  public void addInformation(ItemStack itemStack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack itemStack, Level worldIn, List<Component> list, TooltipFlag flagIn) {
     if (itemStack.getTag() != null && itemStack.getTag().contains(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTag().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
-        TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang(blockname));
-        t.mergeStyle(TextFormatting.DARK_GREEN);
+        TranslatableComponent t = new TranslatableComponent(UtilChat.lang(blockname));
+        t.withStyle(ChatFormatting.DARK_GREEN);
         list.add(t);
       }
     }
     else {
-      TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang("invalid"));
-      t.mergeStyle(TextFormatting.DARK_RED);
+      TranslatableComponent t = new TranslatableComponent(UtilChat.lang("invalid"));
+      t.withStyle(ChatFormatting.DARK_RED);
       list.add(t);
     }
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public boolean hasEffect(ItemStack stack) {
+  public boolean isFoil(ItemStack stack) {
     return true;
   }
 }

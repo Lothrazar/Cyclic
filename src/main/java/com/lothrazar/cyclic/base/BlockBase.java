@@ -3,30 +3,30 @@ package com.lothrazar.cyclic.base;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -37,6 +37,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockBase extends Block {
 
@@ -61,20 +63,20 @@ public class BlockBase extends Block {
 
   @SuppressWarnings("deprecation")
   @Override
-  public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+  public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
     if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
-      Direction oldDir = state.get(BlockStateProperties.HORIZONTAL_FACING);
+      Direction oldDir = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
       Direction newDir = direction.rotate(oldDir);
       //still rotate on axis, if its valid
       if (newDir != Direction.UP && newDir != Direction.DOWN) {
-        return state.with(BlockStateProperties.HORIZONTAL_FACING, newDir);
+        return state.setValue(BlockStateProperties.HORIZONTAL_FACING, newDir);
       }
     }
     if (state.hasProperty(BlockStateProperties.FACING)) {
-      Direction oldDir = state.get(BlockStateProperties.FACING);
+      Direction oldDir = state.getValue(BlockStateProperties.FACING);
       Direction newDir = direction.rotate(oldDir);
       // rotate state on axis dir
-      return state.with(BlockStateProperties.FACING, newDir);
+      return state.setValue(BlockStateProperties.FACING, newDir);
     }
     // default doesnt do much
     BlockState newState = state.rotate(direction);
@@ -83,46 +85,46 @@ public class BlockBase extends Block {
 
   @SuppressWarnings("deprecation")
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     if (hasFluidInteract) {
-      if (!world.isRemote) {
-        TileEntity tankHere = world.getTileEntity(pos);
+      if (!world.isClientSide) {
+        BlockEntity tankHere = world.getBlockEntity(pos);
         if (tankHere != null) {
-          IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getFace()).orElse(null);
+          IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getDirection()).orElse(null);
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               //success so display new amount
               if (handler.getFluidInTank(0) != null) {
-                player.sendStatusMessage(new TranslationTextComponent(getFluidRatioName(handler)), true);
+                player.displayClientMessage(new TranslatableComponent(getFluidRatioName(handler)), true);
               }
               //and also play the fluid sound
-              if (player instanceof ServerPlayerEntity) {
-                UtilSound.playSoundFromServer((ServerPlayerEntity) player, SoundEvents.ITEM_BUCKET_FILL);
+              if (player instanceof ServerPlayer) {
+                UtilSound.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL);
               }
             }
             else {
-              player.sendStatusMessage(new TranslationTextComponent(getFluidRatioName(handler)), true);
+              player.displayClientMessage(new TranslatableComponent(getFluidRatioName(handler)), true);
             }
           }
         }
       }
-      if (FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
-        return ActionResultType.SUCCESS;
+      if (FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()) {
+        return InteractionResult.SUCCESS;
       }
     }
     if (this.hasGui) {
-      if (!world.isRemote) {
-        TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity instanceof INamedContainerProvider) {
-          NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+      if (!world.isClientSide) {
+        BlockEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof MenuProvider) {
+          NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
         }
         else {
           throw new IllegalStateException("Our named container provider is missing!");
         }
       }
-      return ActionResultType.SUCCESS;
+      return InteractionResult.SUCCESS;
     }
-    return super.onBlockActivated(state, world, pos, player, hand, hit);
+    return super.use(state, world, pos, player, hand, hit);
   }
 
   public static String getFluidRatioName(IFluidHandler handler) {
@@ -135,26 +137,26 @@ public class BlockBase extends Block {
 
   @SuppressWarnings("deprecation")
   @Override
-  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      TileEntity tileentity = worldIn.getTileEntity(pos);
+      BlockEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity != null) {
         IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         if (items != null) {
           for (int i = 0; i < items.getSlots(); ++i) {
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
+            Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
           }
-          worldIn.updateComparatorOutputLevel(pos, this);
+          worldIn.updateNeighbourForOutputSignal(pos, this);
         }
       }
-      super.onReplaced(state, worldIn, pos, newState, isMoving);
+      super.onRemove(state, worldIn, pos, newState, isMoving);
     }
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip").mergeStyle(TextFormatting.GRAY));
+  public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
   }
 
   /**
@@ -162,23 +164,23 @@ public class BlockBase extends Block {
    */
   public void registerClient() {}
 
-  public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+  public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
     return hasCapabilityDir(facing, world, facingPos, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
   }
 
-  public static boolean isFluid(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+  public static boolean isFluid(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
     return hasCapabilityDir(facing, world, facingPos, CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
   }
 
-  public static boolean isEnergy(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+  public static boolean isEnergy(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
     return hasCapabilityDir(facing, world, facingPos, CapabilityEnergy.ENERGY);
   }
 
-  private static boolean hasCapabilityDir(Direction facing, IWorld world, BlockPos facingPos, Capability<?> cap) {
+  private static boolean hasCapabilityDir(Direction facing, LevelAccessor world, BlockPos facingPos, Capability<?> cap) {
     if (facing == null) {
       return false;
     }
-    TileEntity neighbor = world.getTileEntity(facingPos);
+    BlockEntity neighbor = world.getBlockEntity(facingPos);
     if (neighbor != null
         && neighbor.getCapability(cap, facing.getOpposite()).orElse(null) != null) {
       return true;

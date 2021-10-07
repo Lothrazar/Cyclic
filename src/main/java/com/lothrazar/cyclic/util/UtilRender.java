@@ -3,41 +3,41 @@ package com.lothrazar.cyclic.util;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.render.RenderResizableCuboid;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
-import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.model.BakedQuad;
-import net.minecraft.client.renderer.model.IBakedModel;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.util.Mth;
+import com.mojang.math.Matrix4f;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.FluidStack;
@@ -66,22 +66,22 @@ public class UtilRender {
     if (desiredWidth == 0 || desiredHeight == 0 || textureWidth == 0 || textureHeight == 0) {
       return;
     }
-    Minecraft.getInstance().textureManager.bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+    Minecraft.getInstance().textureManager.bind(InventoryMenu.BLOCK_ATLAS);
     int xTileCount = desiredWidth / textureWidth;
     int xRemainder = desiredWidth - (xTileCount * textureWidth);
     int yTileCount = desiredHeight / textureHeight;
     int yRemainder = desiredHeight - (yTileCount * textureHeight);
     int yStart = yPosition + yOffset;
-    float uMin = sprite.getMinU();
-    float uMax = sprite.getMaxU();
-    float vMin = sprite.getMinV();
-    float vMax = sprite.getMaxV();
+    float uMin = sprite.getU0();
+    float uMax = sprite.getU1();
+    float vMin = sprite.getV0();
+    float vMax = sprite.getV1();
     float uDif = uMax - uMin;
     float vDif = vMax - vMin;
     RenderSystem.enableBlend();
     //    RenderSystem.enableAlphaTest();
-    BufferBuilder vertexBuffer = Tessellator.getInstance().getBuffer();
-    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+    BufferBuilder vertexBuffer = Tesselator.getInstance().getBuilder();
+    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
     for (int xTile = 0; xTile <= xTileCount; xTile++) {
       int width = (xTile == xTileCount) ? xRemainder : textureWidth;
       if (width == 0) {
@@ -101,64 +101,64 @@ public class UtilRender {
         int y = yStart - ((yTile + 1) * textureHeight);
         int maskTop = textureHeight - height;
         float vMaxLocal = vMax - (vDif * maskTop / textureHeight);
-        vertexBuffer.pos(x, y + textureHeight, zLevel).tex(uMin, vMaxLocal).endVertex();
-        vertexBuffer.pos(shiftedX, y + textureHeight, zLevel).tex(uMaxLocal, vMaxLocal).endVertex();
-        vertexBuffer.pos(shiftedX, y + maskTop, zLevel).tex(uMaxLocal, vMin).endVertex();
-        vertexBuffer.pos(x, y + maskTop, zLevel).tex(uMin, vMin).endVertex();
+        vertexBuffer.vertex(x, y + textureHeight, zLevel).uv(uMin, vMaxLocal).endVertex();
+        vertexBuffer.vertex(shiftedX, y + textureHeight, zLevel).uv(uMaxLocal, vMaxLocal).endVertex();
+        vertexBuffer.vertex(shiftedX, y + maskTop, zLevel).uv(uMaxLocal, vMin).endVertex();
+        vertexBuffer.vertex(x, y + maskTop, zLevel).uv(uMin, vMin).endVertex();
       }
     }
-    vertexBuffer.finishDrawing();
-    WorldVertexBufferUploader.draw(vertexBuffer);
+    vertexBuffer.end();
+    BufferUploader.end(vertexBuffer);
     //    RenderSystem.disableAlphaTest();
     RenderSystem.disableBlend();
   }
 
-  private static void renderCube(Matrix4f matrix, IVertexBuilder builder, BlockPos pos, Color color, float alpha) {
+  private static void renderCube(Matrix4f matrix, VertexConsumer builder, BlockPos pos, Color color, float alpha) {
     float red = color.getRed() / 255f, green = color.getGreen() / 255f, blue = color.getBlue() / 255f;
     float startX = 0, startY = 0, startZ = -1, endX = 1, endY = 1, endZ = 0;
     //down
-    builder.pos(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
     //up
-    builder.pos(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
     //east
-    builder.pos(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
     //west
-    builder.pos(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
     //south
-    builder.pos(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, endX, startY, endZ).color(red, green, blue, alpha).endVertex();
     //north
-    builder.pos(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
-    builder.pos(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, startY, startZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, startY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, endY, endZ).color(red, green, blue, alpha).endVertex();
+    builder.vertex(matrix, startX, endY, startZ).color(red, green, blue, alpha).endVertex();
   }
 
   /**
    * This block-rendering function from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
    *
    */
-  private static void renderModelBrightnessColorQuads(MatrixStack.Entry matrixEntry, IVertexBuilder builder, float red, float green, float blue, float alpha, List<BakedQuad> quads,
+  private static void renderModelBrightnessColorQuads(PoseStack.Pose matrixEntry, VertexConsumer builder, float red, float green, float blue, float alpha, List<BakedQuad> quads,
       int combinedLights, int combinedOverlay) {
     for (BakedQuad bakedquad : quads) {
       float r;
       float g;
       float b;
-      if (bakedquad.hasTintIndex()) {
+      if (bakedquad.isTinted()) {
         r = red * 1f;
         g = green * 1f;
         b = blue * 1f;
@@ -179,7 +179,7 @@ public class UtilRender {
    * 
    * See MekanismRenderer.
    **/
-  public static void renderObject(Model3D object, MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
+  public static void renderObject(Model3D object, PoseStack matrix, VertexConsumer buffer, int argb, int light) {
     if (object != null) {
       RenderResizableCuboid.INSTANCE.renderCube(object, matrix, buffer, argb, light);
     }
@@ -204,9 +204,9 @@ public class UtilRender {
     if (glow >= 15) {
       return FULL_LIGHT;
     }
-    int blockLight = LightTexture.getLightBlock(light);
-    int skyLight = LightTexture.getLightSky(light);
-    return LightTexture.packLight(Math.max(blockLight, glow), Math.max(skyLight, glow));
+    int blockLight = LightTexture.block(light);
+    int skyLight = LightTexture.sky(light);
+    return LightTexture.pack(Math.max(blockLight, glow), Math.max(skyLight, glow));
   }
 
   public static int getColorARGB(FluidStack fluidStack, float fluidScale) {
@@ -239,8 +239,8 @@ public class UtilRender {
   /**
    * Call from TESR perspective
    */
-  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, MatrixStack matrix, ItemStack stack, float alpha, float scale) {
-    BlockState renderBlockState = Block.getBlockFromItem(stack.getItem()).getDefaultState();
+  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, ItemStack stack, float alpha, float scale) {
+    BlockState renderBlockState = Block.byItem(stack.getItem()).defaultBlockState();
     renderAsBlock(centerPos, shape, matrix, renderBlockState, alpha, scale);
   }
 
@@ -248,10 +248,10 @@ public class UtilRender {
    * Render this BLOCK right here in the world, start with alpha and scale near 1. Call from TESR perspective
    * 
    */
-  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, MatrixStack matrix, BlockState renderBlockState, float alpha, float scale) {
-    World world = Minecraft.getInstance().world;
+  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, BlockState renderBlockState, float alpha, float scale) {
+    Level world = Minecraft.getInstance().level;
     //render 
-    Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
+    Minecraft.getInstance().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
     //
     //    double range = 6F;
     //    ClientPlayerEntity player = Minecraft.getInstance().player;
@@ -260,10 +260,10 @@ public class UtilRender {
     //      return;
     //    }
     Minecraft mc = Minecraft.getInstance();
-    IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    IVertexBuilder builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);
-    BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
-    matrix.push();
+    MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
+    VertexConsumer builder = buffer.getBuffer(FakeBlockRenderTypes.FAKE_BLOCK);
+    BlockRenderDispatcher dispatcher = mc.getBlockRenderer();
+    matrix.pushPose();
     //    BlockPos centerPos = center;//mc.gameRenderer.getActiveRenderInfo().getProjectedView();
     matrix.translate(-centerPos.getX(), -centerPos.getY(), -centerPos.getZ());
     for (BlockPos coordinate : shape) {
@@ -273,7 +273,7 @@ public class UtilRender {
       float x = coordinate.getX();
       float y = coordinate.getY();
       float z = coordinate.getZ();
-      matrix.push();
+      matrix.pushPose();
       matrix.translate(x, y, z);
       //
       //shrink it up
@@ -281,31 +281,31 @@ public class UtilRender {
       matrix.scale(scale, scale, scale);
       //
       //      UtilWorld.OutlineRenderer.renderHighLightedBlocksOutline(builder, x, y, z, r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); // .02f
-      IBakedModel ibakedmodel = dispatcher.getModelForState(renderBlockState);
+      BakedModel ibakedmodel = dispatcher.getBlockModel(renderBlockState);
       BlockColors blockColors = Minecraft.getInstance().getBlockColors();
       int color = blockColors.getColor(renderBlockState, world, coordinate, 0);
       float red = (color >> 16 & 255) / 255.0F;
       float green = (color >> 8 & 255) / 255.0F;
       float blue = (color & 255) / 255.0F;
-      if (renderBlockState.getRenderType() == BlockRenderType.MODEL) {
+      if (renderBlockState.getRenderShape() == RenderShape.MODEL) {
         int combinedLights = 15728640;
         int combinedOverlay = 655360;
         for (Direction direction : Direction.values()) {
-          UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
-              ibakedmodel.getQuads(renderBlockState, direction, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE),
+          UtilRender.renderModelBrightnessColorQuads(matrix.last(), builder, red, green, blue, alpha,
+              ibakedmodel.getQuads(renderBlockState, direction, new Random(Mth.getSeed(coordinate)), EmptyModelData.INSTANCE),
               combinedLights, combinedOverlay);
         }
         //        UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,
         //            ibakedmodel.getQuads(renderBlockState, null, new Random(MathHelper.getPositionRandom(coordinate)), EmptyModelData.INSTANCE),
         //            combinedLights, combinedOverlay);
       }
-      matrix.pop();
+      matrix.popPose();
     }
     ///
-    matrix.pop();
+    matrix.popPose();
   }
 
-  public static void renderOutline(BlockPos view, BlockPos pos, MatrixStack matrix, float scale, Color color) {
+  public static void renderOutline(BlockPos view, BlockPos pos, PoseStack matrix, float scale, Color color) {
     List<BlockPos> coords = new ArrayList<>();
     coords.add(pos);
     renderOutline(view, coords, matrix, scale, color);
@@ -315,13 +315,13 @@ public class UtilRender {
    * Used by TESRs
    * 
    */
-  public static void renderOutline(BlockPos view, List<BlockPos> coords, MatrixStack matrix, float scale, Color color) {
+  public static void renderOutline(BlockPos view, List<BlockPos> coords, PoseStack matrix, float scale, Color color) {
     //    IRenderTypeBuffer.getImpl(ibuffer);
     final Minecraft mc = Minecraft.getInstance();
-    IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    matrix.push();
+    MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
+    matrix.pushPose();
     matrix.translate(-view.getX(), -view.getY(), -view.getZ());
-    IVertexBuilder builder;
+    VertexConsumer builder;
     builder = buffer.getBuffer(FakeBlockRenderTypes.SOLID_COLOUR);
     for (BlockPos e : coords) {
       if (e == null) {
@@ -330,24 +330,24 @@ public class UtilRender {
       //      if (!world.isAirBlock(e)) {
       //        continue;
       //      }
-      matrix.push();
+      matrix.pushPose();
       float ctr = (1 - scale) / 2;
       matrix.translate(e.getX() + ctr, e.getY() + ctr, e.getZ() + ctr);
       //      matrix.translate(e.getX() + .5F, e.getY() + .5F, e.getZ() + .5F);
       matrix.translate(-0.005f, -0.005f, -0.005f);
       matrix.scale(scale, scale, scale);
-      matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
-      Matrix4f positionMatrix = matrix.getLast().getMatrix();
+      matrix.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+      Matrix4f positionMatrix = matrix.last().pose();
       UtilRender.renderCube(positionMatrix, builder, e, color, .125F);
-      matrix.pop();
+      matrix.popPose();
     }
-    matrix.pop();
+    matrix.popPose();
     //    RenderSystem.disableDepthTest();
-    buffer.finish(FakeBlockRenderTypes.SOLID_COLOUR);
+    buffer.endBatch(FakeBlockRenderTypes.SOLID_COLOUR);
   }
 
-  public static BlockRayTraceResult getLookingAt(PlayerEntity player, int range) {
-    return (BlockRayTraceResult) player.pick(range, 0F, false);
+  public static BlockHitResult getLookingAt(Player player, int range) {
+    return (BlockHitResult) player.pick(range, 0F, false);
   }
 
   /**
@@ -358,31 +358,31 @@ public class UtilRender {
    * @param alpha
    */
   public static void renderColourCubes(RenderWorldLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
-    ClientPlayerEntity player = Minecraft.getInstance().player;
+    LocalPlayer player = Minecraft.getInstance().player;
     if (player == null) {
       return;
     }
     float scale = 1.01F;
     final Minecraft mc = Minecraft.getInstance();
-    IRenderTypeBuffer.Impl buffer = mc.getRenderTypeBuffers().getBufferSource();
-    Vector3d view = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
-    MatrixStack matrix = evt.getMatrixStack();
-    matrix.push();
-    matrix.translate(-view.getX(), -view.getY(), -view.getZ());
-    IVertexBuilder builder;
+    MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
+    Vec3 view = mc.gameRenderer.getMainCamera().getPosition();
+    PoseStack matrix = evt.getMatrixStack();
+    matrix.pushPose();
+    matrix.translate(-view.x(), -view.y(), -view.z());
+    VertexConsumer builder;
     builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
     for (BlockPos posCurr : coords.keySet()) {
-      matrix.push();
+      matrix.pushPose();
       matrix.translate(posCurr.getX(), posCurr.getY(), posCurr.getZ());
       matrix.translate(-0.005f, -0.005f, -0.005f);
       matrix.scale(scale, scale, scale);
-      matrix.rotate(Vector3f.YP.rotationDegrees(-90.0F));
-      UtilRender.renderCube(matrix.getLast().getMatrix(), builder, posCurr, coords.get(posCurr), alpha);
-      matrix.pop();
+      matrix.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+      UtilRender.renderCube(matrix.last().pose(), builder, posCurr, coords.get(posCurr), alpha);
+      matrix.popPose();
     }
-    matrix.pop();
+    matrix.popPose();
     RenderSystem.disableDepthTest();
-    buffer.finish(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
+    buffer.endBatch(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
   }
 
   /**
@@ -392,7 +392,7 @@ public class UtilRender {
    * 
    */
   @SuppressWarnings("deprecation")
-  public static void createBox(MatrixStack matrixStack, BlockPos pos) {
+  public static void createBox(PoseStack matrixStack, BlockPos pos) {
     final double offset = 1;
     double x = pos.getX();
     double y = pos.getY();
@@ -402,53 +402,53 @@ public class UtilRender {
     RenderSystem.disableBlend();
     RenderSystem.disableDepthTest();
     RenderSystem.pushMatrix();
-    Vector3d viewPosition = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+    Vec3 viewPosition = mc.gameRenderer.getMainCamera().getPosition();
     long c = (System.currentTimeMillis() / 15L) % 360L;
     float[] color = getHSBtoRGBF(c / 360f, 1f, 1f);
-    matrixStack.push();
+    matrixStack.pushPose();
     // get a closer pos if too far
-    Vector3d vec = new Vector3d(x, y, z).subtract(viewPosition);
-    if (vec.distanceTo(Vector3d.ZERO) > 200d) { // could be 300
+    Vec3 vec = new Vec3(x, y, z).subtract(viewPosition);
+    if (vec.distanceTo(Vec3.ZERO) > 200d) { // could be 300
       vec = vec.normalize().scale(200d);
       x += vec.x;
       y += vec.y;
       z += vec.z;
     }
-    x -= viewPosition.getX();
-    y -= viewPosition.getY();
-    z -= viewPosition.getZ();
-    RenderSystem.multMatrix(matrixStack.getLast().getMatrix());
-    Tessellator tessellator = Tessellator.getInstance();
-    BufferBuilder renderer = tessellator.getBuffer();
-    renderer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
+    x -= viewPosition.x();
+    y -= viewPosition.y();
+    z -= viewPosition.z();
+    RenderSystem.multMatrix(matrixStack.last().pose());
+    Tesselator tessellator = Tesselator.getInstance();
+    BufferBuilder renderer = tessellator.getBuilder();
+    renderer.begin(GL11.GL_LINES, DefaultVertexFormat.POSITION);
     RenderSystem.color4f(color[0], color[1], color[2], 1f);
     RenderSystem.lineWidth(2.5f);
-    renderer.pos(x, y, z).endVertex();
-    renderer.pos(x + offset, y, z).endVertex();
-    renderer.pos(x, y, z).endVertex();
-    renderer.pos(x, y + offset, z).endVertex();
-    renderer.pos(x, y, z).endVertex();
-    renderer.pos(x, y, z + offset).endVertex();
-    renderer.pos(x + offset, y + offset, z + offset).endVertex();
-    renderer.pos(x, y + offset, z + offset).endVertex();
-    renderer.pos(x + offset, y + offset, z + offset).endVertex();
-    renderer.pos(x + offset, y, z + offset).endVertex();
-    renderer.pos(x + offset, y + offset, z + offset).endVertex();
-    renderer.pos(x + offset, y + offset, z).endVertex();
-    renderer.pos(x, y + offset, z).endVertex();
-    renderer.pos(x, y + offset, z + offset).endVertex();
-    renderer.pos(x, y + offset, z).endVertex();
-    renderer.pos(x + offset, y + offset, z).endVertex();
-    renderer.pos(x + offset, y, z).endVertex();
-    renderer.pos(x + offset, y, z + offset).endVertex();
-    renderer.pos(x + offset, y, z).endVertex();
-    renderer.pos(x + offset, y + offset, z).endVertex();
-    renderer.pos(x, y, z + offset).endVertex();
-    renderer.pos(x + offset, y, z + offset).endVertex();
-    renderer.pos(x, y, z + offset).endVertex();
-    renderer.pos(x, y + offset, z + offset).endVertex();
-    tessellator.draw();
-    matrixStack.pop();
+    renderer.vertex(x, y, z).endVertex();
+    renderer.vertex(x + offset, y, z).endVertex();
+    renderer.vertex(x, y, z).endVertex();
+    renderer.vertex(x, y + offset, z).endVertex();
+    renderer.vertex(x, y, z).endVertex();
+    renderer.vertex(x, y, z + offset).endVertex();
+    renderer.vertex(x + offset, y + offset, z + offset).endVertex();
+    renderer.vertex(x, y + offset, z + offset).endVertex();
+    renderer.vertex(x + offset, y + offset, z + offset).endVertex();
+    renderer.vertex(x + offset, y, z + offset).endVertex();
+    renderer.vertex(x + offset, y + offset, z + offset).endVertex();
+    renderer.vertex(x + offset, y + offset, z).endVertex();
+    renderer.vertex(x, y + offset, z).endVertex();
+    renderer.vertex(x, y + offset, z + offset).endVertex();
+    renderer.vertex(x, y + offset, z).endVertex();
+    renderer.vertex(x + offset, y + offset, z).endVertex();
+    renderer.vertex(x + offset, y, z).endVertex();
+    renderer.vertex(x + offset, y, z + offset).endVertex();
+    renderer.vertex(x + offset, y, z).endVertex();
+    renderer.vertex(x + offset, y + offset, z).endVertex();
+    renderer.vertex(x, y, z + offset).endVertex();
+    renderer.vertex(x + offset, y, z + offset).endVertex();
+    renderer.vertex(x, y, z + offset).endVertex();
+    renderer.vertex(x, y + offset, z + offset).endVertex();
+    tessellator.end();
+    matrixStack.popPose();
     RenderSystem.popMatrix();
     RenderSystem.lineWidth(1f);
     RenderSystem.enableDepthTest();

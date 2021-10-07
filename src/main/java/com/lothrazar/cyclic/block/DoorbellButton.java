@@ -1,22 +1,24 @@
 package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import net.minecraft.block.AbstractButtonBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 
-public class DoorbellButton extends AbstractButtonBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class DoorbellButton extends ButtonBlock {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   private static final SoundEvent SOUND = SoundRegistry.DOORBELL_MIKEKOENIG;
@@ -24,53 +26,53 @@ public class DoorbellButton extends AbstractButtonBlock {
   public static final int POWERLVL = 1;
 
   public DoorbellButton(Properties properties) {
-    super(false, properties.hardnessAndResistance(0.5F).setLightLevel(s -> s.get(POWERED) ? LIGHTLVL : 0));
-    setDefaultState(getDefaultState().with(WATERLOGGED, false));
+    super(false, properties.strength(0.5F).lightLevel(s -> s.getValue(POWERED) ? LIGHTLVL : 0));
+    registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    super.fillStateContainer(builder);
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    super.createBlockStateDefinition(builder);
     builder.add(WATERLOGGED);
   }
 
   @Override
-  public BlockState getStateForPlacement(BlockItemUseContext context) {
+  public BlockState getStateForPlacement(BlockPlaceContext context) {
     return super.getStateForPlacement(context)
-        .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
+        .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
   }
 
   @Override
   @SuppressWarnings("deprecation")
   public FluidState getFluidState(BlockState state) {
-    return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+    return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
   }
 
   @Override
-  public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-    if (stateIn.get(WATERLOGGED)) {
-      worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+  public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    if (stateIn.getValue(WATERLOGGED)) {
+      worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
     }
-    return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
   }
 
   @Override
-  public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    return blockState.get(POWERED) ? POWERLVL : 0;
+  public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    return blockState.getValue(POWERED) ? POWERLVL : 0;
   }
 
   @Override
-  public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    return blockState.get(POWERED) && getFacing(blockState) == side ? POWERLVL : 0;
+  public int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    return blockState.getValue(POWERED) && getConnectedDirection(blockState) == side ? POWERLVL : 0;
   }
 
   @Override
-  public boolean canProvidePower(BlockState state) {
+  public boolean isSignalSource(BlockState state) {
     return true;
   }
 
   @Override
-  protected SoundEvent getSoundEvent(boolean isOn) {
+  protected SoundEvent getSound(boolean isOn) {
     return isOn ? SOUND : null;
   }
 }

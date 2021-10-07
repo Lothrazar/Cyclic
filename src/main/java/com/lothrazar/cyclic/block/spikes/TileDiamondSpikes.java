@@ -6,19 +6,19 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEntity {
+public class TileDiamondSpikes extends TileEntityBase implements TickableBlockEntity {
 
   WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
@@ -28,19 +28,19 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     if (uuid != null) {
-      tag.putUniqueId("uuid", uuid);
+      tag.putUUID("uuid", uuid);
     }
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     if (tag.contains("uuid")) {
-      uuid = tag.getUniqueId("uuid");
+      uuid = tag.getUUID("uuid");
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
@@ -49,22 +49,22 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
       timer--;
       return;
     }
-    timer = world.rand.nextInt(24) + 12;
-    if (fakePlayer == null && world instanceof ServerWorld) {
+    timer = level.random.nextInt(24) + 12;
+    if (fakePlayer == null && level instanceof ServerLevel) {
       if (uuid == null) {
         uuid = UUID.randomUUID();
       }
-      fakePlayer = setupBeforeTrigger((ServerWorld) world, "spikes_diamond", uuid);
-      if (fakePlayer.get().getHeldItem(Hand.MAIN_HAND).isEmpty()) {
+      fakePlayer = setupBeforeTrigger((ServerLevel) level, "spikes_diamond", uuid);
+      if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
         Map<Enchantment, Integer> map = Maps.newHashMap();
         map.put(Enchantments.BANE_OF_ARTHROPODS, 2);
-        map.put(Enchantments.SWEEPING, 3);
+        map.put(Enchantments.SWEEPING_EDGE, 3);
         map.put(Enchantments.SHARPNESS, 1);
         ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
         EnchantmentHelper.setEnchantments(map, sword);
-        fakePlayer.get().setHeldItem(Hand.MAIN_HAND, sword);
+        fakePlayer.get().setItemInHand(InteractionHand.MAIN_HAND, sword);
       }
-      if (world.rand.nextDouble() < 0.001F) {
+      if (level.random.nextDouble() < 0.001F) {
         tryDumpFakePlayerInvo(fakePlayer, false);
       }
     }

@@ -33,19 +33,21 @@ import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilString;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class TileTransporterEmptyItem extends ItemBase {
 
@@ -57,53 +59,53 @@ public class TileTransporterEmptyItem extends ItemBase {
 
   @SuppressWarnings("unchecked")
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    BlockPos pos = context.getPos();
-    World world = context.getWorld();
-    TileEntity tile = world.getTileEntity(pos);
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
+    BlockPos pos = context.getClickedPos();
+    Level world = context.getLevel();
+    BlockEntity tile = world.getBlockEntity(pos);
     BlockState state = world.getBlockState(pos);
     //
     if (state == null || tile == null || state.getBlock() == null
         || state.getBlock().getRegistryName() == null) {
       UtilChat.sendStatusMessage(player, "chest_sack.error.null");
-      return ActionResultType.FAIL;
+      return InteractionResult.FAIL;
     }
     ResourceLocation blockId = state.getBlock().getRegistryName();
     if (UtilString.isInList((List<String>) IGNORELIST.get(), blockId)) {
       UtilChat.sendStatusMessage(player, "chest_sack.error.config");
-      return ActionResultType.FAIL;
+      return InteractionResult.FAIL;
     }
     UtilSound.playSound(player, SoundRegistry.THUNK);
-    if (world.isRemote) {
+    if (world.isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketChestSack(pos));
     }
-    return ActionResultType.SUCCESS;
+    return InteractionResult.SUCCESS;
   }
 
-  public static void gatherTileEntity(BlockPos pos, PlayerEntity player, World world, TileEntity tile) {
+  public static void gatherTileEntity(BlockPos pos, Player player, Level world, BlockEntity tile) {
     if (tile == null) {
       return;
     } //was block destroyed before this packet and/or thread resolved? server desync? who knows https://github.com/PrinceOfAmber/Cyclic/issues/487
     BlockState state = world.getBlockState(pos);
     //bedrock returns ZERO for this hardness 
-    if (state.getPlayerRelativeBlockHardness(player, world, pos) <= 0) {
+    if (state.getDestroyProgress(player, world, pos) <= 0) {
       return;
     }
-    CompoundNBT tileData = new CompoundNBT();
+    CompoundTag tileData = new CompoundTag();
     //thanks for the tip on setting tile entity data from nbt tag:
     //https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
-    tile.write(tileData);
-    CompoundNBT itemData = new CompoundNBT();
-    itemData.putString(TileTransporterItem.KEY_BLOCKNAME, state.getBlock().getTranslationKey());
+    tile.save(tileData);
+    CompoundTag itemData = new CompoundTag();
+    itemData.putString(TileTransporterItem.KEY_BLOCKNAME, state.getBlock().getDescriptionId());
     itemData.put(TileTransporterItem.KEY_BLOCKTILE, tileData);
     itemData.putString(TileTransporterItem.KEY_BLOCKID, state.getBlock().getRegistryName().toString());
-    itemData.put(TileTransporterItem.KEY_BLOCKSTATE, NBTUtil.writeBlockState(state));
-    Hand hand = Hand.MAIN_HAND;
-    ItemStack held = player.getHeldItem(hand);
+    itemData.put(TileTransporterItem.KEY_BLOCKSTATE, NbtUtils.writeBlockState(state));
+    InteractionHand hand = InteractionHand.MAIN_HAND;
+    ItemStack held = player.getItemInHand(hand);
     if (held == null || held.getItem() instanceof TileTransporterEmptyItem == false) {
-      hand = Hand.OFF_HAND;
-      held = player.getHeldItem(hand);
+      hand = InteractionHand.OFF_HAND;
+      held = player.getItemInHand(hand);
     }
     if (held != null && held.getCount() > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
       if (held.getItem() instanceof TileTransporterEmptyItem) {
@@ -111,17 +113,17 @@ public class TileTransporterEmptyItem extends ItemBase {
           //we failed to break the block
           // try to undo the break if we can
           UtilChat.sendStatusMessage(player, "chest_sack.error.pickup");
-          world.setBlockState(pos, state);
+          world.setBlockAndUpdate(pos, state);
           return; // and dont drop the full item stack or shrink the empty just end
         }
         ItemStack drop = new ItemStack(ItemRegistry.tile_transporter);
         drop.setTag(itemData);
-        UtilItemStack.drop(world, player.getPosition(), drop);
+        UtilItemStack.drop(world, player.blockPosition(), drop);
         if (player.isCreative() == false && held.getCount() > 0) {
           held.shrink(1);
           if (held.getCount() == 0) {
             held = ItemStack.EMPTY;
-            player.setHeldItem(hand, ItemStack.EMPTY);
+            player.setItemInHand(hand, ItemStack.EMPTY);
           }
         }
       }

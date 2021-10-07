@@ -27,11 +27,11 @@ import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -45,9 +45,9 @@ public class ContainerPeatFarm extends ContainerBase {
   public static final int SLOTY = 54;
   protected TilePeatFarm tile;
 
-  public ContainerPeatFarm(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerPeatFarm(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.peat_farm, windowId);
-    tile = (TilePeatFarm) world.getTileEntity(pos);
+    tile = (TilePeatFarm) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
@@ -67,7 +67,7 @@ public class ContainerPeatFarm extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.peat_farm);
+  public boolean stillValid(Player playerIn) {
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.peat_farm);
   }
 }

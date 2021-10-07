@@ -1,14 +1,16 @@
 package com.lothrazar.cyclic.block.spikes;
 
 import com.lothrazar.cyclic.ModCyclic;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SpikesDiamond extends SpikesBlock {
 
@@ -22,24 +24,24 @@ public class SpikesDiamond extends SpikesBlock {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileDiamondSpikes();
   }
 
   @Override
-  public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
-    if (entity instanceof LivingEntity && state.get(ACTIVATED) && worldIn instanceof ServerWorld) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+    if (entity instanceof LivingEntity && state.getValue(ACTIVATED) && worldIn instanceof ServerLevel) {
       //attck from fake player
-      TileDiamondSpikes tile = (TileDiamondSpikes) worldIn.getTileEntity(pos);
+      TileDiamondSpikes tile = (TileDiamondSpikes) worldIn.getBlockEntity(pos);
       if (tile.fakePlayer == null || tile.fakePlayer.get() == null) {
         ModCyclic.LOGGER.error("null player sup +" + tile, tile.fakePlayer);
         return;
       }
       if (tile.getTimer() == 1) {
-        //public net.minecraft.entity.LivingEntity field_184617_aD # ticksSinceLastSwing
-        tile.fakePlayer.get().ticksSinceLastSwing = (int) tile.fakePlayer.get().getCooldownPeriod();
-        tile.fakePlayer.get().attackTargetEntityWithCurrentItem(entity);
-        tile.fakePlayer.get().resetCooldown();
+        //public net.minecraft.entity.LivingEntity attackStrengthTicker # ticksSinceLastSwing
+        tile.fakePlayer.get().attackStrengthTicker = (int) tile.fakePlayer.get().getCurrentItemAttackStrengthDelay();
+        tile.fakePlayer.get().attack(entity);
+        tile.fakePlayer.get().resetAttackStrengthTicker();
       }
     }
   }

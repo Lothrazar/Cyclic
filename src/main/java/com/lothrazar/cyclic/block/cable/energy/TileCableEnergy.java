@@ -11,18 +11,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableEnergy extends TileEntityBase implements ITickableTileEntity {
+public class TileCableEnergy extends TileEntityBase implements TickableBlockEntity {
 
   private static final int MAX = 32000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -43,7 +43,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     this.tickCableFlow();
     //extract mode conditionally
     for (Direction side : Direction.values()) {
-      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(side));
       if (connection.isExtraction()) {
         tryExtract(side);
       }
@@ -55,8 +55,8 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     if (extractSide == null) {
       return;
     }
-    BlockPos posTarget = this.pos.offset(extractSide);
-    TileEntity tile = world.getTileEntity(posTarget);
+    BlockPos posTarget = this.worldPosition.relative(extractSide);
+    BlockEntity tile = level.getBlockEntity(posTarget);
     if (tile != null) {
       IEnergyStorage itemHandlerFrom = tile.getCapability(CapabilityEnergy.ENERGY, extractSide.getOpposite()).orElse(null);
       if (itemHandlerFrom != null) {
@@ -77,7 +77,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     Collections.shuffle(rawList);
     for (Integer i : rawList) {
       Direction outgoingSide = Direction.values()[i];
-      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
       if (connection.isExtraction() || connection.isBlocked()) {
         continue;
       }
@@ -106,21 +106,21 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      mapIncomingEnergy.put(f, tag.getInt(f.getString() + "_incenergy"));
+      mapIncomingEnergy.put(f, tag.getInt(f.getSerializedName() + "_incenergy"));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      tag.putInt(f.getString() + "_incenergy", mapIncomingEnergy.get(f));
+      tag.putInt(f.getSerializedName() + "_incenergy", mapIncomingEnergy.get(f));
     }
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   private static final int TIMER_SIDE_INPUT = 15;

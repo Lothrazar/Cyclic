@@ -1,14 +1,16 @@
 package com.lothrazar.cyclic.block.eyetp;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockEyeTp extends BlockBase {
 
   public BlockEyeTp(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.strength(1.8F));
   }
 
   @Override
@@ -17,7 +19,7 @@ public class BlockEyeTp extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileEyeTp();
   }
 }

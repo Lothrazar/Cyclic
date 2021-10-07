@@ -2,24 +2,24 @@ package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
 
-public class TileWirelessRec extends TileEntityBase implements ITickableTileEntity {
+public class TileWirelessRec extends TileEntityBase implements TickableBlockEntity {
 
   public TileWirelessRec() {
     super(TileRegistry.wireless_receiver);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    super.read(bs, tag);
+  public void load(BlockState bs, CompoundTag tag) {
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    return super.write(tag);
+  public CompoundTag save(CompoundTag tag) {
+    return super.save(tag);
   }
 
   @Override

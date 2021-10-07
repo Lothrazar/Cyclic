@@ -25,27 +25,29 @@ package com.lothrazar.cyclic.block.crafter;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockCrafter extends BlockBase {
 
   public BlockCrafter(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.strength(1.8F));
     this.setHasGui();
   }
 
   @Override
-  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      TileEntity tileentity = worldIn.getTileEntity(pos);
+      BlockEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity != null) {
         TileCrafter tileCrafter = (TileCrafter) tileentity;
         tileCrafter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
@@ -58,23 +60,23 @@ public class BlockCrafter extends BlockBase {
         });
         tileCrafter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
           for (int i = 0; i < h.getSlots(); i++) {
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), h.getStackInSlot(i));
+            Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), h.getStackInSlot(i));
           }
         });
         tileCrafter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.OUTPUT).ifPresent(h -> {
           for (int i = 0; i < h.getSlots(); i++) {
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), h.getStackInSlot(i));
+            Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), h.getStackInSlot(i));
           }
         });
       }
     }
-    worldIn.updateComparatorOutputLevel(pos, this);
-    super.onReplaced(state, worldIn, pos, newState, isMoving);
+    worldIn.updateNeighbourForOutputSignal(pos, this);
+    super.onRemove(state, worldIn, pos, newState, isMoving);
   }
 
   @Override
-  public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state) {
-    super.onPlayerDestroy(worldIn, pos, state);
+  public void destroy(LevelAccessor worldIn, BlockPos pos, BlockState state) {
+    super.destroy(worldIn, pos, state);
   }
 
   @Override
@@ -83,12 +85,12 @@ public class BlockCrafter extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileCrafter();
   }
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.CRAFTER, ScreenCrafter::new);
+    MenuScreens.register(ContainerScreenRegistry.CRAFTER, ScreenCrafter::new);
   }
 }

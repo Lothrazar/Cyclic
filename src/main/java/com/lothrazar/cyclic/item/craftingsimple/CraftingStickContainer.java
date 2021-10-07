@@ -5,35 +5,35 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.Optional;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.CraftingResultSlot;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 
 public class CraftingStickContainer extends ContainerBase implements IContainerCraftingAction {
 
-  private final CraftingInventory craftMatrix = new CraftingInventory(this, 3, 3);
-  final CraftResultInventory craftResult = new CraftResultInventory();
-  private Hand hand;
+  private final CraftingContainer craftMatrix = new CraftingContainer(this, 3, 3);
+  final ResultContainer craftResult = new ResultContainer();
+  private InteractionHand hand;
 
   //does NOT save inventory into the stack, very simple and plain
-  public CraftingStickContainer(int id, PlayerInventory playerInventory, PlayerEntity player, Hand hand) {
+  public CraftingStickContainer(int id, Inventory playerInventory, Player player, InteractionHand hand) {
     super(ContainerScreenRegistry.CRAFTING_STICK, id);
     this.hand = hand;
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;
-    this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
+    this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         addSlot(new Slot(craftMatrix, j + i * 3, 30 + j * Const.SQ, 17 + i * Const.SQ));
@@ -43,39 +43,39 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   }
 
   @Override
-  public void onContainerClosed(PlayerEntity playerIn) {
-    super.onContainerClosed(playerIn);
+  public void removed(Player playerIn) {
+    super.removed(playerIn);
     //this is not the saving version
-    clearContainer(playerIn, playerIn.world, craftMatrix);
+    clearContainer(playerIn, playerIn.level, craftMatrix);
   }
 
   @Override
-  public void onCraftMatrixChanged(IInventory inventory) {
+  public void slotsChanged(Container inventory) {
     // 
-    World world = playerInventory.player.world;
-    if (!world.isRemote) {
-      ServerPlayerEntity player = (ServerPlayerEntity) playerInventory.player;
+    Level world = playerInventory.player.level;
+    if (!world.isClientSide) {
+      ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
-      Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftMatrix, world);
+      Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix, world);
       if (optional.isPresent()) {
-        ICraftingRecipe icraftingrecipe = optional.get();
-        if (craftResult.canUseRecipe(world, player, icraftingrecipe)) {
-          itemstack = icraftingrecipe.getCraftingResult(craftMatrix);
+        CraftingRecipe icraftingrecipe = optional.get();
+        if (craftResult.setRecipeUsed(world, player, icraftingrecipe)) {
+          itemstack = icraftingrecipe.assemble(craftMatrix);
         }
       }
-      craftResult.setInventorySlotContents(0, itemstack);
-      player.connection.sendPacket(new SSetSlotPacket(windowId, 0, itemstack));
+      craftResult.setItem(0, itemstack);
+      player.connection.send(new ClientboundContainerSetSlotPacket(containerId, 0, itemstack));
     }
   }
 
   @Override
-  public boolean canMergeSlot(ItemStack itemStack, Slot slot) {
-    return slot.inventory != craftResult && super.canMergeSlot(itemStack, slot);
+  public boolean canTakeItemForPickAll(ItemStack itemStack, Slot slot) {
+    return slot.container != craftResult && super.canTakeItemForPickAll(itemStack, slot);
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return hand != null && playerIn.getHeldItem(hand).getItem() instanceof CraftingStickItem;
+  public boolean stillValid(Player playerIn) {
+    return hand != null && playerIn.getItemInHand(hand).getItem() instanceof CraftingStickItem;
   }
   //  @Override
   //  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
@@ -90,17 +90,17 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   //  }
 
   @Override
-  public ItemStack transferStack(PlayerEntity playerIn, int index) {
-    return super.transferStackInSlot(playerIn, index);
+  public ItemStack transferStack(Player playerIn, int index) {
+    return super.quickMoveStack(playerIn, index);
   }
 
   @Override
-  public CraftingInventory getCraftMatrix() {
+  public CraftingContainer getCraftMatrix() {
     return this.craftMatrix;
   }
 
   @Override
-  public CraftResultInventory getCraftResult() {
+  public ResultContainer getCraftResult() {
     return this.craftResult;
   }
 }

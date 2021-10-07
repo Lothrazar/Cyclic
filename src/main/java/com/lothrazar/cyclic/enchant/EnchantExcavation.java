@@ -32,21 +32,21 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,9 +55,11 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantExcavation extends EnchantBase {
 
-  public EnchantExcavation(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantExcavation(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -76,13 +78,13 @@ public class EnchantExcavation extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
-    return super.canApply(stack) || stack.getItem().isIn(Tags.Items.SHEARS);
+  public boolean canEnchant(ItemStack stack) {
+    return super.canEnchant(stack) || stack.getItem().is(Tags.Items.SHEARS);
   }
 
   @Override
-  public boolean canApplyTogether(Enchantment ench) {
-    return super.canApplyTogether(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
+  public boolean checkCompatibility(Enchantment ench) {
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
   }
 
   private int getHarvestMax(int level) {
@@ -91,22 +93,22 @@ public class EnchantExcavation extends EnchantBase {
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onBreakEvent(BreakEvent event) {
-    IWorld world = event.getWorld();
-    PlayerEntity player = event.getPlayer();
-    if (player.swingingHand == null || world.isRemote()) {
+    LevelAccessor world = event.getWorld();
+    Player player = event.getPlayer();
+    if (player.swingingArm == null || world.isClientSide()) {
       return;
     }
     BlockPos pos = event.getPos();
     BlockState eventState = event.getState();
     Block block = eventState.getBlock();
     //is this item stack enchanted with ME?
-    ItemStack stackHarvestingWith = player.getHeldItem(player.swingingHand);
+    ItemStack stackHarvestingWith = player.getItemInHand(player.swingingArm);
     int level = this.getCurrentLevelTool(stackHarvestingWith);
     if (level <= 0) {
       return;
     }
     if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
-      int harvested = this.harvestSurrounding((World) world, player, pos, block, 1, level, player.swingingHand);
+      int harvested = this.harvestSurrounding((Level) world, player, pos, block, 1, level, player.swingingArm);
       if (harvested > 0) {
         //damage but also respect the unbreaking chant  
         UtilItemStack.damageItem(player, stackHarvestingWith);
@@ -123,8 +125,8 @@ public class EnchantExcavation extends EnchantBase {
    *
    * @param swingingHand
    */
-  private int harvestSurrounding(final World world, final PlayerEntity player, final BlockPos posIn, final Block block, int totalBroken, final int level, Hand swingingHand) {
-    if (totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
+  private int harvestSurrounding(final Level world, final Player player, final BlockPos posIn, final Block block, int totalBroken, final int level, InteractionHand swingingHand) {
+    if (totalBroken >= this.getHarvestMax(level) || player.getItemInHand(player.swingingArm).isEmpty()) {
       return totalBroken;
     }
     Set<BlockPos> wasHarvested = new HashSet<BlockPos>();
@@ -132,24 +134,24 @@ public class EnchantExcavation extends EnchantBase {
     for (BlockPos targetPos : theFuture) {
       BlockState targetState = world.getBlockState(targetPos);
       //check canHarvest every time -> permission or any other hooks
-      if (world.isAirBlock(targetPos)
-          || !player.isAllowEdit()
-          || !player.func_234569_d_(targetState) //canHarvestBlock
+      if (world.isEmptyBlock(targetPos)
+          || !player.mayBuild()
+          || !player.hasCorrectToolForDrops(targetState) //canHarvestBlock
           || totalBroken >= this.getHarvestMax(level)
-          || player.getHeldItem(player.swingingHand).isEmpty()
+          || player.getItemInHand(player.swingingArm).isEmpty()
           || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)) {
         continue;
       }
-      if (world instanceof ServerWorld) {
+      if (world instanceof ServerLevel) {
         //important! use the version that takes the item stack. this way it will end up in Block:getDrops that references the LootContext.Builder
         //and since now loot tables are used, fortune and similar things will be respected
-        Block.spawnDrops(targetState, world, targetPos, world.getTileEntity(targetPos), player, player.getHeldItem(player.swingingHand));
+        Block.dropResources(targetState, world, targetPos, world.getBlockEntity(targetPos), player, player.getItemInHand(player.swingingArm));
       }
-      int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
-      int silklevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());
+      int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
+      int silklevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
       int exp = targetState.getExpDrop(world, targetPos, bonusLevel, silklevel);
-      if (exp > 0 && world instanceof ServerWorld) {
-        block.dropXpOnBlockBreak((ServerWorld) world, targetPos, exp);
+      if (exp > 0 && world instanceof ServerLevel) {
+        block.popExperience((ServerLevel) world, targetPos, exp);
       }
       world.destroyBlock(targetPos, false);
       wasHarvested.add(targetPos);
@@ -161,7 +163,7 @@ public class EnchantExcavation extends EnchantBase {
     }
     //AFTER we harvest the close ones only THEN we branch out
     for (BlockPos targetPos : theFuture) {
-      if (totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
+      if (totalBroken >= this.getHarvestMax(level) || player.getItemInHand(player.swingingArm).isEmpty()) {
         break;
       }
       totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level, swingingHand);
@@ -171,7 +173,7 @@ public class EnchantExcavation extends EnchantBase {
 
   private static final Direction[] VALUES = Direction.values();
 
-  private Set<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
+  private Set<BlockPos> getMatchingSurrounding(Level world, BlockPos start, Block blockIn) {
     Set<BlockPos> list = new HashSet<BlockPos>();
     List<Direction> targetFaces = Arrays.asList(VALUES);
     try {
@@ -186,9 +188,9 @@ public class EnchantExcavation extends EnchantBase {
       // java.util shit the bed not my problem 
     }
     for (Direction fac : targetFaces) {
-      Block target = world.getBlockState(start.offset(fac)).getBlock();
+      Block target = world.getBlockState(start.relative(fac)).getBlock();
       if (target == blockIn) {
-        list.add(start.offset(fac));
+        list.add(start.relative(fac));
       }
     }
     return list;

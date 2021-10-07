@@ -7,28 +7,28 @@ import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
 
-  public CraftingBagScreen(CraftingBagContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public CraftingBagScreen(CraftingBagContainer screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
+    this.renderTooltip(ms, mouseX, mouseY);
   }
 
   @Override
   public void init() {
     super.init();
-    int x = guiLeft + 108;
-    int y = guiTop + 62;
+    int x = leftPos + 108;
+    int y = topPos + 62;
     final int size = 14;
     this.addButton(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.gui.craft.empty", b -> {
       PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
@@ -45,13 +45,13 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+    super.renderLabels(ms, mouseX, mouseY);
     this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
+  protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.V_CRAFTING);
   }
 }

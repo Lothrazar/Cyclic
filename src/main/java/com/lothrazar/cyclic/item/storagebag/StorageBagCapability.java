@@ -1,15 +1,15 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class StorageBagCapability implements ICapabilitySerializable<CompoundNBT> {
+public class StorageBagCapability implements ICapabilitySerializable<CompoundTag> {
 
   ItemStackHandler invo = new ItemStackHandler(ItemStorageBag.SLOTS) {
 
@@ -20,7 +20,7 @@ public class StorageBagCapability implements ICapabilitySerializable<CompoundNBT
   };
   private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> invo);
 
-  public StorageBagCapability(ItemStack stack, CompoundNBT nbt) {
+  public StorageBagCapability(ItemStack stack, CompoundTag nbt) {
     //
   }
 
@@ -33,12 +33,12 @@ public class StorageBagCapability implements ICapabilitySerializable<CompoundNBT
   }
 
   @Override
-  public CompoundNBT serializeNBT() {
+  public CompoundTag serializeNBT() {
     return invo.serializeNBT();
   }
 
   @Override
-  public void deserializeNBT(CompoundNBT nbt) {
+  public void deserializeNBT(CompoundTag nbt) {
     invo.deserializeNBT(nbt);
   }
 }

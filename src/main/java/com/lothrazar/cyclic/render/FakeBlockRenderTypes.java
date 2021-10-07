@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.render;
 
-import net.minecraft.client.renderer.RenderState;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -19,49 +19,49 @@ public class FakeBlockRenderTypes extends RenderType {
   /**
    * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
    */
-  public static final RenderType LASER_MAIN_BEAM = makeType("MiningLaserMainBeam",
-      DefaultVertexFormats.POSITION_COLOR_TEX, GL11.GL_QUADS, 256,
-      RenderType.State.getBuilder()
-          .layer(field_239235_M_)
-          .transparency(TRANSLUCENT_TRANSPARENCY)
-          .depthTest(RenderState.DEPTH_LEQUAL)
-          .cull(CULL_DISABLED)
-          .lightmap(LIGHTMAP_DISABLED)
-          .writeMask(COLOR_WRITE)
-          .build(false));
+  public static final RenderType LASER_MAIN_BEAM = create("MiningLaserMainBeam",
+      DefaultVertexFormat.POSITION_COLOR_TEX, GL11.GL_QUADS, 256,
+      RenderType.CompositeState.builder()
+          .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+          .setCullState(NO_CULL)
+          .setLightmapState(NO_LIGHTMAP)
+          .setWriteMaskState(COLOR_WRITE)
+          .createCompositeState(false));
   //
-  public static final RenderType FAKE_BLOCK = makeType("fakeBlock",
-      DefaultVertexFormats.BLOCK, GL11.GL_QUADS, 256,
-      RenderType.State.getBuilder()
-          .shadeModel(SHADE_ENABLED)
-          .lightmap(LIGHTMAP_ENABLED)
-          .texture(BLOCK_SHEET_MIPPED)
+  public static final RenderType FAKE_BLOCK = create("fakeBlock",
+      DefaultVertexFormat.BLOCK, GL11.GL_QUADS, 256,
+      RenderType.CompositeState.builder()
+          .setShadeModelState(SMOOTH_SHADE)
+          .setLightmapState(LIGHTMAP)
+          .setTextureState(BLOCK_SHEET_MIPPED)
           //          .layer(PROJECTION_LAYERING)
-          .transparency(TRANSLUCENT_TRANSPARENCY)
-          .depthTest(DEPTH_LEQUAL)
-          .cull(CULL_DISABLED)
-          .writeMask(COLOR_DEPTH_WRITE)
-          .build(false));
-  public static final RenderType TRANSPARENT_COLOUR = makeType("transparentColour",
-      DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256,
-      RenderType.State.getBuilder()
+          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .setDepthTestState(LEQUAL_DEPTH_TEST)
+          .setCullState(NO_CULL)
+          .setWriteMaskState(COLOR_DEPTH_WRITE)
+          .createCompositeState(false));
+  public static final RenderType TRANSPARENT_COLOUR = create("transparentColour",
+      DefaultVertexFormat.POSITION_COLOR, GL11.GL_QUADS, 256,
+      RenderType.CompositeState.builder()
           //          .layer(PROJECTION_LAYERING)
-          .transparency(TRANSLUCENT_TRANSPARENCY)
-          .texture(NO_TEXTURE)
-          .depthTest(DEPTH_LEQUAL)
-          .cull(CULL_ENABLED)
-          .lightmap(LIGHTMAP_DISABLED)
-          .writeMask(COLOR_DEPTH_WRITE)
-          .build(false));
-  public static final RenderType SOLID_COLOUR = makeType("solidColour",
-      DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256,
-      RenderType.State.getBuilder()
+          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .setTextureState(NO_TEXTURE)
+          .setDepthTestState(LEQUAL_DEPTH_TEST)
+          .setCullState(CULL)
+          .setLightmapState(NO_LIGHTMAP)
+          .setWriteMaskState(COLOR_DEPTH_WRITE)
+          .createCompositeState(false));
+  public static final RenderType SOLID_COLOUR = create("solidColour",
+      DefaultVertexFormat.POSITION_COLOR, GL11.GL_QUADS, 256,
+      RenderType.CompositeState.builder()
           //          .layer(PROJECTION_LAYERING)
-          .transparency(ADDITIVE_TRANSPARENCY)
-          .texture(NO_TEXTURE)
-          .depthTest(DEPTH_LEQUAL)
-          .cull(CULL_ENABLED)
-          .lightmap(LIGHTMAP_DISABLED)
-          .writeMask(COLOR_DEPTH_WRITE)
-          .build(false));
+          .setTransparencyState(ADDITIVE_TRANSPARENCY)
+          .setTextureState(NO_TEXTURE)
+          .setDepthTestState(LEQUAL_DEPTH_TEST)
+          .setCullState(CULL)
+          .setLightmapState(NO_LIGHTMAP)
+          .setWriteMaskState(COLOR_DEPTH_WRITE)
+          .createCompositeState(false));
 }

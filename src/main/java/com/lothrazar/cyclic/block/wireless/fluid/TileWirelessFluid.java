@@ -6,17 +6,17 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -26,7 +26,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileWirelessFluid extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;
@@ -53,13 +53,13 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerWirelessFluid(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerWirelessFluid(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -74,21 +74,21 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.transferRate = tag.getInt("transferRate");
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("transferRate", transferRate);
     tag.put(NBTINV, inventory.serializeNBT());
-    CompoundNBT fluid = new CompoundNBT();
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   public FluidStack getFluid() {
@@ -107,13 +107,13 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
       setLitProperty(false);
       return;
     }
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     boolean moved = false;
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot(0);
-    if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
+    if (loc != null && UtilWorld.dimensionIsEqual(loc, level)) {
       this.moveFluids(loc.getSide(), loc.getPos(), this.transferRate, tank);
     }
     this.setLitProperty(moved);

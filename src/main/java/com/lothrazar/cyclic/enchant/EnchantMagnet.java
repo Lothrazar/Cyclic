@@ -26,18 +26,20 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.compat.botania.BotaniaWrapper;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantMagnet extends EnchantBase {
 
-  public EnchantMagnet(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantMagnet(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -62,8 +64,8 @@ public class EnchantMagnet extends EnchantBase {
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     LivingEntity entity = event.getEntityLiving();
-    if (entity instanceof PlayerEntity) {
-      PlayerEntity p = (PlayerEntity) entity;
+    if (entity instanceof Player) {
+      Player p = (Player) entity;
       if (p.isSpectator()) {
         return;
       }
@@ -71,7 +73,7 @@ public class EnchantMagnet extends EnchantBase {
     //Ticking
     int level = getLevelAll(entity);
     if (level > 0 && !BotaniaWrapper.hasSolegnoliaAround(entity)) {
-      UtilEntity.moveEntityItemsInRegion(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
+      UtilEntity.moveEntityItemsInRegion(entity.getCommandSenderWorld(), entity.blockPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }
   }
 }

@@ -2,12 +2,12 @@ package com.lothrazar.cyclic.block.eye;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TileEye extends TileEntityBase implements ITickableTileEntity {
+public class TileEye extends TileEntityBase implements TickableBlockEntity {
 
   public static IntValue RANGE;
   public static IntValue FREQUENCY;
@@ -17,18 +17,18 @@ public class TileEye extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    super.read(bs, tag);
+  public void load(BlockState bs, CompoundTag tag) {
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    return super.write(tag);
+  public CompoundTag save(CompoundTag tag) {
+    return super.save(tag);
   }
 
   @Override
   public void tick() {
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     timer--;

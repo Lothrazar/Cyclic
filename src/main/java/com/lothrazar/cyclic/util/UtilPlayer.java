@@ -1,27 +1,27 @@
 package com.lothrazar.cyclic.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 
 public class UtilPlayer {
 
-  public static void setPlayerReach(PlayerEntity player, int currentReach) {
+  public static void setPlayerReach(Player player, int currentReach) {
     //thank you ForgeMod for adding this when mojang removed
     player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
   }
 
-  public static double getExpTotal(PlayerEntity player) {
+  public static double getExpTotal(Player player) {
     //  validateExpPositive(player);
     int level = player.experienceLevel;
     // numeric reference:
     // http://minecraft.gamepedia.com/Experience#Leveling_up
     double totalExp = getXpForLevel(level);
-    double progress = Math.round(player.xpBarCap() * player.experience);
+    double progress = Math.round(player.getXpNeededForNextLevel() * player.experienceProgress);
     totalExp += (int) progress;
     return totalExp;
   }
@@ -43,47 +43,47 @@ public class UtilPlayer {
     return totalExp;
   }
 
-  public static ItemStack getPlayerItemIfHeld(PlayerEntity player) {
-    ItemStack wand = player.getHeldItemMainhand();
+  public static ItemStack getPlayerItemIfHeld(Player player) {
+    ItemStack wand = player.getMainHandItem();
     if (wand.isEmpty()) {
-      wand = player.getHeldItemOffhand();
+      wand = player.getOffhandItem();
     }
     return wand;
   }
 
-  public static int getFirstSlotWithBlock(PlayerEntity player, BlockState targetState) {
+  public static int getFirstSlotWithBlock(Player player, BlockState targetState) {
     int ret = -1;
     ItemStack stack;
-    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-      stack = player.inventory.getStackInSlot(i);
+    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+      stack = player.inventory.getItem(i);
       if (!stack.isEmpty() &&
           stack.getItem() != null &&
-          Block.getBlockFromItem(stack.getItem()) == targetState.getBlock()) {
+          Block.byItem(stack.getItem()) == targetState.getBlock()) {
         return i;
       }
     }
     return ret;
   }
 
-  public static BlockState getBlockstateFromSlot(PlayerEntity player, int slot) {
-    ItemStack stack = player.inventory.getStackInSlot(slot);
+  public static BlockState getBlockstateFromSlot(Player player, int slot) {
+    ItemStack stack = player.inventory.getItem(slot);
     if (!stack.isEmpty() &&
         stack.getItem() != null &&
-        Block.getBlockFromItem(stack.getItem()) != null) {
-      Block b = Block.getBlockFromItem(stack.getItem());
-      return b.getDefaultState();
+        Block.byItem(stack.getItem()) != null) {
+      Block b = Block.byItem(stack.getItem());
+      return b.defaultBlockState();
     }
     return null;
   }
 
-  public static void decrStackSize(PlayerEntity player, int slot) {
+  public static void decrStackSize(Player player, int slot) {
     if (player.isCreative() == false && slot >= 0) {
-      player.inventory.decrStackSize(slot, 1);
+      player.inventory.removeItem(slot, 1);
     }
   }
 
-  public static Item getItemArmorSlot(PlayerEntity player, EquipmentSlotType slot) {
-    ItemStack inslot = player.inventory.armorInventory.get(slot.getIndex());
+  public static Item getItemArmorSlot(Player player, EquipmentSlot slot) {
+    ItemStack inslot = player.inventory.armor.get(slot.getIndex());
     //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
     Item item = (inslot.isEmpty()) ? null : inslot.getItem();
     return item;

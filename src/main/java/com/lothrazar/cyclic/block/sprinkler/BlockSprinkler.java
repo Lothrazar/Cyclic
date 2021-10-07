@@ -2,37 +2,39 @@ package com.lothrazar.cyclic.block.sprinkler;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockSprinkler extends BlockBase {
 
-  private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D,
+  private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D,
       12.0D, 5.0D, 12.0D);
 
   public BlockSprinkler(Properties properties) {
-    super(properties.hardnessAndResistance(0.8F).notSolid());
+    super(properties.strength(0.8F).noOcclusion());
     this.setHasFluidInteract();
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return SHAPE;
   }
   //  @Override
@@ -46,18 +48,18 @@ public class BlockSprinkler extends BlockBase {
   //  }
 
   @Override
-  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+  public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 1.0f;
   }
 
   @Override
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
-    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 
   @Override
-  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+  public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     return false;
   }
 
@@ -67,7 +69,7 @@ public class BlockSprinkler extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileSprinkler();
   }
 }

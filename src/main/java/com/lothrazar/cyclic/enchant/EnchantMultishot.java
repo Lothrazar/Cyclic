@@ -24,23 +24,25 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class EnchantMultishot extends EnchantBase {
 
-  public EnchantMultishot(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantMultishot(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
   }
 
@@ -53,7 +55,7 @@ public class EnchantMultishot extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     return stack.getItem() instanceof BowItem;
   }
 
@@ -62,29 +64,29 @@ public class EnchantMultishot extends EnchantBase {
     return 1;
   }
 
-  public static void spawnArrow(World worldIn, PlayerEntity player, ItemStack stackBow, int charge, Vector3d offsetVector) {
+  public static void spawnArrow(Level worldIn, Player player, ItemStack stackBow, int charge, Vec3 offsetVector) {
     ArrowItem arrowitem = (ArrowItem) Items.ARROW;
-    AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, stackBow, player);
-    abstractarrowentity.forceSetPosition(abstractarrowentity.getPosX() + offsetVector.getX(), abstractarrowentity.getPosY(), abstractarrowentity.getPosZ() + offsetVector.getZ());
-    float f = BowItem.getArrowVelocity(charge); // i
-    abstractarrowentity.func_234612_a_(player, player.rotationPitch, player.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+    AbstractArrow abstractarrowentity = arrowitem.createArrow(worldIn, stackBow, player);
+    abstractarrowentity.setPosAndOldPos(abstractarrowentity.getX() + offsetVector.x(), abstractarrowentity.getY(), abstractarrowentity.getZ() + offsetVector.z());
+    float f = BowItem.getPowerForTime(charge); // i
+    abstractarrowentity.shootFromRotation(player, player.xRot, player.yRot, 0.0F, f * 3.0F, 1.0F);
     if (f == 1.0F) {
-      abstractarrowentity.setIsCritical(true);
+      abstractarrowentity.setCritArrow(true);
     }
-    int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stackBow);
+    int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, stackBow);
     if (j > 0) {
-      abstractarrowentity.setDamage(abstractarrowentity.getDamage() + j * 0.5D + 0.5D);
+      abstractarrowentity.setBaseDamage(abstractarrowentity.getBaseDamage() + j * 0.5D + 0.5D);
     }
-    int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stackBow);
+    int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, stackBow);
     if (k > 0) {
-      abstractarrowentity.setKnockbackStrength(k);
+      abstractarrowentity.setKnockback(k);
     }
-    if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stackBow) > 0) {
-      abstractarrowentity.setFire(100);
+    if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, stackBow) > 0) {
+      abstractarrowentity.setSecondsOnFire(100);
     }
-    stackBow.damageItem(1, player, (p) -> {
-      p.sendBreakAnimation(player.getActiveHand());
+    stackBow.hurtAndBreak(1, player, (p) -> {
+      p.broadcastBreakEvent(player.getUsedItemHand());
     });
-    worldIn.addEntity(abstractarrowentity);
+    worldIn.addFreshEntity(abstractarrowentity);
   }
 }

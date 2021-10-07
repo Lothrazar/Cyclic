@@ -21,10 +21,10 @@ import com.lothrazar.cyclic.net.PacketStorageBagScreen;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileString;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -63,13 +63,13 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketRecordSound.class, PacketRecordSound::encode, PacketRecordSound::decode, PacketRecordSound::handle);
   }
 
-  public static void sendToAllClients(World world, PacketBase packet) {
-    if (world.isRemote) {
+  public static void sendToAllClients(Level world, PacketBase packet) {
+    if (world.isClientSide) {
       return;
     }
-    for (PlayerEntity player : world.getPlayers()) {
-      ServerPlayerEntity sp = ((ServerPlayerEntity) player);
-      PacketRegistry.INSTANCE.sendTo(packet, sp.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+    for (Player player : world.players()) {
+      ServerPlayer sp = ((ServerPlayer) player);
+      PacketRegistry.INSTANCE.sendTo(packet, sp.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
   }
 }

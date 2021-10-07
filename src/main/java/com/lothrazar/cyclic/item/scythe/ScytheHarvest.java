@@ -5,11 +5,13 @@ import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ScytheHarvest extends ItemBase {
 
@@ -25,19 +27,19 @@ public class ScytheHarvest extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    BlockPos pos = context.getPos();
-    Direction side = context.getFace();
+  public InteractionResult useOn(UseOnContext context) {
+    BlockPos pos = context.getClickedPos();
+    Direction side = context.getClickedFace();
     if (side != null) {
-      pos = pos.offset(side);
+      pos = pos.relative(side);
     }
-    PlayerEntity player = context.getPlayer();
+    Player player = context.getPlayer();
     int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
     for (BlockPos p : getShape(pos, radius)) {
-      TileHarvester.tryHarvestSingle(context.getWorld(), p);
+      TileHarvester.tryHarvestSingle(context.getLevel(), p);
     }
-    context.getPlayer().swingArm(context.getHand());
-    UtilItemStack.damageItem(context.getItem());
-    return super.onItemUse(context);
+    context.getPlayer().swing(context.getHand());
+    UtilItemStack.damageItem(context.getItemInHand());
+    return super.useOn(context);
   }
 }

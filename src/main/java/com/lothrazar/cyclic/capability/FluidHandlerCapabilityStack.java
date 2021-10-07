@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.capability;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -10,6 +10,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
+
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabilityProvider {
 
@@ -35,7 +37,7 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
   }
 
   public FluidStack getFluid() {
-    CompoundNBT tagCompound = container.getTag();
+    CompoundTag tagCompound = container.getTag();
     if (tagCompound == null || !tagCompound.contains(FLUID_NBT_KEY)) {
       return FluidStack.EMPTY;
     }
@@ -44,9 +46,9 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
 
   public void setFluid(FluidStack fluid) {
     if (!container.hasTag()) {
-      container.setTag(new CompoundNBT());
+      container.setTag(new CompoundTag());
     }
-    CompoundNBT fluidTag = new CompoundNBT();
+    CompoundTag fluidTag = new CompoundTag();
     fluid.writeToNBT(fluidTag);
     container.getTag().put(FLUID_NBT_KEY, fluidTag);
   }
@@ -143,7 +145,7 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
    * Override this method for special handling. Can be used to swap out or destroy the container.
    */
   protected void setContainerToEmpty() {
-    container.removeChildTag(FLUID_NBT_KEY);
+    container.removeTagKey(FLUID_NBT_KEY);
   }
 
   @Override

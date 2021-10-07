@@ -3,90 +3,92 @@ package com.lothrazar.cyclic.item;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.List;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CauldronBlock;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.SignTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CauldronBlock;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class CarbonPaperItem extends ItemBase {
 
   public CarbonPaperItem(Properties properties) {
-    super(properties.maxStackSize(1));
+    super(properties.stacksTo(1));
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
-      SignTileEntity fakeSign = new SignTileEntity();
-      fakeSign.read(Blocks.OAK_SIGN.getDefaultState(), stack.getTag());
-      tooltip.add(new TranslationTextComponent("[" + fakeSign.getTextColor().getString() + "]"));
+      SignBlockEntity fakeSign = new SignBlockEntity();
+      fakeSign.load(Blocks.OAK_SIGN.defaultBlockState(), stack.getTag());
+      tooltip.add(new TranslatableComponent("[" + fakeSign.getColor().getSerializedName() + "]"));
       for (int i = 0; i <= 3; i++) {
         //        fakeSign.setText(line, p_212365_2_);
-        ITextComponent t = fakeSign.signText[i];
+        Component t = fakeSign.messages[i];
         //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
         tooltip.add(t);
       }
     }
-    super.addInformation(stack, worldIn, tooltip, flagIn);
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    Hand hand = context.getHand();
-    BlockPos pos = context.getPos();
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
+    InteractionHand hand = context.getHand();
+    BlockPos pos = context.getClickedPos();
     //test spawn detetc
     //    Direction side = context.getFace();
-    ItemStack held = player.getHeldItem(hand);
-    TileEntity tile = context.getWorld().getTileEntity(pos);
-    if (player.world.getBlockState(pos).getBlock() instanceof CauldronBlock) {
+    ItemStack held = player.getItemInHand(hand);
+    BlockEntity tile = context.getLevel().getBlockEntity(pos);
+    if (player.level.getBlockState(pos).getBlock() instanceof CauldronBlock) {
       if (held.hasTag()) {
         //clean with cauldron
         held.setTag(null);
         UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.deleted");
-        player.swingArm(hand);
-        return ActionResultType.SUCCESS;
+        player.swing(hand);
+        return InteractionResult.SUCCESS;
       }
     }
-    if (tile instanceof SignTileEntity) {
+    if (tile instanceof SignBlockEntity) {
       //ok, i am a sign
-      SignTileEntity sign = (SignTileEntity) tile;
+      SignBlockEntity sign = (SignBlockEntity) tile;
       if (held.hasTag()) {
         //write to fake sign to parse nbt internally
-        SignTileEntity fakeSign = new SignTileEntity();
-        fakeSign.read(Blocks.OAK_SIGN.getDefaultState(), held.getTag());
-        sign.setTextColor(fakeSign.getTextColor());
+        SignBlockEntity fakeSign = new SignBlockEntity();
+        fakeSign.load(Blocks.OAK_SIGN.defaultBlockState(), held.getTag());
+        sign.setColor(fakeSign.getColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());
-          sign.setText(i, fakeSign.signText[i]);
+          sign.setMessage(i, fakeSign.messages[i]);
         }
         UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.written");
       }
       else {
         //so it has NO tag right now at all
         //read
-        CompoundNBT data = new CompoundNBT();
-        sign.write(data);
+        CompoundTag data = new CompoundTag();
+        sign.save(data);
         held.setTag(data);
         UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.copied");
       }
-      player.swingArm(hand);
-      return ActionResultType.SUCCESS;
+      player.swing(hand);
+      return InteractionResult.SUCCESS;
     }
-    return ActionResultType.PASS;
+    return InteractionResult.PASS;
   }
 }

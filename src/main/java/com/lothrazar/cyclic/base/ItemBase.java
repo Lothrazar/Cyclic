@@ -3,21 +3,23 @@ package com.lothrazar.cyclic.base;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.List;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import com.mojang.math.Quaternion;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Vector3f;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemBase extends Item {
 
@@ -29,25 +31,25 @@ public class ItemBase extends Item {
     ItemRegistry.items.add(this);
   }
 
-  protected void shootMe(World world, PlayerEntity shooter, ProjectileItemEntity ball, float pitch, float velocityFactor) {
-    if (world.isRemote) {
+  protected void shootMe(Level world, Player shooter, ThrowableItemProjectile ball, float pitch, float velocityFactor) {
+    if (world.isClientSide) {
       return;
     }
-    Vector3d vector3d1 = shooter.getUpVector(1.0F);
+    Vec3 vector3d1 = shooter.getUpVector(1.0F);
     // pitch is degrees so can be -10, +10, etc
     Quaternion quaternion = new Quaternion(new Vector3f(vector3d1), pitch, true);
-    Vector3d vector3d = shooter.getLook(1.0F);
+    Vec3 vector3d = shooter.getViewVector(1.0F);
     Vector3f vector3f = new Vector3f(vector3d);
     vector3f.transform(quaternion);
-    ball.shoot(vector3f.getX(), vector3f.getY(), vector3f.getZ(), velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
+    ball.shoot(vector3f.x(), vector3f.y(), vector3f.z(), velocityFactor * VELOCITY_MAX, INACCURACY_DEFAULT);
     //    worldIn.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(),
     //        SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-    world.addEntity(ball);
+    world.addFreshEntity(ball);
   }
 
-  protected ItemStack findAmmo(PlayerEntity player, Item item) {
-    for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
-      ItemStack itemstack = player.inventory.getStackInSlot(i);
+  protected ItemStack findAmmo(Player player, Item item) {
+    for (int i = 0; i < player.inventory.getContainerSize(); ++i) {
+      ItemStack itemstack = player.inventory.getItem(i);
       if (itemstack.getItem() == item) {
         return itemstack;
       }
@@ -55,7 +57,7 @@ public class ItemBase extends Item {
     return ItemStack.EMPTY;
   }
 
-  public void tryRepairWith(ItemStack stackToRepair, PlayerEntity player, Item target) {
+  public void tryRepairWith(ItemStack stackToRepair, Player player, Item target) {
     if (stackToRepair.isDamaged()) {
       ItemStack torches = this.findAmmo(player, target);
       if (!torches.isEmpty()) {
@@ -66,13 +68,13 @@ public class ItemBase extends Item {
   }
 
   public float getChargedPercent(ItemStack stack, int chargeTimer) {
-    return BowItem.getArrowVelocity(this.getUseDuration(stack) - chargeTimer);
+    return BowItem.getPowerForTime(this.getUseDuration(stack) - chargeTimer);
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(new TranslationTextComponent(getTranslationKey() + ".tooltip").mergeStyle(TextFormatting.GRAY));
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
   }
 
   @OnlyIn(Dist.CLIENT)

@@ -6,41 +6,41 @@ import com.lothrazar.cyclic.gui.IHasTooltip;
 import com.lothrazar.cyclic.gui.TextBoxAutosave;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 
-public abstract class ScreenBase<T extends Container> extends ContainerScreen<T> {
+public abstract class ScreenBase<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
-  public ScreenBase(T screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenBase(T screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
   }
 
-  protected void drawBackground(MatrixStack ms, ResourceLocation gui) {
-    this.minecraft.getTextureManager().bindTexture(gui);
-    int relX = (this.width - this.xSize) / 2;
-    int relY = (this.height - this.ySize) / 2;
-    this.blit(ms, relX, relY, 0, 0, this.xSize, this.ySize);
+  protected void drawBackground(PoseStack ms, ResourceLocation gui) {
+    this.minecraft.getTextureManager().bind(gui);
+    int relX = (this.width - this.imageWidth) / 2;
+    int relY = (this.height - this.imageHeight) / 2;
+    this.blit(ms, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
   }
 
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-    for (Widget btn : this.buttons) {
+    for (AbstractWidget btn : this.buttons) {
       Minecraft mc = Minecraft.getInstance();
-      int mouseX = (int) (mc.mouseHelper.getMouseX() * mc.getMainWindow().getScaledWidth() / mc.getMainWindow().getWidth());
-      int mouseY = (int) (mc.mouseHelper.getMouseY() * mc.getMainWindow().getScaledHeight() / mc.getMainWindow().getHeight());
+      int mouseX = (int) (mc.mouseHandler.xpos() * mc.getWindow().getGuiScaledWidth() / mc.getWindow().getScreenWidth());
+      int mouseY = (int) (mc.mouseHandler.ypos() * mc.getWindow().getGuiScaledHeight() / mc.getWindow().getScreenHeight());
       if (btn instanceof GuiSliderInteger && btn.isMouseOver(mouseX, mouseY)) {
         return btn.keyPressed(keyCode, scanCode, modifiers);
       }
     }
-    for (IGuiEventListener widget : this.children) {
+    for (GuiEventListener widget : this.children) {
       if (widget instanceof TextBoxAutosave) {
         //without this, txt boxes still work BUT:
         //keybindings like E OPEN INVENTORY dont make trigger the textbox, oops
@@ -53,20 +53,20 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
     return super.keyPressed(keyCode, scanCode, modifiers);
   }
 
-  protected void drawSlot(MatrixStack ms, int x, int y, ResourceLocation texture) {
+  protected void drawSlot(PoseStack ms, int x, int y, ResourceLocation texture) {
     drawSlot(ms, x, y, texture, 18);
   }
 
-  protected void drawSlot(MatrixStack ms, int x, int y, ResourceLocation texture, int size) {
-    this.minecraft.getTextureManager().bindTexture(texture);
-    blit(ms, guiLeft + x, guiTop + y, 0, 0, size, size, size, size);
+  protected void drawSlot(PoseStack ms, int x, int y, ResourceLocation texture, int size) {
+    this.minecraft.getTextureManager().bind(texture);
+    blit(ms, leftPos + x, topPos + y, 0, 0, size, size, size, size);
   }
 
-  protected void drawSlot(MatrixStack ms, int x, int y) {
+  protected void drawSlot(PoseStack ms, int x, int y) {
     drawSlot(ms, x, y, TextureRegistry.SLOT, 18);
   }
 
-  protected void drawSlotLarge(MatrixStack ms, int x, int y) {
+  protected void drawSlotLarge(PoseStack ms, int x, int y) {
     drawSlot(ms, x, y, TextureRegistry.SLOT_LARGE, 26);
   }
 
@@ -75,32 +75,32 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
    * 
    * @param name
    */
-  protected void drawName(MatrixStack ms, String name) {
+  protected void drawName(PoseStack ms, String name) {
     name = UtilChat.lang("block." + ModCyclic.MODID + "." + name);
     drawString(ms, name,
-        (this.getXSize() - this.font.getStringWidth(name)) / 2,
+        (this.getXSize() - this.font.width(name)) / 2,
         6.0F);
   }
 
-  protected void drawString(MatrixStack ms, String name, float x, float y) {
-    this.font.drawString(ms, UtilChat.lang(name), x, y, 4210752);
+  protected void drawString(PoseStack ms, String name, float x, float y) {
+    this.font.draw(ms, UtilChat.lang(name), x, y, 4210752);
   }
 
-  public void drawButtonTooltips(MatrixStack ms, int mouseX, int mouseY) {
-    for (Widget btn : this.buttons) {
+  public void drawButtonTooltips(PoseStack ms, int mouseX, int mouseY) {
+    for (AbstractWidget btn : this.buttons) {
       if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)) {
         btn.renderToolTip(ms, mouseX, mouseY);
-        List<ITextComponent> localTooltip = ((IHasTooltip) btn).getTooltip();
+        List<Component> localTooltip = ((IHasTooltip) btn).getTooltip();
         if (localTooltip != null) {
-          this.func_243308_b(ms, localTooltip, mouseX - guiLeft, mouseY - guiTop);
+          this.renderComponentTooltip(ms, localTooltip, mouseX - leftPos, mouseY - topPos);
         }
       }
     }
-    for (IGuiEventListener widget : this.children) {
+    for (GuiEventListener widget : this.children) {
       if (widget instanceof IHasTooltip && widget.isMouseOver(mouseX, mouseY)) {
         IHasTooltip txt = (IHasTooltip) widget;
         if (txt.getTooltip() != null) {
-          this.func_243308_b(ms, txt.getTooltip(), mouseX - guiLeft, mouseY - guiTop);
+          this.renderComponentTooltip(ms, txt.getTooltip(), mouseX - leftPos, mouseY - topPos);
         }
       }
     }

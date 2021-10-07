@@ -6,20 +6,20 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -30,7 +30,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileUser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileUser extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   public static IntValue POWERCONF;
 
@@ -58,7 +58,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    if (world.isRemote || !(world instanceof ServerWorld)) {
+    if (level.isClientSide || !(level instanceof ServerLevel)) {
       return;
     }
     if (timer > 0) {
@@ -71,7 +71,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       if (uuid == null) {
         uuid = UUID.randomUUID();
       }
-      fakePlayer = setupBeforeTrigger((ServerWorld) world, "user", uuid);
+      fakePlayer = setupBeforeTrigger((ServerLevel) level, "user", uuid);
     }
     final int repair = POWERCONF.get();
     if (repair > 0) {
@@ -85,28 +85,28 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       energy.extractEnergy(repair, false);
     }
     try {
-      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
+      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       //start of SUPERHACK
-      ResourceLocation registryItem = fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getItem().getRegistryName();
+      ResourceLocation registryItem = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem().getRegistryName();
       if (registryItem.getNamespace().equalsIgnoreCase("mysticalagriculture")
           && registryItem.getPath().contains("watering_can") &&
-          fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag() != null) {
+          fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getTag() != null) {
         //        boolean water = fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag().getBoolean("Water");
         ModCyclic.LOGGER.info(registryItem + " id hack ");
         //hack around mysttical ag id throttling   fail system 
         //when they fill water, id is set. uses id and gametime 
         //to reject actions to 'throttle'. but fakeplayer confuses this
-        fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag().putString("ID", UUID.randomUUID().toString());
+        fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getTag().putString("ID", UUID.randomUUID().toString());
         //after this hack. they still return type FAIL
         //but the plants grow and the watering DOES happen
         //        https://github.com/BlakeBr0/MysticalAgriculture/blob/f60de3510c694082acf5ff63299f119ab4a9d9a9/src/main/java/com/blakebr0/mysticalagriculture/item/WateringCanItem.java#L144
         //so successful hack
       }
       //end of SUPERHACK
-      BlockPos target = this.pos.offset(this.getCurrentFacing());
-      TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND, null);
+      BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
+      TileEntityBase.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
       // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
-      TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
+      TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
@@ -159,34 +159,34 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     timerDelay = tag.getInt("delay");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("uuid")) {
-      uuid = tag.getUniqueId("uuid");
+      uuid = tag.getUUID("uuid");
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("delay", timerDelay);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     if (uuid != null) {
-      tag.putUniqueId("uuid", uuid);
+      tag.putUUID("uuid", uuid);
     }
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerUser(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerUser(i, level, worldPosition, playerInventory, playerEntity);
   }
 }

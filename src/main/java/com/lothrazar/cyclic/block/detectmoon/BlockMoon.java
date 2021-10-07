@@ -1,32 +1,34 @@
 package com.lothrazar.cyclic.block.detectmoon;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockMoon extends BlockBase {
 
-  public static final IntegerProperty LEVEL = BlockStateProperties.LEVEL_0_8;
+  public static final IntegerProperty LEVEL = BlockStateProperties.LEVEL_COMPOSTER;
 
   public BlockMoon(Properties properties) {
-    super(properties.hardnessAndResistance(0.8F));
+    super(properties.strength(0.8F));
   }
 
   @Override
-  public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    return blockState.get(LEVEL) * 2;
+  public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    return blockState.getValue(LEVEL) * 2;
   }
 
   @Override
-  public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    return blockState.get(LEVEL) * 2;
+  public int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    return blockState.getValue(LEVEL) * 2;
   }
 
   @Override
@@ -35,12 +37,12 @@ public class BlockMoon extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileMoon();
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(LEVEL);
   }
 }

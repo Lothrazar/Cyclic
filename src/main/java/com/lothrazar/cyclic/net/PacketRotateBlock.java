@@ -28,34 +28,34 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketRotateBlock extends PacketBase {
 
   private BlockPos pos;
   private Direction side;
-  private Hand hand;
+  private InteractionHand hand;
 
-  public PacketRotateBlock(BlockPos mouseover, Direction s, Hand hand) {
+  public PacketRotateBlock(BlockPos mouseover, Direction s, InteractionHand hand) {
     pos = mouseover;
     side = s;
     this.hand = hand;
   }
 
-  public static PacketRotateBlock decode(PacketBuffer buf) {
+  public static PacketRotateBlock decode(FriendlyByteBuf buf) {
     return new PacketRotateBlock(buf.readBlockPos(),
         Direction.values()[buf.readInt()],
-        Hand.values()[buf.readInt()]);
+        InteractionHand.values()[buf.readInt()]);
   }
 
-  public static void encode(PacketRotateBlock msg, PacketBuffer buf) {
+  public static void encode(PacketRotateBlock msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.side.ordinal());
     buf.writeInt(msg.hand.ordinal());
@@ -64,11 +64,11 @@ public class PacketRotateBlock extends PacketBase {
   public static void handle(PacketRotateBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      World world = ctx.get().getSender().world;
+      Level world = ctx.get().getSender().level;
       boolean succ = UtilPlaceBlocks.rotateBlockValidState(world, message.pos, message.side);
       if (succ) {
-        ServerPlayerEntity player = ctx.get().getSender();
-        ItemStack itemStackHeld = player.getHeldItem(message.hand);
+        ServerPlayer player = ctx.get().getSender();
+        ItemStack itemStackHeld = player.getItemInHand(message.hand);
         UtilItemStack.damageItem(player, itemStackHeld);
         if (world.getBlockState(message.pos).getSoundType() != null) {
           UtilSound.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound());

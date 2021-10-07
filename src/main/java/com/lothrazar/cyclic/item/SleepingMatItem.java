@@ -4,63 +4,65 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.mojang.datafixers.util.Either;
 import java.util.Optional;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.Unit;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SleepingMatItem extends ItemBase {
 
   public SleepingMatItem(Properties properties) {
-    super(properties.maxStackSize(1).maxDamage(256));
+    super(properties.stacksTo(1).durability(256));
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn) {
-    ItemStack itemstack = player.getHeldItem(handIn);
-    BlockPos pos = player.getPosition();
-    if (!worldIn.isDaytime()) {
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+    ItemStack itemstack = player.getItemInHand(handIn);
+    BlockPos pos = player.blockPosition();
+    if (!worldIn.isDay()) {
       trySleep(player, pos, itemstack).ifLeft((p) -> {
         if (p != null) {
-          player.sendStatusMessage(p.getMessage(), true);
+          player.displayClientMessage(p.getMessage(), true);
         }
       });
     }
-    return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
   }
 
-  public Either<PlayerEntity.SleepResult, Unit> trySleep(PlayerEntity player, BlockPos at, ItemStack itemstack) {
+  public Either<Player.BedSleepingProblem, Unit> trySleep(Player player, BlockPos at, ItemStack itemstack) {
     Optional<BlockPos> optAt = Optional.of(at);
-    PlayerEntity.SleepResult ret = net.minecraftforge.event.ForgeEventFactory.onPlayerSleepInBed(player, optAt);
+    Player.BedSleepingProblem ret = net.minecraftforge.event.ForgeEventFactory.onPlayerSleepInBed(player, optAt);
     if (ret != null) {
       return Either.left(ret);
     }
-    World world = player.world;
-    if (!world.isRemote) {
+    Level world = player.level;
+    if (!world.isClientSide) {
       if (player.isSleeping() || !player.isAlive()) {
-        return Either.left(PlayerEntity.SleepResult.OTHER_PROBLEM);
+        return Either.left(Player.BedSleepingProblem.OTHER_PROBLEM);
       }
-      boolean isoverworld = world.getDimensionKey() == World.OVERWORLD;
+      boolean isoverworld = world.dimension() == Level.OVERWORLD;
       if (!isoverworld) {
-        return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_HERE);
+        return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_HERE);
       }
       if (!net.minecraftforge.event.ForgeEventFactory.fireSleepingTimeCheck(player, optAt)) {
-        player.setBedPosition(at);
-        return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
+        player.setSleepingPos(at);
+        return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
       }
     }
     player.startSleeping(at);
     player.getPersistentData().putBoolean("cyclic_sleeping", true);
     //    tthis.sleepTimer = 0;
-    ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "field_71076_b");
-    if (player.world instanceof ServerWorld) {
-      ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
+    ObfuscationReflectionHelper.setPrivateValue(Player.class, player, 0, "sleepCounter");
+    if (player.level instanceof ServerLevel) {
+      ((ServerLevel) player.level).updateSleepingPlayerList();
     }
     UtilItemStack.damageItem(player, itemstack);
     return Either.right(Unit.INSTANCE);

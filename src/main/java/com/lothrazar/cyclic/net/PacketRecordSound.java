@@ -26,11 +26,11 @@ package com.lothrazar.cyclic.net;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketRecordSound extends PacketBase {
@@ -43,26 +43,26 @@ public class PacketRecordSound extends PacketBase {
     pos = n;
   }
 
-  public static PacketRecordSound decode(PacketBuffer buf) {
-    String s = buf.readString();
-    CompoundNBT tags = buf.readCompoundTag();
+  public static PacketRecordSound decode(FriendlyByteBuf buf) {
+    String s = buf.readUtf();
+    CompoundTag tags = buf.readNbt();
     return new PacketRecordSound(s, new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z")));
   }
 
-  public static void encode(PacketRecordSound msg, PacketBuffer buf) {
-    buf.writeString(msg.sound);
-    CompoundNBT tags = new CompoundNBT();
+  public static void encode(PacketRecordSound msg, FriendlyByteBuf buf) {
+    buf.writeUtf(msg.sound);
+    CompoundTag tags = new CompoundTag();
     tags.putInt("x", msg.pos.getX());
     tags.putInt("y", msg.pos.getY());
     tags.putInt("z", msg.pos.getZ());
-    buf.writeCompoundTag(tags);
+    buf.writeNbt(tags);
   }
 
   public static void handle(PacketRecordSound message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      ServerPlayerEntity sender = ctx.get().getSender();
-      TileEntity tile = sender.world.getTileEntity(message.pos);
+      ServerPlayer sender = ctx.get().getSender();
+      BlockEntity tile = sender.level.getBlockEntity(message.pos);
       if (tile instanceof TileSoundRecorder) {
         ((TileSoundRecorder) tile).onSoundHeard(message.sound);
       }

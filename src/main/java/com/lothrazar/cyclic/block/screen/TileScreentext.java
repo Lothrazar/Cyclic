@@ -2,18 +2,18 @@ package com.lothrazar.cyclic.block.screen;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
-public class TileScreentext extends TileEntityBase implements INamedContainerProvider {
+public class TileScreentext extends TileEntityBase implements MenuProvider {
 
   public static final int STRINGS = 4;
   private String[] text = new String[STRINGS];
@@ -42,22 +42,22 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerScreentext(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerScreentext(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tags) {
+  public void load(BlockState bs, CompoundTag tags) {
     text = new String[STRINGS];
     for (int i = 0; i < STRINGS; i++) {
       text[i] = tags.getString("text" + i);
@@ -69,11 +69,11 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
     fontSize = tags.getInt("font");
     offset = tags.getInt("offset");
     dropShadow = tags.getBoolean("dropShadow");
-    super.read(bs, tags);
+    super.load(bs, tags);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tags) {
+  public CompoundTag save(CompoundTag tags) {
     for (int i = 0; i < STRINGS; i++) {
       if (text[i] != null) {
         tags.putString("text" + i, text[i]);
@@ -86,7 +86,7 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
     tags.putInt("font", fontSize);
     tags.putInt("offset", offset);
     tags.putBoolean("dropShadow", dropShadow);
-    return super.write(tags);
+    return super.save(tags);
   }
 
   @Override

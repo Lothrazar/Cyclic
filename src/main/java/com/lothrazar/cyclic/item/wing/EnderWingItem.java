@@ -31,16 +31,18 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Optional;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EnderWingItem extends ItemBase implements IHasClickToggle {
 
@@ -51,41 +53,41 @@ public class EnderWingItem extends ItemBase implements IHasClickToggle {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (worldIn.isRemote
-        || playerIn.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemRightClick(worldIn, playerIn, handIn);
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (worldIn.isClientSide
+        || playerIn.getCooldowns().isOnCooldown(this)) {
+      return super.use(worldIn, playerIn, handIn);
     }
-    attemptTeleport(worldIn, playerIn, playerIn.getHeldItem(handIn));
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    attemptTeleport(worldIn, playerIn, playerIn.getItemInHand(handIn));
+    return super.use(worldIn, playerIn, handIn);
   }
 
-  private void attemptTeleport(World worldIn, PlayerEntity playerIn, ItemStack held) {
-    ServerWorld serverWorld = worldIn.getServer().getWorld(World.OVERWORLD);
-    ServerPlayerEntity serverPlayerEntity = playerIn instanceof ServerPlayerEntity ? (ServerPlayerEntity) playerIn : null;
+  private void attemptTeleport(Level worldIn, Player playerIn, ItemStack held) {
+    ServerLevel serverWorld = worldIn.getServer().getLevel(Level.OVERWORLD);
+    ServerPlayer serverPlayerEntity = playerIn instanceof ServerPlayer ? (ServerPlayer) playerIn : null;
     if (serverWorld != null && serverPlayerEntity != null) {
       /* get the player's respawn point. This will be one of the following: -- null: Player has not slept in a bed, or their bed has been destroyed, and they are not tied to a Respawn Anchor -- the
        * location of their bed, if they've set the respawn point with a bed -- the location of their Respawn Anchor in the Nether */
-      BlockPos respawnPos = serverPlayerEntity.func_241140_K_();
+      BlockPos respawnPos = serverPlayerEntity.getRespawnPosition();
       if (respawnPos != null) {
         //This Optional checks that the player has a valid respawn point, and that it's safe to spawn there
-        Optional<Vector3d> optional = PlayerEntity.func_242374_a(serverWorld, respawnPos, 0.0F, true, true);
+        Optional<Vec3> optional = Player.findRespawnPositionAndUseSpawnBlock(serverWorld, respawnPos, 0.0F, true, true);
         BlockPos pos;
         boolean needsTeleport = false;
         if (optional.isPresent()) {
-          pos = new BlockPos(optional.get().getX(), optional.get().getY(), optional.get().getZ());
-          RegistryKey<World> spawnWorldKey = serverPlayerEntity.func_241141_L_();
-          ServerWorld spawnWorld = worldIn.getServer().getWorld(spawnWorldKey);
-          if (spawnWorld != null && spawnWorldKey == World.THE_NETHER) {
-            if (worldIn.getDimensionKey() == World.THE_NETHER) {
+          pos = new BlockPos(optional.get().x(), optional.get().y(), optional.get().z());
+          ResourceKey<Level> spawnWorldKey = serverPlayerEntity.getRespawnDimension();
+          ServerLevel spawnWorld = worldIn.getServer().getLevel(spawnWorldKey);
+          if (spawnWorld != null && spawnWorldKey == Level.NETHER) {
+            if (worldIn.dimension() == Level.NETHER) {
               needsTeleport = true;
             }
             else {
               UtilChat.sendStatusMessage(playerIn, "command.cyclic.home.nether");
             }
           }
-          else if (spawnWorld != null && spawnWorldKey == World.OVERWORLD) {
-            if (worldIn.getDimensionKey() == World.OVERWORLD) {
+          else if (spawnWorld != null && spawnWorldKey == Level.OVERWORLD) {
+            if (worldIn.dimension() == Level.OVERWORLD) {
               needsTeleport = true;
             }
             else {
@@ -94,7 +96,7 @@ public class EnderWingItem extends ItemBase implements IHasClickToggle {
           }
           if (needsTeleport) {
             UtilItemStack.damageItem(playerIn, held);
-            playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
+            playerIn.getCooldowns().addCooldown(this, COOLDOWN);
             UtilEntity.enderTeleportEvent(playerIn, spawnWorld, pos);
             UtilSound.playSound(playerIn, SoundRegistry.WARP_ECHO);
           }
@@ -107,8 +109,8 @@ public class EnderWingItem extends ItemBase implements IHasClickToggle {
   }
 
   @Override
-  public void toggle(PlayerEntity player, ItemStack held) {
-    this.attemptTeleport(player.world, player, held);
+  public void toggle(Player player, ItemStack held) {
+    this.attemptTeleport(player.level, player, held);
   }
 
   @Override

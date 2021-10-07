@@ -4,23 +4,23 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.IHopper;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.Hopper;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileSimpleHopper extends TileEntityBase implements ITickableTileEntity, IHopper {
+public class TileSimpleHopper extends TileEntityBase implements TickableBlockEntity, Hopper {
 
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -29,7 +29,7 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     super(TileRegistry.HOPPER.get());
   }
 
-  public TileSimpleHopper(TileEntityType<? extends TileSimpleHopper> tileEntityType) {
+  public TileSimpleHopper(BlockEntityType<? extends TileSimpleHopper> tileEntityType) {
     super(tileEntityType);
   }
 
@@ -47,9 +47,9 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     if (this.isPowered()) {
       return;
     }
-    this.tryPullFromWorld(pos.offset(Direction.UP));
+    this.tryPullFromWorld(worldPosition.relative(Direction.UP));
     this.tryExtract(inventory, Direction.UP, getFlow(), null);
-    Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
+    Direction exportToSide = this.getBlockState().getValue(BlockFluidHopper.FACING);
     this.moveItems(exportToSide, getFlow(), inventory);
   }
 
@@ -63,14 +63,14 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
 
   private void tryPullFromWorld(BlockPos center) {
     int radius = getRadius();
-    AxisAlignedBB aabb = new AxisAlignedBB(
+    AABB aabb = new AABB(
         center.getX() - radius, center.getY(), center.getZ() - radius,
         center.getX() + radius + 1, center.getY(), center.getZ() + radius + 1);
-    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
+    List<ItemEntity> list = level.getEntitiesOfClass(ItemEntity.class, aabb, (entity) -> {
       return entity.isAlive() && !entity.getItem().isEmpty(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
     });
     if (list.size() > 0) {
-      ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
+      ItemEntity stackEntity = list.get(level.random.nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();
       remainder = inventory.insertItem(0, remainder, false);
       stackEntity.setItem(remainder);
@@ -81,15 +81,15 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -101,17 +101,17 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
-  public double getXPos() {
-    return this.getPos().getX();
+  public double getLevelX() {
+    return this.getBlockPos().getX();
   }
 
   @Override
-  public double getYPos() {
-    return this.getPos().getY();
+  public double getLevelY() {
+    return this.getBlockPos().getY();
   }
 
   @Override
-  public double getZPos() {
-    return this.getPos().getZ();
+  public double getLevelZ() {
+    return this.getBlockPos().getZ();
   }
 }

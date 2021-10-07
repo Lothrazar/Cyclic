@@ -2,60 +2,62 @@ package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class LaunchBlock extends BlockBase {
 
   private static final float ANGLE = 90;
-  protected static final VoxelShape PRESSED_AABB = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
+  protected static final VoxelShape PRESSED_AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
   boolean sneakPlayerAvoid = true;
   boolean doRedstone;
 
   public LaunchBlock(Properties properties, boolean doRedstone) {
-    super(properties.doesNotBlockMovement().hardnessAndResistance(0.5F));
+    super(properties.noCollission().strength(0.5F));
     this.doRedstone = doRedstone;
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return PRESSED_AABB;
   }
 
   @Override
-  public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, Direction side) {
+  public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
     return false;
   }
 
   @Override
-  public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-    BlockPos blockpos = pos.down();
-    return hasSolidSideOnTop(worldIn, blockpos) || hasEnoughSolidSide(worldIn, blockpos, Direction.UP);
+  public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+    BlockPos blockpos = pos.below();
+    return canSupportRigidBlock(worldIn, blockpos) || canSupportCenter(worldIn, blockpos, Direction.UP);
   }
 
   @Override
-  public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
-    if (sneakPlayerAvoid && entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+    if (sneakPlayerAvoid && entity instanceof Player && ((Player) entity).isCrouching()) {
       return;
     }
-    if (worldIn.isRemote) {
+    if (worldIn.isClientSide) {
       UtilEntity.launch(entity, ANGLE, getPower(worldIn, pos));
     }
-    else if (entity instanceof PlayerEntity) {
+    else if (entity instanceof Player) {
       //          ((EntityPlayer) entity).addPotionEffect(new PotionEffect(PotionEffects.BOUNCE, 300, 0));
     }
   }
 
-  private float getPower(World world, BlockPos pos) {
+  private float getPower(Level world, BlockPos pos) {
     if (this.doRedstone == false) {
       return 1.6F;
     }
@@ -64,7 +66,7 @@ public class LaunchBlock extends BlockBase {
       if (direction == Direction.UP) {
         continue;
       }
-      int localPow = world.getRedstonePower(pos.offset(direction), direction);
+      int localPow = world.getSignal(pos.relative(direction), direction);
       if (localPow > power) {
         power = localPow;
       }

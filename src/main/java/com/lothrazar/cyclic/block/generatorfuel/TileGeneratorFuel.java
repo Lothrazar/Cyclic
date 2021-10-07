@@ -5,18 +5,18 @@ import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
@@ -27,7 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorFuel extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileGeneratorFuel extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX, FLOWING;
@@ -41,7 +41,7 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING) > 0; //stack.getBurnTime(IRecipeType.SMELTING) >= 0;
+      return ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0; //stack.getBurnTime(IRecipeType.SMELTING) >= 0;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
@@ -66,7 +66,7 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
       setLitProperty(false);
       return;
     }
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     //are we EMPTY
@@ -86,7 +86,7 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     final int factor = 1;
-    int burnTimeTicks = factor * ForgeHooks.getBurnTime(stack, IRecipeType.SMELTING);
+    int burnTimeTicks = factor * ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
     if (burnTimeTicks > 0) {
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
@@ -96,13 +96,13 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerGeneratorFuel(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerGeneratorFuel(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -117,17 +117,17 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

@@ -3,16 +3,18 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.util.Hand;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
+
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class EnchantDisarm extends EnchantBase {
 
@@ -20,7 +22,7 @@ public class EnchantDisarm extends EnchantBase {
   // "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
   private static final double BASE_CHANCE = 0.08 / 2;
 
-  public EnchantDisarm(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantDisarm(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -43,37 +45,37 @@ public class EnchantDisarm extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     return stack.getItem() instanceof SwordItem;
   }
 
   @Override
-  public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+  public void doPostAttack(LivingEntity user, Entity target, int level) {
     if (target instanceof LivingEntity == false) {
       return;
     }
     LivingEntity livingTarget = (LivingEntity) target;
     List<ItemStack> toDisarm = new ArrayList<>();
-    target.getHeldEquipment().forEach(itemStack -> {
-      if (getChanceToDisarm(level) > user.world.rand.nextDouble()) {
+    target.getHandSlots().forEach(itemStack -> {
+      if (getChanceToDisarm(level) > user.level.random.nextDouble()) {
         toDisarm.add(itemStack);
       }
     });
     toDisarm.forEach(itemStack -> {
       boolean dropHeld = false;
-      if (itemStack.equals(livingTarget.getHeldItemMainhand())) {
-        livingTarget.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
+      if (itemStack.equals(livingTarget.getMainHandItem())) {
+        livingTarget.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         dropHeld = true;
       }
-      else if (itemStack.equals(livingTarget.getHeldItemOffhand())) {
-        livingTarget.setHeldItem(Hand.OFF_HAND, ItemStack.EMPTY);
+      else if (itemStack.equals(livingTarget.getOffhandItem())) {
+        livingTarget.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
         dropHeld = true;
       }
       if (dropHeld) {
-        user.world.addEntity(new ItemEntity(user.world, livingTarget.getPosX(),
-            livingTarget.getPosY(), livingTarget.getPosZ(), itemStack));
+        user.level.addFreshEntity(new ItemEntity(user.level, livingTarget.getX(),
+            livingTarget.getY(), livingTarget.getZ(), itemStack));
       }
     });
-    super.onEntityDamaged(user, target, level);
+    super.doPostAttack(user, target, level);
   }
 }

@@ -8,9 +8,9 @@ import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
@@ -19,7 +19,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   private ButtonMachineField btnRedstone;
   private ButtonMachineField btnRender;
 
-  public ScreenFluidCollect(ContainerFluidCollect screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenFluidCollect(ContainerFluidCollect screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     fluid = new FluidBar(this, TileFluidCollect.CAPACITY);
     energy = new EnergyBar(this, TileFluidCollect.MAX);
@@ -28,61 +28,61 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
   @Override
   public void init() {
     super.init();
-    energy.guiLeft = fluid.guiLeft = guiLeft;
-    energy.guiTop = fluid.guiTop = guiTop;
+    energy.guiLeft = fluid.guiLeft = leftPos;
+    energy.guiTop = fluid.guiTop = topPos;
     energy.visible = TileFluidCollect.POWERCONF.get() > 0;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     btnRender = addButton(new ButtonMachineField(x, y + 20, TileFluidCollect.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+        menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //
     int w = 96;
     int h = 20;
-    x = guiLeft + 32;
+    x = leftPos + 32;
     y += h + 1;
     int f = TileFluidCollect.Fields.HEIGHT.ordinal();
-    GuiSliderInteger height = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, TileFluidCollect.MAX_HEIGHT, container.tile.getField(f)));
+    GuiSliderInteger height = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, TileFluidCollect.MAX_HEIGHT, menu.tile.getField(f)));
     height.setTooltip("buildertype.height.tooltip");
     y += h + 1;
     //
     //
     f = TileFluidCollect.Fields.SIZE.ordinal();
-    GuiSliderInteger size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, TileMiner.MAX_SIZE, container.tile.getField(f)));
+    GuiSliderInteger size = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, TileMiner.MAX_SIZE, menu.tile.getField(f)));
     size.setTooltip("buildertype.size.tooltip");
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
+    this.renderTooltip(ms, mouseX, mouseY);
+    fluid.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getFluid());
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    btnRedstone.onValueUpdate(container.tile);
-    btnRender.onValueUpdate(container.tile);
+    btnRedstone.onValueUpdate(menu.tile);
+    btnRender.onValueUpdate(menu.tile);
     //    int on = container.tile.getField(TileFluidCollect.Fields.RENDER.ordinal());
     //    btnRender.setTooltip(UtilChat.lang("gui.cyclic.render" + on));
     //    btnRender.setTextureId(on == 1 ? TextureEnum.RENDER_SHOW : TextureEnum.RENDER_HIDE);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 9, 50);
     if (TileFluidCollect.POWERCONF.get() > 0) {
-      energy.draw(ms, container.tile.getEnergy());
+      energy.draw(ms, menu.tile.getEnergy());
     }
-    fluid.draw(ms, container.tile.getFluid());
+    fluid.draw(ms, menu.tile.getFluid());
   }
 }

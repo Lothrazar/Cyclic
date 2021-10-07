@@ -5,15 +5,15 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -21,10 +21,12 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockCask extends BlockBase {
 
   public BlockCask(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F));
+    super(properties.harvestTool(ToolType.PICKAXE).strength(1.2F));
     this.setHasFluidInteract();
   }
 
@@ -34,21 +36,21 @@ public class BlockCask extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileCask();
   }
 
   @Override
-  public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
+  public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 
     return new ArrayList<>();
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+  public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     try {
       IFluidHandlerItem storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
-      TileEntity container = world.getTileEntity(pos);
+      BlockEntity container = world.getBlockEntity(pos);
       if (storage != null && container != null) {
         IFluidHandler storageTile = container.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
         if (storageTile != null) {
@@ -62,12 +64,12 @@ public class BlockCask extends BlockBase {
     }
     //set default state
     //    state = state.with(TANK_ABOVE, false).with(TANK_BELOW, false);
-    world.setBlockState(pos, state);
+    world.setBlockAndUpdate(pos, state);
   }
 
   @Override
-  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
-    super.harvestBlock(world, player, pos, state, ent, stack);
+  public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity ent, ItemStack stack) {
+    super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {
       IFluidHandler fluidInTile = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
@@ -79,8 +81,8 @@ public class BlockCask extends BlockBase {
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
-    if (world.isRemote == false) {
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
+    if (world.isClientSide == false) {
+      world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
     }
   }
 }

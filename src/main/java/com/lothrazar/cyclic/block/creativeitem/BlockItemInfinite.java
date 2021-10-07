@@ -1,21 +1,23 @@
 package com.lothrazar.cyclic.block.creativeitem;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockItemInfinite extends BlockBase {
 
   public BlockItemInfinite(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.strength(1.8F));
   }
 
   @Override
@@ -24,23 +26,23 @@ public class BlockItemInfinite extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileItemInfinite();
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    if (!world.isRemote) {
-      TileEntity tileEntity = world.getTileEntity(pos);
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    if (!world.isClientSide) {
+      BlockEntity tileEntity = world.getBlockEntity(pos);
       if (tileEntity instanceof TileItemInfinite) {
         TileItemInfinite tile = (TileItemInfinite) tileEntity;
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = player.getItemInHand(hand);
         if (!stack.isEmpty()) {
           tile.inputSlots.setStackInSlot(0, stack);
-          return ActionResultType.SUCCESS;
+          return InteractionResult.SUCCESS;
         }
       }
     }
-    return super.onBlockActivated(state, world, pos, player, hand, hit);
+    return super.use(state, world, pos, player, hand, hit);
   }
 }

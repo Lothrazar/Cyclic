@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.compat.botania;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.fml.ModList;
 import vazkii.botania.api.BotaniaAPI;
 

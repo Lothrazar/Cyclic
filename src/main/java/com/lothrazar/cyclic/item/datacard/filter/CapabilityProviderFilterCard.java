@@ -1,14 +1,14 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class CapabilityProviderFilterCard implements ICapabilitySerializable<CompoundNBT> {
+public class CapabilityProviderFilterCard implements ICapabilitySerializable<CompoundTag> {
 
   public static final int SLOTS = 9;
   private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(SLOTS) {
@@ -32,16 +32,16 @@ public class CapabilityProviderFilterCard implements ICapabilitySerializable<Com
   }
 
   @Override
-  public CompoundNBT serializeNBT() {
+  public CompoundTag serializeNBT() {
     if (inventory.isPresent()) {
-      CompoundNBT nbt = inventory.resolve().get().serializeNBT();
+      CompoundTag nbt = inventory.resolve().get().serializeNBT();
       return nbt;
     }
-    return new CompoundNBT();
+    return new CompoundTag();
   }
 
   @Override
-  public void deserializeNBT(CompoundNBT nbt) {
+  public void deserializeNBT(CompoundTag nbt) {
     inventory.ifPresent(h -> h.deserializeNBT(nbt));
   }
 }

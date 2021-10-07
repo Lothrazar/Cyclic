@@ -4,37 +4,39 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockItemCollector extends BlockBase {
 
   public BlockItemCollector(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).sound(SoundType.STONE));
+    super(properties.strength(1.8F).sound(SoundType.STONE));
     this.setHasGui();
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
+  public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlockState(pos, state.with(HorizontalBlock.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
+      world.setBlock(pos, state.setValue(HorizontalDirectionalBlock.FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(HorizontalBlock.HORIZONTAL_FACING).add(LIT);
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    builder.add(HorizontalDirectionalBlock.FACING).add(LIT);
   }
 
   @Override
@@ -43,13 +45,13 @@ public class BlockItemCollector extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileItemCollector();
   }
 
   @Override
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.COLLECTOR_ITEM, RenderItemCollect::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.collector, ScreenItemCollector::new);
+    MenuScreens.register(ContainerScreenRegistry.collector, ScreenItemCollector::new);
   }
 }

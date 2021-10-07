@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
 
-public class MembraneLampTile extends TileEntityBase implements ITickableTileEntity {
+public class MembraneLampTile extends TileEntityBase implements TickableBlockEntity {
 
   public MembraneLampTile() {
     super(TileRegistry.LAMP.get());
@@ -13,9 +13,9 @@ public class MembraneLampTile extends TileEntityBase implements ITickableTileEnt
   @Override
   public void tick() {
     int newPower = this.getRedstonePower();
-    int previous = this.getBlockState().get(MembraneLamp.POWER);
+    int previous = this.getBlockState().getValue(MembraneLamp.POWER);
     if (newPower != previous) {
-      world.setBlockState(this.getPos(), getBlockState().with(MembraneLamp.POWER, newPower));
+      level.setBlockAndUpdate(this.getBlockPos(), getBlockState().setValue(MembraneLamp.POWER, newPower));
     }
   }
 

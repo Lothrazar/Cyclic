@@ -10,11 +10,11 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
@@ -23,35 +23,35 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   public ButtonMachineField btnRedstone;
   private ButtonMachineField btnRender;
 
-  public ScreenStructure(ContainerStructure screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenStructure(ContainerStructure screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileStructure.MAX);
-    this.ySize = 256;
+    this.imageHeight = 256;
   }
 
   @Override
   public void init() {
     super.init();
     int x, y;
-    energy.guiLeft = guiLeft;
-    energy.guiTop = guiTop;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileStructure.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    energy.guiLeft = leftPos;
+    energy.guiTop = topPos;
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileStructure.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     btnRender = addButton(new ButtonMachineField(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+        menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     int w = 160;
     int h = 20;
     int f = TileStructure.Fields.HEIGHT.ordinal();
-    x = guiLeft + 8;
-    y = guiTop + 82;
-    GuiSliderInteger durationslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        1, TileStructure.MAXHEIGHT, container.tile.getField(f)));
+    x = leftPos + 8;
+    y = topPos + 82;
+    GuiSliderInteger durationslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        1, TileStructure.MAXHEIGHT, menu.tile.getField(f)));
     durationslider.setTooltip("buildertype.height.tooltip");
     y += 21;
     f = TileStructure.Fields.SIZE.ordinal();
-    GuiSliderInteger sizeslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        1, 64, container.tile.getField(f)));
+    GuiSliderInteger sizeslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        1, 64, menu.tile.getField(f)));
     sizeslider.setTooltip("buildertype.size.tooltip");
     //
     //
@@ -67,8 +67,8 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     //    this.children.add(txtSize);
     TileStructure.Fields fld = TileStructure.Fields.BUILDTYPE;
     int numInRow = 0;
-    x = this.guiLeft + 8;
-    y = this.guiTop + 40;
+    x = this.leftPos + 8;
+    y = this.topPos + 40;
     int bsize = 20;
     shapeBtuns = new ArrayList<>();
     for (BuildStructureType shape : BuildStructureType.values()) {
@@ -76,7 +76,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
       if (numInRow == 7) {
         //only 6 per row fit on screen
         //so just reset x back to left side and bump up the y
-        x = this.guiLeft + 8;
+        x = this.leftPos + 8;
         y += bsize;
       }
       String shapeName = UtilChat.lang("buildertype." + shape.name().toLowerCase());
@@ -85,7 +85,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
             //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
             PacketRegistry.INSTANCE.sendToServer(
                 new PacketTileData(fld.ordinal(),
-                    shape.ordinal(), container.tile.getPos()));
+                    shape.ordinal(), menu.tile.getBlockPos()));
           }));
       btnShape.setTooltip(shapeName);
       x += bsize;
@@ -95,33 +95,33 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.getEnergy());
+    this.renderTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.getEnergy());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    btnRedstone.onValueUpdate(container.tile);
-    btnRender.onValueUpdate(container.tile);
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+    btnRedstone.onValueUpdate(menu.tile);
+    btnRender.onValueUpdate(menu.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
     updateDisabledButtons();
   }
 
   private void updateDisabledButtons() {
-    int shape = container.tile.getField(TileStructure.Fields.BUILDTYPE.ordinal());
+    int shape = menu.tile.getField(TileStructure.Fields.BUILDTYPE.ordinal());
     for (ButtonMachine b : this.shapeBtuns) {
       b.active = (b.getTileField() != shape);
     }
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
-    energy.draw(ms, container.getEnergy());
+    energy.draw(ms, menu.getEnergy());
     this.drawSlot(ms, 60, 20);
     this.drawSlot(ms, 7, 131, TextureRegistry.SLOT_SHAPE, 18);
     this.drawSlot(ms, 151, 131, TextureRegistry.SLOT_GPS, 18);

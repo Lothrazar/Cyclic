@@ -2,18 +2,18 @@ package com.lothrazar.cyclic.gui;
 
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class TimerBar {
 
-  private ContainerScreen<?> parent;
+  private AbstractContainerScreen<?> parent;
   private int x = 20;
   private int y = 98;
   public int capacity;
@@ -24,7 +24,7 @@ public class TimerBar {
   public boolean showText = true;
   public boolean visible = true;
 
-  public TimerBar(ContainerScreen<?> parent, int x, int y, int cap) {
+  public TimerBar(AbstractContainerScreen<?> parent, int x, int y, int cap) {
     this.parent = parent;
     this.x = x;
     this.y = y;
@@ -36,24 +36,24 @@ public class TimerBar {
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
   }
 
-  public void draw(MatrixStack ms, float timer) {
+  public void draw(PoseStack ms, float timer) {
     if (!visible) {
       return;
     }
-    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.PROGRESS);
+    parent.getMinecraft().getTextureManager().bind(TextureRegistry.PROGRESS);
     float pct = Math.min(timer / capacity, 1.0F);
     Screen.blit(ms, guiLeft + x, guiTop + y,
         0, 0,
         (int) (width * pct), height,
         width, height);
     if (showText) {
-      Minecraft.getInstance().fontRenderer.drawString(ms, "[" + ((int) timer) + "]",
+      Minecraft.getInstance().font.draw(ms, "[" + ((int) timer) + "]",
           guiLeft + x + 2,
           guiTop + y + 4, 4209792);
     }
   }
 
-  public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int curr) {
+  public void renderHoveredToolTip(PoseStack ms, int mouseX, int mouseY, int curr) {
     if (this.isMouseover(mouseX, mouseY) && this.visible) {
       String display = "";
       int seconds = curr / Const.TICKS_PER_SEC;
@@ -70,9 +70,9 @@ public class TimerBar {
       else {
         display = curr + "";
       }
-      List<ITextComponent> list = new ArrayList<>();
-      list.add(new TranslationTextComponent(display));
-      parent.func_243308_b(ms, list, mouseX, mouseY);
+      List<Component> list = new ArrayList<>();
+      list.add(new TranslatableComponent(display));
+      parent.renderComponentTooltip(ms, list, mouseX, mouseY);
     }
   }
 }

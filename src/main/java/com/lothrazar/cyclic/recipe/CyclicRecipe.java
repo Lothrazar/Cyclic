@@ -25,18 +25,18 @@ package com.lothrazar.cyclic.recipe;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ITag.INamedTag;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag.Named;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
+public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
 
   private final ResourceLocation id;
 
@@ -45,17 +45,17 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
   }
 
   @Override
-  public ItemStack getCraftingResult(TileEntityBase inv) {
+  public ItemStack assemble(TileEntityBase inv) {
     return ItemStack.EMPTY;
   }
 
   @Override
-  public boolean canFit(int width, int height) {
+  public boolean canCraftInDimensions(int width, int height) {
     return true;
   }
 
   @Override
-  public ItemStack getRecipeOutput() {
+  public ItemStack getResultItem() {
     return ItemStack.EMPTY;
   }
 
@@ -69,7 +69,7 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
   }
 
   @Override
-  public IRecipeSerializer<?> getSerializer() {
+  public RecipeSerializer<?> getSerializer() {
     return null;
   }
 
@@ -82,8 +82,8 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
     }
     //if the fluids are not identical, they might have a matching tag
     //see /data/forge/tags/fluids/
-    for (INamedTag<Fluid> fluidTag : FluidTags.getAllTags()) {
-      if (getRecipeFluid().getFluid().isIn(fluidTag) && tileFluid.getFluid().isIn(fluidTag)) {
+    for (Named<Fluid> fluidTag : FluidTags.getWrappers()) {
+      if (getRecipeFluid().getFluid().is(fluidTag) && tileFluid.getFluid().is(fluidTag)) {
         return true;
       }
     }
@@ -97,7 +97,7 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
       count = 1;
     }
     FluidStack fs = null;
-    String fluidId = JSONUtils.getString(mix, "fluid");
+    String fluidId = GsonHelper.getAsString(mix, "fluid");
     ResourceLocation resourceLocation = new ResourceLocation(fluidId);
     Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
     if (fluid == FluidStack.EMPTY.getFluid()) {

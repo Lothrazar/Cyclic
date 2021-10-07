@@ -6,27 +6,27 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileItemCollector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileItemCollector extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
@@ -60,15 +60,15 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       return;
     }
     setLitProperty(true);
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
-    AxisAlignedBB aabb = getRange();
-    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
+    AABB aabb = getRange();
+    List<ItemEntity> list = level.getEntitiesOfClass(ItemEntity.class, aabb, (entity) -> {
       return entity.isAlive(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
     });
     if (list.size() > 0) {
-      ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
+      ItemEntity stackEntity = list.get(level.random.nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();
       // and then pull 
       if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), remainder)) {
@@ -88,13 +88,13 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerItemCollector(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerItemCollector(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -106,28 +106,28 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
     radius = tag.getInt("radius");
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put("filter", filter.serializeNBT());
     tag.putInt("radius", radius);
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   private BlockPos getTargetCenter() {
     // move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), radius + 1);
+    return this.getBlockPos().relative(this.getCurrentFacing(), radius + 1);
   }
 
   public List<BlockPos> getShape() {
@@ -139,7 +139,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     return shape;
   }
 
-  private AxisAlignedBB getRange() {
+  private AABB getRange() {
     BlockPos center = getTargetCenter();
     int diff = directionIsUp ? 1 : -1;
     int yMin = center.getY();
@@ -149,7 +149,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       // when aiming down, we dont have the offset to get [current block] without this
       yMin++;
     }
-    AxisAlignedBB aabb = new AxisAlignedBB(
+    AABB aabb = new AABB(
         center.getX() - radius, yMin, center.getZ() - radius,
         center.getX() + radius + 1, yMax, center.getZ() + radius + 1);
     return aabb;

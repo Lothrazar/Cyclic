@@ -3,13 +3,15 @@ package com.lothrazar.cyclic.item;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EdibleSpecItem extends ItemBase {
 
@@ -17,26 +19,26 @@ public class EdibleSpecItem extends ItemBase {
   public static IntValue TICKS;
 
   public EdibleSpecItem(Properties properties) {
-    super(properties.rarity(Rarity.EPIC).food(new Food.Builder().hunger(3).saturation(0).setAlwaysEdible().build()));
+    super(properties.rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(3).saturationMod(0).alwaysEat().build()));
   }
 
   @Override
-  public boolean hasEffect(ItemStack stack) {
+  public boolean isFoil(ItemStack stack) {
     return true;
   }
 
   @Override
-  public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-    if (entityLiving instanceof PlayerEntity == false) {
-      return super.onItemUseFinish(stack, worldIn, entityLiving);
+  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+    if (entityLiving instanceof Player == false) {
+      return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    PlayerEntity player = (PlayerEntity) entityLiving;
-    if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemUseFinish(stack, worldIn, entityLiving);
+    Player player = (Player) entityLiving;
+    if (player.getCooldowns().isOnCooldown(this)) {
+      return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    player.getCooldowns().addCooldown(this, COOLDOWN);
     CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
     datFile.spectatorTicks += TICKS.get();
-    return super.onItemUseFinish(stack, worldIn, entityLiving);
+    return super.finishUsingItem(stack, worldIn, entityLiving);
   }
 }

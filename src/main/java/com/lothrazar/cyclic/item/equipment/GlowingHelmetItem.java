@@ -6,34 +6,36 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import java.util.List;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   public static final String NBT_GLOW = Const.MODID + "_glow";
   public static final String NBT_STATUS = "onoff";
 
-  public GlowingHelmetItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn) {
+  public GlowingHelmetItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
     super(materialIn, slot, builderIn);
   }
 
   @Override
-  public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
+  public void onArmorTick(ItemStack stack, Level world, Player player) {
     boolean isTurnedOn = this.isOn(stack);
     removeNightVision(player, isTurnedOn);
     if (isTurnedOn) {
@@ -42,27 +44,27 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   @Override
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(new TranslationTextComponent(UtilChat.lang(this.getTranslationKey() + ".tooltip")).mergeStyle(TextFormatting.GRAY));
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    tooltip.add(new TranslatableComponent(UtilChat.lang(this.getDescriptionId() + ".tooltip")).withStyle(ChatFormatting.GRAY));
     String onoff = this.isOn(stack) ? "on" : "off";
-    TranslationTextComponent t = new TranslationTextComponent(UtilChat.lang("item.cantoggle.tooltip.info") + " " + UtilChat.lang("item.cantoggle.tooltip." + onoff));
-    t.mergeStyle(TextFormatting.DARK_GRAY);
+    TranslatableComponent t = new TranslatableComponent(UtilChat.lang("item.cantoggle.tooltip.info") + " " + UtilChat.lang("item.cantoggle.tooltip." + onoff));
+    t.withStyle(ChatFormatting.DARK_GRAY);
     tooltip.add(t);
-    super.addInformation(stack, worldIn, tooltip, flagIn);
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
-  private void addNightVision(PlayerEntity player) {
-    player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
+  private void addNightVision(Player player) {
+    player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
   }
 
-  public static void removeNightVision(PlayerEntity player, boolean hidden) {
+  public static void removeNightVision(Player player, boolean hidden) {
     //flag it so we know the purple glow was from this item, not something else
     player.getPersistentData().putBoolean(NBT_GLOW, hidden);
-    player.removeActivePotionEffect(Effects.NIGHT_VISION);
+    player.removeEffectNoUpdate(MobEffects.NIGHT_VISION);
   }
 
-  private void checkIfHelmOff(PlayerEntity player) {
-    Item itemInSlot = UtilPlayer.getItemArmorSlot(player, EquipmentSlotType.HEAD);
+  private void checkIfHelmOff(Player player) {
+    Item itemInSlot = UtilPlayer.getItemArmorSlot(player, EquipmentSlot.HEAD);
     if (itemInSlot == this) {
       //turn it off once, from the message
       removeNightVision(player, false);
@@ -70,15 +72,15 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   @Override
-  public void toggle(PlayerEntity player, ItemStack held) {
-    CompoundNBT tags = UtilNBT.getItemStackNBT(held);
+  public void toggle(Player player, ItemStack held) {
+    CompoundTag tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.putInt(NBT_STATUS, vnew);
   }
 
   @Override
   public boolean isOn(ItemStack held) {
-    CompoundNBT tags = UtilNBT.getItemStackNBT(held);
+    CompoundTag tags = UtilNBT.getItemStackNBT(held);
     if (!tags.contains(NBT_STATUS)) {
       return true;
     } //default for newlycrafted//legacy items
@@ -88,9 +90,9 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   @SubscribeEvent
   public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
     //reduce check to only once per second instead  of per tick
-    if (event.getEntity().world.getGameTime() % 20 == 0 &&
+    if (event.getEntity().level.getGameTime() % 20 == 0 &&
         event.getEntityLiving() != null) { //some of the items need an off switch
-      PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+      Player player = (Player) event.getEntityLiving();
       checkIfHelmOff(player);
     }
   }

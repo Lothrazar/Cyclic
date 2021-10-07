@@ -2,19 +2,19 @@ package com.lothrazar.cyclic.block.breaker;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
-public class TileBreaker extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileBreaker extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     REDSTONE, TIMER;
@@ -37,14 +37,14 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
       return;
     }
     setLitProperty(true);
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
-    BlockPos target = pos.offset(this.getCurrentFacing());
-    BlockState state = world.getBlockState(target);
+    BlockPos target = worldPosition.relative(this.getCurrentFacing());
+    BlockState state = level.getBlockState(target);
     if (state.getBlock() != Blocks.AIR &&
-        state.getBlockHardness(world, target) >= 0) {
-      this.world.destroyBlock(target, true);
+        state.getDestroySpeed(level, target) >= 0) {
+      this.level.destroyBlock(target, true);
       //      int cost = POWERCONF.get();
       //      ModCyclic.LOGGER.info("cost" + cost + " have " + energy.getEnergyStored());
       //      if (cost > 0) {
@@ -62,25 +62,25 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
   //  }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerBreaker(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerBreaker(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     //    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     //    tag.put(NBTENERGY, energy.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

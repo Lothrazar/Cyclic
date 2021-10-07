@@ -7,23 +7,25 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EnderBucket extends ItemBase {
 
@@ -36,45 +38,45 @@ public class EnderBucket extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     BlockPosDim dim = getPosition(stack);
     if (dim != null) {
-      tooltip.add(new TranslationTextComponent(dim.toString()).mergeStyle(TextFormatting.GRAY));
+      tooltip.add(new TranslatableComponent(dim.toString()).withStyle(ChatFormatting.GRAY));
       if (flagIn.isAdvanced() || Screen.hasShiftDown()) {
         String side = "S: " + dim.getSide().toString().toUpperCase();
-        tooltip.add(new TranslationTextComponent(side).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(side).withStyle(ChatFormatting.GRAY));
         String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
-        tooltip.add(new TranslationTextComponent(sideF).mergeStyle(TextFormatting.GRAY));
-        tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(sideF).withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TranslatableComponent("H: " + dim.getHitVec().toString()).withStyle(ChatFormatting.GRAY));
       }
     }
     else {
-      TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
-      t.mergeStyle(TextFormatting.GRAY);
+      TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".tooltip");
+      t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    Hand hand = context.getHand();
-    BlockPos pos = context.getPos();
-    Direction side = context.getFace();
-    ItemStack held = player.getHeldItem(hand);
-    player.swingArm(hand);
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
+    InteractionHand hand = context.getHand();
+    BlockPos pos = context.getClickedPos();
+    Direction side = context.getClickedFace();
+    ItemStack held = player.getItemInHand(hand);
+    player.swing(hand);
     UtilNBT.setItemStackBlockPos(held, pos);
-    held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.world));
+    held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.level));
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
-    UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getHorizontalFacing().ordinal());
+    UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
     UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
         + UtilChat.blockPosToString(pos));
     // fl
-    Vector3d vec = context.getHitVec();
+    Vec3 vec = context.getClickLocation();
     held.getOrCreateTag().putDouble("hitx", vec.x - pos.getX());
     held.getOrCreateTag().putDouble("hity", vec.y - pos.getY());
     held.getOrCreateTag().putDouble("hitz", vec.z - pos.getZ());
-    return ActionResultType.SUCCESS;
+    return InteractionResult.SUCCESS;
     //this.write 
   }
 
@@ -84,13 +86,13 @@ public class EnderBucket extends ItemBase {
       return null;
     }
     //    this.read 
-    CompoundNBT tag = item.getOrCreateTag();
-    item.getDisplayName();
+    CompoundTag tag = item.getOrCreateTag();
+    item.getHoverName();
     BlockPosDim dim = new BlockPosDim(pos, tag.getString(NBT_DIM), tag);
     try {
       dim.setSidePlayerFacing(Direction.values()[tag.getInt(NBT_SIDE + "facing")]);
       dim.setSide(Direction.values()[tag.getInt(NBT_SIDE)]);
-      Vector3d vec = new Vector3d(
+      Vec3 vec = new Vec3(
           tag.getDouble("hitx"),
           tag.getDouble("hity"),
           tag.getDouble("hitz"));

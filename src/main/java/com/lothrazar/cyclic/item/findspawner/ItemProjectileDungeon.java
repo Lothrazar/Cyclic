@@ -5,13 +5,15 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemProjectileDungeon extends ItemBase {
 
@@ -22,17 +24,17 @@ public class ItemProjectileDungeon extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-    ItemStack stack = player.getHeldItem(hand);
+  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    ItemStack stack = player.getItemInHand(hand);
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
     shootMe(world, player, ball, 0, ItemBase.VELOCITY_MAX);
     stack.shrink(1);
     UtilSound.playSound(player, SoundRegistry.DUNGEONFINDER, 0.1F, 1.0F);
     findTargetLocation(player, ball);
-    return super.onItemRightClick(world, player, hand);
+    return super.use(world, player, hand);
   }
 
-  private void findTargetLocation(PlayerEntity player, EntityDungeonEye entityendereye) {
+  private void findTargetLocation(Player player, EntityDungeonEye entityendereye) {
     if (entityendereye == null || !entityendereye.isAlive()) {
       return; //something happened! but this never happens
     }

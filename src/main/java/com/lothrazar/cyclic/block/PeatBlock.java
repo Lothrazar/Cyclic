@@ -7,12 +7,14 @@ import com.lothrazar.cyclic.util.UtilShape;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class PeatBlock extends BlockBase {
 
@@ -20,12 +22,12 @@ public class PeatBlock extends BlockBase {
   public static final int FUEL_STRONG = 4096;
 
   public PeatBlock(Properties properties) {
-    super(properties.tickRandomly().hardnessAndResistance(0.9F));
+    super(properties.randomTicks().strength(0.9F));
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+  public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
     super.randomTick(state, world, pos, random);
     List<BlockPos> around = UtilShape.squareHorizontalHollow(pos, 1);
     int sidesWet = 0;
@@ -47,9 +49,9 @@ public class PeatBlock extends BlockBase {
    * Percent chance to bake based on how much water. If touching 1 water source its just the PCT. Touching all 6 water sources means 6 * PCT
    * 
    */
-  private void tryBake(World world, BlockPos pos, int waters) {
-    if (world.rand.nextDouble() < ConfigRegistry.PEATCHANCE.get().doubleValue() * waters) {
-      world.setBlockState(pos, BlockRegistry.peat_baked.getDefaultState());
+  private void tryBake(Level world, BlockPos pos, int waters) {
+    if (world.random.nextDouble() < ConfigRegistry.PEATCHANCE.get().doubleValue() * waters) {
+      world.setBlockAndUpdate(pos, BlockRegistry.peat_baked.defaultBlockState());
     }
   }
 }

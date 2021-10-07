@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.capability;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -12,7 +12,7 @@ import net.minecraftforge.items.ItemStackHandler;
  * Note that the above only applies to operations on the wrapper, the backing handlers are not restricted. For persistence, either the backing {@link ItemStackHandler}s can be saved, or the wrapper
  * itself.
  */
-public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifiable, INBTSerializable<CompoundNBT> {
+public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifiable, INBTSerializable<CompoundTag> {
 
   public static final String NBT_INPUT = "Input";
   public static final String NBT_OUTPUT = "Output";
@@ -83,15 +83,15 @@ public class ItemStackHandlerWrapper implements IItemHandler, IItemHandlerModifi
   }
 
   @Override
-  public CompoundNBT serializeNBT() {
-    CompoundNBT cmp = new CompoundNBT();
+  public CompoundTag serializeNBT() {
+    CompoundTag cmp = new CompoundTag();
     cmp.put(NBT_INPUT, input.serializeNBT());
     cmp.put(NBT_OUTPUT, output.serializeNBT());
     return cmp;
   }
 
   @Override
-  public void deserializeNBT(CompoundNBT nbt) {
+  public void deserializeNBT(CompoundTag nbt) {
     input.deserializeNBT(nbt.getCompound(NBT_INPUT));
     output.deserializeNBT(nbt.getCompound(NBT_OUTPUT));
   }

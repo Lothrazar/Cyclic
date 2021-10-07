@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.awt.Color;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class ClientConfigCyclic {
@@ -28,7 +28,7 @@ public class ClientConfigCyclic {
   public static ConfigValue<String> REPLACE_SCEPTER;
   public static ConfigValue<String> BUILD_SCEPTER;
 
-  public static Color getColor(TileEntity tile) {
+  public static Color getColor(BlockEntity tile) {
     //passing in tile in case of data overrides in future
     // but client config makes sense right now
     if (tile.getType() == TileRegistry.COLLECTOR_ITEM) {

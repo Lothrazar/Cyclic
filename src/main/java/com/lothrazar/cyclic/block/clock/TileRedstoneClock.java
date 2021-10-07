@@ -5,18 +5,18 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
-public class TileRedstoneClock extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileRedstoneClock extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     TIMER, DELAY, DURATION, POWER, REDSTONE, N, E, S, W, U, D;
@@ -87,52 +87,52 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerClock(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerClock(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     delay = tag.getInt("redstone_delay");
     duration = tag.getInt("redstone_duration");
     power = tag.getInt("redstone_power");
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean(f.getName2()));
+      poweredSides.put(f, tag.getBoolean(f.getName()));
     }
     if (this.detectAllOff()) {
       this.facingResetAllOn(); //fix legacy data for one
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("redstone_delay", delay);
     tag.putInt("redstone_duration", duration);
     tag.putInt("redstone_power", power);
     for (Direction f : Direction.values()) {
-      tag.putBoolean(f.getName2(), poweredSides.get(f));
+      tag.putBoolean(f.getName(), poweredSides.get(f));
     }
-    return super.write(tag);
+    return super.save(tag);
   }
 
   private void updateMyState() throws IllegalArgumentException {
-    BlockState blockState = world.getBlockState(pos);
+    BlockState blockState = level.getBlockState(worldPosition);
     if (blockState.hasProperty(BlockRedstoneClock.LIT) == false) {
       return;
     }
     if (this.power == 0) {
-      world.setBlockState(pos, blockState.with(BlockRedstoneClock.LIT, false));
+      level.setBlockAndUpdate(worldPosition, blockState.setValue(BlockRedstoneClock.LIT, false));
       return;
     }
     this.timer++;
     boolean powered;
-    boolean prevPowered = blockState.get(BlockRedstoneClock.LIT);
+    boolean prevPowered = blockState.getValue(BlockRedstoneClock.LIT);
     if (timer < delay) {
       powered = false;
     }
@@ -145,7 +145,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
       powered = false;
     }
     if (prevPowered != powered) {
-      world.setBlockState(pos, blockState.with(BlockRedstoneClock.LIT, powered));
+      level.setBlockAndUpdate(worldPosition, blockState.setValue(BlockRedstoneClock.LIT, powered));
       //super weird hotfix for down state not updating
       //all other directions read update, but not down apparently!
       //      world.notifyNeighborsOfStateChange(pos.down(), world.getBlockState(pos.down()).getBlock(), true);

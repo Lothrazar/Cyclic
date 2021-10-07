@@ -6,29 +6,31 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class RandomizerItem extends ItemBase {
 
   private static final int COOLDOWN = 15;
 
   public RandomizerItem(Properties properties) {
-    super(properties.maxStackSize(1).maxDamage(4096));
+    super(properties.stacksTo(1).durability(4096));
   }
 
-  public static ItemStack getIfHeld(PlayerEntity player) {
-    ItemStack heldItem = player.getHeldItemMainhand();
+  public static ItemStack getIfHeld(Player player) {
+    ItemStack heldItem = player.getMainHandItem();
     if (heldItem.getItem() instanceof RandomizerItem) {
       return heldItem;
     }
-    heldItem = player.getHeldItemOffhand();
+    heldItem = player.getOffhandItem();
     if (heldItem.getItem() instanceof RandomizerItem) {
       return heldItem;
     }
@@ -36,19 +38,19 @@ public class RandomizerItem extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    ItemStack stack = context.getItem();
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
-      return super.onItemUse(context);
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
+    ItemStack stack = context.getItemInHand();
+    if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+      return super.useOn(context);
     }
-    BlockPos pos = context.getPos();
-    Direction side = context.getFace();
-    if (player.world.isRemote) {
+    BlockPos pos = context.getClickedPos();
+    Direction side = context.getClickedFace();
+    if (player.level.isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketRandomize(pos, side, context.getHand()));
     }
     UtilEntity.setCooldownItem(player, this, COOLDOWN);
-    return super.onItemUse(context);
+    return super.useOn(context);
   }
 
   public static List<BlockPos> getPlaces(final BlockPos pos, final Direction side) {
@@ -91,12 +93,12 @@ public class RandomizerItem extends ItemBase {
     return places;
   }
 
-  public static boolean canMove(BlockState stateHere, World world, BlockPos p) {
-    if (stateHere.getBlockHardness(world, p) < 0) {
+  public static boolean canMove(BlockState stateHere, Level world, BlockPos p) {
+    if (stateHere.getDestroySpeed(world, p) < 0) {
       return false; //unbreakable
     }
-    if (world.getTileEntity(p) == null
-        && world.isAirBlock(p) == false
+    if (world.getBlockEntity(p) == null
+        && world.isEmptyBlock(p) == false
         && stateHere.getMaterial().isLiquid() == false) {
       return true;
     }

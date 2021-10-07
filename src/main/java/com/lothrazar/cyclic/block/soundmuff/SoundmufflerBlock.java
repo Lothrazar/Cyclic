@@ -4,17 +4,19 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import java.util.List;
-import net.minecraft.block.SoundType;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.ITickableSound;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.resources.sounds.TickableSoundInstance;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SoundmufflerBlock extends BlockBase {
 
@@ -22,18 +24,18 @@ public class SoundmufflerBlock extends BlockBase {
   private static final int RADIUS = 6;
 
   public SoundmufflerBlock(Properties properties) {
-    super(properties.hardnessAndResistance(1F).sound(SoundType.SCAFFOLDING));
+    super(properties.strength(1F).sound(SoundType.SCAFFOLDING));
     MinecraftForge.EVENT_BUS.register(this);
   }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public void onPlaySound(PlaySoundEvent event) {
-    ClientWorld clientWorld = Minecraft.getInstance().world;
-    if (event.getResultSound() == null || event.getResultSound() instanceof ITickableSound || clientWorld == null) {
+    ClientLevel clientWorld = Minecraft.getInstance().level;
+    if (event.getResultSound() == null || event.getResultSound() instanceof TickableSoundInstance || clientWorld == null) {
       return;
     } //long term/repeating/music
-    ISound sound = event.getResultSound();
+    SoundInstance sound = event.getResultSound();
     List<BlockPos> blocks = UtilBlockstates.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this, RADIUS);
     if (blocks == null || blocks.size() == 0) {
       return;

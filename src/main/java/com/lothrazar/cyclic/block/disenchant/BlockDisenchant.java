@@ -3,37 +3,39 @@ package com.lothrazar.cyclic.block.disenchant;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.Random;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockDisenchant extends BlockBase {
 
-  protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
+  protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
   public BlockDisenchant(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).notSolid());
+    super(properties.strength(1.8F).noOcclusion());
     this.setHasGui();
   }
 
   @Override
-  public boolean isTransparent(BlockState state) {
+  public boolean useShapeForLightOcclusion(BlockState state) {
     return true;
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return SHAPE;
   }
 
@@ -42,7 +44,7 @@ public class BlockDisenchant extends BlockBase {
    * will always be called regardless of whether the block can receive random update ticks
    */
   @Override
-  public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+  public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
     super.animateTick(stateIn, worldIn, pos, rand);
     for (int i = -2; i <= 2; ++i) {
       for (int j = -2; j <= 2; ++j) {
@@ -51,9 +53,9 @@ public class BlockDisenchant extends BlockBase {
         }
         if (rand.nextInt(16) == 0) {
           for (int k = 0; k <= 1; ++k) {
-            BlockPos blockpos = pos.add(i, k, j);
+            BlockPos blockpos = pos.offset(i, k, j);
             if (worldIn.getBlockState(blockpos).getEnchantPowerBonus(worldIn, blockpos) > 0) {
-              if (!worldIn.isAirBlock(pos.add(i / 2, 0, j / 2))) {
+              if (!worldIn.isEmptyBlock(pos.offset(i / 2, 0, j / 2))) {
                 break;
               }
               worldIn.addParticle(ParticleTypes.ENCHANT, pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D,
@@ -66,14 +68,14 @@ public class BlockDisenchant extends BlockBase {
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
   @Override
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
-    ScreenManager.registerFactory(ContainerScreenRegistry.DISENCHANTER, ScreenDisenchant::new);
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
+    MenuScreens.register(ContainerScreenRegistry.DISENCHANTER, ScreenDisenchant::new);
   }
 
   @Override
@@ -82,7 +84,7 @@ public class BlockDisenchant extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileDisenchant();
   }
 }

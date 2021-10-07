@@ -8,34 +8,34 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilString;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class EntityMagicNetEmpty extends ProjectileItemEntity {
+public class EntityMagicNetEmpty extends ThrowableItemProjectile {
 
   public static final String NBT_ENTITYID = ModCyclic.MODID + ":magicnet_id";
   public static final int PARTICLE_CAPTURE_COUNT = 8;
 
-  public EntityMagicNetEmpty(EntityType<? extends ProjectileItemEntity> entityType, World world) {
+  public EntityMagicNetEmpty(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
     super(entityType, world);
   }
 
-  public EntityMagicNetEmpty(World worldIn, LivingEntity livingEntityIn) {
+  public EntityMagicNetEmpty(Level worldIn, LivingEntity livingEntityIn) {
     super(EntityRegistry.NETBALL, livingEntityIn, worldIn);
   }
 
@@ -45,23 +45,23 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
   }
 
   @Override
-  protected void onImpact(RayTraceResult result) {
-    RayTraceResult.Type type = result.getType();
-    BasicParticleType particleType = null;
+  protected void onHit(HitResult result) {
+    HitResult.Type type = result.getType();
+    SimpleParticleType particleType = null;
     double targetHeightOffset = 0.0d;
-    if (type == RayTraceResult.Type.ENTITY) {
+    if (type == HitResult.Type.ENTITY) {
       //now grab and kill the entity
-      EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
+      EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
-      if (target instanceof PlayerEntity || !target.isAlive()) {
+      if (target instanceof Player || !target.isAlive()) {
         return;
       }
       //Wake up the mob in case they're sleeping in a bed see Issue #1599
       if (target instanceof LivingEntity) {
-        ((LivingEntity) target).wakeUp();
+        ((LivingEntity) target).stopSleeping();
       }
-      CompoundNBT compound = new CompoundNBT();
-      target.writeUnlessPassenger(compound);
+      CompoundTag compound = new CompoundTag();
+      target.save(compound);
       //
       String id = EntityType.getKey(target.getType()).toString();
       if (UtilString.isInList(ConfigRegistry.getMagicNetList(), EntityType.getKey(target.getType()))) {
@@ -74,30 +74,30 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       compound.putString(NBT_ENTITYID, id);
       ItemStack drop = new ItemStack(ItemRegistry.mob_container);
       drop.setTag(compound);
-      targetHeightOffset = target.getHeight() / 2;
+      targetHeightOffset = target.getBbHeight() / 2;
       particleType = ParticleTypes.PORTAL;
-      UtilItemStack.drop(world, this.getPosition(), drop);
+      UtilItemStack.drop(level, this.blockPosition(), drop);
       UtilSound.playSound(target, SoundRegistry.MONSTER_BALL_CAPTURE);
       target.remove();
     }
-    else if (type == RayTraceResult.Type.BLOCK) {
+    else if (type == HitResult.Type.BLOCK) {
       //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
-      BlockPos pos = this.getPosition();
+      BlockPos pos = this.blockPosition();
       targetHeightOffset = 0.0D;
       particleType = ParticleTypes.POOF;
-      UtilItemStack.drop(world, pos, new ItemStack(ItemRegistry.magic_net));
+      UtilItemStack.drop(level, pos, new ItemStack(ItemRegistry.magic_net));
     }
     if (particleType != null) {
-      Vector3d hitVec = result.getHitVec();
+      Vec3 hitVec = result.getLocation();
       for (int i = 0; i < PARTICLE_CAPTURE_COUNT; i++) {
-        world.addParticle(particleType, hitVec.getX(), hitVec.getY() + targetHeightOffset, hitVec.getZ(), this.rand.nextGaussian() * 0.1D, 0.0D, this.rand.nextGaussian() * 0.1D);
+        level.addParticle(particleType, hitVec.x(), hitVec.y() + targetHeightOffset, hitVec.z(), this.random.nextGaussian() * 0.1D, 0.0D, this.random.nextGaussian() * 0.1D);
       }
     }
     this.remove();
   }
 
   @Override
-  public IPacket<?> createSpawnPacket() {
+  public Packet<?> getAddEntityPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
   }
 }

@@ -78,7 +78,7 @@ import com.lothrazar.cyclic.block.wireless.item.TileWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.TileWorkbench;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -91,199 +91,199 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TileRegistry {
 
-  public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ModCyclic.MODID);
-  public static final RegistryObject<TileEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> TileEntityType.Builder.create(() -> new TileFluidHopper(), BlockRegistry.FLUIDHOPPER.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> TileEntityType.Builder.create(() -> new TileSimpleHopper(), BlockRegistry.HOPPER.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> TileEntityType.Builder.create(() -> new TileGoldHopper(), BlockRegistry.HOPPERGOLD.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> TileEntityType.Builder.create(() -> new TileAnvilVoid(), BlockRegistry.ANVILVOID.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileFanSlab>> FANSLAB = TILES.register("fan_slab", () -> TileEntityType.Builder.create(() -> new TileFanSlab(), BlockRegistry.FANSLAB.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileRotator>> ROTATOR = TILES.register("rotator", () -> TileEntityType.Builder.create(() -> new TileRotator(), BlockRegistry.ROTATOR.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileMoon>> DETECTORMOON = TILES.register("detector_moon", () -> TileEntityType.Builder.create(() -> new TileMoon(), BlockRegistry.DETECTORMOON.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileWeather>> DETECTORWEATHER = TILES.register("detector_weather", () -> TileEntityType.Builder.create(() -> new TileWeather(), BlockRegistry.DETECTORWEATHER.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileTerraGlass>> TERRAGLASS = TILES.register("terra_glass", () -> TileEntityType.Builder.create(() -> new TileTerraGlass(), BlockRegistry.TERRAGLASS.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileSprinkler>> SPRINKLER = TILES.register("sprinkler", () -> TileEntityType.Builder.create(() -> new TileSprinkler(), BlockRegistry.SPRINKLER.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileItemShelf>> ENDER_ITEM_SHELF = TILES.register("ender_item_shelf", () -> TileEntityType.Builder.create(() -> new TileItemShelf(), BlockRegistry.ENDER_ITEM_SHELF.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileWirelessEnergy>> WIRELESS_ENERGY = TILES.register("wireless_energy", () -> TileEntityType.Builder.create(() -> new TileWirelessEnergy(), BlockRegistry.WIRELESS_ENERGY.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileWirelessItem>> WIRELESS_ITEM = TILES.register("wireless_item", () -> TileEntityType.Builder.create(() -> new TileWirelessItem(), BlockRegistry.WIRELESS_ITEM.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileWirelessFluid>> WIRELESS_FLUID = TILES.register("wireless_fluid", () -> TileEntityType.Builder.create(() -> new TileWirelessFluid(), BlockRegistry.WIRELESS_FLUID.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileSoundRecorder>> SOUND_RECORDER = TILES.register("sound_recorder", () -> TileEntityType.Builder.create(() -> new TileSoundRecorder(), BlockRegistry.SOUND_RECORDER.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileSoundPlayer>> SOUND_PLAYER = TILES.register("sound_player", () -> TileEntityType.Builder.create(() -> new TileSoundPlayer(), BlockRegistry.SOUND_PLAYER.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileGeneratorFuel>> GENERATOR_FUEL = TILES.register("generator_fuel", () -> TileEntityType.Builder.create(() -> new TileGeneratorFuel(), BlockRegistry.GENERATOR_FUEL.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileGeneratorFood>> GENERATOR_FOOD = TILES.register("generator_food", () -> TileEntityType.Builder.create(() -> new TileGeneratorFood(), BlockRegistry.GENERATOR_FOOD.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> TileEntityType.Builder.create(() -> new TileGeneratorDrops(), BlockRegistry.GENERATOR_ITEM.get()).build(null));
-  public static final RegistryObject<TileEntityType<TileGeneratorFluid>> GENERATOR_FLUID = TILES.register("generator_fluid", () -> TileEntityType.Builder.create(() -> new TileGeneratorFluid(), BlockRegistry.GENERATOR_FLUID.get()).build(null));
-  public static final RegistryObject<TileEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> TileEntityType.Builder.create(() -> new TilePackager(), BlockRegistry.PACKAGER.get()).build(null));
-  public static final RegistryObject<TileEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> TileEntityType.Builder.create(() -> new MembraneLampTile(), BlockRegistry.LAMP.get()).build(null));
-  public static final RegistryObject<TileEntityType<SoilTile>> SOIL = TILES.register("soil", () -> TileEntityType.Builder.create(() -> new SoilTile(), BlockRegistry.SOIL.get()).build(null));
+  public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ModCyclic.MODID);
+  public static final RegistryObject<BlockEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> BlockEntityType.Builder.of(() -> new TileFluidHopper(), BlockRegistry.FLUIDHOPPER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> BlockEntityType.Builder.of(() -> new TileSimpleHopper(), BlockRegistry.HOPPER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> BlockEntityType.Builder.of(() -> new TileGoldHopper(), BlockRegistry.HOPPERGOLD.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> BlockEntityType.Builder.of(() -> new TileAnvilVoid(), BlockRegistry.ANVILVOID.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileFanSlab>> FANSLAB = TILES.register("fan_slab", () -> BlockEntityType.Builder.of(() -> new TileFanSlab(), BlockRegistry.FANSLAB.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileRotator>> ROTATOR = TILES.register("rotator", () -> BlockEntityType.Builder.of(() -> new TileRotator(), BlockRegistry.ROTATOR.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileMoon>> DETECTORMOON = TILES.register("detector_moon", () -> BlockEntityType.Builder.of(() -> new TileMoon(), BlockRegistry.DETECTORMOON.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileWeather>> DETECTORWEATHER = TILES.register("detector_weather", () -> BlockEntityType.Builder.of(() -> new TileWeather(), BlockRegistry.DETECTORWEATHER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileTerraGlass>> TERRAGLASS = TILES.register("terra_glass", () -> BlockEntityType.Builder.of(() -> new TileTerraGlass(), BlockRegistry.TERRAGLASS.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileSprinkler>> SPRINKLER = TILES.register("sprinkler", () -> BlockEntityType.Builder.of(() -> new TileSprinkler(), BlockRegistry.SPRINKLER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileItemShelf>> ENDER_ITEM_SHELF = TILES.register("ender_item_shelf", () -> BlockEntityType.Builder.of(() -> new TileItemShelf(), BlockRegistry.ENDER_ITEM_SHELF.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileWirelessEnergy>> WIRELESS_ENERGY = TILES.register("wireless_energy", () -> BlockEntityType.Builder.of(() -> new TileWirelessEnergy(), BlockRegistry.WIRELESS_ENERGY.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileWirelessItem>> WIRELESS_ITEM = TILES.register("wireless_item", () -> BlockEntityType.Builder.of(() -> new TileWirelessItem(), BlockRegistry.WIRELESS_ITEM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileWirelessFluid>> WIRELESS_FLUID = TILES.register("wireless_fluid", () -> BlockEntityType.Builder.of(() -> new TileWirelessFluid(), BlockRegistry.WIRELESS_FLUID.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileSoundRecorder>> SOUND_RECORDER = TILES.register("sound_recorder", () -> BlockEntityType.Builder.of(() -> new TileSoundRecorder(), BlockRegistry.SOUND_RECORDER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileSoundPlayer>> SOUND_PLAYER = TILES.register("sound_player", () -> BlockEntityType.Builder.of(() -> new TileSoundPlayer(), BlockRegistry.SOUND_PLAYER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileGeneratorFuel>> GENERATOR_FUEL = TILES.register("generator_fuel", () -> BlockEntityType.Builder.of(() -> new TileGeneratorFuel(), BlockRegistry.GENERATOR_FUEL.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileGeneratorFood>> GENERATOR_FOOD = TILES.register("generator_food", () -> BlockEntityType.Builder.of(() -> new TileGeneratorFood(), BlockRegistry.GENERATOR_FOOD.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> BlockEntityType.Builder.of(() -> new TileGeneratorDrops(), BlockRegistry.GENERATOR_ITEM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileGeneratorFluid>> GENERATOR_FLUID = TILES.register("generator_fluid", () -> BlockEntityType.Builder.of(() -> new TileGeneratorFluid(), BlockRegistry.GENERATOR_FLUID.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> BlockEntityType.Builder.of(() -> new TilePackager(), BlockRegistry.PACKAGER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> BlockEntityType.Builder.of(() -> new MembraneLampTile(), BlockRegistry.LAMP.get()).build(null));
+  public static final RegistryObject<BlockEntityType<SoilTile>> SOIL = TILES.register("soil", () -> BlockEntityType.Builder.of(() -> new SoilTile(), BlockRegistry.SOIL.get()).build(null));
   //  public static final RegistryObject<TileEntityType<BalloonTile>> BALLOON = TILES.register("balloon", () -> TileEntityType.Builder.create(() -> new BalloonTile(), BlockRegistry.BALLOON.get()).build(null));
 
   @SubscribeEvent
-  public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
-    IForgeRegistry<TileEntityType<?>> r = event.getRegistry();
-    r.register(TileEntityType.Builder.create(TileDiamondSpikes::new, BlockRegistry.spikes_diamond).build(null).setRegistryName("spikes_diamond"));
-    r.register(TileEntityType.Builder.create(TileLightCamo::new, BlockRegistry.LIGHT_CAMO.get()).build(null).setRegistryName("light_camo"));
-    r.register(TileEntityType.Builder.create(SoundmuffTile::new, BlockRegistry.soundproofing_ghost).build(null).setRegistryName("soundproofing_ghost"));
-    r.register(TileEntityType.Builder.create(TileTerraPreta::new, BlockRegistry.TERRA_PRETA.get()).build(null).setRegistryName("terra_preta"));
-    r.register(TileEntityType.Builder.create(TileEye::new, BlockRegistry.EYE_REDSTONE).build(null).setRegistryName("eye_redstone"));
-    r.register(TileEntityType.Builder.create(TileEyeTp::new, BlockRegistry.EYE_TELEPORT).build(null).setRegistryName("eye_teleport"));
+  public static void onTileEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> event) {
+    IForgeRegistry<BlockEntityType<?>> r = event.getRegistry();
+    r.register(BlockEntityType.Builder.of(TileDiamondSpikes::new, BlockRegistry.spikes_diamond).build(null).setRegistryName("spikes_diamond"));
+    r.register(BlockEntityType.Builder.of(TileLightCamo::new, BlockRegistry.LIGHT_CAMO.get()).build(null).setRegistryName("light_camo"));
+    r.register(BlockEntityType.Builder.of(SoundmuffTile::new, BlockRegistry.soundproofing_ghost).build(null).setRegistryName("soundproofing_ghost"));
+    r.register(BlockEntityType.Builder.of(TileTerraPreta::new, BlockRegistry.TERRA_PRETA.get()).build(null).setRegistryName("terra_preta"));
+    r.register(BlockEntityType.Builder.of(TileEye::new, BlockRegistry.EYE_REDSTONE).build(null).setRegistryName("eye_redstone"));
+    r.register(BlockEntityType.Builder.of(TileEyeTp::new, BlockRegistry.EYE_TELEPORT).build(null).setRegistryName("eye_teleport"));
     //
-    r.register(TileEntityType.Builder.create(TileAnvilMagma::new, BlockRegistry.anvil_magma).build(null).setRegistryName("anvil_magma"));
-    r.register(TileEntityType.Builder.create(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));
-    r.register(TileEntityType.Builder.create(TileBatteryInfinite::new, BlockRegistry.battery_infinite).build(null).setRegistryName("battery_infinite"));
-    r.register(TileEntityType.Builder.create(TileItemInfinite::new, BlockRegistry.item_infinite).build(null).setRegistryName("item_infinite"));
-    r.register(TileEntityType.Builder.create(TileDice::new, BlockRegistry.dice).build(null).setRegistryName("dice"));
-    r.register(TileEntityType.Builder.create(TileDropper::new, BlockRegistry.dropper).build(null).setRegistryName("dropper"));
-    r.register(TileEntityType.Builder.create(TileForester::new, BlockRegistry.forester).build(null).setRegistryName("forester"));
-    r.register(TileEntityType.Builder.create(TileMiner::new, BlockRegistry.miner).build(null).setRegistryName("miner"));
-    r.register(TileEntityType.Builder.create(TileScreentext::new, BlockRegistry.screen).build(null).setRegistryName("screen"));
-    r.register(TileEntityType.Builder.create(TileUncraft::new, BlockRegistry.uncrafter).build(null).setRegistryName("uncrafter"));
+    r.register(BlockEntityType.Builder.of(TileAnvilMagma::new, BlockRegistry.anvil_magma).build(null).setRegistryName("anvil_magma"));
+    r.register(BlockEntityType.Builder.of(TilePotion::new, BlockRegistry.beacon).build(null).setRegistryName("beacon"));
+    r.register(BlockEntityType.Builder.of(TileBatteryInfinite::new, BlockRegistry.battery_infinite).build(null).setRegistryName("battery_infinite"));
+    r.register(BlockEntityType.Builder.of(TileItemInfinite::new, BlockRegistry.item_infinite).build(null).setRegistryName("item_infinite"));
+    r.register(BlockEntityType.Builder.of(TileDice::new, BlockRegistry.dice).build(null).setRegistryName("dice"));
+    r.register(BlockEntityType.Builder.of(TileDropper::new, BlockRegistry.dropper).build(null).setRegistryName("dropper"));
+    r.register(BlockEntityType.Builder.of(TileForester::new, BlockRegistry.forester).build(null).setRegistryName("forester"));
+    r.register(BlockEntityType.Builder.of(TileMiner::new, BlockRegistry.miner).build(null).setRegistryName("miner"));
+    r.register(BlockEntityType.Builder.of(TileScreentext::new, BlockRegistry.screen).build(null).setRegistryName("screen"));
+    r.register(BlockEntityType.Builder.of(TileUncraft::new, BlockRegistry.uncrafter).build(null).setRegistryName("uncrafter"));
     //
-    r.register(TileEntityType.Builder.create(TilePlacerFluid::new, BlockRegistry.placer_fluid).build(null).setRegistryName("placer_fluid"));
-    r.register(TileEntityType.Builder.create(TileCask::new, BlockRegistry.cask).build(null).setRegistryName("cask"));
-    r.register(TileEntityType.Builder.create(TileCrate::new, BlockRegistry.crate).build(null).setRegistryName("crate"));
-    r.register(TileEntityType.Builder.create(TileRedstoneClock::new, BlockRegistry.clock).build(null).setRegistryName("clock"));
-    r.register(TileEntityType.Builder.create(TileWirelessRec::new, BlockRegistry.wireless_receiver).build(null).setRegistryName("wireless_receiver"));
-    r.register(TileEntityType.Builder.create(TileWirelessTransmit::new, BlockRegistry.wireless_transmitter).build(null).setRegistryName("wireless_transmitter"));
-    r.register(TileEntityType.Builder.create(TileFluidCollect::new, BlockRegistry.collector_fluid).build(null).setRegistryName("collector_fluid"));
-    r.register(TileEntityType.Builder.create(TileDisenchant::new, BlockRegistry.disenchanter).build(null).setRegistryName("disenchanter"));
-    r.register(TileEntityType.Builder.create(TileDetectorItem::new, BlockRegistry.detector_item).build(null).setRegistryName("detector_item"));
-    r.register(TileEntityType.Builder.create(TileDetector::new, BlockRegistry.detector_entity).build(null).setRegistryName("detector_entity"));
-    r.register(TileEntityType.Builder.create(TileSolidifier::new, BlockRegistry.SOLIDIFIER).build(null).setRegistryName("solidifier"));
-    r.register(TileEntityType.Builder.create(TileMelter::new, BlockRegistry.MELTER).build(null).setRegistryName("melter"));
-    r.register(TileEntityType.Builder.create(TileTank::new, BlockRegistry.tank).build(null).setRegistryName("tank"));
-    r.register(TileEntityType.Builder.create(TileBreaker::new, BlockRegistry.breaker).build(null).setRegistryName("breaker"));
-    r.register(TileEntityType.Builder.create(TileItemCollector::new, BlockRegistry.collector).build(null).setRegistryName("collector"));
-    r.register(TileEntityType.Builder.create(TileFan::new, BlockRegistry.fan).build(null).setRegistryName("fan"));
-    r.register(TileEntityType.Builder.create(TileExpPylon::new, BlockRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
-    r.register(TileEntityType.Builder.create(TileTrash::new, BlockRegistry.trash).build(null).setRegistryName("trash"));
-    r.register(TileEntityType.Builder.create(TileGeneratorPeat::new, BlockRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
-    r.register(TileEntityType.Builder.create(TilePeatFarm::new, BlockRegistry.peat_farm).build(null).setRegistryName("peat_farm"));
-    r.register(TileEntityType.Builder.create(TileBattery::new, BlockRegistry.battery).build(null).setRegistryName("battery"));
-    r.register(TileEntityType.Builder.create(TileCableEnergy::new, BlockRegistry.energy_pipe).build(null).setRegistryName("energy_pipe"));
-    r.register(TileEntityType.Builder.create(TileCableItem::new, BlockRegistry.item_pipe).build(null).setRegistryName("item_pipe"));
-    r.register(TileEntityType.Builder.create(TileCableFluid::new, BlockRegistry.fluid_pipe).build(null).setRegistryName("fluid_pipe"));
-    r.register(TileEntityType.Builder.create(TileHarvester::new, BlockRegistry.harvester).build(null).setRegistryName("harvester"));
-    r.register(TileEntityType.Builder.create(TileAnvilAuto::new, BlockRegistry.anvil).build(null).setRegistryName("anvil"));
-    r.register(TileEntityType.Builder.create(TilePlacer::new, BlockRegistry.placer).build(null).setRegistryName("placer"));
-    r.register(TileEntityType.Builder.create(TileStructure::new, BlockRegistry.structure).build(null).setRegistryName("structure"));
-    r.register(TileEntityType.Builder.create(TileFisher::new, BlockRegistry.fisher).build(null).setRegistryName("fisher"));
-    r.register(TileEntityType.Builder.create(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
-    r.register(TileEntityType.Builder.create(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
-    r.register(TileEntityType.Builder.create(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
-    r.register(TileEntityType.Builder.create(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
-    r.register(TileEntityType.Builder.create(TileLaser::new, BlockRegistry.LASER.get()).build(null).setRegistryName("laser"));
-    r.register(TileEntityType.Builder.create(TileConveyor::new, BlockRegistry.CONVEYOR).build(null).setRegistryName("conveyor"));
-    r.register(TileEntityType.Builder.create(TileEnderShelf::new, BlockRegistry.ENDER_SHELF).build(null).setRegistryName("ender_shelf"));
-    r.register(TileEntityType.Builder.create(TileEnderCtrl::new, BlockRegistry.ENDER_CONTROLLER).build(null).setRegistryName("ender_controller"));
-    r.register(TileEntityType.Builder.create(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null).setRegistryName("workbench"));
+    r.register(BlockEntityType.Builder.of(TilePlacerFluid::new, BlockRegistry.placer_fluid).build(null).setRegistryName("placer_fluid"));
+    r.register(BlockEntityType.Builder.of(TileCask::new, BlockRegistry.cask).build(null).setRegistryName("cask"));
+    r.register(BlockEntityType.Builder.of(TileCrate::new, BlockRegistry.crate).build(null).setRegistryName("crate"));
+    r.register(BlockEntityType.Builder.of(TileRedstoneClock::new, BlockRegistry.clock).build(null).setRegistryName("clock"));
+    r.register(BlockEntityType.Builder.of(TileWirelessRec::new, BlockRegistry.wireless_receiver).build(null).setRegistryName("wireless_receiver"));
+    r.register(BlockEntityType.Builder.of(TileWirelessTransmit::new, BlockRegistry.wireless_transmitter).build(null).setRegistryName("wireless_transmitter"));
+    r.register(BlockEntityType.Builder.of(TileFluidCollect::new, BlockRegistry.collector_fluid).build(null).setRegistryName("collector_fluid"));
+    r.register(BlockEntityType.Builder.of(TileDisenchant::new, BlockRegistry.disenchanter).build(null).setRegistryName("disenchanter"));
+    r.register(BlockEntityType.Builder.of(TileDetectorItem::new, BlockRegistry.detector_item).build(null).setRegistryName("detector_item"));
+    r.register(BlockEntityType.Builder.of(TileDetector::new, BlockRegistry.detector_entity).build(null).setRegistryName("detector_entity"));
+    r.register(BlockEntityType.Builder.of(TileSolidifier::new, BlockRegistry.SOLIDIFIER).build(null).setRegistryName("solidifier"));
+    r.register(BlockEntityType.Builder.of(TileMelter::new, BlockRegistry.MELTER).build(null).setRegistryName("melter"));
+    r.register(BlockEntityType.Builder.of(TileTank::new, BlockRegistry.tank).build(null).setRegistryName("tank"));
+    r.register(BlockEntityType.Builder.of(TileBreaker::new, BlockRegistry.breaker).build(null).setRegistryName("breaker"));
+    r.register(BlockEntityType.Builder.of(TileItemCollector::new, BlockRegistry.collector).build(null).setRegistryName("collector"));
+    r.register(BlockEntityType.Builder.of(TileFan::new, BlockRegistry.fan).build(null).setRegistryName("fan"));
+    r.register(BlockEntityType.Builder.of(TileExpPylon::new, BlockRegistry.experience_pylon).build(null).setRegistryName("experience_pylon"));
+    r.register(BlockEntityType.Builder.of(TileTrash::new, BlockRegistry.trash).build(null).setRegistryName("trash"));
+    r.register(BlockEntityType.Builder.of(TileGeneratorPeat::new, BlockRegistry.peat_generator).build(null).setRegistryName("peat_generator"));
+    r.register(BlockEntityType.Builder.of(TilePeatFarm::new, BlockRegistry.peat_farm).build(null).setRegistryName("peat_farm"));
+    r.register(BlockEntityType.Builder.of(TileBattery::new, BlockRegistry.battery).build(null).setRegistryName("battery"));
+    r.register(BlockEntityType.Builder.of(TileCableEnergy::new, BlockRegistry.energy_pipe).build(null).setRegistryName("energy_pipe"));
+    r.register(BlockEntityType.Builder.of(TileCableItem::new, BlockRegistry.item_pipe).build(null).setRegistryName("item_pipe"));
+    r.register(BlockEntityType.Builder.of(TileCableFluid::new, BlockRegistry.fluid_pipe).build(null).setRegistryName("fluid_pipe"));
+    r.register(BlockEntityType.Builder.of(TileHarvester::new, BlockRegistry.harvester).build(null).setRegistryName("harvester"));
+    r.register(BlockEntityType.Builder.of(TileAnvilAuto::new, BlockRegistry.anvil).build(null).setRegistryName("anvil"));
+    r.register(BlockEntityType.Builder.of(TilePlacer::new, BlockRegistry.placer).build(null).setRegistryName("placer"));
+    r.register(BlockEntityType.Builder.of(TileStructure::new, BlockRegistry.structure).build(null).setRegistryName("structure"));
+    r.register(BlockEntityType.Builder.of(TileFisher::new, BlockRegistry.fisher).build(null).setRegistryName("fisher"));
+    r.register(BlockEntityType.Builder.of(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
+    r.register(BlockEntityType.Builder.of(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
+    r.register(BlockEntityType.Builder.of(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
+    r.register(BlockEntityType.Builder.of(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
+    r.register(BlockEntityType.Builder.of(TileLaser::new, BlockRegistry.LASER.get()).build(null).setRegistryName("laser"));
+    r.register(BlockEntityType.Builder.of(TileConveyor::new, BlockRegistry.CONVEYOR).build(null).setRegistryName("conveyor"));
+    r.register(BlockEntityType.Builder.of(TileEnderShelf::new, BlockRegistry.ENDER_SHELF).build(null).setRegistryName("ender_shelf"));
+    r.register(BlockEntityType.Builder.of(TileEnderCtrl::new, BlockRegistry.ENDER_CONTROLLER).build(null).setRegistryName("ender_controller"));
+    r.register(BlockEntityType.Builder.of(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null).setRegistryName("workbench"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":spikes_diamond")
-  public static TileEntityType<TileDiamondSpikes> spikes_diamond;
+  public static BlockEntityType<TileDiamondSpikes> spikes_diamond;
   @ObjectHolder(ModCyclic.MODID + ":light_camo")
-  public static TileEntityType<TileLightCamo> light_camo;
+  public static BlockEntityType<TileLightCamo> light_camo;
   @ObjectHolder(ModCyclic.MODID + ":soundproofing_ghost")
-  public static TileEntityType<SoundmuffTile> soundproofing_ghost;
+  public static BlockEntityType<SoundmuffTile> soundproofing_ghost;
   @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
-  public static TileEntityType<TileEye> eye_redstone;
+  public static BlockEntityType<TileEye> eye_redstone;
   @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
-  public static TileEntityType<TileEyeTp> eye_teleport;
+  public static BlockEntityType<TileEyeTp> eye_teleport;
   @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
-  public static TileEntityType<UnbreakablePoweredTile> unbreakable_reactive;
+  public static BlockEntityType<UnbreakablePoweredTile> unbreakable_reactive;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
-  public static TileEntityType<TileShapedata> computer_shape;
+  public static BlockEntityType<TileShapedata> computer_shape;
   @ObjectHolder(ModCyclic.MODID + ":terra_preta")
-  public static TileEntityType<TileTerraPreta> terra_preta;
+  public static BlockEntityType<TileTerraPreta> terra_preta;
   @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
-  public static TileEntityType<TileWirelessRec> wireless_receiver;
+  public static BlockEntityType<TileWirelessRec> wireless_receiver;
   @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
-  public static TileEntityType<TileWirelessTransmit> wireless_transmitter;
+  public static BlockEntityType<TileWirelessTransmit> wireless_transmitter;
   @ObjectHolder(ModCyclic.MODID + ":detector_item")
-  public static TileEntityType<TileDetectorItem> DETECTOR_ITEM;
+  public static BlockEntityType<TileDetectorItem> DETECTOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":detector_entity")
-  public static TileEntityType<TileDetector> DETECTOR_ENTITY;
+  public static BlockEntityType<TileDetector> DETECTOR_ENTITY;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
-  public static TileEntityType<TileSolidifier> solidifier;
+  public static BlockEntityType<TileSolidifier> solidifier;
   @ObjectHolder(ModCyclic.MODID + ":melter")
-  public static TileEntityType<TileMelter> melter;
+  public static BlockEntityType<TileMelter> melter;
   @ObjectHolder(ModCyclic.MODID + ":structure")
-  public static TileEntityType<TileStructure> STRUCTURE;
+  public static BlockEntityType<TileStructure> STRUCTURE;
   @ObjectHolder(ModCyclic.MODID + ":anvil")
-  public static TileEntityType<TileAnvilAuto> anvil;
+  public static BlockEntityType<TileAnvilAuto> anvil;
   @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
-  public static TileEntityType<TileAnvilMagma> anvil_magma;
+  public static BlockEntityType<TileAnvilMagma> anvil_magma;
   @ObjectHolder(ModCyclic.MODID + ":tank")
-  public static TileEntityType<TileTank> tank;
+  public static BlockEntityType<TileTank> tank;
   @ObjectHolder(ModCyclic.MODID + ":battery")
-  public static TileEntityType<TileBattery> batterytile;
+  public static BlockEntityType<TileBattery> batterytile;
   @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
-  public static TileEntityType<TileCableEnergy> energy_pipeTile;
+  public static BlockEntityType<TileCableEnergy> energy_pipeTile;
   @ObjectHolder(ModCyclic.MODID + ":item_pipe")
-  public static TileEntityType<TileCableItem> item_pipeTile;
+  public static BlockEntityType<TileCableItem> item_pipeTile;
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
-  public static TileEntityType<TileCableFluid> fluid_pipeTile;
+  public static BlockEntityType<TileCableFluid> fluid_pipeTile;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static TileEntityType<TileItemCollector> COLLECTOR_ITEM;
+  public static BlockEntityType<TileItemCollector> COLLECTOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":trash")
-  public static TileEntityType<TileTrash> trashtile;
+  public static BlockEntityType<TileTrash> trashtile;
   @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-  public static TileEntityType<TileGeneratorPeat> peat_generator;
+  public static BlockEntityType<TileGeneratorPeat> peat_generator;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")
-  public static TileEntityType<TilePeatFarm> PEAT_FARM;
+  public static BlockEntityType<TilePeatFarm> PEAT_FARM;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
-  public static TileEntityType<TileHarvester> HARVESTER;
+  public static BlockEntityType<TileHarvester> HARVESTER;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
-  public static TileEntityType<TileBreaker> breakerTile;
+  public static BlockEntityType<TileBreaker> breakerTile;
   @ObjectHolder(ModCyclic.MODID + ":fan")
-  public static TileEntityType<TileFan> fantile;
+  public static BlockEntityType<TileFan> fantile;
   @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
-  public static TileEntityType<TileExpPylon> experience_pylontile;
+  public static BlockEntityType<TileExpPylon> experience_pylontile;
   @ObjectHolder(ModCyclic.MODID + ":placer")
-  public static TileEntityType<TilePlacer> placer;
+  public static BlockEntityType<TilePlacer> placer;
   @ObjectHolder(ModCyclic.MODID + ":fisher")
-  public static TileEntityType<TileFisher> fisher;
+  public static BlockEntityType<TileFisher> fisher;
   @ObjectHolder(ModCyclic.MODID + ":user")
-  public static TileEntityType<TileUser> user;
+  public static BlockEntityType<TileUser> user;
   @ObjectHolder(ModCyclic.MODID + ":disenchanter")
-  public static TileEntityType<TileDisenchant> disenchanter;
+  public static BlockEntityType<TileDisenchant> disenchanter;
   @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
-  public static TileEntityType<TileFluidCollect> COLLECTOR_FLUID;
+  public static BlockEntityType<TileFluidCollect> COLLECTOR_FLUID;
   @ObjectHolder(ModCyclic.MODID + ":clock")
-  public static TileEntityType<TileRedstoneClock> clock;
+  public static BlockEntityType<TileRedstoneClock> clock;
   @ObjectHolder(ModCyclic.MODID + ":crate")
-  public static TileEntityType<TileCrate> crate;
+  public static BlockEntityType<TileCrate> crate;
   @ObjectHolder(ModCyclic.MODID + ":cask")
-  public static TileEntityType<TileCrate> cask;
+  public static BlockEntityType<TileCrate> cask;
   @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
-  public static TileEntityType<TilePlacerFluid> placer_fluid;
+  public static BlockEntityType<TilePlacerFluid> placer_fluid;
   @ObjectHolder(ModCyclic.MODID + ":beacon")
-  public static TileEntityType<TilePotion> beacon;
+  public static BlockEntityType<TilePotion> beacon;
   @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
-  public static TileEntityType<TileBatteryInfinite> battery_infinite;
+  public static BlockEntityType<TileBatteryInfinite> battery_infinite;
   @ObjectHolder(ModCyclic.MODID + ":item_infinite")
-  public static TileEntityType<TileItemInfinite> item_infinite;
+  public static BlockEntityType<TileItemInfinite> item_infinite;
   @ObjectHolder(ModCyclic.MODID + ":dice")
-  public static TileEntityType<TileDice> dice;
+  public static BlockEntityType<TileDice> dice;
   @ObjectHolder(ModCyclic.MODID + ":dropper")
-  public static TileEntityType<TileDropper> DROPPER;
+  public static BlockEntityType<TileDropper> DROPPER;
   @ObjectHolder(ModCyclic.MODID + ":forester")
-  public static TileEntityType<TileForester> FORESTER;
+  public static BlockEntityType<TileForester> FORESTER;
   @ObjectHolder(ModCyclic.MODID + ":miner")
-  public static TileEntityType<TileMiner> MINER;
+  public static BlockEntityType<TileMiner> MINER;
   @ObjectHolder(ModCyclic.MODID + ":screen")
-  public static TileEntityType<TileScreentext> screen;
+  public static BlockEntityType<TileScreentext> screen;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
-  public static TileEntityType<TileUncraft> uncrafter;
+  public static BlockEntityType<TileUncraft> uncrafter;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
-  public static TileEntityType<TileCrafter> crafter;
+  public static BlockEntityType<TileCrafter> crafter;
   @ObjectHolder(ModCyclic.MODID + ":conveyor")
-  public static TileEntityType<TileConveyor> conveyor;
+  public static BlockEntityType<TileConveyor> conveyor;
   @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
-  public static TileEntityType<TileEnderShelf> ender_shelf;
+  public static BlockEntityType<TileEnderShelf> ender_shelf;
   @ObjectHolder(ModCyclic.MODID + ":ender_controller")
-  public static TileEntityType<TileEnderCtrl> ender_controller;
+  public static BlockEntityType<TileEnderCtrl> ender_controller;
   @ObjectHolder(ModCyclic.MODID + ":laser")
-  public static TileEntityType<TileLaser> laser;
+  public static BlockEntityType<TileLaser> laser;
   @ObjectHolder(ModCyclic.MODID + ":workbench")
-  public static TileEntityType<TileWorkbench> workbench;
+  public static BlockEntityType<TileWorkbench> workbench;
 }

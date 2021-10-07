@@ -2,11 +2,11 @@ package com.lothrazar.cyclic.block.bedrock;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
 
-public class UnbreakablePoweredTile extends TileEntityBase implements ITickableTileEntity {
+public class UnbreakablePoweredTile extends TileEntityBase implements TickableBlockEntity {
 
   public UnbreakablePoweredTile() {
     super(TileRegistry.unbreakable_reactive);
@@ -15,17 +15,17 @@ public class UnbreakablePoweredTile extends TileEntityBase implements ITickableT
   @Override
   public void tick() {
     boolean isBreakable = !this.isPowered();
-    UnbreakablePoweredBlock.setBreakable(world, pos, isBreakable);
+    UnbreakablePoweredBlock.setBreakable(level, worldPosition, isBreakable);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    super.read(bs, tag);
+  public void load(BlockState bs, CompoundTag tag) {
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    return super.write(tag);
+  public CompoundTag save(CompoundTag tag) {
+    return super.save(tag);
   }
 
   @Override

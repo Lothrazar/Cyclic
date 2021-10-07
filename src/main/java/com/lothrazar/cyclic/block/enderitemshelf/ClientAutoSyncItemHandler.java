@@ -3,15 +3,15 @@ package com.lothrazar.cyclic.block.enderitemshelf;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ClientAutoSyncItemHandler extends ItemStackHandler {
 
-  private TileEntity shelf;
+  private BlockEntity shelf;
 
-  public ClientAutoSyncItemHandler(TileEntity shelf, int rows) {
+  public ClientAutoSyncItemHandler(BlockEntity shelf, int rows) {
     super(rows);
     this.shelf = shelf;
   }
@@ -26,7 +26,7 @@ public class ClientAutoSyncItemHandler extends ItemStackHandler {
   public ItemStack extractItem(int slot, int amount, boolean simulate) {
     ItemStack extracted = super.extractItem(slot, amount, simulate);
     if (!simulate) {
-      PacketRegistry.sendToAllClients(shelf.getWorld(), new PacketTileInventoryToClient(shelf.getPos(), slot, getStackInSlot(slot), SyncPacketType.SET));
+      PacketRegistry.sendToAllClients(shelf.getLevel(), new PacketTileInventoryToClient(shelf.getBlockPos(), slot, getStackInSlot(slot), SyncPacketType.SET));
     }
     return extracted;
   }
@@ -43,7 +43,7 @@ public class ClientAutoSyncItemHandler extends ItemStackHandler {
     }
     ItemStack remaining = super.insertItem(slot, stack, simulate);
     if (!simulate) {
-      PacketRegistry.sendToAllClients(shelf.getWorld(), new PacketTileInventoryToClient(shelf.getPos(), slot, getStackInSlot(slot), SyncPacketType.SET));
+      PacketRegistry.sendToAllClients(shelf.getLevel(), new PacketTileInventoryToClient(shelf.getBlockPos(), slot, getStackInSlot(slot), SyncPacketType.SET));
     }
     return remaining;
   }

@@ -13,7 +13,8 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-apply plugin: 'checkstyle'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
+//apply plugin: 'checkstyle'
 
 import net.minecraftforge.gradle.common.tasks.SignJar
 import groovy.json.JsonSlurper
@@ -23,16 +24,16 @@ version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Cyclic'
 
-checkstyle {
-    toolVersion '8.23'
-    configFile file("checkstyle.xml")
- //      config project.resources.text.fromUri("https://raw.githubusercontent.com/Lothrazar/Cyclic/trunk/1.16/checkstyle.xml")
-}
-checkstyleMain {
-    source ='src/main/java'
-}
+//checkstyle {
+//    toolVersion '8.23'
+//    configFile file("checkstyle.xml")
+//}
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+//checkstyleMain {
+//    source ='src/main/java'
+//}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
@@ -41,7 +42,7 @@ minecraft {
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
     
-    mappings channel: 'snapshot', version: mappings_version
+	mappings channel: 'official', version: '1.17.1'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -98,40 +99,38 @@ dependencies {
     implementation fg.deobf("mezz.jei:${jei_version}")
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+ //   compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+ //   runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
-    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
-    runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
+ //   compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
+ //   runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
-	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
+//	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
 	 	
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
-  //	implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")
-  //	implementation fg.deobf("curse.maven:simple-generators-246010:3464413")
+  //  implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")
+  //  implementation fg.deobf("curse.maven:simple-generators-246010:3464413")
   //  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3361660")
   //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
   //  implementation fg.deobf("curse.maven:quark-243121:3394265")
   //  implementation fg.deobf("curse.maven:mantle-74924:3389377")
   //  implementation fg.deobf("curse.maven:inspirations-284007:3170862")
-  // 	implementation fg.deobf("curse.maven:titanium-287342:3346366")
+  //  implementation fg.deobf("curse.maven:titanium-287342:3346366")
   //  implementation fg.deobf("curse.maven:industrial-foregoing-266515:3386008")
-     // if -> generators
-     // pneum - repressurized
-     // 
+      
   //  implementation fg.deobf("curse.maven:cofh-core-69162:3407019")
-	//  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
-	//  implementation fg.deobf("curse.maven:ensorcellation-349447:3407021")
-	//	implementation fg.deobf("curse.maven:mekanism-268560:3206392")
-	//	implementation fg.deobf("curse.maven:mekanism-generators-268566:3206395")
-	//	implementation fg.deobf("curse.maven:mcjtylib-233105:3402861")
-	//	implementation fg.deobf("curse.maven:rftools-base-326041:3380271")
+  //  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
+  //  implementation fg.deobf("curse.maven:ensorcellation-349447:3407021")
+  //  implementation fg.deobf("curse.maven:mekanism-268560:3206392")
+  //  implementation fg.deobf("curse.maven:mekanism-generators-268566:3206395")
+  //  implementation fg.deobf("curse.maven:mcjtylib-233105:3402861")
+  //  implementation fg.deobf("curse.maven:rftools-base-326041:3380271")
   //  implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
   //  implementation fg.deobf("curse.maven:aquaculture-60028:3401886")
   //  implementation fg.deobf("curse.maven:plain-grinder-452000:3389092")  
-	//  implementation fg.deobf("curse.maven:liquid-blocks-301999:3323640")
+  //  implementation fg.deobf("curse.maven:liquid-blocks-301999:3323640")
   //  implementation fg.deobf("curse.maven:tinkers-construct-74072:3412365")
-	//  implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
+  //  implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
   //  implementation fg.deobf("curse.maven:cucumber-272335:3187116")
   //  implementation fg.deobf("curse.maven:mystical-agriculture-246640:3152061")
   //  implementation fg.deobf("curse.maven:refined-storage-243076:3157354")
@@ -139,12 +138,6 @@ dependencies {
   //  implementation fg.deobf("curse.maven:storage-drawers-223852:3180569")
   //  implementation fg.deobf("curse.maven:create-328085:328085")
   
-	// 	implementation fg.deobf("curse.maven:selene-499980:3472679")
-	// 	implementation fg.deobf("curse.maven:supplementaries-412082:3466032")
-  //  implementation fg.deobf("curse.maven:resourceful-bees-384508:3206649")
-  //  implementation fg.deobf("curse.maven:architectury-forge-419699:3188530")
-	//  implementation fg.deobf("curse.maven:rhino-416294:3187177")
-	//  implementation fg.deobf("curse.maven:kubejs-238086:3137415")
   
     // To use any mod in /libs/ folder, place it in and set the mod and version to match jar filename
    // runtimeOnly fg.deobf("libs:SimpleStorageNetwork:1.16.4-1.3.1")

@@ -1,31 +1,31 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class UtilBlockstates {
 
   public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
-    return Direction.getFacingFromVector(
-        (float) (entity.lastTickPosX - clickedBlock.getX()),
-        (float) (entity.lastTickPosY - clickedBlock.getY()),
-        (float) (entity.lastTickPosZ - clickedBlock.getZ()));
+    return Direction.getNearest(
+        (float) (entity.xOld - clickedBlock.getX()),
+        (float) (entity.yOld - clickedBlock.getY()),
+        (float) (entity.zOld - clickedBlock.getZ()));
   }
 
   public static Direction getFacingFromEntityHorizontal(BlockPos clickedBlock, LivingEntity entity) {
     Direction d = getFacingFromEntity(clickedBlock, entity);
     //if only horizontal is allowed
     if (d == Direction.UP || d == Direction.DOWN) {
-      return entity.getHorizontalFacing().getOpposite();
+      return entity.getDirection().getOpposite();
     }
     return d;
   }
 
-  public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, final int radiusIn) {
+  public static ArrayList<BlockPos> findBlocks(Level world, BlockPos start, Block blockHunt, final int radiusIn) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
     int xMin = start.getX() - radiusIn;
     int xMax = start.getX() + radiusIn;

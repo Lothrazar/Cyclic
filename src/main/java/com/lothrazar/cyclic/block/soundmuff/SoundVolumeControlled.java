@@ -1,20 +1,22 @@
 package com.lothrazar.cyclic.block.soundmuff;
 
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.Sound;
-import net.minecraft.client.audio.SoundEventAccessor;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.resources.sounds.Sound;
+import net.minecraft.client.sounds.WeighedSoundEvents;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 
 //copy a sound and control its volume
 //because there is no setVolume() fn in ISound... we must clone it
-public class SoundVolumeControlled implements ISound {
+import net.minecraft.client.resources.sounds.SoundInstance.Attenuation;
+
+public class SoundVolumeControlled implements SoundInstance {
 
   public float volume;
-  public ISound sound;
+  public SoundInstance sound;
 
-  public SoundVolumeControlled(ISound s) {
+  public SoundVolumeControlled(SoundInstance s) {
     sound = s;
   }
 
@@ -28,13 +30,13 @@ public class SoundVolumeControlled implements ISound {
   }
 
   @Override
-  public ResourceLocation getSoundLocation() {
-    return sound.getSoundLocation();
+  public ResourceLocation getLocation() {
+    return sound.getLocation();
   }
 
   @Override
-  public SoundEventAccessor createAccessor(SoundHandler handler) {
-    return sound.createAccessor(handler);
+  public WeighedSoundEvents resolve(SoundManager handler) {
+    return sound.resolve(handler);
   }
 
   @Override
@@ -43,18 +45,18 @@ public class SoundVolumeControlled implements ISound {
   }
 
   @Override
-  public SoundCategory getCategory() {
-    return sound.getCategory();
+  public SoundSource getSource() {
+    return sound.getSource();
   }
 
   @Override
-  public boolean canRepeat() {
-    return sound.canRepeat();
+  public boolean isLooping() {
+    return sound.isLooping();
   }
 
   @Override
-  public int getRepeatDelay() {
-    return sound.getRepeatDelay();
+  public int getDelay() {
+    return sound.getDelay();
   }
 
   @Override
@@ -63,13 +65,13 @@ public class SoundVolumeControlled implements ISound {
   }
 
   @Override
-  public AttenuationType getAttenuationType() {
-    return sound.getAttenuationType();
+  public Attenuation getAttenuation() {
+    return sound.getAttenuation();
   }
 
   @Override
-  public boolean isGlobal() {
-    return sound.isGlobal();
+  public boolean isRelative() {
+    return sound.isRelative();
   }
 
   @Override

@@ -7,35 +7,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketRandomize extends PacketBase {
 
   private BlockPos pos;
   private Direction side;
-  private Hand hand;
+  private InteractionHand hand;
 
-  public PacketRandomize(BlockPos pos, Direction side, Hand h) {
+  public PacketRandomize(BlockPos pos, Direction side, InteractionHand h) {
     this.pos = pos;
     this.side = side;
     hand = h;
   }
 
-  public static PacketRandomize decode(PacketBuffer buf) {
+  public static PacketRandomize decode(FriendlyByteBuf buf) {
     PacketRandomize p = new PacketRandomize(buf.readBlockPos(),
         Direction.values()[buf.readInt()],
-        Hand.values()[buf.readInt()]);
+        InteractionHand.values()[buf.readInt()]);
     return p;
   }
 
-  public static void encode(PacketRandomize msg, PacketBuffer buf) {
+  public static void encode(PacketRandomize msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.side.ordinal());
     buf.writeInt(msg.hand.ordinal());
@@ -43,8 +43,8 @@ public class PacketRandomize extends PacketBase {
 
   public static void handle(PacketRandomize message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      ServerPlayerEntity player = ctx.get().getSender();
-      World world = player.getEntityWorld();
+      ServerPlayer player = ctx.get().getSender();
+      Level world = player.getCommandSenderWorld();
       List<BlockPos> places = RandomizerItem.getPlaces(message.pos, message.side);
       List<BlockPos> rpos = new ArrayList<BlockPos>();
       List<BlockState> rstates = new ArrayList<BlockState>();
@@ -63,7 +63,7 @@ public class PacketRandomize extends PacketBase {
           rstates.add(stateHere);
         }
       }
-      Collections.shuffle(rpos, world.rand);
+      Collections.shuffle(rpos, world.random);
       BlockPos swapPos;
       BlockState swapState;
       synchronized (rpos) { //just in case
@@ -78,7 +78,7 @@ public class PacketRandomize extends PacketBase {
         }
       }
       if (atLeastOne) {
-        UtilItemStack.damageItem(player, player.getHeldItem(message.hand));
+        UtilItemStack.damageItem(player, player.getItemInHand(message.hand));
       }
     });
     message.done(ctx);

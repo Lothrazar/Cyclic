@@ -25,36 +25,36 @@ package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.item.scythe.ScytheType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class UtilScythe {
 
-  public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ScytheType type) {
+  public static boolean harvestSingle(Level world, Player player, BlockPos posCurrent, ScytheType type) {
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
     switch (type) {
       case LEAVES:
-        doBreak = blockState.isIn(BlockTags.LEAVES);
+        doBreak = blockState.is(BlockTags.LEAVES);
       break;
       case BRUSH:
-        doBreak = blockState.isIn(DataTags.PLANTS);
+        doBreak = blockState.is(DataTags.PLANTS);
       break;
       case FORAGE:
-        doBreak = blockState.isIn(BlockTags.FLOWERS)
-            || blockState.isIn(BlockTags.CORALS) || blockState.isIn(BlockTags.WALL_CORALS)
-            || blockState.isIn(DataTags.MUSHROOMS)
-            || blockState.isIn(DataTags.VINES)
-            || blockState.isIn(DataTags.CACTUS)
-            || blockState.isIn(DataTags.CROP_BLOCKS);
+        doBreak = blockState.is(BlockTags.FLOWERS)
+            || blockState.is(BlockTags.CORALS) || blockState.is(BlockTags.WALL_CORALS)
+            || blockState.is(DataTags.MUSHROOMS)
+            || blockState.is(DataTags.VINES)
+            || blockState.is(DataTags.CACTUS)
+            || blockState.is(DataTags.CROP_BLOCKS);
       break;
     }
     if (doBreak) {
       //harvest block with player context: better mod compatibility
-      blockState.getBlock().harvestBlock(world, player, posCurrent, blockState, world.getTileEntity(posCurrent), player.getHeldItemMainhand());
+      blockState.getBlock().playerDestroy(world, player, posCurrent, blockState, world.getBlockEntity(posCurrent), player.getMainHandItem());
       //sometimes this doesnt work and/or doesnt sync ot client, so force it
       world.destroyBlock(posCurrent, false);
       //break with false to disable dropsfor the above versions, dont want to dupe tallflowers

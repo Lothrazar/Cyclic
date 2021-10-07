@@ -1,14 +1,14 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import java.util.Locale;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum ConveyorType implements IStringSerializable {
+public enum ConveyorType implements StringRepresentable {
 
   STRAIGHT, UP, DOWN, CORNER_LEFT, CORNER_RIGHT;
 
   @Override
-  public String getString() {
+  public String getSerializedName() {
     return this.name().toLowerCase(Locale.ENGLISH);
   }
 

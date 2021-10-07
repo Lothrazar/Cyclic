@@ -6,36 +6,38 @@ import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import java.util.Map;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockEnderCtrl extends BlockBase {
 
   public BlockEnderCtrl(Properties properties, boolean isController) {
-    super(properties.hardnessAndResistance(1.0F));
+    super(properties.strength(1.0F));
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(BlockStateProperties.HORIZONTAL_FACING);
   }
 
@@ -45,15 +47,15 @@ public class BlockEnderCtrl extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileEnderCtrl();
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
+  public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
-      TileEnderCtrl ctrl = (TileEnderCtrl) world.getTileEntity(pos);
+      world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
+      TileEnderCtrl ctrl = (TileEnderCtrl) world.getBlockEntity(pos);
       //i placed a shelf? find nearby
       if (ctrl != null) {
         ctrl.setShelves(EnderShelfHelper.findConnectedShelves(world, pos, ctrl.getCurrentFacing()));
@@ -62,57 +64,57 @@ public class BlockEnderCtrl extends BlockBase {
   }
 
   @Override
-  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     boolean isCurrentlyShelf = EnderShelfHelper.isShelf(state);
     boolean isNewShelf = EnderShelfHelper.isShelf(newState);
-    TileEnderCtrl ctrl = (TileEnderCtrl) worldIn.getTileEntity(pos);
+    TileEnderCtrl ctrl = (TileEnderCtrl) worldIn.getBlockEntity(pos);
     if (isCurrentlyShelf && !isNewShelf && ctrl != null) {
       //trigger controller reindex
       ctrl.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos, ctrl.getCurrentFacing()));
     }
     if (state.getBlock() != newState.getBlock()) {
-      worldIn.removeTileEntity(pos);
-      worldIn.updateComparatorOutputLevel(pos, this);
+      worldIn.removeBlockEntity(pos);
+      worldIn.updateNeighbourForOutputSignal(pos, this);
     }
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    ItemStack heldItem = player.getHeldItem(hand);
-    if (hand != Hand.MAIN_HAND && heldItem.isEmpty()) {
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    ItemStack heldItem = player.getItemInHand(hand);
+    if (hand != InteractionHand.MAIN_HAND && heldItem.isEmpty()) {
       //if your hand is empty, dont process if its the OFF hand
       //otherwise: main hand inserts, off hand takes out right away
-      return ActionResultType.PASS;
+      return InteractionResult.PASS;
     }
-    if (heldItem.getItem().isIn(DataTags.WRENCH)) {
-      TileEnderCtrl contrl = (TileEnderCtrl) world.getTileEntity(pos);
+    if (heldItem.getItem().is(DataTags.WRENCH)) {
+      TileEnderCtrl contrl = (TileEnderCtrl) world.getBlockEntity(pos);
       contrl.toggleShowText();
       RenderTextType nt = contrl.renderStyle;
       for (BlockPos shelf : contrl.getShelves()) {
-        TileEntity shelfy = world.getTileEntity(shelf);
+        BlockEntity shelfy = world.getBlockEntity(shelf);
         if (shelfy instanceof TileEnderShelf) {
           ((TileEnderShelf) shelfy).renderStyle = nt;
         }
       }
-      player.swingArm(Hand.MAIN_HAND);
-      return ActionResultType.PASS;
+      player.swing(InteractionHand.MAIN_HAND);
+      return InteractionResult.PASS;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
         insertIntoController(player, hand, heldItem, h);
       });
     }
-    return ActionResultType.CONSUME;
+    return InteractionResult.CONSUME;
   }
 
-  private void insertIntoController(PlayerEntity player, Hand hand, ItemStack heldItem, IItemHandler h) {
+  private void insertIntoController(Player player, InteractionHand hand, ItemStack heldItem, IItemHandler h) {
     Map<Enchantment, Integer> allofthem = EnchantmentHelper.getEnchantments(heldItem);
     if (allofthem == null || allofthem.size() == 0) {
       return;
     }
     else if (allofthem.size() == 1) {
       ItemStack insertResult = h.insertItem(0, heldItem, false);
-      player.setHeldItem(hand, insertResult);
+      player.setItemInHand(hand, insertResult);
     }
     else {
       //loop and make books of each, if we have any 
@@ -120,7 +122,7 @@ public class BlockEnderCtrl extends BlockBase {
       for (Enchantment entry : flatten) {
         // try it
         ItemStack fake = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantedBookItem.addEnchantment(fake, new EnchantmentData(entry, allofthem.get(entry)));
+        EnchantedBookItem.addEnchantment(fake, new EnchantmentInstance(entry, allofthem.get(entry)));
         ItemStack insertResult = h.insertItem(0, fake, false);
         if (insertResult.isEmpty()) {
           //ok it worked, so REMOVE that from the og set
@@ -129,15 +131,15 @@ public class BlockEnderCtrl extends BlockBase {
       }
       //now set it back into the book
       if (allofthem.isEmpty()) {
-        player.setHeldItem(hand, ItemStack.EMPTY);
+        player.setItemInHand(hand, ItemStack.EMPTY);
       }
       else {
         //        apply all to the book and give the book back
         ItemStack newFake = new ItemStack(Items.ENCHANTED_BOOK);
         for (Enchantment newentry : allofthem.keySet()) {
-          EnchantedBookItem.addEnchantment(newFake, new EnchantmentData(newentry, allofthem.get(newentry)));
+          EnchantedBookItem.addEnchantment(newFake, new EnchantmentInstance(newentry, allofthem.get(newentry)));
         }
-        player.setHeldItem(hand, newFake);
+        player.setItemInHand(hand, newFake);
       }
     }
   }

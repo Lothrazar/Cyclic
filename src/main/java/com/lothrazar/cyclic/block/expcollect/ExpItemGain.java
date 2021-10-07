@@ -2,12 +2,14 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ExpItemGain extends ItemBase {
 
@@ -20,12 +22,12 @@ public class ExpItemGain extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
       playerIn.giveExperiencePoints(EXP_PER_FOOD);
-      playerIn.getHeldItemMainhand().shrink(1);
-      UtilSound.playSound(playerIn, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+      playerIn.getMainHandItem().shrink(1);
+      UtilSound.playSound(playerIn, SoundEvents.EXPERIENCE_ORB_PICKUP);
     }
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    return super.use(worldIn, playerIn, handIn);
   }
 }

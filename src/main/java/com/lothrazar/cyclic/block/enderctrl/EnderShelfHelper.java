@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -20,11 +20,11 @@ public class EnderShelfHelper {
   public static IntValue MAX_DIST;
   public static final int MAX_ITERATIONS = 6400; // TODO config entry
 
-  public static BlockPos findConnectedController(World world, BlockPos shelfPos) {
+  public static BlockPos findConnectedController(Level world, BlockPos shelfPos) {
     return recursivelyFindConnectedController(world, shelfPos, new HashMap<BlockPos, Integer>(), 0);
   }
 
-  private static BlockPos recursivelyFindConnectedController(World world, BlockPos pos, Map<BlockPos, Integer> visitedLocations, int iterations) {
+  private static BlockPos recursivelyFindConnectedController(Level world, BlockPos pos, Map<BlockPos, Integer> visitedLocations, int iterations) {
     BlockState state = world.getBlockState(pos);
     if (iterations > MAX_ITERATIONS) {
       return null; //We tried for too long, stop now before there's an infinite loop
@@ -41,8 +41,8 @@ public class EnderShelfHelper {
     int index = 0;
     iterations++;
     for (Direction direction : Direction.values()) {
-      if (state.get(BlockStateProperties.HORIZONTAL_FACING) != direction) {
-        possibleControllers[index] = recursivelyFindConnectedController(world, pos.offset(direction), visitedLocations, iterations);
+      if (state.getValue(BlockStateProperties.HORIZONTAL_FACING) != direction) {
+        possibleControllers[index] = recursivelyFindConnectedController(world, pos.relative(direction), visitedLocations, iterations);
       }
       if (possibleControllers[index] != null) {
         returnController = possibleControllers[index];
@@ -51,11 +51,11 @@ public class EnderShelfHelper {
     return returnController;
   }
 
-  public static Set<BlockPos> findConnectedShelves(World world, BlockPos controllerPos, Direction facing) {
+  public static Set<BlockPos> findConnectedShelves(Level world, BlockPos controllerPos, Direction facing) {
     return recursivelyFindConnectedShelves(controllerPos, world, controllerPos, new HashSet<>(), new HashSet<>(), 0);
   }
 
-  public static Set<BlockPos> recursivelyFindConnectedShelves(final BlockPos controllerPos, World world, BlockPos pos, Set<BlockPos> visitedLocations, Set<BlockPos> shelves, int iterations) {
+  public static Set<BlockPos> recursivelyFindConnectedShelves(final BlockPos controllerPos, Level world, BlockPos pos, Set<BlockPos> visitedLocations, Set<BlockPos> shelves, int iterations) {
     BlockState state = world.getBlockState(pos);
     if (visitedLocations.contains(pos)) {
       return shelves; //We've already traveled here and didn't find anything, stop here.
@@ -65,7 +65,7 @@ public class EnderShelfHelper {
       return shelves; //We tried for too long, stop now before there's an infinite loop
     }
     //are we too far away
-    if (pos.manhattanDistance(controllerPos) > MAX_DIST.get()) {
+    if (pos.distManhattan(controllerPos) > MAX_DIST.get()) {
       return shelves;
     }
     if (iterations > 0 && !isShelf(state)) {
@@ -77,14 +77,14 @@ public class EnderShelfHelper {
     }
     iterations++;
     for (Direction direction : Direction.values()) {
-      if (state.get(BlockStateProperties.HORIZONTAL_FACING) != direction) {
-        shelves.addAll(recursivelyFindConnectedShelves(controllerPos, world, pos.offset(direction), visitedLocations, shelves, iterations));
+      if (state.getValue(BlockStateProperties.HORIZONTAL_FACING) != direction) {
+        shelves.addAll(recursivelyFindConnectedShelves(controllerPos, world, pos.relative(direction), visitedLocations, shelves, iterations));
       }
     }
     return shelves;
   }
 
-  public static EnderShelfItemHandler getShelfHandler(TileEntity te) {
+  public static EnderShelfItemHandler getShelfHandler(BlockEntity te) {
     if (te != null &&
         te.getBlockState().getBlock() == BlockRegistry.ENDER_SHELF &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&
@@ -94,7 +94,7 @@ public class EnderShelfHelper {
     return null;
   }
 
-  public static EnderControllerItemHandler getControllerHandler(TileEntity te) {
+  public static EnderControllerItemHandler getControllerHandler(BlockEntity te) {
     if (te != null &&
         te.getBlockState().getBlock() == BlockRegistry.ENDER_CONTROLLER &&
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() &&

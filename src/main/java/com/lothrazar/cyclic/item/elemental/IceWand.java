@@ -28,14 +28,16 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class IceWand extends ItemBase {
 
@@ -46,30 +48,30 @@ public class IceWand extends ItemBase {
   private static final int RADIUS = 2;
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    BlockPos pos = context.getPos();
-    Direction side = context.getFace();
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
+    BlockPos pos = context.getClickedPos();
+    Direction side = context.getClickedFace();
     if (side != null) {
-      pos = pos.offset(side);
+      pos = pos.relative(side);
     }
-    if (spreadWaterFromCenter(context.getWorld(), pos.offset(side))) {
+    if (spreadWaterFromCenter(context.getLevel(), pos.relative(side))) {
       //but the real sound
-      UtilSound.playSound(player, Blocks.PACKED_ICE.getDefaultState().getSoundType().getBreakSound());
-      UtilItemStack.damageItem(player, context.getItem());
+      UtilSound.playSound(player, Blocks.PACKED_ICE.defaultBlockState().getSoundType().getBreakSound());
+      UtilItemStack.damageItem(player, context.getItemInHand());
     }
-    return super.onItemUse(context);
+    return super.useOn(context);
   }
 
-  private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
+  private boolean spreadWaterFromCenter(Level world, BlockPos posCenter) {
     int count = 0;
     List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
     for (BlockPos pos : water) {
       FluidState fluidState = world.getBlockState(pos).getFluidState();
       if (fluidState != null &&
           fluidState.getFluidState() != null &&
-          fluidState.getFluidState().getLevel() >= 8) {
-        world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
+          fluidState.getFluidState().getAmount() >= 8) {
+        world.setBlock(pos, Blocks.ICE.defaultBlockState(), 3);
       }
       count++;
     }

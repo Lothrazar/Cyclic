@@ -9,22 +9,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileBattery extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
@@ -58,10 +58,10 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   public void setPercentFilled() {
     BlockState st = this.getBlockState();
     if (st.hasProperty(BlockBattery.PERCENT)) {
-      EnumBatteryPercent previousPercent = st.get(BlockBattery.PERCENT);
+      EnumBatteryPercent previousPercent = st.getValue(BlockBattery.PERCENT);
       EnumBatteryPercent percent = calculateRoundedPercentFilled();
       if (percent != previousPercent) {
-        this.world.setBlockState(pos, st.with(BlockBattery.PERCENT, percent));
+        this.level.setBlockAndUpdate(worldPosition, st.setValue(BlockBattery.PERCENT, percent));
       }
     }
   }
@@ -111,32 +111,32 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
+      poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
+      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
     tag.putInt("flowing", getFlowing());
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerBattery(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerBattery(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   private List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());

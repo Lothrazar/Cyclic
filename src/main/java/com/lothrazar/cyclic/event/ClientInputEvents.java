@@ -12,10 +12,10 @@ import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
@@ -27,7 +27,7 @@ public class ClientInputEvents {
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
     EnchantRegistry.LAUNCH.onKeyInput(Minecraft.getInstance().player);
-    if (ClientRegistryCyclic.CAKE.isPressed()) {
+    if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
     }
   }
@@ -35,36 +35,36 @@ public class ClientInputEvents {
   @SubscribeEvent
   public void onMouseEvent(InputEvent.MouseScrollEvent event) {
     //    PlayerEvent.Visibility
-    ClientPlayerEntity player = Minecraft.getInstance().player;
-    if (player.isCrouching() && player.getHeldItemMainhand().getItem() == ItemRegistry.ENDER_BOOK.get()) {
+    LocalPlayer player = Minecraft.getInstance().player;
+    if (player.isCrouching() && player.getMainHandItem().getItem() == ItemRegistry.ENDER_BOOK.get()) {
       //
       event.setCanceled(true);
-      if (!player.getCooldownTracker().hasCooldown(ItemRegistry.ENDER_BOOK.get())) {
+      if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
         boolean isDown = event.getScrollDelta() < 0;
-        PacketRegistry.INSTANCE.sendToServer(new PacketItemScroll(player.inventory.currentItem, isDown));
+        PacketRegistry.INSTANCE.sendToServer(new PacketItemScroll(player.inventory.selected, isDown));
       }
     }
   }
 
   @SubscribeEvent(priority = EventPriority.HIGH)
   public void onMouseEvent(GuiScreenEvent.MouseClickedEvent.Pre event) {
-    if (event.getGui() == null || !(event.getGui() instanceof ContainerScreen<?>)) {
+    if (event.getGui() == null || !(event.getGui() instanceof AbstractContainerScreen<?>)) {
       return;
     }
-    ContainerScreen<?> gui = (ContainerScreen<?>) event.getGui();
+    AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) event.getGui();
     boolean rightClickDown = event.getButton() == 1;
     try {
       if (rightClickDown && gui.getSlotUnderMouse() != null) {
         Slot slotHit = gui.getSlotUnderMouse();
-        if (!slotHit.getStack().isEmpty()) {
-          ItemStack maybeCharm = slotHit.getStack();
+        if (!slotHit.getItem().isEmpty()) {
+          ItemStack maybeCharm = slotHit.getItem();
           if (maybeCharm.getItem() instanceof IHasClickToggle) {
-            PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.slotNumber));
+            PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.index));
             event.setCanceled(true);
             //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
           }
           else if (maybeCharm.getItem() instanceof ItemStorageBag) {
-            PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.slotNumber));
+            PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.index));
             event.setCanceled(true);
           }
         }

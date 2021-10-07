@@ -27,9 +27,9 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -53,19 +53,19 @@ public class PacketEnergySync extends PacketBase {
   }
 
   private static void doWork(PacketEnergySync message) {
-    TileEntity te = Minecraft.getInstance().world.getTileEntity(message.pos);
+    BlockEntity te = Minecraft.getInstance().level.getBlockEntity(message.pos);
     if (te instanceof TileEntityBase) {
       ((TileEntityBase) te).setEnergy(message.energy);
     }
   }
 
-  public static PacketEnergySync decode(PacketBuffer buf) {
+  public static PacketEnergySync decode(FriendlyByteBuf buf) {
     PacketEnergySync msg = new PacketEnergySync(buf.readBlockPos(),
         buf.readInt());
     return msg;
   }
 
-  public static void encode(PacketEnergySync msg, PacketBuffer buf) {
+  public static void encode(PacketEnergySync msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.energy);
   }

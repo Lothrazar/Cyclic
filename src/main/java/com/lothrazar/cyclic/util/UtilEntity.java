@@ -32,25 +32,25 @@ import com.lothrazar.cyclic.world.DimensionTransit;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -68,8 +68,8 @@ public class UtilEntity {
    *
    * @return true if teleport was a success
    */
-  private static boolean enderTeleportEvent(LivingEntity player, World world, double x, double y, double z) {
-    if (player.getLowestRidingEntity() != player) {
+  private static boolean enderTeleportEvent(LivingEntity player, Level world, double x, double y, double z) {
+    if (player.getRootVehicle() != player) {
       return false;
     }
     EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
@@ -85,29 +85,29 @@ public class UtilEntity {
    *
    * @return true if teleport was a success
    */
-  public static boolean enderTeleportEvent(LivingEntity player, World world, BlockPos target) {
+  public static boolean enderTeleportEvent(LivingEntity player, Level world, BlockPos target) {
     return enderTeleportEvent(player, world, target.getX() + .5F, target.getY() + .5F, target.getZ() + .5F);
   }
 
-  private static void teleportWallSafe(LivingEntity player, World world, double x, double y, double z) {
+  private static void teleportWallSafe(LivingEntity player, Level world, double x, double y, double z) {
     BlockPos coords = new BlockPos(x, y, z);
     //    world.update
     //    world.markBlockRangeForRenderUpdate(coords, coords);
-    world.getChunk(coords).setModified(true);
-    player.setPositionAndUpdate(x, y, z);
+    world.getChunk(coords).setUnsaved(true);
+    player.teleportTo(x, y, z);
     moveEntityWallSafe(player, world);
   }
 
-  public static void moveEntityWallSafe(Entity entity, World world) {
+  public static void moveEntityWallSafe(Entity entity, Level world) {
     //    world.checkBlockCollision(bb)
     //    world.hasNoCollisions(p_226669_1_)
-    while (world.hasNoCollisions(entity) == false) {
-      entity.setPositionAndUpdate(entity.prevPosX, entity.prevPosY + 1.0D, entity.prevPosZ);
+    while (world.noCollision(entity) == false) {
+      entity.teleportTo(entity.xo, entity.yo + 1.0D, entity.zo);
     }
   }
 
   public static Direction getFacing(LivingEntity entity) {
-    int yaw = (int) entity.rotationYaw;
+    int yaw = (int) entity.yRot;
     if (yaw < 0) { // due to the yaw running a -360 to positive 360
       yaw += 360; // not sure why it's that way
     }
@@ -115,7 +115,7 @@ public class UtilEntity {
     yaw %= 360; // and this one if you want a strict interpretation of the
     // zones
     int facing = yaw / 45; // 360degrees divided by 45 == 8 zones
-    return Direction.byHorizontalIndex(facing / 2);
+    return Direction.from2DDataValue(facing / 2);
   }
 
   public static double getSpeedTranslated(double speed) {
@@ -156,17 +156,17 @@ public class UtilEntity {
       default:
       break;
     }
-    Entity ridingEntity = entity.getRidingEntity();
+    Entity ridingEntity = entity.getVehicle();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
-      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
+      entity.setDeltaMovement(entity.getDeltaMovement().x, 0, entity.getDeltaMovement().z);
       ridingEntity.fallDistance = 0;
-      ridingEntity.addVelocity(velX, velY, velZ);
+      ridingEntity.push(velX, velY, velZ);
     }
     else {
-      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
+      entity.setDeltaMovement(entity.getDeltaMovement().x, 0, entity.getDeltaMovement().z);
       entity.fallDistance = 0;
-      entity.addVelocity(velX, velY, velZ);
+      entity.push(velX, velY, velZ);
     }
   }
 
@@ -178,66 +178,66 @@ public class UtilEntity {
    * @param power
    */
   public static void launch(Entity entity, float rotationPitch, float power) {
-    float rotationYaw = entity.rotationYaw;
+    float rotationYaw = entity.yRot;
     launch(entity, rotationPitch, rotationYaw, power);
   }
 
   public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
     float mountPower = (float) (power + 0.5);
-    double velX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
-    double velZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
-    double velY = -MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
+    double velX = -Mth.sin(rotationYaw / 180.0F * (float) Math.PI) * Mth.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
+    double velZ = Mth.cos(rotationYaw / 180.0F * (float) Math.PI) * Mth.cos(rotationPitch / 180.0F * (float) Math.PI) * power;
+    double velY = -Mth.sin((rotationPitch) / 180.0F * (float) Math.PI) * power;
     // launch the player up and forward at minimum angle
     // regardless of look vector
     if (velY < 0) {
       velY *= -1; // make it always up never down
     }
-    Entity ridingEntity = entity.getRidingEntity();
+    Entity ridingEntity = entity.getVehicle();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
-      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
+      entity.setDeltaMovement(entity.getDeltaMovement().x, 0, entity.getDeltaMovement().z);
       ridingEntity.fallDistance = 0;
-      ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
+      ridingEntity.push(velX * mountPower, velY * mountPower, velZ * mountPower);
     }
     else {
-      entity.setMotion(entity.getMotion().x, 0, entity.getMotion().z);
+      entity.setDeltaMovement(entity.getDeltaMovement().x, 0, entity.getDeltaMovement().z);
       entity.fallDistance = 0;
-      entity.addVelocity(velX, velY, velZ);
+      entity.push(velX, velY, velZ);
     }
   }
 
-  public static AxisAlignedBB makeBoundingBox(BlockPos center, int hRadius, int vRadius) {
+  public static AABB makeBoundingBox(BlockPos center, int hRadius, int vRadius) {
     //so if radius is 1, it goes 1 in each direction, and boom, 3x3 selected
-    return new AxisAlignedBB(center).expand(hRadius, vRadius, hRadius);
+    return new AABB(center).expandTowards(hRadius, vRadius, hRadius);
   }
 
-  public static AxisAlignedBB makeBoundingBox(double x, double y, double z, int hRadius, int vRadius) {
-    return new AxisAlignedBB(
+  public static AABB makeBoundingBox(double x, double y, double z, int hRadius, int vRadius) {
+    return new AABB(
         x - hRadius, y - vRadius, z - hRadius,
         x + hRadius, y + vRadius, z + hRadius);
   }
 
-  public static int moveEntityItemsInRegion(World world, BlockPos pos, int hRadius, int vRadius) {
+  public static int moveEntityItemsInRegion(Level world, BlockPos pos, int hRadius, int vRadius) {
     return moveEntityItemsInRegion(world, pos.getX(), pos.getY(), pos.getZ(), hRadius, vRadius, true);
   }
 
-  public static int moveEntityItemsInRegion(World world, double x, double y, double z, int hRadius, int vRadius, boolean towardsPos) {
-    AxisAlignedBB range = makeBoundingBox(x, y, z, hRadius, vRadius);
+  public static int moveEntityItemsInRegion(Level world, double x, double y, double z, int hRadius, int vRadius, boolean towardsPos) {
+    AABB range = makeBoundingBox(x, y, z, hRadius, vRadius);
     List<Entity> all = getItemExp(world, range);
     return pullEntityList(x, y, z, towardsPos, all);
   }
 
-  public static List<Entity> getItemExp(World world, AxisAlignedBB range) {
+  public static List<Entity> getItemExp(Level world, AABB range) {
     List<Entity> all = new ArrayList<Entity>();
-    all.addAll(world.getEntitiesWithinAABB(ItemEntity.class, range));
-    all.addAll(world.getEntitiesWithinAABB(ExperienceOrbEntity.class, range));
+    all.addAll(world.getEntitiesOfClass(ItemEntity.class, range));
+    all.addAll(world.getEntitiesOfClass(ExperienceOrb.class, range));
     return all;
   }
 
   public static boolean speedupEntityIfMoving(LivingEntity entity, float factor) {
-    if (entity.moveForward > 0) {
-      if (entity.getRidingEntity() != null && entity.getRidingEntity() instanceof LivingEntity) {
-        speedupEntity((LivingEntity) entity.getRidingEntity(), factor);
+    if (entity.zza > 0) {
+      if (entity.getVehicle() != null && entity.getVehicle() instanceof LivingEntity) {
+        speedupEntity((LivingEntity) entity.getVehicle(), factor);
         return true;
       }
       else {
@@ -249,22 +249,22 @@ public class UtilEntity {
   }
 
   public static void speedupEntity(LivingEntity entity, float factor) {
-    float x = MathHelper.sin(-entity.rotationYaw * 0.017453292F) * factor;
-    float z = MathHelper.cos(entity.rotationYaw * 0.017453292F) * factor;
-    entity.setMotion(x, entity.getMotion().y, z);
+    float x = Mth.sin(-entity.yRot * 0.017453292F) * factor;
+    float z = Mth.cos(entity.yRot * 0.017453292F) * factor;
+    entity.setDeltaMovement(x, entity.getDeltaMovement().y, z);
   }
 
-  public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int horizRadius, int height, boolean towardsPos, float speed) {
-    AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, horizRadius, height);
+  public static int moveEntityLivingNonplayers(Level world, double x, double y, double z, int horizRadius, int height, boolean towardsPos, float speed) {
+    AABB range = UtilEntity.makeBoundingBox(x, y, z, horizRadius, height);
     List<LivingEntity> nonPlayer = getLivingHostile(world, range);
     return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed);
   }
 
-  public static List<LivingEntity> getLivingHostile(World world, AxisAlignedBB range) {
-    List<LivingEntity> all = world.getEntitiesWithinAABB(LivingEntity.class, range);
+  public static List<LivingEntity> getLivingHostile(Level world, AABB range) {
+    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, range);
     List<LivingEntity> nonPlayer = new ArrayList<LivingEntity>();
     for (LivingEntity ent : all) {
-      if (ent instanceof PlayerEntity == false) {
+      if (ent instanceof Player == false) {
         //&& ent.isCreatureType(EnumCreatureType.MONSTER, false)) {//players are not monsters so, redundant?
         nonPlayer.add(ent);
       }
@@ -285,10 +285,10 @@ public class UtilEntity {
       if (entity == null) {
         continue;
       } //being paranoid
-      if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
+      if (entity instanceof Player && ((Player) entity).isCrouching()) {
         continue; //sneak avoid feature
       }
-      BlockPos p = entity.getPosition();
+      BlockPos p = entity.blockPosition();
       xDist = Math.abs(x - p.getX());
       zDist = Math.abs(z - p.getZ());
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
@@ -311,20 +311,20 @@ public class UtilEntity {
     double motionX = finalVector.x * modifier;
     double motionY = finalVector.y * modifier;
     double motionZ = finalVector.z * modifier;
-    entity.setMotion(motionX, motionY, motionZ);
+    entity.setDeltaMovement(motionX, motionY, motionZ);
   }
 
-  public static void addOrMergePotionEffect(LivingEntity player, EffectInstance newp) {
+  public static void addOrMergePotionEffect(LivingEntity player, MobEffectInstance newp) {
     // this could be in a utilPotion class i guess...
-    if (player.isPotionActive(newp.getPotion())) {
+    if (player.hasEffect(newp.getEffect())) {
       // do not use built in 'combine' function, just add up duration
-      EffectInstance p = player.getActivePotionEffect(newp.getPotion());
+      MobEffectInstance p = player.getEffect(newp.getEffect());
       int ampMax = Math.max(p.getAmplifier(), newp.getAmplifier());
       int dur = newp.getDuration() + p.getDuration();
-      player.addPotionEffect(new EffectInstance(newp.getPotion(), dur, ampMax));
+      player.addEffect(new MobEffectInstance(newp.getEffect(), dur, ampMax));
     }
     else {
-      player.addPotionEffect(newp);
+      player.addEffect(newp);
     }
   }
 
@@ -337,22 +337,22 @@ public class UtilEntity {
   public static void centerEntityHoriz(Entity entity, BlockPos pos) {
     float fixedX = pos.getX() + 0.5F; //((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
     float fixedZ = pos.getZ() + 0.5F; //((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
-    entity.setPosition(fixedX, entity.getPosition().getY(), fixedZ);
+    entity.setPos(fixedX, entity.blockPosition().getY(), fixedZ);
   }
 
-  public static List<VillagerEntity> getVillagers(World world, BlockPos p, int r) {
-    BlockPos start = p.add(-r, -r, -r);
-    BlockPos end = p.add(r, r, r);
-    return world.getEntitiesWithinAABB(VillagerEntity.class, new AxisAlignedBB(start, end));
+  public static List<Villager> getVillagers(Level world, BlockPos p, int r) {
+    BlockPos start = p.offset(-r, -r, -r);
+    BlockPos end = p.offset(r, r, r);
+    return world.getEntitiesOfClass(Villager.class, new AABB(start, end));
   }
 
-  public static LivingEntity getClosestEntity(World world, PlayerEntity player, List<? extends LivingEntity> list) {
+  public static LivingEntity getClosestEntity(Level world, Player player, List<? extends LivingEntity> list) {
     LivingEntity closest = null;
     double minDist = 999999;
     double dist, xDistance, zDistance;
     for (LivingEntity ent : list) {
-      xDistance = Math.abs(player.prevPosX - ent.prevPosX);
-      zDistance = Math.abs(player.prevPosZ - ent.prevPosZ);
+      xDistance = Math.abs(player.xo - ent.xo);
+      zDistance = Math.abs(player.zo - ent.zo);
       dist = Math.sqrt(xDistance * xDistance + zDistance * zDistance);
       if (dist < minDist) {
         minDist = dist;
@@ -362,8 +362,8 @@ public class UtilEntity {
     return closest;
   }
 
-  public static VillagerEntity getVillager(World world, int x, int y, int z) {
-    List<VillagerEntity> all = world.getEntitiesWithinAABB(VillagerEntity.class, new AxisAlignedBB(new BlockPos(x, y, z)));
+  public static Villager getVillager(Level world, int x, int y, int z) {
+    List<Villager> all = world.getEntitiesOfClass(Villager.class, new AABB(new BlockPos(x, y, z)));
     if (all.size() == 0) {
       return null;
     }
@@ -391,8 +391,8 @@ public class UtilEntity {
     return (float) Math.toDegrees(Math.atan2(posY2 - posY, Math.sqrt((posX2 - posX) * (posX2 - posX) + (posZ2 - posZ) * (posZ2 - posZ))));
   }
 
-  public static Vector3d lookVector(float rotYaw, float rotPitch) {
-    return new Vector3d(
+  public static Vec3 lookVector(float rotYaw, float rotPitch) {
+    return new Vec3(
         Math.sin(rotYaw) * Math.cos(rotPitch),
         Math.sin(rotPitch),
         Math.cos(rotYaw) * Math.cos(rotPitch));
@@ -432,7 +432,7 @@ public class UtilEntity {
       default:
         yaw = 0;
     }
-    entity.rotationYaw = yaw;
+    entity.yRot = yaw;
   }
 
   /**
@@ -442,22 +442,22 @@ public class UtilEntity {
    * @param verticalMomentumFactor
    */
   public static void dragEntityMomentum(LivingEntity entity, double verticalMomentumFactor) {
-    double x = entity.getMotion().x / verticalMomentumFactor;
-    double z = entity.getMotion().z / verticalMomentumFactor;
-    entity.setMotion(x, entity.getMotion().y, z);
+    double x = entity.getDeltaMovement().x / verticalMomentumFactor;
+    double z = entity.getDeltaMovement().z / verticalMomentumFactor;
+    entity.setDeltaMovement(x, entity.getDeltaMovement().y, z);
   }
 
-  public static void setCooldownItem(PlayerEntity player, Item item, int cooldown) {
-    player.getCooldownTracker().setCooldown(item, cooldown);
+  public static void setCooldownItem(Player player, Item item, int cooldown) {
+    player.getCooldowns().addCooldown(item, cooldown);
   }
 
-  public static Attribute getAttributeJump(HorseEntity ahorse) {
-    return Attributes.HORSE_JUMP_STRENGTH; //was reflection lol
+  public static Attribute getAttributeJump(Horse ahorse) {
+    return Attributes.JUMP_STRENGTH; //was reflection lol
   }
 
-  public static void eatingHorse(HorseEntity ahorse) {
+  public static void eatingHorse(Horse ahorse) {
     try {
-      Method m = ObfuscationReflectionHelper.findMethod(AbstractHorseEntity.class, "func_110266_cB"); // "eatingHorse");
+      Method m = ObfuscationReflectionHelper.findMethod(AbstractHorse.class, "eating"); // "eatingHorse");
       //      Method m = AbstractHorseEntity.class.getDeclaredMethod("eatingHorse");
       m.setAccessible(true);
       m.invoke(ahorse);
@@ -467,22 +467,22 @@ public class UtilEntity {
     }
   }
 
-  public static void tryMakeEntityClimb(World worldIn, LivingEntity entity, double climbSpeed) {
+  public static void tryMakeEntityClimb(Level worldIn, LivingEntity entity, double climbSpeed) {
     if (entity.isCrouching()) {
-      entity.setMotion(entity.getMotion().x, 0.0, entity.getMotion().z);
+      entity.setDeltaMovement(entity.getDeltaMovement().x, 0.0, entity.getDeltaMovement().z);
     }
-    else if (entity.moveForward > 0.0F && entity.getMotion().y < climbSpeed) {
-      entity.setMotion(entity.getMotion().x, climbSpeed, entity.getMotion().z);
+    else if (entity.zza > 0.0F && entity.getDeltaMovement().y < climbSpeed) {
+      entity.setDeltaMovement(entity.getDeltaMovement().x, climbSpeed, entity.getDeltaMovement().z);
       entity.fallDistance = 0.0F;
     } //setting fall distance on clientside wont work
-    if (worldIn.isRemote && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+    if (worldIn.isClientSide && entity.tickCount % TICKS_FALLDIST_SYNC == 0) {
       PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
     }
   }
 
-  public static void dimensionTeleport(PlayerEntity player, World world, BlockPosDim loc) {
-    if (world instanceof ServerWorld) {
-      DimensionTransit transit = new DimensionTransit((ServerWorld) world, loc);
+  public static void dimensionTeleport(Player player, Level world, BlockPosDim loc) {
+    if (world instanceof ServerLevel) {
+      DimensionTransit transit = new DimensionTransit((ServerLevel) world, loc);
       transit.teleport(player);
     }
   }

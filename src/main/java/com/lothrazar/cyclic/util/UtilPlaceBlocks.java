@@ -1,33 +1,33 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.DirectionalPlaceContext;
-import net.minecraft.item.Items;
-import net.minecraft.state.Property;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.DirectionalPlaceContext;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class UtilPlaceBlocks {
 
-  public static boolean rotateBlockValidState(World world, BlockPos pos, Direction side) {
+  public static boolean rotateBlockValidState(Level world, BlockPos pos, Direction side) {
     BlockState clicked = world.getBlockState(pos);
     if (clicked.getBlock() == null) {
       return false;
     }
     Block clickedBlock = clicked.getBlock();
     BlockState newState = null;
-    if (clickedBlock.isIn(BlockTags.SLABS)) {
+    if (clickedBlock.is(BlockTags.SLABS)) {
       final String key = "type"; //top or bottom
       final String valueDupe = "double"; //actually theres 3 but dont worry about it
       //      clicked.get(property)
@@ -35,26 +35,26 @@ public class UtilPlaceBlocks {
         //yes
         if (prop.getName().equals(key)) {
           //then cycle me 
-          newState = clicked.func_235896_a_(prop); // cycle
-          if (newState.get(prop).toString().equals(valueDupe)) {
+          newState = clicked.cycle(prop); // cycle
+          if (newState.getValue(prop).toString().equals(valueDupe)) {
             //haha just hack and skip. turns into length 2. dont worry about it
-            newState = newState.func_235896_a_(prop);
+            newState = newState.cycle(prop);
           }
         }
       }
     }
     else if (clicked.hasProperty(RotatedPillarBlock.AXIS)) {
       //axis 
-      Axis current = clicked.get(RotatedPillarBlock.AXIS);
+      Axis current = clicked.getValue(RotatedPillarBlock.AXIS);
       switch (current) {
         case X:
-          newState = clicked.with(RotatedPillarBlock.AXIS, Axis.Y);
+          newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.Y);
         break;
         case Y:
-          newState = clicked.with(RotatedPillarBlock.AXIS, Axis.Z);
+          newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.Z);
         break;
         case Z:
-          newState = clicked.with(RotatedPillarBlock.AXIS, Axis.X);
+          newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.X);
         break;
         default:
         break;
@@ -89,7 +89,7 @@ public class UtilPlaceBlocks {
     }
     boolean win = false;
     if (newState != null) {
-      win = world.setBlockState(pos, newState);
+      win = world.setBlockAndUpdate(pos, newState);
     }
     if (!win) {
       ModCyclic.LOGGER.error("Could not rotate " + clickedBlock);
@@ -97,7 +97,7 @@ public class UtilPlaceBlocks {
     return win;
   }
 
-  public static boolean placeStateSafe(World world, PlayerEntity player,
+  public static boolean placeStateSafe(Level world, Player player,
       BlockPos placePos, BlockState placeState) {
     return placeStateSafe(world, player, placePos, placeState, false);
   }
@@ -112,7 +112,7 @@ public class UtilPlaceBlocks {
    * @param playSound
    * @return
    */
-  public static boolean placeStateSafe(World world, PlayerEntity player, BlockPos placePos, BlockState placeState, boolean playSound) {
+  public static boolean placeStateSafe(Level world, Player player, BlockPos placePos, BlockState placeState, boolean playSound) {
     if (placePos == null) {
       return false;
     }
@@ -120,7 +120,7 @@ public class UtilPlaceBlocks {
     //    if (player != null && PermissionRegistry.hasPermissionHere(player, placePos) == false) {
     //      return false;
     //    }
-    if (world.isAirBlock(placePos) == false) {
+    if (world.isEmptyBlock(placePos) == false) {
       // if there is a block here, we might have to stop
       stateHere = world.getBlockState(placePos);
       if (stateHere != null) {
@@ -136,7 +136,7 @@ public class UtilPlaceBlocks {
         //blockHere.getMaterial(stateHere)
         if (stateHere.getMaterial().isLiquid() == false) {
           boolean dropBlock = true;
-          if (world.isRemote == false) {
+          if (world.isClientSide == false) {
             world.destroyBlock(placePos, dropBlock);
           }
         }
@@ -149,8 +149,8 @@ public class UtilPlaceBlocks {
     try {
       // flags specifies what to update, '3' means notify client & neighbors
       // isRemote to make sure we are in a server thread
-      if (world.isRemote == false) {
-        success = world.setBlockState(placePos, placeState, 3); // returns false when placement failed
+      if (world.isClientSide == false) {
+        success = world.setBlock(placePos, placeState, 3); // returns false when placement failed
       }
     }
     catch (Exception e) {
@@ -169,14 +169,14 @@ public class UtilPlaceBlocks {
     return success;
   }
 
-  public static boolean destroyBlock(World world, BlockPos pos) {
-    world.removeTileEntity(pos);
-    return world.setBlockState(pos, Blocks.AIR.getDefaultState()); // world.destroyBlock(pos, false);
+  public static boolean destroyBlock(Level world, BlockPos pos) {
+    world.removeBlockEntity(pos);
+    return world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState()); // world.destroyBlock(pos, false);
   }
 
-  public static boolean placeTorchSafely(World world, BlockPos blockPos, Direction solidBlockDirection) {
+  public static boolean placeTorchSafely(Level world, BlockPos blockPos, Direction solidBlockDirection) {
     BlockItem torch = (BlockItem) Items.TORCH;
-    BlockItemUseContext context = new DirectionalPlaceContext(world, blockPos, solidBlockDirection, Items.TORCH.getDefaultInstance(), solidBlockDirection);
-    return torch.tryPlace(context).isSuccessOrConsume();
+    BlockPlaceContext context = new DirectionalPlaceContext(world, blockPos, solidBlockDirection, Items.TORCH.getDefaultInstance(), solidBlockDirection);
+    return torch.place(context).consumesAction();
   }
 }

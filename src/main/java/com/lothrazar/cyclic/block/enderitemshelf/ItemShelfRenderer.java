@@ -2,24 +2,24 @@ package com.lothrazar.cyclic.block.enderitemshelf;
 
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.util.UtilRenderText;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
 
-public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
+public class ItemShelfRenderer extends BlockEntityRenderer<TileItemShelf> {
 
-  public ItemShelfRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+  public ItemShelfRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) {
     super(rendererDispatcherIn);
   }
 
   @Override
-  public void render(TileItemShelf tile, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+  public void render(TileItemShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
     Direction side = tile.getCurrentFacing();
     UtilRenderText.alignRendering(ms, side);
     for (int i = 0; i < tile.inventory.getSlots(); i++) {
@@ -27,7 +27,7 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
     }
   }
 
-  private void renderSlot(TileItemShelf tile, int slot, ItemStack stack, MatrixStack ms, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+  private void renderSlot(TileItemShelf tile, int slot, ItemStack stack, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
     if (stack.isEmpty()) {
       return;
     }
@@ -37,7 +37,7 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
     final double y = (3 * slot + 2) / sh;
     final double z = 1.01;
     final float scaleNum = 0.094F;
-    FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
+    Font fontRenderer = this.renderer.getFont();
     if (tile.renderStyle == RenderTextType.STACK) {
       final float sp = 0.19F;
       final float xf = 0.16F + slot * sp / 1.5F;
@@ -45,14 +45,14 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
       float size = 0.12F;
       //similar to but different, i didnt use rotation
       //https://github.com/InnovativeOnlineIndustries/Industrial-Foregoing/blob/1.16/src/main/java/com/buuz135/industrial/proxy/client/render/BlackHoleUnitTESR.java#L76
-      ms.push();
+      ms.pushPose();
       ms.translate(0, 0, 1);
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
       // TODO: use light offset
       //      float lf = tile.getWorld().getLight(tile.getPos().offset(tile.getCurrentFacing()));
-      Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer);
-      ms.pop();
+      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer);
+      ms.popPose();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
       //      if (tile.inventory.nameCache[slot] == null || tile.inventory.nameCache[slot].isEmpty()) {
@@ -62,25 +62,25 @@ public class ItemShelfRenderer extends TileEntityRenderer<TileItemShelf> {
       //          break;
       //        }
       //      }
-      String displayName = stack.getDisplayName().getString();
+      String displayName = stack.getHoverName().getString();
       //      if (displayName.isEmpty()) {
       //        displayName = stack.getDisplayName().getString();
       //      }
       final float scaleName = 0.02832999F + 0.1F * getScaleFactor(displayName);
-      ms.push();
+      ms.pushPose();
       ms.translate(x - 0.02, y + 0.06, z);
       ms.scale(1 / sh * scaleName, -1 / sh * scaleName, 0.00005F);
-      fontRenderer.renderString(displayName, 0, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, combinedLightIn);
-      ms.pop();
+      fontRenderer.drawInBatch(displayName, 0, 0, color, false, ms.last().pose(), buffer, false, 0, combinedLightIn);
+      ms.popPose();
     }
     if (tile.renderStyle != RenderTextType.NONE) {
       //render stack count
-      ms.push();
+      ms.pushPose();
       ms.translate(x + 0.081F, y, z);
       ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
       String displayCount = "x" + stack.getCount();
-      fontRenderer.renderString(displayCount, 110, 0, color, false, ms.getLast().getMatrix(), buffer, false, 0, combinedLightIn);
-      ms.pop();
+      fontRenderer.drawInBatch(displayCount, 110, 0, color, false, ms.last().pose(), buffer, false, 0, combinedLightIn);
+      ms.popPose();
     }
   }
 

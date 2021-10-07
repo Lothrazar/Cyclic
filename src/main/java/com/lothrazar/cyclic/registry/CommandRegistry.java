@@ -18,11 +18,11 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import java.util.Collection;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.GameType;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.GameType;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -43,25 +43,25 @@ public class CommandRegistry {
 
   @SubscribeEvent
   public void onRegisterCommandsEvent(RegisterCommandsEvent event) {
-    CommandDispatcher<CommandSource> r = event.getDispatcher();
-    r.register(LiteralArgumentBuilder.<CommandSource> literal(ModCyclic.MODID)
+    CommandDispatcher<CommandSourceStack> r = event.getDispatcher();
+    r.register(LiteralArgumentBuilder.<CommandSourceStack> literal(ModCyclic.MODID)
         .then(Commands.literal(CyclicCommands.HOME.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHOME.get() ? 3 : 0);
+              return p.hasPermission(ConfigRegistry.COMMANDHOME.get() ? 3 : 0);
             })
             .executes(x -> {
               return CommandHome.execute(x);
             }))
         .then(Commands.literal(CyclicCommands.GETHOME.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDGETHOME.get() ? 3 : 0);
+              return p.hasPermission(ConfigRegistry.COMMANDGETHOME.get() ? 3 : 0);
             })
             .executes(x -> {
               return CommandGetHome.execute(x);
             }))
         .then(Commands.literal(CyclicCommands.HEALTH.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
+              return p.hasPermission(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, FloatArgumentType.floatArg(0, 100F))
@@ -70,7 +70,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.HEARTS.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
+              return p.hasPermission(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(1, 100))
@@ -79,7 +79,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.GAMEMODE.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(3); // 3 for gamemode
+              return p.hasPermission(3); // 3 for gamemode
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 3))
@@ -88,7 +88,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.GRAVITY.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(3); // 3 for  
+              return p.hasPermission(3); // 3 for  
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, BoolArgumentType.bool())
@@ -97,7 +97,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.GLOWING.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(3); // 3 for  
+              return p.hasPermission(3); // 3 for  
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, BoolArgumentType.bool())
@@ -106,7 +106,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.HUNGER.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHUNGER.get() ? 3 : 0);
+              return p.hasPermission(ConfigRegistry.COMMANDHUNGER.get() ? 3 : 0);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 20))
@@ -115,7 +115,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.DEV.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDDEV.get() ? 3 : 0);
+              return p.hasPermission(ConfigRegistry.COMMANDDEV.get() ? 3 : 0);
             })
             //TODO: copy version. send network packet to client for clipboard
             .then(Commands.literal("nbt")
@@ -128,7 +128,7 @@ public class CommandRegistry {
                 })))
         .then(Commands.literal(CyclicCommands.PING.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDPING.get() ? 3 : 0);
+              return p.hasPermission(ConfigRegistry.COMMANDPING.get() ? 3 : 0);
             })
             .then(Commands.literal("nether")
                 .executes(x -> {
@@ -140,7 +140,7 @@ public class CommandRegistry {
                 })))
         .then(Commands.literal(CyclicCommands.TODO.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(0);
+              return p.hasPermission(0);
             })
             .then(Commands.literal("add")
                 .then(Commands.argument("arguments", StringArgumentType.greedyString())
@@ -160,34 +160,34 @@ public class CommandRegistry {
     );
   }
 
-  private static int executeGlowing(CommandContext<CommandSource> x, Collection<ServerPlayerEntity> players, boolean bool) {
-    for (ServerPlayerEntity p : players) {
+  private static int executeGlowing(CommandContext<CommandSourceStack> x, Collection<ServerPlayer> players, boolean bool) {
+    for (ServerPlayer p : players) {
       p.setGlowing(bool);
     }
     return 0;
   }
 
-  private static int executeGravity(CommandContext<CommandSource> x, Collection<ServerPlayerEntity> players, boolean bool) {
-    for (ServerPlayerEntity p : players) {
+  private static int executeGravity(CommandContext<CommandSourceStack> x, Collection<ServerPlayer> players, boolean bool) {
+    for (ServerPlayer p : players) {
       p.setNoGravity(bool);
     }
     return 0;
   }
 
-  private static int executeGamemode(CommandContext<CommandSource> x, Collection<ServerPlayerEntity> players, int integer) {
-    for (ServerPlayerEntity p : players) {
+  private static int executeGamemode(CommandContext<CommandSourceStack> x, Collection<ServerPlayer> players, int integer) {
+    for (ServerPlayer p : players) {
       switch (integer) {
         case 0:
-          p.setGameType(GameType.SURVIVAL);
+          p.setGameMode(GameType.SURVIVAL);
         break;
         case 1:
-          p.setGameType(GameType.CREATIVE);
+          p.setGameMode(GameType.CREATIVE);
         break;
         case 2:
-          p.setGameType(GameType.ADVENTURE);
+          p.setGameMode(GameType.ADVENTURE);
         break;
         case 3:
-          p.setGameType(GameType.SPECTATOR);
+          p.setGameMode(GameType.SPECTATOR);
         break;
         default:
           UtilChat.sendFeedback(x, integer + " = ?!");

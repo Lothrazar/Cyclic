@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.data;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
 
 public class BlockPosDim {
 
@@ -14,11 +14,11 @@ public class BlockPosDim {
   private BlockPos pos;
   private String dimension;
   private String name;
-  private Vector3d hitVec = Vector3d.ZERO;
+  private Vec3 hitVec = Vec3.ZERO;
   private Direction side;
   private Direction sidePlayerFacing;
 
-  public BlockPosDim(BlockPos pos, String dimension, CompoundNBT stackTag) {
+  public BlockPosDim(BlockPos pos, String dimension, CompoundTag stackTag) {
     setX(pos.getX());
     setY(pos.getY());
     setZ(pos.getZ());
@@ -26,10 +26,10 @@ public class BlockPosDim {
     this.setDimension(dimension);
     if (stackTag != null && stackTag.contains("display")) {
       //
-      CompoundNBT displayTag = stackTag.getCompound("display");
+      CompoundTag displayTag = stackTag.getCompound("display");
       if (displayTag != null && displayTag.contains("Name", 8)) {
         //
-        ITextComponent namec = ITextComponent.Serializer.getComponentFromJson(displayTag.getString("Name"));
+        Component namec = Component.Serializer.fromJson(displayTag.getString("Name"));
         this.name = namec.getString();
       }
     }
@@ -89,11 +89,11 @@ public class BlockPosDim {
     this.side = side;
   }
 
-  public Vector3d getHitVec() {
+  public Vec3 getHitVec() {
     return hitVec;
   }
 
-  public void setHitVec(Vector3d hitVec) {
+  public void setHitVec(Vec3 hitVec) {
     this.hitVec = hitVec;
   }
 

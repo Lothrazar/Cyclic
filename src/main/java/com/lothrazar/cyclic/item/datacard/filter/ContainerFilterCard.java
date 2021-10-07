@@ -5,11 +5,11 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import javax.annotation.Nonnull;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -18,19 +18,19 @@ public class ContainerFilterCard extends ContainerBase {
   public ItemStack bag;
   public int slot;
   public int slots;
-  public CompoundNBT nbt;
+  public CompoundTag nbt;
 
-  public ContainerFilterCard(int id, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerFilterCard(int id, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.filter_data, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = CapabilityProviderFilterCard.SLOTS;
-    if (player.getHeldItemMainhand().getItem() instanceof FilterCardItem) {
-      this.bag = player.getHeldItemMainhand();
-      this.slot = player.inventory.currentItem;
+    if (player.getMainHandItem().getItem() instanceof FilterCardItem) {
+      this.bag = player.getMainHandItem();
+      this.slot = player.inventory.selected;
     }
-    else if (player.getHeldItemOffhand().getItem() instanceof FilterCardItem) {
-      this.bag = player.getHeldItemOffhand();
+    else if (player.getOffhandItem().getItem() instanceof FilterCardItem) {
+      this.bag = player.getOffhandItem();
       this.slot = 40;
     }
     //
@@ -45,11 +45,11 @@ public class ContainerFilterCard extends ContainerBase {
         this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
 
           @Override
-          public boolean isItemValid(@Nonnull ItemStack stack) {
+          public boolean mayPlace(@Nonnull ItemStack stack) {
             if (stack.getItem() == ItemRegistry.filter_data) {
               return false;
             }
-            return super.isItemValid(stack);
+            return super.mayPlace(stack);
           }
         });
       }
@@ -58,19 +58,19 @@ public class ContainerFilterCard extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
+  public boolean stillValid(Player playerIn) {
     return true;
   }
 
   @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
-      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
+  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+    if (!(slotId < 0 || slotId >= this.slots.size())) {
+      ItemStack myBag = this.slots.get(slotId).getItem();
       if (myBag.getItem() instanceof FilterCardItem) {
         //lock the bag in place by returning empty
         return ItemStack.EMPTY;
       }
     }
-    return super.slotClick(slotId, dragType, clickTypeIn, player);
+    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 }

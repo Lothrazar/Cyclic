@@ -3,27 +3,27 @@ package com.lothrazar.cyclic.block.wireless.item;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerWirelessItem extends ContainerBase {
 
   protected TileWirelessItem tile;
 
-  public ContainerWirelessItem(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerWirelessItem(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.wireless_item, windowId);
-    tile = (TileWirelessItem) world.getTileEntity(pos);
+    tile = (TileWirelessItem) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = tile.inventory.getSlots() + 1; //+1 for output slot
     addSlot(new SlotItemHandler(tile.gpsSlots, 0, 80, 36) {
 
       @Override
-      public int getSlotStackLimit() {
+      public int getMaxStackSize() {
         return 1;
       }
     });
@@ -33,7 +33,7 @@ public class ContainerWirelessItem extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.WIRELESS_ITEM.get());
+  public boolean stillValid(Player playerIn) {
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.WIRELESS_ITEM.get());
   }
 }

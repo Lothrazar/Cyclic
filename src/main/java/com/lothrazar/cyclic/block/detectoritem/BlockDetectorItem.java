@@ -3,53 +3,55 @@ package com.lothrazar.cyclic.block.detectoritem;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockDetectorItem extends BlockBase {
 
   private static final double BOUNDS = 1;
-  private static final VoxelShape AABB = Block.makeCuboidShape(BOUNDS, 0, BOUNDS,
+  private static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
       16 - BOUNDS, 10, 16 - BOUNDS);
 
   public BlockDetectorItem(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F).notSolid());
+    super(properties.strength(1.8F).noOcclusion());
     this.setHasGui();
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return AABB;
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
   @Override
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     ClientRegistry.bindTileEntityRenderer(TileRegistry.DETECTOR_ITEM, RenderDetectorItem::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.DETECTOR_ITEM, ScreenDetectorItem::new);
+    MenuScreens.register(ContainerScreenRegistry.DETECTOR_ITEM, ScreenDetectorItem::new);
   }
 
   @Override
   @Deprecated
-  public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-    TileDetectorItem te = (TileDetectorItem) blockAccess.getTileEntity(pos);
+  public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    TileDetectorItem te = (TileDetectorItem) blockAccess.getBlockEntity(pos);
     if (te == null) {
       return 0;
     }
@@ -57,7 +59,7 @@ public class BlockDetectorItem extends BlockBase {
   }
 
   @Override
-  public boolean canProvidePower(BlockState state) {
+  public boolean isSignalSource(BlockState state) {
     return true;
   }
 
@@ -67,7 +69,7 @@ public class BlockDetectorItem extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileDetectorItem();
   }
 }

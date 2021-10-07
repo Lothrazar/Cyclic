@@ -3,30 +3,30 @@ package com.lothrazar.cyclic.item.elemental;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class FireEntity extends ProjectileItemEntity {
+public class FireEntity extends ThrowableItemProjectile {
 
-  public FireEntity(EntityType<? extends ProjectileItemEntity> entityType, World world) {
+  public FireEntity(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
     super(entityType, world);
   }
 
-  public FireEntity(LivingEntity livingEntityIn, World worldIn) {
+  public FireEntity(LivingEntity livingEntityIn, Level worldIn) {
     super(EntityRegistry.fire_bolt, livingEntityIn, worldIn);
   }
 
@@ -36,27 +36,27 @@ public class FireEntity extends ProjectileItemEntity {
   }
 
   @Override
-  protected void onImpact(RayTraceResult result) {
-    RayTraceResult.Type type = result.getType();
-    if (type == RayTraceResult.Type.ENTITY) {
+  protected void onHit(HitResult result) {
+    HitResult.Type type = result.getType();
+    if (type == HitResult.Type.ENTITY) {
       //damage entity by zero
       //drop torch
-      EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
+      EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), MathHelper.nextInt(world.rand, 2, 6));
-        if (!target.world.isRemote && target.isBurning() == false
+        target.hurt(DamageSource.thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 6));
+        if (!target.level.isClientSide && target.isOnFire() == false
             && target instanceof LivingEntity) {
-          target.attackEntityFrom(DamageSource.IN_FIRE, MathHelper.nextInt(world.rand, 3, 5));
+          target.hurt(DamageSource.IN_FIRE, Mth.nextInt(level.random, 3, 5));
           LivingEntity living = (LivingEntity) target;
-          living.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 4, 1));
-          living.setFire(MathHelper.nextInt(world.rand, 1, 5));
+          living.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 4, 1));
+          living.setSecondsOnFire(Mth.nextInt(level.random, 1, 5));
         }
       }
     }
-    else if (type == RayTraceResult.Type.BLOCK) {
-      BlockRayTraceResult ray = (BlockRayTraceResult) result;
-      if (ray.getPos() == null) {
+    else if (type == HitResult.Type.BLOCK) {
+      BlockHitResult ray = (BlockHitResult) result;
+      if (ray.getBlockPos() == null) {
         return;
       }
       //      BlockPos pos = ray.getPos();//.offset(ray.getFace());
@@ -72,17 +72,17 @@ public class FireEntity extends ProjectileItemEntity {
   }
 
   @Override
-  public void writeAdditional(CompoundNBT tag) {
-    super.writeAdditional(tag);
+  public void addAdditionalSaveData(CompoundTag tag) {
+    super.addAdditionalSaveData(tag);
   }
 
   @Override
-  public void readAdditional(CompoundNBT tag) {
-    super.readAdditional(tag);
+  public void readAdditionalSaveData(CompoundTag tag) {
+    super.readAdditionalSaveData(tag);
   }
 
   @Override
-  public IPacket<?> createSpawnPacket() {
+  public Packet<?> getAddEntityPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
   }
 }

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class BlockStateMatcher {
 

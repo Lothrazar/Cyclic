@@ -2,16 +2,16 @@ package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.potion.TickableEffect;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class SwimEffect extends TickableEffect {
 
   private static final float speedfactor = 0.09F;
 
-  public SwimEffect(EffectType typeIn, int liquidColorIn) {
+  public SwimEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
   }
 
@@ -20,7 +20,7 @@ public class SwimEffect extends TickableEffect {
     // delete me i guess 
     LivingEntity entity = event.getEntityLiving();
     if (entity.isInWater()) {
-      EffectInstance pot = entity.getActivePotionEffect(this);
+      MobEffectInstance pot = entity.getEffect(this);
       int amp = pot.getAmplifier() + 4; //level I is zero,  II is one 
       UtilEntity.speedupEntityIfMoving(entity, speedfactor * amp);
     }

@@ -26,22 +26,24 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilStepHeight;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantStep extends EnchantBase {
 
   private static final String NBT_ON = ModCyclic.MODID + "_stepenchant";
 
-  public EnchantStep(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantStep(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -60,27 +62,27 @@ public class EnchantStep extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     //anything that goes on your feet
     boolean yes = (stack.getItem() instanceof ArmorItem)
-        && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
+        && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.LEGS;
     return yes;
   }
 
   @Override
   public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canApply(stack);
+    return this.canEnchant(stack);
   }
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     //check if NOT holding this harm
-    if (event.getEntityLiving() instanceof PlayerEntity == false) {
+    if (event.getEntityLiving() instanceof Player == false) {
       return;
     }
-    PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+    Player player = (Player) event.getEntityLiving();
     //Ticking
-    ItemStack armor = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
+    ItemStack armor = player.getItemBySlot(EquipmentSlot.LEGS);
     int level = 0;
     if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
         && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
@@ -96,13 +98,13 @@ public class EnchantStep extends EnchantBase {
     }
   }
 
-  private void turnOn(PlayerEntity player, ItemStack armor) {
+  private void turnOn(Player player, ItemStack armor) {
     player.getPersistentData().putBoolean(NBT_ON, true);
     UtilStepHeight.enableStepHeight(player);
     //    ModCyclic.log("ON " + player.getPersistentData().getBoolean(NBT_ON));
   }
 
-  private void turnOff(PlayerEntity player, ItemStack armor) {
+  private void turnOff(Player player, ItemStack armor) {
     //skip if lofty stature has override
     //was it on before, do we need to do an off hit
     if (player.getPersistentData().contains(NBT_ON) && player.getPersistentData().getBoolean(NBT_ON)) {

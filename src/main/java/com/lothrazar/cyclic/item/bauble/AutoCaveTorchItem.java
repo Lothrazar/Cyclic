@@ -34,18 +34,20 @@ import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class AutoCaveTorchItem extends ItemBaseToggle {
 
@@ -67,22 +69,22 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-    if (world.isRemote) {
+  public void inventoryTick(ItemStack stack, Level world, Entity entityIn, int itemSlot, boolean isSelected) {
+    if (world.isClientSide) {
       return;
     }
     if (!this.isOn(stack)) {
       return;
     }
-    if (!(entityIn instanceof PlayerEntity)) {
+    if (!(entityIn instanceof Player)) {
       return;
     }
-    PlayerEntity player = (PlayerEntity) entityIn;
+    Player player = (Player) entityIn;
     if (player.isSpectator()) {
       return;
     }
-    if (stack.getDamage() >= stack.getMaxDamage()) {
-      stack.setDamage(stack.getMaxDamage());
+    if (stack.getDamageValue() >= stack.getMaxDamage()) {
+      stack.setDamageValue(stack.getMaxDamage());
       return;
     }
     // A lock is necessary here as it's possible for multiple torches to be placed at the same time.
@@ -98,27 +100,27 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
     tryRepairWith(stack, player, Blocks.TORCH.asItem());
   }
 
-  private void placeTorchIfNecessary(ItemStack stack, World world, PlayerEntity player) {
-    BlockPos playerPos = player.getPosition();
-    if (world.getBlockState(playerPos).isSolid()) {
+  private void placeTorchIfNecessary(ItemStack stack, Level world, Player player) {
+    BlockPos playerPos = player.blockPosition();
+    if (world.getBlockState(playerPos).canOcclude()) {
       return;
     }
     // Find the surface below the player's feet.
     for (int i = 0; i < BLOCKS_TO_MOVE_FEET_DOWN; i++) {
-      BlockPos next = playerPos.down();
-      if (world.getBlockState(next).isSolid()) {
+      BlockPos next = playerPos.below();
+      if (world.getBlockState(next).canOcclude()) {
         break;
       }
       else {
         playerPos = next;
       }
     }
-    if (!world.getBlockState(playerPos.down()).isSolid()) {
+    if (!world.getBlockState(playerPos.below()).canOcclude()) {
       return;
     }
     final int lightLimit = getLightLimit();
-    final int playerPosLight = world.getLight(playerPos);
-    world.getLightFor(LightType.BLOCK, playerPos);
+    final int playerPosLight = world.getMaxLocalRawBrightness(playerPos);
+    world.getBrightness(LightLayer.BLOCK, playerPos);
     if (playerPosLight > lightLimit) {
       return;
     }
@@ -163,7 +165,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
             .thenComparing(TorchPos::isNotOnGround)
             // Reverse the comparator to get validTorchPositions from best to worst, instead of worst to best.
             .reversed());
-    final Direction facing = player.getHorizontalFacing();
+    final Direction facing = player.getDirection();
     for (TorchPos torchPos : validTorchPositions) {
       if (UtilPlaceBlocks.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
         UtilItemStack.damageItem(player, stack);
@@ -203,7 +205,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
    *          The y value of the player's feet.
    * @return Newly found valid torch positions.
    */
-  private ArrayList<TorchPos> bfs(World world, Queue<BlockPos> queue, HashMap<BlockPos, Integer> distances, int maxPoppedDist, int maxPushedDist, int playerElevation) {
+  private ArrayList<TorchPos> bfs(Level world, Queue<BlockPos> queue, HashMap<BlockPos, Integer> distances, int maxPoppedDist, int maxPushedDist, int playerElevation) {
     ArrayList<TorchPos> validTorchPositions = new ArrayList<>();
     while (!queue.isEmpty()) {
       final BlockPos poppedPos = queue.peek();
@@ -217,9 +219,9 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
       boolean wouldUpdateFloatingFallingBlock = false;
       EnumSet<Direction> solidDirections = EnumSet.noneOf(Direction.class);
       for (Direction direction : Direction.values()) {
-        final BlockPos nextPos = poppedPos.offset(direction);
+        final BlockPos nextPos = poppedPos.relative(direction);
         final BlockState state = world.getBlockState(nextPos);
-        if (state.isSolid()) {
+        if (state.canOcclude()) {
           solidDirections.add(direction);
           if (direction != Direction.UP) {
             isValidTorch = true;
@@ -232,13 +234,13 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
         // Check if placing a torch here would cause a floating block to fall.
         // Placing a torch BELOW a floating block is okay, though.
         if (direction != Direction.UP && state.getBlock() instanceof FallingBlock &&
-            FallingBlock.canFallThrough(world.getBlockState(nextPos.down()))) {
+            FallingBlock.isFree(world.getBlockState(nextPos.below()))) {
           wouldUpdateFloatingFallingBlock = true;
         }
       }
-      if (isValidTorch && !wouldUpdateFloatingFallingBlock && world.isAirBlock(poppedPos)) {
+      if (isValidTorch && !wouldUpdateFloatingFallingBlock && world.isEmptyBlock(poppedPos)) {
         validTorchPositions.add(new TorchPos(poppedPos, poppedPos.getY() - playerElevation,
-            TORCH_LIGHT_LEVEL - poppedDistance, world.getLight(poppedPos), solidDirections));
+            TORCH_LIGHT_LEVEL - poppedDistance, world.getMaxLocalRawBrightness(poppedPos), solidDirections));
       }
     }
     return validTorchPositions;
@@ -304,7 +306,7 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
         return Direction.DOWN;
       }
       // - Right of player / left of player, depending on isPreferLeftWall().
-      final Direction preferredDirection = isPreferLeftWall() ? facing.rotateYCCW() : facing.rotateY();
+      final Direction preferredDirection = isPreferLeftWall() ? facing.getCounterClockWise() : facing.getClockWise();
       if (solidDirections.contains(preferredDirection)) {
         return preferredDirection;
       }

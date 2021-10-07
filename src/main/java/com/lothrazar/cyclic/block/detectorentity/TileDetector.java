@@ -6,21 +6,21 @@ import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
-public class TileDetector extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileDetector extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE, RENDER;
@@ -44,7 +44,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   @Override
   public void tick() {
     timer--;
-    if (world.isRemote || timer > 0) {
+    if (level.isClientSide || timer > 0) {
       return;
     }
     timer = PER_TICK;
@@ -66,10 +66,10 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     }
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
-      BlockState state = world.getBlockState(this.getPos());
-      world.notifyBlockUpdate(this.getPos(), state, state, 3);
+      BlockState state = level.getBlockState(this.getBlockPos());
+      level.sendBlockUpdated(this.getBlockPos(), state, state, 3);
       try {
-        world.notifyNeighborsOfStateChange(this.getPos(), this.getBlockState().getBlock());
+        level.updateNeighborsAt(this.getBlockPos(), this.getBlockState().getBlock());
       }
       catch (Throwable e) {
         //somehow this lead to a  
@@ -84,18 +84,18 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerDetector(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerDetector(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -104,19 +104,19 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.getShape(getRange(), pos.getY());
+    return UtilShape.getShape(getRange(), worldPosition.getY());
   }
 
   private int getCountInRange() {
-    List<? extends LivingEntity> list = this.entityFilter.getEntities(world, getRange());
+    List<? extends LivingEntity> list = this.entityFilter.getEntities(level, getRange());
     return list.size();
   }
 
-  private AxisAlignedBB getRange() {
-    double x = pos.getX();
-    double y = pos.getY();
-    double z = pos.getZ();
-    AxisAlignedBB entityRange = new AxisAlignedBB(
+  private AABB getRange() {
+    double x = worldPosition.getX();
+    double y = worldPosition.getY();
+    double z = worldPosition.getZ();
+    AABB entityRange = new AABB(
         x - this.rangeX, y - this.rangeY, z - this.rangeZ,
         x + this.rangeX + 1, y + this.rangeY, z + this.rangeZ + 1);
     return entityRange;
@@ -189,7 +189,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     this.rangeX = tag.getInt("ox");
     this.rangeY = tag.getInt("oy");
     this.rangeZ = tag.getInt("oz");
@@ -202,17 +202,17 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     if (eType >= 0 && eType < EntityFilterType.values().length) {
       this.entityFilter = EntityFilterType.values()[eType];
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("ox", rangeX);
     tag.putInt("oy", rangeY);
     tag.putInt("oz", rangeZ);
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
     tag.putInt("entityType", entityFilter.ordinal());
-    return super.write(tag);
+    return super.save(tag);
   }
 }

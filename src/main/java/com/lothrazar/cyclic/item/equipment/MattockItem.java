@@ -3,46 +3,48 @@ package com.lothrazar.cyclic.item.equipment;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTier;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolItem;
-import net.minecraft.network.play.server.SChangeBlockPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ToolType;
 
-public class MattockItem extends ToolItem {
+import net.minecraft.world.item.Item.Properties;
+
+public class MattockItem extends DiggerItem {
 
   final int radius; //radius 2 is 5x5 area square
 
   public MattockItem(Properties builder, int radius) {
-    super(5.0F, -3.0F, ItemTier.DIAMOND, Sets.newHashSet(), builder.addToolType(ToolType.SHOVEL, 4).addToolType(ToolType.PICKAXE, 4));
+    super(5.0F, -3.0F, Tiers.DIAMOND, Sets.newHashSet(), builder.addToolType(ToolType.SHOVEL, 4).addToolType(ToolType.PICKAXE, 4));
     this.radius = radius;
   }
 
   @Override
-  public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
-    World world = player.world;
-    RayTraceResult ray = rayTrace(world, player, RayTraceContext.FluidMode.NONE);
+  public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
+    Level world = player.level;
+    HitResult ray = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
     int yoff = 0;
     if (radius == 2 && player.isCrouching()) {
       yoff = 1;
     }
-    if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK) {
-      BlockRayTraceResult brt = (BlockRayTraceResult) ray;
-      Direction sideHit = brt.getFace();
+    if (ray != null && ray.getType() == HitResult.Type.BLOCK) {
+      BlockHitResult brt = (BlockHitResult) ray;
+      Direction sideHit = brt.getDirection();
       List<BlockPos> shape;
       if (sideHit == Direction.UP || sideHit == Direction.DOWN) {
         shape = UtilShape.squareHorizontalHollow(pos, radius);
@@ -62,31 +64,31 @@ public class MattockItem extends ToolItem {
       }
       for (BlockPos posCurrent : shape) {
         BlockState bsCurrent = world.getBlockState(posCurrent);
-        if (bsCurrent.hardness >= 0 // -1 is unbreakable
-            && player.canPlayerEdit(posCurrent, sideHit, stack)
+        if (bsCurrent.destroySpeed >= 0 // -1 is unbreakable
+            && player.mayUseItemAt(posCurrent, sideHit, stack)
             && ForgeHooks.canHarvestBlock(bsCurrent, player, world, posCurrent)
             && this.getDestroySpeed(stack, bsCurrent) > 1) {
-          stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);
+          stack.mineBlock(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
-          if (world.isRemote) {
-            world.playEvent(2001, posCurrent, Block.getStateId(bsCurrent));
+          if (world.isClientSide) {
+            world.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
             if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
-              blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
+              blockCurrent.destroy(world, posCurrent, bsCurrent);
             }
             //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
           }
-          else if (player instanceof ServerPlayerEntity) { //Server side, so this works
-            ServerPlayerEntity mp = (ServerPlayerEntity) player;
-            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, posCurrent);
+          else if (player instanceof ServerPlayer) { //Server side, so this works
+            ServerPlayer mp = (ServerPlayer) player;
+            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
             if (xpGivenOnDrop >= 0) {
               if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())
-                  && world instanceof ServerWorld) {
-                TileEntity tile = world.getTileEntity(posCurrent);
-                blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
-                blockCurrent.harvestBlock(world, player, posCurrent, bsCurrent, tile, stack);
-                blockCurrent.dropXpOnBlockBreak((ServerWorld) world, posCurrent, xpGivenOnDrop);
+                  && world instanceof ServerLevel) {
+                BlockEntity tile = world.getBlockEntity(posCurrent);
+                blockCurrent.destroy(world, posCurrent, bsCurrent);
+                blockCurrent.playerDestroy(world, player, posCurrent, bsCurrent, tile, stack);
+                blockCurrent.popExperience((ServerLevel) world, posCurrent, xpGivenOnDrop);
               }
-              mp.connection.sendPacket(new SChangeBlockPacket(world, posCurrent));
+              mp.connection.send(new ClientboundBlockUpdatePacket(world, posCurrent));
             }
           }
         }
@@ -96,7 +98,7 @@ public class MattockItem extends ToolItem {
   }
 
   @Override
-  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, PlayerEntity player, BlockState blockState) {
+  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, Player player, BlockState blockState) {
     return Math.max(Items.DIAMOND_PICKAXE.getHarvestLevel(stack, tool, player, blockState),
         Items.DIAMOND_SHOVEL.getHarvestLevel(stack, tool, player, blockState));
   }

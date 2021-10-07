@@ -28,14 +28,14 @@ import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -51,9 +51,9 @@ public class ContainerCrafter extends ContainerBase {
   public static final int PREVIEW_START_X = 70;
   public static final int PREVIEW_START_Y = 35;
 
-  public ContainerCrafter(int windowId, World clientWorld, BlockPos pos, PlayerInventory inv, PlayerEntity clientPlayer) {
+  public ContainerCrafter(int windowId, Level clientWorld, BlockPos pos, Inventory inv, Player clientPlayer) {
     super(ContainerScreenRegistry.CRAFTER, windowId);
-    tile = (TileCrafter) clientWorld.getTileEntity(pos);
+    tile = (TileCrafter) clientWorld.getBlockEntity(pos);
     trackEnergy(tile);
     this.endInv = TileCrafter.IO_NUM_COLS * TileCrafter.IO_NUM_ROWS;
     this.playerEntity = clientPlayer;
@@ -95,13 +95,13 @@ public class ContainerCrafter extends ContainerBase {
           PREVIEW_START_X,
           PREVIEW_START_Y));
     });
-    this.endInv = inventorySlots.size();
+    this.endInv = slots.size();
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileCrafter.Fields.values().length);
   }
 
   @Override
-  public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+  public ItemStack quickMoveStack(Player playerIn, int index) {
     //30-65 is players
     //29 is the preview slot
     //19-28 is the right output
@@ -111,31 +111,31 @@ public class ContainerCrafter extends ContainerBase {
     int playerEnd = endInv + PLAYERSIZE;
     //standard logic based on start/end
     ItemStack itemstack = ItemStack.EMPTY;
-    Slot slot = this.inventorySlots.get(index);
-    if (slot != null && slot.getHasStack()) {
-      ItemStack stack = slot.getStack();
+    Slot slot = this.slots.get(index);
+    if (slot != null && slot.hasItem()) {
+      ItemStack stack = slot.getItem();
       itemstack = stack.copy();
       //from output to player
       if (index >= TileCrafter.OUTPUT_SLOT_START && index <= TileCrafter.OUTPUT_SLOT_STOP) {
-        if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
+        if (!this.moveItemStackTo(stack, playerStart, playerEnd, false)) {
           return ItemStack.EMPTY;
         }
       }
       //from input to player
       if (index < TileCrafter.IO_SIZE) {
-        if (!this.mergeItemStack(stack, playerStart, playerEnd, false)) {
+        if (!this.moveItemStackTo(stack, playerStart, playerEnd, false)) {
           return ItemStack.EMPTY;
         }
       }
-      else if (index <= playerEnd && !this.mergeItemStack(stack, 0, 9, false)) {
+      else if (index <= playerEnd && !this.moveItemStackTo(stack, 0, 9, false)) {
         ModCyclic.LOGGER.info("less than playerend and merge to self start-end");
         return ItemStack.EMPTY;
       }
       if (stack.isEmpty()) {
-        slot.putStack(ItemStack.EMPTY);
+        slot.set(ItemStack.EMPTY);
       }
       else {
-        slot.onSlotChanged();
+        slot.setChanged();
       }
       if (stack.getCount() == itemstack.getCount()) {
         return ItemStack.EMPTY;
@@ -146,32 +146,32 @@ public class ContainerCrafter extends ContainerBase {
   }
 
   @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     if (slotId == TileCrafter.PREVIEW_SLOT) {
       return ItemStack.EMPTY;
     }
     // [ 10 - 18 ]
     if (slotId >= TileCrafter.GRID_SLOT_START && slotId <= TileCrafter.GRID_SLOT_STOP) {
-      ItemStack ghostStack = player.inventory.getItemStack().copy();
+      ItemStack ghostStack = player.inventory.getCarried().copy();
       ghostStack.setCount(1);
-      inventorySlots.get(slotId).putStack(ghostStack);
+      slots.get(slotId).set(ghostStack);
       tile.shouldSearch = true;
       return ItemStack.EMPTY;
     }
-    return super.slotClick(slotId, dragType, clickTypeIn, player);
+    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 
   @Override
-  public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
+  public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
     // dont merge to preview
     // dont merge to grid
     return slotIn.getSlotIndex() != TileCrafter.PREVIEW_SLOT &&
         !(slotIn.getSlotIndex() >= TileCrafter.GRID_SLOT_START && slotIn.getSlotIndex() <= TileCrafter.GRID_SLOT_STOP) &&
-        super.canMergeSlot(stack, slotIn);
+        super.canTakeItemForPickAll(stack, slotIn);
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.crafter);
+  public boolean stillValid(Player playerIn) {
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.crafter);
   }
 }

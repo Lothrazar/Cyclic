@@ -5,58 +5,58 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextBoxAutosave;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
 
   private ButtonMachineField btnRedstone;
   private TextBoxAutosave txtString;
 
-  public ScreenScreentext(ContainerScreentext screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenScreentext(ContainerScreentext screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
   }
 
   @Override
   public void init() {
     super.init();
-    int x = guiLeft + 6;
-    int y = guiTop + 6;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileScreentext.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    int x = leftPos + 6;
+    int y = topPos + 6;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileScreentext.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     int w = 140;
-    x = guiLeft + 28;
-    y = guiTop + 8;
-    txtString = new TextBoxAutosave(this.font, x, y, w, container.tile.getPos(), 0);
-    txtString.setText(container.tile.getFieldString(0));
+    x = leftPos + 28;
+    y = topPos + 8;
+    txtString = new TextBoxAutosave(this.font, x, y, w, menu.tile.getBlockPos(), 0);
+    txtString.setValue(menu.tile.getFieldString(0));
     this.children.add(txtString);
     w = 160;
-    x = guiLeft + 8;
-    y = guiTop + 28;
+    x = leftPos + 8;
+    y = topPos + 28;
     int h = 20;
     int f = TileScreentext.Fields.RED.ordinal();
-    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 255, container.tile.getField(f)));
+    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 255, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.GREEN.ordinal();
-    GuiSliderInteger green = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 255, container.tile.getField(f)));
+    GuiSliderInteger green = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 255, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.BLUE.ordinal();
-    GuiSliderInteger blue = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 255, container.tile.getField(f)));
+    GuiSliderInteger blue = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 255, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.PADDING.ordinal();
-    GuiSliderInteger pad = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 20, container.tile.getField(f)));
+    GuiSliderInteger pad = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 20, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.FONT.ordinal();
-    GuiSliderInteger font = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        1, 100, container.tile.getField(f)));
+    GuiSliderInteger font = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        1, 100, menu.tile.getField(f)));
     y += h + 1;
     f = TileScreentext.Fields.OFFSET.ordinal();
-    GuiSliderInteger offset = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 10, container.tile.getField(f)));
+    GuiSliderInteger offset = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 10, menu.tile.getField(f)));
     red.setTooltip("cyclic.screen.red");
     green.setTooltip("cyclic.screen.green");
     blue.setTooltip("cyclic.screen.blue");
@@ -71,20 +71,20 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
+    this.renderTooltip(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
-    btnRedstone.onValueUpdate(container.tile);
+    btnRedstone.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_PLAIN);
     this.txtString.render(ms, mouseX, mouseY, partialTicks);
   }

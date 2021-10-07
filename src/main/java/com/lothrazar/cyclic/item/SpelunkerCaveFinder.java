@@ -27,50 +27,52 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SpelunkerCaveFinder extends ItemBase {
 
   public SpelunkerCaveFinder(Properties properties) {
-    super(properties.maxDamage(10));
+    super(properties.durability(10));
   }
 
   private static final int COOLDOWN = 12;
   private static final int RANGE = 64;
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
     //
-    ItemStack stack = context.getItem();
-    BlockPos pos = context.getPos();
-    Direction direction = context.getFace();
+    ItemStack stack = context.getItemInHand();
+    BlockPos pos = context.getClickedPos();
+    Direction direction = context.getClickedFace();
     if (direction == null) {
-      return super.onItemUse(context);
+      return super.useOn(context);
     }
-    World worldObj = context.getWorld();
+    Level worldObj = context.getLevel();
     //    boolean showOdds = player.isSneaking();
     boolean found = false;
     //    if (!worldObj.isRemote) {
     BlockPos current = pos;
     for (int i = 1; i <= RANGE; i++) {
-      current = current.offset(direction.getOpposite());
-      if (context.getWorld().isAirBlock(current)) {
+      current = current.relative(direction.getOpposite());
+      if (context.getLevel().isEmptyBlock(current)) {
         UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.cave") + i);
         found = true;
       }
-      else if (worldObj.getBlockState(current) == Blocks.WATER.getDefaultState()) {
+      else if (worldObj.getBlockState(current) == Blocks.WATER.defaultBlockState()) {
         UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.water") + i);
         found = true;
       }
-      else if (worldObj.getBlockState(current) == Blocks.LAVA.getDefaultState()) {
+      else if (worldObj.getBlockState(current) == Blocks.LAVA.defaultBlockState()) {
         UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.lava") + i);
         found = true;
       }
@@ -83,6 +85,6 @@ public class SpelunkerCaveFinder extends ItemBase {
     }
     UtilItemStack.damageItem(player, stack);
     UtilEntity.setCooldownItem(player, this, COOLDOWN);
-    return super.onItemUse(context);
+    return super.useOn(context);
   }
 }

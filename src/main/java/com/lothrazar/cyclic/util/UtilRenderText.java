@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.util;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.core.Direction;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
 /**
  * as of minecraft 1.16 much of this file contains code from this mod which is MIT License, the same as this project
@@ -15,10 +15,10 @@ public class UtilRenderText {
 
   static final float[] SIDE_ROTATION = { 0, 0, 2, 0, 3, 1 };
 
-  public static void alignRendering(MatrixStack matrix, Direction side) {
+  public static void alignRendering(PoseStack matrix, Direction side) {
     // Rotate to face the correct direction for the drawer's orientation.
     matrix.translate(.5f, .5f, .5f);
-    matrix.rotate(new Quaternion(Vector3f.YP, getRotationYForSide2D(side), true));
+    matrix.mulPose(new Quaternion(Vector3f.YP, getRotationYForSide2D(side), true));
     matrix.translate(-.5f, -.5f, -.5f);
   }
 

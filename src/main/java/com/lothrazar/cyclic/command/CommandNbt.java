@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.command;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
 public class CommandNbt {
 
@@ -20,9 +20,9 @@ public class CommandNbt {
   //        //
   //        ModCyclic.LOGGER.error("?", e);
   //      }
-  public static int executePrintNbt(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-    ServerPlayerEntity player = ctx.getSource().asPlayer();
-    ItemStack held = player.getHeldItemMainhand();
+  public static int executePrintNbt(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+    ServerPlayer player = ctx.getSource().getPlayerOrException();
+    ItemStack held = player.getMainHandItem();
     if (held.hasTag()) {
       UtilChat.sendFeedback(ctx, held.getTag().toString());
     }
@@ -32,9 +32,9 @@ public class CommandNbt {
     return 0;
   }
 
-  public static int executePrintTags(CommandContext<CommandSource> ctx) throws CommandSyntaxException {
-    ServerPlayerEntity player = ctx.getSource().asPlayer();
-    ItemStack held = player.getHeldItemMainhand();
+  public static int executePrintTags(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+    ServerPlayer player = ctx.getSource().getPlayerOrException();
+    ItemStack held = player.getMainHandItem();
     for (ResourceLocation tag : held.getItem().getTags()) {
       UtilChat.sendFeedback(ctx, tag.toString());
     }

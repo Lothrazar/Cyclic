@@ -5,75 +5,77 @@ import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockCableFluid extends CableBase {
 
   public BlockCableFluid(Properties properties) {
-    super(properties.hardnessAndResistance(0.5F));
+    super(properties.strength(0.5F));
   }
 
   @Override
-  public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
+  public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (Screen.hasShiftDown()) {
-      tooltip.add(new TranslationTextComponent("block.cyclic.fluid_pipe.tooltip0").mergeStyle(TextFormatting.GRAY));
+      tooltip.add(new TranslatableComponent("block.cyclic.fluid_pipe.tooltip0").withStyle(ChatFormatting.GRAY));
     }
     else {
-      tooltip.add(new TranslationTextComponent("item.cyclic.shift").mergeStyle(TextFormatting.DARK_GRAY));
+      tooltip.add(new TranslatableComponent("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
     }
   }
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.fluid_pipe, ScreenCableFluid::new);
+    MenuScreens.register(ContainerScreenRegistry.fluid_pipe, ScreenCableFluid::new);
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    if (!world.isRemote) {
-      TileEntity ent = world.getTileEntity(pos);
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    if (!world.isClientSide) {
+      BlockEntity ent = world.getBlockEntity(pos);
       IFluidHandler handlerHere = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
       //show current 
       if (handlerHere != null && handlerHere.getFluidInTank(0) != null) {
         FluidStack fluid = handlerHere.getFluidInTank(0);
         int st = fluid.getAmount();
         if (st > 0) {
-          player.sendStatusMessage(new TranslationTextComponent(st + " " + fluid.getDisplayName()), true);
+          player.displayClientMessage(new TranslatableComponent(st + " " + fluid.getDisplayName()), true);
         }
       }
     }
-    return super.onBlockActivated(state, world, pos, player, hand, hit);
+    return super.use(state, world, pos, player, hand, hit);
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return ShapeCache.getOrCreate(state, CableBase::createShape);
   }
 
@@ -83,45 +85,45 @@ public class BlockCableFluid extends CableBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileCableFluid();
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    super.fillStateContainer(builder);
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    super.createBlockStateDefinition(builder);
     builder.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
   }
 
   @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
+  public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
-      TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
+      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
       IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
       if (cap != null) {
-        stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
+        stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
       }
     }
-    worldIn.setBlockState(pos, stateIn);
+    worldIn.setBlockAndUpdate(pos, stateIn);
   }
 
   @Override
-  public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+  public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
-    EnumConnectType oldProp = stateIn.get(property);
+    EnumConnectType oldProp = stateIn.getValue(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
       return stateIn;
     }
     if (isFluid(stateIn, facing, facingState, world, currentPos, facingPos)) {
-      BlockState with = stateIn.with(property, EnumConnectType.INVENTORY);
-      if (world instanceof World) {
+      BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
+      if (world instanceof Level) {
         //hack to force {any} -> inventory IF its here
-        ((World) world).setBlockState(currentPos, with);
+        ((Level) world).setBlockAndUpdate(currentPos, with);
       }
       return with;
     }
     else {
-      return stateIn.with(property, EnumConnectType.NONE);
+      return stateIn.setValue(property, EnumConnectType.NONE);
     }
   }
 }

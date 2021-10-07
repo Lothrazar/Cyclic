@@ -10,37 +10,39 @@ import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockEnderShelf extends BlockBase {
 
   public BlockEnderShelf(Properties properties, boolean isController) {
-    super(properties.hardnessAndResistance(1.2F).notSolid());
+    super(properties.strength(1.2F).noOcclusion());
   }
 
   @Override
-  public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
-    return Blocks.BOOKSHELF.getEnchantPowerBonus(Blocks.BOOKSHELF.getDefaultState(), world, pos);
+  public float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos) {
+    return Blocks.BOOKSHELF.getEnchantPowerBonus(Blocks.BOOKSHELF.defaultBlockState(), world, pos);
   }
 
   @Override
@@ -49,7 +51,7 @@ public class BlockEnderShelf extends BlockBase {
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(BlockStateProperties.HORIZONTAL_FACING);
   }
 
@@ -59,14 +61,14 @@ public class BlockEnderShelf extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileEnderShelf();
   }
 
   @Override
-  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.hasTileEntity() && (!state.isIn(newState.getBlock()) || !newState.hasTileEntity())) {
-      worldIn.removeTileEntity(pos);
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+      worldIn.removeBlockEntity(pos);
     }
     //    if (state.getBlock() != newState.getBlock()) {
     //      TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -87,53 +89,53 @@ public class BlockEnderShelf extends BlockBase {
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    ItemStack heldItem = player.getHeldItem(hand);
-    if (hand != Hand.MAIN_HAND && heldItem.isEmpty()) {
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    ItemStack heldItem = player.getItemInHand(hand);
+    if (hand != InteractionHand.MAIN_HAND && heldItem.isEmpty()) {
       //if your hand is empty, dont process if its the OFF hand
       //otherwise: main hand inserts, off hand takes out right away
-      return ActionResultType.PASS;
+      return InteractionResult.PASS;
     }
     TileEnderShelf shelf = getTileEntity(world, pos);
-    if (heldItem.getItem().isIn(DataTags.WRENCH)) {
+    if (heldItem.getItem().is(DataTags.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
-      player.swingArm(hand);
-      return ActionResultType.PASS;
+      player.swing(hand);
+      return InteractionResult.PASS;
     }
-    Direction face = hit.getFace();
-    Vector3d hitVec = hit.getHitVec();
+    Direction face = hit.getDirection();
+    Vec3 hitVec = hit.getLocation();
     int slot = getSlotFromHitVec(pos, face, hitVec);
-    if (hit.getFace() == state.get(BlockStateProperties.HORIZONTAL_FACING)) {
+    if (hit.getDirection() == state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
       //
       // single shelf
       //
       if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
         ItemStack stackInSlot = shelf.inventory.getStackInSlot(slot);
         if (stackInSlot == ItemStack.EMPTY || UtilEnchant.doBookEnchantmentsMatch(stackInSlot, heldItem)) {
-          if (!world.isRemote) {
+          if (!world.isClientSide) {
             ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
-            player.setHeldItem(hand, remaining);
-            player.swingArm(hand);
+            player.setItemInHand(hand, remaining);
+            player.swing(hand);
           }
         }
       }
       else if (heldItem.isEmpty()) {
         ItemStack retrievedBook = shelf.inventory.extractItem(slot, 1, false);
-        player.setHeldItem(hand, retrievedBook);
-        player.swingArm(hand);
+        player.setItemInHand(hand, retrievedBook);
+        player.swing(hand);
       }
     }
-    return ActionResultType.PASS;
+    return InteractionResult.PASS;
   }
 
-  public static int getSlotFromHitVec(BlockPos pos, Direction face, Vector3d hitVec) {
-    double normalizedY = hitVec.getY() - pos.getY();
+  public static int getSlotFromHitVec(BlockPos pos, Direction face, Vec3 hitVec) {
+    double normalizedY = hitVec.y() - pos.getY();
     return (int) Math.floor(normalizedY / 0.20);
   }
 
-  public TileEnderShelf getTileEntity(World world, BlockPos pos) {
-    return (TileEnderShelf) world.getTileEntity(pos);
+  public TileEnderShelf getTileEntity(Level world, BlockPos pos) {
+    return (TileEnderShelf) world.getBlockEntity(pos);
   }
   //
   //
@@ -143,23 +145,23 @@ public class BlockEnderShelf extends BlockBase {
   //
 
   @Override
-  public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
+  public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
     // because harvestBlock manually forces a drop, we must do this to dodge that
     return new ArrayList<>();
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
+  public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
       //facing state if needed 
-      world.setBlockState(pos, state.with(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
+      world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
-    TileEntity tileentity = world.getTileEntity(pos);
+    BlockEntity tileentity = world.getBlockEntity(pos);
     TileEnderShelf shelf = (TileEnderShelf) tileentity;
     BlockPos controllerPos = EnderShelfHelper.findConnectedController(world, pos);
     if (controllerPos != null) {
       //      shelf.setControllerLocation(controllerPos);
-      TileEnderCtrl controller = (TileEnderCtrl) world.getTileEntity(controllerPos);
+      TileEnderCtrl controller = (TileEnderCtrl) world.getBlockEntity(controllerPos);
       if (controllerPos != null && controller != null) {
         controller.getShelves().add(pos);
         //                Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos, controller.getCurrentFacing());
@@ -173,12 +175,12 @@ public class BlockEnderShelf extends BlockBase {
   }
 
   @Override
-  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity tileentity, ItemStack stackToolUsed) {
-    super.harvestBlock(world, player, pos, state, tileentity, stackToolUsed);
+  public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity tileentity, ItemStack stackToolUsed) {
+    super.playerDestroy(world, player, pos, state, tileentity, stackToolUsed);
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
-      CompoundNBT tileData = shelf.inventory.serializeNBT();
+      CompoundTag tileData = shelf.inventory.serializeNBT();
       //read from tile, write to itemstack 
       newStack.setTag(tileData);
     }

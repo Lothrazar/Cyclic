@@ -27,12 +27,14 @@ import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import java.util.UUID;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.InteractionResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemHorseEmeraldJump extends ItemEntityInteractable {
 
@@ -47,12 +49,12 @@ public class ItemHorseEmeraldJump extends ItemEntityInteractable {
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
-        && event.getTarget() instanceof HorseEntity) {
+        && event.getTarget() instanceof Horse) {
       // lets go 
-      HorseEntity ahorse = (HorseEntity) event.getTarget();
+      Horse ahorse = (Horse) event.getTarget();
       Attribute attr = UtilEntity.getAttributeJump(ahorse);
       //got the attribute instance
-      ModifiableAttributeInstance mainAttribute = ahorse.getAttribute(attr);
+      AttributeInstance mainAttribute = ahorse.getAttribute(attr);
       //now create a modifier 
       if (mainAttribute.getValue() < JUMP_MAX) {
         //ok good 
@@ -62,11 +64,11 @@ public class ItemHorseEmeraldJump extends ItemEntityInteractable {
         //got it      //replace the modifier on the main attribute
         mainAttribute.removeModifier(MODIFIER_ID);
         AttributeModifier newModifier = new AttributeModifier(MODIFIER_ID, "Cyclic Carrot Jump", newAdded, AttributeModifier.Operation.ADDITION);
-        mainAttribute.applyPersistentModifier(newModifier);
+        mainAttribute.addPermanentModifier(newModifier);
         //finish up
         //
         //success doesnt work, its broken. player still does the mounting lol
-        event.setCancellationResult(ActionResultType.SUCCESS);
+        event.setCancellationResult(InteractionResult.SUCCESS);
         event.setCanceled(true);
         event.getItemStack().shrink(1);
         UtilEntity.eatingHorse(ahorse);

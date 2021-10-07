@@ -3,20 +3,20 @@ package com.lothrazar.cyclic.block.soundrecord;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerSoundRecorder extends ContainerBase {
 
   TileSoundRecorder tile;
 
-  public ContainerSoundRecorder(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerSoundRecorder(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.SOUND_RECORDER, windowId);
-    tile = (TileSoundRecorder) world.getTileEntity(pos);
+    tile = (TileSoundRecorder) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     addSlot(new SlotItemHandler(tile.inputSlots, 0, 9, 209));
@@ -26,7 +26,7 @@ public class ContainerSoundRecorder extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.SOUND_RECORDER.get());
+  public boolean stillValid(Player playerIn) {
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.SOUND_RECORDER.get());
   }
 }

@@ -2,12 +2,14 @@ package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SoulstoneCharm extends ItemBaseToggle {
 
@@ -21,11 +23,11 @@ public class SoulstoneCharm extends ItemBaseToggle {
   }
 
   //from LivingEntity class
-  public static boolean checkTotemDeathProtection(DamageSource damageSourceIn, PlayerEntity player, ItemStack itemstack) {
+  public static boolean checkTotemDeathProtection(DamageSource damageSourceIn, Player player, ItemStack itemstack) {
     if (itemstack.getItem() != ItemRegistry.SOULSTONE.get()) { // != this
       return false;
     }
-    if (damageSourceIn.canHarmInCreative()) {
+    if (damageSourceIn.isBypassInvul()) {
       return false;
     }
     else {
@@ -44,11 +46,11 @@ public class SoulstoneCharm extends ItemBaseToggle {
       //        CriteriaTriggers.USED_TOTEM.trigger(serverplayerentity, itemstack);
       //                }
       player.setHealth(1.0F);
-      player.clearActivePotions();
-      player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 900, 1));
-      player.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
-      player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 800, 0));
-      player.world.setEntityState(player, (byte) 35);
+      player.removeAllEffects();
+      player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
+      player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
+      player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
+      player.level.broadcastEntityEvent(player, (byte) 35);
       UtilItemStack.damageItem(player, itemstack);
       return true;
     }

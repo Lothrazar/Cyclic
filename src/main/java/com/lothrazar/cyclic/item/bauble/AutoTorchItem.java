@@ -25,13 +25,15 @@ package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class AutoTorchItem extends ItemBaseToggle {
 
@@ -42,28 +44,28 @@ public class AutoTorchItem extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, Level world, Entity entityIn, int itemSlot, boolean isSelected) {
     if (!this.isOn(stack)) {
       return;
     }
-    if (entityIn instanceof PlayerEntity == false) {
+    if (entityIn instanceof Player == false) {
       return;
     }
-    PlayerEntity player = (PlayerEntity) entityIn;
+    Player player = (Player) entityIn;
     if (player.isSpectator()) {
       return;
     }
-    if (stack.getDamage() >= stack.getMaxDamage()) {
-      stack.setDamage(stack.getMaxDamage());
+    if (stack.getDamageValue() >= stack.getMaxDamage()) {
+      stack.setDamageValue(stack.getMaxDamage());
       return;
     }
-    BlockPos pos = entityIn.getPosition();
-    if (world.getLight(pos) <= LIGHT_LEVEL.get()
+    BlockPos pos = entityIn.blockPosition();
+    if (world.getMaxLocalRawBrightness(pos) <= LIGHT_LEVEL.get()
         //            && player.isSpectator() == false
         //            && world.isSideSolid(pos.down(), Direction.UP)
-        && world.getBlockState(pos.down()).isSolid()
-        && world.isAirBlock(pos)) { // dont overwrite liquids
-      if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
+        && world.getBlockState(pos.below()).canOcclude()
+        && world.isEmptyBlock(pos)) { // dont overwrite liquids
+      if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.defaultBlockState())) {
         UtilItemStack.damageItem(player, stack);
       }
     }

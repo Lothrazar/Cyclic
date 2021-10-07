@@ -7,28 +7,30 @@ import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import java.util.Locale;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class AntimatterEvaporatorWandItem extends ItemBase {
 
@@ -36,12 +38,12 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
   private static final String NBT_MODE = "mode";
   public static final int COOLDOWN = 15;
 
-  public enum EvaporateMode implements IStringSerializable {
+  public enum EvaporateMode implements StringRepresentable {
 
     WATER, LAVA, GENERIC;
 
     @Override
-    public String getString() {
+    public String getSerializedName() {
       return this.name().toLowerCase(Locale.ENGLISH);
     }
 
@@ -63,13 +65,13 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    BlockPos pos = context.getPos();
-    World world = context.getWorld();
-    Direction face = context.getFace();
-    ItemStack itemstack = context.getItem();
+  public InteractionResult useOn(UseOnContext context) {
+    BlockPos pos = context.getClickedPos();
+    Level world = context.getLevel();
+    Direction face = context.getClickedFace();
+    ItemStack itemstack = context.getItemInHand();
     EvaporateMode fluidMode = EvaporateMode.values()[itemstack.getOrCreateTag().getInt(NBT_MODE)];
-    List<BlockPos> area = UtilShape.cubeSquareBase(pos.offset(face), SIZE, 1);
+    List<BlockPos> area = UtilShape.cubeSquareBase(pos.relative(face), SIZE, 1);
     //    AtomicBoolean removed = new AtomicBoolean(false);
     switch (fluidMode) {
       case GENERIC:
@@ -90,14 +92,14 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
         continue;
       }
       tryHere = false;
-      if (fluidMode == EvaporateMode.GENERIC && fluidHere.getFluid() != null
-          && fluidHere.getFluid() != Fluids.EMPTY) {
+      if (fluidMode == EvaporateMode.GENERIC && fluidHere.getType() != null
+          && fluidHere.getType() != Fluids.EMPTY) {
         tryHere = true;
       }
-      else if (fluidMode == EvaporateMode.WATER && fluidHere.getFluid().isIn(FluidTags.WATER)) {
+      else if (fluidMode == EvaporateMode.WATER && fluidHere.getType().is(FluidTags.WATER)) {
         tryHere = true;
       }
-      else if (fluidMode == EvaporateMode.LAVA && fluidHere.getFluid().isIn(FluidTags.LAVA)) {
+      else if (fluidMode == EvaporateMode.LAVA && fluidHere.getType().is(FluidTags.LAVA)) {
         tryHere = true;
       }
       if (tryHere && removeLiquid(world, blockHere, posTarget)) {
@@ -105,23 +107,23 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       }
     }
     if (countSuccess > 0) {
-      PlayerEntity player = context.getPlayer();
-      player.swingArm(context.getHand());
+      Player player = context.getPlayer();
+      player.swing(context.getHand());
       UtilItemStack.damageItem(player, itemstack);
-      if (world.isRemote) {
+      if (world.isClientSide) {
         UtilSound.playSound(world, pos, SoundRegistry.PSCHEW_FIRE);
       }
     }
-    return ActionResultType.SUCCESS;
+    return InteractionResult.SUCCESS;
   }
 
-  private boolean removeLiquid(World world, BlockState blockHere, BlockPos pos) {
-    if (blockHere.getBlock() instanceof IBucketPickupHandler) {
-      IBucketPickupHandler block = (IBucketPickupHandler) blockHere.getBlock();
-      Fluid res = block.pickupFluid(world, pos, blockHere);
+  private boolean removeLiquid(Level world, BlockState blockHere, BlockPos pos) {
+    if (blockHere.getBlock() instanceof BucketPickup) {
+      BucketPickup block = (BucketPickup) blockHere.getBlock();
+      Fluid res = block.takeLiquid(world, pos, blockHere);
       if (res == null || res == Fluids.EMPTY) {
         // flowing block
-        return world.setBlockState(pos, Blocks.AIR.getDefaultState(), 18);
+        return world.setBlock(pos, Blocks.AIR.defaultBlockState(), 18);
       }
       else {
         return true; // was source block
@@ -129,43 +131,43 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     }
     else if (blockHere.hasProperty(BlockStateProperties.WATERLOGGED)) {
       // un-water log
-      return world.setBlockState(pos, blockHere.with(BlockStateProperties.WATERLOGGED, false), 18);
+      return world.setBlock(pos, blockHere.setValue(BlockStateProperties.WATERLOGGED, false), 18);
     }
     else {
       //ok just nuke it 
-      return world.setBlockState(pos, Blocks.AIR.getDefaultState(), 18);
+      return world.setBlock(pos, Blocks.AIR.defaultBlockState(), 18);
     }
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
-    tooltip.add(getModeTooltip(stack).mergeStyle(TextFormatting.AQUA));
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    tooltip.add(getModeTooltip(stack).withStyle(ChatFormatting.AQUA));
   }
 
   @Override
-  public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+  public void onCraftedBy(ItemStack stack, Level worldIn, Player playerIn) {
     stack.getOrCreateTag().putInt(NBT_MODE, EvaporateMode.WATER.ordinal());
-    super.onCreated(stack, worldIn, playerIn);
+    super.onCraftedBy(stack, worldIn, playerIn);
   }
 
-  private static TranslationTextComponent getModeTooltip(ItemStack stack) {
+  private static TranslatableComponent getModeTooltip(ItemStack stack) {
     EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
-    return new TranslationTextComponent("item.cyclic.antimatter_wand.tooltip0",
-        new TranslationTextComponent(String.format("item.cyclic.antimatter_wand.mode.%s",
-            mode.getString())));
+    return new TranslatableComponent("item.cyclic.antimatter_wand.tooltip0",
+        new TranslatableComponent(String.format("item.cyclic.antimatter_wand.mode.%s",
+            mode.getSerializedName())));
   }
 
-  public static void toggleMode(PlayerEntity player, ItemStack stack) {
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) {
+  public static void toggleMode(Player player, ItemStack stack) {
+    if (player.getCooldowns().isOnCooldown(stack.getItem())) {
       return;
     }
     EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
     stack.getOrCreateTag().putInt(NBT_MODE, mode.getNext().ordinal());
-    player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
-    if (player.world.isRemote) {
-      player.sendStatusMessage(getModeTooltip(stack), true);
+    player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
+    if (player.level.isClientSide) {
+      player.displayClientMessage(getModeTooltip(stack), true);
       UtilSound.playSound(player, SoundRegistry.TOOL_MODE);
     }
   }

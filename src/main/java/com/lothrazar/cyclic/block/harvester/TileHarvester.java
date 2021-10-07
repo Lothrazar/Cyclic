@@ -13,36 +13,36 @@ import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.block.StemBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.Property;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileHarvester extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileHarvester extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
@@ -78,14 +78,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return;
     }
     setLitProperty(true);
-    if (this.world.isRemote) {
+    if (this.level.isClientSide) {
       return;
     }
     //get and update target
     BlockPos targetPos = getShapeTarget();
     shapeIndex++;
     //does it exist
-    if (targetPos != null && tryHarvestSingle(this.world, targetPos)) {
+    if (targetPos != null && tryHarvestSingle(this.level, targetPos)) {
       //energy is per action
       energy.extractEnergy(cost, false);
     }
@@ -123,11 +123,11 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public AxisAlignedBB getRenderBoundingBox() {
-    return TileEntity.INFINITE_EXTENT_AABB;
+  public AABB getRenderBoundingBox() {
+    return BlockEntity.INFINITE_EXTENT_AABB;
   }
 
-  public static boolean tryHarvestSingle(World world, BlockPos posCurrent) {
+  public static boolean tryHarvestSingle(Level world, BlockPos posCurrent) {
     BlockState blockState = world.getBlockState(posCurrent);
     // Try running override logic
     IHarvesterOverride applicable = null;
@@ -152,12 +152,12 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     }
     //growable crops have an age block property
     IntegerProperty propInt = TileHarvester.getAgeProp(blockState);
-    if (propInt == null || !(world instanceof ServerWorld)) {
+    if (propInt == null || !(world instanceof ServerLevel)) {
       return false;
     }
-    final int currentAge = blockState.get(propInt);
-    final int minAge = Collections.min(propInt.getAllowedValues());
-    final int maxAge = Collections.max(propInt.getAllowedValues());
+    final int currentAge = blockState.getValue(propInt);
+    final int minAge = Collections.min(propInt.getPossibleValues());
+    final int maxAge = Collections.max(propInt.getPossibleValues());
     if (minAge == maxAge || currentAge < maxAge) {
       //not grown
       return false;
@@ -166,14 +166,14 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     //update behavior to address Issue #1600
     //
     Item seed = null;
-    if (blockState.getBlock() instanceof CropsBlock) {
-      CropsBlock crop = (CropsBlock) blockState.getBlock();
-      ItemStack defaultSeedDrop = crop.getItem(world, posCurrent, blockState);
+    if (blockState.getBlock() instanceof CropBlock) {
+      CropBlock crop = (CropBlock) blockState.getBlock();
+      ItemStack defaultSeedDrop = crop.getCloneItemStack(world, posCurrent, blockState);
       if (!defaultSeedDrop.isEmpty()) {
         seed = defaultSeedDrop.getItem();
       }
     }
-    List<ItemStack> drops = Block.getDrops(blockState, (ServerWorld) world, posCurrent, null);
+    List<ItemStack> drops = Block.getDrops(blockState, (ServerLevel) world, posCurrent, null);
     for (ItemStack dropStack : drops) {
       if (seed != null && dropStack.getItem() == seed) {
         //we found the seed. steal one for replant
@@ -183,28 +183,28 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       //drop the rest
       UtilWorld.dropItemStackInWorld(world, posCurrent, dropStack);
     }
-    if (world instanceof ServerWorld) {
-      blockState.spawnAdditionalDrops((ServerWorld) world, posCurrent, ItemStack.EMPTY);
+    if (world instanceof ServerLevel) {
+      blockState.spawnAfterBreak((ServerLevel) world, posCurrent, ItemStack.EMPTY);
     }
     //now update age to zero after harvest
-    BlockState newState = blockState.with(propInt, minAge);
-    boolean updated = world.setBlockState(posCurrent, newState);
+    BlockState newState = blockState.setValue(propInt, minAge);
+    boolean updated = world.setBlockAndUpdate(posCurrent, newState);
     return updated || drops.size() > 0;
   }
 
   private static boolean simpleBreakDrop(BlockState blockState) {
-    boolean breakit = blockState.isIn(DataTags.VINES) || blockState.isIn(DataTags.CROP_BLOCKS);
+    boolean breakit = blockState.is(DataTags.VINES) || blockState.is(DataTags.CROP_BLOCKS);
     // the list tells all
     return breakit;
   }
 
   public static IntegerProperty getAgeProp(BlockState blockState) {
-    if (blockState.getBlock() instanceof CropsBlock) {
-      CropsBlock crops = (CropsBlock) blockState.getBlock();
+    if (blockState.getBlock() instanceof CropBlock) {
+      CropBlock crops = (CropBlock) blockState.getBlock();
       //better mod compatibility if they dont use 'age'
       return crops.getAgeProperty();
     }
-    String age = CropsBlock.AGE.getName();
+    String age = CropBlock.AGE.getName();
     ResourceLocation bid = blockState.getBlock().getRegistryName();
     if (CompatConstants.RESYNTH.equalsIgnoreCase(bid.getNamespace())) {
       //some silly old mods dont use age for compatibility
@@ -270,32 +270,32 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     radius = tag.getInt("radius");
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
     shapeIndex = tag.getInt("shapeIndex");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("radius", radius);
     tag.putInt("shapeIndex", shapeIndex);
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerHarvester(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerHarvester(i, level, worldPosition, playerInventory, playerEntity);
   }
 }

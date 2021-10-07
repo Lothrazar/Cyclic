@@ -5,13 +5,13 @@ import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -35,7 +35,7 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
 
   @Override
   public String getTitle() {
-    return UtilChat.lang(BlockRegistry.GENERATOR_ITEM.get().getTranslationKey());
+    return UtilChat.lang(BlockRegistry.GENERATOR_ITEM.get().getDescriptionId());
   }
 
   @Override
@@ -69,10 +69,10 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
   }
 
   @Override
-  public void draw(RecipeGeneratorItem recipe, MatrixStack ms, double mouseX, double mouseY) {
-    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getTicks() + " t", 60, 0, FONT);
-    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
-    Minecraft.getInstance().fontRenderer.drawString(ms, recipe.getRfTotal() + " RF", 60, 20, FONT);
+  public void draw(RecipeGeneratorItem recipe, PoseStack ms, double mouseX, double mouseY) {
+    Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", 60, 0, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getRfTotal() + " RF", 60, 20, FONT);
   }
 
   @Override

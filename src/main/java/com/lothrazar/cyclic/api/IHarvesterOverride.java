@@ -2,10 +2,10 @@ package com.lothrazar.cyclic.api;
 
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import java.util.function.Consumer;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public interface IHarvesterOverride {
 
@@ -24,7 +24,7 @@ public interface IHarvesterOverride {
    *          the position
    * @return true if this logic handles the given block
    */
-  boolean appliesTo(BlockState state, World world, BlockPos pos);
+  boolean appliesTo(BlockState state, Level world, BlockPos pos);
 
   /**
    * Attempts to harvest and run custom harvest logic for a block at the given position.
@@ -39,5 +39,5 @@ public interface IHarvesterOverride {
    *          pass any drops resulting from the harvest operation
    * @return true if the harvesting operation was successfully handled
    */
-  boolean attemptHarvest(BlockState state, World world, BlockPos pos, Consumer<ItemStack> dropConsumer);
+  boolean attemptHarvest(BlockState state, Level world, BlockPos pos, Consumer<ItemStack> dropConsumer);
 }

@@ -7,10 +7,10 @@ import com.lothrazar.cyclic.util.UtilChat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.resources.ResourceLocation;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -19,7 +19,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 
-public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> {
+public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   static final ResourceLocation ID = new ResourceLocation("cyclic:packager");
   private IDrawable gui;
@@ -32,7 +32,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   @Override
   public String getTitle() {
-    return UtilChat.lang(BlockRegistry.PACKAGER.get().getTranslationKey());
+    return UtilChat.lang(BlockRegistry.PACKAGER.get().getDescriptionId());
   }
 
   @Override
@@ -46,8 +46,8 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
   }
 
   @Override
-  public Class<? extends ICraftingRecipe> getRecipeClass() {
-    return ICraftingRecipe.class;
+  public Class<? extends CraftingRecipe> getRecipeClass() {
+    return CraftingRecipe.class;
   }
 
   @Override
@@ -56,12 +56,12 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
   }
 
   @Override
-  public boolean isHandled(ICraftingRecipe recipe) {
+  public boolean isHandled(CraftingRecipe recipe) {
     return TilePackager.isRecipeValid(recipe);
   }
 
   @Override
-  public void setIngredients(ICraftingRecipe recipe, IIngredients ingredients) {
+  public void setIngredients(CraftingRecipe recipe, IIngredients ingredients) {
     //    if (!TilePackager.isRecipeValid(recipe)) {
     //      return;
     //    }
@@ -69,13 +69,13 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
     Ingredient ingr = recipe.getIngredients().get(0);
-    Collections.addAll(stuff, ingr.getMatchingStacks());
+    Collections.addAll(stuff, ingr.getItems());
     in.add(stuff);
     ingredients.setInputLists(VanillaTypes.ITEM, in);
   }
 
   @Override
-  public void setRecipe(IRecipeLayout recipeLayout, ICraftingRecipe recipe, IIngredients ingredients) {
+  public void setRecipe(IRecipeLayout recipeLayout, CraftingRecipe recipe, IIngredients ingredients) {
     //    if (!TilePackager.isRecipeValid(recipe)) {
     //      return;
     //    }
@@ -84,7 +84,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
     guiItemStacks.init(0, true, 5, 6);
     int sz = 0; // recipe.getIngredients().size();
     for (Ingredient wtf : recipe.getIngredients()) {
-      if (wtf != Ingredient.EMPTY && wtf.getMatchingStacks().length > 0) {
+      if (wtf != Ingredient.EMPTY && wtf.getItems().length > 0) {
         sz++;
       }
     }
@@ -99,6 +99,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
     }
     guiItemStacks.set(0, haxor);
     guiItemStacks.init(1, false, 67, 8);
-    guiItemStacks.set(1, recipe.getRecipeOutput());
+    guiItemStacks.set(1, recipe.getResultItem());
   }
 }

@@ -6,21 +6,21 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
-public class TileFan extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileFan extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE, RANGE, SPEED;
@@ -48,13 +48,13 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerFan(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerFan(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   public int getRange() {
@@ -70,7 +70,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
     BlockPos tester;
     for (int i = MIN_RANGE; i <= this.getRange(); i++) {
       //if we start at fan, we hit MYSELF (the fan)
-      tester = this.getPos().offset(facing, i);
+      tester = this.getBlockPos().relative(facing, i);
       if (canBlowThrough(tester) == false) {
         return i; //cant pass thru
       }
@@ -79,11 +79,11 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   }
 
   private boolean canBlowThrough(BlockPos tester) {
-    return !world.getBlockState(tester).isSolid();
+    return !level.getBlockState(tester).canOcclude();
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.line(getPos(), getCurrentFacing(), getCurrentRange());
+    return UtilShape.line(getBlockPos(), getCurrentFacing(), getCurrentRange());
   }
 
   private int pushEntities() {
@@ -96,16 +96,16 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
     BlockPos end = shape.get(shape.size() - 1); //without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
     switch (getCurrentFacing().getAxis()) {
       case X:
-        end = end.add(0, 0, 1); //X means EASTorwest. adding +1z means GO 1 south
-        end = end.add(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
+        end = end.offset(0, 0, 1); //X means EASTorwest. adding +1z means GO 1 south
+        end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
       case Z:
-        end = end.add(1, 0, 0);
-        end = end.add(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
+        end = end.offset(1, 0, 0);
+        end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
       break;
       case Y:
-        start = start.add(1, 0, 0);
-        end = end.add(0, 0, 1);
+        start = start.offset(1, 0, 0);
+        end = end.offset(0, 0, 1);
       break;
     }
     //ok now we have basically teh 3d box we wanted
@@ -132,20 +132,20 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
       default:
       break;
     }
-    AxisAlignedBB region = new AxisAlignedBB(start, end);
-    List<Entity> entitiesFound = this.getWorld().getEntitiesWithinAABB(Entity.class, region);
+    AABB region = new AABB(start, end);
+    List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
     int moved = 0;
     boolean doPush = true; // TODO this toggle
     int direction = 1;
     float speed = this.getSpeedCalc();
     for (Entity entity : entitiesFound) {
-      if (entity instanceof PlayerEntity && ((PlayerEntity) entity).isCrouching()) {
+      if (entity instanceof Player && ((Player) entity).isCrouching()) {
         continue; //sneak avoid feature
       }
       moved++;
-      double newx = entity.getMotion().getX();
-      double newy = entity.getMotion().getY();
-      double newz = entity.getMotion().getZ();
+      double newx = entity.getDeltaMovement().x();
+      double newy = entity.getDeltaMovement().y();
+      double newz = entity.getDeltaMovement().z();
       switch (face) {
         case NORTH:
           direction = !doPush ? 1 : -1;
@@ -172,9 +172,9 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
           newy += direction * speed;
         break;
       }
-      entity.setMotion(newx, newy, newz);
-      if (world.isRemote && entity.ticksExisted % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
-          && entity instanceof PlayerEntity) {
+      entity.setDeltaMovement(newx, newy, newz);
+      if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
+          && entity instanceof Player) {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
       }
     }
@@ -182,17 +182,17 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     speed = tag.getInt("speed");
     range = tag.getInt("range");
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("speed", speed);
     tag.putInt("range", range);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

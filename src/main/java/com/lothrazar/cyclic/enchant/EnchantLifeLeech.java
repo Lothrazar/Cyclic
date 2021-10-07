@@ -24,19 +24,21 @@ t * The MIT License (MIT)
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantLifeLeech extends EnchantBase {
 
-  public EnchantLifeLeech(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantLifeLeech(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -56,8 +58,8 @@ public class EnchantLifeLeech extends EnchantBase {
 
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
-    if (event.getSource().getTrueSource() instanceof PlayerEntity && event.getEntity() instanceof LivingEntity) {
-      PlayerEntity attacker = (PlayerEntity) event.getSource().getTrueSource();
+    if (event.getSource().getEntity() instanceof Player && event.getEntity() instanceof LivingEntity) {
+      Player attacker = (Player) event.getSource().getEntity();
       LivingEntity target = (LivingEntity) event.getEntity();
       int level = getCurrentLevelTool(attacker);
       if (level > 0) {
@@ -65,10 +67,10 @@ public class EnchantLifeLeech extends EnchantBase {
         //so that means enchantment I giving poison I means this
         int restore = (int) Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
         int min = level; //so if restore starts at 4 the rand will be [min,restore]
-        restore = attacker.getEntityWorld().rand.nextInt(restore + 1) + min;
+        restore = attacker.getCommandSenderWorld().random.nextInt(restore + 1) + min;
         if (restore > 0) {
           //hunger
-          attacker.getFoodStats().addStats(restore, 0.5F);
+          attacker.getFoodData().eat(restore, 0.5F);
           //hearts
           if (attacker.getHealth() < attacker.getMaxHealth()) {
             attacker.heal(restore);
@@ -83,7 +85,7 @@ public class EnchantLifeLeech extends EnchantBase {
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
     //    EntityLivingBase target = (EntityLivingBase) event.getTarget();
-    PlayerEntity attacker = event.getPlayer();
+    Player attacker = event.getPlayer();
     int level = getCurrentLevelTool(attacker);
     if (level > 0 && attacker.getHealth() < attacker.getMaxHealth()) {
       //      UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(2));

@@ -26,15 +26,17 @@ package com.lothrazar.cyclic.item.elemental;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilShape;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class WaterSpreaderItem extends ItemBase {
 
@@ -46,34 +48,34 @@ public class WaterSpreaderItem extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
     // 
-    BlockPos pos = context.getPos();
-    Direction side = context.getFace();
+    BlockPos pos = context.getClickedPos();
+    Direction side = context.getClickedFace();
     if (side != null) {
-      pos = pos.offset(side);
+      pos = pos.relative(side);
     }
-    spreadWaterFromCenter(context.getWorld(), player, pos);
-    player.swingArm(context.getHand());
-    return super.onItemUse(context);
+    spreadWaterFromCenter(context.getLevel(), player, pos);
+    player.swing(context.getHand());
+    return super.useOn(context);
   }
 
-  private boolean spreadWaterFromCenter(World world, PlayerEntity player, BlockPos posCenter) {
+  private boolean spreadWaterFromCenter(Level world, Player player, BlockPos posCenter) {
     int count = 0;
     for (BlockPos pos : UtilShape.squareHorizontalFull(posCenter, RADIUS)) {
-      if (world.hasWater(pos) && world.getBlockState(pos).getBlock() == Blocks.WATER) {
-        world.setBlockState(pos, Blocks.WATER.getDefaultState());
+      if (world.isWaterAt(pos) && world.getBlockState(pos).getBlock() == Blocks.WATER) {
+        world.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
         count++;
       }
       else {
         BlockState state = world.getBlockState(pos);
         if (state.hasProperty(BlockStateProperties.WATERLOGGED)
-            && !state.get(BlockStateProperties.WATERLOGGED).booleanValue()
+            && !state.getValue(BlockStateProperties.WATERLOGGED).booleanValue()
             && this.isWaterNextdoor(world, pos)) {
           //  flow it into the loggable
-          state = state.with(BlockStateProperties.WATERLOGGED, true);
-          world.setBlockState(pos, state);
+          state = state.setValue(BlockStateProperties.WATERLOGGED, true);
+          world.setBlockAndUpdate(pos, state);
           count++;
         }
       }
@@ -86,8 +88,8 @@ public class WaterSpreaderItem extends ItemBase {
     return success;
   }
 
-  private boolean isWaterNextdoor(World world, BlockPos pos) {
-    return world.hasWater(pos.north()) || world.hasWater(pos.south()) ||
-        world.hasWater(pos.east()) || world.hasWater(pos.west());
+  private boolean isWaterNextdoor(Level world, BlockPos pos) {
+    return world.isWaterAt(pos.north()) || world.isWaterAt(pos.south()) ||
+        world.isWaterAt(pos.east()) || world.isWaterAt(pos.west());
   }
 }

@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainerProvider;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -19,9 +19,9 @@ public class PacketItemGui extends PacketBase {
 
   public static void handle(PacketItemGui message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      ServerPlayerEntity player = ctx.get().getSender();
-      if ((player.openContainer instanceof ContainerStorageBag) == false) {
-        NetworkHooks.openGui(player, new StorageBagContainerProvider(), player.getPosition());
+      ServerPlayer player = ctx.get().getSender();
+      if ((player.containerMenu instanceof ContainerStorageBag) == false) {
+        NetworkHooks.openGui(player, new StorageBagContainerProvider(), player.blockPosition());
       }
       //
       //
@@ -29,12 +29,12 @@ public class PacketItemGui extends PacketBase {
     message.done(ctx);
   }
 
-  public static PacketItemGui decode(PacketBuffer buf) {
+  public static PacketItemGui decode(FriendlyByteBuf buf) {
     PacketItemGui p = new PacketItemGui(buf.readInt());
     return p;
   }
 
-  public static void encode(PacketItemGui msg, PacketBuffer buf) {
+  public static void encode(PacketItemGui msg, FriendlyByteBuf buf) {
     buf.writeInt(msg.slot);
   }
 }

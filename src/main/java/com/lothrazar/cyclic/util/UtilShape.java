@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 
 public class UtilShape {
 
@@ -101,7 +101,7 @@ public class UtilShape {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     int skip = 1;
     for (int i = 1; i < want + 1; i = i + skip) {
-      shape.add(pos.offset(efacing, i));
+      shape.add(pos.relative(efacing, i));
     }
     return shape;
   }
@@ -153,7 +153,7 @@ public class UtilShape {
     return shape;
   }
 
-  public static List<BlockPos> getShape(AxisAlignedBB ab, int y) {
+  public static List<BlockPos> getShape(AABB ab, int y) {
     List<BlockPos> shape = new ArrayList<>();
     int xMin = (int) ab.minX;
     int xMax = (int) ab.maxX - 1;
@@ -216,10 +216,10 @@ public class UtilShape {
       for (BlockPos p : shape) {
         BlockPos newOffset = null;
         if (height > 0) {
-          newOffset = p.up(i);
+          newOffset = p.above(i);
         }
         else {
-          newOffset = p.down(i);
+          newOffset = p.below(i);
         }
         //        if (newOffset.getY() > 3) {}
         // TODO: put in const, 
@@ -288,7 +288,7 @@ public class UtilShape {
     for (int i = 0; i < radius; i++) {
       shape.addAll(rectHollow(posCurrent, radiusCurrent, radiusCurrent));
       radiusCurrent--;
-      posCurrent = posCurrent.up();
+      posCurrent = posCurrent.above();
     }
     return shape;
   }
@@ -297,12 +297,12 @@ public class UtilShape {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     for (int i = 1; i < want + 1; i++) {
       if (isLookingUp) {
-        posCurrent = posCurrent.up();
+        posCurrent = posCurrent.above();
       }
       else {
-        posCurrent = posCurrent.down();
+        posCurrent = posCurrent.below();
       } //go up and over each time
-      posCurrent = posCurrent.offset(pfacing);
+      posCurrent = posCurrent.relative(pfacing);
       shape.add(posCurrent);
     }
     return shape;

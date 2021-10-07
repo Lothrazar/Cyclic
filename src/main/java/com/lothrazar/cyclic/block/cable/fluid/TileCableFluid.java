@@ -14,22 +14,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -39,7 +39,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableFluid extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileCableFluid extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   final ItemStackHandler filter = new ItemStackHandler(1) {
 
@@ -66,7 +66,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public void tick() {
     for (Direction side : Direction.values()) {
-      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(side));
       if (connection.isExtraction()) {
         tryExtract(side);
       }
@@ -78,32 +78,32 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     if (extractSide == null) {
       return;
     }
-    BlockPos target = this.pos.offset(extractSide);
+    BlockPos target = this.worldPosition.relative(extractSide);
     Direction incomingSide = extractSide.getOpposite();
-    IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
+    IFluidHandler stuff = UtilFluid.getTank(level, target, incomingSide);
     if (stuff != null
         && stuff.getTanks() > 0
         && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
       return;
     }
-    boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, EXTRACT_RATE);
+    boolean success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, EXTRACT_RATE);
     FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
     if (!success && sideHandler != null
         && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       //test if its a source block, or a waterlogged block
-      BlockState targetState = world.getBlockState(target);
-      FluidState fluidState = world.getFluidState(target);
-      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
-        targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
+      BlockState targetState = level.getBlockState(target);
+      FluidState fluidState = level.getFluidState(target);
+      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
+        targetState = targetState.setValue(BlockStateProperties.WATERLOGGED, false);
         //for waterlogged it is hardcoded to water
-        if (world.setBlockState(target, targetState)) {
+        if (level.setBlockAndUpdate(target, targetState)) {
           sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
       else if (fluidState != null && fluidState.isSource()) {
         //not just water. any fluid source block
-        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-          sideHandler.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        if (level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState())) {
+          sideHandler.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
     }
@@ -121,11 +121,11 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         if (outgoingSide == incomingSide) {
           continue;
         }
-        EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+        EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
         if (connection.isExtraction() || connection.isBlocked()) {
           continue;
         }
-        this.moveFluids(outgoingSide, pos.offset(outgoingSide), FLOW_RATE, sideHandler);
+        this.moveFluids(outgoingSide, worldPosition.relative(outgoingSide), FLOW_RATE, sideHandler);
       }
     }
   }
@@ -141,7 +141,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
@@ -150,22 +150,22 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
       }
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put("filter", filter.serializeNBT());
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
       fluidh = flow.get(dir).orElse(null);
-      CompoundNBT fluidtag = new CompoundNBT();
+      CompoundTag fluidtag = new CompoundTag();
       if (fluidh != null) {
         fluidh.writeToNBT(fluidtag);
       }
       tag.put("fluid" + dir.toString(), fluidtag);
     }
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -177,12 +177,12 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerCableFluid(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerCableFluid(i, level, worldPosition, playerInventory, playerEntity);
   }
 }

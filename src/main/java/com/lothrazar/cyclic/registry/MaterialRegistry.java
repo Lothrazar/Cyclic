@@ -1,32 +1,32 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTier;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class MaterialRegistry {
 
-  public static final ItemGroup BLOCK_GROUP = new ItemGroup(ModCyclic.MODID) {
+  public static final CreativeModeTab BLOCK_GROUP = new CreativeModeTab(ModCyclic.MODID) {
 
     @Override
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
       return new ItemStack(BlockRegistry.trash);
     }
   };
-  public static final ItemGroup ITEM_GROUP = new ItemGroup(ModCyclic.MODID + "items") {
+  public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(ModCyclic.MODID + "items") {
 
     @Override
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
       return new ItemStack(ItemRegistry.gem_amber);
     }
   };
@@ -48,15 +48,15 @@ public class MaterialRegistry {
     private static final String EMERALDID = ModCyclic.MODID + ":emerald";
     private static final String CRYSTALID = ModCyclic.MODID + ":crystal";
     private static final String GLOWINGID = ModCyclic.MODID + ":glowing";
-    public static final IArmorMaterial EMERALD = new IArmorMaterial() {
+    public static final ArmorMaterial EMERALD = new ArmorMaterial() {
 
       @Override
-      public int getDurability(EquipmentSlotType slotIn) {
-        return ArmorMaterial.DIAMOND.getDurability(slotIn) + ArmorMaterial.IRON.getDurability(slotIn);
+      public int getDurabilityForSlot(EquipmentSlot slotIn) {
+        return ArmorMaterials.DIAMOND.getDurabilityForSlot(slotIn) + ArmorMaterials.IRON.getDurabilityForSlot(slotIn);
       }
 
       @Override
-      public int getDamageReductionAmount(EquipmentSlotType slot) {
+      public int getDefenseForSlot(EquipmentSlot slot) {
         switch (slot) {
           case CHEST:
             return EMERALD_CHEST.get();
@@ -75,18 +75,18 @@ public class MaterialRegistry {
       }
 
       @Override
-      public int getEnchantability() {
-        return ArmorMaterial.GOLD.getEnchantability();
+      public int getEnchantmentValue() {
+        return ArmorMaterials.GOLD.getEnchantmentValue();
       }
 
       @Override
-      public SoundEvent getSoundEvent() {
+      public SoundEvent getEquipSound() {
         return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
       }
 
       @Override
-      public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(Items.EMERALD));
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(Items.EMERALD));
       }
 
       @Override
@@ -101,18 +101,18 @@ public class MaterialRegistry {
 
       @Override
       public float getKnockbackResistance() {
-        return ArmorMaterial.DIAMOND.getKnockbackResistance();
+        return ArmorMaterials.DIAMOND.getKnockbackResistance();
       }
     };
-    public static final IArmorMaterial GEMOBSIDIAN = new IArmorMaterial() {
+    public static final ArmorMaterial GEMOBSIDIAN = new ArmorMaterial() {
 
       @Override
-      public int getDurability(EquipmentSlotType slotIn) {
-        return ArmorMaterial.DIAMOND.getDurability(slotIn) * 4;
+      public int getDurabilityForSlot(EquipmentSlot slotIn) {
+        return ArmorMaterials.DIAMOND.getDurabilityForSlot(slotIn) * 4;
       }
 
       @Override
-      public int getDamageReductionAmount(EquipmentSlotType slot) {
+      public int getDefenseForSlot(EquipmentSlot slot) {
         switch (slot) {
           case CHEST:
             return OBS_CHEST.get();
@@ -131,18 +131,18 @@ public class MaterialRegistry {
       }
 
       @Override
-      public int getEnchantability() {
-        return ArmorMaterial.GOLD.getEnchantability() + 3;
+      public int getEnchantmentValue() {
+        return ArmorMaterials.GOLD.getEnchantmentValue() + 3;
       }
 
       @Override
-      public SoundEvent getSoundEvent() {
+      public SoundEvent getEquipSound() {
         return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
       }
 
       @Override
-      public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(ItemRegistry.gem_obsidian));
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(ItemRegistry.gem_obsidian));
       }
 
       @Override
@@ -157,36 +157,36 @@ public class MaterialRegistry {
 
       @Override
       public float getKnockbackResistance() {
-        return ArmorMaterial.NETHERITE.getKnockbackResistance();
+        return ArmorMaterials.NETHERITE.getKnockbackResistance();
       }
     };
-    public static final IArmorMaterial GLOWING = new IArmorMaterial() {
+    public static final ArmorMaterial GLOWING = new ArmorMaterial() {
 
-      ArmorMaterial mimicArmor = ArmorMaterial.IRON;
+      ArmorMaterials mimicArmor = ArmorMaterials.IRON;
 
       @Override
-      public int getDurability(EquipmentSlotType slotIn) {
-        return mimicArmor.getDurability(slotIn);
+      public int getDurabilityForSlot(EquipmentSlot slotIn) {
+        return mimicArmor.getDurabilityForSlot(slotIn);
       }
 
       @Override
-      public int getDamageReductionAmount(EquipmentSlotType slotIn) {
-        return mimicArmor.getDamageReductionAmount(slotIn);
+      public int getDefenseForSlot(EquipmentSlot slotIn) {
+        return mimicArmor.getDefenseForSlot(slotIn);
       }
 
       @Override
-      public int getEnchantability() {
-        return mimicArmor.getEnchantability() + 1;
+      public int getEnchantmentValue() {
+        return mimicArmor.getEnchantmentValue() + 1;
       }
 
       @Override
-      public SoundEvent getSoundEvent() {
+      public SoundEvent getEquipSound() {
         return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
       }
 
       @Override
-      public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(ItemRegistry.gem_amber));
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(ItemRegistry.gem_amber));
       }
 
       @Override
@@ -208,132 +208,132 @@ public class MaterialRegistry {
 
   public static class ToolMats {
 
-    public static final IItemTier GEMOBSIDIAN = new IItemTier() {
+    public static final Tier GEMOBSIDIAN = new Tier() {
 
       @Override
-      public int getMaxUses() {
-        return ItemTier.DIAMOND.getMaxUses() * 4;
+      public int getUses() {
+        return Tiers.DIAMOND.getUses() * 4;
       }
 
       @Override
-      public float getEfficiency() {
-        return ItemTier.DIAMOND.getEfficiency() * 4;
+      public float getSpeed() {
+        return Tiers.DIAMOND.getSpeed() * 4;
       }
 
       @Override
-      public float getAttackDamage() {
+      public float getAttackDamageBonus() {
         return OBS_DMG.get().floatValue();
       }
 
       @Override
-      public int getHarvestLevel() {
-        return ItemTier.DIAMOND.getHarvestLevel() + 1;
+      public int getLevel() {
+        return Tiers.DIAMOND.getLevel() + 1;
       }
 
       @Override
-      public int getEnchantability() {
-        return ItemTier.GOLD.getEnchantability() + 1;
+      public int getEnchantmentValue() {
+        return Tiers.GOLD.getEnchantmentValue() + 1;
       }
 
       @Override
-      public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(ItemRegistry.gem_obsidian));
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(ItemRegistry.gem_obsidian));
       }
     };
-    public static final IItemTier EMERALD = new IItemTier() {
+    public static final Tier EMERALD = new Tier() {
 
       @Override
-      public int getMaxUses() {
-        return ItemTier.DIAMOND.getMaxUses() + ItemTier.GOLD.getMaxUses();
+      public int getUses() {
+        return Tiers.DIAMOND.getUses() + Tiers.GOLD.getUses();
       }
 
       @Override
-      public float getEfficiency() {
-        return ItemTier.DIAMOND.getEfficiency() * 2;
+      public float getSpeed() {
+        return Tiers.DIAMOND.getSpeed() * 2;
       }
 
       @Override
-      public float getAttackDamage() {
+      public float getAttackDamageBonus() {
         return EMERALD_DMG.get().floatValue();
       }
 
       @Override
-      public int getHarvestLevel() {
-        return ItemTier.DIAMOND.getHarvestLevel();
+      public int getLevel() {
+        return Tiers.DIAMOND.getLevel();
       }
 
       @Override
-      public int getEnchantability() {
-        return ItemTier.GOLD.getEnchantability() + 1;
+      public int getEnchantmentValue() {
+        return Tiers.GOLD.getEnchantmentValue() + 1;
       }
 
       @Override
-      public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(net.minecraft.item.Items.EMERALD));
-      }
-    };
-    public static final IItemTier SANDSTONE = new IItemTier() {
-
-      @Override
-      public int getMaxUses() {
-        return ItemTier.STONE.getMaxUses() - 2;
-      }
-
-      @Override
-      public float getEfficiency() {
-        return ItemTier.STONE.getEfficiency();
-      }
-
-      @Override
-      public float getAttackDamage() {
-        return (ItemTier.WOOD.getAttackDamage() + ItemTier.STONE.getAttackDamage()) / 2;
-      }
-
-      @Override
-      public int getHarvestLevel() {
-        return ItemTier.STONE.getHarvestLevel();
-      }
-
-      @Override
-      public int getEnchantability() {
-        return (ItemTier.WOOD.getEnchantability() + ItemTier.STONE.getEnchantability()) / 2;
-      }
-
-      @Override
-      public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(net.minecraft.block.Blocks.SANDSTONE));
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(net.minecraft.world.item.Items.EMERALD));
       }
     };
-    public static final IItemTier NETHERBRICK = new IItemTier() {
+    public static final Tier SANDSTONE = new Tier() {
 
       @Override
-      public int getMaxUses() {
-        return (ItemTier.IRON.getMaxUses() + ItemTier.STONE.getMaxUses()) / 2;
+      public int getUses() {
+        return Tiers.STONE.getUses() - 2;
       }
 
       @Override
-      public float getEfficiency() {
-        return (ItemTier.IRON.getEfficiency() + ItemTier.STONE.getEfficiency()) / 2;
+      public float getSpeed() {
+        return Tiers.STONE.getSpeed();
       }
 
       @Override
-      public float getAttackDamage() {
-        return (ItemTier.IRON.getAttackDamage() + ItemTier.STONE.getAttackDamage()) / 2;
+      public float getAttackDamageBonus() {
+        return (Tiers.WOOD.getAttackDamageBonus() + Tiers.STONE.getAttackDamageBonus()) / 2;
       }
 
       @Override
-      public int getHarvestLevel() {
-        return ItemTier.IRON.getHarvestLevel();
+      public int getLevel() {
+        return Tiers.STONE.getLevel();
       }
 
       @Override
-      public int getEnchantability() {
-        return (ItemTier.IRON.getEnchantability() + ItemTier.STONE.getEnchantability()) / 2;
+      public int getEnchantmentValue() {
+        return (Tiers.WOOD.getEnchantmentValue() + Tiers.STONE.getEnchantmentValue()) / 2;
       }
 
       @Override
-      public Ingredient getRepairMaterial() {
-        return Ingredient.fromStacks(new ItemStack(net.minecraft.block.Blocks.NETHER_BRICKS));
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(net.minecraft.world.level.block.Blocks.SANDSTONE));
+      }
+    };
+    public static final Tier NETHERBRICK = new Tier() {
+
+      @Override
+      public int getUses() {
+        return (Tiers.IRON.getUses() + Tiers.STONE.getUses()) / 2;
+      }
+
+      @Override
+      public float getSpeed() {
+        return (Tiers.IRON.getSpeed() + Tiers.STONE.getSpeed()) / 2;
+      }
+
+      @Override
+      public float getAttackDamageBonus() {
+        return (Tiers.IRON.getAttackDamageBonus() + Tiers.STONE.getAttackDamageBonus()) / 2;
+      }
+
+      @Override
+      public int getLevel() {
+        return Tiers.IRON.getLevel();
+      }
+
+      @Override
+      public int getEnchantmentValue() {
+        return (Tiers.IRON.getEnchantmentValue() + Tiers.STONE.getEnchantmentValue()) / 2;
+      }
+
+      @Override
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(net.minecraft.world.level.block.Blocks.NETHER_BRICKS));
       }
     };
   }

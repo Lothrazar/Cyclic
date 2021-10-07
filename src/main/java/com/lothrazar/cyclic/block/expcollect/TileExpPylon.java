@@ -9,19 +9,19 @@ import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import java.util.function.Predicate;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileExpPylon extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileExpPylon extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   static enum Fields {
     REDSTONE;
@@ -51,7 +51,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
 
   @Override
   public void tick() {
-    if (!world.isRemote) {
+    if (!level.isClientSide) {
       //ignore on/off state, for player standing on top collecting exp
       collectPlayerExperience();
     }
@@ -63,7 +63,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   public Predicate<FluidStack> isFluidValid() {
-    return p -> p.getFluid().isIn(DataTags.EXPERIENCE);
+    return p -> p.getFluid().is(DataTags.EXPERIENCE);
   }
 
   @Override
@@ -75,28 +75,28 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     int legacy = tag.getInt("storedXp");
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
     }
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("storedXp", getStoredXp());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   private void collectPlayerExperience() {
-    List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class,
-        new AxisAlignedBB(this.getPos().up()));
-    for (PlayerEntity p : players) {
+    List<Player> players = level.getEntitiesOfClass(Player.class,
+        new AABB(this.getBlockPos().above()));
+    for (Player p : players) {
       double myTotal = UtilPlayer.getExpTotal(p);
       if (p.isCrouching() && myTotal > 0) {
         //go
@@ -128,25 +128,25 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
           p.giveExperiencePoints(-1 * addMeXp);
           tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
           //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
-          UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
-          this.markDirty();
+          UtilSound.playSound(p, SoundEvents.EXPERIENCE_ORB_PICKUP);
+          this.setChanged();
         }
       }
     }
   }
 
   private void collectLocalExperience() {
-    List<ExperienceOrbEntity> list = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(
-        pos.getX() - RADIUS, pos.getY() - 1, pos.getZ() - RADIUS,
-        pos.getX() + RADIUS, pos.getY() + 2, pos.getZ() + RADIUS), (entity) -> {
-          return entity.isAlive() && entity.getXpValue() > 0;
+    List<ExperienceOrb> list = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(
+        worldPosition.getX() - RADIUS, worldPosition.getY() - 1, worldPosition.getZ() - RADIUS,
+        worldPosition.getX() + RADIUS, worldPosition.getY() + 2, worldPosition.getZ() + RADIUS), (entity) -> {
+          return entity.isAlive() && entity.getValue() > 0;
           //entity != null && entity.getHorizontalFacing() == facing;
         });
     if (list.size() > 0) {
-      ExperienceOrbEntity myOrb = list.get(world.rand.nextInt(list.size()));
-      int addMeXp = myOrb.getXpValue();
+      ExperienceOrb myOrb = list.get(level.random.nextInt(list.size()));
+      int addMeXp = myOrb.getValue();
       if (getStoredXp() + addMeXp <= tank.getCapacity()) {
-        myOrb.xpValue = 0;
+        myOrb.value = 0;
         // myOrb.setPosition(this.pos.getX(), this.pos.getY(), this.pos.getZ());
         myOrb.remove();
         int addMeFluid = addMeXp * FLUID_PER_EXP;
@@ -186,12 +186,12 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerExpPylon(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerExpPylon(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 }

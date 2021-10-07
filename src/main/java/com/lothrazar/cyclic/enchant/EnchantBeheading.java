@@ -28,24 +28,26 @@ import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
 import java.util.Map;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantBeheading extends EnchantBase {
 
-  public EnchantBeheading(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantBeheading(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -71,24 +73,24 @@ public class EnchantBeheading extends EnchantBase {
 
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
-    if (event.getSource().getTrueSource() instanceof PlayerEntity) {
-      PlayerEntity attacker = (PlayerEntity) event.getSource().getTrueSource();
+    if (event.getSource().getEntity() instanceof Player) {
+      Player attacker = (Player) event.getSource().getEntity();
       int level = getCurrentLevelTool(attacker);
       if (level <= 0) {
         return;
       }
-      World world = attacker.world;
-      if (MathHelper.nextInt(world.rand, 0, 100) > percentForLevel(level)) {
+      Level world = attacker.level;
+      if (Mth.nextInt(world.random, 0, 100) > percentForLevel(level)) {
         return;
       }
       LivingEntity target = (LivingEntity) event.getEntity();
       if (target == null) {
         return;
       } //probably wont happen just extra safe
-      BlockPos pos = target.getPosition();
-      if (target instanceof PlayerEntity) {
+      BlockPos pos = target.blockPosition();
+      if (target instanceof Player) {
         //player head
-        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull((PlayerEntity) target));
+        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull((Player) target));
         return;
       }
       //else the random number was less than 10, so it passed the 10% chance req

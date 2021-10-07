@@ -6,9 +6,9 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
 
@@ -16,7 +16,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   private ButtonMachineField btnRedstone;
   private FluidBar fluid;
 
-  public ScreenDisenchant(ContainerDisenchant screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenDisenchant(ContainerDisenchant screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     energy = new EnergyBar(this, TileDisenchant.MAX);
     fluid = new FluidBar(this, 134, 8, TileDisenchant.CAPACITY);
@@ -26,33 +26,33 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   @Override
   public void init() {
     super.init();
-    fluid.guiLeft = energy.guiLeft = guiLeft;
-    fluid.guiTop = energy.guiTop = guiTop;
+    fluid.guiLeft = energy.guiLeft = leftPos;
+    fluid.guiTop = energy.guiTop = topPos;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
-    btnRedstone = addButton(new ButtonMachineField(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), container.tile.getPos()));
+    x = leftPos + 8;
+    y = topPos + 8;
+    btnRedstone = addButton(new ButtonMachineField(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     energy.visible = TileDisenchant.POWERCONF.get() > 0;
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
-    fluid.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getFluid());
+    this.renderTooltip(ms, mouseX, mouseY);
+    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
+    fluid.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getFluid());
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    btnRedstone.onValueUpdate(container.tile);
+    btnRedstone.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     int x = 23;
     int y = 39;
@@ -60,7 +60,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     this.drawSlot(ms, x + 24, y, TextureRegistry.SLOT_BOOK, 18);
     this.drawSlotLarge(ms, 103, y - 20);
     this.drawSlotLarge(ms, 103, y + 12);
-    energy.draw(ms, container.tile.getEnergy());
-    fluid.draw(ms, container.tile.getFluid());
+    energy.draw(ms, menu.tile.getEnergy());
+    fluid.draw(ms, menu.tile.getFluid());
   }
 }

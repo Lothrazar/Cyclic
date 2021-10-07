@@ -4,14 +4,16 @@ import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class HeartToxicItem extends ItemBase {
 
@@ -23,11 +25,11 @@ public class HeartToxicItem extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (playerIn.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemRightClick(worldIn, playerIn, handIn);
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (playerIn.getCooldowns().isOnCooldown(this)) {
+      return super.use(worldIn, playerIn, handIn);
     }
-    ModifiableAttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
+    AttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
     //    if (healthAttribute != null && healthAttribute.getBaseValue() > 2) {
     //get attribute modif by id
     AttributeModifier oldHealthModifier = healthAttribute.getModifier(HeartItem.ID);
@@ -38,17 +40,17 @@ public class HeartToxicItem extends ItemBase {
     else {
       addedHealth = (oldHealthModifier == null) ? -2.0D : oldHealthModifier.getAmount() - 2.0D;
       //actually DO the eating of the thing
-      playerIn.getCooldownTracker().setCooldown(this, COOLDOWN);
-      playerIn.getHeldItem(handIn).shrink(1);
+      playerIn.getCooldowns().addCooldown(this, COOLDOWN);
+      playerIn.getItemInHand(handIn).shrink(1);
       UtilSound.playSound(playerIn, SoundRegistry.FILL);
-      playerIn.getFoodStats().addStats(3, 1);
+      playerIn.getFoodData().eat(3, 1);
       playerIn.giveExperiencePoints(ConfigRegistry.HEARTXPMINUS.get());
     }
     //replace the modifier on the main attribute
     healthAttribute.removeModifier(HeartItem.ID);
     AttributeModifier healthModifier = new AttributeModifier(HeartItem.ID, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
-    healthAttribute.applyPersistentModifier(healthModifier);
+    healthAttribute.addPermanentModifier(healthModifier);
     //
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    return super.use(worldIn, playerIn, handIn);
   }
 }

@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtIo;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -20,26 +20,26 @@ public class PlayerDataEvents {
   public static Map<UUID, CyclicFile> DATA_QUEUE = new HashMap<>();
   public static final String FILE_EXT = ".dat";
 
-  public static CyclicFile getOrCreate(PlayerEntity player) {
-    UUID id = player.getUniqueID();
+  public static CyclicFile getOrCreate(Player player) {
+    UUID id = player.getUUID();
     if (!DATA_QUEUE.containsKey(id)) {
-      DATA_QUEUE.put(id, new CyclicFile(player.getUniqueID()));
+      DATA_QUEUE.put(id, new CyclicFile(player.getUUID()));
     }
     return DATA_QUEUE.get(id);
   }
 
   @SubscribeEvent
   public void onSaveFile(PlayerEvent.SaveToFile event) {
-    PlayerEntity player = event.getPlayer();
+    Player player = event.getPlayer();
     //if we have datas queued up to be saved
-    if (DATA_QUEUE.containsKey(player.getUniqueID())) {
+    if (DATA_QUEUE.containsKey(player.getUUID())) {
       //yes i have data to save 
-      CyclicFile dataToSave = DATA_QUEUE.get(player.getUniqueID());
-      CompoundNBT data = dataToSave.write();
+      CyclicFile dataToSave = DATA_QUEUE.get(player.getUUID());
+      CompoundTag data = dataToSave.write();
       try {
         File mctomb = new File(event.getPlayerDirectory(), getPlayerFile(player));
         FileOutputStream fileoutputstream = new FileOutputStream(mctomb);
-        CompressedStreamTools.writeCompressed(data, fileoutputstream);
+        NbtIo.writeCompressed(data, fileoutputstream);
         fileoutputstream.close();
         ModCyclic.LOGGER.info("Cyclic PlayerEvent.SaveToFile success" + data);
       }
@@ -49,26 +49,26 @@ public class PlayerDataEvents {
     }
   }
 
-  private String getPlayerFile(PlayerEntity player) {
-    return player.getUniqueID() + "_cyclic" + FILE_EXT;
+  private String getPlayerFile(Player player) {
+    return player.getUUID() + "_cyclic" + FILE_EXT;
   }
 
   @SubscribeEvent
   public void onLoadFile(PlayerEvent.LoadFromFile event) {
-    PlayerEntity player = event.getPlayer();
+    Player player = event.getPlayer();
     File mctomb = new File(event.getPlayerDirectory(), getPlayerFile(player));
     if (mctomb.exists()) {
       try {
         FileInputStream fileinputstream = new FileInputStream(mctomb);
-        CompoundNBT data = CompressedStreamTools.readCompressed(fileinputstream);
+        CompoundTag data = NbtIo.readCompressed(fileinputstream);
         fileinputstream.close();
-        CyclicFile dataLoaded = new CyclicFile(player.getUniqueID());
+        CyclicFile dataLoaded = new CyclicFile(player.getUUID());
         dataLoaded.read(data);
-        if (DATA_QUEUE.containsKey(player.getUniqueID())) {
+        if (DATA_QUEUE.containsKey(player.getUUID())) {
           // 
           ModCyclic.LOGGER.error("? overwrite PlayerEvent.LoadFromFile " + data);
         }
-        DATA_QUEUE.put(player.getUniqueID(), dataLoaded);
+        DATA_QUEUE.put(player.getUUID(), dataLoaded);
         ModCyclic.LOGGER.error("C PlayerEvent.LoadFromFile " + data);
         //        ModCyclic.LOGGER.error("# of tombs " + dataLoaded.playerGraves.size());
       }

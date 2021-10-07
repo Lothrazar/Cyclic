@@ -6,21 +6,23 @@ import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ShapeCard extends ItemBase {
 
@@ -31,24 +33,24 @@ public class ShapeCard extends ItemBase {
   }
 
   public static void setBlockState(ItemStack wand, BlockState target) {
-    CompoundNBT encoded = NBTUtil.writeBlockState(target);
+    CompoundTag encoded = NbtUtils.writeBlockState(target);
     wand.getOrCreateTag().put(BuilderActionType.NBTBLOCKSTATE, encoded);
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
-      TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".count");
-      t.appendString(shape.getCount() + "");
+      TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".count");
+      t.append(shape.getCount() + "");
       tooltip.add(t);
       BlockState target = BuilderActionType.getBlockState(stack);
       String block = "scepter.cyclic.nothing";
       if (target != null) {
-        block = target.getBlock().getTranslationKey();
+        block = target.getBlock().getDescriptionId();
       }
-      tooltip.add(new TranslationTextComponent(TextFormatting.AQUA + UtilChat.lang(block)));
+      tooltip.add(new TranslatableComponent(ChatFormatting.AQUA + UtilChat.lang(block)));
       if (flagIn.isAdvanced()) {
         //        String side = "S: " + dim.getSide().toString().toUpperCase();
         //        tooltip.add(new TranslationTextComponent(side));
@@ -57,25 +59,25 @@ public class ShapeCard extends ItemBase {
         //        tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()));
       }
     }
-    TranslationTextComponent t = new TranslationTextComponent(getTranslationKey() + ".tooltip");
-    t.mergeStyle(TextFormatting.GRAY);
+    TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".tooltip");
+    t.withStyle(ChatFormatting.GRAY);
     tooltip.add(t);
     //    }
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-    ItemStack stack = player.getHeldItem(hand);
+  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    ItemStack stack = player.getItemInHand(hand);
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
       BlockState targetState = BuilderActionType.getBlockState(stack);
       if (targetState != null) {
-        final BlockPos centerPos = player.getPosition();
+        final BlockPos centerPos = player.blockPosition();
         //        Direction side = context.getFace(); 
         BlockPos posBuild = null;
         for (BlockPos s : shape.getShape()) {
-          posBuild = centerPos.add(s);
-          if (World.isOutsideBuildHeight(posBuild) || !world.isAirBlock(posBuild)) {
+          posBuild = centerPos.offset(s);
+          if (Level.isOutsideBuildHeight(posBuild) || !world.isEmptyBlock(posBuild)) {
             //if outside, or not air, then continue
             continue;
           }
@@ -89,7 +91,7 @@ public class ShapeCard extends ItemBase {
               break; //stop looping
             }
           }
-          if (world.setBlockState(posBuild, targetState, 1)) {
+          if (world.setBlock(posBuild, targetState, 1)) {
             UtilPlayer.decrStackSize(player, slot);
           }
         }
@@ -101,7 +103,7 @@ public class ShapeCard extends ItemBase {
     else {
       UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.nothing");
     }
-    player.swingArm(hand);
-    return super.onItemRightClick(world, player, hand);
+    player.swing(hand);
+    return super.use(world, player, hand);
   }
 }

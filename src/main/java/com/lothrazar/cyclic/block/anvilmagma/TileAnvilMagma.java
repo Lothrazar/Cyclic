@@ -8,18 +8,18 @@ import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.function.Predicate;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -31,7 +31,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileAnvilMagma extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
+public class TileAnvilMagma extends TileEntityBase implements MenuProvider, TickableBlockEntity {
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -43,7 +43,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isRepairable() && stack.getDamage() > 0;
+      return stack.isRepairable() && stack.getDamageValue() > 0;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
@@ -65,7 +65,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     }
     setLitProperty(true);
     ItemStack stack = inputSlots.getStackInSlot(0);
-    if (stack.isEmpty() || stack.getItem().isIn(DataTags.ANVIL_IMMUNE)) {
+    if (stack.isEmpty() || stack.getItem().is(DataTags.ANVIL_IMMUNE)) {
       //move it over and then done
       if (outputSlots.getStackInSlot(0).isEmpty()) {
         outputSlots.insertItem(0, stack.copy(), false);
@@ -73,7 +73,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
       }
       return;
     }
-    boolean done = (stack.getDamage() == 0);
+    boolean done = (stack.getDamageValue() == 0);
     if (done && outputSlots.getStackInSlot(0).isEmpty()) {
       // 
       outputSlots.insertItem(0, stack.copy(), false);
@@ -84,7 +84,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     if (tank != null &&
         tank.getFluidAmount() >= repair &&
         stack.isRepairable() &&
-        stack.getDamage() > 0) {
+        stack.getDamageValue() > 0) {
       //we can repair so steal some power 
       //ok drain power  
       work = true;
@@ -104,13 +104,13 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerAnvilMagma(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerAnvilMagma(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
@@ -125,19 +125,19 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

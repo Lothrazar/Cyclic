@@ -2,18 +2,18 @@ package com.lothrazar.cyclic.render;
 
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.util.UtilRender;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.Arrays;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import com.mojang.math.Matrix4f;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Vector3f;
 
 /**
  * Source from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x
@@ -30,22 +30,22 @@ public class RenderResizableCuboid {
   private static final int U_MAX = 1;
   private static final int V_MIN = 2;
   private static final int V_MAX = 3;
-  protected EntityRendererManager manager = Minecraft.getInstance().getRenderManager();
+  protected EntityRenderDispatcher manager = Minecraft.getInstance().getEntityRenderDispatcher();
 
   private static Vector3f withValue(Vector3f vector, Axis axis, float value) {
     if (axis == Axis.X) {
-      return new Vector3f(value, vector.getY(), vector.getZ());
+      return new Vector3f(value, vector.y(), vector.z());
     }
     else if (axis == Axis.Y) {
-      return new Vector3f(vector.getX(), value, vector.getZ());
+      return new Vector3f(vector.x(), value, vector.z());
     }
     else if (axis == Axis.Z) {
-      return new Vector3f(vector.getX(), vector.getY(), value);
+      return new Vector3f(vector.x(), vector.y(), value);
     }
     throw new RuntimeException("Was given a null axis! That was probably not intentional, consider this a bug! (Vector = " + vector + ")");
   }
 
-  public static double getValue(Vector3d vector, Axis axis) {
+  public static double getValue(Vec3 vector, Axis axis) {
     if (axis == Axis.X) {
       return vector.x;
     }
@@ -61,15 +61,15 @@ public class RenderResizableCuboid {
   /**
    * model 3d cube is the fluid
    */
-  public void renderCube(Model3D cube, MatrixStack matrix, IVertexBuilder buffer, int argb, int light) {
+  public void renderCube(Model3D cube, PoseStack matrix, VertexConsumer buffer, int argb, int light) {
     float red = UtilRender.getRed(argb);
     float green = UtilRender.getGreen(argb);
     float blue = UtilRender.getBlue(argb);
     float alpha = UtilRender.getAlpha(argb);
-    Vector3d size = new Vector3d(cube.sizeX(), cube.sizeY(), cube.sizeZ());
-    matrix.push();
+    Vec3 size = new Vec3(cube.sizeX(), cube.sizeY(), cube.sizeZ());
+    matrix.pushPose();
     matrix.translate(cube.minX, cube.minY, cube.minZ);
-    net.minecraft.util.math.vector.Matrix4f matrix4f = matrix.getLast().getMatrix();
+    com.mojang.math.Matrix4f matrix4f = matrix.last().pose();
     for (Direction face : Direction.values()) {
       if (cube.shouldSideRender(face)) {
         int ordinal = face.ordinal();
@@ -81,11 +81,11 @@ public class RenderResizableCuboid {
           //Swap the face if this is positive: the renderer returns indexes that ALWAYS are for the negative face, so light it properly this way
           face = face.getAxisDirection() == AxisDirection.NEGATIVE ? face : face.getOpposite();
           Direction opposite = face.getOpposite();
-          float minU = sprite.getMinU();
-          float maxU = sprite.getMaxU();
+          float minU = sprite.getU0();
+          float maxU = sprite.getU1();
           //Flip the v
-          float minV = sprite.getMaxV();
-          float maxV = sprite.getMinV();
+          float minV = sprite.getV1();
+          float maxV = sprite.getV0();
           double sizeU = getValue(size, u);
           double sizeV = getValue(size, v);
           // Look into this more, as it makes tiling of multiple objects not render properly if they don't fit the full texture.
@@ -119,16 +119,16 @@ public class RenderResizableCuboid {
         }
       }
     }
-    matrix.pop();
+    matrix.popPose();
   }
 
-  private void renderPoint(Matrix4f matrix4f, IVertexBuilder buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV,
+  private void renderPoint(Matrix4f matrix4f, VertexConsumer buffer, Direction face, Axis u, Axis v, float other, float[] uv, float[] xyz, boolean minU, boolean minV,
       float red, float green, float blue, float alpha, int light) {
     int uFinal = minU ? U_MIN : U_MAX;
     int vFinal = minV ? V_MIN : V_MAX;
     Vector3f vertex = withValue(VEC_ZERO, u, xyz[uFinal]);
     vertex = withValue(vertex, v, xyz[vFinal]);
     vertex = withValue(vertex, face.getAxis(), other);
-    buffer.pos(matrix4f, vertex.getX(), vertex.getY(), vertex.getZ()).color(red, green, blue, alpha).tex(uv[uFinal], uv[vFinal]).lightmap(light).endVertex();
+    buffer.vertex(matrix4f, vertex.x(), vertex.y(), vertex.z()).color(red, green, blue, alpha).uv(uv[uFinal], uv[vFinal]).uv2(light).endVertex();
   }
 }

@@ -9,17 +9,17 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -34,7 +34,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
-public class TileSolidifier extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileSolidifier extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 5;
   public static final int MAX = 64000;
@@ -111,33 +111,33 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerSolidifier(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerSolidifier(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inputSlots.deserializeNBT(tag.getCompound(NBTINV));
     outputSlots.deserializeNBT(tag.getCompound("invoutput"));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inputSlots.serializeNBT());
     tag.put("invoutput", outputSlots.serializeNBT());
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -168,13 +168,13 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, world)) {
+    if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeSolidifier<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID);
+    List<RecipeSolidifier<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID);
     for (RecipeSolidifier rec : recipes) {
-      if (rec.matches(this, world)) {
+      if (rec.matches(this, level)) {
         currentRecipe = rec;
         break;
       }
@@ -185,8 +185,8 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
     if (test.getAmount() >= this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
-      if (!outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), true).isEmpty()) {
-        ModCyclic.LOGGER.info(pos + "recipe stop on output is full");
+      if (!outputSlots.insertItem(0, currentRecipe.getResultItem(), true).isEmpty()) {
+        ModCyclic.LOGGER.info(worldPosition + "recipe stop on output is full");
         return false;
         //there was non-empty left after this, so no room for all
       }
@@ -195,10 +195,10 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
       tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
-      outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), false);
+      outputSlots.insertItem(0, currentRecipe.getResultItem(), false);
       return true;
     }
-    ModCyclic.LOGGER.info(pos + " recipe stop on fluid not enoughl");
+    ModCyclic.LOGGER.info(worldPosition + " recipe stop on fluid not enoughl");
     return false;
   }
 

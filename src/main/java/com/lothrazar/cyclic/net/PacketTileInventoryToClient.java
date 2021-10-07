@@ -5,10 +5,10 @@ import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -35,11 +35,11 @@ public class PacketTileInventoryToClient extends PacketBase {
   @SuppressWarnings("unused")
   public static void handle(PacketTileInventoryToClient message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      if (Minecraft.getInstance().world == null) {
+      if (Minecraft.getInstance().level == null) {
         message.done(ctx);
         return;
       }
-      TileEntity tile = Minecraft.getInstance().world.getTileEntity(message.blockPos);
+      BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(message.blockPos);
       if (tile != null) {
         tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
           if (message.type == SyncPacketType.SET) {
@@ -61,19 +61,19 @@ public class PacketTileInventoryToClient extends PacketBase {
     message.done(ctx);
   }
 
-  public static PacketTileInventoryToClient decode(PacketBuffer buf) {
+  public static PacketTileInventoryToClient decode(FriendlyByteBuf buf) {
     PacketTileInventoryToClient p = new PacketTileInventoryToClient();
     p.blockPos = buf.readBlockPos();
     p.slot = buf.readInt();
-    p.itemStack = buf.readItemStack();
-    p.type = buf.readEnumValue(SyncPacketType.class);
+    p.itemStack = buf.readItem();
+    p.type = buf.readEnum(SyncPacketType.class);
     return p;
   }
 
-  public static void encode(PacketTileInventoryToClient msg, PacketBuffer buf) {
+  public static void encode(PacketTileInventoryToClient msg, FriendlyByteBuf buf) {
     buf.writeBlockPos(msg.blockPos);
     buf.writeInt(msg.slot);
-    buf.writeItemStack(msg.itemStack);
-    buf.writeEnumValue(msg.type);
+    buf.writeItem(msg.itemStack);
+    buf.writeEnum(msg.type);
   }
 }

@@ -7,14 +7,14 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileSprinkler extends TileEntityBase implements ITickableTileEntity {
+public class TileSprinkler extends TileEntityBase implements TickableBlockEntity {
 
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public static IntValue TIMER_FULL;
@@ -48,7 +48,7 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     if (WATERCOST.get() > 0 && tank.getFluidAmount() < WATERCOST.get()) {
       return;
     }
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(pos, RAD);
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(worldPosition, RAD);
     shapeIndex++;
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
@@ -58,7 +58,7 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     //since no animation
     tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
     final double d = 0.001;
-    if (TileTerraPreta.grow(world, shape.get(shapeIndex), d)) {
+    if (TileTerraPreta.grow(level, shape.get(shapeIndex), d)) {
       //it worked, so double drain
       tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
     }
@@ -66,35 +66,35 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
 
   private void grabWater() {
     //only drink from below. similar to but updated from 1.12.2
-    BlockState down = world.getBlockState(pos.down());
+    BlockState down = level.getBlockState(worldPosition.below());
     if (tank.isEmpty() && down.getBlock() == Blocks.WATER
         && down.getFluidState().isSource()) {
       tank.fill(new FluidStack(Fluids.WATER, CAPACITY), FluidAction.EXECUTE);
-      world.setBlockState(pos.down(), Blocks.AIR.getDefaultState());
+      level.setBlockAndUpdate(worldPosition.below(), Blocks.AIR.defaultBlockState());
       return;
     }
-    TileEntity below = this.world.getTileEntity(this.pos.down());
+    BlockEntity below = this.level.getBlockEntity(this.worldPosition.below());
     if (below != null) {
       //from below, fill this.pos 
-      UtilFluid.tryFillPositionFromTank(world, this.pos, Direction.DOWN, below.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null), CAPACITY);
+      UtilFluid.tryFillPositionFromTank(level, this.worldPosition, Direction.DOWN, below.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null), CAPACITY);
     }
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    CompoundNBT fluid = tag.getCompound(NBTFLUID);
+  public void load(BlockState bs, CompoundTag tag) {
+    CompoundTag fluid = tag.getCompound(NBTFLUID);
     tank.readFromNBT(fluid);
     shapeIndex = tag.getInt("shapeIndex");
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    CompoundNBT fluid = new CompoundNBT();
+  public CompoundTag save(CompoundTag tag) {
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("shapeIndex", shapeIndex);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override

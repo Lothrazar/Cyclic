@@ -2,62 +2,62 @@ package com.lothrazar.cyclic.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.AmbientEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.ambient.AmbientCreature;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public enum EntityFilterType {
 
   //living DOES include players
   LIVING, PLAYERS, MOB, MONSTER, ANIMAL, TAMEABLE, FLYING, WATER, AMBIENT;
 
-  public List<? extends LivingEntity> getEntities(World world, BlockPos pos, int radius) {
+  public List<? extends LivingEntity> getEntities(Level world, BlockPos pos, int radius) {
     int x = pos.getX();
     int y = pos.getY();
     int z = pos.getZ();
-    AxisAlignedBB axisalignedbb = (new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1)).grow(radius).expand(0.0D, world.getHeight(), 0.0D);
+    AABB axisalignedbb = (new AABB(x, y, z, x + 1, y + 1, z + 1)).inflate(radius).expandTowards(0.0D, world.getMaxBuildHeight(), 0.0D);
     //
     return getEntities(world, axisalignedbb);
   }
 
-  public List<? extends LivingEntity> getEntities(World world, AxisAlignedBB axisalignedbb) {
+  public List<? extends LivingEntity> getEntities(Level world, AABB axisalignedbb) {
     List<LivingEntity> list = new ArrayList<>();
     switch (this) {
       case AMBIENT:
-        list.addAll(world.getEntitiesWithinAABB(AmbientEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(AmbientCreature.class, axisalignedbb));
       break;
       case ANIMAL:
-        list.addAll(world.getEntitiesWithinAABB(AnimalEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(Animal.class, axisalignedbb));
       break;
       case FLYING:
-        list.addAll(world.getEntitiesWithinAABB(FlyingEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(FlyingMob.class, axisalignedbb));
       break;
       case LIVING:
-        list.addAll(world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(LivingEntity.class, axisalignedbb));
       break;
       case MOB:
-        list.addAll(world.getEntitiesWithinAABB(MobEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(Mob.class, axisalignedbb));
       break;
       case PLAYERS:
-        list.addAll(world.getEntitiesWithinAABB(PlayerEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(Player.class, axisalignedbb));
       break;
       case TAMEABLE:
-        list.addAll(world.getEntitiesWithinAABB(TameableEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(TamableAnimal.class, axisalignedbb));
       break;
       case WATER:
-        list.addAll(world.getEntitiesWithinAABB(WaterMobEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(WaterAnimal.class, axisalignedbb));
       break;
       case MONSTER:
-        list.addAll(world.getEntitiesWithinAABB(MonsterEntity.class, axisalignedbb));
+        list.addAll(world.getEntitiesOfClass(Monster.class, axisalignedbb));
       break;
     }
     return list;

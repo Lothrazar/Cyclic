@@ -18,12 +18,12 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilString;
 import java.util.Objects;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -76,12 +76,12 @@ public class CyclicPluginJEI implements IModPlugin {
 
   @Override
   public void registerRecipes(IRecipeRegistration registry) {
-    ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().world);
-    registry.addRecipes(world.getRecipeManager().getRecipesForType(IRecipeType.CRAFTING), PackagerRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.MELTER), MelterRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_ITEM), GenitemRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
+    ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
+    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING), PackagerRecipeCategory.ID);
+    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER), MelterRecipeCategory.ID);
+    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
+    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM), GenitemRecipeCategory.ID);
+    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
       if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
@@ -91,7 +91,7 @@ public class CyclicPluginJEI implements IModPlugin {
       //          && item != BlockRegistry.PACKAGER.get().asItem()
       //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
       ) {
-        registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
+        registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslatableComponent(item.getDescriptionId() + ".guide"));
       }
     }
   }

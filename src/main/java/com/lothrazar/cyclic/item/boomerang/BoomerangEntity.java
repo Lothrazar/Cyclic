@@ -8,53 +8,53 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class BoomerangEntity extends ProjectileItemEntity {
+public class BoomerangEntity extends ThrowableItemProjectile {
 
-  public BoomerangEntity(EntityType<? extends ProjectileItemEntity> type, World worldIn) {
+  public BoomerangEntity(EntityType<? extends ThrowableItemProjectile> type, Level worldIn) {
     super(type, worldIn);
   }
 
-  public BoomerangEntity(EntityType<BoomerangEntity> type, LivingEntity throwerIn, World worldIn) {
+  public BoomerangEntity(EntityType<BoomerangEntity> type, LivingEntity throwerIn, Level worldIn) {
     super(type, throwerIn, worldIn);
   }
 
   @Override
-  protected void registerData() {
-    super.registerData();
-    this.dataManager.register(IS_RETURNING, (byte) 0);
-    this.dataManager.register(REDSTONE_TRIGGERED, (byte) 0);
-    this.dataManager.register(OWNER, "");
+  protected void defineSynchedData() {
+    super.defineSynchedData();
+    this.entityData.define(IS_RETURNING, (byte) 0);
+    this.entityData.define(REDSTONE_TRIGGERED, (byte) 0);
+    this.entityData.define(OWNER, "");
   }
 
   private static final int STUN_SECONDS = 7;
@@ -63,11 +63,11 @@ public class BoomerangEntity extends ProjectileItemEntity {
   private static final double SPEED = 0.95;
   static final float DAMAGE_MIN = 1.5F;
   static final float DAMAGE_MAX = 3.8F;
-  private static final DataParameter<Byte> IS_RETURNING = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.BYTE);
-  private static final DataParameter<Byte> REDSTONE_TRIGGERED = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.BYTE);
-  private static final DataParameter<String> OWNER = EntityDataManager.createKey(BoomerangEntity.class, DataSerializers.STRING);
+  private static final EntityDataAccessor<Byte> IS_RETURNING = SynchedEntityData.defineId(BoomerangEntity.class, EntityDataSerializers.BYTE);
+  private static final EntityDataAccessor<Byte> REDSTONE_TRIGGERED = SynchedEntityData.defineId(BoomerangEntity.class, EntityDataSerializers.BYTE);
+  private static final EntityDataAccessor<String> OWNER = SynchedEntityData.defineId(BoomerangEntity.class, EntityDataSerializers.STRING);
   private ItemStack boomerangThrown = ItemStack.EMPTY;
-  private PlayerEntity targetEntity;
+  private Player targetEntity;
   protected Boomer boomerangType;
 
   public void setBoomerangThrown(ItemStack boomerangThrown) {
@@ -75,32 +75,32 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   @Override
-  public void writeAdditional(CompoundNBT tag) {
-    tag.putString("OWNER", dataManager.get(OWNER));
-    tag.putByte("returning", dataManager.get(IS_RETURNING));
-    tag.putByte("REDSTONE_TRIGGERED", dataManager.get(REDSTONE_TRIGGERED));
-    boomerangThrown.write(tag);
-    super.writeAdditional(tag);
+  public void addAdditionalSaveData(CompoundTag tag) {
+    tag.putString("OWNER", entityData.get(OWNER));
+    tag.putByte("returning", entityData.get(IS_RETURNING));
+    tag.putByte("REDSTONE_TRIGGERED", entityData.get(REDSTONE_TRIGGERED));
+    boomerangThrown.save(tag);
+    super.addAdditionalSaveData(tag);
   }
 
   @Override
-  public void readAdditional(CompoundNBT tag) {
-    dataManager.set(OWNER, tag.getString("OWNER"));
-    dataManager.set(IS_RETURNING, tag.getByte("returning"));
-    dataManager.set(REDSTONE_TRIGGERED, tag.getByte("REDSTONE_TRIGGERED"));
-    boomerangThrown = ItemStack.read(tag);
-    super.readAdditional(tag);
+  public void readAdditionalSaveData(CompoundTag tag) {
+    entityData.set(OWNER, tag.getString("OWNER"));
+    entityData.set(IS_RETURNING, tag.getByte("returning"));
+    entityData.set(REDSTONE_TRIGGERED, tag.getByte("REDSTONE_TRIGGERED"));
+    boomerangThrown = ItemStack.of(tag);
+    super.readAdditionalSaveData(tag);
   }
 
-  public void setOwner(PlayerEntity ent) {
+  public void setOwner(Player ent) {
     this.targetEntity = ent;
-    if (ent != null && ent.getUniqueID() != null) {
-      dataManager.set(OWNER, ent.getUniqueID().toString());
+    if (ent != null && ent.getUUID() != null) {
+      entityData.set(OWNER, ent.getUUID().toString());
     }
   }
 
   private void movementReturnCheck() {
-    boolean returning = dataManager.get(IS_RETURNING) == 1;
+    boolean returning = entityData.get(IS_RETURNING) == 1;
     if (returning) {
       //reverse direction 
       if (this.targetEntity != null) {
@@ -110,40 +110,40 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   private void moveTowardsTarget() {
-    rotationYaw = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getPosX(), getPosY(), getPosZ(), targetEntity.getPosX(), targetEntity.getPosY(), targetEntity.getPosZ()));
-    rotationPitch = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(getPosX(), getPosY(), getPosZ(), targetEntity.getPosX(), targetEntity.getPosY(), targetEntity.getPosZ()));
-    Vector3d moveVec = UtilEntity.lookVector(this.rotationYaw, this.rotationPitch).scale(SPEED);
-    this.setMotion(
-        0.5f * this.getMotion().getX() + 0.5f * moveVec.x,
-        0.5f * this.getMotion().getY() + 0.503f * moveVec.y,
-        0.5f * this.getMotion().getZ() + 0.5f * moveVec.z);
+    yRot = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
+    xRot = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
+    Vec3 moveVec = UtilEntity.lookVector(this.yRot, this.xRot).scale(SPEED);
+    this.setDeltaMovement(
+        0.5f * this.getDeltaMovement().x() + 0.5f * moveVec.x,
+        0.5f * this.getDeltaMovement().y() + 0.503f * moveVec.y,
+        0.5f * this.getDeltaMovement().z() + 0.5f * moveVec.z);
   }
 
   private void tryPickupNearby() {
-    Entity owner = func_234616_v_();
-    if (owner == null || world.isRemote) {
+    Entity owner = getOwner();
+    if (owner == null || level.isClientSide) {
       return;
     }
     //try to find entities to pick up
     int range = 1;
-    List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
-        this.getBoundingBox().offset(this.getMotion()).grow(range, range, range));
+    List<Entity> list = this.level.getEntities(this,
+        this.getBoundingBox().move(this.getDeltaMovement()).inflate(range, range, range));
     for (Entity entityHit : list) {
-      if (entityHit instanceof ItemEntity || entityHit instanceof ExperienceOrbEntity) {
-        entityHit.setPositionAndUpdate(owner.getPosX(), owner.getPosY(), owner.getPosZ());
+      if (entityHit instanceof ItemEntity || entityHit instanceof ExperienceOrb) {
+        entityHit.teleportTo(owner.getX(), owner.getY(), owner.getZ());
       }
     }
   }
 
   @SuppressWarnings("deprecation")
   private void tryToggleRedstone(final BlockPos pos) {
-    Entity owner = func_234616_v_();
-    if (owner instanceof PlayerEntity) {
+    Entity owner = getOwner();
+    if (owner instanceof Player) {
       try {
-        BlockState blockState = world.getBlockState(pos);
+        BlockState blockState = level.getBlockState(pos);
         Block block = blockState.getBlock();
-        ActionResultType t = block.onBlockActivated(blockState, world, pos, (PlayerEntity) owner, Hand.MAIN_HAND, null);
-        boolean hasTriggered = t == ActionResultType.SUCCESS; //block.onBlockActivated(world, pos, blockState,
+        InteractionResult t = block.use(blockState, level, pos, (Player) owner, InteractionHand.MAIN_HAND, null);
+        boolean hasTriggered = t == InteractionResult.SUCCESS; //block.onBlockActivated(world, pos, blockState,
         //            (PlayerEntity) this.owner, Hand.MAIN_HAND, Direction.UP, 0.5F, 0.5F, 0.5F);
         if (hasTriggered) {
           this.setRedstoneHasTriggered();
@@ -157,15 +157,15 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   private void setIsReturning() {
-    dataManager.set(IS_RETURNING, (byte) 1);
+    entityData.set(IS_RETURNING, (byte) 1);
   }
 
   private void setRedstoneHasTriggered() {
-    this.dataManager.set(REDSTONE_TRIGGERED, (byte) 1);
+    this.entityData.set(REDSTONE_TRIGGERED, (byte) 1);
   }
 
   private boolean hasTriggeredRedstoneAlready() {
-    return this.dataManager.get(REDSTONE_TRIGGERED) > 0;
+    return this.entityData.get(REDSTONE_TRIGGERED) > 0;
   }
 
   /**
@@ -173,22 +173,22 @@ public class BoomerangEntity extends ProjectileItemEntity {
    */
   private void dropAsItem() {
     if (!boomerangThrown.isEmpty()) {
-      Entity owner = func_234616_v_();
+      Entity owner = getOwner();
       //we have something to drop
-      if (owner instanceof PlayerEntity) {
-        PlayerEntity pl = (PlayerEntity) owner;
+      if (owner instanceof Player) {
+        Player pl = (Player) owner;
         //try to give it to the player the nicest way possible 
-        if (pl.getHeldItemMainhand().isEmpty()) {
-          pl.setHeldItem(Hand.MAIN_HAND, boomerangThrown);
+        if (pl.getMainHandItem().isEmpty()) {
+          pl.setItemInHand(InteractionHand.MAIN_HAND, boomerangThrown);
           boomerangThrown = ItemStack.EMPTY;
         }
         else {
-          owner.entityDropItem(boomerangThrown, 0.5F);
+          owner.spawnAtLocation(boomerangThrown, 0.5F);
           boomerangThrown = ItemStack.EMPTY;
         }
       }
       else {
-        UtilItemStack.drop(world, this.getPosition().up(), boomerangThrown);
+        UtilItemStack.drop(level, this.blockPosition().above(), boomerangThrown);
         boomerangThrown = ItemStack.EMPTY;
       }
     }
@@ -198,20 +198,20 @@ public class BoomerangEntity extends ProjectileItemEntity {
   @Override
   public void tick() {
     super.tick();
-    if (this.ticksExisted > TICKS_UNTIL_DEATH) {
+    if (this.tickCount > TICKS_UNTIL_DEATH) {
       dropAsItem();
       return;
     }
-    if (this.ticksExisted > TICKS_UNTIL_RETURN) {
+    if (this.tickCount > TICKS_UNTIL_RETURN) {
       setIsReturning();
     }
-    final BlockPos pos = this.getPosition();
-    Entity owner = func_234616_v_();
-    if (owner != null && UtilWorld.distanceBetweenHorizontal(pos, owner.getPosition()) < 1) {
+    final BlockPos pos = this.blockPosition();
+    Entity owner = getOwner();
+    if (owner != null && UtilWorld.distanceBetweenHorizontal(pos, owner.blockPosition()) < 1) {
       dropAsItem();
       return;
     }
-    if (hasTriggeredRedstoneAlready() == false && world.isAirBlock(pos) == false) {
+    if (hasTriggeredRedstoneAlready() == false && level.isEmptyBlock(pos) == false) {
       tryToggleRedstone(pos);
     }
     tryPickupNearby();
@@ -219,13 +219,13 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   @Override
-  protected void onImpact(RayTraceResult result) {
+  protected void onHit(HitResult result) {
     switch (result.getType()) {
       case BLOCK:
-        onImpactBlock((BlockRayTraceResult) result);
+        onImpactBlock((BlockHitResult) result);
       break;
       case ENTITY:
-        onImpactEntity((EntityRayTraceResult) result);
+        onImpactEntity((EntityHitResult) result);
       break;
       case MISS:
       default:
@@ -233,8 +233,8 @@ public class BoomerangEntity extends ProjectileItemEntity {
     }
   }
 
-  private void onImpactBlock(BlockRayTraceResult mop) {
-    BlockState block = world.getBlockState(mop.getPos());
+  private void onImpactBlock(BlockHitResult mop) {
+    BlockState block = level.getBlockState(mop.getBlockPos());
     //crops are 0.0, farmland 0.6, leaves are 0.2  etc
     //    if (this.canHarvest(block, mop.getPos(), mop.getFace())) {
     //      if (this.owner instanceof PlayerEntity) {
@@ -245,19 +245,19 @@ public class BoomerangEntity extends ProjectileItemEntity {
     //      //still break regardless of harvest 
     //      world.destroyBlock(mop.getPos(), false);
     //    }
-    if (mop.getFace() != Direction.UP
-        && block.isSolidSide(this.getEntityWorld(), mop.getPos(), mop.getFace())) {
+    if (mop.getDirection() != Direction.UP
+        && block.isFaceSturdy(this.getCommandSenderWorld(), mop.getBlockPos(), mop.getDirection())) {
       //ok return 
       this.setIsReturning();
     }
   }
 
-  private void onImpactEntity(EntityRayTraceResult entityRayTrace) {
+  private void onImpactEntity(EntityHitResult entityRayTrace) {
     Entity entityHit = entityRayTrace.getEntity();
     if (entityHit == null || !entityHit.isAlive()) {
       return;
     }
-    Entity owner = func_234616_v_();
+    Entity owner = getOwner();
     if (owner == entityHit) {
       //player catch it on return 
       dropAsItem();
@@ -265,15 +265,15 @@ public class BoomerangEntity extends ProjectileItemEntity {
     }
     switch (this.boomerangType) {
       case CARRY:
-        if (!entityHit.world.isRemote) {
+        if (!entityHit.level.isClientSide) {
           entityHit.startRiding(this);
         }
       break;
       case DAMAGE:
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
-          float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
-          boolean attackSucc = live.attackEntityFrom(DamageSource.causeThrownDamage(this, owner), damage);
+          float damage = Mth.nextFloat(level.random, DAMAGE_MIN, DAMAGE_MAX);
+          boolean attackSucc = live.hurt(DamageSource.thrown(this, owner), damage);
           if (attackSucc && live.isAlive() == false) {
             //           ("killed one");
           }
@@ -282,11 +282,11 @@ public class BoomerangEntity extends ProjectileItemEntity {
       case STUN:
         //!entityHit.getUniqueID().equals(owner.getUniqueID()) 
         if (entityHit != owner && entityHit instanceof LivingEntity
-            && !(entityHit instanceof PlayerEntity)) {
+            && !(entityHit instanceof Player)) {
           LivingEntity live = (LivingEntity) entityHit;
-          if (live.isPotionActive(PotionRegistry.PotionEffects.stun) == false) {
-            live.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
-            UtilSound.playSound(live, SoundEvents.ENTITY_IRON_GOLEM_ATTACK);
+          if (live.hasEffect(PotionRegistry.PotionEffects.stun) == false) {
+            live.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
+            UtilSound.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }
       break;
@@ -296,7 +296,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   @Override
-  protected float getGravityVelocity() {
+  protected float getGravity() {
     return -1 * 0.02F;
   }
 
@@ -306,7 +306,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
   }
 
   @Override
-  public IPacket<?> createSpawnPacket() {
+  public Packet<?> getAddEntityPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
   }
 }

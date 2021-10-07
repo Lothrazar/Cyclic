@@ -4,92 +4,92 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.net.PacketStorageBagScreen;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.LinkedList;
 import java.util.List;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
   private static final int BUTTON_OFFSET_Y = 10;
   private static final int BUTTON_GAP = 28;
 
-  public ScreenStorageBag(ContainerStorageBag screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenStorageBag(ContainerStorageBag screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.ySize = 256;
+    this.imageHeight = 256;
   }
 
   @Override
   protected void init() {
     super.init();
-    CompoundNBT nbt = this.container.bag.getOrCreateTag();
-    ToggleButton pickup = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y,
-        nbt, StringNBT.valueOf("pickup_mode"), StringNBT.valueOf("nothing"),
-        new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
-            new TranslationTextComponent("item.cyclic.storage_bag.disabled")));
+    CompoundTag nbt = this.menu.bag.getOrCreateTag();
+    ToggleButton pickup = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y,
+        nbt, StringTag.valueOf("pickup_mode"), StringTag.valueOf("nothing"),
+        new TranslatableComponent("item.cyclic.storage_bag.disabled.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
+            new TranslatableComponent("item.cyclic.storage_bag.disabled")));
     pickup.addState(
-        new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
-            new TranslationTextComponent("item.cyclic.storage_bag.pickup.everything")),
-        StringNBT.valueOf("everything"));
+        new TranslatableComponent("item.cyclic.storage_bag.pickup.everything.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
+            new TranslatableComponent("item.cyclic.storage_bag.pickup.everything")),
+        StringTag.valueOf("everything"));
     pickup.addState(
-        new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
-            new TranslationTextComponent("item.cyclic.storage_bag.pickup.filter")),
-        StringNBT.valueOf("filter"));
-    ToggleButton dump = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y + BUTTON_GAP,
-        nbt, StringNBT.valueOf("deposit_mode"), StringNBT.valueOf("nothing"),
-        new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
-            new TranslationTextComponent("item.cyclic.storage_bag.disabled")));
+        new TranslatableComponent("item.cyclic.storage_bag.pickup.filter.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
+            new TranslatableComponent("item.cyclic.storage_bag.pickup.filter")),
+        StringTag.valueOf("filter"));
+    ToggleButton dump = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y + BUTTON_GAP,
+        nbt, StringTag.valueOf("deposit_mode"), StringTag.valueOf("nothing"),
+        new TranslatableComponent("item.cyclic.storage_bag.disabled.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
+            new TranslatableComponent("item.cyclic.storage_bag.disabled")));
     dump.addState(
-        new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
-            new TranslationTextComponent("item.cyclic.storage_bag.deposit.dump")),
-        StringNBT.valueOf("dump"));
+        new TranslatableComponent("item.cyclic.storage_bag.deposit.dump.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
+            new TranslatableComponent("item.cyclic.storage_bag.deposit.dump")),
+        StringTag.valueOf("dump"));
     dump.addState(
-        new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
-            new TranslationTextComponent("item.cyclic.storage_bag.deposit.merge")),
-        StringNBT.valueOf("merge"));
-    ToggleButton refill = new ToggleButton(guiLeft - 18, guiTop + BUTTON_OFFSET_Y + BUTTON_GAP * 2,
-        nbt, StringNBT.valueOf("refill_mode"), StringNBT.valueOf("nothing"),
-        new TranslationTextComponent("item.cyclic.storage_bag.disabled.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
-            new TranslationTextComponent("item.cyclic.storage_bag.disabled")));
+        new TranslatableComponent("item.cyclic.storage_bag.deposit.merge.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
+            new TranslatableComponent("item.cyclic.storage_bag.deposit.merge")),
+        StringTag.valueOf("merge"));
+    ToggleButton refill = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y + BUTTON_GAP * 2,
+        nbt, StringTag.valueOf("refill_mode"), StringTag.valueOf("nothing"),
+        new TranslatableComponent("item.cyclic.storage_bag.disabled.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
+            new TranslatableComponent("item.cyclic.storage_bag.disabled")));
     refill.addState(
-        new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar.button"),
-        new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
-            new TranslationTextComponent("item.cyclic.storage_bag.refill.hotbar")),
-        StringNBT.valueOf("hotbar"));
+        new TranslatableComponent("item.cyclic.storage_bag.refill.hotbar.button"),
+        new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
+            new TranslatableComponent("item.cyclic.storage_bag.refill.hotbar")),
+        StringTag.valueOf("hotbar"));
     this.addButton(pickup);
     this.addButton(dump);
     this.addButton(refill);
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
+    this.renderTooltip(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int x, int y) {}
+  protected void renderLabels(PoseStack ms, int x, int y) {}
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
+  protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE);
-    this.minecraft.getTextureManager().bindTexture(TextureRegistry.INVENTORY_SIDEBAR);
-    Screen.blit(ms, this.guiLeft - 24, this.guiTop, 0, 0, 27, 101, 27, 101);
+    this.minecraft.getTextureManager().bind(TextureRegistry.INVENTORY_SIDEBAR);
+    Screen.blit(ms, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
     //this.container.bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
     //  for (int i = 0; i < h.getSlots(); i++) {
     //    int row = (int) i / 9;
@@ -104,18 +104,18 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
   private class ToggleButton extends Button {
 
-    List<ITextComponent> titles;
-    List<ITextComponent> tooltips;
-    List<INBT> nbtValues;
-    StringNBT nbtKey;
-    CompoundNBT nbt;
+    List<Component> titles;
+    List<Component> tooltips;
+    List<Tag> nbtValues;
+    StringTag nbtKey;
+    CompoundTag nbt;
     int index;
 
-    public ToggleButton(int x, int y, CompoundNBT nbt, StringNBT key, INBT defaultValue, ITextComponent defaultTitle, ITextComponent defaultTooltip) {
+    public ToggleButton(int x, int y, CompoundTag nbt, StringTag key, Tag defaultValue, Component defaultTitle, Component defaultTooltip) {
       super(x, y, 0, 20, defaultTitle, (p -> {
         //do nothing
       }), Button::renderToolTip);
-      this.width = ScreenStorageBag.this.font.getStringWidth(defaultTitle.getString()) + 8;
+      this.width = ScreenStorageBag.this.font.width(defaultTitle.getString()) + 8;
       index = 0;
       titles = new LinkedList<>();
       tooltips = new LinkedList<>();
@@ -128,7 +128,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     }
 
     @Override
-    public void renderToolTip(MatrixStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
       ScreenStorageBag.this.renderTooltip(matrixStack, tooltips.get(index), mouseX, mouseY);
     }
 
@@ -140,15 +140,15 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
       }
       this.setMessage(titles.get(index));
       PacketRegistry.INSTANCE.sendToServer(new PacketStorageBagScreen(
-          ScreenStorageBag.this.container.bag, ScreenStorageBag.this.container.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
+          ScreenStorageBag.this.menu.bag, ScreenStorageBag.this.menu.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
 
-    public void addState(ITextComponent title, ITextComponent tooltip, INBT nbtValue) {
+    public void addState(Component title, Component tooltip, Tag nbtValue) {
       this.titles.add(title);
       this.tooltips.add(tooltip);
       this.nbtValues.add(nbtValue);
-      if (this.nbt.get(nbtKey.getString()) != null &&
-          this.nbt.get(nbtKey.getString()).equals(nbtValue)) {
+      if (this.nbt.get(nbtKey.getAsString()) != null &&
+          this.nbt.get(nbtKey.getAsString()).equals(nbtValue)) {
         this.index = this.nbtValues.indexOf(nbtValue);
         this.setMessage(this.titles.get(index));
       }

@@ -5,8 +5,8 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -15,7 +15,7 @@ public class ContainerCake extends ContainerBase {
   private CyclicFile datFile;
   private ItemStackHandler mirror;
 
-  public ContainerCake(int id, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerCake(int id, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.inventory_cake, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
@@ -32,10 +32,10 @@ public class ContainerCake extends ContainerBase {
       this.addSlot(new SlotItemHandler(mirror, j, xPos, yPos) {
 
         @Override
-        public void onSlotChanged() {
-          super.onSlotChanged();
+        public void setChanged() {
+          super.setChanged();
           //sync it up with file system vers
-          datFile.inventory.setStackInSlot(this.getSlotIndex(), this.getStack());
+          datFile.inventory.setStackInSlot(this.getSlotIndex(), this.getItem());
         }
       });
     }
@@ -43,7 +43,7 @@ public class ContainerCake extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
+  public boolean stillValid(Player playerIn) {
     return true;
   }
 }

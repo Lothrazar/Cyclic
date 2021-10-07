@@ -2,99 +2,99 @@ package com.lothrazar.cyclic.block.apple;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import java.util.Random;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeHooks;
 
-public class AppleCropBlock extends BlockBase implements IGrowable {
+public class AppleCropBlock extends BlockBase implements BonemealableBlock {
 
   private static final int MAX_AGE = 7;
-  private static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+  private static final IntegerProperty AGE = BlockStateProperties.AGE_7;
   private static final VoxelShape[] SHAPES = new VoxelShape[] {
       //////////////         x1    y1    z1    x2     y2     z2
-      Block.makeCuboidShape(4.0D, 12.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 0
-      Block.makeCuboidShape(4.0D, 11.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 1
-      Block.makeCuboidShape(4.0D, 10.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 2
-      Block.makeCuboidShape(4.0D, 9.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 3
-      Block.makeCuboidShape(4.0D, 8.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 4
-      Block.makeCuboidShape(4.0D, 6.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 5
-      Block.makeCuboidShape(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 6
-      Block.makeCuboidShape(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D) };
+      Block.box(4.0D, 12.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 0
+      Block.box(4.0D, 11.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 1
+      Block.box(4.0D, 10.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 2
+      Block.box(4.0D, 9.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 3
+      Block.box(4.0D, 8.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 4
+      Block.box(4.0D, 6.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 5
+      Block.box(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D), // 6
+      Block.box(4.0D, 4.0D, 2.0D, 14.0D, 16.0D, 12.0D) };
   boolean canBonemeal = true;
 
   public AppleCropBlock(Block.Properties builder, boolean canBonemeal) {
-    super(builder.doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP));
+    super(builder.noCollission().randomTicks().instabreak().sound(SoundType.CROP));
     this.canBonemeal = canBonemeal;
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(AGE);
   }
 
   @Override
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
   @Override
-  public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+  public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
     return canBonemeal; //false if its a super-apple
   }
 
   @Override
-  public boolean ticksRandomly(BlockState state) {
-    return state.get(AGE) < MAX_AGE;
+  public boolean isRandomlyTicking(BlockState state) {
+    return state.getValue(AGE) < MAX_AGE;
   }
 
   @Override
-  public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-    return worldIn.getBlockState(pos.up()).isIn(BlockTags.LEAVES);
+  public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+    return worldIn.getBlockState(pos.above()).is(BlockTags.LEAVES);
   }
 
   @Override
-  public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-    int age = state.get(AGE);
-    if (age < MAX_AGE && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.rand.nextInt(5) == 0)) {
-      worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(age + 1)), 2);
+  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    int age = state.getValue(AGE);
+    if (age < MAX_AGE && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.random.nextInt(5) == 0)) {
+      worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(age + 1)), 2);
       ForgeHooks.onCropsGrowPost(worldIn, pos, state);
     }
   }
 
   @Override
-  public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-    return state.get(AGE) < MAX_AGE;
+  public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    return state.getValue(AGE) < MAX_AGE;
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return SHAPES[state.get(AGE)];
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    return SHAPES[state.getValue(AGE)];
   }
 
   @Override
-  public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-    worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(state.get(AGE) + 1)), 2);
+  public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(state.getValue(AGE) + 1)), 2);
   }
 }

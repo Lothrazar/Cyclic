@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.crafter;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -12,20 +12,20 @@ public class CrafterGridSlot extends SlotItemHandler {
   }
 
   @Override
-  public boolean isItemValid(ItemStack stack) {
+  public boolean mayPlace(ItemStack stack) {
     return true;
   }
 
   @Override
-  public boolean canTakeStack(PlayerEntity playerIn) {
+  public boolean mayPickup(Player playerIn) {
     return false;
   }
 
   @Override
-  public void putStack(ItemStack stack) {
+  public void set(ItemStack stack) {
     ItemStack copy = stack.copy();
     copy.setCount(1);
-    super.putStack(copy);
+    super.set(copy);
     stack.grow(1); //hack for JEI when they auto-fill recipes, re fill it after it drains so its a 'mock slot'
   }
 }

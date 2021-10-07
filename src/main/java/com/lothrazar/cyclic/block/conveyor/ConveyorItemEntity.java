@@ -1,102 +1,102 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.SSpawnObjectPacket;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.world.level.Level;
 
 public class ConveyorItemEntity extends ItemEntity {
 
-  public ConveyorItemEntity(World worldIn, double x, double y, double z, ItemStack stack) {
+  public ConveyorItemEntity(Level worldIn, double x, double y, double z, ItemStack stack) {
     super(EntityRegistry.conveyor_item, worldIn);
-    this.setPosition(x, y, z);
+    this.setPos(x, y, z);
     this.setItem(stack);
     this.lifespan = Integer.MAX_VALUE;
-    this.setNoDespawn();
-    this.setInfinitePickupDelay();
+    this.setExtendedLifetime();
+    this.setNeverPickUp();
   }
 
-  public ConveyorItemEntity(EntityType<ConveyorItemEntity> entityType, World world) {
+  public ConveyorItemEntity(EntityType<ConveyorItemEntity> entityType, Level world) {
     super(entityType, world);
   }
 
   @Override
-  public boolean cannotPickup() {
+  public boolean hasPickUpDelay() {
     return true;
   }
 
   @Override
-  public void setInfinitePickupDelay() {
-    super.setInfinitePickupDelay();
+  public void setNeverPickUp() {
+    super.setNeverPickUp();
   }
 
   @Override
-  public float getItemHover(float partialTicks) {
+  public float getSpin(float partialTicks) {
     return 0.0F;
   }
 
   @Override
   public void tick() {
-    if (this.world == null) {
+    if (this.level == null) {
       return;
     }
-    if (!(this.world.getBlockState(this.getPosition()).getBlock() instanceof BlockConveyor)) {
+    if (!(this.level.getBlockState(this.blockPosition()).getBlock() instanceof BlockConveyor)) {
       this.spawnRegularStack();
     }
     super.tick();
   }
 
   private void spawnRegularStack() {
-    ItemEntity e = new ItemEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ(), this.getItem());
-    this.world.addEntity(e);
+    ItemEntity e = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), this.getItem());
+    this.level.addFreshEntity(e);
     this.setItem(ItemStack.EMPTY);
     this.remove();
   }
 
   @Override
-  public void onCollideWithPlayer(PlayerEntity entityIn) {
+  public void playerTouch(Player entityIn) {
     //Do nothing
   }
 
   @Override
-  public IPacket<?> createSpawnPacket() {
-    return new SSpawnObjectPacket(this);
+  public Packet<?> getAddEntityPacket() {
+    return new ClientboundAddEntityPacket(this);
   }
 
   @Override
-  public void writeAdditional(CompoundNBT compound) {
+  public void addAdditionalSaveData(CompoundTag compound) {
     compound.putInt("Lifespan", lifespan);
-    if (this.getThrowerId() != null) {
-      compound.putUniqueId("Thrower", this.getThrowerId());
+    if (this.getThrower() != null) {
+      compound.putUUID("Thrower", this.getThrower());
     }
-    if (this.getOwnerId() != null) {
-      compound.putUniqueId("Owner", this.getOwnerId());
+    if (this.getOwner() != null) {
+      compound.putUUID("Owner", this.getOwner());
     }
     if (!this.getItem().isEmpty()) {
-      compound.put("Item", this.getItem().write(new CompoundNBT()));
+      compound.put("Item", this.getItem().save(new CompoundTag()));
     }
   }
 
   @Override
-  public void readAdditional(CompoundNBT compound) {
-    this.setNoDespawn();
-    this.setInfinitePickupDelay();
+  public void readAdditionalSaveData(CompoundTag compound) {
+    this.setExtendedLifetime();
+    this.setNeverPickUp();
     if (compound.contains("Lifespan")) {
       lifespan = compound.getInt("Lifespan");
     }
-    if (compound.hasUniqueId("Owner")) {
-      this.setOwnerId(compound.getUniqueId("Owner"));
+    if (compound.hasUUID("Owner")) {
+      this.setOwner(compound.getUUID("Owner"));
     }
-    if (compound.hasUniqueId("Thrower")) {
-      this.setThrowerId(compound.getUniqueId("Thrower"));
+    if (compound.hasUUID("Thrower")) {
+      this.setThrower(compound.getUUID("Thrower"));
     }
-    CompoundNBT compoundnbt = compound.getCompound("Item");
-    this.setItem(ItemStack.read(compoundnbt));
+    CompoundTag compoundnbt = compound.getCompound("Item");
+    this.setItem(ItemStack.of(compoundnbt));
     if (this.getItem().isEmpty()) {
       this.remove();
     }

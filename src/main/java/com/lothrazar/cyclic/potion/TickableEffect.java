@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.potion;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
-public abstract class TickableEffect extends Effect {
+public abstract class TickableEffect extends MobEffect {
 
-  protected TickableEffect(EffectType typeIn, int liquidColorIn) {
+  protected TickableEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
   }
 

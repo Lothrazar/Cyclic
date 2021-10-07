@@ -10,17 +10,17 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileCask extends TileEntityBase implements ITickableTileEntity {
+public class TileCask extends TileEntityBase implements TickableBlockEntity {
 
   private Map<Direction, Boolean> poweredSides;
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
@@ -46,25 +46,25 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
+      poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     this.flowing = (tag.getInt("flowing"));
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     for (Direction f : Direction.values()) {
-      tag.putBoolean("flow_" + f.getName2(), poweredSides.get(f));
+      tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
     tag.putInt("flowing", this.flowing);
-    CompoundNBT fluid = new CompoundNBT();
+    CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -157,7 +157,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
       if (this.poweredSides.get(exportToSide)) {
-        this.moveFluids(exportToSide, pos.offset(exportToSide), TRANSFER_FLUID_PER_TICK / 4, tank);
+        this.moveFluids(exportToSide, worldPosition.relative(exportToSide), TRANSFER_FLUID_PER_TICK / 4, tank);
       }
     }
   }

@@ -3,23 +3,25 @@ package com.lothrazar.cyclic.block.shapedata;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockShapedata extends BlockBase {
 
   public BlockShapedata(Properties properties) {
-    super(properties.hardnessAndResistance(1.8F));
+    super(properties.strength(1.8F));
     this.setHasGui();
   }
 
   @Override
   public void registerClient() {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.computer_shape, RenderShapedata::new);
-    ScreenManager.registerFactory(ContainerScreenRegistry.computer_shape, ScreenShapedata::new);
+    MenuScreens.register(ContainerScreenRegistry.computer_shape, ScreenShapedata::new);
   }
 
   @Override
@@ -28,7 +30,7 @@ public class BlockShapedata extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileShapedata();
   }
 }

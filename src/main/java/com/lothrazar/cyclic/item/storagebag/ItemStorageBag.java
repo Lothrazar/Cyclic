@@ -11,32 +11,34 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemStorageBag extends ItemBase {
 
@@ -50,20 +52,20 @@ public class ItemStorageBag extends ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    if (!worldIn.isRemote && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayerEntity) playerIn, new StorageBagContainerProvider(), playerIn.getPosition());
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    if (!worldIn.isClientSide && !playerIn.isCrouching()) {
+      NetworkHooks.openGui((ServerPlayer) playerIn, new StorageBagContainerProvider(), playerIn.blockPosition());
     }
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+    return super.use(worldIn, playerIn, handIn);
   }
 
   public static void setColour(ItemStack stack, DyeColor col) {
-    CompoundNBT tags = stack.getOrCreateTag();
+    CompoundTag tags = stack.getOrCreateTag();
     tags.putInt(NBT_COLOUR, col.getColorValue());
   }
 
   public static int getColour(ItemStack stack) {
-    CompoundNBT tags = stack.getOrCreateTag();
+    CompoundTag tags = stack.getOrCreateTag();
     if (tags.contains(NBT_COLOUR) == false) {
       return DyeColor.BROWN.getColorValue(); //BROWN as default for normal look
     }
@@ -71,15 +73,15 @@ public class ItemStorageBag extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    BlockPos pos = context.getPos();
-    Direction face = context.getFace();
-    World world = context.getWorld();
-    TileEntity te = world.getTileEntity(pos);
-    ItemStack bag = context.getItem();
+  public InteractionResult useOn(UseOnContext context) {
+    BlockPos pos = context.getClickedPos();
+    Direction face = context.getClickedFace();
+    Level world = context.getLevel();
+    BlockEntity te = world.getBlockEntity(pos);
+    ItemStack bag = context.getItemInHand();
     DepositMode mode = getDepositMode(bag);
     if (mode == DepositMode.NOTHING) {
-      return ActionResultType.PASS;
+      return InteractionResult.PASS;
     }
     ItemStackHandler handler = getInventory(bag);
     if (handler != null && te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
@@ -101,69 +103,69 @@ public class ItemStorageBag extends ItemBase {
         }
       }
       UtilSound.playSound(context.getPlayer(), SoundRegistry.BASEY);
-      return ActionResultType.SUCCESS;
+      return InteractionResult.SUCCESS;
     }
-    return ActionResultType.PASS;
+    return InteractionResult.PASS;
   }
 
   @Override
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
-    CompoundNBT nbt = stack.getOrCreateTag();
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    CompoundTag nbt = stack.getOrCreateTag();
     String pickupMode = nbt.getString(PickupMode.NBT);
     String depositMode = nbt.getString("deposit_mode");
     String refillMode = nbt.getString("refill_mode");
     if (!pickupMode.equals("")) {
-      tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.pickup",
-          new TranslationTextComponent(String.format(
+      tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
+          new TranslatableComponent(String.format(
               pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
-                  .mergeStyle(TextFormatting.GREEN));
+                  .withStyle(ChatFormatting.GREEN));
     }
     if (!depositMode.equals("")) {
-      tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.deposit",
-          new TranslationTextComponent(String.format(
+      tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
+          new TranslatableComponent(String.format(
               depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
-                  .mergeStyle(TextFormatting.BLUE));
+                  .withStyle(ChatFormatting.BLUE));
     }
     if (!refillMode.equals("")) {
-      tooltip.add(new TranslationTextComponent("item.cyclic.storage_bag.tooltip.refill",
-          new TranslationTextComponent(String.format(
+      tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
+          new TranslatableComponent(String.format(
               refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
-                  .mergeStyle(TextFormatting.RED));
+                  .withStyle(ChatFormatting.RED));
     }
   }
 
   @Override
   public void registerClient() {
-    ScreenManager.registerFactory(ContainerScreenRegistry.STORAGE_BAG, ScreenStorageBag::new);
+    MenuScreens.register(ContainerScreenRegistry.STORAGE_BAG, ScreenStorageBag::new);
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new StorageBagCapability(stack, nbt);
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
     timer++;
     if (timer < REFILL_TICKS) {
       return;
     }
     timer = 0;
-    if (!world.isRemote && entity instanceof PlayerEntity) {
+    if (!world.isClientSide && entity instanceof Player) {
       if (getRefillMode(stack) == RefillMode.HOTBAR) {
-        tryRefillHotbar(stack, (PlayerEntity) entity);
+        tryRefillHotbar(stack, (Player) entity);
       }
     }
   }
 
-  private void tryRefillHotbar(ItemStack bag, PlayerEntity player) {
+  private void tryRefillHotbar(ItemStack bag, Player player) {
     ItemStackHandler handler = getInventory(bag);
     if (handler == null) {
       return;
     }
-    for (int i = 0; i < Math.min(9, player.inventory.getSizeInventory()); i++) { //hotbar is 0-8, but do a Math.min in case some mod reduces inventory size? Idk, why not.
-      ItemStack stack = player.inventory.getStackInSlot(i);
+    for (int i = 0; i < Math.min(9, player.inventory.getContainerSize()); i++) { //hotbar is 0-8, but do a Math.min in case some mod reduces inventory size? Idk, why not.
+      ItemStack stack = player.inventory.getItem(i);
       if (!stack.isEmpty()) {
         //we found a non
         int slot = getLastSlotWithStack(bag, stack);
@@ -178,7 +180,7 @@ public class ItemStorageBag extends ItemBase {
     }
   }
 
-  private boolean refillHotbar(ItemStack bag, PlayerEntity player, int bagSlot, int invSlot) {
+  private boolean refillHotbar(ItemStack bag, Player player, int bagSlot, int invSlot) {
     ItemStackHandler handler = getInventory(bag);
     boolean success = false;
     if (handler != null) {
@@ -250,7 +252,7 @@ public class ItemStorageBag extends ItemBase {
   public static PickupMode getPickupMode(ItemStack stack) {
     String mode = stack.getOrCreateTag().getString(PickupMode.NBT);
     for (int i = 0; i < PickupMode.values().length; i++) {
-      if (mode.equals(PickupMode.values()[i].getString())) {
+      if (mode.equals(PickupMode.values()[i].getSerializedName())) {
         return PickupMode.values()[i];
       }
     }
@@ -260,7 +262,7 @@ public class ItemStorageBag extends ItemBase {
   private static DepositMode getDepositMode(ItemStack stack) {
     String mode = stack.getOrCreateTag().getString(DepositMode.NBT);
     for (int i = 0; i < DepositMode.values().length; i++) {
-      if (mode.equals(DepositMode.values()[i].getString())) {
+      if (mode.equals(DepositMode.values()[i].getSerializedName())) {
         return DepositMode.values()[i];
       }
     }
@@ -268,19 +270,19 @@ public class ItemStorageBag extends ItemBase {
   }
 
   private static RefillMode getRefillMode(ItemStack stack) {
-    String mode = stack.getOrCreateTag().getString();
+    String mode = stack.getOrCreateTag().getAsString();
     for (int i = 0; i < RefillMode.values().length; i++) {
-      if (mode.equals(RefillMode.values()[i].getString())) {
+      if (mode.equals(RefillMode.values()[i].getSerializedName())) {
         return RefillMode.values()[i];
       }
     }
     return RefillMode.NOTHING;
   }
 
-  public static List<Integer> getAllBagSlots(PlayerEntity player) {
+  public static List<Integer> getAllBagSlots(Player player) {
     List<Integer> slots = new ArrayList<>();
-    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-      if (isBag(player.inventory.getStackInSlot(i))) {
+    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+      if (isBag(player.inventory.getItem(i))) {
         slots.add(i);
       }
     }
@@ -288,9 +290,9 @@ public class ItemStorageBag extends ItemBase {
   }
 
   //unused but possibly useful
-  public static int getFirstBagSlot(PlayerEntity player) {
-    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-      if (isBag(player.inventory.getStackInSlot(i))) {
+  public static int getFirstBagSlot(Player player) {
+    for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+      if (isBag(player.inventory.getItem(i))) {
         return i;
       }
     }

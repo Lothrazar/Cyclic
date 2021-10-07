@@ -2,34 +2,34 @@ package com.lothrazar.cyclic.item.torchthrow;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.WallTorchBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class EntityTorchBolt extends ProjectileItemEntity {
+public class EntityTorchBolt extends ThrowableItemProjectile {
 
-  public EntityTorchBolt(EntityType<? extends ProjectileItemEntity> entityType, World world) {
+  public EntityTorchBolt(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
     super(entityType, world);
   }
 
-  public EntityTorchBolt(LivingEntity livingEntityIn, World worldIn) {
+  public EntityTorchBolt(LivingEntity livingEntityIn, Level worldIn) {
     super(EntityRegistry.torchbolt, livingEntityIn, worldIn);
   }
 
@@ -39,84 +39,84 @@ public class EntityTorchBolt extends ProjectileItemEntity {
   }
 
   @Override
-  protected void onImpact(RayTraceResult result) {
-    if (this.world.isRemote) {
+  protected void onHit(HitResult result) {
+    if (this.level.isClientSide) {
       return;
     }
-    RayTraceResult.Type type = result.getType();
-    if (type == RayTraceResult.Type.ENTITY) {
+    HitResult.Type type = result.getType();
+    if (type == HitResult.Type.ENTITY) {
       //damage entity by zero
       //drop torch
-      EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) result;
+      EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.attackEntityFrom(DamageSource.causeThrownDamage(this, this.func_234616_v_()), 0);
+        target.hurt(DamageSource.thrown(this, this.getOwner()), 0);
       }
-      UtilItemStack.drop(world, target.getPosition(), new ItemStack(Items.TORCH));
+      UtilItemStack.drop(level, target.blockPosition(), new ItemStack(Items.TORCH));
     }
-    else if (type == RayTraceResult.Type.BLOCK) {
-      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
-      Direction offset = bRayTrace.getFace();
-      BlockPos pos = bRayTrace.getPos().offset(offset);
+    else if (type == HitResult.Type.BLOCK) {
+      BlockHitResult bRayTrace = (BlockHitResult) result;
+      Direction offset = bRayTrace.getDirection();
+      BlockPos pos = bRayTrace.getBlockPos().relative(offset);
       boolean itPlaced = false;
-      if (world.isAirBlock(pos) || world.getBlockState(pos).getMaterial().isReplaceable()) {
+      if (level.isEmptyBlock(pos) || level.getBlockState(pos).getMaterial().isReplaceable()) {
         BlockState newstate = null;
         if (offset == Direction.UP || offset == Direction.DOWN) {
-          newstate = Blocks.TORCH.getDefaultState();
-          if (newstate.isValidPosition(world, pos)) {
-            itPlaced = world.setBlockState(pos, newstate);
+          newstate = Blocks.TORCH.defaultBlockState();
+          if (newstate.canSurvive(level, pos)) {
+            itPlaced = level.setBlockAndUpdate(pos, newstate);
           }
           else {
             //HAX for making it feel better tu use, these almost never fire 
-            if (newstate.isValidPosition(world, pos.down())
-                && world.isAirBlock(pos.down())) {
-              itPlaced = world.setBlockState(pos.down(), newstate);
+            if (newstate.canSurvive(level, pos.below())
+                && level.isEmptyBlock(pos.below())) {
+              itPlaced = level.setBlockAndUpdate(pos.below(), newstate);
             }
             else {
-              if (newstate.isValidPosition(world, pos.up())
-                  && world.isAirBlock(pos.up())) {
-                itPlaced = world.setBlockState(pos.up(), newstate);
+              if (newstate.canSurvive(level, pos.above())
+                  && level.isEmptyBlock(pos.above())) {
+                itPlaced = level.setBlockAndUpdate(pos.above(), newstate);
               }
             }
           }
         }
         else {
-          BlockState testMeState = Blocks.WALL_TORCH.getDefaultState();
+          BlockState testMeState = Blocks.WALL_TORCH.defaultBlockState();
           for (Direction direction : Direction.values()) {
             if (direction.getAxis().isHorizontal()) {
               Direction direction1 = direction.getOpposite();
-              testMeState = testMeState.with(WallTorchBlock.HORIZONTAL_FACING, direction1);
-              if (testMeState.isValidPosition(world, pos)) {
+              testMeState = testMeState.setValue(WallTorchBlock.FACING, direction1);
+              if (testMeState.canSurvive(level, pos)) {
                 newstate = testMeState;
               }
             }
           }
           //          newstate = Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.HORIZONTAL_FACING, offset);
-          if (newstate != null && world.isAirBlock(pos)) {
-            itPlaced = world.setBlockState(pos, newstate);
+          if (newstate != null && level.isEmptyBlock(pos)) {
+            itPlaced = level.setBlockAndUpdate(pos, newstate);
           }
         }
       }
       if (!itPlaced) {
         //we hit grass or a slab or something
-        UtilItemStack.drop(world, this.getPosition(), new ItemStack(Items.TORCH));
+        UtilItemStack.drop(level, this.blockPosition(), new ItemStack(Items.TORCH));
       }
     }
     this.remove();
   }
 
   @Override
-  public void writeAdditional(CompoundNBT tag) {
-    super.writeAdditional(tag);
+  public void addAdditionalSaveData(CompoundTag tag) {
+    super.addAdditionalSaveData(tag);
   }
 
   @Override
-  public void readAdditional(CompoundNBT tag) {
-    super.readAdditional(tag);
+  public void readAdditionalSaveData(CompoundTag tag) {
+    super.readAdditionalSaveData(tag);
   }
 
   @Override
-  public IPacket<?> createSpawnPacket() {
+  public Packet<?> getAddEntityPacket() {
     return NetworkHooks.getEntitySpawningPacket(this);
   }
 }

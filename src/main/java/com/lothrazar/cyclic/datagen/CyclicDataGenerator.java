@@ -6,9 +6,9 @@ import com.lothrazar.cyclic.block.conveyor.ConveyorSpeed;
 import com.lothrazar.cyclic.block.conveyor.ConveyorType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -39,9 +39,9 @@ public class CyclicDataGenerator {
     protected void registerStatesAndModels() {
       VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.CONVEYOR);
       builder.forAllStates((state -> {
-        ConveyorType type = state.get(BlockConveyor.TYPE);
-        ConveyorSpeed speed = state.get(BlockConveyor.SPEED);
-        Direction facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+        ConveyorType type = state.getValue(BlockConveyor.TYPE);
+        ConveyorSpeed speed = state.getValue(BlockConveyor.SPEED);
+        Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
         int y;
         switch (facing) {
           case EAST:
@@ -56,7 +56,7 @@ public class CyclicDataGenerator {
           default:
             y = 0;
         }
-        String location = String.format("block/conveyor/conveyor_%s_%s", speed.getString(), type.getString());
+        String location = String.format("block/conveyor/conveyor_%s_%s", speed.getSerializedName(), type.getSerializedName());
         ModelFile.UncheckedModelFile model = new ModelFile.UncheckedModelFile(new ResourceLocation(ModCyclic.MODID, location));
         return ConfiguredModel.builder()
             .rotationX(0)

@@ -29,26 +29,28 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantGrowth extends EnchantBase {
 
   private static final double ODDS_ROTATE = 0.04;
 
-  public EnchantGrowth(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantGrowth(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -72,28 +74,28 @@ public class EnchantGrowth extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     return canApplyAtEnchantingTable(stack);
   }
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     LivingEntity entity = event.getEntityLiving();
-    if (entity instanceof PlayerEntity) {
-      PlayerEntity p = (PlayerEntity) entity;
+    if (entity instanceof Player) {
+      Player p = (Player) entity;
       if (p.isSpectator() || !p.isAlive()) {
         return;
       }
     }
     //Ticking
-    int level = getCurrentLevelTool(entity.getHeldItem(Hand.MAIN_HAND));
-    if (level > 0 && !entity.world.isRemote) {
-      if (entity.world.rand.nextDouble() > ODDS_ROTATE / level) {
+    int level = getCurrentLevelTool(entity.getItemInHand(InteractionHand.MAIN_HAND));
+    if (level > 0 && !entity.level.isClientSide) {
+      if (entity.level.random.nextDouble() > ODDS_ROTATE / level) {
         return; //slow the dice down
       }
-      final int growthLimit = level * 2 + (entity.world.isRaining() ? 4 : 1); //faster when raining too 
+      final int growthLimit = level * 2 + (entity.level.isRaining() ? 4 : 1); //faster when raining too 
       int grown = 0;
-      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level + 2);
+      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.blockPosition().below(), level + 2);
       shape = UtilShape.repeatShapeByHeight(shape, 2);
       Collections.shuffle(shape);
       for (int i = 0; i < shape.size(); i++) {
@@ -102,22 +104,22 @@ public class EnchantGrowth extends EnchantBase {
         }
         //do one
         BlockPos pos = shape.get(i);
-        BlockState target = entity.world.getBlockState(pos);
+        BlockState target = entity.level.getBlockState(pos);
         IntegerProperty propAge = TileHarvester.getAgeProp(target);
         if (propAge == null) {
           continue;
         }
-        int maxAge = Collections.max(propAge.getAllowedValues());
-        Integer currentAge = target.get(propAge);
+        int maxAge = Collections.max(propAge.getPossibleValues());
+        Integer currentAge = target.getValue(propAge);
         if (currentAge < maxAge) {
-          if (entity.world.setBlockState(pos,
-              target.with(propAge, currentAge + 1))) {
+          if (entity.level.setBlockAndUpdate(pos,
+              target.setValue(propAge, currentAge + 1))) {
             grown++;
           }
         }
       }
       if (grown > 0) {
-        UtilItemStack.damageItem(entity, entity.getHeldItem(Hand.MAIN_HAND));
+        UtilItemStack.damageItem(entity, entity.getItemInHand(InteractionHand.MAIN_HAND));
       }
     }
   }

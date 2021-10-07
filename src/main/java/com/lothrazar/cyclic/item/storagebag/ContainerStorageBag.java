@@ -3,11 +3,11 @@ package com.lothrazar.cyclic.item.storagebag;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -17,19 +17,19 @@ public class ContainerStorageBag extends ContainerBase {
   public int slot;
   public int slots;
 
-  public ContainerStorageBag(int i, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerStorageBag(int i, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.STORAGE_BAG, i);
-    if (player.getHeldItemMainhand().getItem() instanceof ItemStorageBag) {
-      this.bag = player.getHeldItemMainhand();
-      this.slot = player.inventory.currentItem;
+    if (player.getMainHandItem().getItem() instanceof ItemStorageBag) {
+      this.bag = player.getMainHandItem();
+      this.slot = player.inventory.selected;
     }
-    else if (player.getHeldItemOffhand().getItem() instanceof ItemStorageBag) {
-      this.bag = player.getHeldItemOffhand();
+    else if (player.getOffhandItem().getItem() instanceof ItemStorageBag) {
+      this.bag = player.getOffhandItem();
       this.slot = 40;
     }
     else {
-      for (int x = 0; x < playerInventory.getSizeInventory(); x++) {
-        ItemStack stack = playerInventory.getStackInSlot(x);
+      for (int x = 0; x < playerInventory.getContainerSize(); x++) {
+        ItemStack stack = playerInventory.getItem(x);
         if (stack.getItem() instanceof ItemStorageBag) {
           bag = stack;
           slot = x;
@@ -50,9 +50,9 @@ public class ContainerStorageBag extends ContainerBase {
         this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
 
           @Override
-          public void onSlotChange(ItemStack oldStackIn, ItemStack newStackIn) {
+          public void onQuickCraft(ItemStack oldStackIn, ItemStack newStackIn) {
             ItemStorageBag.setTimestamp(bag);
-            super.onSlotChange(oldStackIn, newStackIn);
+            super.onQuickCraft(oldStackIn, newStackIn);
           }
         });
       }
@@ -61,27 +61,27 @@ public class ContainerStorageBag extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
+  public boolean stillValid(Player playerIn) {
     return true;
   }
 
   @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     ItemStorageBag.setTimestamp(bag);
-    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
-      if (this.inventorySlots.get(slotId).getStack().getItem() instanceof ItemStorageBag) {
+    if (!(slotId < 0 || slotId >= this.slots.size())) {
+      if (this.slots.get(slotId).getItem().getItem() instanceof ItemStorageBag) {
         // if its a normal click with a Dye item, then update stack color
         if (clickTypeIn == ClickType.PICKUP) {
-          ItemStack mouseStack = player.inventory.getItemStack();
+          ItemStack mouseStack = player.inventory.getCarried();
           if (mouseStack.getItem() instanceof DyeItem) {
             DyeItem dye = (DyeItem) mouseStack.getItem();
-            ItemStorageBag.setColour(inventorySlots.get(slotId).getStack(), dye.getDyeColor());
+            ItemStorageBag.setColour(slots.get(slotId).getItem(), dye.getDyeColor());
           }
         }
         //lock the bag in place by returning empty
         return ItemStack.EMPTY;
       }
     }
-    return super.slotClick(slotId, dragType, clickTypeIn, player);
+    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 }

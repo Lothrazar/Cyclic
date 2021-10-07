@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -29,7 +29,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableItem extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileCableItem extends TileEntityBase implements TickableBlockEntity, MenuProvider {
 
   private static final int FLOW_QTY = 64; // fixed, for non-extract motion
   private int extractQty = 64; // default
@@ -60,7 +60,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   @Override
   public void tick() {
     for (Direction extractSide : Direction.values()) {
-      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
       if (connection.isExtraction()) {
         IItemHandler sideHandler = flow.get(extractSide).orElse(null);
         tryExtract(sideHandler, extractSide, extractQty, filter);
@@ -82,7 +82,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
         if (outgoingSide == incomingSide) {
           continue;
         }
-        EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+        EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
         if (connection.isExtraction() || connection.isBlocked()) {
           continue;
         }
@@ -106,34 +106,34 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
 
   @SuppressWarnings("unchecked")
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     extractQty = tag.getInt("extractCount");
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
       item.ifPresent(h -> {
-        CompoundNBT itemTag = tag.getCompound("item" + f.toString());
-        ((INBTSerializable<CompoundNBT>) h).deserializeNBT(itemTag);
+        CompoundTag itemTag = tag.getCompound("item" + f.toString());
+        ((INBTSerializable<CompoundTag>) h).deserializeNBT(itemTag);
       });
     }
     filter.deserializeNBT(tag.getCompound("filter"));
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.put("filter", filter.serializeNBT());
     tag.putInt("extractCount", extractQty);
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
       item.ifPresent(h -> {
-        CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+        CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
         tag.put("item" + f.toString(), compound);
       });
     }
-    return super.write(tag);
+    return super.save(tag);
   }
 
   @Override
@@ -147,12 +147,12 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new StringTextComponent(getType().getRegistryName().getPath());
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-    return new ContainerCableItem(i, world, pos, playerInventory, playerEntity);
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerCableItem(i, level, worldPosition, playerInventory, playerEntity);
   }
 }

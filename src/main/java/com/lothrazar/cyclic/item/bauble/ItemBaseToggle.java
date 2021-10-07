@@ -3,16 +3,18 @@ package com.lothrazar.cyclic.item.bauble;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import java.util.List;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
 
@@ -27,21 +29,21 @@ public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
    * @return
    */
   public boolean canUse(ItemStack stack) {
-    return stack.getDamage() < stack.getMaxDamage() - 1;
+    return stack.getDamageValue() < stack.getMaxDamage() - 1;
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    super.addInformation(stack, worldIn, tooltip, flagIn);
-    TranslationTextComponent t = new TranslationTextComponent("item.cyclic.bauble.on." + this.isOn(stack));
-    t.mergeStyle(TextFormatting.DARK_GRAY);
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    TranslatableComponent t = new TranslatableComponent("item.cyclic.bauble.on." + this.isOn(stack));
+    t.withStyle(ChatFormatting.DARK_GRAY);
     tooltip.add(t);
   }
 
   @Override
-  public void toggle(PlayerEntity player, ItemStack held) {
-    CompoundNBT tag = held.getOrCreateTag();
+  public void toggle(Player player, ItemStack held) {
+    CompoundTag tag = held.getOrCreateTag();
     tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
     held.setTag(tag);
   }
@@ -57,7 +59,7 @@ public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public boolean hasEffect(ItemStack stack) {
+  public boolean isFoil(ItemStack stack) {
     return isOn(stack);
   }
 }

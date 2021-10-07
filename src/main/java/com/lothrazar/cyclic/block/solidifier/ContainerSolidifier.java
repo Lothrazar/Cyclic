@@ -4,12 +4,12 @@ import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.ItemStackHandler;
@@ -19,9 +19,9 @@ public class ContainerSolidifier extends ContainerBase {
 
   TileSolidifier tile;
 
-  public ContainerSolidifier(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+  public ContainerSolidifier(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.solidifier, windowId);
-    tile = (TileSolidifier) world.getTileEntity(pos);
+    tile = (TileSolidifier) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     ItemStackHandler h = tile.inputSlots;
@@ -31,7 +31,7 @@ public class ContainerSolidifier extends ContainerBase {
     addSlot(new SlotItemHandler(tile.outputSlots, 0, 121, 31) {
 
       @Override
-      public boolean isItemValid(ItemStack stack) {
+      public boolean mayPlace(ItemStack stack) {
         return false;
       }
     });
@@ -46,7 +46,7 @@ public class ContainerSolidifier extends ContainerBase {
   }
 
   @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return isWithinUsableDistance(IWorldPosCallable.of(tile.getWorld(), tile.getPos()), playerEntity, BlockRegistry.SOLIDIFIER);
+  public boolean stillValid(Player playerIn) {
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.SOLIDIFIER);
   }
 }

@@ -3,13 +3,13 @@ package com.lothrazar.cyclic.net;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import java.util.function.Supplier;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketTileString extends PacketBase {
@@ -29,36 +29,36 @@ public class PacketTileString extends PacketBase {
 
   public static void handle(PacketTileString message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      ServerPlayerEntity player = ctx.get().getSender();
-      World world = player.getEntityWorld();
-      TileEntity tile = world.getTileEntity(message.pos);
+      ServerPlayer player = ctx.get().getSender();
+      Level world = player.getCommandSenderWorld();
+      BlockEntity tile = world.getBlockEntity(message.pos);
       if (tile instanceof TileEntityBase) {
         TileEntityBase base = (TileEntityBase) tile;
         base.setFieldString(message.field, message.value);
         BlockState oldState = world.getBlockState(message.pos);
-        world.notifyBlockUpdate(message.pos, oldState, oldState, 3);
+        world.sendBlockUpdated(message.pos, oldState, oldState, 3);
       }
     });
     message.done(ctx);
   }
 
-  public static PacketTileString decode(PacketBuffer buf) {
+  public static PacketTileString decode(FriendlyByteBuf buf) {
     PacketTileString p = new PacketTileString();
     p.field = buf.readInt();
-    CompoundNBT tags = buf.readCompoundTag();
+    CompoundTag tags = buf.readNbt();
     p.pos = new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z"));
     //something in vanilla or forge marks this as CLIENT ONLY. unless i give it a max length
-    p.value = buf.readString(32767);
+    p.value = buf.readUtf(32767);
     return p;
   }
 
-  public static void encode(PacketTileString msg, PacketBuffer buf) {
+  public static void encode(PacketTileString msg, FriendlyByteBuf buf) {
     buf.writeInt(msg.field);
-    CompoundNBT tags = new CompoundNBT();
+    CompoundTag tags = new CompoundTag();
     tags.putInt("x", msg.pos.getX());
     tags.putInt("y", msg.pos.getY());
     tags.putInt("z", msg.pos.getZ());
-    buf.writeCompoundTag(tags);
-    buf.writeString(msg.value);
+    buf.writeNbt(tags);
+    buf.writeUtf(msg.value);
   }
 }

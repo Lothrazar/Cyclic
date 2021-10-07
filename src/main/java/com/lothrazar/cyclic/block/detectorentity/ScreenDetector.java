@@ -9,9 +9,9 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
 
 public class ScreenDetector extends ScreenBase<ContainerDetector> {
 
@@ -19,7 +19,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
   private ButtonMachine btnComp;
   private ButtonMachineField btnRender;
 
-  public ScreenDetector(ContainerDetector screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+  public ScreenDetector(ContainerDetector screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
   }
 
@@ -27,70 +27,70 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
   public void init() {
     super.init();
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 18;
+    x = leftPos + 8;
+    y = topPos + 18;
     btnRender = addButton(new ButtonMachineField(x, y, TileDetector.Fields.RENDER.ordinal(),
-        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
+        menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x += 22;
     int w = 50, h = 20;
     btnEntity = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetector.Fields.ENTITYTYPE.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
-          container.tile.getField(f) + 1, container.tile.getPos()));
+          menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     x += 58;
     btnComp = addButton(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetector.Fields.GREATERTHAN.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
-          container.tile.getField(f) + 1, container.tile.getPos()));
+          menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     //sliders
     w = 160;
     h = 20;
-    x = guiLeft + 8;
+    x = leftPos + 8;
     y += h + 1;
     int f = TileDetector.Fields.RANGEX.ordinal();
-    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 64, container.tile.getField(f)));
+    GuiSliderInteger red = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 64, menu.tile.getField(f)));
     red.setTooltip("cyclic.detector.rangex");
     y += h + 1;
     f = TileDetector.Fields.RANGEY.ordinal();
-    GuiSliderInteger rangey = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 64, container.tile.getField(f)));
+    GuiSliderInteger rangey = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 64, menu.tile.getField(f)));
     rangey.setTooltip("cyclic.detector.rangey");
     y += h + 1;
     f = TileDetector.Fields.RANGEZ.ordinal();
-    GuiSliderInteger rangez = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 64, container.tile.getField(f)));
+    GuiSliderInteger rangez = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 64, menu.tile.getField(f)));
     rangez.setTooltip("cyclic.detector.rangez");
     y += h + 1;
     f = TileDetector.Fields.LIMIT.ordinal();
-    GuiSliderInteger limit = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        0, 64, container.tile.getField(f)));
+    GuiSliderInteger limit = this.addButton(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+        0, 64, menu.tile.getField(f)));
     limit.setTooltip("cyclic.detector.limit");
   }
 
   @Override
-  public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(ms, mouseX, mouseY);
+    this.renderTooltip(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    btnRender.onValueUpdate(container.tile);
+    btnRender.onValueUpdate(menu.tile);
     btnEntity.setTooltip(UtilChat.lang("cyclic.detector.entitytype.tooltip"));
-    btnEntity.setMessage(UtilChat.ilang("cyclic.entitytype." + container.tile.entityFilter.name().toLowerCase()));
+    btnEntity.setMessage(UtilChat.ilang("cyclic.entitytype." + menu.tile.entityFilter.name().toLowerCase()));
     btnComp.setTooltip(UtilChat.lang("cyclic.detector.compare.tooltip"));
     btnComp.setMessage(UtilChat.ilang("cyclic.detector.compare" +
-        container.tile.getField(TileDetector.Fields.GREATERTHAN.ordinal())));
+        menu.tile.getField(TileDetector.Fields.GREATERTHAN.ordinal())));
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_PLAIN);
   }
 }

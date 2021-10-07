@@ -28,13 +28,15 @@ import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemHorseEnder extends ItemEntityInteractable {
 
@@ -45,8 +47,8 @@ public class ItemHorseEnder extends ItemEntityInteractable {
   }
 
   public static void onSuccess(LivingEntity liv) {
-    UtilSound.playSound(liv, SoundEvents.ENTITY_GENERIC_DRINK);
-    UtilParticle.spawnParticle(liv.world, ParticleTypes.CRIT, liv.getPosition(), 3);
+    UtilSound.playSound(liv, SoundEvents.GENERIC_DRINK);
+    UtilParticle.spawnParticle(liv.level, ParticleTypes.CRIT, liv.blockPosition(), 3);
     increment(liv, -1);
     //    int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
     //    UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);
@@ -60,20 +62,20 @@ public class ItemHorseEnder extends ItemEntityInteractable {
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
-        && event.getTarget() instanceof AbstractHorseEntity
-        && !event.getPlayer().getCooldownTracker().hasCooldown(this)) {
+        && event.getTarget() instanceof AbstractHorse
+        && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
       // lets go 
-      AbstractHorseEntity ahorse = (AbstractHorseEntity) event.getTarget();
-      if (event.getTarget() instanceof AbstractChestedHorseEntity
-          && ahorse.isTame()) {
-        AbstractChestedHorseEntity ss = (AbstractChestedHorseEntity) event.getTarget();
-        ss.setChested(true);
+      AbstractHorse ahorse = (AbstractHorse) event.getTarget();
+      if (event.getTarget() instanceof AbstractChestedHorse
+          && ahorse.isTamed()) {
+        AbstractChestedHorse ss = (AbstractChestedHorse) event.getTarget();
+        ss.setChest(true);
       }
       //do the thing 
       increment(ahorse, 1);
       event.setCanceled(true);
-      event.setCancellationResult(ActionResultType.SUCCESS);
-      event.getPlayer().getCooldownTracker().setCooldown(this, 1);
+      event.setCancellationResult(InteractionResult.SUCCESS);
+      event.getPlayer().getCooldowns().addCooldown(this, 1);
       event.getItemStack().shrink(1);
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
       UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("item.cyclic.carrot_ender.count") + current);

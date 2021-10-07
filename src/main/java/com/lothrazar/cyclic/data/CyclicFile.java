@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.ModCyclic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -33,7 +33,7 @@ public class CyclicFile {
     this.playerId = playerId;
   }
 
-  public void read(CompoundNBT tag) {
+  public void read(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     flyTicks = tag.getInt("flyTicks");
     spectatorTicks = tag.getInt("spectatorTicks");
@@ -41,26 +41,26 @@ public class CyclicFile {
     stepHeightForceOff = tag.getBoolean("stepHeightForceOff");
     stepHeight = tag.getBoolean("stepHeight");
     if (tag.contains("tasks")) {
-      ListNBT glist = tag.getList("tasks", Constants.NBT.TAG_COMPOUND);
+      ListTag glist = tag.getList("tasks", Constants.NBT.TAG_COMPOUND);
       for (int i = 0; i < glist.size(); i++) {
-        CompoundNBT row = glist.getCompound(i);
+        CompoundTag row = glist.getCompound(i);
         todoTasks.add(row.getString("todo"));
       }
     }
   }
 
-  public CompoundNBT write() {
-    CompoundNBT tag = new CompoundNBT();
+  public CompoundTag write() {
+    CompoundTag tag = new CompoundTag();
     tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("flyTicks", flyTicks);
     tag.putInt("spectatorTicks", spectatorTicks);
     tag.putBoolean("stepHeight", stepHeight);
     tag.putBoolean("stepHeightForceOff", stepHeightForceOff);
     tag.putBoolean("storageVisible", storageVisible);
-    ListNBT glist = new ListNBT();
+    ListTag glist = new ListTag();
     int i = 0;
     for (String t : todoTasks) {
-      CompoundNBT row = new CompoundNBT();
+      CompoundTag row = new CompoundTag();
       row.putInt("index", i);
       row.putString("todo", t);
       glist.add(row);

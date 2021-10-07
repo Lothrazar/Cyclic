@@ -1,28 +1,28 @@
 package com.lothrazar.cyclic.item.craftingsimple;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
-public class CraftingStickContainerProvider implements INamedContainerProvider {
+public class CraftingStickContainerProvider implements MenuProvider {
 
-  private Hand hand;
+  private InteractionHand hand;
 
-  public CraftingStickContainerProvider(Hand handIn) {
+  public CraftingStickContainerProvider(InteractionHand handIn) {
     this.hand = handIn;
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    return new TranslationTextComponent("item.cyclic.crafting_stick");
+  public Component getDisplayName() {
+    return new TranslatableComponent("item.cyclic.crafting_stick");
   }
 
   @Override
-  public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player player) {
     return new CraftingStickContainer(i, playerInventory, player, hand);
   }
 }

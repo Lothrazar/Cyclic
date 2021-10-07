@@ -25,15 +25,17 @@ package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.entity.passive.horse.ZombieHorseEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.animal.horse.ZombieHorse;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemHorseToxic extends ItemEntityInteractable {
 
@@ -44,21 +46,21 @@ public class ItemHorseToxic extends ItemEntityInteractable {
   @Override
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
-        && event.getTarget() instanceof HorseEntity
+        && event.getTarget() instanceof Horse
         //        && event.getWorld().isRemote == false
-        && event.getWorld() instanceof ServerWorld
-        && !event.getPlayer().getCooldownTracker().hasCooldown(this)) {
+        && event.getWorld() instanceof ServerLevel
+        && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
       // lets go 
-      HorseEntity ahorse = (HorseEntity) event.getTarget();
-      ZombieHorseEntity zombie = EntityType.ZOMBIE_HORSE.spawn((ServerWorld) event.getWorld(), null, null, event.getPlayer(), event.getPos(), SpawnReason.NATURAL, false, false);
-      event.getWorld().addEntity(zombie);
-      if (ahorse.isTame() && ahorse.getOwnerUniqueId() == event.getPlayer().getUniqueID()) {
+      Horse ahorse = (Horse) event.getTarget();
+      ZombieHorse zombie = EntityType.ZOMBIE_HORSE.spawn((ServerLevel) event.getWorld(), null, null, event.getPlayer(), event.getPos(), MobSpawnType.NATURAL, false, false);
+      event.getWorld().addFreshEntity(zombie);
+      if (ahorse.isTamed() && ahorse.getOwnerUUID() == event.getPlayer().getUUID()) {
         // you still tamed it
-        zombie.setTamedBy(event.getPlayer());
+        zombie.tameWithName(event.getPlayer());
       }
-      if (ahorse.isHorseSaddled()) {
+      if (ahorse.isSaddled()) {
         //TODO:1.16 TEST  zombie.setHorseSaddled(true); 
-        //        zombie.func_230275_fc_();// 
+        //        zombie.updateContainerEquipment();// 
         //try to copy the EXACT saddle as well if possible
         IItemHandler horseChest = ahorse.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         if (horseChest != null) {
@@ -72,8 +74,8 @@ public class ItemHorseToxic extends ItemEntityInteractable {
       //remove the horse    
       ahorse.remove();
       event.setCanceled(true);
-      event.setCancellationResult(ActionResultType.SUCCESS);
-      event.getPlayer().getCooldownTracker().setCooldown(this, 10);
+      event.setCancellationResult(InteractionResult.SUCCESS);
+      event.getPlayer().getCooldowns().addCooldown(this, 10);
       event.getItemStack().shrink(1);
     }
   }

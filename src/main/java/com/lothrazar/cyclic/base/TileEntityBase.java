@@ -18,25 +18,25 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -47,7 +47,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class TileEntityBase extends TileEntity implements IInventory {
+public abstract class TileEntityBase extends BlockEntity implements Container {
 
   public static final String NBTINV = "inv";
   public static final String NBTFLUID = "fluid";
@@ -58,7 +58,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   protected int render = 0; // default to do not render
   protected int timer;
 
-  public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
+  public TileEntityBase(BlockEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
   }
 
@@ -66,22 +66,22 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return timer;
   }
 
-  protected PlayerEntity getLookingPlayer(int maxRange, boolean mustCrouch) {
-    List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(
-        this.pos.getX() - maxRange, this.pos.getY() - maxRange, this.pos.getZ() - maxRange, this.pos.getX() + maxRange, this.pos.getY() + maxRange, this.pos.getZ() + maxRange));
-    for (PlayerEntity player : players) {
+  protected Player getLookingPlayer(int maxRange, boolean mustCrouch) {
+    List<Player> players = level.getEntitiesOfClass(Player.class, new AABB(
+        this.worldPosition.getX() - maxRange, this.worldPosition.getY() - maxRange, this.worldPosition.getZ() - maxRange, this.worldPosition.getX() + maxRange, this.worldPosition.getY() + maxRange, this.worldPosition.getZ() + maxRange));
+    for (Player player : players) {
       if (mustCrouch && !player.isCrouching()) {
         continue; //check the next one
       }
       //am i looking
-      Vector3d positionEyes = player.getEyePosition(1F);
-      Vector3d look = player.getLook(1F);
+      Vec3 positionEyes = player.getEyePosition(1F);
+      Vec3 look = player.getViewVector(1F);
       //take the player eye position. draw a vector from the eyes, in the direction they are looking
       //of LENGTH equal to the range
-      Vector3d visionWithLength = positionEyes.add(look.x * maxRange, look.y * maxRange, look.z * maxRange);
+      Vec3 visionWithLength = positionEyes.add(look.x * maxRange, look.y * maxRange, look.z * maxRange);
       //ray trayce from eyes, along the vision vec
-      BlockRayTraceResult rayTrace = this.world.rayTraceBlocks(new RayTraceContext(positionEyes, visionWithLength, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, player));
-      if (this.pos.equals(rayTrace.getPos())) {
+      BlockHitResult rayTrace = this.level.clip(new ClipContext(positionEyes, visionWithLength, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
+      if (this.worldPosition.equals(rayTrace.getBlockPos())) {
         //at least one is enough, stop looping
         return player;
       }
@@ -92,34 +92,34 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
     int start = (includeMainHand) ? 0 : 1;
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (int i = start; i < fp.get().inventory.mainInventory.size(); i++) {
-      ItemStack s = fp.get().inventory.mainInventory.get(i);
+    for (int i = start; i < fp.get().inventory.items.size(); i++) {
+      ItemStack s = fp.get().inventory.items.get(i);
       if (s.isEmpty() == false) {
         toDrop.add(s.copy());
-        fp.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
+        fp.get().inventory.items.set(i, ItemStack.EMPTY);
       }
     }
-    UtilItemStack.drop(this.world, this.pos.up(), toDrop);
+    UtilItemStack.drop(this.level, this.worldPosition.above(), toDrop);
   }
 
-  public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, Hand hand) {
+  public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, InteractionHand hand) {
     if (fp == null) {
       return;
     }
-    fp.get().setHeldItem(hand, item);
+    fp.get().setItemInHand(hand, item);
   }
 
-  public static void syncEquippedItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, Hand hand) {
+  public static void syncEquippedItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, InteractionHand hand) {
     if (fp == null) {
       return;
     }
     i.ifPresent(inv -> {
       inv.extractItem(slot, 64, false); //delete and overwrite
-      inv.insertItem(slot, fp.get().getHeldItem(hand), false);
+      inv.insertItem(slot, fp.get().getItemInHand(hand), false);
     });
   }
 
-  public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, Hand hand) {
+  public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, InteractionHand hand) {
     if (fp == null) {
       return;
     }
@@ -130,48 +130,48 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
           maybeTool = ItemStack.EMPTY;
         }
       }
-      if (!maybeTool.equals(fp.get().getHeldItem(hand))) {
-        fp.get().setHeldItem(hand, maybeTool);
+      if (!maybeTool.equals(fp.get().getItemInHand(hand))) {
+        fp.get().setItemInHand(hand, maybeTool);
       }
     });
   }
 
-  public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,
-      World world, BlockPos targetPos, Hand hand, Direction facing) throws Exception {
+  public static InteractionResult rightClickBlock(WeakReference<FakePlayer> fakePlayer,
+      Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
     if (fakePlayer == null) {
-      return ActionResultType.FAIL;
+      return InteractionResult.FAIL;
     }
-    Direction placementOn = (facing == null) ? fakePlayer.get().getAdjustedHorizontalFacing() : facing;
-    BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
-        fakePlayer.get().getLookVec(), placementOn,
+    Direction placementOn = (facing == null) ? fakePlayer.get().getMotionDirection() : facing;
+    BlockHitResult blockraytraceresult = new BlockHitResult(
+        fakePlayer.get().getLookAngle(), placementOn,
         targetPos, true);
     //processRightClick
-    ActionResultType result = fakePlayer.get().interactionManager.func_219441_a(fakePlayer.get(), world,
-        fakePlayer.get().getHeldItem(hand), hand, blockraytraceresult);
+    InteractionResult result = fakePlayer.get().gameMode.useItemOn(fakePlayer.get(), world,
+        fakePlayer.get().getItemInHand(hand), hand, blockraytraceresult);
     //it becomes CONSUME result 1 bucket. then later i guess it doesnt save, and then its water_bucket again
     return result;
   }
 
-  public static boolean tryHarvestBlock(WeakReference<FakePlayer> fakePlayer, World world, BlockPos targetPos) {
+  public static boolean tryHarvestBlock(WeakReference<FakePlayer> fakePlayer, Level world, BlockPos targetPos) {
     if (fakePlayer == null) {
       return false;
     }
-    return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+    return fakePlayer.get().gameMode.destroyBlock(targetPos);
   }
 
-  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name, UUID uuid) {
+  public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name, UUID uuid) {
     WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, uuid, name);
     if (fakePlayer == null) {
       ModCyclic.LOGGER.error("Fake player failed to init " + name + " " + uuid);
       return null;
     }
     //fake player facing the same direction as tile. for throwables
-    fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ()); //seems to help interact() mob drops like milk
-    fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
+    fakePlayer.get().setPos(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()); //seems to help interact() mob drops like milk
+    fakePlayer.get().yRot = UtilEntity.getYawFromFacing(this.getCurrentFacing());
     return fakePlayer;
   }
 
-  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name) {
+  public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name) {
     return setupBeforeTrigger(sw, name, UUID.randomUUID());
   }
 
@@ -180,36 +180,36 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (!st.hasProperty(BlockBase.LIT)) {
       return;
     }
-    boolean previous = st.get(BlockBreaker.LIT);
+    boolean previous = st.getValue(BlockBreaker.LIT);
     if (previous != lit) {
-      this.world.setBlockState(pos, st.with(BlockBreaker.LIT, lit));
+      this.level.setBlockAndUpdate(worldPosition, st.setValue(BlockBreaker.LIT, lit));
     }
   }
 
   public Direction getCurrentFacing() {
     if (this.getBlockState().hasProperty(BlockStateProperties.FACING)) {
-      return this.getBlockState().get(BlockStateProperties.FACING);
+      return this.getBlockState().getValue(BlockStateProperties.FACING);
     }
     if (this.getBlockState().hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
-      return this.getBlockState().get(BlockStateProperties.HORIZONTAL_FACING);
+      return this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
     }
     return null;
   }
 
   @Override
-  public CompoundNBT getUpdateTag() {
+  public CompoundTag getUpdateTag() {
     //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
-    CompoundNBT syncData = new CompoundNBT();
-    this.write(syncData); //this calls writeInternal
+    CompoundTag syncData = new CompoundTag();
+    this.save(syncData); //this calls writeInternal
     return syncData;
   }
 
   protected BlockPos getCurrentFacingPos(int distance) {
     Direction f = this.getCurrentFacing();
     if (f != null) {
-      return this.pos.offset(f, distance);
+      return this.worldPosition.relative(f, distance);
     }
-    return this.pos;
+    return this.worldPosition;
   }
 
   protected BlockPos getCurrentFacingPos() {
@@ -217,22 +217,22 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   @Override
-  public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.SUpdateTileEntityPacket pkt) {
-    this.read(this.getBlockState(), pkt.getNbtCompound());
+  public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
+    this.load(this.getBlockState(), pkt.getTag());
     super.onDataPacket(net, pkt);
   }
 
   @Override
-  public SUpdateTileEntityPacket getUpdatePacket() {
-    return new SUpdateTileEntityPacket(this.pos, 1, getUpdateTag());
+  public ClientboundBlockEntityDataPacket getUpdatePacket() {
+    return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, getUpdateTag());
   }
 
   public boolean isPowered() {
-    return this.getWorld().isBlockPowered(this.getPos());
+    return this.getLevel().hasNeighborSignal(this.getBlockPos());
   }
 
   public int getRedstonePower() {
-    return this.getWorld().getRedstonePowerFromNeighbors(this.getPos());
+    return this.getLevel().getBestNeighborSignal(this.getBlockPos());
   }
 
   public boolean requiresRedstone() {
@@ -245,7 +245,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
-    UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
+    UtilFluid.tryFillPositionFromTank(level, posTarget, themFacingMe, tank, toFlow);
   }
 
   public void tryExtract(IItemHandler myself, Direction extractSide, int qty, ItemStackHandler nullableFilter) {
@@ -255,8 +255,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (extractSide == null || !myself.getStackInSlot(0).isEmpty()) {
       return;
     }
-    BlockPos posTarget = pos.offset(extractSide);
-    TileEntity tile = world.getTileEntity(posTarget);
+    BlockPos posTarget = worldPosition.relative(extractSide);
+    BlockEntity tile = level.getBlockEntity(posTarget);
     if (tile != null) {
       IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
       //
@@ -283,18 +283,18 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
-    return moveItems(myFacingDir, pos.offset(myFacingDir), max, handlerHere, 0);
+    return moveItems(myFacingDir, worldPosition.relative(myFacingDir), max, handlerHere, 0);
   }
 
   public boolean moveItems(Direction myFacingDir, BlockPos posTarget, int max, IItemHandler handlerHere, int theslot) {
-    if (this.world.isRemote()) {
+    if (this.level.isClientSide()) {
       return false;
     }
     if (handlerHere == null) {
       return false;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
-    TileEntity tileTarget = world.getTileEntity(posTarget);
+    BlockEntity tileTarget = level.getBlockEntity(posTarget);
     if (tileTarget == null) {
       return false;
     }
@@ -325,11 +325,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   protected boolean moveEnergy(Direction myFacingDir, int quantity) {
-    return moveEnergy(myFacingDir, pos.offset(myFacingDir), quantity);
+    return moveEnergy(myFacingDir, worldPosition.relative(myFacingDir), quantity);
   }
 
   protected boolean moveEnergy(Direction myFacingDir, BlockPos posTarget, int quantity) {
-    if (this.world.isRemote) {
+    if (this.level.isClientSide) {
       return false; //important to not desync cables
     }
     IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
@@ -337,7 +337,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return false;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
-    TileEntity tileTarget = world.getTileEntity(posTarget);
+    BlockEntity tileTarget = level.getBlockEntity(posTarget);
     if (tileTarget == null) {
       return false;
     }
@@ -366,21 +366,21 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void load(BlockState bs, CompoundTag tag) {
     flowing = tag.getInt("flowing");
     needsRedstone = tag.getInt("needsRedstone");
     render = tag.getInt("renderParticles");
     timer = tag.getInt("timer");
-    super.read(bs, tag);
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag save(CompoundTag tag) {
     tag.putInt("flowing", flowing);
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", render);
     tag.putInt("timer", timer);
-    return super.write(tag);
+    return super.save(tag);
   }
 
   public abstract void setField(int field, int value);
@@ -396,7 +396,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
   @Override
-  public int getSizeInventory() {
+  public int getContainerSize() {
     return 0;
   }
 
@@ -408,35 +408,35 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Deprecated
   @Override
-  public ItemStack getStackInSlot(int index) {
+  public ItemStack getItem(int index) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public ItemStack decrStackSize(int index, int count) {
+  public ItemStack removeItem(int index, int count) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public ItemStack removeStackFromSlot(int index) {
+  public ItemStack removeItemNoUpdate(int index) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {}
+  public void setItem(int index, ItemStack stack) {}
 
   @Deprecated
   @Override
-  public boolean isUsableByPlayer(PlayerEntity player) {
+  public boolean stillValid(Player player) {
     return false;
   }
 
   @Deprecated
   @Override
-  public void clear() {}
+  public void clearContent() {}
 
   public void setFieldString(int field, String value) {
     //for string field  
@@ -460,10 +460,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
-    if (world.isRemote == false && world.getGameTime() % 20 == 0) { //if serverside then 
+    if (level.isClientSide == false && level.getGameTime() % 20 == 0) { //if serverside then 
       IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
       if (energ != null) {
-        PacketRegistry.sendToAllClients(this.getWorld(), new PacketEnergySync(this.getPos(), energ.getEnergyStored()));
+        PacketRegistry.sendToAllClients(this.getLevel(), new PacketEnergySync(this.getBlockPos(), energ.getEnergyStored()));
       }
     }
   }

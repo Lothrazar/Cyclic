@@ -28,29 +28,31 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantAutoSmelt extends EnchantBase {
 
   public static final String ID = "auto_smelt";
   public static BooleanValue CFG;
 
-  public EnchantAutoSmelt(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantAutoSmelt(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -66,13 +68,13 @@ public class EnchantAutoSmelt extends EnchantBase {
   }
 
   @Override
-  public boolean canApplyTogether(Enchantment ench) {
-    return ench != Enchantments.SILK_TOUCH && ench != Enchantments.FORTUNE && super.canApplyTogether(ench);
+  public boolean checkCompatibility(Enchantment ench) {
+    return ench != Enchantments.SILK_TOUCH && ench != Enchantments.BLOCK_FORTUNE && super.checkCompatibility(ench);
   }
 
   public static class EnchantAutoSmeltModifier extends LootModifier {
 
-    public EnchantAutoSmeltModifier(ILootCondition[] conditionsIn) {
+    public EnchantAutoSmeltModifier(LootItemCondition[] conditionsIn) {
       super(conditionsIn);
     }
 
@@ -80,9 +82,9 @@ public class EnchantAutoSmelt extends EnchantBase {
     public List<ItemStack> doApply(List<ItemStack> originalLoot, LootContext context) {
       List<ItemStack> newLoot = new ArrayList<>();
       originalLoot.forEach((stack) -> {
-        Optional<FurnaceRecipe> optional = context.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(stack), context.getWorld());
+        Optional<SmeltingRecipe> optional = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel());
         if (optional.isPresent()) {
-          ItemStack smeltedItemStack = optional.get().getRecipeOutput();
+          ItemStack smeltedItemStack = optional.get().getResultItem();
           if (!smeltedItemStack.isEmpty()) {
             smeltedItemStack = ItemHandlerHelper.copyStackWithSize(smeltedItemStack, stack.getCount() * smeltedItemStack.getCount());
             newLoot.add(smeltedItemStack);
@@ -102,7 +104,7 @@ public class EnchantAutoSmelt extends EnchantBase {
   public static class Serializer extends GlobalLootModifierSerializer<EnchantAutoSmeltModifier> {
 
     @Override
-    public EnchantAutoSmeltModifier read(ResourceLocation name, JsonObject json, ILootCondition[] conditionsIn) {
+    public EnchantAutoSmeltModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn) {
       return new EnchantAutoSmeltModifier(conditionsIn);
     }
 

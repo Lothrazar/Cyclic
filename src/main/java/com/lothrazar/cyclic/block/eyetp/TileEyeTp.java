@@ -4,13 +4,13 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilPlayer;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
+public class TileEyeTp extends TileEntityBase implements TickableBlockEntity {
 
   public static IntValue RANGE;
   public static IntValue HUNGER;
@@ -22,18 +22,18 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    super.read(bs, tag);
+  public void load(BlockState bs, CompoundTag tag) {
+    super.load(bs, tag);
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
-    return super.write(tag);
+  public CompoundTag save(CompoundTag tag) {
+    return super.save(tag);
   }
 
   @Override
   public void tick() {
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     timer--;
@@ -41,16 +41,16 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
       return;
     }
     timer = FREQUENCY.get();
-    PlayerEntity player = getLookingPlayer(RANGE.get(), true);
+    Player player = getLookingPlayer(RANGE.get(), true);
     if (this.canTp(player)) {
-      boolean success = UtilEntity.enderTeleportEvent(player, world, this.pos.up());
+      boolean success = UtilEntity.enderTeleportEvent(player, level, this.worldPosition.above());
       if (success) {
         this.payCost(player);
       }
     }
   }
 
-  private boolean canTp(PlayerEntity player) {
+  private boolean canTp(Player player) {
     if (player == null) {
       return false;
     }
@@ -64,9 +64,9 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
     return true;
   }
 
-  private void payCost(PlayerEntity player) {
+  private void payCost(Player player) {
     if (HUNGER.get() > 0) {
-      player.getFoodStats().addStats(-1 * HUNGER.get(), 0);
+      player.getFoodData().eat(-1 * HUNGER.get(), 0);
     }
     if (EXP.get() > 0) {
       player.giveExperiencePoints(-1 * EXP.get());

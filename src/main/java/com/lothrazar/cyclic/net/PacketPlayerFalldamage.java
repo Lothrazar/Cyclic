@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.base.PacketBase;
 import java.util.function.Supplier;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -15,7 +15,7 @@ public class PacketPlayerFalldamage extends PacketBase {
 
   public static void handle(PacketPlayerFalldamage message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      ServerPlayerEntity player = ctx.get().getSender();
+      ServerPlayer player = ctx.get().getSender();
       /**
        * if fall damage gets high, they take damage on landing
        */
@@ -23,15 +23,15 @@ public class PacketPlayerFalldamage extends PacketBase {
       /**
        * Used to keep track of how the player is floating while gamerules should prevent that. Surpassing 80 ticks means kick
        */
-      player.connection.floatingTickCount = 0;
+      player.connection.aboveGroundTickCount = 0;
     });
     message.done(ctx);
   }
 
-  public static PacketPlayerFalldamage decode(PacketBuffer buf) {
+  public static PacketPlayerFalldamage decode(FriendlyByteBuf buf) {
     PacketPlayerFalldamage message = new PacketPlayerFalldamage();
     return message;
   }
 
-  public static void encode(PacketPlayerFalldamage msg, PacketBuffer buf) {}
+  public static void encode(PacketPlayerFalldamage msg, FriendlyByteBuf buf) {}
 }

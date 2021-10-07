@@ -26,22 +26,24 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import java.lang.reflect.Method;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantQuickdraw extends EnchantBase {
 
-  public EnchantQuickdraw(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantQuickdraw(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -55,7 +57,7 @@ public class EnchantQuickdraw extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     return stack.getItem() instanceof BowItem;
   }
 
@@ -66,16 +68,16 @@ public class EnchantQuickdraw extends EnchantBase {
 
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
-    if (event.getEntity() instanceof PlayerEntity) {
-      PlayerEntity player = (PlayerEntity) event.getEntity();
-      if (player.isHandActive() == false) {
+    if (event.getEntity() instanceof Player) {
+      Player player = (Player) event.getEntity();
+      if (player.isUsingItem() == false) {
         return;
       }
-      Hand hand = player.getActiveHand();
+      InteractionHand hand = player.getUsedItemHand();
       if (hand == null) {
         return;
       }
-      ItemStack heldItem = player.getHeldItem(hand);
+      ItemStack heldItem = player.getItemInHand(hand);
       if (heldItem.getItem() instanceof BowItem == false) {
         return;
       }
@@ -90,9 +92,9 @@ public class EnchantQuickdraw extends EnchantBase {
     }
   }
 
-  private void tickHeldBow(PlayerEntity player) {
+  private void tickHeldBow(Player player) {
     try {
-      Method m = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_184608_ct");
+      Method m = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "updatingUsingItem");
       //      Method m = PlayerEntity.class.getDeclaredMethod("updateActiveHand");
       m.setAccessible(true);
       m.invoke(player);

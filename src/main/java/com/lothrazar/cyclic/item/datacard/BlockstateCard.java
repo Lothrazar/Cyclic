@@ -3,25 +3,27 @@ package com.lothrazar.cyclic.item.datacard;
 import com.lothrazar.cyclic.base.ItemBase;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class BlockstateCard extends ItemBase {
 
@@ -35,20 +37,20 @@ public class BlockstateCard extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack held, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack held, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
       for (BlockStateMatcher m : getSavedStates(held)) {
         BlockState st = m.getState();
-        TextFormatting c = m.isExactProperties() ? TextFormatting.LIGHT_PURPLE : TextFormatting.DARK_PURPLE;
+        ChatFormatting c = m.isExactProperties() ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.DARK_PURPLE;
         String extra = m.isExactProperties() ? " [state]" : " [block]"; // star for not exact
-        tooltip.add(new TranslationTextComponent(st.getBlock().getTranslationKey()).appendString(extra).mergeStyle(c));
+        tooltip.add(new TranslatableComponent(st.getBlock().getDescriptionId()).append(extra).withStyle(c));
         if (m.isExactProperties() && Screen.hasShiftDown()) {
-          tooltip.add(new TranslationTextComponent(st.toString()).mergeStyle(TextFormatting.DARK_GRAY));
+          tooltip.add(new TranslatableComponent(st.toString()).withStyle(ChatFormatting.DARK_GRAY));
         }
       }
     }
     else {
-      super.addInformation(held, worldIn, tooltip, flagIn);
+      super.appendHoverText(held, worldIn, tooltip, flagIn);
     }
   }
 
@@ -56,10 +58,10 @@ public class BlockstateCard extends ItemBase {
     List<BlockStateMatcher> st = new ArrayList<>();
     if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
       //get it
-      ListNBT stateTags = held.getTag().getList(STATESTAG, 10);
+      ListTag stateTags = held.getTag().getList(STATESTAG, 10);
       for (int i = 0; i < stateTags.size(); ++i) {
-        CompoundNBT currTag = stateTags.getCompound(i);
-        BlockState stateFound = NBTUtil.readBlockState(currTag);
+        CompoundTag currTag = stateTags.getCompound(i);
+        BlockState stateFound = NbtUtils.readBlockState(currTag);
         if (stateFound != null && stateFound.getBlock() != Blocks.AIR) {
           BlockStateMatcher matcher = new BlockStateMatcher();
           matcher.setState(stateFound);
@@ -74,30 +76,30 @@ public class BlockstateCard extends ItemBase {
   }
 
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
-    Hand hand = context.getHand();
-    BlockPos pos = context.getPos();
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
+    InteractionHand hand = context.getHand();
+    BlockPos pos = context.getClickedPos();
     //    Direction side = context.getFace();
-    ItemStack held = player.getHeldItem(hand);
-    BlockState state = context.getWorld().getBlockState(pos);
-    CompoundNBT stateTag = NBTUtil.writeBlockState(state);
-    ListNBT stateTags = null;
+    ItemStack held = player.getItemInHand(hand);
+    BlockState state = context.getLevel().getBlockState(pos);
+    CompoundTag stateTag = NbtUtils.writeBlockState(state);
+    ListTag stateTags = null;
     if (held.getOrCreateTag().contains(STATESTAG)) {
       //get it
       stateTags = held.getOrCreateTag().getList(STATESTAG, 10);
     }
     else {
-      stateTags = new ListNBT();
+      stateTags = new ListTag();
     }
     if (stateTags.size() >= MAXSIZE) {
-      return ActionResultType.PASS;
+      return InteractionResult.PASS;
     }
     //wait wait wait does it exist
     for (int i = 0; i < stateTags.size(); ++i) {
-      BlockState stateFound = NBTUtil.readBlockState(stateTags.getCompound(i));
+      BlockState stateFound = NbtUtils.readBlockState(stateTags.getCompound(i));
       if (stateFound.equals(state)) {
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
       }
     }
     //not crouching: default and match exact
@@ -105,7 +107,7 @@ public class BlockstateCard extends ItemBase {
     stateTag.putBoolean(EXACT_TAG, !player.isCrouching());
     stateTags.add(stateTag);
     held.getOrCreateTag().put(STATESTAG, stateTags);
-    player.swingArm(hand);
-    return ActionResultType.SUCCESS;
+    player.swing(hand);
+    return InteractionResult.SUCCESS;
   }
 }

@@ -25,21 +25,23 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilPlayer;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 public class EnchantReach extends EnchantBase {
 
-  public EnchantReach(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantReach(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -61,25 +63,25 @@ public class EnchantReach extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
+  public boolean canEnchant(ItemStack stack) {
     //anything that goes on your feet
     boolean yes = stack.getItem() == Items.ELYTRA ||
         (stack.getItem() instanceof ArmorItem)
-            && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.CHEST;
+            && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.CHEST;
     return yes;
   }
 
   @Override
   public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canApply(stack);
+    return this.canEnchant(stack);
   }
 
-  private void turnReachOff(PlayerEntity player) {
+  private void turnReachOff(Player player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, false);
     UtilPlayer.setPlayerReach(player, REACH_VANILLA);
   }
 
-  private void turnReachOn(PlayerEntity player) {
+  private void turnReachOn(Player player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, true);
     UtilPlayer.setPlayerReach(player, REACH_BOOST);
   }
@@ -87,12 +89,12 @@ public class EnchantReach extends EnchantBase {
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     //check if NOT holding this harm
-    if (event.getEntityLiving() instanceof PlayerEntity == false) {
+    if (event.getEntityLiving() instanceof Player == false) {
       return;
     }
-    PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+    Player player = (Player) event.getEntityLiving();
     //Ticking
-    ItemStack armor = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+    ItemStack armor = player.getItemBySlot(EquipmentSlot.CHEST);
     int level = 0;
     if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
         && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {

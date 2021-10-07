@@ -6,27 +6,27 @@ import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -35,53 +35,55 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BlockFluidTank extends BlockBase {
 
   public static final BooleanProperty TANK_ABOVE = BooleanProperty.create("above");
   public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");
 
   public BlockFluidTank(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F).notSolid());
+    super(properties.harvestTool(ToolType.PICKAXE).strength(1.2F).noOcclusion());
     this.setHasFluidInteract();
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-    if (!player.isCrouching() && player.getHeldItem(hand).getItem() == this.asItem()
-        && (hit.getFace() == Direction.UP || hit.getFace() == Direction.DOWN)) {
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    if (!player.isCrouching() && player.getItemInHand(hand).getItem() == this.asItem()
+        && (hit.getDirection() == Direction.UP || hit.getDirection() == Direction.DOWN)) {
       //pass to allow quick building up and down
-      return ActionResultType.PASS;
+      return InteractionResult.PASS;
     }
-    return super.onBlockActivated(state, world, pos, player, hand, hit);
+    return super.use(state, world, pos, player, hand, hit);
   }
 
   @Override
-  public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+  public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 1.0f;
   }
 
   @Override
-  public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+  public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     return false;
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    super.fillStateContainer(builder);
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    super.createBlockStateDefinition(builder);
     builder.add(TANK_ABOVE, TANK_BELOW);
   }
 
   @Override
-  public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
-    boolean tileAbove = world.getTileEntity(pos.up()) instanceof TileTank;
-    boolean tileBelow = world.getTileEntity(pos.down()) instanceof TileTank;
+  public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos pos, BlockPos facingPos) {
+    boolean tileAbove = world.getBlockEntity(pos.above()) instanceof TileTank;
+    boolean tileBelow = world.getBlockEntity(pos.below()) instanceof TileTank;
     return state
-        .with(TANK_ABOVE, tileAbove)
-        .with(TANK_BELOW, tileBelow);
+        .setValue(TANK_ABOVE, tileAbove)
+        .setValue(TANK_BELOW, tileBelow);
   }
 
   @Override
-  public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+  public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
     return true;
   }
 
@@ -91,32 +93,32 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
     return new TileTank();
   }
 
   @Override
-  public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
 
   @Override
   public void registerClient() {
-    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
     ClientRegistry.bindTileEntityRenderer(TileRegistry.tank, RenderTank::new);
   }
 
   @Override
-  public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
+  public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 
     return new ArrayList<>();
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+  public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     try {
       IFluidHandlerItem storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
-      TileEntity container = world.getTileEntity(pos);
+      BlockEntity container = world.getBlockEntity(pos);
       if (storage != null && container != null) {
         IFluidHandler storageTile = container.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
         if (storageTile != null) {
@@ -128,13 +130,13 @@ public class BlockFluidTank extends BlockBase {
       ModCyclic.LOGGER.error("Error during fill from item ", e);
     }
     //set default state
-    state = state.with(TANK_ABOVE, false).with(TANK_BELOW, false);
-    world.setBlockState(pos, state);
+    state = state.setValue(TANK_ABOVE, false).setValue(TANK_BELOW, false);
+    world.setBlockAndUpdate(pos, state);
   }
 
   @Override
-  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stackTool) {
-    super.harvestBlock(world, player, pos, state, ent, stackTool);
+  public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity ent, ItemStack stackTool) {
+    super.playerDestroy(world, player, pos, state, ent, stackTool);
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {
       IFluidHandler fluidInTile = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
@@ -146,8 +148,8 @@ public class BlockFluidTank extends BlockBase {
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
-    if (world.isRemote == false) {
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
+    if (world.isClientSide == false) {
+      world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
     }
   }
 }

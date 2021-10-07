@@ -8,13 +8,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.server.level.ServerLevel;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EnderApple extends ItemBase {
 
@@ -35,32 +37,32 @@ public class EnderApple extends ItemBase {
   }
 
   @Override
-  public boolean hasEffect(ItemStack stack) {
+  public boolean isFoil(ItemStack stack) {
     return true;
   }
 
   @Override
-  public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-    if (entityLiving instanceof PlayerEntity == false) {
-      return super.onItemUseFinish(stack, worldIn, entityLiving);
+  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+    if (entityLiving instanceof Player == false) {
+      return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    PlayerEntity player = (PlayerEntity) entityLiving;
-    if (player.getCooldownTracker().hasCooldown(this)) {
-      return super.onItemUseFinish(stack, worldIn, entityLiving);
+    Player player = (Player) entityLiving;
+    if (player.getCooldowns().isOnCooldown(this)) {
+      return super.finishUsingItem(stack, worldIn, entityLiving);
     }
-    player.getCooldownTracker().setCooldown(this, COOLDOWN);
-    if (worldIn instanceof ServerWorld) {
+    player.getCooldowns().addCooldown(this, COOLDOWN);
+    if (worldIn instanceof ServerLevel) {
       final List<String> structIgnoreList = Arrays.asList(ignoreMe);
       //
-      ServerWorld serverWorld = (ServerWorld) worldIn;
+      ServerLevel serverWorld = (ServerLevel) worldIn;
       Map<String, Integer> distanceStructNames = new HashMap<>();
-      for (Structure<?> structureFeature : net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
+      for (StructureFeature<?> structureFeature : net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
         try {
           String name = structureFeature.getRegistryName().toString();
           if (!structIgnoreList.contains(name)) {
             //then we are allowed to look fori t, we are not in ignore list 
-            BlockPos targetPos = entityLiving.getPosition();
-            final BlockPos posOfStructure = serverWorld.func_241117_a_(structureFeature, targetPos, 100, false);
+            BlockPos targetPos = entityLiving.blockPosition();
+            final BlockPos posOfStructure = serverWorld.findNearestMapFeature(structureFeature, targetPos, 100, false);
             if (posOfStructure != null) {
               double distance = UtilWorld.distanceBetweenHorizontal(posOfStructure, targetPos);
               distanceStructNames.put(name, (int) distance);
@@ -72,7 +74,7 @@ public class EnderApple extends ItemBase {
           //          java.lang.Error: ServerHangWatchdog detected that a single server tick took 192.11 seconds (should be max 0.05)
           // ...
           //          at com.telepathicgrunt.repurposedstructures.world.structures.AbstractBaseStructure.locateStructureFast(AbstractBaseStructure.java:61) ~[repurposed_structures:2.7.5] {re:classloading}
-          //          at com.telepathicgrunt.repurposedstructures.world.structures.AbstractBaseStructure.func_236388_a_(AbstractBaseStructure.java:41) ~[repurposed_structures:2.7.5] {re:classloading}
+          //          at com.telepathicgrunt.repurposedstructures.world.structures.AbstractBaseStructure.getNearestGeneratedFeature(AbstractBaseStructure.java:41) ~[repurposed_structures:2.7.5] {re:classloading}
           //          
         }
       }
@@ -99,10 +101,10 @@ public class EnderApple extends ItemBase {
       //
       //      String name = regName.replace("minecraft:", "");
       //      literalargumentbuilder = literalargumentbuilder.then(Commands.literal(name)
-      //            .executes(ctx -> func_241053_a_(ctx.getSource(), structureFeature)));
+      //            .executes(ctx -> locate(ctx.getSource(), structureFeature)));
       //collections CUSTOM SORT by distance 
       //
     }
-    return super.onItemUseFinish(stack, worldIn, entityLiving);
+    return super.finishUsingItem(stack, worldIn, entityLiving);
   }
 }

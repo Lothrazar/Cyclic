@@ -3,12 +3,12 @@ package com.lothrazar.cyclic.data;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class RelativeShape {
 
@@ -40,7 +40,7 @@ public class RelativeShape {
    * @param options
    * @param center
    */
-  public RelativeShape(World world, List<BlockPos> options, BlockPos center) {
+  public RelativeShape(Level world, List<BlockPos> options, BlockPos center) {
     this();
     this.shape = options;
     if (world != null && center != null) {
@@ -48,14 +48,14 @@ public class RelativeShape {
     }
   }
 
-  public void setWorldCenter(World world, BlockPos center) {
+  public void setWorldCenter(Level world, BlockPos center) {
     if (world != null) {
       List<BlockPos> options = shape;
       shape = new ArrayList<>();
       for (BlockPos pos : options) {
         BlockState bs = world.getBlockState(pos);
         if (bs.getBlock() != Blocks.AIR) {
-          shape.add(pos.add(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
+          shape.add(pos.offset(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
         }
       }
     }
@@ -78,7 +78,7 @@ public class RelativeShape {
     return shape;
   }
 
-  public static RelativeShape read(CompoundNBT tag) {
+  public static RelativeShape read(CompoundTag tag) {
     if (tag == null || tag.getBoolean(ShapeCard.VALID_SHAPE) == false) {
       return null;
     }
@@ -94,11 +94,11 @@ public class RelativeShape {
   }
 
   public static RelativeShape read(ItemStack item) {
-    CompoundNBT tag = item.getTag();
+    CompoundTag tag = item.getTag();
     return read(tag);
   }
 
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundTag write(CompoundTag tag) {
     int i = 0;
     int count = 0;
     for (BlockPos p : shape) {
@@ -114,7 +114,7 @@ public class RelativeShape {
   }
 
   public void write(ItemStack shapeCard) {
-    CompoundNBT tag = shapeCard.getOrCreateTag();
+    CompoundTag tag = shapeCard.getOrCreateTag();
     write(tag);
   }
 

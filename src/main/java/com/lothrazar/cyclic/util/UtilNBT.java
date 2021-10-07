@@ -1,25 +1,25 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.data.Const;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 public class UtilNBT {
 
-  public static ItemStack buildNamedPlayerSkull(PlayerEntity player) {
+  public static ItemStack buildNamedPlayerSkull(Player player) {
     return buildNamedPlayerSkull(player.getDisplayName().getString());
   }
 
   public static ItemStack buildNamedPlayerSkull(String displayNameString) {
-    CompoundNBT t = new CompoundNBT();
+    CompoundTag t = new CompoundTag();
     t.putString(Const.SKULLOWNER, displayNameString);
     return buildSkullFromTag(t);
   }
 
-  public static ItemStack buildSkullFromTag(CompoundNBT player) {
+  public static ItemStack buildSkullFromTag(CompoundTag player) {
     ItemStack skull = new ItemStack(Items.PLAYER_HEAD);
     skull.setTag(player);
     return skull;
@@ -34,7 +34,7 @@ public class UtilNBT {
     UtilNBT.setItemStackNBTVal(item, "zpos", pos.getZ());
   }
 
-  public static void putBlockPos(CompoundNBT tag, BlockPos pos) {
+  public static void putBlockPos(CompoundTag tag, BlockPos pos) {
     tag.putInt("xpos", pos.getX());
     tag.putInt("ypos", pos.getY());
     tag.putInt("zpos", pos.getZ());
@@ -44,11 +44,11 @@ public class UtilNBT {
     if (item.isEmpty() || item.getTag() == null || !item.getTag().contains("xpos")) {
       return null;
     }
-    CompoundNBT tag = item.getOrCreateTag();
+    CompoundTag tag = item.getOrCreateTag();
     return getBlockPos(tag);
   }
 
-  public static BlockPos getBlockPos(CompoundNBT tag) {
+  public static BlockPos getBlockPos(CompoundTag tag) {
     return new BlockPos(tag.getInt("xpos"), tag.getInt("ypos"), tag.getInt("zpos"));
   }
 
@@ -59,7 +59,7 @@ public class UtilNBT {
     item.getOrCreateTag().putInt(prop, value);
   }
 
-  public static CompoundNBT getItemStackNBT(ItemStack held) {
+  public static CompoundTag getItemStackNBT(ItemStack held) {
     return held.getOrCreateTag();
   }
 }
