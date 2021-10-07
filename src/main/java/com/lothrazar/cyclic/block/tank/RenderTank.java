@@ -12,11 +12,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class RenderTank extends BlockEntityRenderer<TileTank> {
+public class RenderTank implements BlockEntityRenderer<TileTank> {
 
-  public RenderTank(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderTank(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileTank tankHere, float v, PoseStack matrix,

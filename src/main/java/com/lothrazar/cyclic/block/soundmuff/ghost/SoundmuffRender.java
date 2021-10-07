@@ -9,11 +9,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class SoundmuffRender extends BlockEntityRenderer<SoundmuffTile> {
+public class SoundmuffRender implements BlockEntityRenderer<SoundmuffTile> {
 
-  public SoundmuffRender(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public SoundmuffRender(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public boolean shouldRenderOffScreen(SoundmuffTile te) {

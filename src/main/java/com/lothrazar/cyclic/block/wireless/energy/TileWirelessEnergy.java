@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,7 +14,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -25,14 +25,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessEnergy extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileWirelessEnergy extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;
   }
 
-  public TileWirelessEnergy() {
-    super(TileRegistry.WIRELESS_ENERGY.get());
+  public TileWirelessEnergy(BlockPos pos, BlockState state) {
+    super(TileRegistry.WIRELESS_ENERGY.get(),pos,state);
     this.needsRedstone = 0;
   }
 
@@ -72,11 +72,11 @@ public class TileWirelessEnergy extends TileEntityBase implements MenuProvider, 
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     this.transferRate = tag.getInt("transferRate");
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -87,7 +87,7 @@ public class TileWirelessEnergy extends TileEntityBase implements MenuProvider, 
     return super.save(tag);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {

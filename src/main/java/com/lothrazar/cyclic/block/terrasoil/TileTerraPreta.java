@@ -6,21 +6,20 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class TileTerraPreta extends TileEntityBase implements TickableBlockEntity {
+public class TileTerraPreta extends TileEntityBase  {
 
   public static final int TIMER_FULL = 100;
   public static final int HEIGHT = 16;
 
-  public TileTerraPreta() {
-    super(TileRegistry.terra_preta);
+  public TileTerraPreta(BlockPos pos, BlockState state) {
+    super(TileRegistry.terra_preta,pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     //sprinkler to ONLY whats directly above/below
     timer--;

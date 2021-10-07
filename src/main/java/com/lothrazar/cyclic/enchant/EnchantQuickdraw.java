@@ -37,9 +37,9 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class EnchantQuickdraw extends EnchantBase {
 

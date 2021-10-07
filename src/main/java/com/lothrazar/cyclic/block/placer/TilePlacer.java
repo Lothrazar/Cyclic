@@ -12,7 +12,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -23,7 +22,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePlacer extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TilePlacer extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER;
@@ -34,11 +33,11 @@ public class TilePlacer extends TileEntityBase implements MenuProvider, Tickable
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public TilePlacer() {
-    super(TileRegistry.placer);
+  public TilePlacer(BlockPos pos, BlockState state) {
+    super(TileRegistry.placer,pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -81,9 +80,9 @@ public class TilePlacer extends TileEntityBase implements MenuProvider, Tickable
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load( tag);
   }
 
   @Override

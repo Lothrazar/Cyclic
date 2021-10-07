@@ -28,6 +28,7 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
@@ -114,7 +115,7 @@ public class ItemEvents {
     Level worldIn = player.level;
     if (worldIn.isClientSide == false) {
       //use cross product to push arrows out to left and right
-      Vec3 playerDirection = UtilEntity.lookVector(player.yRot, player.xRot);
+      Vec3 playerDirection = UtilEntity.lookVector(player.getYRot(), player.getXRot());
       Vec3 left = playerDirection.cross(new Vec3(0, 1, 0));
       Vec3 right = playerDirection.cross(new Vec3(0, -1, 0));
       EnchantMultishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
@@ -139,29 +140,31 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onProjectileImpactEvent(ProjectileImpactEvent.Arrow event) {
-    if (event.getArrow() == null || event.getRayTraceResult() == null) {
+  public void onProjectileImpactEvent(ProjectileImpactEvent event) {
+    Projectile arrow = event.getProjectile();
+    if (arrow == null || event.getRayTraceResult() == null) {
       return;
     }
-    Level world = event.getArrow().level;
+    Level world = arrow.level;
     Type hit = event.getRayTraceResult().getType();
-    Entity shooter = event.getArrow().getOwner(); // getShooter
+    Entity shooter = arrow.getOwner(); // getShooter
     if (shooter instanceof Player) {
       Player ply = (Player) shooter;
       //      ply.isSprinting()
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_DMG.get());
-      if (!find.isEmpty()) {
+      if (!find.isEmpty() && arrow instanceof AbstractArrow) {
+
         //        ModCyclic.LOGGER.info("before " + event.getArrow().getDamage());
-        AbstractArrow arrow = event.getArrow();
-        double boost = arrow.getBaseDamage() / 2;
-        arrow.setBaseDamage(arrow.getBaseDamage() + boost);
+        AbstractArrow arroww = (AbstractArrow) arrow;
+        double boost = arroww.getBaseDamage() / 2;
+        arroww.setBaseDamage(arroww.getBaseDamage() + boost);
         UtilItemStack.damageItem(ply, find);
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_LIT.get());
       if (!find.isEmpty() && world.random.nextDouble() < 0.25) {
         if (hit == HitResult.Type.ENTITY && ((EntityHitResult) event.getRayTraceResult()).getEntity() instanceof LivingEntity) {
           LivingEntity target = (LivingEntity) ((EntityHitResult) event.getRayTraceResult()).getEntity();
-          target.setGlowing(true);
+          target.setGlowingTag(true);
           //          ModCyclic.LOGGER.info(event.getEntity() + " eeeee" + event.getArrow().getDamage());
           BlockPos p = target.blockPosition();
           // lightning? 
@@ -386,7 +389,7 @@ public class ItemEvents {
         && event.getPlayer().isCrouching()) {
       scaffoldHit(event);
     }
-    if (event.getPlayer().isCrouching() && event.getItemStack().getItem().is(DataTags.WRENCH)) {
+    if (event.getPlayer().isCrouching() && event.getItemStack().is(DataTags.WRENCH)) {
       if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof CableBase) {
         //cyclic cable
         //test? maybe config disable? 
@@ -469,7 +472,7 @@ public class ItemEvents {
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();
       for (Integer i : ItemStorageBag.getAllBagSlots(player)) {
-        ItemStack bag = player.inventory.getItem(i);
+        ItemStack bag = player.getInventory().getItem(i);
         switch (ItemStorageBag.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = ItemStorageBag.tryInsert(bag, resultStack);

@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
@@ -23,7 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileSprinkler extends TileEntityBase implements TickableBlockEntity {
+public class TileSprinkler extends TileEntityBase {
 
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public static IntValue TIMER_FULL;
@@ -32,12 +31,12 @@ public class TileSprinkler extends TileEntityBase implements TickableBlockEntity
   public FluidTankBase tank;
   private int shapeIndex = 0;
 
-  public TileSprinkler() {
-    super(TileRegistry.SPRINKLER.get());
+  public TileSprinkler(BlockPos pos, BlockState state) {
+    super(TileRegistry.SPRINKLER.get(),pos,state);
     tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
   }
 
-  @Override
+//  @Override
   public void tick() {
     timer--;
     if (timer > 0) {
@@ -81,11 +80,11 @@ public class TileSprinkler extends TileEntityBase implements TickableBlockEntity
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     CompoundTag fluid = tag.getCompound(NBTFLUID);
     tank.readFromNBT(fluid);
     shapeIndex = tag.getInt("shapeIndex");
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

@@ -10,11 +10,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class RenderStructure extends BlockEntityRenderer<TileStructure> {
+public class RenderStructure implements BlockEntityRenderer<TileStructure> {
 
-  public RenderStructure(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderStructure(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileStructure te, float v, PoseStack matrixStack, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {

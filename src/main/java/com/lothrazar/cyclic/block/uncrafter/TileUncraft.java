@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -36,7 +36,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileUncraft extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileUncraft extends TileEntityBase implements  MenuProvider {
 
   static enum Fields {
     REDSTONE, STATUS, TIMER;
@@ -55,11 +55,11 @@ public class TileUncraft extends TileEntityBase implements TickableBlockEntity, 
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public TileUncraft() {
-    super(TileRegistry.uncrafter);
+  public TileUncraft(BlockPos pos, BlockState state) {
+    super(TileRegistry.uncrafter,pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     ItemStack dropMe = inputSlots.getStackInSlot(0).copy();
@@ -129,11 +129,11 @@ public class TileUncraft extends TileEntityBase implements TickableBlockEntity, 
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

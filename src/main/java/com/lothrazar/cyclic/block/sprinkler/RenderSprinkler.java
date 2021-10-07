@@ -12,11 +12,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class RenderSprinkler extends BlockEntityRenderer<TileSprinkler> {
+public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler> {
 
-  public RenderSprinkler(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderSprinkler(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileSprinkler tankHere, float v, PoseStack matrix,

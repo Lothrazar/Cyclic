@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -27,7 +26,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileShapedata extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileShapedata extends TileEntityBase implements MenuProvider {
 
   private static final int SLOT_A = 0;
   private static final int SLOT_B = 1;
@@ -117,8 +116,8 @@ public class TileShapedata extends TileEntityBase implements MenuProvider, Ticka
     }
   }
 
-  public TileShapedata() {
-    super(TileRegistry.computer_shape);
+  public TileShapedata(BlockPos pos, BlockState state) {
+    super(TileRegistry.computer_shape,pos,state);
   }
 
   @Override
@@ -140,14 +139,14 @@ public class TileShapedata extends TileEntityBase implements MenuProvider, Ticka
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("copiedShape")) {
       CompoundTag cs = (CompoundTag) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
     }
     hasStashIfOne = tag.getInt("stashToggle");
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -161,7 +160,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider, Ticka
     return super.save(tag);
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (level.isClientSide == false) {
       hasStashIfOne = (this.copiedShape == null) ? 0 : 1;

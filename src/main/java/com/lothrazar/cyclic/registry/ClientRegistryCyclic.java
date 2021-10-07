@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
 import com.lothrazar.cyclic.block.peatfarm.RenderPeatFarm;
+import com.lothrazar.cyclic.block.shapebuilder.RenderStructure;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
@@ -28,6 +29,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.glfw.GLFW;
 
@@ -47,6 +49,7 @@ public class ClientRegistryCyclic {
     //    import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
     BlockEntityRendererProvider.Context lol; //  is required in constructor
     event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
+    event.registerBlockEntityRenderer(TileRegistry.STRUCTURE, RenderStructure::new);
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {

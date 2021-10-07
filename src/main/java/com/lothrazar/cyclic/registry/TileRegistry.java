@@ -91,9 +91,9 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TileRegistry {
 
-  public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ModCyclic.MODID);
-  public static final RegistryObject<BlockEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> BlockEntityType.Builder.of(() -> new TileFluidHopper(), BlockRegistry.FLUIDHOPPER.get()).build(null));
-  public static final RegistryObject<BlockEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> BlockEntityType.Builder.of(() -> new TileSimpleHopper(), BlockRegistry.HOPPER.get()).build(null));
+  public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ModCyclic.MODID);
+  public static final RegistryObject<BlockEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> BlockEntityType.Builder.of(TileFluidHopper::new, BlockRegistry.FLUIDHOPPER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> BlockEntityType.Builder.of(TileSimpleHopper::new, BlockRegistry.HOPPER.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> BlockEntityType.Builder.of(() -> new TileGoldHopper(), BlockRegistry.HOPPERGOLD.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> BlockEntityType.Builder.of(() -> new TileAnvilVoid(), BlockRegistry.ANVILVOID.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileFanSlab>> FANSLAB = TILES.register("fan_slab", () -> BlockEntityType.Builder.of(() -> new TileFanSlab(), BlockRegistry.FANSLAB.get()).build(null));

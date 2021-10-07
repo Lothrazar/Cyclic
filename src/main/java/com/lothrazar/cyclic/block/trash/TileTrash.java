@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.block.trash;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -16,7 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileTrash extends TileEntityBase implements TickableBlockEntity {
+public class TileTrash extends TileEntityBase  {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   ItemStackHandler inventory = new ItemStackHandler(1);
@@ -24,8 +24,8 @@ public class TileTrash extends TileEntityBase implements TickableBlockEntity {
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
 
-  public TileTrash() {
-    super(TileRegistry.trashtile);
+  public TileTrash(BlockPos pos, BlockState state) {
+    super(TileRegistry.trashtile,pos,state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
@@ -41,9 +41,9 @@ public class TileTrash extends TileEntityBase implements TickableBlockEntity {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -52,7 +52,7 @@ public class TileTrash extends TileEntityBase implements TickableBlockEntity {
     return super.save(tag);
   }
 
-  @Override
+//  @Override
   public void tick() {
     inventory.extractItem(0, 64, false);
     tank.drain(CAPACITY, FluidAction.EXECUTE);

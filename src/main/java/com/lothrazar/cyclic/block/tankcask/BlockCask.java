@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -26,18 +25,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 public class BlockCask extends BlockBase {
 
   public BlockCask(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).strength(1.2F));
+    super(properties.strength(1.2F));
     this.setHasFluidInteract();
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileCask();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileCask(pos,state);
   }
 
   @Override

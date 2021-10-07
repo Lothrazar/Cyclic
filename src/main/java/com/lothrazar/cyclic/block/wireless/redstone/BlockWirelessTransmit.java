@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.wireless.redstone;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -35,13 +36,8 @@ public class BlockWirelessTransmit extends BlockBase {
   }
 
   @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
-  @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileWirelessTransmit();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return new TileWirelessTransmit(pos,state );
   }
 
   @Override

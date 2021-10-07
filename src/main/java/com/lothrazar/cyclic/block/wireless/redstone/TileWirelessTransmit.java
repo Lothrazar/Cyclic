@@ -13,7 +13,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -24,14 +23,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessTransmit extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileWirelessTransmit extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     RENDER;
   }
 
-  public TileWirelessTransmit() {
-    super(TileRegistry.wireless_transmitter);
+  public TileWirelessTransmit(BlockPos pos, BlockState state) {
+    super(TileRegistry.wireless_transmitter,pos,state);
   }
 
   ItemStackHandler inventory = new ItemStackHandler(9) {
@@ -62,9 +61,9 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -90,7 +89,7 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
     }
   }
 
-  @Override
+//  @Override
   public void tick() {
     for (int s = 0; s < inventory.getSlots(); s++) {
       BlockPosDim targetPos = getTargetInSlot(s);

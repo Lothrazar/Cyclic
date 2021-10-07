@@ -14,11 +14,11 @@ import net.minecraft.core.Direction;
  * https://github.com/jaquadro/StorageDrawers/blob/1.16/LICENSE
  * 
  */
-public class RenderScreentext extends BlockEntityRenderer<TileScreentext> {
+public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
 
-  public RenderScreentext(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderScreentext(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileScreentext tile, float v, PoseStack matrix,
@@ -49,6 +49,7 @@ public class RenderScreentext extends BlockEntityRenderer<TileScreentext> {
     float scaleX = 0.05F, scaleY = 0.05F;
     matrix.scale(scaleX * fontSize, scaleY * fontSize, 1);
     //then draw it
+
     Font fontRenderer = this.renderer.getFont();
     fontRenderer.drawInBatch(text, 0, 0, tile.getColor(),
         tile.getDropShadow(), matrix.last().pose(), buffer, false, 0, light); // 15728880

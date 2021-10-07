@@ -15,11 +15,11 @@ import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
-public class RenderTransmit extends BlockEntityRenderer<TileWirelessTransmit> {
+public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit> {
 
-  public RenderTransmit(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderTransmit(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileWirelessTransmit te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

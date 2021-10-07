@@ -15,15 +15,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockSolidifier extends BlockBase {
 
   public BlockSolidifier(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).strength(1.2F).noOcclusion());
+    super(properties.strength(1.2F).noOcclusion());
     this.setHasGui();
     this.setHasFluidInteract();
   }
@@ -44,14 +42,10 @@ public class BlockSolidifier extends BlockBase {
     return true;
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileSolidifier();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state, BlockGetter world) {
+    return new TileSolidifier(pos,state);
   }
 
   @Override

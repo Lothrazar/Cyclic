@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +17,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -34,7 +34,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
-public class TileSolidifier extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileSolidifier extends TileEntityBase implements  MenuProvider {
 
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 5;
   public static final int MAX = 64000;
@@ -55,12 +55,12 @@ public class TileSolidifier extends TileEntityBase implements TickableBlockEntit
     REDSTONE, TIMER, RENDER;
   }
 
-  public TileSolidifier() {
-    super(TileRegistry.solidifier);
+  public TileSolidifier(BlockPos pos, BlockState state) {
+    super(TileRegistry.solidifier,pos,state );
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     this.findMatchingRecipe();
@@ -121,12 +121,12 @@ public class TileSolidifier extends TileEntityBase implements TickableBlockEntit
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inputSlots.deserializeNBT(tag.getCompound(NBTINV));
     outputSlots.deserializeNBT(tag.getCompound("invoutput"));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

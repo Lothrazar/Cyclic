@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileCask extends TileEntityBase implements TickableBlockEntity {
+public class TileCask extends TileEntityBase  {
 
   private Map<Direction, Boolean> poweredSides;
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
@@ -31,8 +31,8 @@ public class TileCask extends TileEntityBase implements TickableBlockEntity {
     FLOWING, N, E, S, W, U, D;
   }
 
-  public TileCask() {
-    super(TileRegistry.cask);
+  public TileCask(BlockPos pos, BlockState state) {
+    super(TileRegistry.cask,pos, state);
     flowing = 0;
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     poweredSides = new HashMap<Direction, Boolean>();
@@ -46,13 +46,13 @@ public class TileCask extends TileEntityBase implements TickableBlockEntity {
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     this.flowing = (tag.getInt("flowing"));
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -140,7 +140,7 @@ public class TileCask extends TileEntityBase implements TickableBlockEntity {
     tank.setFluid(fluid);
   }
 
-  @Override
+//  @Override
   public void tick() {
     //drain below but only to one of myself
     if (this.flowing > 0) {

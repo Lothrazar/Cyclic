@@ -3,11 +3,12 @@ package com.lothrazar.cyclic.block.shapedata;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -24,13 +25,9 @@ public class BlockShapedata extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.computer_shape, ScreenShapedata::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileShapedata();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state, BlockGetter world) {
+    return new TileShapedata(pos,state);
   }
 }

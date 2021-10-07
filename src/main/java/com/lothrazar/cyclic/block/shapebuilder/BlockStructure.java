@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -28,7 +28,6 @@ public class BlockStructure extends BlockBase {
 
   @Override
   public void registerClient() {
-    ClientRegistry.bindTileEntityRenderer(TileRegistry.STRUCTURE, RenderStructure::new);
     MenuScreens.register(ContainerScreenRegistry.structure, ScreenStructure::new);
   }
 

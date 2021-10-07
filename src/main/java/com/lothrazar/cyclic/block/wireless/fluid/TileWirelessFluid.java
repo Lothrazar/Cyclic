@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,7 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessFluid extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;
@@ -46,8 +47,8 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider, T
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
-  public TileWirelessFluid() {
-    super(TileRegistry.WIRELESS_FLUID.get());
+  public TileWirelessFluid(BlockPos pos, BlockState state) {
+    super(TileRegistry.WIRELESS_FLUID.get(),pos,state);
     this.needsRedstone = 0;
     tank = new FluidTankBase(this, CAPACITY, f -> true);
   }
@@ -74,11 +75,11 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider, T
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.transferRate = tag.getInt("transferRate");
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -100,7 +101,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider, T
     tank.setFluid(fluid);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {

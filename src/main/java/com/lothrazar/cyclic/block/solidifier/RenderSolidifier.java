@@ -18,11 +18,11 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class RenderSolidifier extends BlockEntityRenderer<TileSolidifier> {
+public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
 
-  public RenderSolidifier(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderSolidifier(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileSolidifier tankHere, float v, PoseStack matrixStack,
@@ -34,7 +34,7 @@ public class RenderSolidifier extends BlockEntityRenderer<TileSolidifier> {
         matrixStack.pushPose();
         //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.4, 0.65, 0.4);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x111111, 0, matrixStack, buffer);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x111111, 0, matrixStack, buffer,light);
         matrixStack.popPose();
       }
       stack = itemHandler.getStackInSlot(1);
@@ -42,14 +42,14 @@ public class RenderSolidifier extends BlockEntityRenderer<TileSolidifier> {
         matrixStack.pushPose();
         //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.5, 0.45, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x777777, 0, matrixStack, buffer);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x777777, 0, matrixStack, buffer,light);
         matrixStack.popPose();
       }
       stack = itemHandler.getStackInSlot(2);
       if (!stack.isEmpty()) {
         matrixStack.pushPose();
         matrixStack.translate(0.6, 0.15, 0.6);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0xBBBBBB, 0, matrixStack, buffer);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0xBBBBBB, 0, matrixStack, buffer,light);
         matrixStack.popPose();
       }
     }

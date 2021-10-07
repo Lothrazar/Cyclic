@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
@@ -28,14 +28,10 @@ public class SoundmufflerBlockGhost extends SoundmufflerBlock {
     ClientRegistry.bindTileEntityRenderer(TileRegistry.soundproofing_ghost, SoundmuffRender::new);
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new SoundmuffTile();
+  public BlockEntity newBkicjEntity(BlockPos pos, BlockState state, BlockGetter world) {
+    return new SoundmuffTile(pos,state);
   }
 
   @Override

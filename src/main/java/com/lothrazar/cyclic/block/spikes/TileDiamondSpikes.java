@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -13,18 +14,17 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileDiamondSpikes extends TileEntityBase implements TickableBlockEntity {
+public class TileDiamondSpikes extends TileEntityBase  {
 
   WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
 
-  public TileDiamondSpikes() {
-    super(TileRegistry.spikes_diamond);
+  public TileDiamondSpikes(BlockPos pos, BlockState state) {
+    super(TileRegistry.spikes_diamond,pos,state);
   }
 
   @Override
@@ -36,14 +36,14 @@ public class TileDiamondSpikes extends TileEntityBase implements TickableBlockEn
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     if (tag.contains("uuid")) {
       uuid = tag.getUUID("uuid");
     }
-    super.load(bs, tag);
+    super.load( tag);
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (timer > 0) {
       timer--;

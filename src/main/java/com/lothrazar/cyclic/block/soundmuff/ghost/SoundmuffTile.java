@@ -4,12 +4,12 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,13 +21,14 @@ public class SoundmuffTile extends TileEntityBase {
   ItemStackHandler notInventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> notInventory);
 
-  public SoundmuffTile() {
-    super(TileRegistry.soundproofing_ghost);
+  public SoundmuffTile(BlockPos pos, BlockState state) {
+    super(TileRegistry.soundproofing_ghost, pos, state);
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load(CompoundTag tag) {
     notInventory.deserializeNBT(tag.getCompound(NBTINV));
+  super.load(tag);
   }
 
   @Override
@@ -50,7 +51,8 @@ public class SoundmuffTile extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

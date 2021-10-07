@@ -11,7 +11,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -23,7 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TilePlacerFluid extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TilePlacerFluid extends TileEntityBase implements MenuProvider {
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   FluidTankBase tank;
@@ -32,13 +31,13 @@ public class TilePlacerFluid extends TileEntityBase implements MenuProvider, Tic
     REDSTONE, RENDER;
   }
 
-  public TilePlacerFluid() {
-    super(TileRegistry.placer_fluid);
+  public TilePlacerFluid(BlockPos pos, BlockState state) {
+    super(TileRegistry.placer_fluid,pos,state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
   }
 
-  @Override
+//  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -89,9 +88,9 @@ public class TilePlacerFluid extends TileEntityBase implements MenuProvider, Tic
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

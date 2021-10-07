@@ -27,15 +27,13 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockFluidTank extends BlockBase {
 
@@ -43,7 +41,7 @@ public class BlockFluidTank extends BlockBase {
   public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");
 
   public BlockFluidTank(Properties properties) {
-    super(properties.harvestTool(ToolType.PICKAXE).strength(1.2F).noOcclusion());
+    super(properties.strength(1.2F).noOcclusion());
     this.setHasFluidInteract();
   }
 
@@ -87,14 +85,10 @@ public class BlockFluidTank extends BlockBase {
     return true;
   }
 
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
 
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new TileTank();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state, BlockGetter world) {
+    return new TileTank(pos,state);
   }
 
   @Override

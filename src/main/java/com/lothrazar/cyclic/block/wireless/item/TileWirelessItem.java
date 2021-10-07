@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,14 +23,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessItem extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileWirelessItem extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;
   }
 
-  public TileWirelessItem() {
-    super(TileRegistry.WIRELESS_ITEM.get());
+  public TileWirelessItem(BlockPos pos, BlockState state) {
+    super(TileRegistry.WIRELESS_ITEM.get(),pos,state );
     this.needsRedstone = 0;
   }
 
@@ -64,11 +65,11 @@ public class TileWirelessItem extends TileEntityBase implements MenuProvider, Ti
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     gpsSlots.deserializeNBT(tag.getCompound(NBTINV + "gps"));
     this.transferRate = tag.getInt("transferRate");
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -79,7 +80,7 @@ public class TileWirelessItem extends TileEntityBase implements MenuProvider, Ti
     return super.save(tag);
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {

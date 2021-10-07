@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +29,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileUser extends TileEntityBase implements TickableBlockEntity, MenuProvider {
+public class TileUser extends TileEntityBase implements  MenuProvider {
 
   public static IntValue POWERCONF;
 
@@ -47,12 +46,12 @@ public class TileUser extends TileEntityBase implements TickableBlockEntity, Men
   private int timerDelay = 20;
   static final int MAX = 640000;
 
-  public TileUser() {
-    super(TileRegistry.user);
+  public TileUser(BlockPos pos, BlockState state) {
+    super(TileRegistry.user,pos,state);
     this.needsRedstone = 1;
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -159,14 +158,14 @@ public class TileUser extends TileEntityBase implements TickableBlockEntity, Men
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     timerDelay = tag.getInt("delay");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("uuid")) {
       uuid = tag.getUUID("uuid");
     }
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override

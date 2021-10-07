@@ -5,20 +5,19 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-public class TileTerraGlass extends TileEntityBase implements TickableBlockEntity {
+public class TileTerraGlass extends TileEntityBase  {
 
   private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL / 2;
   private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
 
-  public TileTerraGlass() {
-    super(TileRegistry.TERRAGLASS.get());
+  public TileTerraGlass(BlockPos pos, BlockState state) {
+    super(TileRegistry.TERRAGLASS.get(),pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     //sprinkler to ONLY whats directly above/below
     if (level.isClientSide) {
@@ -51,7 +50,7 @@ public class TileTerraGlass extends TileEntityBase implements TickableBlockEntit
     //    world.isOutsideBuildHeight(pos)
     //    else {
     for (BlockPos blockpos1 = pos.above(); blockpos1.getY() < 256; blockpos1 = blockpos1.above()) {
-      if (Level.isOutsideBuildHeight(blockpos1.getY())) {
+      if (level.isOutsideBuildHeight(blockpos1.getY())) {
         continue;
       }
       BlockState blockstate = world.getBlockState(blockpos1);

@@ -19,7 +19,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
@@ -36,7 +35,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileStructure extends TileEntityBase implements MenuProvider, TickableBlockEntity {
+public class TileStructure extends TileEntityBase implements MenuProvider {
 
   public static IntValue POWERCONF;
   static final int SLOT_BUILD = 0;
@@ -82,12 +81,12 @@ public class TileStructure extends TileEntityBase implements MenuProvider, Ticka
   //machine settings
   private int shapeIndex = 0;
 
-  public TileStructure() {
-    super(TileRegistry.STRUCTURE);
+  public TileStructure(BlockPos pos, BlockState state) {
+    super(TileRegistry.STRUCTURE,pos,state );
   }
 
   @Override
-  public void load(BlockState bs, CompoundTag tag) {
+  public void load( CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     int t = tag.getInt("buildType");
@@ -95,7 +94,7 @@ public class TileStructure extends TileEntityBase implements MenuProvider, Ticka
     buildSize = tag.getInt("buildSize");
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
-    super.load(bs, tag);
+    super.load(tag);
   }
 
   @Override
@@ -184,7 +183,7 @@ public class TileStructure extends TileEntityBase implements MenuProvider, Ticka
     return 0;
   }
 
-  @Override
+//  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -216,7 +215,7 @@ public class TileStructure extends TileEntityBase implements MenuProvider, Ticka
       }
       //true means bounding box is null in the check. entit falling sand uses true
       //used to be exact air world.isAirBlock(nextPos)
-      if (!Level.isOutsideBuildHeight(nextPos)
+      if (!level.isOutsideBuildHeight(nextPos)
           && level.isEmptyBlock(nextPos)) { // check if this spot is even valid
         BlockState placeState = stuff.defaultBlockState();
         if (level.isClientSide == false && UtilPlaceBlocks.placeStateSafe(level, null, nextPos, placeState)) {

@@ -6,17 +6,16 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-public class TileRotator extends TileEntityBase implements TickableBlockEntity {
+public class TileRotator extends TileEntityBase  {
 
-  public TileRotator() {
-    super(TileRegistry.ROTATOR.get());
+  public TileRotator(BlockPos pos, BlockState state) {
+    super(TileRegistry.ROTATOR.get(),pos,state);
   }
 
-  @Override
+//  @Override
   public void tick() {
     boolean powered = this.isPowered();
     boolean lit = this.getBlockState().getValue(BlockBase.LIT);

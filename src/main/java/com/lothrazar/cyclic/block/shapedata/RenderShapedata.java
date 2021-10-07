@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class RenderShapedata extends BlockEntityRenderer<TileShapedata> {
+public class RenderShapedata implements BlockEntityRenderer<TileShapedata> {
 
-  public RenderShapedata(BlockEntityRenderDispatcher d) {
-    super(d);
-  }
+//  public RenderShapedata(BlockEntityRenderDispatcher d) {
+//    super(d);
+//  }
 
   @Override
   public void render(TileShapedata te, float v, PoseStack matrixStack,
@@ -29,12 +29,7 @@ public class RenderShapedata extends BlockEntityRenderer<TileShapedata> {
       if (te.getTarget(1) != null) {
         UtilRender.renderOutline(te.getBlockPos(), te.getTarget(1), matrixStack, 1.05F, Color.RED);
       }
-      //      ItemStack stack = inv.getStackInSlot(0);
-      //      if (stack.isEmpty()) {
-      //      }
-      //      else {
-      //        //              UtilRender.renderAsBlock(te.getPos(), te.getShape(), matrixStack, stack, 0.5F, 1.0F);
-      //      }
+
     }
   }
 }
