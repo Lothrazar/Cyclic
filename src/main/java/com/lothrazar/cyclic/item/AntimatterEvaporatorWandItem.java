@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import java.util.Locale;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BucketPickup;
@@ -120,8 +121,9 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
   private boolean removeLiquid(Level world, BlockState blockHere, BlockPos pos) {
     if (blockHere.getBlock() instanceof BucketPickup) {
       BucketPickup block = (BucketPickup) blockHere.getBlock();
-      Fluid res = block.takeLiquid(world, pos, blockHere);
-      if (res == null || res == Fluids.EMPTY) {
+      //
+      ItemStack res = block.pickupBlock(world, pos, blockHere);
+      if (!res.isEmpty()) {
         // flowing block
         return world.setBlock(pos, Blocks.AIR.defaultBlockState(), 18);
       }

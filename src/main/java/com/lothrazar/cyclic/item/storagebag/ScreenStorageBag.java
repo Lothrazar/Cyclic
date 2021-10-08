@@ -4,11 +4,13 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.net.PacketStorageBagScreen;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.LinkedList;
 import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -88,7 +90,11 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE);
-    this.minecraft.getTextureManager().bind(TextureRegistry.INVENTORY_SIDEBAR);
+//    this.minecraft.getTextureManager().bind(TextureRegistry.INVENTORY_SIDEBAR);
+
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, TextureRegistry.INVENTORY_SIDEBAR);
+
     Screen.blit(ms, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
     //this.container.bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
     //  for (int i = 0; i < h.getSlots(); i++) {

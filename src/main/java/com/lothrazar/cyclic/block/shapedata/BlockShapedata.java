@@ -26,7 +26,7 @@ public class BlockShapedata extends BlockBase {
 
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state, BlockGetter world) {
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return new TileShapedata(pos,state);
   }
 }

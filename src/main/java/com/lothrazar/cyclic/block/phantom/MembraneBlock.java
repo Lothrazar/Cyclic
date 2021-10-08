@@ -77,7 +77,7 @@ public class MembraneBlock extends BlockBase {
   }
 
   @Override
-  public void stepOn(Level worldIn, BlockPos pos, Entity entityIn) {
+  public void stepOn(Level worldIn, BlockPos pos,BlockState state, Entity entityIn) {
     if (worldIn.isClientSide || !(entityIn instanceof Player)) {
       //not a server player
       return;
@@ -101,8 +101,9 @@ public class MembraneBlock extends BlockBase {
   }
 
   @Override
-  public void fallOn(Level worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+  public void fallOn(Level worldIn,BlockState state, BlockPos pos, Entity entityIn, float fallDistance) {
+
     fallDistance = 0;
-    super.fallOn(worldIn, pos, entityIn, fallDistance);
+    super.fallOn(worldIn, state,pos, entityIn, fallDistance);
   }
 }

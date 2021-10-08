@@ -26,7 +26,7 @@ public class DimensionTransit implements ITeleporter {
 
   @Override
   public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-    return new PortalInfo(new Vec3(target.getX(), target.getY(), target.getZ()), Vec3.ZERO, entity.yRot, entity.xRot);
+    return new PortalInfo(new Vec3(target.getX(), target.getY(), target.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot());
   }
 
   @Override

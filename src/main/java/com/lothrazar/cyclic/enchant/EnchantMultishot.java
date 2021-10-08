@@ -67,7 +67,7 @@ public class EnchantMultishot extends EnchantBase {
   public static void spawnArrow(Level worldIn, Player player, ItemStack stackBow, int charge, Vec3 offsetVector) {
     ArrowItem arrowitem = (ArrowItem) Items.ARROW;
     AbstractArrow abstractarrowentity = arrowitem.createArrow(worldIn, stackBow, player);
-    abstractarrowentity.setPosAndOldPos(abstractarrowentity.getX() + offsetVector.x(), abstractarrowentity.getY(), abstractarrowentity.getZ() + offsetVector.z());
+    abstractarrowentity.setPos(abstractarrowentity.getX() + offsetVector.x(), abstractarrowentity.getY(), abstractarrowentity.getZ() + offsetVector.z());
     float f = BowItem.getPowerForTime(charge); // i
     abstractarrowentity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
     if (f == 1.0F) {

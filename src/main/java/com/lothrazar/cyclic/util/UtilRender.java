@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.data.Model3D;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.render.RenderResizableCuboid;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,7 +69,9 @@ public class UtilRender {
     if (desiredWidth == 0 || desiredHeight == 0 || textureWidth == 0 || textureHeight == 0) {
       return;
     }
-    Minecraft.getInstance().textureManager.bind(InventoryMenu.BLOCK_ATLAS);
+//    Minecraft.getInstance().textureManager.bind(InventoryMenu.BLOCK_ATLAS);
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
     int xTileCount = desiredWidth / textureWidth;
     int xRemainder = desiredWidth - (xTileCount * textureWidth);
     int yTileCount = desiredHeight / textureHeight;

@@ -53,6 +53,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 @SuppressWarnings("deprecation")
 public class UtilEntity {
@@ -177,7 +178,7 @@ public class UtilEntity {
    * @param power
    */
   public static void launch(Entity entity, float rotationPitch, float power) {
-    float rotationYaw = entity.yRot;
+    float rotationYaw = entity.getYRot();
     launch(entity, rotationPitch, rotationYaw, power);
   }
 
@@ -248,8 +249,8 @@ public class UtilEntity {
   }
 
   public static void speedupEntity(LivingEntity entity, float factor) {
-    float x = Mth.sin(-entity.yRot * 0.017453292F) * factor;
-    float z = Mth.cos(entity.yRot * 0.017453292F) * factor;
+    float x = Mth.sin(-entity.getYRot() * 0.017453292F) * factor;
+    float z = Mth.cos(entity.getYRot() * 0.017453292F) * factor;
     entity.setDeltaMovement(x, entity.getDeltaMovement().y, z);
   }
 

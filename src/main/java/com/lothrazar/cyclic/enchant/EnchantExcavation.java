@@ -51,6 +51,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -107,7 +108,8 @@ public class EnchantExcavation extends EnchantBase {
     if (level <= 0) {
       return;
     }
-    if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
+    //if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
+    if(ForgeEventFactory.doPlayerHarvestCheck(player,eventState,true)){
       int harvested = this.harvestSurrounding((Level) world, player, pos, block, 1, level, player.swingingArm);
       if (harvested > 0) {
         //damage but also respect the unbreaking chant  
@@ -139,7 +141,9 @@ public class EnchantExcavation extends EnchantBase {
           || !player.hasCorrectToolForDrops(targetState) //canHarvestBlock
           || totalBroken >= this.getHarvestMax(level)
           || player.getItemInHand(player.swingingArm).isEmpty()
-          || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)) {
+          || ForgeEventFactory.doPlayerHarvestCheck(player,targetState,true)
+//          || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)
+      ) {
         continue;
       }
       if (world instanceof ServerLevel) {
