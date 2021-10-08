@@ -36,8 +36,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -102,7 +100,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
    */
   public static VoxelShape rot(final VoxelShape shape) {
     double x1 = shape.min(Direction.Axis.X), x2 = shape.max(Direction.Axis.X);
-    final double y1 = shape.min(Direction.Axis.Y), y2 = shape.max(Direction.Axis.Y);
+      double y1 = shape.min(Direction.Axis.Y), y2 = shape.max(Direction.Axis.Y);
     double z1 = shape.min(Direction.Axis.Z), z2 = shape.max(Direction.Axis.Z);
     //    if (rotationDir == Rotation.CLOCKWISE_90 || rotationDir == Rotation.COUNTERCLOCKWISE_90) {
     double temp = z1; // ]
@@ -120,6 +118,26 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
     //      z1 = 1 - z1; // counterclockwise
     //      z2 = 1 - z2;
     //    }
+    return safeShapeBox(x1, x2, y1, y2, z1, z2);
+  }
+
+  private static VoxelShape safeShapeBox(double x1, double x2, double y1, double y2, double z1, double z2) {
+    double temp;
+    if(x1 > x2){
+      temp= x1;
+      x1 = x2;
+      x2 =temp;
+    }
+    if(y1 > y2){
+      temp= y1;
+      y1 = y2;
+      y2 =temp;
+    }
+    if(z1 > z2){
+      temp= z1;
+      z1 = z2;
+      z2 =temp;
+    }
     return Shapes.box(x1, y1, z1, x2, y2, z2);
   }
 
@@ -141,7 +159,8 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
     //    if (rotationDir == Rotation.COUNTERCLOCKWISE_90 || rotationDir == Rotation.CLOCKWISE_180) {
     z1 = 1 - z1; // counterclockwise
     z2 = 1 - z2;
-    return Shapes.box(x1, y1, z1, x2, y2, z2);
+
+    return safeShapeBox(x1, y1, z1, x2, y2, z2);
   }
 
   public static VoxelShape flipz(final VoxelShape shape) {
@@ -156,7 +175,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
     x2 = 1 - x2;
     z1 = 1 - z1; //  
     z2 = 1 - z2;
-    return Shapes.box(x1, y1, z1, x2, y2, z2);
+    return safeShapeBox(x1, y1, z1, x2, y2, z2);
   }
 
   @Override
