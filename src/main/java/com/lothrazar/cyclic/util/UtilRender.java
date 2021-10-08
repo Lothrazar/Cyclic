@@ -175,7 +175,8 @@ public class UtilRender {
         g = 1f;
         b = 1f;
       }
-      builder.addVertexData(matrixEntry, bakedquad, r, g, b, alpha, combinedLights, combinedOverlay);
+//      addVertexData
+      builder.putBulkData(matrixEntry, bakedquad, r, g, b, alpha, combinedLights, combinedOverlay);
     }
   }
 
@@ -258,7 +259,10 @@ public class UtilRender {
   public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, BlockState renderBlockState, float alpha, float scale) {
     Level world = Minecraft.getInstance().level;
     //render 
-    Minecraft.getInstance().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
+//    Minecraft.getInstance().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
+
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderTexture(0,InventoryMenu.BLOCK_ATLAS);
     //
     //    double range = 6F;
     //    ClientPlayerEntity player = Minecraft.getInstance().player;
@@ -424,11 +428,14 @@ public class UtilRender {
     x -= viewPosition.x();
     y -= viewPosition.y();
     z -= viewPosition.z();
-    RenderSystem.multMatrix(matrixStack.last().pose());
+//    RenderSystem.multMatrix(matrixStack.last().pose());
+    RenderSystem.setProjectionMatrix(matrixStack.last().pose());
+//    RenderSystem.
     Tesselator tessellator = Tesselator.getInstance();
     BufferBuilder renderer = tessellator.getBuilder();
-    renderer.begin(GL11.GL_LINES, DefaultVertexFormat.POSITION);
-    RenderSystem.color4f(color[0], color[1], color[2], 1f);
+    renderer.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION);
+    RenderSystem.setShaderColor(color[0], color[1], color[2], 1f);
+//    RenderSystem.color4f
     RenderSystem.lineWidth(2.5f);
     renderer.vertex(x, y, z).endVertex();
     renderer.vertex(x + offset, y, z).endVertex();
@@ -461,7 +468,7 @@ public class UtilRender {
     RenderSystem.enableDepthTest();
     RenderSystem.enableBlend();
     RenderSystem.enableTexture();
-    //    RenderSystem.color4f(1f, 1f, 1f, 1f);
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
   }
 
   /**
