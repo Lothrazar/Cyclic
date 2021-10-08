@@ -18,12 +18,12 @@ public class FluidTankRenderType extends RenderType {
 // AlphaStateShard
   private static final TransparencyStateShard ALPHA =   RenderStateShard.TRANSLUCENT_TRANSPARENCY;//.AlphaStateShard(0.1F);
 
-  private FluidTankRenderType(String nameIn, VertexFormat formatIn, int drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
+  private FluidTankRenderType(String nameIn, VertexFormat formatIn, VertexFormat.Mode drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
   }
 
   public static RenderType resizableCuboid() {
-    RenderType.CompositeState.CompositeStateBuilder stateBuilder = preset(InventoryMenu.BLOCK_ATLAS).setAlphaState(ALPHA);
+    RenderType.CompositeState.CompositeStateBuilder stateBuilder = preset(InventoryMenu.BLOCK_ATLAS); //.setAlphaState(ALPHA);
     return create("resizable_cuboid", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
         stateBuilder.createCompositeState(true));
   }

@@ -432,7 +432,7 @@ public class UtilEntity {
       default:
         yaw = 0;
     }
-    entity.yRot = yaw;
+    entity.setYRot(yaw);
   }
 
   /**

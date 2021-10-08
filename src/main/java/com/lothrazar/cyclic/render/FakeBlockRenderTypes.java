@@ -12,15 +12,20 @@ import org.lwjgl.opengl.GL11;
  */
 public class FakeBlockRenderTypes extends RenderType {
 
-  public FakeBlockRenderTypes(String nameIn, VertexFormat formatIn, int drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
+  public FakeBlockRenderTypes(String nameIn, VertexFormat formatIn, VertexFormat.Mode drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
   }
 
   /**
    * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
+   * 1.17 BOOLS are
+   *
+   this.affectsCrumbling = p_173182_;
+   this.sortOnUpload = p_173183_;
    */
   public static final RenderType LASER_MAIN_BEAM = create("MiningLaserMainBeam",
-      DefaultVertexFormat.POSITION_COLOR_TEX, GL11.GL_QUADS, 256,
+      DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256,
+      false,false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           .setLayeringState(VIEW_OFFSET_Z_LAYERING)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
@@ -31,9 +36,9 @@ public class FakeBlockRenderTypes extends RenderType {
           .createCompositeState(false));
   //
   public static final RenderType FAKE_BLOCK = create("fakeBlock",
-      DefaultVertexFormat.BLOCK, GL11.GL_QUADS, 256,
+      DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256,false,false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
-          .setShadeModelState(SMOOTH_SHADE)
+//          .setShadeModelState(SMOOTH_SHADE)
           .setLightmapState(LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
           //          .layer(PROJECTION_LAYERING)
@@ -43,7 +48,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
   public static final RenderType TRANSPARENT_COLOUR = create("transparentColour",
-      DefaultVertexFormat.POSITION_COLOR, GL11.GL_QUADS, 256,
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256,false,false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           //          .layer(PROJECTION_LAYERING)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
@@ -54,7 +59,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
   public static final RenderType SOLID_COLOUR = create("solidColour",
-      DefaultVertexFormat.POSITION_COLOR, GL11.GL_QUADS, 256,
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256,false,false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           //          .layer(PROJECTION_LAYERING)
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
