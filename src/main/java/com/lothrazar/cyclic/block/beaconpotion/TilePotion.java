@@ -1,12 +1,15 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -63,6 +66,13 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
   public TilePotion(BlockPos pos, BlockState state) {
     super(TileRegistry.beacon,pos,state );
     timer = 0;
+  }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePotion e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TilePotion e) {
+    e.tick();
   }
 
 //  @Override

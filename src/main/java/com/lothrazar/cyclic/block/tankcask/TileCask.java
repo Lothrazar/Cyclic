@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.tankcask;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,6 +12,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
@@ -41,6 +44,13 @@ public class TileCask extends TileEntityBase  {
     }
   }
 
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCask e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCask e) {
+    e.tick();
+  }
   public Predicate<FluidStack> isFluidValid() {
     return p -> true;
   }

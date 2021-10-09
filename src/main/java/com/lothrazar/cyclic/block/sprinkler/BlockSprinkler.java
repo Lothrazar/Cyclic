@@ -2,7 +2,10 @@ package com.lothrazar.cyclic.block.sprinkler;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -66,5 +69,10 @@ public class BlockSprinkler extends BlockBase {
   @Override
   public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return new TileSprinkler(pos,state);
+  }
+
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type,TileRegistry.SPRINKLER.get(), world.isClientSide ? TileSprinkler::clientTick : TileSprinkler::serverTick);
   }
 }

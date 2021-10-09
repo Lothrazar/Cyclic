@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.enderctrl;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -31,7 +34,13 @@ public class TileEnderCtrl extends TileEntityBase {
   public TileEnderCtrl(BlockPos pos, BlockState state) {
     super(TileRegistry.ender_controller,pos,state );
   }
-
+//  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
+//    e.tick();
+//  }
+//
+//  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
+//    e.tick();
+//  }
   @Override
   public void setField(int field, int value) {}
 

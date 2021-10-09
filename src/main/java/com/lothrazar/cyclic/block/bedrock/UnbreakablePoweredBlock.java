@@ -1,8 +1,11 @@
 package com.lothrazar.cyclic.block.bedrock;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -28,6 +31,10 @@ public class UnbreakablePoweredBlock extends BlockBase {
     return new UnbreakablePoweredTile(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.unbreakable_reactive, world.isClientSide ? UnbreakablePoweredTile::clientTick : UnbreakablePoweredTile::serverTick);
+  }
   public static void setBreakable(Level world, BlockPos pos, boolean isBreakable) {
     BlockState state = world.getBlockState(pos);
     boolean oldBreakable = state.getValue(BREAKABLE);

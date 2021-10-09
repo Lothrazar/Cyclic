@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.harvester;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.api.IHarvesterOverride;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.generatorpeat.TileGeneratorPeat;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.DataTags;
@@ -64,7 +65,14 @@ public class TileHarvester extends TileEntityBase implements MenuProvider {
     timer = 1;
   }
 
-  //  @Override
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileHarvester e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileHarvester e) {
+    e.tick();
+  }
+
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -269,7 +277,7 @@ public class TileHarvester extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     radius = tag.getInt("radius");
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");

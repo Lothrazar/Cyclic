@@ -1,7 +1,11 @@
 package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -39,6 +43,10 @@ public class MembraneLamp extends BlockBase {
     return new MembraneLampTile(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.LAMP.get(), world.isClientSide ? MembraneLampTile::clientTick : MembraneLampTile::serverTick);
+  }
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());

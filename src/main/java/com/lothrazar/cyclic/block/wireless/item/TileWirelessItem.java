@@ -1,11 +1,14 @@
 package com.lothrazar.cyclic.block.wireless.item;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.wireless.fluid.TileWirelessFluid;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,6 +34,12 @@ public class TileWirelessItem extends TileEntityBase implements MenuProvider {
   public TileWirelessItem(BlockPos pos, BlockState state) {
     super(TileRegistry.WIRELESS_ITEM.get(),pos,state );
     this.needsRedstone = 0;
+  }  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessItem e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessItem e) {
+    e.tick();
   }
 
   //TWO INVENTORIES: ONE FOR GETCAP IO AND ONE FOR HIDDEN CARD

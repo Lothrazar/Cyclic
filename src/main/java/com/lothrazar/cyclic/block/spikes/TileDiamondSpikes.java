@@ -2,11 +2,14 @@ package com.lothrazar.cyclic.block.spikes;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -42,8 +45,13 @@ public class TileDiamondSpikes extends TileEntityBase  {
     }
     super.load( tag);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDiamondSpikes e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDiamondSpikes e) {
+    e.tick();
+  }
   public void tick() {
     if (timer > 0) {
       timer--;

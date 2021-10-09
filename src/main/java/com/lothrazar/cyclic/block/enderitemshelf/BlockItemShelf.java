@@ -11,6 +11,8 @@ import com.lothrazar.cyclic.util.UtilSound;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -53,6 +55,10 @@ public class BlockItemShelf extends BlockBase {
     return new TileItemShelf(pos,state);
   }
 
+//  @Override
+//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+//    return createTickerHelper(type,TileRegistry.ENDER_ITEM_SHELF.get(), world.isClientSide ? TileItemShelf::clientTick : TileItemShelf::serverTick);
+//  }
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
 //    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {

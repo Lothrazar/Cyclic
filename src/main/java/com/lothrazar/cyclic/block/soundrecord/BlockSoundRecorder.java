@@ -6,23 +6,20 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import java.util.List;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.TickableSoundInstance;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.client.resources.sounds.TickableSoundInstance;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockSoundRecorder extends BlockBase {
 
@@ -39,12 +36,15 @@ public class BlockSoundRecorder extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.SOUND_RECORDER, ScreenSoundRecorder::new);
   }
 
-
-
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
-    return new TileSoundRecorder(pos,state);
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TileSoundRecorder(pos, state);
   }
+
+//  @Override
+  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+  //    return createTickerHelper(type, TileRegistry.SOUND_RECORDER, world.isClientSide ? TileSoundRecorder::clientTick : TileSoundRecorder::serverTick);
+  //  }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent

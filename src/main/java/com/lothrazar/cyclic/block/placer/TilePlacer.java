@@ -1,8 +1,11 @@
 package com.lothrazar.cyclic.block.placer;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Player;
@@ -36,8 +39,13 @@ public class TilePlacer extends TileEntityBase implements MenuProvider {
   public TilePlacer(BlockPos pos, BlockState state) {
     super(TileRegistry.placer,pos,state);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePlacer e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TilePlacer e) {
+    e.tick();
+  }
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);

@@ -5,6 +5,8 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -45,6 +47,10 @@ public class BlockItemCollector extends BlockBase {
     return new TileItemCollector(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type,TileRegistry.COLLECTOR_ITEM, world.isClientSide ? TileItemCollector::clientTick : TileItemCollector::serverTick);
+  }
   @Override
   public void registerClient() {
     MenuScreens.register(ContainerScreenRegistry.collector, ScreenItemCollector::new);

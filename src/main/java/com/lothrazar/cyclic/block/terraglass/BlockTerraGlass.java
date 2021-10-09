@@ -1,7 +1,11 @@
 package com.lothrazar.cyclic.block.terraglass;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -62,6 +66,10 @@ public class BlockTerraGlass extends BlockBase {
     return new TileTerraGlass(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.TERRAGLASS.get(), world.isClientSide ? TileTerraGlass::clientTick : TileTerraGlass::serverTick);
+  }
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(LIT);

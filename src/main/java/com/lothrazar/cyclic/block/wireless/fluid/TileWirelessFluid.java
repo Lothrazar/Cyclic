@@ -2,11 +2,14 @@ package com.lothrazar.cyclic.block.wireless.fluid;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.wireless.energy.TileWirelessEnergy;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -51,7 +54,13 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
     this.needsRedstone = 0;
     tank = new FluidTankBase(this, CAPACITY, f -> true);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessFluid e) {
+    e.tick();
+  }
 
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessFluid e) {
+    e.tick();
+  }
   @Override
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());

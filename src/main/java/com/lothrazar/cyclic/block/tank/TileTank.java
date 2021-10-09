@@ -2,9 +2,11 @@ package com.lothrazar.cyclic.block.tank;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,6 +28,13 @@ public class TileTank extends TileEntityBase  {
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTank e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTank e) {
+    e.tick();
+  }
   @Override
   public void load(CompoundTag tag) {
     CompoundTag fluid = tag.getCompound(NBTFLUID);

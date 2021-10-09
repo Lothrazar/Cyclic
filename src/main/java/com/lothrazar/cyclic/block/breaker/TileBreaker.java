@@ -1,7 +1,10 @@
 package com.lothrazar.cyclic.block.breaker;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredTile;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +29,13 @@ public class TileBreaker extends TileEntityBase implements MenuProvider {
   public TileBreaker(BlockPos pos, BlockState state) {
     super(TileRegistry.breakerTile,pos,state);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileBreaker e) {
+    e.tick();
+  }
 
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileBreaker e) {
+    e.tick();
+  }
 //  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {

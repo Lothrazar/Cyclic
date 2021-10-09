@@ -1,12 +1,15 @@
 package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -53,8 +56,13 @@ public class TileItemCollector extends TileEntityBase implements MenuProvider {
     super(TileRegistry.COLLECTOR_ITEM,pos,state);
     this.needsRedstone = 0; // default on
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileItemCollector e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileItemCollector e) {
+    e.tick();
+  }
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);

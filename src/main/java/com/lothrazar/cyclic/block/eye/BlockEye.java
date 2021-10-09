@@ -1,7 +1,11 @@
 package com.lothrazar.cyclic.block.eye;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,6 +27,10 @@ public class BlockEye extends BlockBase {
     return new TileEye(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.eye_redstone, world.isClientSide ? TileEye::clientTick : TileEye::serverTick);
+  }
   @Override
   public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
     return blockState.getValue(LIT) ? 15 : 0;

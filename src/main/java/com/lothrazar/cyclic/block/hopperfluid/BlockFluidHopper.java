@@ -2,7 +2,11 @@ package com.lothrazar.cyclic.block.hopperfluid;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -59,5 +63,10 @@ public class BlockFluidHopper extends BlockBase {
   @Override
   public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return new TileFluidHopper(pos,state);
+  }
+
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.FLUIDHOPPER.get(), world.isClientSide ? TileFluidHopper::clientTick : TileFluidHopper::serverTick);
   }
 }

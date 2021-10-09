@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
@@ -18,6 +19,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
@@ -55,8 +58,13 @@ public class TileMelter extends TileEntityBase implements MenuProvider {
     super(TileRegistry.melter, pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMelter e) {
+    e.tick();
+  }
 
-  //  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileMelter e) {
+    e.tick();
+  }
   public void tick() {
     this.syncEnergy();
     this.findMatchingRecipe();

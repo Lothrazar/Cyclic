@@ -4,6 +4,9 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -51,6 +54,10 @@ public class BlockExpPylon extends BlockBase {
     return new TileExpPylon(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.experience_pylontile , world.isClientSide ? TileExpPylon::clientTick : TileExpPylon::serverTick);
+  }
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
     if (!world.isClientSide) {

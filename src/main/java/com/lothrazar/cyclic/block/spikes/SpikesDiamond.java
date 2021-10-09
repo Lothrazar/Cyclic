@@ -1,6 +1,9 @@
 package com.lothrazar.cyclic.block.spikes;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,6 +28,10 @@ public class SpikesDiamond extends SpikesBlock {
     return new TileDiamondSpikes(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.spikes_diamond, world.isClientSide ?  TileDiamondSpikes::clientTick :  TileDiamondSpikes::serverTick);
+  }
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
     if (entity instanceof LivingEntity && state.getValue(ACTIVATED) && worldIn instanceof ServerLevel) {

@@ -25,6 +25,9 @@ package com.lothrazar.cyclic.block.crafter;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.Containers;
@@ -85,6 +88,10 @@ public class BlockCrafter extends BlockBase {
     return new TileCrafter(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.crafter, world.isClientSide ? TileCrafter::clientTick : TileCrafter::serverTick);
+  }
   @Override
   public void registerClient() {
     MenuScreens.register(ContainerScreenRegistry.CRAFTER, ScreenCrafter::new);

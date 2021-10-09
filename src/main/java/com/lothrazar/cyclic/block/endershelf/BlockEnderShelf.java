@@ -11,6 +11,8 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.LivingEntity;
@@ -59,6 +61,12 @@ public class BlockEnderShelf extends BlockBase {
   public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return new TileEnderShelf(pos,state);
   }
+
+//  @Override
+//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+//    return createTickerHelper(type,TileRegistry.ender_shelf, world.isClientSide ? TileEnderShelf::clientTick : TileEnderShelf::serverTick);
+//  }
+
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -121,11 +129,7 @@ public class BlockEnderShelf extends BlockBase {
     return (TileEnderShelf) world.getBlockEntity(pos);
   }
   //
-  //
-  //
-  //
-  //
-  //
+
 
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {

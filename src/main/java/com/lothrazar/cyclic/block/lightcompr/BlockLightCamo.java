@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.block.lightcompr;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +39,10 @@ public class BlockLightCamo extends BlockBase {
     return new TileLightCamo(pos,state);
   }
 
+//  @Override
+//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+//    return createTickerHelper(type, TileRegistry.light_camo, world.isClientSide ? TileLightCamo::clientTick : TileLightCamo::serverTick);
+//  }
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     ItemStack stack = player.getItemInHand(handIn);

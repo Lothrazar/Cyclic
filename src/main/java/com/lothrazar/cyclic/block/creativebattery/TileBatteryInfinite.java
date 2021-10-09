@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.creativebattery;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
@@ -82,8 +85,13 @@ public class TileBatteryInfinite extends TileEntityBase  {
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileBatteryInfinite e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileBatteryInfinite e) {
+    e.tick();
+  }
   public void tick() {
     energy.receiveEnergy(MAX, false);
     //now go

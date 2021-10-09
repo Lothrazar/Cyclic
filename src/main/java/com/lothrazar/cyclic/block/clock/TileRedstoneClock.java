@@ -2,10 +2,13 @@ package com.lothrazar.cyclic.block.clock;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,8 +39,13 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
     needsRedstone = 0;
     this.facingResetAllOn();
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileRedstoneClock e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileRedstoneClock e) {
+//    e.tick();
+  }
   public void tick() {
     try {
       updateMyState();

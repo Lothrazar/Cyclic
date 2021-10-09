@@ -26,13 +26,16 @@ package com.lothrazar.cyclic.block.peatfarm;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
+import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import java.util.function.Predicate;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Player;
@@ -107,8 +110,13 @@ public class TilePeatFarm extends TileEntityBase implements  MenuProvider {
       outer.addAll(waterShape);
     }
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePeatFarm e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TilePeatFarm e) {
+    e.tick();
+  }
   public void tick() {
     this.syncEnergy();
     this.init();

@@ -3,8 +3,11 @@ package com.lothrazar.cyclic.block.tankcask;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -34,6 +37,10 @@ public class BlockCask extends BlockBase {
     return new TileCask(pos,state);
   }
 
+//  @Override
+//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+//    return createTickerHelper(type, TileRegistry.cask, world.isClientSide ? TileCask::clientTick : TileCask::serverTick);
+//  }
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.cable.energy;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,7 +36,13 @@ public class TileCableEnergy extends TileEntityBase  {
       mapIncomingEnergy.put(f, 0);
     }
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
+    e.tick();
+  }
 
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
+    e.tick();
+  }
 //  @Override
   public void tick() {
     this.syncEnergy();

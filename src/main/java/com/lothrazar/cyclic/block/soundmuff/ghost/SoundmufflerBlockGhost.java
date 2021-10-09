@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.block.soundmuff.ghost;
 import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,6 +35,10 @@ public class SoundmufflerBlockGhost extends SoundmufflerBlock {
     return new SoundmuffTile(pos,state);
   }
 
+//  @Override
+//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+//    return createTickerHelper(type,TileRegistry.soundproofing_ghost, world.isClientSide ? SoundmuffTile::clientTick : SoundmuffTile::serverTick);
+//  }
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     ItemStack stack = player.getItemInHand(handIn);

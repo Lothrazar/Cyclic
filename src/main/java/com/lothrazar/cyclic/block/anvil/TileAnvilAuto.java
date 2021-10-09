@@ -7,6 +7,8 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,6 +29,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileEntityBase implements MenuProvider {
+
+
 
   static enum Fields {
     TIMER, REDSTONE;
@@ -50,7 +54,13 @@ public class TileAnvilAuto extends TileEntityBase implements MenuProvider {
   public TileAnvilAuto(BlockPos pos, BlockState state) {
     super(TileRegistry.anvil,pos,state);
   }
+  public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilAuto tileAnvilAuto) {
+  tileAnvilAuto.tick();
+  }
 
+  public static <E extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilAuto e) {
+    e.tick();
+  }
   @Override
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());

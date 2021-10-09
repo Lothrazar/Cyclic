@@ -3,9 +3,11 @@ package com.lothrazar.cyclic.block.detectoritem;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.detectorentity.CompareType;
+import com.lothrazar.cyclic.block.detectorentity.TileDetector;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -39,7 +41,13 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
     super(TileRegistry.DETECTOR_ITEM,pos,state);
   }
 
-//  @Override
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDetectorItem e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDetectorItem e) {
+    e.tick();
+  }
   public void tick() {
     timer--;
     if (level.isClientSide || timer > 0) {

@@ -1,10 +1,12 @@
 package com.lothrazar.cyclic.block.laser;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.OffsetEnum;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -51,6 +53,13 @@ public class TileLaser extends TileEntityBase implements  MenuProvider {
     super(TileRegistry.laser,pos,state );
     this.needsRedstone = 0;
   }
+//  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
+//    e.tick();
+//  }
+//
+//  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
+//    e.tick();
+//  }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {

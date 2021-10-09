@@ -2,11 +2,14 @@ package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.entity.LivingEntity;
@@ -308,6 +311,10 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
     return new TileConveyor(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.conveyor, world.isClientSide ? TileConveyor::clientTick : TileConveyor::serverTick);
+  }
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     //decide properties

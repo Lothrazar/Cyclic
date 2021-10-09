@@ -2,8 +2,11 @@ package com.lothrazar.cyclic.block.hopperfluid;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
@@ -37,8 +40,13 @@ public class TileFluidHopper extends TileEntityBase {
     }
     return super.getCapability(cap, side);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidHopper e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidHopper e) {
+    e.tick();
+  }
   public void tick() {
     if (this.isPowered()) {
       return;

@@ -1,7 +1,11 @@
 package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -25,6 +29,10 @@ public class SoilBlock extends BlockBase {
     return new SoilTile(pos,state);
   }
 
+//  @Override
+//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+//    return createTickerHelper(type, TileRegistry.SOIL, world.isClientSide ? SoilTile::clientTick : SoilTile::serverTick);
+//  }
   @Override
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {

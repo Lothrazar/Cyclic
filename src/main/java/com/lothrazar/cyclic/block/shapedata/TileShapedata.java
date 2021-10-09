@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.shapedata;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -9,6 +10,8 @@ import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -119,7 +122,13 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
   public TileShapedata(BlockPos pos, BlockState state) {
     super(TileRegistry.computer_shape,pos,state);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileShapedata e) {
+    e.tick();
+  }
 
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileShapedata e) {
+    e.tick();
+  }
   @Override
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());

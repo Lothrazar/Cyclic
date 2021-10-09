@@ -3,12 +3,15 @@ package com.lothrazar.cyclic.block.generatorfluid;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
+import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -55,7 +58,13 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
     tank = new FluidTankBase(this, CAPACITY, p -> true);
     this.needsRedstone = 0;
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorFluid e) {
+    e.tick();
+  }
 
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorFluid e) {
+    e.tick();
+  }
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

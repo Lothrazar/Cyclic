@@ -2,6 +2,9 @@ package com.lothrazar.cyclic.block.workbench;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.entity.player.Player;
@@ -37,4 +40,8 @@ public class BlockWorkbench extends BlockBase {
   public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
     return new TileWorkbench(pos,state);
   }
+//  @Override
+//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+//    return createTickerHelper(type, TileRegistry.workbench, world.isClientSide ? TileWorkbench::clientTick : TileWorkbench::serverTick);
+//  }
 }

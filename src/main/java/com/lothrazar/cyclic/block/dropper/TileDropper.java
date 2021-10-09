@@ -1,11 +1,13 @@
 package com.lothrazar.cyclic.block.dropper;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -47,8 +49,13 @@ public class TileDropper extends TileEntityBase implements MenuProvider {
   public TileDropper(BlockPos pos, BlockState state) {
     super(TileRegistry.DROPPER,pos,state);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDropper e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDropper e) {
+    e.tick();
+  }
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {

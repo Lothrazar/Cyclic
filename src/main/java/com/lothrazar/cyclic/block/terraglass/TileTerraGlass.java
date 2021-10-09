@@ -2,8 +2,10 @@ package com.lothrazar.cyclic.block.terraglass;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -17,7 +19,13 @@ public class TileTerraGlass extends TileEntityBase  {
     super(TileRegistry.TERRAGLASS.get(),pos,state);
   }
 
-//  @Override
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraGlass e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraGlass e) {
+    e.tick();
+  }
   public void tick() {
     //sprinkler to ONLY whats directly above/below
     if (level.isClientSide) {

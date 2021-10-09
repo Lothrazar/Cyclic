@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.miner;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.datacard.BlockStateMatcher;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -88,7 +90,13 @@ public class TileMiner extends TileEntityBase implements MenuProvider {
   public TileMiner(BlockPos pos, BlockState state) {
     super(TileRegistry.MINER, pos, state);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMiner e) {
+    e.tick();
+  }
 
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileMiner e) {
+    e.tick();
+  }
   @Override
   public AABB getRenderBoundingBox() {
     return BlockEntity.INFINITE_EXTENT_AABB;

@@ -2,7 +2,11 @@ package com.lothrazar.cyclic.block.clock;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -46,6 +50,10 @@ public class BlockRedstoneClock extends BlockBase {
     return new TileRedstoneClock(pos,state);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.clock, world.isClientSide ? TileRedstoneClock::clientTick : TileRedstoneClock::serverTick);
+  }
   @Override
   public void registerClient() {
     MenuScreens.register(ContainerScreenRegistry.CLOCK, ScreenClock::new);

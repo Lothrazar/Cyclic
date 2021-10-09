@@ -1,8 +1,11 @@
 package com.lothrazar.cyclic.block.eye;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
@@ -16,8 +19,13 @@ public class TileEye extends TileEntityBase  {
     super(TileRegistry.eye_redstone,pos,state);
   }
 
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEye e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileEye e) {
+    e.tick();
+  }
   public void tick() {
     if (level.isClientSide) {
       return;

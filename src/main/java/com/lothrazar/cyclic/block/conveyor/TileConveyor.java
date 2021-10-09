@@ -2,8 +2,10 @@ package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -27,8 +29,13 @@ public class TileConveyor extends TileEntityBase  {
   public int getField(int field) {
     return 0;
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileConveyor e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileConveyor e) {
+    e.tick();
+  }
   public void tick() {
     if (level == null || worldPosition == null) {
       return;

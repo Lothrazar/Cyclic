@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.generatoritem.TileGeneratorDrops;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -14,6 +15,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -39,6 +42,12 @@ public class TileGeneratorPeat extends TileEntityBase implements MenuProvider {
   public TileGeneratorPeat(BlockPos pos, BlockState state) {
     super(TileRegistry.peat_generator, pos, state);
     this.setNeedsRedstone(0);
+  }  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorPeat e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorPeat e) {
+    e.tick();
   }
 
   @Override

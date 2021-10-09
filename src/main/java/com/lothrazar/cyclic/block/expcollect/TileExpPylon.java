@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
@@ -49,8 +52,13 @@ public class TileExpPylon extends TileEntityBase implements  MenuProvider {
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileExpPylon e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileExpPylon e) {
+    e.tick();
+  }
   public void tick() {
     if (!level.isClientSide) {
       //ignore on/off state, for player standing on top collecting exp

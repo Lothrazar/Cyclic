@@ -1,10 +1,13 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.wireless.item.TileWirelessItem;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -88,8 +91,14 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
       }
     }
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessTransmit e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessTransmit e) {
+    e.tick();
+  }
+
   public void tick() {
     for (int s = 0; s < inventory.getSlots(); s++) {
       BlockPosDim targetPos = getTargetInSlot(s);

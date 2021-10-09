@@ -5,6 +5,8 @@ import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,6 +33,10 @@ public class BlockDropper extends BlockBase {
     MenuScreens.register(ContainerScreenRegistry.DROPPER, ScreenDropper::new);
   }
 
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.DROPPER , world.isClientSide ? TileDropper::clientTick : TileDropper::serverTick);
+  }
 
   @Override
   public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {

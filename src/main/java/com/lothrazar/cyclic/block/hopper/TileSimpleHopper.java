@@ -1,11 +1,14 @@
 package com.lothrazar.cyclic.block.hopper;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -41,8 +44,13 @@ public class TileSimpleHopper extends TileEntityBase implements  Hopper {
     }
     return super.getCapability(cap, side);
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileSimpleHopper e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileSimpleHopper e) {
+    e.tick();
+  }
   public void tick() {
     //block if redstone powered
     if (this.isPowered()) {

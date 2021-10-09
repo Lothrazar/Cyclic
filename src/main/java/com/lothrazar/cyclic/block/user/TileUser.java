@@ -2,10 +2,13 @@ package com.lothrazar.cyclic.block.user;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -50,8 +53,14 @@ public class TileUser extends TileEntityBase implements  MenuProvider {
     super(TileRegistry.user,pos,state);
     this.needsRedstone = 1;
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileUser e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileUser e) {
+    e.tick();
+  }
+
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {

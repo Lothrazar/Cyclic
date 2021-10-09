@@ -2,8 +2,11 @@ package com.lothrazar.cyclic.block.trash;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
@@ -52,7 +55,14 @@ public class TileTrash extends TileEntityBase  {
     return super.save(tag);
   }
 
-//  @Override
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTrash e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTrash e) {
+    e.tick();
+  }
+
   public void tick() {
     inventory.extractItem(0, 64, false);
     tank.drain(CAPACITY, FluidAction.EXECUTE);

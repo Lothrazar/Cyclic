@@ -2,10 +2,13 @@ package com.lothrazar.cyclic.block.generatorfood;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
+import com.lothrazar.cyclic.block.generatorfluid.TileGeneratorFluid;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -53,8 +56,13 @@ public class TileGeneratorFood extends TileEntityBase implements MenuProvider {
     super(TileRegistry.GENERATOR_FOOD.get(),pos,state );
     this.needsRedstone = 0;
   }
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorFood e) {
+    e.tick();
+  }
 
-//  @Override
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorFood e) {
+    e.tick();
+  }
   public void tick() {
     this.syncEnergy();
     if (this.flowing == 1) {

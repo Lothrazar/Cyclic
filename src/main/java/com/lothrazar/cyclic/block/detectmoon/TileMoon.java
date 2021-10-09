@@ -4,15 +4,24 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TileMoon extends TileEntityBase  {
+public class TileMoon extends TileEntityBase {
 
   public TileMoon(BlockPos pos, BlockState state) {
-    super(TileRegistry.DETECTORMOON.get(),pos,state);
+    super(TileRegistry.DETECTORMOON.get(), pos, state);
   }
 
-//  @Override
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMoon e) {
+    e.tick();
+  }
+
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileMoon e) {
+    e.tick();
+  }
+
   public void tick() {
     //if we are going from unpowered to powered, meaning state isnt set but power is
     if (level instanceof ServerLevel) {
@@ -34,7 +43,8 @@ public class TileMoon extends TileEntityBase  {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
