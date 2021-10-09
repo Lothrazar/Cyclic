@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -52,6 +53,9 @@ public class BlockBase extends BaseEntityBlock {
     BlockRegistry.blocksClientRegistry.add(this);
   }
 
+  public RenderShape getRenderShape(BlockState p_49232_) {
+    return RenderShape.MODEL;
+  }
   protected BlockBase setHasGui() {
     this.hasGui = true;
     return this;
