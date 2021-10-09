@@ -29,12 +29,13 @@ public class ModCyclic {
     DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
     ConfigRegistry.setup();
     ConfigRegistry.setupClient();
-    FluidRegistry.setup();
     FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    FluidRegistry.setup(bus);
     BlockRegistry.BLOCKS.register(bus);
     ItemRegistry.ITEMS.register(bus);
     TileRegistry.TILES.register(bus);
+    FluidRegistry.FLUIDS.register(bus);
   }
 }

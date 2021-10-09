@@ -66,6 +66,9 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
     //    if (!TilePackager.isRecipeValid(recipe)) {
     //      return;
     //    }
+    if (recipe.getIngredients().size() == 0) {
+      return;
+    }
     //    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
