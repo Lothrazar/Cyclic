@@ -23,6 +23,7 @@ public class FakeBlockRenderTypes extends RenderType {
       DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256,
       false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
           .setLayeringState(VIEW_OFFSET_Z_LAYERING)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
           .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
@@ -34,6 +35,7 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType FAKE_BLOCK = create("fakeBlock",
       DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
           //          .setShadeModelState(SMOOTH_SHADE)
           .setLightmapState(LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
@@ -46,6 +48,7 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType TRANSPARENT_COLOUR = create("transparentColour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
           //          .layer(PROJECTION_LAYERING)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
           .setTextureState(NO_TEXTURE)
@@ -57,6 +60,7 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType SOLID_COLOUR = create("solidColour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
+          .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_MOVING_BLOCK_SHADER) //1.17 new
           //          .layer(PROJECTION_LAYERING)
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
           .setTextureState(NO_TEXTURE)
