@@ -122,7 +122,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
 
   @Override
   public boolean shouldMoveToInventory(int s) {
-    System.out.println("WAT is this shouldMoveToInventory" + s);
+    //LOGGER.info("WAT is this shouldMoveToInventory" + s);
     return false;
   }
 

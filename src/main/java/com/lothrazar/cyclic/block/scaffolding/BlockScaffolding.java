@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
 import java.util.Random;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -29,9 +30,8 @@ public class BlockScaffolding extends BlockBase {
   private boolean doesAutobreak = true;
 
   public BlockScaffolding(Properties properties, boolean autobreak) {
-    super(properties.strength(0.1F).randomTicks().noOcclusion()
-        .sound(SoundRegistry.SCAFFOLD));
-    System.out.println("TODO: +harvestLevel(0)");
+    super(properties.strength(0.1F).randomTicks().noOcclusion().sound(SoundRegistry.SCAFFOLD));
+    ModCyclic.LOGGER.error("TODO: +harvestLevel(0)");
     this.doesAutobreak = autobreak;
   }
 
