@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.conveyor;
 
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -82,6 +82,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
     super(properties.strength(0.6F).noOcclusion());
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
+
   /**
    * Utility methods for block shapes.
    *
@@ -94,8 +95,10 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
    * <p>
    * https://gist.github.com/sciwhiz12/0852b629e7a3d0200ffc03ec7edab187
    *
-   * @param shape       The shape to rotate
-   * @param rotationDir The rotation direction
+   * @param shape
+   *          The shape to rotate
+   * @param rotationDir
+   *          The rotation direction
    * @return The rotated shape
    */
   public static VoxelShape rot(final VoxelShape shape) {
@@ -193,7 +196,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
           return ANGLEWEST;
         case DOWN:
         case UP:
-          break;
+        break;
       }
       if (state.getValue(TYPE) == ConveyorType.DOWN) {
         switch (facing) {
@@ -207,7 +210,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
             return ANGLEEAST;
           case DOWN:
           case UP:
-            break;
+          break;
         }
       }
     }

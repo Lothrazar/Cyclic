@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.boomerang;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.registry.PotionRegistry;
@@ -7,7 +8,6 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -225,13 +225,13 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     switch (result.getType()) {
       case BLOCK:
         onImpactBlock((BlockHitResult) result);
-        break;
+      break;
       case ENTITY:
         onImpactEntity((EntityHitResult) result);
-        break;
+      break;
       case MISS:
       default:
-        break;
+      break;
     }
   }
 
@@ -270,7 +270,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         if (!entityHit.level.isClientSide) {
           entityHit.startRiding(this);
         }
-        break;
+      break;
       case DAMAGE:
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
@@ -280,7 +280,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             //           ("killed one");
           }
         }
-        break;
+      break;
       case STUN:
         //!entityHit.getUniqueID().equals(owner.getUniqueID()) 
         if (entityHit != owner && entityHit instanceof LivingEntity
@@ -291,9 +291,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             UtilSound.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }
-        break;
+      break;
       default:
-        break;
+      break;
     }
   }
 

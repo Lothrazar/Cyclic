@@ -14,8 +14,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler> {
 
-  public RenderSprinkler(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderSprinkler(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileSprinkler tankHere, float v, PoseStack matrix,

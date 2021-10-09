@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.clock;
 
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -201,37 +201,37 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
           value = 15;
         }
         power = value;
-        break;
+      break;
       case TIMER:
         timer = value;
-        break;
+      break;
       case DELAY:
         delay = Math.max(value, 1);
-        break;
+      break;
       case DURATION:
         duration = Math.max(value, 1);
-        break;
+      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-        break;
+      break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-        break;
+      break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-        break;
+      break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-        break;
+      break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-        break;
+      break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-        break;
+      break;
     }
   }
 }

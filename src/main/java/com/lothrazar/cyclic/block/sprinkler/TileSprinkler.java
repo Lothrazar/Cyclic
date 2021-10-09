@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.sprinkler;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -118,8 +118,7 @@ public class TileSprinkler extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {

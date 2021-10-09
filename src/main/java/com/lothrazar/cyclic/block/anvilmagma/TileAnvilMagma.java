@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.anvilmagma;
 
+import java.util.function.Predicate;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
@@ -7,7 +8,6 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -166,10 +166,10 @@ public class TileAnvilMagma extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.timer = value;
-        break;
+      break;
     }
   }
 

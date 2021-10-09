@@ -122,40 +122,40 @@ public class TileLaser extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[id]) {
       case THICK:
         this.thick = value;
-        break;
+      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case BLUE:
         blue = value;
-        break;
+      break;
       case GREEN:
         green = value;
-        break;
+      break;
       case RED:
         red = value;
-        break;
+      break;
       case ALPHA:
         alpha = value;
-        break;
+      break;
       case XOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.xOffset = OffsetEnum.values()[value];
-        break;
+      break;
       case YOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.yOffset = OffsetEnum.values()[value];
-        break;
+      break;
       case ZOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.zOffset = OffsetEnum.values()[value];
-        break;
+      break;
     }
   }
 

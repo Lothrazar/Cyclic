@@ -23,15 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.EnchantBase;
-import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.registry.EnchantRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -139,7 +139,7 @@ public class EnchantExcavation extends EnchantBase {
           || totalBroken >= this.getHarvestMax(level)
           || player.getItemInHand(player.swingingArm).isEmpty()
           || ForgeEventFactory.doPlayerHarvestCheck(player, targetState, true)
-        //          || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)
+      //          || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)
       ) {
         continue;
       }

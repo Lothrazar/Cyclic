@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.shapedata;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
@@ -8,7 +9,6 @@ import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -87,13 +87,13 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
           ModCyclic.LOGGER.info(cmd + " success");
           /// shape set
         }
-        break;
+      break;
       case COPY:
         //copy shape from CARD to BUFFER
         //only works
         this.copiedShape = new RelativeShape(cardShape);
         ModCyclic.LOGGER.info(cmd + " success");
-        break;
+      break;
       case PASTE:
         //from BUFFER to CARD
         //only works on EMPTY CARDS
@@ -103,7 +103,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
           this.copiedShape.write(shapeCard);
           ModCyclic.LOGGER.info(cmd + " success");
         }
-        break;
+      break;
       case MERGE:
         //from BUFFER to CARD
         //only works on NOT EMPTY cards
@@ -114,7 +114,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
           ModCyclic.LOGGER.info(cmd + " success");
           //          this.copiedShape = null;
         }
-        break;
+      break;
     }
   }
 
@@ -233,17 +233,17 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case STASH:
         hasStashIfOne = value;
-        break;
+      break;
       case COMMAND:
         if (value >= StructCommands.values().length) {
           value = 0;
         }
         StructCommands cmd = StructCommands.values()[value];
         this.execute(cmd);
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 }

@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.soundrecord;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;

@@ -13,8 +13,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderFisher implements BlockEntityRenderer<TileFisher> {
 
-  public RenderFisher(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderFisher(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileFisher tankHere, float v, PoseStack matrixStack,

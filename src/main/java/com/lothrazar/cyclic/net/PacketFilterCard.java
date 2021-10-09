@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
+import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
-import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;

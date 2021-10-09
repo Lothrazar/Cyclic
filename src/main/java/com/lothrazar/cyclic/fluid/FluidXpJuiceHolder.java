@@ -37,7 +37,7 @@ public class FluidXpJuiceHolder {
       FluidAttributes.builder(
           new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_still"),
           new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow")))
-      .bucket(BUCKET).block(BLOCK);
+              .bucket(BUCKET).block(BLOCK);
 
   public FluidXpJuiceHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);

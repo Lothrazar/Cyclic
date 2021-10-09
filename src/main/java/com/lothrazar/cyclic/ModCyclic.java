@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic;
 
+import org.apache.logging.log4j.LogManager;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
@@ -15,7 +16,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
 
 @Mod(ModCyclic.MODID)
 public class ModCyclic {

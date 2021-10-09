@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.base;
 
+import java.util.List;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -76,6 +76,5 @@ public class ItemBase extends Item {
   }
 
   @OnlyIn(Dist.CLIENT)
-  public void registerClient() {
-  }
+  public void registerClient() {}
 }

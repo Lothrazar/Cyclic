@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.util.UtilRenderText;
 import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.Map;
-import java.util.Map.Entry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,8 +20,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
 
-  public EnderShelfRenderer(BlockEntityRendererProvider.Context d) {
-  }
+  public EnderShelfRenderer(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileEnderShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {

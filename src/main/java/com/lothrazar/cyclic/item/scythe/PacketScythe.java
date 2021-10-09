@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.scythe;
 
-import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.util.UtilScythe;
 import java.util.List;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.util.UtilScythe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,8 +39,7 @@ public class PacketScythe extends PacketBase {
   private ScytheType type;
   private int radius;
 
-  public PacketScythe() {
-  }
+  public PacketScythe() {}
 
   public PacketScythe(BlockPos mouseover, ScytheType t, int r) {
     pos = mouseover;

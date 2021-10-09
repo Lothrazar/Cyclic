@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
-import com.mojang.brigadier.context.CommandContext;
 import java.util.Collection;
+import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
 

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import java.util.List;
+import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,6 +17,5 @@ public class GemstoneItem extends ItemBase {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-  }
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
 }

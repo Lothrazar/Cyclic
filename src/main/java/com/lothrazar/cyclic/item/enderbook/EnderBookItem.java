@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.enderbook;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -8,7 +9,6 @@ import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilWorld;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.nbt.CompoundTag;

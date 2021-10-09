@@ -26,8 +26,7 @@ public class ScreenCrate extends ScreenBase<ContainerCrate> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
-  }
+  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {}
 
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {

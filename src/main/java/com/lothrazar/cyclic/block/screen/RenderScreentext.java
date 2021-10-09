@@ -16,8 +16,7 @@ import net.minecraft.core.Direction;
  */
 public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
 
-  public RenderScreentext(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderScreentext(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileScreentext tile, float v, PoseStack matrix,

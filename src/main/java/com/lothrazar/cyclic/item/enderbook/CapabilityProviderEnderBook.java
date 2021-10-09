@@ -19,8 +19,7 @@ public class CapabilityProviderEnderBook implements ICapabilitySerializable<Comp
     }
   });
 
-  public CapabilityProviderEnderBook() {
-  }
+  public CapabilityProviderEnderBook() {}
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {

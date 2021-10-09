@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic;
 
-import com.lothrazar.cyclic.config.ConfigRegistry;
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 
 public class CyclicLogger {
 

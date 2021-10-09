@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.potion.TickableEffect;
 import com.lothrazar.cyclic.potion.effect.StunEffect;
 import com.lothrazar.cyclic.potion.effect.SwimEffect;
 import com.lothrazar.cyclic.recipe.ModBrewingRecipe;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

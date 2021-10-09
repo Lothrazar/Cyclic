@@ -124,13 +124,13 @@ public class TileWirelessEnergy extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
       case TRANSFER_RATE:
         transferRate = value;
-        break;
+      break;
     }
   }
 

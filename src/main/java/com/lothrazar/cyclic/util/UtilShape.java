@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.data.Const;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import com.lothrazar.cyclic.data.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;

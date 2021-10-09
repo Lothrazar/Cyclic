@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.conveyor;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -22,8 +22,7 @@ public class TileConveyor extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {

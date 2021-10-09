@@ -23,15 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.Vector3;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.world.DimensionTransit;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +53,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
-@SuppressWarnings("deprecation")
 public class UtilEntity {
 
   private static final double ENTITY_PULL_DIST = 0.4; //closer than this and nothing happens
@@ -84,15 +83,13 @@ public class UtilEntity {
   public static boolean enderTeleportEvent(LivingEntity player, Level world, BlockPos target) {
     return enderTeleportEvent(player, world, target.getX() + .5F, target.getY() + .5F, target.getZ() + .5F);
   }
-
-  private static void teleportWallSafe(LivingEntity player, Level world, double x, double y, double z) {
-    BlockPos coords = new BlockPos(x, y, z);
-    //    world.update
-    //    world.markBlockRangeForRenderUpdate(coords, coords);
-    world.getChunk(coords).setUnsaved(true);
-    player.teleportTo(x, y, z);
-    moveEntityWallSafe(player, world);
-  }
+  //  private static void teleportWallSafe(LivingEntity player, Level world, double x, double y, double z) {
+  //    BlockPos coords = new BlockPos(x, y, z);
+  // 
+  //    world.getChunk(coords).setUnsaved(true);
+  //    player.teleportTo(x, y, z);
+  //    moveEntityWallSafe(player, world);
+  //  }
 
   public static void moveEntityWallSafe(Entity entity, Level world) {
     //    world.checkBlockCollision(bb)
@@ -134,23 +131,23 @@ public class UtilEntity {
       case EAST:
         velX = Math.abs(power);
         velZ = 0;
-        break;
+      break;
       case WEST:
         velX = -1 * Math.abs(power);
         velZ = 0;
-        break;
+      break;
       case NORTH:
         velX = 0;
         velZ = -1 * Math.abs(power);
-        break;
+      break;
       case SOUTH:
         velX = 0;
         velZ = Math.abs(power);
-        break;
+      break;
       case UP:
       case DOWN:
       default:
-        break;
+      break;
     }
     Entity ridingEntity = entity.getVehicle();
     if (ridingEntity != null) {
@@ -415,13 +412,13 @@ public class UtilEntity {
     switch (currentFacing) {
       case EAST:
         yaw = 270F;
-        break;
+      break;
       case NORTH:
         yaw = 180F;
-        break;
+      break;
       case WEST:
         yaw = 90F;
-        break;
+      break;
       case DOWN:
       case UP:
       case SOUTH:

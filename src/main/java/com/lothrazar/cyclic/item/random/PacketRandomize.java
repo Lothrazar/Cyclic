@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.item.random;
 
-import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;

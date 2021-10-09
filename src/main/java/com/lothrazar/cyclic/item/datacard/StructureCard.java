@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import java.util.List;
+import com.lothrazar.cyclic.base.ItemBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.hopper;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -103,8 +103,7 @@ public class TileSimpleHopper extends TileEntityBase implements Hopper {
   }
 
   @Override
-  public void setField(int field, int value) {
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {

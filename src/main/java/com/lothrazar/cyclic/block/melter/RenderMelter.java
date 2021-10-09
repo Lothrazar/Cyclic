@@ -20,8 +20,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderMelter implements BlockEntityRenderer<TileMelter> {
 
-  public RenderMelter(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderMelter(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileMelter tankHere, float v, PoseStack matrixStack,

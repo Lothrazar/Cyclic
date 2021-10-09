@@ -15,11 +15,9 @@ public class FakeBlockRenderTypes extends RenderType {
   }
 
   /**
-   * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
-   * 1.17 BOOLS are
+   * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md 1.17 BOOLS are
    * <p>
-   * this.affectsCrumbling = p_173182_;
-   * this.sortOnUpload = p_173183_;
+   * this.affectsCrumbling = p_173182_; this.sortOnUpload = p_173183_;
    */
   public static final RenderType LASER_MAIN_BEAM = create("MiningLaserMainBeam",
       DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256,

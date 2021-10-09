@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.generatorpeat.TileGeneratorPeat;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;

@@ -157,7 +157,7 @@ public class TileAnvilVoid extends TileEntityBase implements MenuProvider {
       case TIMER:
         return this.timer;
       default:
-        break;
+      break;
     }
     return 0;
   }
@@ -167,10 +167,10 @@ public class TileAnvilVoid extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.timer = value;
-        break;
+      break;
     }
   }
 }

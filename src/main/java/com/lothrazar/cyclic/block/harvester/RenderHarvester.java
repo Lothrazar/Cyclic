@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderHarvester implements BlockEntityRenderer<TileHarvester> {
 
-  public RenderHarvester(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderHarvester(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileHarvester te, float v, PoseStack matrix,

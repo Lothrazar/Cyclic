@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.block.soundrecord;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -104,13 +104,13 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case CLEARALL:
         this.clearSounds();
-        break;
+      break;
       case IGNORE:
         this.ignoreSound(value);
-        break;
+      break;
       case SAVE:
         this.saveSoundToCard(value);
-        break;
+      break;
     }
   }
 

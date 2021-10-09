@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.solidifier;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
@@ -8,7 +9,6 @@ import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -96,13 +96,13 @@ public class TileSolidifier extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 

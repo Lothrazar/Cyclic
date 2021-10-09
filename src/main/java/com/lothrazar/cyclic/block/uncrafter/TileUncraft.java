@@ -1,16 +1,16 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilString;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -154,10 +154,10 @@ public class TileUncraft extends TileEntityBase implements MenuProvider {
 
   private boolean uncraftRecipe(Recipe<?> match) {
     List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())
-            .filter(stack -> !stack.hasContainerItem())
-            .findAny()
-            .map(Stream::of)
-            .orElseGet(Stream::empty))
+        .filter(stack -> !stack.hasContainerItem())
+        .findAny()
+        .map(Stream::of)
+        .orElseGet(Stream::empty))
         .collect(Collectors.toList());
     if (result.isEmpty()) {
       this.status = UncraftStatusEnum.NORECIPE;
@@ -268,13 +268,13 @@ public class TileUncraft extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case STATUS:
         this.status = UncraftStatusEnum.values()[value];
-        break;
+      break;
       case TIMER:
         timer = value;
-        break;
+      break;
     }
   }
 }

@@ -54,7 +54,7 @@ public class EntityRegistry {
   public static void registerEntity(RegistryEvent.Register<EntityType<?>> e) {
     IForgeRegistry<EntityType<?>> r = e.getRegistry();
     r.register(
-        EntityType.Builder.<EntityMagicNetEmpty>of(EntityMagicNetEmpty::new, MobCategory.MISC)
+        EntityType.Builder.<EntityMagicNetEmpty> of(EntityMagicNetEmpty::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -62,7 +62,7 @@ public class EntityRegistry {
             .build("magic_net")
             .setRegistryName("magic_net"));
     r.register(
-        EntityType.Builder.<EntityTorchBolt>of(EntityTorchBolt::new, MobCategory.MISC)
+        EntityType.Builder.<EntityTorchBolt> of(EntityTorchBolt::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -70,7 +70,7 @@ public class EntityRegistry {
             .build("torch_bolt")
             .setRegistryName("torch_bolt"));
     r.register(
-        EntityType.Builder.<BoomerangEntityStun>of(BoomerangEntityStun::new, MobCategory.MISC)
+        EntityType.Builder.<BoomerangEntityStun> of(BoomerangEntityStun::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -78,7 +78,7 @@ public class EntityRegistry {
             .build("boomerang_stun")
             .setRegistryName("boomerang_stun"));
     r.register(
-        EntityType.Builder.<BoomerangEntityCarry>of(BoomerangEntityCarry::new, MobCategory.MISC)
+        EntityType.Builder.<BoomerangEntityCarry> of(BoomerangEntityCarry::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -86,7 +86,7 @@ public class EntityRegistry {
             .build("boomerang_carry")
             .setRegistryName("boomerang_carry"));
     r.register(
-        EntityType.Builder.<BoomerangEntityDamage>of(BoomerangEntityDamage::new, MobCategory.MISC)
+        EntityType.Builder.<BoomerangEntityDamage> of(BoomerangEntityDamage::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -94,7 +94,7 @@ public class EntityRegistry {
             .build("boomerang_damage")
             .setRegistryName("boomerang_damage"));
     r.register(
-        EntityType.Builder.<EntityDungeonEye>of(EntityDungeonEye::new, MobCategory.MISC)
+        EntityType.Builder.<EntityDungeonEye> of(EntityDungeonEye::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -102,7 +102,7 @@ public class EntityRegistry {
             .build("dungeon")
             .setRegistryName("dungeon"));
     r.register(
-        EntityType.Builder.<EyeOfEnderEntityNodrop>of(EyeOfEnderEntityNodrop::new, MobCategory.MISC)
+        EntityType.Builder.<EyeOfEnderEntityNodrop> of(EyeOfEnderEntityNodrop::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -110,7 +110,7 @@ public class EntityRegistry {
             .build("eye")
             .setRegistryName("eye"));
     r.register(
-        EntityType.Builder.<LightningEntity>of(LightningEntity::new, MobCategory.MISC)
+        EntityType.Builder.<LightningEntity> of(LightningEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -118,7 +118,7 @@ public class EntityRegistry {
             .build("lightning_bolt")
             .setRegistryName("lightning_bolt"));
     r.register(
-        EntityType.Builder.<SnowEntity>of(SnowEntity::new, MobCategory.MISC)
+        EntityType.Builder.<SnowEntity> of(SnowEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -126,7 +126,7 @@ public class EntityRegistry {
             .build("snow_bolt")
             .setRegistryName("snow_bolt"));
     r.register(
-        EntityType.Builder.<FireEntity>of(FireEntity::new, MobCategory.MISC)
+        EntityType.Builder.<FireEntity> of(FireEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -134,7 +134,7 @@ public class EntityRegistry {
             .build("fire_bolt")
             .setRegistryName("fire_bolt"));
     r.register(
-        EntityType.Builder.<StoneEntity>of(StoneEntity::new, MobCategory.MISC)
+        EntityType.Builder.<StoneEntity> of(StoneEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
@@ -142,7 +142,7 @@ public class EntityRegistry {
             .build("stone_bolt")
             .setRegistryName("stone_bolt"));
     r.register(
-        EntityType.Builder.<ConveyorItemEntity>of(ConveyorItemEntity::new, MobCategory.MISC)
+        EntityType.Builder.<ConveyorItemEntity> of(ConveyorItemEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(1)

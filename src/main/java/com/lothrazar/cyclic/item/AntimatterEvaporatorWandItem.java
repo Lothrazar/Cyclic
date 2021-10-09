@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.item;
 
+import java.util.List;
+import java.util.Locale;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.List;
-import java.util.Locale;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -72,13 +72,13 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
     //    AtomicBoolean removed = new AtomicBoolean(false);
     switch (fluidMode) {
       case GENERIC:
-        break;
+      break;
       case LAVA:
-        break;
+      break;
       case WATER:
-        break;
+      break;
       default:
-        break;
+      break;
     }
     int countSuccess = 0;
     boolean tryHere = false;

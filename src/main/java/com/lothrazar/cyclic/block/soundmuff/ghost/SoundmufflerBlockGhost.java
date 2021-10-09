@@ -19,8 +19,7 @@ public class SoundmufflerBlockGhost extends SoundmufflerBlock {
   }
 
   @Override
-  public void registerClient() {
-  }
+  public void registerClient() {}
 
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

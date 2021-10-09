@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.base;
 
+import java.util.function.Predicate;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import java.util.function.Predicate;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;

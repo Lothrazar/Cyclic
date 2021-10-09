@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.block.forester;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -261,13 +261,13 @@ public class TileForester extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
       case SIZE:
         radius = value % MAX_SIZE;
-        break;
+      break;
     }
   }
 }

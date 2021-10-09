@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.compat.jei;
 
+import java.util.Objects;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatorfluid.ScreenGeneratorFluid;
 import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
@@ -16,7 +17,6 @@ import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilString;
-import java.util.Objects;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
@@ -44,8 +44,7 @@ public class CyclicPluginJEI implements IModPlugin {
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "jei");
 
   @Override
-  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-  }
+  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
 
   @Override
   public ResourceLocation getPluginUid() {
@@ -86,11 +85,11 @@ public class CyclicPluginJEI implements IModPlugin {
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
       if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
-        //          && item != BlockRegistry.SOLIDIFIER.asItem()
-        //                    && item != BlockRegistry.MELTER.asItem()
-        //          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
-        //          && item != BlockRegistry.PACKAGER.get().asItem()
-        //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
+      //          && item != BlockRegistry.SOLIDIFIER.asItem()
+      //                    && item != BlockRegistry.MELTER.asItem()
+      //          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
+      //          && item != BlockRegistry.PACKAGER.get().asItem()
+      //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
       ) {
         registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslatableComponent(item.getDescriptionId() + ".guide"));
       }

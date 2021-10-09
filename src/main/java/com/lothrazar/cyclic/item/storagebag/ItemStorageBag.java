@@ -1,9 +1,5 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +7,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -117,19 +117,19 @@ public class ItemStorageBag extends ItemBase {
       tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
           new TranslatableComponent(String.format(
               pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
-          .withStyle(ChatFormatting.GREEN));
+                  .withStyle(ChatFormatting.GREEN));
     }
     if (!depositMode.equals("")) {
       tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
           new TranslatableComponent(String.format(
               depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
-          .withStyle(ChatFormatting.BLUE));
+                  .withStyle(ChatFormatting.BLUE));
     }
     if (!refillMode.equals("")) {
       tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
           new TranslatableComponent(String.format(
               refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
-          .withStyle(ChatFormatting.RED));
+                  .withStyle(ChatFormatting.RED));
     }
   }
 

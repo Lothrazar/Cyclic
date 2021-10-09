@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.expcollect;
 
+import java.util.List;
+import java.util.function.Predicate;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.DataTags;
@@ -7,8 +9,6 @@ import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.List;
-import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -149,9 +149,9 @@ public class TileExpPylon extends TileEntityBase implements MenuProvider {
     List<ExperienceOrb> list = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(
         worldPosition.getX() - RADIUS, worldPosition.getY() - 1, worldPosition.getZ() - RADIUS,
         worldPosition.getX() + RADIUS, worldPosition.getY() + 2, worldPosition.getZ() + RADIUS), (entity) -> {
-      return entity.isAlive() && entity.getValue() > 0;
-      //entity != null && entity.getHorizontalFacing() == facing;
-    });
+          return entity.isAlive() && entity.getValue() > 0;
+          //entity != null && entity.getHorizontalFacing() == facing;
+        });
     if (list.size() > 0) {
       ExperienceOrb myOrb = list.get(level.random.nextInt(list.size()));
       int addMeXp = myOrb.getValue();
@@ -182,7 +182,7 @@ public class TileExpPylon extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
     }
   }
 

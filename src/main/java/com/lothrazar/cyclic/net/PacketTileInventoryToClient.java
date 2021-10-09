@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.net;
 
+import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
-import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,8 +30,7 @@ public class PacketTileInventoryToClient extends PacketBase {
     this.type = type;
   }
 
-  public PacketTileInventoryToClient() {
-  }
+  public PacketTileInventoryToClient() {}
 
   @SuppressWarnings("unused")
   public static void handle(PacketTileInventoryToClient message, Supplier<NetworkEvent.Context> ctx) {

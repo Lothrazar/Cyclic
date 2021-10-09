@@ -22,7 +22,6 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.data;
-
 public enum OffsetEnum {
 
   TOP, CENTER, BOTTOM;

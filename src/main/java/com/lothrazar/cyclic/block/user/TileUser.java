@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.user;
 
+import java.lang.ref.WeakReference;
+import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.lang.ref.WeakReference;
-import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -127,16 +127,16 @@ public class TileUser extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case TIMERDEL:
         this.timerDelay = value;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 

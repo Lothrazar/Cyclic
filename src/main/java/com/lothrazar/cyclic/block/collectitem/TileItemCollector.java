@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.collectitem;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -169,19 +169,19 @@ public class TileItemCollector extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.setNeedsRedstone(value);
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-        break;
+      break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-        break;
+      break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-        break;
+      break;
     }
   }
 

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.battery;
 
-import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
 import java.util.List;
+import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -46,7 +46,8 @@ public class ItemBlockBattery extends BlockItem {
   /**
    * Queries the percentage of the 'Durability' bar that should be drawn.
    *
-   * @param stack The current ItemStack
+   * @param stack
+   *          The current ItemStack
    * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
    */
   @Override

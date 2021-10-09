@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderPeatFarm implements BlockEntityRenderer<TilePeatFarm> {
 
-  public RenderPeatFarm(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderPeatFarm(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TilePeatFarm te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

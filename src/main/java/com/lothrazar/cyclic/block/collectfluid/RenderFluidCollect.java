@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderFluidCollect implements BlockEntityRenderer<TileFluidCollect> {
 
-  public RenderFluidCollect(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderFluidCollect(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileFluidCollect te, float v, PoseStack matrix, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {

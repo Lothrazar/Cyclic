@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.dice;
 
+import java.util.Random;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.Random;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;

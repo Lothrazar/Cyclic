@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
+import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.Const;
@@ -9,7 +10,6 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;

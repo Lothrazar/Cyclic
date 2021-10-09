@@ -14,8 +14,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
 
-  public ItemShelfRenderer(BlockEntityRendererProvider.Context d) {
-  }
+  public ItemShelfRenderer(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileItemShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {

@@ -14,8 +14,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class RenderTank implements BlockEntityRenderer<TileTank> {
 
-  public RenderTank(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderTank(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileTank tankHere, float v, PoseStack matrix,

@@ -126,25 +126,25 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[id]) {
       case BLUE:
         blue = value;
-        break;
+      break;
       case GREEN:
         green = value;
-        break;
+      break;
       case RED:
         red = value;
-        break;
+      break;
       case PADDING:
         padding = value;
-        break;
+      break;
       case FONT:
         fontSize = value;
-        break;
+      break;
       case OFFSET:
         offset = value;
-        break;
+      break;
       case REDSTONE:
         this.setNeedsRedstone(value);
-        break;
+      break;
     }
   }
 

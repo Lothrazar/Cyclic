@@ -151,7 +151,7 @@ public class TileGeneratorFuel extends TileEntityBase implements MenuProvider {
       case FLOWING:
         return this.flowing;
       default:
-        break;
+      break;
     }
     return 0;
   }
@@ -161,16 +161,16 @@ public class TileGeneratorFuel extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.burnTime = value;
-        break;
+      break;
       case BURNMAX:
         this.burnTimeMax = value;
-        break;
+      break;
       case FLOWING:
         this.flowing = value;
-        break;
+      break;
     }
   }
 

@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEnchant;
-import java.util.Map;
-import java.util.Map.Entry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.EnchantedBookItem;

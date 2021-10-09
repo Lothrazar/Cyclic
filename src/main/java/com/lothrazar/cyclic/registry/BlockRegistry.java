@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.DoorbellButton;
@@ -102,8 +104,6 @@ import com.lothrazar.cyclic.block.wireless.item.BlockWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;

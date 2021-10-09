@@ -120,7 +120,7 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
     switch (Fields.values()[field]) {
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 

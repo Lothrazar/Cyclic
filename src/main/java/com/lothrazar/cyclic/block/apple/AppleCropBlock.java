@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.apple;
 
-import com.lothrazar.cyclic.base.BlockBase;
 import java.util.Random;
+import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;

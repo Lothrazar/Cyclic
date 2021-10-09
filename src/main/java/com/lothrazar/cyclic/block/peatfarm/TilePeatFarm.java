@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.peatfarm;
 
+import java.util.List;
+import java.util.function.Predicate;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
@@ -30,8 +32,6 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
-import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -162,10 +162,10 @@ public class TilePeatFarm extends TileEntityBase implements MenuProvider {
     switch (TilePeatFarm.Fields.values()[field]) {
       case REDSTONE:
         this.setNeedsRedstone(value);
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 

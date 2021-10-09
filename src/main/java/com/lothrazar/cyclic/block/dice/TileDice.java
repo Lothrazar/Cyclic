@@ -105,10 +105,10 @@ public class TileDice extends TileEntityBase {
     switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case SPINNING:
         spinningIfZero = value;
-        break;
+      break;
     }
   }
 }

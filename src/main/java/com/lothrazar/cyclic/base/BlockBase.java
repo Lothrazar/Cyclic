@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.base;
 
+import java.util.List;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -170,8 +170,7 @@ public class BlockBase extends BaseEntityBlock {
   /**
    * Override per block for render-ers/screens/etc
    */
-  public void registerClient() {
-  }
+  public void registerClient() {}
 
   public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
     return hasCapabilityDir(facing, world, facingPos, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);

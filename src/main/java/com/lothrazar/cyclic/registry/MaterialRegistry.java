@@ -69,7 +69,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-            break;
+          break;
         }
         return 0; //ArmorMaterial.DIAMOND.getDamageReductionAmount(slot) + ArmorMaterial.IRON.getDamageReductionAmount(slot);
       }
@@ -125,7 +125,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-            break;
+          break;
         }
         return 0; // ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) * 3;
       }

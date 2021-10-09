@@ -1,5 +1,8 @@
 package com.lothrazar.cyclic.block.miner;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -8,9 +11,6 @@ import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -348,19 +348,19 @@ public class TileMiner extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-        break;
+      break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-        break;
+      break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-        break;
+      break;
     }
   }
 }

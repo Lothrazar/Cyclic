@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
+import java.util.Random;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
-import java.util.Random;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;

@@ -1,5 +1,9 @@
 package com.lothrazar.cyclic.config;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.ModCyclic;
@@ -57,10 +61,6 @@ import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -98,7 +98,6 @@ public class ConfigRegistry {
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
   public static DoubleValue CHARM_ATTACKSPEED;
-
   static {
     buildDefaults();
     initConfig();
@@ -340,7 +339,7 @@ public class ConfigRegistry {
     //
     CFG.comment("Uncrafter settings").push("uncrafter");
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
-            + "For example, if false it will not uncraft damaged or enchanted items")
+        + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", true);
     TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT, it -> it instanceof String);
     TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")

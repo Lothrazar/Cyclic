@@ -1,14 +1,14 @@
 package com.lothrazar.cyclic.block.creativebattery;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -136,22 +136,22 @@ public class TileBatteryInfinite extends TileEntityBase {
     switch (Fields.values()[field]) {
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-        break;
+      break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-        break;
+      break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-        break;
+      break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-        break;
+      break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-        break;
+      break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-        break;
+      break;
     }
   }
 }

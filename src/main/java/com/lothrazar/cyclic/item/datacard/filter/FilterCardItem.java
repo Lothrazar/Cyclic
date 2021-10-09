@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.nbt.CompoundTag;

@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item.scythe;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;

@@ -62,6 +62,5 @@ public class CloudPlayerBlock extends BlockBase {
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-  }
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {}
 }

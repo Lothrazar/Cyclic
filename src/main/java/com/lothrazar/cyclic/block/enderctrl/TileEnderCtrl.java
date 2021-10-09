@@ -1,14 +1,14 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
-import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -40,8 +40,7 @@ public class TileEnderCtrl extends TileEntityBase {
   //    e.tick();
   //  }
   @Override
-  public void setField(int field, int value) {
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {

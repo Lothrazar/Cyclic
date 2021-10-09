@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.data.DataTags;
@@ -7,8 +9,6 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,8 +33,7 @@ public class BlockItemShelf extends BlockBase {
   }
 
   @Override
-  public void registerClient() {
-  }
+  public void registerClient() {}
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

@@ -23,12 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.data.CraftingActionEnum;
-import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.data.CraftingActionEnum;
+import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -73,13 +73,13 @@ public class PacketCraftAction extends PacketBase {
           c.transferStack(player, i);
         }
         c.getCraftResult().clearContent();
-        break;
+      break;
       case SPREAD:
         balanceLargestSlot(c, false);
-        break;
+      break;
       case SPREADMATCH:
         balanceLargestSlot(c, true);
-        break;
+      break;
     }
   }
 
@@ -105,7 +105,7 @@ public class PacketCraftAction extends PacketBase {
       if (tmp.isEmpty() && !onlyExisting) {
         slotTargest.add(i);
       }
-      if (ItemStack.isSameItemSameTags(tmp, biggest)) {  // AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
+      if (ItemStack.isSameItemSameTags(tmp, biggest)) { // AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
         slotTargest.add(i);
         totalQuantity += tmp.getCount();
       }

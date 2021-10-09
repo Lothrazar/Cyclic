@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.cable;
 
+import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.Map;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -203,15 +203,15 @@ public abstract class CableBase extends BlockBase implements SimpleWaterloggedBl
           //unblock it go back to none (dont know where connection would be if any)
           newState = state.setValue(prop, EnumConnectType.NONE);
           updatePost = true;
-          break;
+        break;
         case INVENTORY: // inventory connection or
         case NONE: // no connection
           newState = state.setValue(prop, EnumConnectType.CABLE);
-          break;
+        break;
         case CABLE: // extract
           // extract to blocked 
           newState = state.setValue(prop, EnumConnectType.BLOCKED);
-          break;
+        break;
       }
       if (world.setBlockAndUpdate(pos, newState)) {
         if (updatePost) {

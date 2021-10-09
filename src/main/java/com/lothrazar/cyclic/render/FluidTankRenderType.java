@@ -13,9 +13,8 @@ import net.minecraft.world.inventory.InventoryMenu;
  * https://github.com/mekanism/Mekanism/blob/1.15x/LICENSE
  */
 public class FluidTankRenderType extends RenderType {
-
   // AlphaStateShard
-  private static final TransparencyStateShard ALPHA = RenderStateShard.TRANSLUCENT_TRANSPARENCY;//.AlphaStateShard(0.1F);
+  //  private static final TransparencyStateShard ALPHA = RenderStateShard.TRANSLUCENT_TRANSPARENCY;//.AlphaStateShard(0.1F);
 
   private FluidTankRenderType(String nameIn, VertexFormat formatIn, VertexFormat.Mode drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
@@ -32,7 +31,7 @@ public class FluidTankRenderType extends RenderType {
         .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
         .setCullState(CULL)
         .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-        //        .setShadeModelState(SMOOTH_SHADE)
-        ;
+    //        .setShadeModelState(SMOOTH_SHADE)
+    ;
   }
 }

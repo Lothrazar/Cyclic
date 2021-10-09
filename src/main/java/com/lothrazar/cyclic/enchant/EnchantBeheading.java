@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import java.util.Map;
 import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;

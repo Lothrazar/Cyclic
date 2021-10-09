@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.render;
 
+import java.util.Arrays;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
-import java.util.Arrays;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

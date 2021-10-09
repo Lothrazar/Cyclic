@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -7,7 +8,6 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -175,16 +175,16 @@ public class TileGeneratorDrops extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.burnTime = value;
-        break;
+      break;
       case BURNMAX:
         this.burnTimeMax = value;
-        break;
+      break;
       case FLOWING:
         this.flowing = value;
-        break;
+      break;
     }
   }
 

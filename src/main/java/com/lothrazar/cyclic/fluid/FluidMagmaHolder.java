@@ -40,7 +40,7 @@ public class FluidMagmaHolder {
       FluidAttributes.builder(
           new ResourceLocation("minecraft:block/magma"),
           new ResourceLocation("minecraft:block/magma")))
-      .bucket(BUCKET).block(BLOCK);
+              .bucket(BUCKET).block(BLOCK);
 
   public FluidMagmaHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);

@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.workbench;
 
+import java.util.Optional;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;

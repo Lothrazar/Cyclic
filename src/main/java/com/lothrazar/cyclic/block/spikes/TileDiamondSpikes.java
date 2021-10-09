@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.spikes;
 
-import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
+import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -80,8 +80,7 @@ public class TileDiamondSpikes extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {

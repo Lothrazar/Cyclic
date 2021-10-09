@@ -124,8 +124,7 @@ public class TileFluidHopper extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {
-  }
+  public void setField(int field, int value) {}
 
   @Override
   public int getField(int field) {

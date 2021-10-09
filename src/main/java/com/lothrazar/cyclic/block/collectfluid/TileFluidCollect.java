@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -206,16 +206,16 @@ public class TileFluidCollect extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.setNeedsRedstone(value);
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-        break;
+      break;
       case SIZE:
         size = Math.min(value, MAX_SIZE);
-        break;
+      break;
     }
   }
 

@@ -24,7 +24,6 @@ public class SpawnInspectorTool extends ItemBase {
     super(properties);
   }
 
-  @SuppressWarnings("deprecation")
   private static BlockPos getTopSolidOrLiquidBlock(LevelReader worldIn, EntityType<?> etype, int x, int z) {
     int i = worldIn.getHeight(SpawnPlacements.getHeightmapType(etype), x, z);
     BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(x, i, z);

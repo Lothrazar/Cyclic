@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.carrot;
 
+import java.util.UUID;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
-import java.util.UUID;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;

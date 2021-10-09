@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.ModCyclic;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.resources.ResourceLocation;
 
 public class UtilString {

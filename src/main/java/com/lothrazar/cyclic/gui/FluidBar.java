@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -55,7 +55,6 @@ public class FluidBar {
     this.width = width;
   }
 
-  @SuppressWarnings("deprecation")
   public void draw(PoseStack ms, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
     //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.FLUID_WIDGET);

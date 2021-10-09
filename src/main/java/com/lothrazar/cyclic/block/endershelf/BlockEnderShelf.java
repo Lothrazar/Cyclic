@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.endershelf;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
@@ -7,8 +9,6 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -41,8 +41,7 @@ public class BlockEnderShelf extends BlockBase {
   }
 
   @Override
-  public void registerClient() {
-  }
+  public void registerClient() {}
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

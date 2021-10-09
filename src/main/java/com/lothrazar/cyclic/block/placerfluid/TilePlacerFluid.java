@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.placerfluid;
 
+import java.util.function.Predicate;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -126,10 +126,10 @@ public class TilePlacerFluid extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 }

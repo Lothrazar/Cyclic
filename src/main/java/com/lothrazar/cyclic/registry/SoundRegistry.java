@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.ModCyclic;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.SoundType;

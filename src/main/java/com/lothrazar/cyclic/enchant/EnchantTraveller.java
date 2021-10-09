@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.base.EnchantBase;
-import com.lothrazar.cyclic.util.UtilParticle;
 import java.util.Arrays;
 import java.util.List;
+import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -41,7 +41,6 @@ import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@SuppressWarnings("deprecation")
 public class EnchantTraveller extends EnchantBase {
 
   public static final List<String> PROTS = Arrays.asList(new String[] {

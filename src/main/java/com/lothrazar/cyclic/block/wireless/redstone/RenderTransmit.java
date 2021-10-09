@@ -17,8 +17,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit> {
 
-  public RenderTransmit(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderTransmit(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileWirelessTransmit te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

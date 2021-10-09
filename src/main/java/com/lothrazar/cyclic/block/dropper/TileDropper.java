@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.dropper;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -162,22 +162,22 @@ public class TileDropper extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case DELAY:
         delay = Math.max(0, value);
-        break;
+      break;
       case DROPCOUNT:
         dropCount = Math.max(1, value);
-        break;
+      break;
       case OFFSET:
         hOffset = Math.max(0, value);
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 

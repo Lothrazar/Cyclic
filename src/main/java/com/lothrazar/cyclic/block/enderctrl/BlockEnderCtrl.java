@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
+import java.util.Map;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilBlockstates;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

@@ -60,14 +60,14 @@ public class BoomerangItem extends ItemBase {
     switch (this.type) {
       case CARRY:
         e = new BoomerangEntityCarry(world, player);
-        break;
+      break;
       case DAMAGE:
         e = new BoomerangEntityDamage(world, player);
-        break;
+      break;
       default:
       case STUN:
         e = new BoomerangEntityStun(world, player);
-        break;
+      break;
     }
     shootMe(world, player, e, 0, percentageCharged * ItemBase.VELOCITY_MAX);
     stack.hurtAndBreak(1, player, (p) -> {

@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.tank;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;

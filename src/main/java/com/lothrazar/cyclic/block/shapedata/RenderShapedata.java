@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.shapedata;
 
+import java.awt.Color;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.vertex.PoseStack;
-import java.awt.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -11,8 +11,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderShapedata implements BlockEntityRenderer<TileShapedata> {
 
-  public RenderShapedata(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderShapedata(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileShapedata te, float v, PoseStack matrixStack,

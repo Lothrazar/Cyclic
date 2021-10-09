@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;

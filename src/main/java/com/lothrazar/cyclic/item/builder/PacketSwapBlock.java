@@ -1,17 +1,17 @@
 package com.lothrazar.cyclic.item.builder;
 
-import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclic.util.UtilPlayer;
-import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclic.util.UtilPlayer;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -68,7 +68,7 @@ public class PacketSwapBlock extends PacketBase {
       BlockPos curPos;
       boolean atLeastOne = false;
       synchronized (places) {
-        for (Iterator<BlockPos> i = places.iterator(); i.hasNext(); ) {
+        for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
           curPos = i.next();
           if (processed.containsKey(curPos) == false) {
             processed.put(curPos, 0);
@@ -149,29 +149,29 @@ public class PacketSwapBlock extends PacketBase {
       case SINGLE:
         places.add(pos);
         offsetW = offsetH = 0;
-        break;
+      break;
       case X3:
         offsetW = offsetH = 1;
-        break;
+      break;
       case X5:
         offsetW = offsetH = 2;
-        break;
+      break;
       case X7:
         offsetW = offsetH = 3;
-        break;
+      break;
       case X9:
         offsetW = offsetH = 4;
-        break;
+      break;
       case X19:
         offsetH = 0;
         offsetW = 4;
-        break;
+      break;
       case X91:
         offsetH = 4;
         offsetW = 0;
-        break;
+      break;
       default:
-        break;
+      break;
     }
     if (actionType != BuilderActionType.SINGLE) {
       if (isVertical) {

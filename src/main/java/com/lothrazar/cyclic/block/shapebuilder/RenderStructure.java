@@ -12,8 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderStructure implements BlockEntityRenderer<TileStructure> {
 
-  public RenderStructure(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderStructure(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileStructure te, float v, PoseStack matrixStack, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {

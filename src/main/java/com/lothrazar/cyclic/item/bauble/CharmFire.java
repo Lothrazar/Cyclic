@@ -22,7 +22,6 @@
  * SOFTWARE.
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
-
 public class CharmFire extends CharmBase {
 
   public CharmFire(Properties properties) {

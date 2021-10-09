@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderMiner implements BlockEntityRenderer<TileMiner> {
 
-  public RenderMiner(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderMiner(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileMiner te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

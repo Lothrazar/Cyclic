@@ -11,8 +11,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class SoundmuffRender implements BlockEntityRenderer<SoundmuffTile> {
 
-  public SoundmuffRender(BlockEntityRendererProvider.Context d) {
-  }
+  public SoundmuffRender(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public boolean shouldRenderOffScreen(SoundmuffTile te) {

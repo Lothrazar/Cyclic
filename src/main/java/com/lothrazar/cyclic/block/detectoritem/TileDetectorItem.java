@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.detectoritem;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.detectorentity.CompareType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -60,15 +60,15 @@ public class TileDetectorItem extends TileEntityBase implements MenuProvider {
     switch (this.compType) {
       case LESS:
         trigger = (entitiesFound < limitUntilRedstone);
-        break;
+      break;
       case GREATER:
         trigger = (entitiesFound > limitUntilRedstone);
-        break;
+      break;
       case EQUAL:
         trigger = (entitiesFound == limitUntilRedstone);
-        break;
+      break;
       default:
-        break;
+      break;
     }
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
@@ -145,7 +145,7 @@ public class TileDetectorItem extends TileEntityBase implements MenuProvider {
       case RENDER:
         return this.render;
       default:
-        break;
+      break;
     }
     return 0;
   }
@@ -170,7 +170,7 @@ public class TileDetectorItem extends TileEntityBase implements MenuProvider {
           value = CompareType.values().length - 1;
         }
         this.compType = CompareType.values()[value];
-        break;
+      break;
       case LIMIT:
         if (value > 999) {
           value = MAX_RANGE;
@@ -179,19 +179,19 @@ public class TileDetectorItem extends TileEntityBase implements MenuProvider {
           value = 0;
         }
         this.limitUntilRedstone = value;
-        break;
+      break;
       case RANGEX:
         this.rangeX = value;
-        break;
+      break;
       case RANGEY:
         this.rangeY = value;
-        break;
+      break;
       case RANGEZ:
         this.rangeZ = value;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 

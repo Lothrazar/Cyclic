@@ -475,12 +475,12 @@ public class ItemEvents {
         switch (ItemStorageBag.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = ItemStorageBag.tryInsert(bag, resultStack);
-            break;
+          break;
           case FILTER:
             resultStack = ItemStorageBag.tryFilteredInsert(bag, resultStack);
-            break;
+          break;
           case NOTHING:
-            break;
+          break;
         }
         if (resultStack.isEmpty()) {
           break;

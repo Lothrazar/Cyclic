@@ -1,5 +1,10 @@
 package com.lothrazar.cyclic.util;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.render.RenderResizableCuboid;
@@ -13,11 +18,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.player.LocalPlayer;
@@ -394,7 +394,6 @@ public class UtilRender {
    * <p>
    * From https://github.com/Lothrazar/SimpleTomb/blob/trunk/1.16/src/main/java/com/lothrazar/simpletomb/event/ClientEvents.java
    */
-  @SuppressWarnings("deprecation")
   public static void createBox(PoseStack matrixStack, BlockPos pos) {
     final double offset = 1;
     double x = pos.getX();
@@ -489,27 +488,27 @@ public class UtilRender {
           r = (int) (brightness * 255.0F + 0.5F);
           g = (int) (t * 255.0F + 0.5F);
           b = (int) (p * 255.0F + 0.5F);
-          break;
+        break;
         case 1:
           r = (int) (q * 255.0F + 0.5F);
           g = (int) (brightness * 255.0F + 0.5F);
           b = (int) (p * 255.0F + 0.5F);
-          break;
+        break;
         case 2:
           r = (int) (p * 255.0F + 0.5F);
           g = (int) (brightness * 255.0F + 0.5F);
           b = (int) (t * 255.0F + 0.5F);
-          break;
+        break;
         case 3:
           r = (int) (p * 255.0F + 0.5F);
           g = (int) (q * 255.0F + 0.5F);
           b = (int) (brightness * 255.0F + 0.5F);
-          break;
+        break;
         case 4:
           r = (int) (t * 255.0F + 0.5F);
           g = (int) (p * 255.0F + 0.5F);
           b = (int) (brightness * 255.0F + 0.5F);
-          break;
+        break;
         case 5:
           r = (int) (brightness * 255.0F + 0.5F);
           g = (int) (p * 255.0F + 0.5F);

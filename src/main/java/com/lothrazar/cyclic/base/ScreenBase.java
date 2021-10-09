@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.base;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.IHasTooltip;
@@ -8,7 +9,6 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;

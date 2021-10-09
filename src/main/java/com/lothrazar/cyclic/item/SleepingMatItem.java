@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item;
 
+import java.util.Optional;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.mojang.datafixers.util.Either;
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Unit;

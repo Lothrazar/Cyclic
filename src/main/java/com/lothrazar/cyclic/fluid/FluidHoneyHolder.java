@@ -38,7 +38,7 @@ public class FluidHoneyHolder {
       FluidAttributes.builder(
           new ResourceLocation("minecraft:block/honey_block_top"),
           new ResourceLocation("minecraft:block/honey_block_side")))
-      .bucket(BUCKET).block(BLOCK);
+              .bucket(BUCKET).block(BLOCK);
 
   public FluidHoneyHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);

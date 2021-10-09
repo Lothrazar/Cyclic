@@ -81,10 +81,10 @@ public class TileBreaker extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         timer = value;
-        break;
+      break;
     }
   }
 

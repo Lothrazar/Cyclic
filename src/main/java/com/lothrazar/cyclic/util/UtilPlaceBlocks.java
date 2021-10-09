@@ -49,15 +49,15 @@ public class UtilPlaceBlocks {
       switch (current) {
         case X:
           newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.Y);
-          break;
+        break;
         case Y:
           newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.Z);
-          break;
+        break;
         case Z:
           newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.X);
-          break;
+        break;
         default:
-          break;
+        break;
         //
       }
       //clicked.rot 
@@ -67,24 +67,24 @@ public class UtilPlaceBlocks {
       switch (side) {
         case DOWN:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_180);
-          break;
+        break;
         case UP:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_180);
-          break;
+        break;
         case EAST:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_90);
-          break;
+        break;
         case NORTH:
           newState = clicked.rotate(world, pos, Rotation.COUNTERCLOCKWISE_90);
-          break;
+        break;
         case SOUTH:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_90);
-          break;
+        break;
         case WEST:
           newState = clicked.rotate(world, pos, Rotation.COUNTERCLOCKWISE_90);
-          break;
+        break;
         default:
-          break;
+        break;
       }
     }
     boolean win = false;

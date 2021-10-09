@@ -20,8 +20,7 @@ public class BlockLightCamo extends BlockBase {
   }
 
   @Override
-  public void registerClient() {
-  }
+  public void registerClient() {}
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {

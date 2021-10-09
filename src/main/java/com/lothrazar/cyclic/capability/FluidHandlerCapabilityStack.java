@@ -19,8 +19,10 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
   protected int capacity;
 
   /**
-   * @param container The container itemStack, data is stored on it directly as NBT.
-   * @param capacity  The maximum capacity of this fluid tank.
+   * @param container
+   *          The container itemStack, data is stored on it directly as NBT.
+   * @param capacity
+   *          The maximum capacity of this fluid tank.
    */
   public FluidHandlerCapabilityStack(ItemStack container, int capacity) {
     this.container = container;

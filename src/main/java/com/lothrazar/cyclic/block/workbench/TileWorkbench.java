@@ -37,9 +37,7 @@ public class TileWorkbench extends TileEntityBase implements MenuProvider {
 
   public enum ItemHandlers {
     GRID, OUTPUT
-  }
-
-  ;
+  };
 
   public TileWorkbench(BlockPos pos, BlockState state) {
     super(TileRegistry.workbench, pos, state);

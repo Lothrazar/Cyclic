@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
@@ -92,8 +94,6 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.item.wing.EnderWingItem;
 import com.lothrazar.cyclic.item.wing.EnderWingSp;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;

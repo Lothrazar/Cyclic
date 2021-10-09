@@ -20,8 +20,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
 
-  public RenderSolidifier(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderSolidifier(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileSolidifier tankHere, float v, PoseStack matrixStack,

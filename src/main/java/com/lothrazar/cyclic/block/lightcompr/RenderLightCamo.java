@@ -11,8 +11,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderLightCamo implements BlockEntityRenderer<TileLightCamo> {
 
-  public RenderLightCamo(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderLightCamo(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public boolean shouldRenderOffScreen(TileLightCamo te) {

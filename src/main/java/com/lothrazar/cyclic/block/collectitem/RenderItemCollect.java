@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderItemCollect implements BlockEntityRenderer<TileItemCollector> {
 
-  public RenderItemCollect(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderItemCollect(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileItemCollector te, float v, PoseStack matrix,

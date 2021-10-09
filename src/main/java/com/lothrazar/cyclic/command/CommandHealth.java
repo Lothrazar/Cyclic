@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.command;
 
+import java.util.Collection;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.mojang.brigadier.context.CommandContext;
-import java.util.Collection;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;

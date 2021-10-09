@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block;
 
+import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -86,11 +86,11 @@ public class WaterCandleBlock extends BlockBase {
     }
     else if (state.getValue(LIT)
         && player.getItemInHand(hand).isEmpty()) {
-      //turn it off
-      world.setBlockAndUpdate(pos, state.setValue(LIT, false));
-      UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-      return InteractionResult.SUCCESS;
-    }
+          //turn it off
+          world.setBlockAndUpdate(pos, state.setValue(LIT, false));
+          UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
+          return InteractionResult.SUCCESS;
+        }
     return InteractionResult.FAIL;
   }
 

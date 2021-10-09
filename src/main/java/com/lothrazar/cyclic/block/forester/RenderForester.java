@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderForester implements BlockEntityRenderer<TileForester> {
 
-  public RenderForester(BlockEntityRendererProvider.Context d) {
-  }
+  public RenderForester(BlockEntityRendererProvider.Context d) {}
 
   @Override
   public void render(TileForester te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

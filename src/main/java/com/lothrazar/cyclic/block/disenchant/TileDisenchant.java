@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.disenchant;
 
+import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
@@ -10,7 +11,6 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -114,7 +114,7 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
       return;
     }
     //input is size 1, at least one book exists, and output IS empty
-    Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer>newLinkedHashMap();
+    Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer> newLinkedHashMap();
     Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(input);
     Enchantment keyMoved = null;
     for (Map.Entry<Enchantment, Integer> entry : inputEnchants.entrySet()) {
@@ -237,10 +237,10 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         timer = value;
-        break;
+      break;
     }
   }
 

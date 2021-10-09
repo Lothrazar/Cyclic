@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
@@ -9,8 +11,6 @@ import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -147,28 +147,28 @@ public class TileStructure extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case BUILDTYPE:
         if (value >= BuildStructureType.values().length) {
           value = 0;
         }
         this.buildType = BuildStructureType.values()[value];
-        break;
+      break;
       case SIZE:
         this.buildSize = value;
-        break;
+      break;
       case HEIGHT:
         if (value > MAXHEIGHT) {
           value = MAXHEIGHT;
         }
         this.height = Math.max(1, value);
-        break;
+      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 
@@ -295,34 +295,34 @@ public class TileStructure extends TileEntityBase implements MenuProvider {
       case CIRCLE:
         shape = UtilShape.circleHorizontal(this.getPosTarget(), this.getSize() * 2);
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-        break;
+      break;
       case FACING:
         shape = UtilShape.line(this.getPosTarget(), this.getCurrentFacing(), this.getSize());
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-        break;
+      break;
       case SQUARE:
         shape = UtilShape.squareHorizontalHollow(this.getPosTarget(), this.getSize());
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-        break;
+      break;
       case SOLID:
         shape = UtilShape.squareHorizontalFull(this.getTargetFacing(), this.getSize());
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-        break;
+      break;
       case SPHERE:
         shape = UtilShape.sphere(this.getPosTarget(), this.getSize());
-        break;
+      break;
       case DOME:
         shape = UtilShape.sphereDome(this.getPosTarget(), this.getSize());
-        break;
+      break;
       case CUP:
         shape = UtilShape.sphereCup(this.getPosTarget().above(this.getSize()), this.getSize());
-        break;
+      break;
       case DIAGONAL:
         shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getSize() * 2, true);
-        break;
+      break;
       case PYRAMID:
         shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
-        break;
+      break;
     }
     return shape;
   }

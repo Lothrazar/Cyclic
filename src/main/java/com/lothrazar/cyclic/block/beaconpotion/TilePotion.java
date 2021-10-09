@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -241,14 +241,14 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case ENTITYTYPE:
         value = value % EntityFilterType.values().length;
         this.entityFilter = EntityFilterType.values()[value];
-        break;
+      break;
       case RANGE:
         if (value > MAX_RADIUS) {
           radius = MAX_RADIUS;
@@ -256,7 +256,7 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
         else {
           this.radius = Math.min(value, MAX_RADIUS);
         }
-        break;
+      break;
     }
   }
 

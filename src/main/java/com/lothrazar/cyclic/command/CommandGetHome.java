@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.command;
 
+import java.util.Optional;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import java.util.Optional;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

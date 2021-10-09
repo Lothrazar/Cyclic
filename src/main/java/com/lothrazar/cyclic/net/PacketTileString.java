@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.net;
 
+import java.util.function.Supplier;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,8 +25,7 @@ public class PacketTileString extends PacketBase {
     this.pos = pos;
   }
 
-  public PacketTileString() {
-  }
+  public PacketTileString() {}
 
   public static void handle(PacketTileString message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {

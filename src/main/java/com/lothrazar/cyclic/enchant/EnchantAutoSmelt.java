@@ -23,11 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.google.gson.JsonObject;
-import com.lothrazar.cyclic.base.EnchantBase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.google.gson.JsonObject;
+import com.lothrazar.cyclic.base.EnchantBase;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EquipmentSlot;

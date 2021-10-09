@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.config;
 
+import java.awt.Color;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.awt.Color;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;

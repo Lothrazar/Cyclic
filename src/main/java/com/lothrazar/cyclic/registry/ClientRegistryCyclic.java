@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemBase;
@@ -34,7 +35,6 @@ import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -51,7 +51,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
@@ -67,7 +66,7 @@ public class ClientRegistryCyclic {
   @SubscribeEvent
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
     //    import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-    BlockEntityRendererProvider.Context lol; //  is required in constructor
+    //    BlockEntityRendererProvider.Context lol; //  is required in constructor
     event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
     event.registerBlockEntityRenderer(TileRegistry.STRUCTURE, RenderStructure::new);
     event.registerBlockEntityRenderer(TileRegistry.COLLECTOR_FLUID, RenderFluidCollect::new);
@@ -171,6 +170,5 @@ public class ClientRegistryCyclic {
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public static void registerModels(FMLClientSetupEvent event) {
-  }
+  public static void registerModels(FMLClientSetupEvent event) {}
 }

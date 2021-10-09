@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.bauble;
 
+import java.util.List;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

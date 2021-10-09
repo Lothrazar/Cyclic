@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.shears;
 
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import java.util.List;
 import java.util.Random;
+import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;

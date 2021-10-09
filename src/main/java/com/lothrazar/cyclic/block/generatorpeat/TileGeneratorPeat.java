@@ -160,18 +160,18 @@ public class TileGeneratorPeat extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case FLOWING:
         flowing = value;
-        break;
+      break;
       case REDSTONE:
         setNeedsRedstone(value);
-        break;
+      break;
       case RENDER:
         render = value % 2;
-        break;
+      break;
       case BURNTIME:
         this.setBurnTime(value);
-        break;
+      break;
       default:
-        break;
+      break;
     }
   }
 
