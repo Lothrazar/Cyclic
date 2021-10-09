@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.render;
 
+import java.util.OptionalDouble;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -70,5 +71,17 @@ public class FakeBlockRenderTypes extends RenderType {
           .setCullState(CULL)
           .setLightmapState(NO_LIGHTMAP)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
+          .createCompositeState(false));
+  public static final RenderType TOMB_LINES = create("tomb_lines",
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.LINES, 256, false, false,
+      RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_LINES_SHADER)
+          .setLineState(new LineStateShard(OptionalDouble.of(2.5D)))
+          .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .setOutputState(ITEM_ENTITY_TARGET)
+          .setWriteMaskState(COLOR_DEPTH_WRITE)
+          .setCullState(NO_CULL)
+          .setDepthTestState(NO_DEPTH_TEST)
           .createCompositeState(false));
 }

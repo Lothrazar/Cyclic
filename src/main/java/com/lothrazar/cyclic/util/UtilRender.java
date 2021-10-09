@@ -373,8 +373,7 @@ public class UtilRender {
     PoseStack matrix = evt.getMatrixStack();
     matrix.pushPose();
     matrix.translate(-view.x(), -view.y(), -view.z());
-    VertexConsumer builder;
-    builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
+    VertexConsumer builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
     for (BlockPos posCurr : coords.keySet()) {
       matrix.pushPose();
       matrix.translate(posCurr.getX(), posCurr.getY(), posCurr.getZ());
@@ -389,77 +388,55 @@ public class UtilRender {
     buffer.endBatch(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
   }
 
-  /**
-   * Box OUTLINE that you can see thru blocks.
-   * <p>
-   * From https://github.com/Lothrazar/SimpleTomb/blob/trunk/1.16/src/main/java/com/lothrazar/simpletomb/event/ClientEvents.java
-   */
-  public static void createBox(PoseStack matrixStack, BlockPos pos) {
-    final double offset = 1;
-    double x = pos.getX();
-    double y = pos.getY();
-    double z = pos.getZ();
-    Minecraft mc = Minecraft.getInstance();
-    RenderSystem.disableTexture();
-    RenderSystem.disableBlend();
-    RenderSystem.disableDepthTest();
-    //    RenderSystem.pushMatrix();
-    Vec3 viewPosition = mc.gameRenderer.getMainCamera().getPosition();
+  public static void createBox(PoseStack poseStack, BlockPos pos) {
+    poseStack.pushPose();
+    createBox(Minecraft.getInstance().renderBuffers().bufferSource(), poseStack, pos.getX(), pos.getY(), pos.getZ(), 1.0F);
+    poseStack.popPose();
+  }
+
+  private static void createBox(MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, float x, float y, float z, float offset) {
     long c = (System.currentTimeMillis() / 15L) % 360L;
     float[] color = getHSBtoRGBF(c / 360f, 1f, 1f);
-    matrixStack.pushPose();
+    Minecraft mc = Minecraft.getInstance();
+    Vec3 cameraPosition = mc.gameRenderer.getMainCamera().getPosition();
     // get a closer pos if too far
-    Vec3 vec = new Vec3(x, y, z).subtract(viewPosition);
+    Vec3 vec = new Vec3(x, y, z).subtract(cameraPosition);
     if (vec.distanceTo(Vec3.ZERO) > 200d) { // could be 300
       vec = vec.normalize().scale(200d);
       x += vec.x;
       y += vec.y;
       z += vec.z;
     }
-    x -= viewPosition.x();
-    y -= viewPosition.y();
-    z -= viewPosition.z();
-    //    RenderSystem.multMatrix(matrixStack.last().pose());
-    RenderSystem.setProjectionMatrix(matrixStack.last().pose());
-    //    RenderSystem.
-    Tesselator tessellator = Tesselator.getInstance();
-    BufferBuilder renderer = tessellator.getBuilder();
-    renderer.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION);
-    RenderSystem.setShaderColor(color[0], color[1], color[2], 1f);
-    //    RenderSystem.color4f
-    RenderSystem.lineWidth(2.5f);
-    renderer.vertex(x, y, z).endVertex();
-    renderer.vertex(x + offset, y, z).endVertex();
-    renderer.vertex(x, y, z).endVertex();
-    renderer.vertex(x, y + offset, z).endVertex();
-    renderer.vertex(x, y, z).endVertex();
-    renderer.vertex(x, y, z + offset).endVertex();
-    renderer.vertex(x + offset, y + offset, z + offset).endVertex();
-    renderer.vertex(x, y + offset, z + offset).endVertex();
-    renderer.vertex(x + offset, y + offset, z + offset).endVertex();
-    renderer.vertex(x + offset, y, z + offset).endVertex();
-    renderer.vertex(x + offset, y + offset, z + offset).endVertex();
-    renderer.vertex(x + offset, y + offset, z).endVertex();
-    renderer.vertex(x, y + offset, z).endVertex();
-    renderer.vertex(x, y + offset, z + offset).endVertex();
-    renderer.vertex(x, y + offset, z).endVertex();
-    renderer.vertex(x + offset, y + offset, z).endVertex();
-    renderer.vertex(x + offset, y, z).endVertex();
-    renderer.vertex(x + offset, y, z + offset).endVertex();
-    renderer.vertex(x + offset, y, z).endVertex();
-    renderer.vertex(x + offset, y + offset, z).endVertex();
-    renderer.vertex(x, y, z + offset).endVertex();
-    renderer.vertex(x + offset, y, z + offset).endVertex();
-    renderer.vertex(x, y, z + offset).endVertex();
-    renderer.vertex(x, y + offset, z + offset).endVertex();
-    tessellator.end();
-    matrixStack.popPose();
-    //    RenderSystem.popMatrix();
-    RenderSystem.lineWidth(1f);
+    RenderSystem.disableDepthTest();
+    VertexConsumer vertexConsumer = bufferSource.getBuffer(FakeBlockRenderTypes.TOMB_LINES);
+    poseStack.translate(-cameraPosition.x, -cameraPosition.y, -cameraPosition.z);
+    Matrix4f pose = poseStack.last().pose();
+    vertexConsumer.vertex(pose, x, y, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y + offset, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y + offset, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y + offset, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y + offset, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y + offset, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y + offset, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y + offset, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y + offset, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y + offset, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y + offset, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y + offset, z).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x + offset, y, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    vertexConsumer.vertex(pose, x, y + offset, z + offset).color(color[0], color[1], color[2], 1.0F).endVertex();
+    bufferSource.endBatch(FakeBlockRenderTypes.TOMB_LINES);
     RenderSystem.enableDepthTest();
-    RenderSystem.enableBlend();
-    RenderSystem.enableTexture();
-    RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
   }
 
   /**
