@@ -2,21 +2,21 @@ package com.lothrazar.cyclic.block.rotator;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 
-public class TileRotator extends TileEntityBase  {
+public class TileRotator extends TileEntityBase {
 
   public TileRotator(BlockPos pos, BlockState state) {
-    super(TileRegistry.ROTATOR.get(),pos,state);
+    super(TileRegistry.ROTATOR.get(), pos, state);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileRotator e) {
     e.tick();
   }
@@ -24,6 +24,7 @@ public class TileRotator extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileRotator e) {
     e.tick();
   }
+
   public void tick() {
     boolean powered = this.isPowered();
     boolean lit = this.getBlockState().getValue(BlockBase.LIT);
@@ -44,7 +45,8 @@ public class TileRotator extends TileEntityBase  {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

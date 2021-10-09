@@ -5,13 +5,13 @@ import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderItemCollect implements BlockEntityRenderer<TileItemCollector> {
 
+  public RenderItemCollect(BlockEntityRendererProvider.Context d) {
+  }
 
-  public RenderItemCollect(BlockEntityRendererProvider.Context d) {   }
   @Override
   public void render(TileItemCollector te, float v, PoseStack matrix,
       MultiBufferSource ibuffer, int partialTicks, int destroyStage) {

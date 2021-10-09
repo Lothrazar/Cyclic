@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import java.util.function.Supplier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketItemScroll extends PacketBase {

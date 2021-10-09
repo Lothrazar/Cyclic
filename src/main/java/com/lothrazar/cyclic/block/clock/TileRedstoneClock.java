@@ -2,22 +2,21 @@ package com.lothrazar.cyclic.block.clock;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 
 public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
 
@@ -31,7 +30,7 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
   private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
 
   public TileRedstoneClock(BlockPos pos, BlockState state) {
-    super(TileRegistry.clock,pos,state);
+    super(TileRegistry.clock, pos, state);
     timer = 0;
     delay = 60;
     duration = 60;
@@ -39,13 +38,15 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
     needsRedstone = 0;
     this.facingResetAllOn();
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileRedstoneClock e) {
     e.tick();
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileRedstoneClock e) {
-//    e.tick();
+    //    e.tick();
   }
+
   public void tick() {
     try {
       updateMyState();
@@ -105,7 +106,7 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     delay = tag.getInt("redstone_delay");
     duration = tag.getInt("redstone_duration");
     power = tag.getInt("redstone_power");
@@ -115,7 +116,7 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
     if (this.detectAllOff()) {
       this.facingResetAllOn(); //fix legacy data for one
     }
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -200,37 +201,37 @@ public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
           value = 15;
         }
         power = value;
-      break;
+        break;
       case TIMER:
         timer = value;
-      break;
+        break;
       case DELAY:
         delay = Math.max(value, 1);
-      break;
+        break;
       case DURATION:
         duration = Math.max(value, 1);
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-      break;
+        break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-      break;
+        break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-      break;
+        break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-      break;
+        break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-      break;
+        break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-      break;
+        break;
     }
   }
 }

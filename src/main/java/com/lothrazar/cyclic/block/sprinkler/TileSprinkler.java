@@ -2,20 +2,19 @@ package com.lothrazar.cyclic.block.sprinkler;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.spikes.TileDiamondSpikes;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -34,7 +33,7 @@ public class TileSprinkler extends TileEntityBase {
   private int shapeIndex = 0;
 
   public TileSprinkler(BlockPos pos, BlockState state) {
-    super(TileRegistry.SPRINKLER.get(),pos,state);
+    super(TileRegistry.SPRINKLER.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
   }
 
@@ -45,6 +44,7 @@ public class TileSprinkler extends TileEntityBase {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileSprinkler e) {
     e.tick();
   }
+
   public void tick() {
     timer--;
     if (timer > 0) {
@@ -88,7 +88,7 @@ public class TileSprinkler extends TileEntityBase {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     CompoundTag fluid = tag.getCompound(NBTFLUID);
     tank.readFromNBT(fluid);
     shapeIndex = tag.getInt("shapeIndex");
@@ -118,7 +118,8 @@ public class TileSprinkler extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

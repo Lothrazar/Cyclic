@@ -9,17 +9,17 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -50,7 +50,7 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
   private List<String> ignored = new ArrayList<>();
 
   public TileSoundRecorder(BlockPos pos, BlockState state) {
-    super(TileRegistry.SOUND_RECORDER.get(),pos,state);
+    super(TileRegistry.SOUND_RECORDER.get(), pos, state);
   }
 
   @Override
@@ -64,7 +64,7 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     for (int i = 0; i < MAX_SOUNDS; i++) {
       if (tag.contains(SOUNDAT + i)) {
@@ -76,7 +76,7 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
         ignored.add(tag.getString(IGNORED + i));
       }
     }
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -104,13 +104,13 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case CLEARALL:
         this.clearSounds();
-      break;
+        break;
       case IGNORE:
         this.ignoreSound(value);
-      break;
+        break;
       case SAVE:
         this.saveSoundToCard(value);
-      break;
+        break;
     }
   }
 

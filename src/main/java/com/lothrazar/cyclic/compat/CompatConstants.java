@@ -1,4 +1,5 @@
 package com.lothrazar.cyclic.compat;
+
 public class CompatConstants {
 
   public static final String CROPSTAGE_RESYNTH = "growth_stage";

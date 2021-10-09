@@ -10,16 +10,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
 
 public abstract class ScreenBase<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
@@ -28,7 +26,7 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
   }
 
   protected void drawBackground(PoseStack ms, ResourceLocation gui) {
-//    this.minecraft.getTextureManager().bind(gui);
+    //    this.minecraft.getTextureManager().bind(gui);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, gui);
     int relX = (this.width - this.imageWidth) / 2;
@@ -64,7 +62,7 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
   }
 
   protected void drawSlot(PoseStack ms, int x, int y, ResourceLocation texture, int size) {
-//    this.minecraft.getTextureManager().bind(texture);
+    //    this.minecraft.getTextureManager().bind(texture);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, texture);
     blit(ms, leftPos + x, topPos + y, 0, 0, size, size, size, size);
@@ -80,7 +78,7 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
 
   /**
    * Translate the block name; and draw it in the top center
-   * 
+   *
    * @param name
    */
   protected void drawName(PoseStack ms, String name) {
@@ -97,9 +95,8 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
   public void drawButtonTooltips(PoseStack ms, int mouseX, int mouseY) {
     for (GuiEventListener btn : this.children()) {
       if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)
-      && btn instanceof AbstractWidget) {
-
-        ((AbstractWidget)btn).renderToolTip(ms, mouseX, mouseY);
+          && btn instanceof AbstractWidget) {
+        ((AbstractWidget) btn).renderToolTip(ms, mouseX, mouseY);
         List<Component> localTooltip = ((IHasTooltip) btn).getTooltip();
         if (localTooltip != null) {
           this.renderComponentTooltip(ms, localTooltip, mouseX - leftPos, mouseY - topPos);

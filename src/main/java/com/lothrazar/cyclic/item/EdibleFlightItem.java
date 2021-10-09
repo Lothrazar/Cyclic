@@ -11,8 +11,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class EdibleFlightItem extends ItemBase {
 
   private static final int COOLDOWN = 2;

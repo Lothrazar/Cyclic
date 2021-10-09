@@ -2,24 +2,23 @@ package com.lothrazar.cyclic.block.wireless.fluid;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.wireless.energy.TileWirelessEnergy;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -50,10 +49,11 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileWirelessFluid(BlockPos pos, BlockState state) {
-    super(TileRegistry.WIRELESS_FLUID.get(),pos,state);
+    super(TileRegistry.WIRELESS_FLUID.get(), pos, state);
     this.needsRedstone = 0;
     tank = new FluidTankBase(this, CAPACITY, f -> true);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessFluid e) {
     e.tick();
   }
@@ -61,6 +61,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessFluid e) {
     e.tick();
   }
+
   @Override
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());
@@ -83,7 +84,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.transferRate = tag.getInt("transferRate");
     tank.readFromNBT(tag.getCompound(NBTFLUID));
@@ -109,7 +110,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
     tank.setFluid(fluid);
   }
 
-//  @Override
+  //  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -137,13 +138,13 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
       case TRANSFER_RATE:
         transferRate = value;
-      break;
+        break;
     }
   }
 

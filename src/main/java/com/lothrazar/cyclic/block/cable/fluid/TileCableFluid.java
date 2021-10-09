@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -15,23 +14,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -57,11 +56,12 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
   private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
   public TileCableFluid(BlockPos pos, BlockState state) {
-    super(TileRegistry.fluid_pipeTile,pos,state );
+    super(TileRegistry.fluid_pipeTile, pos, state);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, CAPACITY, p -> true)));
     }
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableFluid e) {
     e.tick();
   }
@@ -69,9 +69,10 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCableFluid e) {
     e.tick();
   }
+
   List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
 
-//  @Override
+  //  @Override
   public void tick() {
     for (Direction side : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(side));
@@ -149,7 +150,7 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
@@ -177,7 +178,8 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

@@ -26,19 +26,17 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
 import java.lang.reflect.Method;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class EnchantQuickdraw extends EnchantBase {

@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.solidifier;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.shapedata.TileShapedata;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.Const;
@@ -11,18 +10,18 @@ import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,7 +36,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
-public class TileSolidifier extends TileEntityBase implements  MenuProvider {
+public class TileSolidifier extends TileEntityBase implements MenuProvider {
 
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 5;
   public static final int MAX = 64000;
@@ -59,9 +58,10 @@ public class TileSolidifier extends TileEntityBase implements  MenuProvider {
   }
 
   public TileSolidifier(BlockPos pos, BlockState state) {
-    super(TileRegistry.solidifier,pos,state );
+    super(TileRegistry.solidifier, pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileSolidifier e) {
     e.tick();
   }
@@ -69,6 +69,7 @@ public class TileSolidifier extends TileEntityBase implements  MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileSolidifier e) {
     e.tick();
   }
+
   public void tick() {
     this.syncEnergy();
     this.findMatchingRecipe();
@@ -95,13 +96,13 @@ public class TileSolidifier extends TileEntityBase implements  MenuProvider {
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 
@@ -129,7 +130,7 @@ public class TileSolidifier extends TileEntityBase implements  MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inputSlots.deserializeNBT(tag.getCompound(NBTINV));

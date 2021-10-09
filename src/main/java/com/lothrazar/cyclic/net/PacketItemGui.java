@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainerProvider;
 import java.util.function.Supplier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 

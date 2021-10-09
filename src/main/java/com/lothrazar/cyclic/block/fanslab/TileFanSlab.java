@@ -1,23 +1,22 @@
 package com.lothrazar.cyclic.block.fanslab;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.fan.TileFan;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 
-public class TileFanSlab extends TileEntityBase  {
+public class TileFanSlab extends TileEntityBase {
 
   static enum Fields {
     REDSTONE, RANGE, SPEED;
@@ -31,8 +30,9 @@ public class TileFanSlab extends TileEntityBase  {
   private int speed = 5;
 
   public TileFanSlab(BlockPos pos, BlockState state) {
-    super(TileRegistry.FANSLAB.get(),pos,state);
+    super(TileRegistry.FANSLAB.get(), pos, state);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFanSlab e) {
     e.tick();
   }
@@ -40,6 +40,7 @@ public class TileFanSlab extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileFanSlab e) {
     e.tick();
   }
+
   public void tick() {
     boolean powered = this.isPowered();
     boolean previous = this.getBlockState().getValue(BlockFanSlab.POWERED);
@@ -104,15 +105,15 @@ public class TileFanSlab extends TileEntityBase  {
       case X:
         end = end.offset(0, 0, 1); //X means EASTorwest. adding +1z means GO 1 south
         end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
-      break;
+        break;
       case Z:
         end = end.offset(1, 0, 0);
         end = end.offset(0, 1, 0); //and of course go up one space. so we have a 3D range selected not a flat slice (ex: height 66 to 67)
-      break;
+        break;
       case Y:
         start = start.offset(1, 0, 0);
         end = end.offset(0, 0, 1);
-      break;
+        break;
     }
     //ok now we have basically teh 3d box we wanted
     //problem: NORTH and WEST are skipping first blocks right at fan, but shouldnt.
@@ -122,21 +123,21 @@ public class TileFanSlab extends TileEntityBase  {
     switch (face) {
       case NORTH:
         start = start.south();
-      break;
+        break;
       case SOUTH:
         end = end.south();
-      break;
+        break;
       case EAST:
         end = end.east();
-      break;
+        break;
       case WEST:
         start = start.east();
-      break;
+        break;
       case DOWN:
-      break;
+        break;
       case UP:
       default:
-      break;
+        break;
     }
     AABB region = new AABB(start, end);
     List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
@@ -156,27 +157,27 @@ public class TileFanSlab extends TileEntityBase  {
         case NORTH:
           direction = !doPush ? 1 : -1;
           newz += direction * speed;
-        break;
+          break;
         case SOUTH:
           direction = doPush ? 1 : -1;
           newz += direction * speed;
-        break;
+          break;
         case EAST:
           direction = doPush ? 1 : -1;
           newx += direction * speed;
-        break;
+          break;
         case WEST:
           direction = !doPush ? 1 : -1;
           newx += direction * speed;
-        break;
+          break;
         case DOWN:
           direction = !doPush ? 1 : -1;
           newy += direction * speed;
-        break;
+          break;
         case UP:
           direction = doPush ? 1 : -1;
           newy += direction * speed;
-        break;
+          break;
       }
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
@@ -187,10 +188,10 @@ public class TileFanSlab extends TileEntityBase  {
     return moved;
   }
 
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     speed = tag.getInt("speed");
     range = tag.getInt("range");
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -225,10 +226,10 @@ public class TileFanSlab extends TileEntityBase  {
         if (range > MAX_RANGE) {
           range = MAX_RANGE;
         }
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case SPEED:
         speed = value;
         if (speed < MIN_SPEED) {
@@ -237,7 +238,7 @@ public class TileFanSlab extends TileEntityBase  {
         if (speed > MAX_SPEED) {
           speed = MAX_SPEED;
         }
-      break;
+        break;
     }
   }
 }

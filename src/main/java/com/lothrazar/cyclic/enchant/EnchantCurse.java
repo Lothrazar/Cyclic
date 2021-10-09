@@ -5,18 +5,16 @@ import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class EnchantCurse extends EnchantBase {
 

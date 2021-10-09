@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
@@ -13,18 +12,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,11 +45,12 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
 
   public TileCableItem(BlockPos pos, BlockState state) {
-    super(TileRegistry.item_pipeTile,pos,state);
+    super(TileRegistry.item_pipeTile, pos, state);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(TileCableItem::createHandler));
     }
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableItem e) {
     e.tick();
   }
@@ -58,6 +58,7 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCableItem e) {
     e.tick();
   }
+
   private static ItemStackHandler createHandler() {
     return new ItemStackHandler(1);
   }
@@ -66,7 +67,7 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
       0,
       5).boxed().collect(Collectors.toList());
 
-//  @Override
+  //  @Override
   public void tick() {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
@@ -115,7 +116,7 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
 
   @SuppressWarnings("unchecked")
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     extractQty = tag.getInt("extractCount");
     LazyOptional<IItemHandler> item;
     for (Direction f : Direction.values()) {
@@ -126,7 +127,7 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
       });
     }
     filter.deserializeNBT(tag.getCompound("filter"));
-    super.load( tag);
+    super.load(tag);
   }
 
   @SuppressWarnings("unchecked")

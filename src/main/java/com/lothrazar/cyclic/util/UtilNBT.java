@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.data.Const;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.BlockPos;
 
 public class UtilNBT {
 

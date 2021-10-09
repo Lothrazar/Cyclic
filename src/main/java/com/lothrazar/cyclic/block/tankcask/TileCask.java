@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.tankcask;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,18 +11,18 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
-public class TileCask extends TileEntityBase  {
+public class TileCask extends TileEntityBase {
 
   private Map<Direction, Boolean> poweredSides;
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
@@ -35,7 +34,7 @@ public class TileCask extends TileEntityBase  {
   }
 
   public TileCask(BlockPos pos, BlockState state) {
-    super(TileRegistry.cask,pos, state);
+    super(TileRegistry.cask, pos, state);
     flowing = 0;
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     poweredSides = new HashMap<Direction, Boolean>();
@@ -51,12 +50,13 @@ public class TileCask extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCask e) {
     e.tick();
   }
+
   public Predicate<FluidStack> isFluidValid() {
     return p -> true;
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
@@ -111,25 +111,25 @@ public class TileCask extends TileEntityBase  {
     switch (Fields.values()[field]) {
       case FLOWING:
         flowing = value;
-      break;
+        break;
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-      break;
+        break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-      break;
+        break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-      break;
+        break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-      break;
+        break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-      break;
+        break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-      break;
+        break;
     }
   }
 
@@ -150,7 +150,7 @@ public class TileCask extends TileEntityBase  {
     tank.setFluid(fluid);
   }
 
-//  @Override
+  //  @Override
   public void tick() {
     //drain below but only to one of myself
     if (this.flowing > 0) {

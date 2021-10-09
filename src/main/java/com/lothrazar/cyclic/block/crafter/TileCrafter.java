@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,7 +25,6 @@ package com.lothrazar.cyclic.block.crafter;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.conveyor.TileConveyor;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -35,24 +34,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -99,14 +98,16 @@ public class TileCrafter extends TileEntityBase implements MenuProvider {
 
   public enum ItemHandlers {
     INPUT, OUTPUT, GRID, PREVIEW
-  };
+  }
+
+  ;
 
   public enum Fields {
     TIMER, REDSTONE, RENDER;
   }
 
   public TileCrafter(BlockPos pos, BlockState state) {
-    super(TileRegistry.crafter,pos,state);
+    super(TileRegistry.crafter, pos, state);
   }
 
   @Override
@@ -117,6 +118,7 @@ public class TileCrafter extends TileEntityBase implements MenuProvider {
     }
     return false;
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter e) {
     e.tick();
   }
@@ -124,6 +126,7 @@ public class TileCrafter extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter e) {
     e.tick();
   }
+
   public void tick() {
     this.syncEnergy();
     if (level == null || level.getServer() == null) {
@@ -265,7 +268,7 @@ public class TileCrafter extends TileEntityBase implements MenuProvider {
     for (int slotId = 0; slotId < IO_SIZE; slotId++) {
       if (inv.getStackInSlot(slotId) == ItemStack.EMPTY
           || (inv.getStackInSlot(slotId).sameItem(output)
-              && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize())) {
+          && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize())) {
         return true;
       }
       if (output == ItemStack.EMPTY || output.getCount() == 0) {
@@ -482,13 +485,13 @@ public class TileCrafter extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     energyCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("energy")));
     input.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("input")));
     output.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("output")));
     gridCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("grid")));
     preview.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("preview")));
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -534,13 +537,13 @@ public class TileCrafter extends TileEntityBase implements MenuProvider {
     switch (TileCrafter.Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 }

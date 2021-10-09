@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.base.PacketBase;
 import java.util.function.Supplier;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
@@ -33,5 +33,6 @@ public class PacketPlayerFalldamage extends PacketBase {
     return message;
   }
 
-  public static void encode(PacketPlayerFalldamage msg, FriendlyByteBuf buf) {}
+  public static void encode(PacketPlayerFalldamage msg, FriendlyByteBuf buf) {
+  }
 }

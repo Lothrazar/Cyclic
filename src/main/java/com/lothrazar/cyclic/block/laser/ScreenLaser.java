@@ -9,8 +9,8 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenLaser extends ScreenBase<ContainerLaser> {
 
@@ -30,33 +30,33 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileLaser.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileLaser.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     //
     y += 26;
     int w = 160;
     int h = 14;
     int f = TileLaser.Fields.RED.ordinal();
-    GuiSliderInteger red = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger red = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
     red.setTooltip("cyclic.screen.red");
     y += h + 1;
     f = TileLaser.Fields.GREEN.ordinal();
-    GuiSliderInteger green = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger green = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
     green.setTooltip("cyclic.screen.green");
     y += h + 1;
     f = TileLaser.Fields.BLUE.ordinal();
-    GuiSliderInteger blue = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger blue = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
     blue.setTooltip("cyclic.screen.blue");
     y += h + 1;
     f = TileLaser.Fields.ALPHA.ordinal();
-    GuiSliderInteger alpha = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger alpha = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 100, menu.tile.getField(f)));
     alpha.setTooltip("cyclic.screen.alpha");
     y += h + 1;
     f = TileLaser.Fields.THICK.ordinal();
-    GuiSliderInteger thick = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger thick = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 20, menu.tile.getField(f)));
     thick.setTooltip("cyclic.screen.thick");
     //
@@ -65,7 +65,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
     //
     w = 50;
     y += h + 2;
-    btnX = addWidget(new ButtonMachine(x, y, w, 20, "X", (p) -> {
+    btnX = addRenderableWidget(new ButtonMachine(x, y, w, 20, "X", (p) -> {
       final int fl = TileLaser.Fields.XOFF.ordinal();
       menu.tile.setField(fl, menu.tile.getField(fl) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
@@ -73,7 +73,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
     btnX.setTooltip("button.offsetx.tooltip");
     //
     x += w + 2;
-    btnY = addWidget(new ButtonMachine(x, y, w, 20, "Y", (p) -> {
+    btnY = addRenderableWidget(new ButtonMachine(x, y, w, 20, "Y", (p) -> {
       final int fl = TileLaser.Fields.YOFF.ordinal();
       menu.tile.setField(fl, menu.tile.getField(fl) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
@@ -81,7 +81,7 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
     btnY.setTooltip("button.offsety.tooltip");
     //
     x += w + 2;
-    btnZ = addWidget(new ButtonMachine(x, y, w, 20, "z", (p) -> {
+    btnZ = addRenderableWidget(new ButtonMachine(x, y, w, 20, "z", (p) -> {
       final int fl = TileLaser.Fields.ZOFF.ordinal();
       menu.tile.setField(fl, menu.tile.getField(fl) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));

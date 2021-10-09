@@ -5,17 +5,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class RenderFisher implements BlockEntityRenderer<TileFisher> {
 
+  public RenderFisher(BlockEntityRendererProvider.Context d) {
+  }
 
-  public RenderFisher(BlockEntityRendererProvider.Context d) {   }
   @Override
   public void render(TileFisher tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
@@ -26,7 +26,7 @@ public class RenderFisher implements BlockEntityRenderer<TileFisher> {
         matrixStack.pushPose();
         //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.4, 0.45, 0.4);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x910911, 0, matrixStack, buffer,light);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x910911, 0, matrixStack, buffer, light);
         matrixStack.popPose();
       }
     }

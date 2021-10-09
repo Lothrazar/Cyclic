@@ -29,11 +29,10 @@ import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketCraftAction extends PacketBase {
@@ -74,13 +73,13 @@ public class PacketCraftAction extends PacketBase {
           c.transferStack(player, i);
         }
         c.getCraftResult().clearContent();
-      break;
+        break;
       case SPREAD:
         balanceLargestSlot(c, false);
-      break;
+        break;
       case SPREADMATCH:
         balanceLargestSlot(c, true);
-      break;
+        break;
     }
   }
 
@@ -106,7 +105,7 @@ public class PacketCraftAction extends PacketBase {
       if (tmp.isEmpty() && !onlyExisting) {
         slotTargest.add(i);
       }
-      if (ItemStack.isSameItemSameTags(tmp,biggest)) {  // AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
+      if (ItemStack.isSameItemSameTags(tmp, biggest)) {  // AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
         slotTargest.add(i);
         totalQuantity += tmp.getCount();
       }

@@ -6,8 +6,8 @@ import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenMelter extends ScreenBase<ContainerMelter> {
 

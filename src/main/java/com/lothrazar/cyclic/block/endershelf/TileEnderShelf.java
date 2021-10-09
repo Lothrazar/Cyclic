@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.block.endershelf;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,11 +21,12 @@ public class TileEnderShelf extends TileEntityBase {
   }
 
   public TileEnderShelf(BlockPos pos, BlockState state) {
-    super(TileRegistry.ender_shelf,pos,state);
+    super(TileRegistry.ender_shelf, pos, state);
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
@@ -41,14 +42,14 @@ public class TileEnderShelf extends TileEntityBase {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
     }
     inventory.resetNameCache();
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override

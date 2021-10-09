@@ -2,33 +2,34 @@ package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 
-public class TileConveyor extends TileEntityBase  {
+public class TileConveyor extends TileEntityBase {
 
   public TileConveyor(BlockPos pos, BlockState state) {
-    super(TileRegistry.conveyor,pos,state);
+    super(TileRegistry.conveyor, pos, state);
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
     return 0;
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileConveyor e) {
     e.tick();
   }
@@ -36,6 +37,7 @@ public class TileConveyor extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileConveyor e) {
     e.tick();
   }
+
   public void tick() {
     if (level == null || worldPosition == null) {
       return;

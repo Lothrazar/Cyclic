@@ -1,16 +1,16 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
@@ -69,7 +69,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-          break;
+            break;
         }
         return 0; //ArmorMaterial.DIAMOND.getDamageReductionAmount(slot) + ArmorMaterial.IRON.getDamageReductionAmount(slot);
       }
@@ -125,7 +125,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-          break;
+            break;
         }
         return 0; // ArmorMaterial.DIAMOND.getDamageReductionAmount(slotIn) * 3;
       }

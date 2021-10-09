@@ -3,12 +3,12 @@ package com.lothrazar.cyclic.net;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import java.util.function.Supplier;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketTileData extends PacketBase {
@@ -34,7 +34,8 @@ public class PacketTileData extends PacketBase {
     this.pos = pos;
   }
 
-  public PacketTileData() {}
+  public PacketTileData() {
+  }
 
   public static void handle(PacketTileData message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {

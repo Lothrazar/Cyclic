@@ -2,19 +2,18 @@ package com.lothrazar.cyclic.block.hopperfluid;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -30,7 +29,7 @@ public class TileFluidHopper extends TileEntityBase {
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
 
   public TileFluidHopper(BlockPos pos, BlockState state) {
-    super(TileRegistry.FLUIDHOPPER.get(),pos,state);
+    super(TileRegistry.FLUIDHOPPER.get(), pos, state);
   }
 
   @Override
@@ -40,6 +39,7 @@ public class TileFluidHopper extends TileEntityBase {
     }
     return super.getCapability(cap, side);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidHopper e) {
     e.tick();
   }
@@ -47,6 +47,7 @@ public class TileFluidHopper extends TileEntityBase {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidHopper e) {
     e.tick();
   }
+
   public void tick() {
     if (this.isPowered()) {
       return;
@@ -102,7 +103,7 @@ public class TileFluidHopper extends TileEntityBase {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.load(tag);
   }
@@ -123,7 +124,8 @@ public class TileFluidHopper extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

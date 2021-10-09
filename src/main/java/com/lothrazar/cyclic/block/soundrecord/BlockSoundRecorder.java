@@ -40,8 +40,7 @@ public class BlockSoundRecorder extends BlockBase {
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileSoundRecorder(pos, state);
   }
-
-//  @Override
+  //  @Override
   //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
   //    return createTickerHelper(type, TileRegistry.SOUND_RECORDER, world.isClientSide ? TileSoundRecorder::clientTick : TileSoundRecorder::serverTick);
   //  }

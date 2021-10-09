@@ -3,10 +3,8 @@ package com.lothrazar.cyclic.item.equipment;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.InteractionResult;
-
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.context.UseOnContext;
 
 public class RotatorItem extends ItemBase {
 

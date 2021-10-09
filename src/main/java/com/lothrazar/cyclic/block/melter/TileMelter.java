@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
@@ -58,6 +57,7 @@ public class TileMelter extends TileEntityBase implements MenuProvider {
     super(TileRegistry.melter, pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMelter e) {
     e.tick();
   }
@@ -65,6 +65,7 @@ public class TileMelter extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileMelter e) {
     e.tick();
   }
+
   public void tick() {
     this.syncEnergy();
     this.findMatchingRecipe();

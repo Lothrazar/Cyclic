@@ -7,8 +7,8 @@ import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenMiner extends ScreenBase<ContainerMiner> {
 
@@ -32,13 +32,13 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     int x = leftPos + 8;
     int y = topPos + 8;
     int f = TileMiner.Fields.REDSTONE.ordinal();
-    btnRedstone = addWidget(new ButtonMachineField(x, y, f, menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, f, menu.tile.getBlockPos()));
     f = TileMiner.Fields.RENDER.ordinal();
-    btnRender = addWidget(new ButtonMachineField(x, y + 20, f,
+    btnRender = addRenderableWidget(new ButtonMachineField(x, y + 20, f,
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //then toggle
     f = TileMiner.Fields.DIRECTION.ordinal();
-    btnDirection = addWidget(new ButtonMachineField(x, y + 40, f,
+    btnDirection = addRenderableWidget(new ButtonMachineField(x, y + 40, f,
         menu.tile.getBlockPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
     //
     int w = 120;
@@ -47,13 +47,13 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     y += h + 1;
     // height fi
     f = TileMiner.Fields.HEIGHT.ordinal();
-    GuiSliderInteger heightslider = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger heightslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileMiner.MAX_HEIGHT, menu.tile.getField(f)));
     heightslider.setTooltip("buildertype.height.tooltip");
     y += h + 1;
     //
     f = TileMiner.Fields.SIZE.ordinal();
-    sizeSlider = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    sizeSlider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileMiner.MAX_SIZE, menu.tile.getField(f)));
   }
 

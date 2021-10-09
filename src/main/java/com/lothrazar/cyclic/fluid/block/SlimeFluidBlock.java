@@ -1,23 +1,21 @@
 package com.lothrazar.cyclic.fluid.block;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-
-import net.minecraftforge.fluids.ForgeFlowingFluid.Properties;
 
 public class SlimeFluidBlock extends LiquidBlock {
 
@@ -79,12 +77,12 @@ public class SlimeFluidBlock extends LiquidBlock {
   }
 
   @Override
-  public void fallOn(Level worldIn,BlockState state, BlockPos pos, Entity entityIn, float fallDistance) {
+  public void fallOn(Level worldIn, BlockState state, BlockPos pos, Entity entityIn, float fallDistance) {
     if (entityIn.isSuppressingBounce()) {
-      super.fallOn(worldIn,state, pos, entityIn, fallDistance);
+      super.fallOn(worldIn, state, pos, entityIn, fallDistance);
     }
     else {
-//      entityIn.causeFallDamage(fallDistance, 0.0F,DamageSou );
+      //      entityIn.causeFallDamage(fallDistance, 0.0F,DamageSou );
     }
   }
 
@@ -100,7 +98,7 @@ public class SlimeFluidBlock extends LiquidBlock {
 
   /**
    * From SlimeBlock.java bounceUp
-   * 
+   *
    * @param entity
    */
   private void collision(Entity entity) {

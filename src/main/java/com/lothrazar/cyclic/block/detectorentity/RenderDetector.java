@@ -5,13 +5,12 @@ import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class RenderDetector implements BlockEntityRenderer<TileDetector> {
 
-
-  public RenderDetector(BlockEntityRendererProvider.Context d) {   }
+  public RenderDetector(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public void render(TileDetector te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

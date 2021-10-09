@@ -32,31 +32,28 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class EnchantExcavation extends EnchantBase {
 
@@ -109,7 +106,7 @@ public class EnchantExcavation extends EnchantBase {
       return;
     }
     //if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
-    if(ForgeEventFactory.doPlayerHarvestCheck(player,eventState,true)){
+    if (ForgeEventFactory.doPlayerHarvestCheck(player, eventState, true)) {
       int harvested = this.harvestSurrounding((Level) world, player, pos, block, 1, level, player.swingingArm);
       if (harvested > 0) {
         //damage but also respect the unbreaking chant  
@@ -141,8 +138,8 @@ public class EnchantExcavation extends EnchantBase {
           || !player.hasCorrectToolForDrops(targetState) //canHarvestBlock
           || totalBroken >= this.getHarvestMax(level)
           || player.getItemInHand(player.swingingArm).isEmpty()
-          || ForgeEventFactory.doPlayerHarvestCheck(player,targetState,true)
-//          || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)
+          || ForgeEventFactory.doPlayerHarvestCheck(player, targetState, true)
+        //          || !ForgeHooks.canHarvestBlock(targetState, player, world, targetPos)
       ) {
         continue;
       }

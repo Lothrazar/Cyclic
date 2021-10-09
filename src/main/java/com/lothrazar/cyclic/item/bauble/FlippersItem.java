@@ -8,8 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class FlippersItem extends ItemBaseToggle {
 
   private static final float SPEEDFACTOR = 0.11F * 3.5F;

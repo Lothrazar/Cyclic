@@ -2,21 +2,20 @@ package com.lothrazar.cyclic.block.terraglass;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class TileTerraGlass extends TileEntityBase  {
+public class TileTerraGlass extends TileEntityBase {
 
   private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL / 2;
   private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
 
   public TileTerraGlass(BlockPos pos, BlockState state) {
-    super(TileRegistry.TERRAGLASS.get(),pos,state);
+    super(TileRegistry.TERRAGLASS.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraGlass e) {
@@ -26,6 +25,7 @@ public class TileTerraGlass extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraGlass e) {
     e.tick();
   }
+
   public void tick() {
     //sprinkler to ONLY whats directly above/below
     if (level.isClientSide) {
@@ -72,7 +72,8 @@ public class TileTerraGlass extends TileEntityBase  {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

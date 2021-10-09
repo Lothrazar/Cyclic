@@ -1,25 +1,24 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.wireless.item.TileWirelessItem;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -33,7 +32,7 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
   }
 
   public TileWirelessTransmit(BlockPos pos, BlockState state) {
-    super(TileRegistry.wireless_transmitter,pos,state);
+    super(TileRegistry.wireless_transmitter, pos, state);
   }
 
   ItemStackHandler inventory = new ItemStackHandler(9) {
@@ -64,7 +63,7 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.load(tag);
   }
@@ -91,6 +90,7 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
       }
     }
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessTransmit e) {
     e.tick();
   }
@@ -120,7 +120,7 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
     switch (Fields.values()[field]) {
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 

@@ -6,9 +6,9 @@ import net.minecraft.core.Direction;
 
 /**
  * Source from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x
- * 
+ * <p>
  * https://github.com/mekanism/Mekanism/blob/1.15x/LICENSE
- * 
+ * <p>
  * Map which uses FluidStacks as keys, ignoring amount. Primary use: caching FluidStack aware fluid rendering (NBT, yay)
  */
 public class Model3D {

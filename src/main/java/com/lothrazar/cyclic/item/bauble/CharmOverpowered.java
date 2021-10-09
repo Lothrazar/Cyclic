@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
 
-import net.minecraft.world.item.Item.Properties;
 public class CharmOverpowered extends CharmBase {
 
   public CharmOverpowered(Properties properties) {

@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -11,21 +10,21 @@ import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
 import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -33,7 +32,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileExpPylon extends TileEntityBase implements  MenuProvider {
+public class TileExpPylon extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE;
@@ -48,10 +47,11 @@ public class TileExpPylon extends TileEntityBase implements  MenuProvider {
   public FluidTankBase tank;
 
   public TileExpPylon(BlockPos pos, BlockState state) {
-    super(TileRegistry.experience_pylontile,pos,state);
+    super(TileRegistry.experience_pylontile, pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileExpPylon e) {
     e.tick();
   }
@@ -59,6 +59,7 @@ public class TileExpPylon extends TileEntityBase implements  MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileExpPylon e) {
     e.tick();
   }
+
   public void tick() {
     if (!level.isClientSide) {
       //ignore on/off state, for player standing on top collecting exp
@@ -84,13 +85,13 @@ public class TileExpPylon extends TileEntityBase implements  MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     int legacy = tag.getInt("storedXp");
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
     }
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -148,9 +149,9 @@ public class TileExpPylon extends TileEntityBase implements  MenuProvider {
     List<ExperienceOrb> list = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(
         worldPosition.getX() - RADIUS, worldPosition.getY() - 1, worldPosition.getZ() - RADIUS,
         worldPosition.getX() + RADIUS, worldPosition.getY() + 2, worldPosition.getZ() + RADIUS), (entity) -> {
-          return entity.isAlive() && entity.getValue() > 0;
-          //entity != null && entity.getHorizontalFacing() == facing;
-        });
+      return entity.isAlive() && entity.getValue() > 0;
+      //entity != null && entity.getHorizontalFacing() == facing;
+    });
     if (list.size() > 0) {
       ExperienceOrb myOrb = list.get(level.random.nextInt(list.size()));
       int addMeXp = myOrb.getValue();
@@ -181,7 +182,7 @@ public class TileExpPylon extends TileEntityBase implements  MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
     }
   }
 

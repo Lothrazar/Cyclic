@@ -5,11 +5,11 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import javax.annotation.Nonnull;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -70,9 +70,9 @@ public class ContainerEnderBook extends ContainerBase {
       ItemStack myBag = this.slots.get(slotId).getItem();
       if (myBag.getItem() instanceof EnderBookItem) {
         //lock the bag in place by returning empty
-        return ; //ItemStack.EMPTY;
+        return; //ItemStack.EMPTY;
       }
     }
-//    return super.clicked(slotId, dragType, clickTypeIn, player);
+    //    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 }

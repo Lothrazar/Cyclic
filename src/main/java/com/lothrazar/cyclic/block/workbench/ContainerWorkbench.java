@@ -6,28 +6,28 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.Optional;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.Container;
-import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.RecipeBookMenu;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.inventory.RecipeBookType;
-import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>    implements IContainerCraftingAction {
+public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implements IContainerCraftingAction {
 
   private TileWorkbench tile;
   public static final int GRID_START_X = 30;
@@ -122,7 +122,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>    imp
 
   @Override
   public boolean shouldMoveToInventory(int s) {
-    System.out.println("WAT is this shouldMoveToInventory"+s);
+    System.out.println("WAT is this shouldMoveToInventory" + s);
     return false;
   }
 
@@ -138,7 +138,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>    imp
       }
     });
     this.worldPosCallable.execute((wrld, posIn) -> {
-      updateCraftingResult(this.containerId,this.getStateId(), wrld, this.player, this.craftMatrix, this.craftResult);
+      updateCraftingResult(this.containerId, this.getStateId(), wrld, this.player, this.craftMatrix, this.craftResult);
     });
   }
 
@@ -187,7 +187,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>    imp
     }
   }
 
-  protected static void updateCraftingResult(int id,int stateId, Level world, Player player, CraftingContainer inventory, ResultContainer inventoryResult) {
+  protected static void updateCraftingResult(int id, int stateId, Level world, Player player, CraftingContainer inventory, ResultContainer inventoryResult) {
     if (!world.isClientSide) {
       ServerPlayer sp = (ServerPlayer) player;
       ItemStack itemstack = ItemStack.EMPTY;
@@ -199,7 +199,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer>    imp
         }
       }
       inventoryResult.setItem(0, itemstack);
-      sp.connection.send(new ClientboundContainerSetSlotPacket(id,stateId, 0, itemstack));
+      sp.connection.send(new ClientboundContainerSetSlotPacket(id, stateId, 0, itemstack));
     }
   }
 

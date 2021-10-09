@@ -1,22 +1,22 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.DirectionalPlaceContext;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 
 public class UtilPlaceBlocks {
 
@@ -49,15 +49,15 @@ public class UtilPlaceBlocks {
       switch (current) {
         case X:
           newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.Y);
-        break;
+          break;
         case Y:
           newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.Z);
-        break;
+          break;
         case Z:
           newState = clicked.setValue(RotatedPillarBlock.AXIS, Axis.X);
-        break;
+          break;
         default:
-        break;
+          break;
         //
       }
       //clicked.rot 
@@ -67,24 +67,24 @@ public class UtilPlaceBlocks {
       switch (side) {
         case DOWN:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_180);
-        break;
+          break;
         case UP:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_180);
-        break;
+          break;
         case EAST:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_90);
-        break;
+          break;
         case NORTH:
           newState = clicked.rotate(world, pos, Rotation.COUNTERCLOCKWISE_90);
-        break;
+          break;
         case SOUTH:
           newState = clicked.rotate(world, pos, Rotation.CLOCKWISE_90);
-        break;
+          break;
         case WEST:
           newState = clicked.rotate(world, pos, Rotation.COUNTERCLOCKWISE_90);
-        break;
+          break;
         default:
-        break;
+          break;
       }
     }
     boolean win = false;

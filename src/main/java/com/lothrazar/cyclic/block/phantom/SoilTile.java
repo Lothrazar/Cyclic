@@ -15,7 +15,7 @@ public class SoilTile extends TileEntityBase {
   private AABBTicket farmWater;
 
   public SoilTile(BlockPos pos, BlockState state) {
-    super(TileRegistry.SOIL.get(),pos,state);
+    super(TileRegistry.SOIL.get(), pos, state);
   }
 
   @Override
@@ -35,7 +35,8 @@ public class SoilTile extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

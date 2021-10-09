@@ -6,8 +6,8 @@ import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
 
@@ -28,7 +28,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileAnvilVoid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileAnvilVoid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

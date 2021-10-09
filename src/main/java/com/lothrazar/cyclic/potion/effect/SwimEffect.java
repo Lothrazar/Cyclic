@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.potion.TickableEffect;
 import com.lothrazar.cyclic.util.UtilEntity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class SwimEffect extends TickableEffect {

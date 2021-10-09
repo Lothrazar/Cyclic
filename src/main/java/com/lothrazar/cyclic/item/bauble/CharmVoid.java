@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
 
-import net.minecraft.world.item.Item.Properties;
 public class CharmVoid extends CharmBase {
 
   public CharmVoid(Properties properties) {

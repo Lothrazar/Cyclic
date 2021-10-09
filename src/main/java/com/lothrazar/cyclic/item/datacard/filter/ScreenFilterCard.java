@@ -9,8 +9,8 @@ import com.lothrazar.cyclic.net.PacketFilterCard;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
 
@@ -35,7 +35,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
     int x = leftPos + 150;
     int y = topPos + 8;
     final int size = 20;
-    btnType = this.addWidget(new ButtonTextured(x, y, size, size, TextureEnum.RENDER_HIDE, "", b -> {
+    btnType = this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.RENDER_HIDE, "", b -> {
       //pressed
       PacketRegistry.INSTANCE.sendToServer(new PacketFilterCard(CraftingActionEnum.EMPTY));
       FilterCardItem.toggleFilterType(screenContainer.bag);

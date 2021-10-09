@@ -4,16 +4,16 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilRender;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidBar {
@@ -58,7 +58,7 @@ public class FluidBar {
   @SuppressWarnings("deprecation")
   public void draw(PoseStack ms, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
-//    parent.getMinecraft().getTextureManager().bind(TextureRegistry.FLUID_WIDGET);
+    //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.FLUID_WIDGET);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, TextureRegistry.FLUID_WIDGET);
     Screen.blit(ms,
@@ -76,7 +76,7 @@ public class FluidBar {
     TextureAtlasSprite icon = UtilFluid.getBaseFluidTexture(fluid.getFluid(), FluidType.STILL);
     if (fluid.getFluid() == Fluids.WATER) {
       //hack in the blue because water is grey and is filled in by the biome when in-world
-      RenderSystem.setShaderColor(0, 0, 1,1);
+      RenderSystem.setShaderColor(0, 0, 1, 1);
     }
     drawTiledSprite(x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
     if (fluid.getFluid() == Fluids.WATER) {

@@ -1,15 +1,14 @@
 package com.lothrazar.cyclic.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.core.Direction;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.minecraft.core.Direction;
 
 /**
  * as of minecraft 1.16 much of this file contains code from this mod which is MIT License, the same as this project
- * 
+ * <p>
  * https://github.com/jaquadro/StorageDrawers/blob/1.16/LICENSE
- * 
  */
 public class UtilRenderText {
 

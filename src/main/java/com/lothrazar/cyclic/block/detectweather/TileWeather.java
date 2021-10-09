@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.detectweather;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -12,8 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 public class TileWeather extends TileEntityBase {
 
   public TileWeather(BlockPos pos, BlockState state) {
-    super(TileRegistry.DETECTORWEATHER.get(),pos,state);
+    super(TileRegistry.DETECTORWEATHER.get(), pos, state);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWeather e) {
     e.tick();
   }
@@ -21,6 +21,7 @@ public class TileWeather extends TileEntityBase {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWeather e) {
     e.tick();
   }
+
   public void tick() {
     //if we are going from unpowered to powered, meaning state isnt set but power is
     if (level instanceof ServerLevel) {
@@ -39,7 +40,7 @@ public class TileWeather extends TileEntityBase {
       }
       int level = this.getBlockState().getValue(BlockWeather.LEVEL);
       if (level != newPower) {
-//        level.se
+        //        level.se
         this.getLevel().setBlockAndUpdate(worldPosition, this.getBlockState().setValue(BlockWeather.LEVEL, newPower));
         //        world.notifyNeighborsOfStateChange(pos, this.getBlockState().getBlock());
       }
@@ -48,7 +49,8 @@ public class TileWeather extends TileEntityBase {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

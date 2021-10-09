@@ -18,25 +18,25 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Container;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -58,8 +58,8 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
   protected int render = 0; // default to do not render
   protected int timer;
 
-  public TileEntityBase(BlockEntityType<?> tileEntityTypeIn,BlockPos pos, BlockState state) {
-    super(tileEntityTypeIn,pos,state);
+  public TileEntityBase(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+    super(tileEntityTypeIn, pos, state);
   }
 
   public int getTimer() {
@@ -218,7 +218,7 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
 
   @Override
   public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-    this.load( pkt.getTag());
+    this.load(pkt.getTag());
     super.onDataPacket(net, pkt);
   }
 
@@ -366,12 +366,12 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     flowing = tag.getInt("flowing");
     needsRedstone = tag.getInt("needsRedstone");
     render = tag.getInt("renderParticles");
     timer = tag.getInt("timer");
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -391,7 +391,8 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
     this.needsRedstone = value % 2;
   }
 
-  public void setFluid(FluidStack fluid) {}
+  public void setFluid(FluidStack fluid) {
+  }
 
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
@@ -426,7 +427,8 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
 
   @Deprecated
   @Override
-  public void setItem(int index, ItemStack stack) {}
+  public void setItem(int index, ItemStack stack) {
+  }
 
   @Deprecated
   @Override
@@ -436,7 +438,8 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
 
   @Deprecated
   @Override
-  public void clearContent() {}
+  public void clearContent() {
+  }
 
   public void setFieldString(int field, String value) {
     //for string field  

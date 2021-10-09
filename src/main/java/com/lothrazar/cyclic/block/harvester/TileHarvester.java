@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.harvester;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.api.IHarvesterOverride;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.generatorpeat.TileGeneratorPeat;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.DataTags;

@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.forester;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -71,6 +70,7 @@ public class TileForester extends TileEntityBase implements MenuProvider {
     this.needsRedstone = 1;
     this.render = 0;
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileForester e) {
     e.tick();
   }
@@ -78,6 +78,7 @@ public class TileForester extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileForester e) {
     e.tick();
   }
+
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {

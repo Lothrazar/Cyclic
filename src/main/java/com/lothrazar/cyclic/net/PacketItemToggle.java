@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.net;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.PacketBase;
 import java.util.function.Supplier;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketItemToggle extends PacketBase {

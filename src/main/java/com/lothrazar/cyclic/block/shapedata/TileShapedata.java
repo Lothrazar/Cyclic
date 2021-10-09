@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.shapedata;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -10,19 +9,19 @@ import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -65,7 +64,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
 
   /**
    * packet to trigger this from custom btn
-   * 
+   *
    * @param cmd
    */
   public void execute(StructCommands cmd) {
@@ -88,13 +87,13 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
           ModCyclic.LOGGER.info(cmd + " success");
           /// shape set
         }
-      break;
+        break;
       case COPY:
         //copy shape from CARD to BUFFER
         //only works
         this.copiedShape = new RelativeShape(cardShape);
         ModCyclic.LOGGER.info(cmd + " success");
-      break;
+        break;
       case PASTE:
         //from BUFFER to CARD
         //only works on EMPTY CARDS
@@ -104,7 +103,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
           this.copiedShape.write(shapeCard);
           ModCyclic.LOGGER.info(cmd + " success");
         }
-      break;
+        break;
       case MERGE:
         //from BUFFER to CARD
         //only works on NOT EMPTY cards
@@ -115,13 +114,14 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
           ModCyclic.LOGGER.info(cmd + " success");
           //          this.copiedShape = null;
         }
-      break;
+        break;
     }
   }
 
   public TileShapedata(BlockPos pos, BlockState state) {
-    super(TileRegistry.computer_shape,pos,state);
+    super(TileRegistry.computer_shape, pos, state);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileShapedata e) {
     e.tick();
   }
@@ -129,6 +129,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileShapedata e) {
     e.tick();
   }
+
   @Override
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());
@@ -148,7 +149,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("copiedShape")) {
       CompoundTag cs = (CompoundTag) tag.get("copiedShape");
@@ -169,7 +170,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
     return super.save(tag);
   }
 
-//  @Override
+  //  @Override
   public void tick() {
     if (level.isClientSide == false) {
       hasStashIfOne = (this.copiedShape == null) ? 0 : 1;
@@ -178,7 +179,7 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
 
   /**
    * is command available for use
-   * 
+   *
    * @param shape
    * @return
    */
@@ -232,17 +233,17 @@ public class TileShapedata extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case STASH:
         hasStashIfOne = value;
-      break;
+        break;
       case COMMAND:
         if (value >= StructCommands.values().length) {
           value = 0;
         }
         StructCommands cmd = StructCommands.values()[value];
         this.execute(cmd);
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 }

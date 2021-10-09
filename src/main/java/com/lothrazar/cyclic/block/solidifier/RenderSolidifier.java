@@ -9,10 +9,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -21,8 +20,9 @@ import net.minecraftforge.items.IItemHandler;
 
 public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
 
+  public RenderSolidifier(BlockEntityRendererProvider.Context d) {
+  }
 
-  public RenderSolidifier(BlockEntityRendererProvider.Context d) {   }
   @Override
   public void render(TileSolidifier tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
@@ -33,7 +33,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
         matrixStack.pushPose();
         //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.4, 0.65, 0.4);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x111111, 0, matrixStack, buffer,light);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x111111, 0, matrixStack, buffer, light);
         matrixStack.popPose();
       }
       stack = itemHandler.getStackInSlot(1);
@@ -41,14 +41,14 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
         matrixStack.pushPose();
         //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.5, 0.45, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x777777, 0, matrixStack, buffer,light);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x777777, 0, matrixStack, buffer, light);
         matrixStack.popPose();
       }
       stack = itemHandler.getStackInSlot(2);
       if (!stack.isEmpty()) {
         matrixStack.pushPose();
         matrixStack.translate(0.6, 0.15, 0.6);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0xBBBBBB, 0, matrixStack, buffer,light);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0xBBBBBB, 0, matrixStack, buffer, light);
         matrixStack.popPose();
       }
     }

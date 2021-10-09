@@ -1,29 +1,28 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -50,7 +49,9 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
   public static IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  /** Primary potion effect given by this beacon. */
+  /**
+   * Primary potion effect given by this beacon.
+   */
   private List<MobEffectInstance> effects = new ArrayList<>();
   EntityFilterType entityFilter = EntityFilterType.PLAYERS;
   ItemStackHandler inventory = new ItemStackHandler(1) {
@@ -64,9 +65,10 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TilePotion(BlockPos pos, BlockState state) {
-    super(TileRegistry.beacon,pos,state );
+    super(TileRegistry.beacon, pos, state);
     timer = 0;
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePotion e) {
     e.tick();
   }
@@ -75,7 +77,7 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
     e.tick();
   }
 
-//  @Override
+  //  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -129,7 +131,7 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
@@ -144,7 +146,7 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
         }
       }
     }
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -239,14 +241,14 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case ENTITYTYPE:
         value = value % EntityFilterType.values().length;
         this.entityFilter = EntityFilterType.values()[value];
-      break;
+        break;
       case RANGE:
         if (value > MAX_RADIUS) {
           radius = MAX_RADIUS;
@@ -254,7 +256,7 @@ public class TilePotion extends TileEntityBase implements MenuProvider {
         else {
           this.radius = Math.min(value, MAX_RADIUS);
         }
-      break;
+        break;
     }
   }
 

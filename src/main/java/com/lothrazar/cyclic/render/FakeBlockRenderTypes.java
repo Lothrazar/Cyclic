@@ -1,14 +1,12 @@
 package com.lothrazar.cyclic.render;
 
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.RenderStateShard;
+import net.minecraft.client.renderer.RenderType;
 
 /**
  * Render Types with help from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
- *
  */
 public class FakeBlockRenderTypes extends RenderType {
 
@@ -19,13 +17,13 @@ public class FakeBlockRenderTypes extends RenderType {
   /**
    * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
    * 1.17 BOOLS are
-   *
-   this.affectsCrumbling = p_173182_;
-   this.sortOnUpload = p_173183_;
+   * <p>
+   * this.affectsCrumbling = p_173182_;
+   * this.sortOnUpload = p_173183_;
    */
   public static final RenderType LASER_MAIN_BEAM = create("MiningLaserMainBeam",
       DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256,
-      false,false, // affectsCrumbling, sortOnUpload
+      false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           .setLayeringState(VIEW_OFFSET_Z_LAYERING)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
@@ -36,9 +34,9 @@ public class FakeBlockRenderTypes extends RenderType {
           .createCompositeState(false));
   //
   public static final RenderType FAKE_BLOCK = create("fakeBlock",
-      DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256,false,false, // affectsCrumbling, sortOnUpload
+      DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
-//          .setShadeModelState(SMOOTH_SHADE)
+          //          .setShadeModelState(SMOOTH_SHADE)
           .setLightmapState(LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
           //          .layer(PROJECTION_LAYERING)
@@ -48,7 +46,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
   public static final RenderType TRANSPARENT_COLOUR = create("transparentColour",
-      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256,false,false, // affectsCrumbling, sortOnUpload
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           //          .layer(PROJECTION_LAYERING)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
@@ -59,7 +57,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
   public static final RenderType SOLID_COLOUR = create("solidColour",
-      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256,false,false, // affectsCrumbling, sortOnUpload
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           //          .layer(PROJECTION_LAYERING)
           .setTransparencyState(ADDITIVE_TRANSPARENCY)

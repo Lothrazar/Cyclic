@@ -5,14 +5,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import java.awt.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class RenderShapedata implements BlockEntityRenderer<TileShapedata> {
 
-  public RenderShapedata(BlockEntityRendererProvider.Context d) {   }
+  public RenderShapedata(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public void render(TileShapedata te, float v, PoseStack matrixStack,
@@ -28,7 +28,6 @@ public class RenderShapedata implements BlockEntityRenderer<TileShapedata> {
       if (te.getTarget(1) != null) {
         UtilRender.renderOutline(te.getBlockPos(), te.getTarget(1), matrixStack, 1.05F, Color.RED);
       }
-
     }
   }
 }

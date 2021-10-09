@@ -27,21 +27,19 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilParticle;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @SuppressWarnings("deprecation")
 public class EnchantTraveller extends EnchantBase {
@@ -84,11 +82,12 @@ public class EnchantTraveller extends EnchantBase {
 
   @SubscribeEvent
   public void onEnderTeleportEvent(EntityTeleportEvent.EnderPearl event) {
-    if(event.getEntity() instanceof LivingEntity){
-    int level = getCurrentArmorLevelSlot((LivingEntity) event.getEntity(), EquipmentSlot.LEGS);
-    if (level > 0) {
-      event.setAttackDamage(0F);
-    }}
+    if (event.getEntity() instanceof LivingEntity) {
+      int level = getCurrentArmorLevelSlot((LivingEntity) event.getEntity(), EquipmentSlot.LEGS);
+      if (level > 0) {
+        event.setAttackDamage(0F);
+      }
+    }
   }
 
   @SubscribeEvent

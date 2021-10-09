@@ -42,7 +42,7 @@ public class TimerBar {
     if (!visible) {
       return;
     }
-//    parent.getMinecraft().getTextureManager().bind(TextureRegistry.PROGRESS);
+    //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.PROGRESS);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, TextureRegistry.PROGRESS);
     float pct = Math.min(timer / capacity, 1.0F);

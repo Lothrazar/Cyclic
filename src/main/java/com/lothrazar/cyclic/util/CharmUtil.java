@@ -26,7 +26,7 @@ public class CharmUtil {
 
   /**
    * First check curios. Then player inventory. Then left/right hands, not ender chest
-   * 
+   *
    * @param player
    * @param match
    * @return

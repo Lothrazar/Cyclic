@@ -32,27 +32,25 @@ import com.lothrazar.cyclic.world.DimensionTransit;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 @SuppressWarnings("deprecation")
@@ -65,24 +63,22 @@ public class UtilEntity {
   private static final int TICKS_FALLDIST_SYNC = 22; //tick every so often
 
   /**
-   *
    * @return true if teleport was a success
    */
   private static boolean enderTeleportEvent(LivingEntity player, Level world, double x, double y, double z) {
     if (player.getRootVehicle() != player) {
       return false;
     }
-//    EntityTeleportEvent.EnderPearl event = new EntityTeleportEvent.EnderPearl(player, x, y, z, 0);
-//    boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
-//    if (wasCancelled == false) {
-//      //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
-//      UtilEntity.teleportWallSafe(player, world, event.getTargetX(), event.getTargetY(), event.getTargetZ());
-//    }
-    return  true; //!wasCancelled;
+    //    EntityTeleportEvent.EnderPearl event = new EntityTeleportEvent.EnderPearl(player, x, y, z, 0);
+    //    boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
+    //    if (wasCancelled == false) {
+    //      //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
+    //      UtilEntity.teleportWallSafe(player, world, event.getTargetX(), event.getTargetY(), event.getTargetZ());
+    //    }
+    return true; //!wasCancelled;
   }
 
   /**
-   *
    * @return true if teleport was a success
    */
   public static boolean enderTeleportEvent(LivingEntity player, Level world, BlockPos target) {
@@ -138,23 +134,23 @@ public class UtilEntity {
       case EAST:
         velX = Math.abs(power);
         velZ = 0;
-      break;
+        break;
       case WEST:
         velX = -1 * Math.abs(power);
         velZ = 0;
-      break;
+        break;
       case NORTH:
         velX = 0;
         velZ = -1 * Math.abs(power);
-      break;
+        break;
       case SOUTH:
         velX = 0;
         velZ = Math.abs(power);
-      break;
+        break;
       case UP:
       case DOWN:
       default:
-      break;
+        break;
     }
     Entity ridingEntity = entity.getVehicle();
     if (ridingEntity != null) {
@@ -419,13 +415,13 @@ public class UtilEntity {
     switch (currentFacing) {
       case EAST:
         yaw = 270F;
-      break;
+        break;
       case NORTH:
         yaw = 180F;
-      break;
+        break;
       case WEST:
         yaw = 90F;
-      break;
+        break;
       case DOWN:
       case UP:
       case SOUTH:

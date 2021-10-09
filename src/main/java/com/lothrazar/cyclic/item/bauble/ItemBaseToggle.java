@@ -3,18 +3,16 @@ package com.lothrazar.cyclic.item.bauble;
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.base.ItemBase;
 import java.util.List;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
 
@@ -24,7 +22,7 @@ public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
 
   /**
    * ElytraItem::isUsable static
-   * 
+   *
    * @param stack
    * @return
    */

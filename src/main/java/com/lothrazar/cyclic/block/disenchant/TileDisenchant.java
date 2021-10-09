@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.detectweather.TileWeather;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.DataTags;
@@ -13,23 +12,23 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -77,11 +76,12 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
   public FluidTankBase tank;
 
   public TileDisenchant(BlockPos pos, BlockState state) {
-    super(TileRegistry.disenchanter,pos,state);
+    super(TileRegistry.disenchanter, pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> {
       return p.getFluid().is(DataTags.EXPERIENCE);
     });
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDisenchant e) {
     e.tick();
   }
@@ -89,6 +89,7 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDisenchant e) {
     e.tick();
   }
+
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -113,7 +114,7 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
       return;
     }
     //input is size 1, at least one book exists, and output IS empty
-    Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer> newLinkedHashMap();
+    Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer>newLinkedHashMap();
     Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(input);
     Enchantment keyMoved = null;
     for (Map.Entry<Enchantment, Integer> entry : inputEnchants.entrySet()) {
@@ -214,11 +215,11 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -236,10 +237,10 @@ public class TileDisenchant extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         timer = value;
-      break;
+        break;
     }
   }
 

@@ -4,37 +4,30 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import com.lothrazar.cyclic.util.UtilEnchant;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockEnderShelf extends BlockBase {
 
@@ -56,25 +49,21 @@ public class BlockEnderShelf extends BlockBase {
     builder.add(BlockStateProperties.HORIZONTAL_FACING);
   }
 
-
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
-    return new TileEnderShelf(pos,state);
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TileEnderShelf(pos, state);
   }
-
-//  @Override
-//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-//    return createTickerHelper(type,TileRegistry.ender_shelf, world.isClientSide ? TileEnderShelf::clientTick : TileEnderShelf::serverTick);
-//  }
-
+  //  @Override
+  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+  //    return createTickerHelper(type,TileRegistry.ender_shelf, world.isClientSide ? TileEnderShelf::clientTick : TileEnderShelf::serverTick);
+  //  }
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-//    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
-//      worldIn.removeBlockEntity(pos);
-//    }
-
-    if ( !state.is(newState.getBlock()) ) {
+    //    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
+    //      worldIn.removeBlockEntity(pos);
+    //    }
+    if (!state.is(newState.getBlock())) {
       worldIn.removeBlockEntity(pos);
     }
   }
@@ -129,7 +118,6 @@ public class BlockEnderShelf extends BlockBase {
     return (TileEnderShelf) world.getBlockEntity(pos);
   }
   //
-
 
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {

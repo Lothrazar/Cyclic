@@ -27,37 +27,33 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.List;
 import java.util.Random;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.random.WeightedRandomList;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.WeighedRandom;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.Event;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class WaterCandleBlock extends BlockBase {
 
@@ -90,11 +86,11 @@ public class WaterCandleBlock extends BlockBase {
     }
     else if (state.getValue(LIT)
         && player.getItemInHand(hand).isEmpty()) {
-          //turn it off
-          world.setBlockAndUpdate(pos, state.setValue(LIT, false));
-          UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-          return InteractionResult.SUCCESS;
-        }
+      //turn it off
+      world.setBlockAndUpdate(pos, state.setValue(LIT, false));
+      UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
+      return InteractionResult.SUCCESS;
+    }
     return InteractionResult.FAIL;
   }
 
@@ -174,10 +170,9 @@ public class WaterCandleBlock extends BlockBase {
     if (spawners.isEmpty()) {
       return null;
     }
-
     //end is inclusive
     MobSpawnSettings.SpawnerData spawner = spawners.getRandom(rand).orElse(null);
-    if(spawner==null){
+    if (spawner == null) {
       return null;
     }
     Mob monster = null;

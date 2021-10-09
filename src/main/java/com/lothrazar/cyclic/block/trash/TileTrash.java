@@ -2,14 +2,13 @@ package com.lothrazar.cyclic.block.trash;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -19,7 +18,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileTrash extends TileEntityBase  {
+public class TileTrash extends TileEntityBase {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   ItemStackHandler inventory = new ItemStackHandler(1);
@@ -28,7 +27,7 @@ public class TileTrash extends TileEntityBase  {
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
 
   public TileTrash(BlockPos pos, BlockState state) {
-    super(TileRegistry.trashtile,pos,state);
+    super(TileRegistry.trashtile, pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
@@ -44,7 +43,7 @@ public class TileTrash extends TileEntityBase  {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.load(tag);
   }
@@ -69,7 +68,8 @@ public class TileTrash extends TileEntityBase  {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

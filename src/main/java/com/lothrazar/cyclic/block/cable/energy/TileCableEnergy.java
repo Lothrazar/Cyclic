@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.cable.energy;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -12,18 +11,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableEnergy extends TileEntityBase  {
+public class TileCableEnergy extends TileEntityBase {
 
   private static final int MAX = 32000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -31,11 +30,12 @@ public class TileCableEnergy extends TileEntityBase  {
   private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
 
   public TileCableEnergy(BlockPos pos, BlockState state) {
-    super(TileRegistry.energy_pipeTile,pos,state );
+    super(TileRegistry.energy_pipeTile, pos, state);
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
     e.tick();
   }
@@ -43,7 +43,8 @@ public class TileCableEnergy extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
     e.tick();
   }
-//  @Override
+
+  //  @Override
   public void tick() {
     this.syncEnergy();
     this.tickDownIncomingPowerFaces();
@@ -113,7 +114,7 @@ public class TileCableEnergy extends TileEntityBase  {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, tag.getInt(f.getSerializedName() + "_incenergy"));
     }
@@ -141,7 +142,8 @@ public class TileCableEnergy extends TileEntityBase  {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

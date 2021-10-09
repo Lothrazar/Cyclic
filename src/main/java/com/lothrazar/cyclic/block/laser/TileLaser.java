@@ -1,32 +1,30 @@
 package com.lothrazar.cyclic.block.laser;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.OffsetEnum;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileLaser extends TileEntityBase implements  MenuProvider {
+public class TileLaser extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, THICK, RED, GREEN, BLUE, ALPHA, XOFF, YOFF, ZOFF;
@@ -50,16 +48,16 @@ public class TileLaser extends TileEntityBase implements  MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileLaser(BlockPos pos, BlockState state) {
-    super(TileRegistry.laser,pos,state );
+    super(TileRegistry.laser, pos, state);
     this.needsRedstone = 0;
   }
-//  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
-//    e.tick();
-//  }
-//
-//  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
-//    e.tick();
-//  }
+  //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
+  //    e.tick();
+  //  }
+  //
+  //  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
+  //    e.tick();
+  //  }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -88,7 +86,6 @@ public class TileLaser extends TileEntityBase implements  MenuProvider {
     }
     return this.getBlockPos();
   }
-
 
   @Override
   public AABB getRenderBoundingBox() {
@@ -125,45 +122,45 @@ public class TileLaser extends TileEntityBase implements  MenuProvider {
     switch (Fields.values()[id]) {
       case THICK:
         this.thick = value;
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case BLUE:
         blue = value;
-      break;
+        break;
       case GREEN:
         green = value;
-      break;
+        break;
       case RED:
         red = value;
-      break;
+        break;
       case ALPHA:
         alpha = value;
-      break;
+        break;
       case XOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.xOffset = OffsetEnum.values()[value];
-      break;
+        break;
       case YOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.yOffset = OffsetEnum.values()[value];
-      break;
+        break;
       case ZOFF:
         if (value >= OffsetEnum.values().length) {
           value = 0;
         }
         this.zOffset = OffsetEnum.values()[value];
-      break;
+        break;
     }
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     red = tag.getInt("red");
     green = tag.getInt("green");

@@ -1,19 +1,17 @@
 package com.lothrazar.cyclic.block.eyetp;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.eye.TileEye;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TileEyeTp extends TileEntityBase  {
+public class TileEyeTp extends TileEntityBase {
 
   public static IntValue RANGE;
   public static IntValue HUNGER;
@@ -21,7 +19,7 @@ public class TileEyeTp extends TileEntityBase  {
   public static IntValue FREQUENCY;
 
   public TileEyeTp(BlockPos pos, BlockState state) {
-    super(TileRegistry.eye_teleport,pos,state);
+    super(TileRegistry.eye_teleport, pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEyeTp e) {
@@ -31,6 +29,7 @@ public class TileEyeTp extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileEyeTp e) {
     e.tick();
   }
+
   public void tick() {
     if (level.isClientSide) {
       return;
@@ -73,7 +72,8 @@ public class TileEyeTp extends TileEntityBase  {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

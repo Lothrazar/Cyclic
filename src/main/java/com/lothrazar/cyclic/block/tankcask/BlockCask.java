@@ -3,27 +3,21 @@ package com.lothrazar.cyclic.block.tankcask;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockCask extends BlockBase {
 
@@ -33,14 +27,14 @@ public class BlockCask extends BlockBase {
   }
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
-    return new TileCask(pos,state);
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TileCask(pos, state);
   }
 
-//  @Override
-//  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-//    return createTickerHelper(type, TileRegistry.cask, world.isClientSide ? TileCask::clientTick : TileCask::serverTick);
-//  }
+  //  @Override
+  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+  //    return createTickerHelper(type, TileRegistry.cask, world.isClientSide ? TileCask::clientTick : TileCask::serverTick);
+  //  }
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 

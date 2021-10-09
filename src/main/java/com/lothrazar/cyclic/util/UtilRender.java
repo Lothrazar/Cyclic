@@ -1,50 +1,48 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.data.Model3D;
-import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.render.RenderResizableCuboid;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.LightTexture;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.Mth;
-import com.mojang.math.Matrix4f;
-import net.minecraft.world.phys.Vec3;
-import com.mojang.math.Vector3f;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.opengl.GL11;
 
 /**
  * legacy ref https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
@@ -53,7 +51,7 @@ public class UtilRender {
 
   /**
    * used by fluid gui screen rendering Thanks to Mekanism https://github.com/mekanism/Mekanism which uses compatible MIT License
-   * 
+   *
    * @param xPosition
    * @param yPosition
    * @param yOffset
@@ -69,7 +67,7 @@ public class UtilRender {
     if (desiredWidth == 0 || desiredHeight == 0 || textureWidth == 0 || textureHeight == 0) {
       return;
     }
-//    Minecraft.getInstance().textureManager.bind(InventoryMenu.BLOCK_ATLAS);
+    //    Minecraft.getInstance().textureManager.bind(InventoryMenu.BLOCK_ATLAS);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
     int xTileCount = desiredWidth / textureWidth;
@@ -86,9 +84,8 @@ public class UtilRender {
     RenderSystem.enableBlend();
     //    RenderSystem.enableAlphaTest();
     BufferBuilder vertexBuffer = Tesselator.getInstance().getBuilder();
-
     vertexBuffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-//    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
+    //    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
     for (int xTile = 0; xTile <= xTileCount; xTile++) {
       int width = (xTile == xTileCount) ? xRemainder : textureWidth;
       if (width == 0) {
@@ -157,7 +154,6 @@ public class UtilRender {
 
   /**
    * This block-rendering function from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
-   *
    */
   private static void renderModelBrightnessColorQuads(PoseStack.Pose matrixEntry, VertexConsumer builder, float red, float green, float blue, float alpha, List<BakedQuad> quads,
       int combinedLights, int combinedOverlay) {
@@ -175,16 +171,16 @@ public class UtilRender {
         g = 1f;
         b = 1f;
       }
-//      addVertexData
+      //      addVertexData
       builder.putBulkData(matrixEntry, bakedquad, r, g, b, alpha, combinedLights, combinedOverlay);
     }
   }
 
   /**
    * Used for in-world fluid rendering Source reference from MIT open source https://github.com/mekanism/Mekanism/tree/1.15x
-   * 
+   * <p>
    * https://github.com/mekanism/Mekanism/blob/1.15x/LICENSE
-   * 
+   * <p>
    * See MekanismRenderer.
    **/
   public static void renderObject(Model3D object, PoseStack matrix, VertexConsumer buffer, int argb, int light) {
@@ -195,7 +191,7 @@ public class UtilRender {
 
   /**
    * used for fluid in-world render lighting
-   * 
+   *
    * @param light
    * @param fluid
    * @return
@@ -254,15 +250,13 @@ public class UtilRender {
 
   /**
    * Render this BLOCK right here in the world, start with alpha and scale near 1. Call from TESR perspective
-   * 
    */
   public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, BlockState renderBlockState, float alpha, float scale) {
     Level world = Minecraft.getInstance().level;
     //render 
-//    Minecraft.getInstance().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
-
+    //    Minecraft.getInstance().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0,InventoryMenu.BLOCK_ATLAS);
+    RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
     //
     //    double range = 6F;
     //    ClientPlayerEntity player = Minecraft.getInstance().player;
@@ -324,7 +318,6 @@ public class UtilRender {
 
   /**
    * Used by TESRs
-   * 
    */
   public static void renderOutline(BlockPos view, List<BlockPos> coords, PoseStack matrix, float scale, Color color) {
     //    IRenderTypeBuffer.getImpl(ibuffer);
@@ -363,7 +356,7 @@ public class UtilRender {
 
   /**
    * for ITEMS held by the PLAYER rendering cubes in world
-   * 
+   *
    * @param evt
    * @param coords
    * @param alpha
@@ -398,9 +391,8 @@ public class UtilRender {
 
   /**
    * Box OUTLINE that you can see thru blocks.
-   * 
+   * <p>
    * From https://github.com/Lothrazar/SimpleTomb/blob/trunk/1.16/src/main/java/com/lothrazar/simpletomb/event/ClientEvents.java
-   * 
    */
   @SuppressWarnings("deprecation")
   public static void createBox(PoseStack matrixStack, BlockPos pos) {
@@ -412,7 +404,7 @@ public class UtilRender {
     RenderSystem.disableTexture();
     RenderSystem.disableBlend();
     RenderSystem.disableDepthTest();
-//    RenderSystem.pushMatrix();
+    //    RenderSystem.pushMatrix();
     Vec3 viewPosition = mc.gameRenderer.getMainCamera().getPosition();
     long c = (System.currentTimeMillis() / 15L) % 360L;
     float[] color = getHSBtoRGBF(c / 360f, 1f, 1f);
@@ -428,14 +420,14 @@ public class UtilRender {
     x -= viewPosition.x();
     y -= viewPosition.y();
     z -= viewPosition.z();
-//    RenderSystem.multMatrix(matrixStack.last().pose());
+    //    RenderSystem.multMatrix(matrixStack.last().pose());
     RenderSystem.setProjectionMatrix(matrixStack.last().pose());
-//    RenderSystem.
+    //    RenderSystem.
     Tesselator tessellator = Tesselator.getInstance();
     BufferBuilder renderer = tessellator.getBuilder();
     renderer.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION);
     RenderSystem.setShaderColor(color[0], color[1], color[2], 1f);
-//    RenderSystem.color4f
+    //    RenderSystem.color4f
     RenderSystem.lineWidth(2.5f);
     renderer.vertex(x, y, z).endVertex();
     renderer.vertex(x + offset, y, z).endVertex();
@@ -463,17 +455,17 @@ public class UtilRender {
     renderer.vertex(x, y + offset, z + offset).endVertex();
     tessellator.end();
     matrixStack.popPose();
-//    RenderSystem.popMatrix();
+    //    RenderSystem.popMatrix();
     RenderSystem.lineWidth(1f);
     RenderSystem.enableDepthTest();
     RenderSystem.enableBlend();
     RenderSystem.enableTexture();
-        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+    RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
   }
 
   /**
    * From https://github.com/Lothrazar/SimpleTomb/blob/704bad5a33731125285d700c489bfe2c3a9e387d/src/main/java/com/lothrazar/simpletomb/helper/WorldHelper.java#L163
-   * 
+   *
    * @param hue
    * @param saturation
    * @param brightness
@@ -497,27 +489,27 @@ public class UtilRender {
           r = (int) (brightness * 255.0F + 0.5F);
           g = (int) (t * 255.0F + 0.5F);
           b = (int) (p * 255.0F + 0.5F);
-        break;
+          break;
         case 1:
           r = (int) (q * 255.0F + 0.5F);
           g = (int) (brightness * 255.0F + 0.5F);
           b = (int) (p * 255.0F + 0.5F);
-        break;
+          break;
         case 2:
           r = (int) (p * 255.0F + 0.5F);
           g = (int) (brightness * 255.0F + 0.5F);
           b = (int) (t * 255.0F + 0.5F);
-        break;
+          break;
         case 3:
           r = (int) (p * 255.0F + 0.5F);
           g = (int) (q * 255.0F + 0.5F);
           b = (int) (brightness * 255.0F + 0.5F);
-        break;
+          break;
         case 4:
           r = (int) (t * 255.0F + 0.5F);
           g = (int) (p * 255.0F + 0.5F);
           b = (int) (brightness * 255.0F + 0.5F);
-        break;
+          break;
         case 5:
           r = (int) (brightness * 255.0F + 0.5F);
           g = (int) (p * 255.0F + 0.5F);

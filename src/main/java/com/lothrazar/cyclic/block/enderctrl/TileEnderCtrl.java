@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.enderctrl;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
@@ -10,14 +9,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -32,17 +29,19 @@ public class TileEnderCtrl extends TileEntityBase {
   RenderTextType renderStyle = RenderTextType.TEXT;
 
   public TileEnderCtrl(BlockPos pos, BlockState state) {
-    super(TileRegistry.ender_controller,pos,state );
+    super(TileRegistry.ender_controller, pos, state);
   }
-//  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
-//    e.tick();
-//  }
-//
-//  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
-//    e.tick();
-//  }
+
+  //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
+  //    e.tick();
+  //  }
+  //
+  //  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
+  //    e.tick();
+  //  }
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
@@ -51,7 +50,7 @@ public class TileEnderCtrl extends TileEntityBase {
 
   /**
    * Converts to sorted list
-   * 
+   *
    * @param shelvesIn
    */
   public void setShelves(Set<BlockPos> shelvesIn) {
@@ -75,7 +74,7 @@ public class TileEnderCtrl extends TileEntityBase {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
@@ -87,7 +86,7 @@ public class TileEnderCtrl extends TileEntityBase {
         this.connectedShelves.add(pos);
       }
     }
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override

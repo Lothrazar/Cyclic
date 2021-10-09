@@ -98,6 +98,7 @@ public class ConfigRegistry {
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
   public static DoubleValue CHARM_ATTACKSPEED;
+
   static {
     buildDefaults();
     initConfig();
@@ -339,7 +340,7 @@ public class ConfigRegistry {
     //
     CFG.comment("Uncrafter settings").push("uncrafter");
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
-        + "For example, if false it will not uncraft damaged or enchanted items")
+            + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", true);
     TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT, it -> it instanceof String);
     TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")

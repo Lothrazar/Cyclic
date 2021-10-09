@@ -4,28 +4,26 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.BlockPos;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * laser rendering by direwolf20-MC from this MIT project
- * 
- * 
+ * <p>
+ * <p>
  * https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
- *
  */
 public class RenderLaser implements BlockEntityRenderer<TileLaser> {
 
-
-  public RenderLaser(BlockEntityRendererProvider.Context d) {   }
+  public RenderLaser(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public void render(TileLaser te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

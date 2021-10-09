@@ -3,15 +3,15 @@ package com.lothrazar.cyclic.block.workbench;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,10 +37,12 @@ public class TileWorkbench extends TileEntityBase implements MenuProvider {
 
   public enum ItemHandlers {
     GRID, OUTPUT
-  };
+  }
+
+  ;
 
   public TileWorkbench(BlockPos pos, BlockState state) {
-    super(TileRegistry.workbench,pos,state );
+    super(TileRegistry.workbench, pos, state);
   }
 
   protected <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers handler) {
@@ -56,7 +58,7 @@ public class TileWorkbench extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("inv")));
     super.load(tag);
   }

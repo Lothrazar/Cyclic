@@ -2,15 +2,15 @@ package com.lothrazar.cyclic.fluid;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
@@ -37,7 +37,7 @@ public class FluidXpJuiceHolder {
       FluidAttributes.builder(
           new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_still"),
           new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow")))
-              .bucket(BUCKET).block(BLOCK);
+      .bucket(BUCKET).block(BLOCK);
 
   public FluidXpJuiceHolder(IEventBus modEventBus) {
     BLOCKS.register(modEventBus);

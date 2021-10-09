@@ -1,40 +1,39 @@
 package com.lothrazar.cyclic.block.hopper;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.block.hoppergold.TileGoldHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.Hopper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.Hopper;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileSimpleHopper extends TileEntityBase implements  Hopper {
+public class TileSimpleHopper extends TileEntityBase implements Hopper {
 
   ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileSimpleHopper(BlockPos pos, BlockState state) {
-    super(TileRegistry.HOPPER.get(),pos,state );
+    super(TileRegistry.HOPPER.get(), pos, state);
   }
 
   public TileSimpleHopper(BlockEntityType<TileGoldHopper> t, BlockPos pos, BlockState state) {
-    super(t,pos,state);
+    super(t, pos, state);
   }
 
   @Override
@@ -44,6 +43,7 @@ public class TileSimpleHopper extends TileEntityBase implements  Hopper {
     }
     return super.getCapability(cap, side);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileSimpleHopper e) {
     e.tick();
   }
@@ -51,6 +51,7 @@ public class TileSimpleHopper extends TileEntityBase implements  Hopper {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileSimpleHopper e) {
     e.tick();
   }
+
   public void tick() {
     //block if redstone powered
     if (this.isPowered()) {
@@ -84,13 +85,13 @@ public class TileSimpleHopper extends TileEntityBase implements  Hopper {
       remainder = inventory.insertItem(0, remainder, false);
       stackEntity.setItem(remainder);
       if (remainder.isEmpty()) {
-        stackEntity.remove(Entity.RemovalReason.KILLED );
+        stackEntity.remove(Entity.RemovalReason.KILLED);
       }
     }
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.load(tag);
   }
@@ -102,7 +103,8 @@ public class TileSimpleHopper extends TileEntityBase implements  Hopper {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

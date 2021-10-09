@@ -8,8 +8,8 @@ import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenForester extends ScreenBase<ContainerForester> {
 
@@ -32,16 +32,16 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     energy.visible = TileForester.POWERCONF.get() > 0;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileForester.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileForester.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     y += 20;
-    btnRender = addWidget(new ButtonMachineField(x, y, TileForester.Fields.RENDER.ordinal(),
+    btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileForester.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     int w = 110;
     int h = 18;
     int f = TileForester.Fields.SIZE.ordinal();
     x += 28;
     y += 20;
-    size = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 0, 10, menu.tile.getField(f)));
+    size = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 0, 10, menu.tile.getField(f)));
   }
 
   @Override

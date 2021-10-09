@@ -36,9 +36,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
 
   @Override
   public void deserializeNBT(net.minecraft.nbt.Tag nbt) {
-    CompoundTag real = (CompoundTag)nbt;
-
-
+    CompoundTag real = (CompoundTag) nbt;
     setEnergy(real.getInt("energy"));
   }
 }

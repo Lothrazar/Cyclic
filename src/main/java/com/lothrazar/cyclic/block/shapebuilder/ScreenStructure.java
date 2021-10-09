@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
@@ -11,10 +13,8 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
@@ -37,20 +37,20 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     energy.guiTop = topPos;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileStructure.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
-    btnRender = addWidget(new ButtonMachineField(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileStructure.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRender = addRenderableWidget(new ButtonMachineField(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     int w = 160;
     int h = 20;
     int f = TileStructure.Fields.HEIGHT.ordinal();
     x = leftPos + 8;
     y = topPos + 82;
-    GuiSliderInteger durationslider = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger durationslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, TileStructure.MAXHEIGHT, menu.tile.getField(f)));
     durationslider.setTooltip("buildertype.height.tooltip");
     y += 21;
     f = TileStructure.Fields.SIZE.ordinal();
-    GuiSliderInteger sizeslider = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger sizeslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
     sizeslider.setTooltip("buildertype.size.tooltip");
     //
@@ -80,7 +80,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
         y += bsize;
       }
       String shapeName = UtilChat.lang("buildertype." + shape.name().toLowerCase());
-      ButtonMachine btnShape = addWidget(new ButtonMachine(x, y, bsize, bsize,
+      ButtonMachine btnShape = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize,
           shapeName.substring(0, 2), (p) -> {
             //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
             PacketRegistry.INSTANCE.sendToServer(

@@ -6,17 +6,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 
 public class GuiSliderInteger extends AbstractSliderButton implements IHasTooltip {
 
@@ -46,10 +46,10 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   //  @SuppressWarnings("deprecation")
   @Override
   protected void renderBg(PoseStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
-//    minecraft.getTextureManager().bind(WIDGETS_LOCATION);
+    //    minecraft.getTextureManager().bind(WIDGETS_LOCATION);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     int i = (this.isHovered() ? 2 : 1) * 20;
     this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i, 4, this.height);
     this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, this.height);

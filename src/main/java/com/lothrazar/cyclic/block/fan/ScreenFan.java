@@ -5,8 +5,8 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenFan extends ScreenBase<ContainerFan> {
 
@@ -22,21 +22,21 @@ public class ScreenFan extends ScreenBase<ContainerFan> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileFan.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileFan.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     //
     int w = 160;
     int h = 20;
     int f = TileFan.Fields.SPEED.ordinal();
     x = leftPos + 8;
     y = topPos + 30;
-    GuiSliderInteger speedsl = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger speedsl = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, TileFan.MAX_SPEED, menu.tile.getField(f)));
     speedsl.setTooltip("cyclic.fan.speed");
     //    
     f = TileFan.Fields.RANGE.ordinal();
     x = leftPos + 8;
     y = topPos + 54;
-    GuiSliderInteger rangesl = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger rangesl = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, TileFan.MAX_RANGE, menu.tile.getField(f)));
     rangesl.setTooltip("cyclic.fan.range");
   }

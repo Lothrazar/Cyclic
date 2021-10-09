@@ -37,7 +37,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileUncraft extends TileEntityBase implements  MenuProvider {
+public class TileUncraft extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     REDSTONE, STATUS, TIMER;
@@ -57,7 +57,7 @@ public class TileUncraft extends TileEntityBase implements  MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileUncraft(BlockPos pos, BlockState state) {
-    super(TileRegistry.uncrafter,pos,state);
+    super(TileRegistry.uncrafter, pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileUncraft e) {
@@ -67,6 +67,7 @@ public class TileUncraft extends TileEntityBase implements  MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileUncraft e) {
     e.tick();
   }
+
   public void tick() {
     this.syncEnergy();
     ItemStack dropMe = inputSlots.getStackInSlot(0).copy();
@@ -136,7 +137,7 @@ public class TileUncraft extends TileEntityBase implements  MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
@@ -153,10 +154,10 @@ public class TileUncraft extends TileEntityBase implements  MenuProvider {
 
   private boolean uncraftRecipe(Recipe<?> match) {
     List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())
-        .filter(stack -> !stack.hasContainerItem())
-        .findAny()
-        .map(Stream::of)
-        .orElseGet(Stream::empty))
+            .filter(stack -> !stack.hasContainerItem())
+            .findAny()
+            .map(Stream::of)
+            .orElseGet(Stream::empty))
         .collect(Collectors.toList());
     if (result.isEmpty()) {
       this.status = UncraftStatusEnum.NORECIPE;
@@ -267,13 +268,13 @@ public class TileUncraft extends TileEntityBase implements  MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case STATUS:
         this.status = UncraftStatusEnum.values()[value];
-      break;
+        break;
       case TIMER:
         timer = value;
-      break;
+        break;
     }
   }
 }

@@ -38,14 +38,13 @@ public class EnergyBar {
     }
     int relX;
     int relY;
-//    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_CTR);
-
+    //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_CTR);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, TextureRegistry.ENERGY_CTR);
     relX = guiLeft + x;
     relY = guiTop + y;
     Screen.blit(ms, relX, relY, 0, 0, width, getHeight(), width, getHeight());
-//    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_INNER);
+    //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_INNER);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, TextureRegistry.ENERGY_INNER);
     relX = relX + 1;

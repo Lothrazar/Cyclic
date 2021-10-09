@@ -5,19 +5,19 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.Optional;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 
 public class CraftingStickContainer extends ContainerBase implements IContainerCraftingAction {
@@ -46,7 +46,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   public void removed(Player playerIn) {
     super.removed(playerIn);
     //this is not the saving version
-    clearContainer(playerIn,  craftMatrix);
+    clearContainer(playerIn, craftMatrix);
   }
 
   @Override
@@ -64,7 +64,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
         }
       }
       craftResult.setItem(0, itemstack);
-      player.connection.send(new ClientboundContainerSetSlotPacket(containerId,this.getStateId(), 0, itemstack));
+      player.connection.send(new ClientboundContainerSetSlotPacket(containerId, this.getStateId(), 0, itemstack));
     }
   }
 

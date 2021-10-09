@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenClock extends ScreenBase<ContainerClock> {
 
@@ -22,17 +22,17 @@ public class ScreenClock extends ScreenBase<ContainerClock> {
     int f = TileRedstoneClock.Fields.DURATION.ordinal();
     x = leftPos + 8;
     y = topPos + 18;
-    GuiSliderInteger dur = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger dur = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 200, menu.tile.getField(f)));
     dur.setTooltip("cyclic.clock.duration");
     y += 21;
     f = TileRedstoneClock.Fields.DELAY.ordinal();
-    GuiSliderInteger delay = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger delay = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 200, menu.tile.getField(f)));
     delay.setTooltip("cyclic.clock.delay");
     y += 21;
     f = TileRedstoneClock.Fields.POWER.ordinal();
-    GuiSliderInteger power = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger power = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 15, menu.tile.getField(f)));
     power.setTooltip("cyclic.clock.power");
   }

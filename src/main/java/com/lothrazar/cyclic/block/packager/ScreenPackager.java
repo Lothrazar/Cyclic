@@ -6,8 +6,8 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenPackager extends ScreenBase<ContainerPackager> {
 
@@ -30,7 +30,7 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TilePackager.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TilePackager.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
   @Override

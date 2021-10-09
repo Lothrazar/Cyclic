@@ -2,13 +2,11 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.EvokerFangs;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.util.Mth;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class EvokerFangItem extends ItemBase {
 

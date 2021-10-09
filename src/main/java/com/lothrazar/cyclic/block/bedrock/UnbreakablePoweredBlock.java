@@ -3,20 +3,18 @@ package com.lothrazar.cyclic.block.bedrock;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilParticle;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class UnbreakablePoweredBlock extends BlockBase {
 
@@ -27,14 +25,15 @@ public class UnbreakablePoweredBlock extends BlockBase {
   }
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
-    return new UnbreakablePoweredTile(pos,state);
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new UnbreakablePoweredTile(pos, state);
   }
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.unbreakable_reactive, world.isClientSide ? UnbreakablePoweredTile::clientTick : UnbreakablePoweredTile::serverTick);
   }
+
   public static void setBreakable(Level world, BlockPos pos, boolean isBreakable) {
     BlockState state = world.getBlockState(pos);
     boolean oldBreakable = state.getValue(BREAKABLE);

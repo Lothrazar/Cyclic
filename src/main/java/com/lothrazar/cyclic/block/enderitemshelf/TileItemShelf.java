@@ -1,16 +1,13 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -23,17 +20,19 @@ public class TileItemShelf extends TileEntityBase {
   public RenderTextType renderStyle = RenderTextType.STACK;
 
   public TileItemShelf(BlockPos pos, BlockState state) {
-    super(TileRegistry.ENDER_ITEM_SHELF.get(),pos,state);
+    super(TileRegistry.ENDER_ITEM_SHELF.get(), pos, state);
   }
-//  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileItemShelf e) {
-//    e.tick();
-//  }
-//
-//  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileItemShelf e) {
-//    e.tick();
-//  }
+
+  //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileItemShelf e) {
+  //    e.tick();
+  //  }
+  //
+  //  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileItemShelf e) {
+  //    e.tick();
+  //  }
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
@@ -49,13 +48,13 @@ public class TileItemShelf extends TileEntityBase {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
     }
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override

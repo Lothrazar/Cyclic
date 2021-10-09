@@ -1,20 +1,18 @@
 package com.lothrazar.cyclic.block.screen;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 public class TileScreentext extends TileEntityBase implements MenuProvider {
 
@@ -34,9 +32,10 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
   }
 
   public TileScreentext(BlockPos pos, BlockState state) {
-    super(TileRegistry.screen,pos,state);
+    super(TileRegistry.screen, pos, state);
     this.needsRedstone = 0;
   }
+
   public int getColor() {
     return ((red & 0xFF) << 16) | //red
         ((green & 0xFF) << 8) | //green
@@ -59,7 +58,7 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tags) {
+  public void load(CompoundTag tags) {
     text = new String[STRINGS];
     for (int i = 0; i < STRINGS; i++) {
       text[i] = tags.getString("text" + i);
@@ -71,7 +70,7 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
     fontSize = tags.getInt("font");
     offset = tags.getInt("offset");
     dropShadow = tags.getBoolean("dropShadow");
-    super.load( tags);
+    super.load(tags);
   }
 
   @Override
@@ -127,25 +126,25 @@ public class TileScreentext extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[id]) {
       case BLUE:
         blue = value;
-      break;
+        break;
       case GREEN:
         green = value;
-      break;
+        break;
       case RED:
         red = value;
-      break;
+        break;
       case PADDING:
         padding = value;
-      break;
+        break;
       case FONT:
         fontSize = value;
-      break;
+        break;
       case OFFSET:
         offset = value;
-      break;
+        break;
       case REDSTONE:
         this.setNeedsRedstone(value);
-      break;
+        break;
     }
   }
 

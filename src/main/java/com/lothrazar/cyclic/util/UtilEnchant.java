@@ -3,13 +3,13 @@ package com.lothrazar.cyclic.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class UtilEnchant {

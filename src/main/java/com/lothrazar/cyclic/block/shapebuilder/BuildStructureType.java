@@ -1,4 +1,5 @@
 package com.lothrazar.cyclic.block.shapebuilder;
+
 public enum BuildStructureType {
 
   FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;

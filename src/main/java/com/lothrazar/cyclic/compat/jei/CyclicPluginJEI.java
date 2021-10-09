@@ -17,14 +17,6 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.UtilString;
 import java.util.Objects;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.registries.ForgeRegistries;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
@@ -36,6 +28,14 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {
@@ -44,7 +44,8 @@ public class CyclicPluginJEI implements IModPlugin {
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "jei");
 
   @Override
-  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
+  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+  }
 
   @Override
   public ResourceLocation getPluginUid() {
@@ -85,11 +86,11 @@ public class CyclicPluginJEI implements IModPlugin {
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
       if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
-      //          && item != BlockRegistry.SOLIDIFIER.asItem()
-      //                    && item != BlockRegistry.MELTER.asItem()
-      //          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
-      //          && item != BlockRegistry.PACKAGER.get().asItem()
-      //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
+        //          && item != BlockRegistry.SOLIDIFIER.asItem()
+        //                    && item != BlockRegistry.MELTER.asItem()
+        //          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
+        //          && item != BlockRegistry.PACKAGER.get().asItem()
+        //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
       ) {
         registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslatableComponent(item.getDescriptionId() + ".guide"));
       }

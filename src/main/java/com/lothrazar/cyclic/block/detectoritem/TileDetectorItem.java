@@ -3,25 +3,24 @@ package com.lothrazar.cyclic.block.detectoritem;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.detectorentity.CompareType;
-import com.lothrazar.cyclic.block.detectorentity.TileDetector;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
-public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
+public class TileDetectorItem extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, RENDER;
@@ -38,7 +37,7 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
   private boolean isPoweredNow = false;
 
   public TileDetectorItem(BlockPos pos, BlockState state) {
-    super(TileRegistry.DETECTOR_ITEM,pos,state);
+    super(TileRegistry.DETECTOR_ITEM, pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDetectorItem e) {
@@ -48,6 +47,7 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDetectorItem e) {
     e.tick();
   }
+
   public void tick() {
     timer--;
     if (level.isClientSide || timer > 0) {
@@ -60,15 +60,15 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
     switch (this.compType) {
       case LESS:
         trigger = (entitiesFound < limitUntilRedstone);
-      break;
+        break;
       case GREATER:
         trigger = (entitiesFound > limitUntilRedstone);
-      break;
+        break;
       case EQUAL:
         trigger = (entitiesFound == limitUntilRedstone);
-      break;
+        break;
       default:
-      break;
+        break;
     }
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
@@ -145,7 +145,7 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
       case RENDER:
         return this.render;
       default:
-      break;
+        break;
     }
     return 0;
   }
@@ -170,7 +170,7 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
           value = CompareType.values().length - 1;
         }
         this.compType = CompareType.values()[value];
-      break;
+        break;
       case LIMIT:
         if (value > 999) {
           value = MAX_RANGE;
@@ -179,24 +179,24 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
           value = 0;
         }
         this.limitUntilRedstone = value;
-      break;
+        break;
       case RANGEX:
         this.rangeX = value;
-      break;
+        break;
       case RANGEY:
         this.rangeY = value;
-      break;
+        break;
       case RANGEZ:
         this.rangeZ = value;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     this.rangeX = tag.getInt("ox");
     this.rangeY = tag.getInt("oy");
     this.rangeZ = tag.getInt("oz");
@@ -205,7 +205,7 @@ public class TileDetectorItem extends TileEntityBase implements  MenuProvider {
     if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
     }
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override

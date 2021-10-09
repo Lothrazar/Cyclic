@@ -1,15 +1,11 @@
 package com.lothrazar.cyclic.block.soundmuff;
 
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.resources.sounds.Sound;
-import net.minecraft.client.sounds.WeighedSoundEvents;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.client.sounds.WeighedSoundEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-
-//copy a sound and control its volume
-//because there is no setVolume() fn in ISound... we must clone it
-import net.minecraft.client.resources.sounds.SoundInstance.Attenuation;
 
 public class SoundVolumeControlled implements SoundInstance {
 

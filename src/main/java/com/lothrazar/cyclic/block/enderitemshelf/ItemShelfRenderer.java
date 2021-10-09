@@ -8,15 +8,14 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 
 public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
 
-
-  public ItemShelfRenderer(BlockEntityRendererProvider.Context d) {   }
+  public ItemShelfRenderer(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public void render(TileItemShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {

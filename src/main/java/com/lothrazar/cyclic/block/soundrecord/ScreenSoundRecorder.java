@@ -7,8 +7,8 @@ import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
 
@@ -25,7 +25,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
     y = topPos + 174;
     int bsize = 20;
     final String pf = "block.cyclic.sound_recorder.";
-    ButtonMachine buttonClear = addWidget(new ButtonMachine(x, y, bsize, bsize, TextureEnum.CRAFT_EMPTY, TileSoundRecorder.Fields.CLEARALL.ordinal(), (p) -> {
+    ButtonMachine buttonClear = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize, TextureEnum.CRAFT_EMPTY, TileSoundRecorder.Fields.CLEARALL.ordinal(), (p) -> {
       menu.tile.clearSounds();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.CLEARALL.ordinal(), 1, menu.tile.getBlockPos()));
     }));
@@ -35,7 +35,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
     bsize = 16;
     y = topPos + 8;
     for (int i = 0; i < TileSoundRecorder.MAX_SOUNDS; i++) {
-      ButtonMachine btnSave = addWidget(new ButtonMachine(x, y, bsize, bsize,
+      ButtonMachine btnSave = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize,
           TextureEnum.RENDER_SHOW, i, (p) -> {
             int soundIndex = ((ButtonMachine) p).getTileField();
             PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.SAVE.ordinal(), soundIndex, menu.tile.getBlockPos()));
@@ -45,7 +45,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
       btnSave.yOffset = 2;
       btnSave.setTooltip(pf + "save");
       //      btnSave.setTextureId(TextureEnum.RENDER_SHOW);
-      ButtonMachine btnIgnore = addWidget(new ButtonMachine(x + bsize, y, bsize, bsize,
+      ButtonMachine btnIgnore = addRenderableWidget(new ButtonMachine(x + bsize, y, bsize, bsize,
           TextureEnum.POWER_STOP, i, (p) -> {
             int soundIndex = ((ButtonMachine) p).getTileField();
             menu.tile.ignoreSound(soundIndex);

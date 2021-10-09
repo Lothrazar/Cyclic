@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.item.storagebag;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
@@ -68,22 +68,21 @@ public class ContainerStorageBag extends ContainerBase {
   @Override
   public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
     ItemStorageBag.setTimestamp(bag);
-
     if (!(slotId < 0 || slotId >= this.slots.size())) {
       if (this.slots.get(slotId).getItem().getItem() instanceof ItemStorageBag) {
         // if its a normal click with a Dye item, then update stack color
         if (clickTypeIn == ClickType.PICKUP) {
           ItemStack mouseStack = player.containerMenu.getCarried();
-//          mouseStack =  player.getInventory().getSelected();
+          //          mouseStack =  player.getInventory().getSelected();
           if (mouseStack.getItem() instanceof DyeItem) {
             DyeItem dye = (DyeItem) mouseStack.getItem();
             ItemStorageBag.setColour(slots.get(slotId).getItem(), dye.getDyeColor());
           }
         }
         //lock the bag in place by returning empty
-//        return ItemStack.EMPTY;
+        //        return ItemStack.EMPTY;
       }
     }
-      super.clicked(slotId, dragType, clickTypeIn, player);
+    super.clicked(slotId, dragType, clickTypeIn, player);
   }
 }

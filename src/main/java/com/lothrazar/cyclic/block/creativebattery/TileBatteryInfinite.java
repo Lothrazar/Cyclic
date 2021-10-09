@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.creativebattery;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.Collections;
@@ -11,19 +10,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileBatteryInfinite extends TileEntityBase  {
+public class TileBatteryInfinite extends TileEntityBase {
 
   static final int MAX = 960000000;
 
@@ -36,7 +35,7 @@ public class TileBatteryInfinite extends TileEntityBase  {
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileBatteryInfinite(BlockPos pos, BlockState state) {
-    super(TileRegistry.battery_infinite,pos,state);
+    super(TileRegistry.battery_infinite, pos, state);
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, true);
@@ -64,12 +63,12 @@ public class TileBatteryInfinite extends TileEntityBase  {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -85,6 +84,7 @@ public class TileBatteryInfinite extends TileEntityBase  {
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileBatteryInfinite e) {
     e.tick();
   }
@@ -92,6 +92,7 @@ public class TileBatteryInfinite extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileBatteryInfinite e) {
     e.tick();
   }
+
   public void tick() {
     energy.receiveEnergy(MAX, false);
     //now go
@@ -135,22 +136,22 @@ public class TileBatteryInfinite extends TileEntityBase  {
     switch (Fields.values()[field]) {
       case D:
         this.setSideField(Direction.DOWN, value % 2);
-      break;
+        break;
       case E:
         this.setSideField(Direction.EAST, value % 2);
-      break;
+        break;
       case N:
         this.setSideField(Direction.NORTH, value % 2);
-      break;
+        break;
       case S:
         this.setSideField(Direction.SOUTH, value % 2);
-      break;
+        break;
       case U:
         this.setSideField(Direction.UP, value % 2);
-      break;
+        break;
       case W:
         this.setSideField(Direction.WEST, value % 2);
-      break;
+        break;
     }
   }
 }

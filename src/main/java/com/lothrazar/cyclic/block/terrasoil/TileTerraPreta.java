@@ -1,25 +1,25 @@
 package com.lothrazar.cyclic.block.terrasoil;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 
-public class TileTerraPreta extends TileEntityBase  {
+public class TileTerraPreta extends TileEntityBase {
 
   public static final int TIMER_FULL = 100;
   public static final int HEIGHT = 16;
 
   public TileTerraPreta(BlockPos pos, BlockState state) {
-    super(TileRegistry.terra_preta,pos,state);
+    super(TileRegistry.terra_preta, pos, state);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraPreta e) {
     e.tick();
   }
@@ -27,6 +27,7 @@ public class TileTerraPreta extends TileEntityBase  {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraPreta e) {
     e.tick();
   }
+
   public void tick() {
     //sprinkler to ONLY whats directly above/below
     timer--;
@@ -77,7 +78,8 @@ public class TileTerraPreta extends TileEntityBase  {
   }
 
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {

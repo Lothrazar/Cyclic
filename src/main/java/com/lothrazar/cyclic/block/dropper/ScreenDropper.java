@@ -7,8 +7,8 @@ import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenDropper extends ScreenBase<ContainerDropper> {
 
@@ -30,26 +30,26 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     energy.visible = TileDropper.POWERCONF.get() > 0;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileDropper.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileDropper.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     y += 20;
-    btnRender = addWidget(new ButtonMachineField(x, y, TileDropper.Fields.RENDER.ordinal(),
+    btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileDropper.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x = leftPos + 32;
     y = topPos + 18;
     w = 120;
     h = 20;
     int f = TileDropper.Fields.DROPCOUNT.ordinal();
-    GuiSliderInteger dropcount = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger dropcount = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
     dropcount.setTooltip("cyclic.dropper.count");
     y += h + 1;
     f = TileDropper.Fields.OFFSET.ordinal();
-    GuiSliderInteger offsetsli = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger offsetsli = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 16, menu.tile.getField(f)));
     offsetsli.setTooltip("cyclic.dropper.offset");
     y += h + 1;
     f = TileDropper.Fields.DELAY.ordinal();
-    GuiSliderInteger delaysli = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger delaysli = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 500, menu.tile.getField(f)));
     delaysli.setTooltip("cyclic.dropper.delay");
     //    y += 22;

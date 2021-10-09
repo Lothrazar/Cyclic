@@ -2,24 +2,21 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
-import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
-
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 
 public class SpawnInspectorTool extends ItemBase {
 

@@ -17,7 +17,6 @@ public class CuriosRegistry {
   private static final ResourceLocation FEET_ICON = new ResourceLocation(ModCyclic.MODID, "curios/feet");
 
   /**
-   *
    * https://github.com/TheIllusiveC4/Curios/wiki/How-to-Use:-Developers
    **/
   public static void setup(FMLCommonSetupEvent event) {

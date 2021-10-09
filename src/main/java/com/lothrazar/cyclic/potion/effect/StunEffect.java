@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.potion.TickableEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class StunEffect extends TickableEffect {

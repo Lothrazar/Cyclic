@@ -9,8 +9,8 @@ import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
@@ -34,8 +34,8 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
-    btnRender = addWidget(new ButtonMachineField(x, y + 20, TileFluidCollect.Fields.RENDER.ordinal(),
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRender = addRenderableWidget(new ButtonMachineField(x, y + 20, TileFluidCollect.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     //
     //
@@ -44,14 +44,14 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     x = leftPos + 32;
     y += h + 1;
     int f = TileFluidCollect.Fields.HEIGHT.ordinal();
-    GuiSliderInteger height = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger height = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileFluidCollect.MAX_HEIGHT, menu.tile.getField(f)));
     height.setTooltip("buildertype.height.tooltip");
     y += h + 1;
     //
     //
     f = TileFluidCollect.Fields.SIZE.ordinal();
-    GuiSliderInteger size = this.addWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
+    GuiSliderInteger size = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileMiner.MAX_SIZE, menu.tile.getField(f)));
     size.setTooltip("buildertype.size.tooltip");
   }

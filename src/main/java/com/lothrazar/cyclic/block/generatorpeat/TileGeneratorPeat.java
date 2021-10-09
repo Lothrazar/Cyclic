@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.generatoritem.TileGeneratorDrops;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -42,7 +41,9 @@ public class TileGeneratorPeat extends TileEntityBase implements MenuProvider {
   public TileGeneratorPeat(BlockPos pos, BlockState state) {
     super(TileRegistry.peat_generator, pos, state);
     this.setNeedsRedstone(0);
-  }  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorPeat e) {
+  }
+
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorPeat e) {
     e.tick();
   }
 
@@ -83,8 +84,8 @@ public class TileGeneratorPeat extends TileEntityBase implements MenuProvider {
     return this.timer > 0;
   }
 
-//  @Override
-  public void  tick() {
+  //  @Override
+  public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;

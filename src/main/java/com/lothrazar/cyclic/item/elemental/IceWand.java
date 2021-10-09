@@ -28,16 +28,14 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.FluidState;
 
 public class IceWand extends ItemBase {
 
@@ -68,9 +66,8 @@ public class IceWand extends ItemBase {
     List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
     for (BlockPos pos : water) {
       FluidState fluidState = world.getBlockState(pos).getFluidState();
-
       if (fluidState != null &&
-//          fluidState.getFluidState() != null &&
+          //          fluidState.getFluidState() != null &&
           fluidState.getAmount() >= 8) { // .getFluidState()
         world.setBlock(pos, Blocks.ICE.defaultBlockState(), 3);
       }

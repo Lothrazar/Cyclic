@@ -27,10 +27,10 @@ import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import java.util.function.Supplier;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketFilterCard extends PacketBase {

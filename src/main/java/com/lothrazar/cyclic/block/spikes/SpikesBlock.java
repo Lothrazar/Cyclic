@@ -3,33 +3,31 @@ package com.lothrazar.cyclic.block.spikes;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SpikesBlock extends BlockBase implements SimpleWaterloggedBlock {
 
@@ -87,16 +85,16 @@ public class SpikesBlock extends BlockBase implements SimpleWaterloggedBlock {
       switch (this.type) {
         case CURSE:
           triggerCurse(worldIn, entity);
-        break;
+          break;
         case FIRE:
           entity.setSecondsOnFire(FIRE_TIME);
-        break;
+          break;
         case PLAIN:
           entity.hurt(DamageSource.CACTUS, 1);
-        break;
+          break;
         default:
         case NONE:
-        break;
+          break;
       }
     }
   }
@@ -109,30 +107,30 @@ public class SpikesBlock extends BlockBase implements SimpleWaterloggedBlock {
           if (!living.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
             living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CURSE_TIME, 2));
           }
-        break;
+          break;
         case 1:
           if (!living.hasEffect(MobEffects.WEAKNESS)) {
             living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, CURSE_TIME, 2));
           }
-        break;
+          break;
         case 2:
           if (!living.hasEffect(MobEffects.UNLUCK)) {
             living.addEffect(new MobEffectInstance(MobEffects.UNLUCK, CURSE_TIME, 1));
           }
-        break;
+          break;
         case 3:
           if (!living.hasEffect(MobEffects.DIG_SLOWDOWN)) {
             living.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, CURSE_TIME, 2));
           }
-        break;
+          break;
         case 4:
           entity.hurt(DamageSource.MAGIC, 1);
-        break;
+          break;
         case 5:
           if (!living.hasEffect(MobEffects.BLINDNESS)) {
             living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, CURSE_TIME, 1));
           }
-        break;
+          break;
       }
     }
   }

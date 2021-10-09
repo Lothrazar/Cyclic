@@ -4,10 +4,10 @@ import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.mojang.brigadier.context.CommandContext;
 import java.util.Collection;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.server.level.ServerPlayer;
 
 public class CommandHealth {
 

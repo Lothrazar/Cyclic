@@ -2,18 +2,15 @@ package com.lothrazar.cyclic.block.spikes;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class SpikesDiamond extends SpikesBlock {
 
@@ -21,17 +18,16 @@ public class SpikesDiamond extends SpikesBlock {
     super(properties, EnumSpikeType.NONE);
   }
 
-
-
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
-    return new TileDiamondSpikes(pos,state);
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TileDiamondSpikes(pos, state);
   }
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.spikes_diamond, world.isClientSide ?  TileDiamondSpikes::clientTick :  TileDiamondSpikes::serverTick);
+    return createTickerHelper(type, TileRegistry.spikes_diamond, world.isClientSide ? TileDiamondSpikes::clientTick : TileDiamondSpikes::serverTick);
   }
+
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
     if (entity instanceof LivingEntity && state.getValue(ACTIVATED) && worldIn instanceof ServerLevel) {

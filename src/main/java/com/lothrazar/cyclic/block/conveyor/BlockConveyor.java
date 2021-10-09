@@ -7,37 +7,37 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
 
@@ -82,7 +82,6 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
     super(properties.strength(0.6F).noOcclusion());
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
-
   /**
    * Utility methods for block shapes.
    *
@@ -90,20 +89,18 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
    */
   /**
    * Rotates the given {@link VoxelShape} along the horizontal plane according to the given rotation direction.
-   *
+   * <p>
    * Assumes the given shape is within the bounds of 1 unit on each axis.
-   * 
+   * <p>
    * https://gist.github.com/sciwhiz12/0852b629e7a3d0200ffc03ec7edab187
-   * 
-   * @param shape
-   *          The shape to rotate
-   * @param rotationDir
-   *          The rotation direction
+   *
+   * @param shape       The shape to rotate
+   * @param rotationDir The rotation direction
    * @return The rotated shape
    */
   public static VoxelShape rot(final VoxelShape shape) {
     double x1 = shape.min(Direction.Axis.X), x2 = shape.max(Direction.Axis.X);
-      double y1 = shape.min(Direction.Axis.Y), y2 = shape.max(Direction.Axis.Y);
+    double y1 = shape.min(Direction.Axis.Y), y2 = shape.max(Direction.Axis.Y);
     double z1 = shape.min(Direction.Axis.Z), z2 = shape.max(Direction.Axis.Z);
     //    if (rotationDir == Rotation.CLOCKWISE_90 || rotationDir == Rotation.COUNTERCLOCKWISE_90) {
     double temp = z1; // ]
@@ -126,20 +123,20 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
 
   private static VoxelShape safeShapeBox(double x1, double x2, double y1, double y2, double z1, double z2) {
     double temp;
-    if(x1 > x2){
-      temp= x1;
+    if (x1 > x2) {
+      temp = x1;
       x1 = x2;
-      x2 =temp;
+      x2 = temp;
     }
-    if(y1 > y2){
-      temp= y1;
+    if (y1 > y2) {
+      temp = y1;
       y1 = y2;
-      y2 =temp;
+      y2 = temp;
     }
-    if(z1 > z2){
-      temp= z1;
+    if (z1 > z2) {
+      temp = z1;
       z1 = z2;
-      z2 =temp;
+      z2 = temp;
     }
     return Shapes.box(x1, y1, z1, x2, y2, z2);
   }
@@ -162,7 +159,6 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
     //    if (rotationDir == Rotation.COUNTERCLOCKWISE_90 || rotationDir == Rotation.CLOCKWISE_180) {
     z1 = 1 - z1; // counterclockwise
     z2 = 1 - z2;
-
     return safeShapeBox(x1, y1, z1, x2, y2, z2);
   }
 
@@ -197,7 +193,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
           return ANGLEWEST;
         case DOWN:
         case UP:
-        break;
+          break;
       }
       if (state.getValue(TYPE) == ConveyorType.DOWN) {
         switch (facing) {
@@ -211,7 +207,7 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
             return ANGLEEAST;
           case DOWN:
           case UP:
-          break;
+            break;
         }
       }
     }
@@ -307,14 +303,15 @@ public class BlockConveyor extends BlockBase implements SimpleWaterloggedBlock {
   }
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
-    return new TileConveyor(pos,state);
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TileConveyor(pos, state);
   }
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.conveyor, world.isClientSide ? TileConveyor::clientTick : TileConveyor::serverTick);
   }
+
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     //decide properties

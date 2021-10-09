@@ -1,20 +1,15 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.base.BlockBase;
-import net.minecraft.world.level.Level;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class BlockWirelessRec extends BlockBase {
 
@@ -47,10 +42,9 @@ public class BlockWirelessRec extends BlockBase {
     return true;
   }
 
-
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
-    return new TileWirelessRec(pos,state );
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TileWirelessRec(pos, state);
   }
 
   @Override

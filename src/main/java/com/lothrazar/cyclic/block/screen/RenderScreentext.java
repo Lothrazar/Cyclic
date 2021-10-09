@@ -6,20 +6,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 
 /**
  * as of minecraft 1.16 parts of this file contains code from this mod which is MIT License, the same as this project
- * 
+ * <p>
  * https://github.com/jaquadro/StorageDrawers/blob/1.16/LICENSE
- * 
  */
 public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
 
-
-  public RenderScreentext(BlockEntityRendererProvider.Context d) {   }
+  public RenderScreentext(BlockEntityRendererProvider.Context d) {
+  }
 
   @Override
   public void render(TileScreentext tile, float v, PoseStack matrix,
@@ -50,7 +48,6 @@ public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
     float scaleX = 0.05F, scaleY = 0.05F;
     matrix.scale(scaleX * fontSize, scaleY * fontSize, 1);
     //then draw it
-
     Font fontRenderer = Minecraft.getInstance().font; //this.renderer.getFont();
     fontRenderer.drawInBatch(text, 0, 0, tile.getColor(),
         tile.getDropShadow(), matrix.last().pose(), buffer, false, 0, light); // 15728880

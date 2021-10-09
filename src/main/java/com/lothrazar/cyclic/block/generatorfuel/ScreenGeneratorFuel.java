@@ -11,8 +11,8 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
 
@@ -36,10 +36,10 @@ public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TileGeneratorFuel.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileGeneratorFuel.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     x = leftPos + 132;
     y = topPos + 8;
-    btnToggle = addWidget(new ButtonMachine(x, y, 14, 14, "", (p) -> {
+    btnToggle = addRenderableWidget(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       int f = TileGeneratorFuel.Fields.FLOWING.ordinal();
       int tog = (menu.tile.getField(f) + 1) % 2;
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));

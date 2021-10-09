@@ -2,23 +2,22 @@ package com.lothrazar.cyclic.block.generatorfood;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
-import com.lothrazar.cyclic.block.generatorfluid.TileGeneratorFluid;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -53,9 +52,10 @@ public class TileGeneratorFood extends TileEntityBase implements MenuProvider {
   private int burnTime = 0; //how much of current fuel is left
 
   public TileGeneratorFood(BlockPos pos, BlockState state) {
-    super(TileRegistry.GENERATOR_FOOD.get(),pos,state );
+    super(TileRegistry.GENERATOR_FOOD.get(), pos, state);
     this.needsRedstone = 0;
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorFood e) {
     e.tick();
   }
@@ -63,6 +63,7 @@ public class TileGeneratorFood extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorFood e) {
     e.tick();
   }
+
   public void tick() {
     this.syncEnergy();
     if (this.flowing == 1) {
@@ -128,7 +129,7 @@ public class TileGeneratorFood extends TileEntityBase implements MenuProvider {
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.load(tag);
@@ -161,16 +162,16 @@ public class TileGeneratorFood extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.burnTime = value;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case FLOWING:
         this.flowing = value;
-      break;
+        break;
     }
   }
 

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.capability;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -10,8 +10,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
-
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabilityProvider {
 
@@ -21,10 +19,8 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
   protected int capacity;
 
   /**
-   * @param container
-   *          The container itemStack, data is stored on it directly as NBT.
-   * @param capacity
-   *          The maximum capacity of this fluid tank.
+   * @param container The container itemStack, data is stored on it directly as NBT.
+   * @param capacity  The maximum capacity of this fluid tank.
    */
   public FluidHandlerCapabilityStack(ItemStack container, int capacity) {
     this.container = container;

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.placerfluid.TilePlacerFluid;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
@@ -12,21 +11,21 @@ import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -83,8 +82,9 @@ public class TileStructure extends TileEntityBase implements MenuProvider {
   private int shapeIndex = 0;
 
   public TileStructure(BlockPos pos, BlockState state) {
-    super(TileRegistry.STRUCTURE,pos,state );
+    super(TileRegistry.STRUCTURE, pos, state);
   }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileStructure e) {
     e.tick();
   }
@@ -92,8 +92,9 @@ public class TileStructure extends TileEntityBase implements MenuProvider {
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileStructure e) {
     e.tick();
   }
+
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     int t = tag.getInt("buildType");
@@ -146,28 +147,28 @@ public class TileStructure extends TileEntityBase implements MenuProvider {
     switch (Fields.values()[field]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case BUILDTYPE:
         if (value >= BuildStructureType.values().length) {
           value = 0;
         }
         this.buildType = BuildStructureType.values()[value];
-      break;
+        break;
       case SIZE:
         this.buildSize = value;
-      break;
+        break;
       case HEIGHT:
         if (value > MAXHEIGHT) {
           value = MAXHEIGHT;
         }
         this.height = Math.max(1, value);
-      break;
+        break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 
@@ -190,7 +191,7 @@ public class TileStructure extends TileEntityBase implements MenuProvider {
     return 0;
   }
 
-//  @Override
+  //  @Override
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -294,34 +295,34 @@ public class TileStructure extends TileEntityBase implements MenuProvider {
       case CIRCLE:
         shape = UtilShape.circleHorizontal(this.getPosTarget(), this.getSize() * 2);
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case FACING:
         shape = UtilShape.line(this.getPosTarget(), this.getCurrentFacing(), this.getSize());
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case SQUARE:
         shape = UtilShape.squareHorizontalHollow(this.getPosTarget(), this.getSize());
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case SOLID:
         shape = UtilShape.squareHorizontalFull(this.getTargetFacing(), this.getSize());
         shape = UtilShape.repeatShapeByHeight(shape, getHeight() - 1);
-      break;
+        break;
       case SPHERE:
         shape = UtilShape.sphere(this.getPosTarget(), this.getSize());
-      break;
+        break;
       case DOME:
         shape = UtilShape.sphereDome(this.getPosTarget(), this.getSize());
-      break;
+        break;
       case CUP:
         shape = UtilShape.sphereCup(this.getPosTarget().above(this.getSize()), this.getSize());
-      break;
+        break;
       case DIAGONAL:
         shape = UtilShape.diagonal(this.getPosTarget(), this.getCurrentFacing(), this.getSize() * 2, true);
-      break;
+        break;
       case PYRAMID:
         shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
-      break;
+        break;
     }
     return shape;
   }

@@ -9,8 +9,8 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenPotion extends ScreenBase<ContainerPotion> {
 
@@ -32,9 +32,9 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     energy.visible = TilePotion.POWERCONF.get() > 0;
     x = leftPos + 8;
     y = topPos + 8;
-    btnRedstone = addWidget(new ButtonMachineField(x, y, TilePotion.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TilePotion.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     y += 51;
-    btnEntity = addWidget(new ButtonMachine(x, y, 60, 20, "", (p) -> {
+    btnEntity = addRenderableWidget(new ButtonMachine(x, y, 60, 20, "", (p) -> {
       int f = TilePotion.Fields.ENTITYTYPE.ordinal();
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));

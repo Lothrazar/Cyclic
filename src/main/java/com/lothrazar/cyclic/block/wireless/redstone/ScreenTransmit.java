@@ -6,8 +6,8 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
 
@@ -24,7 +24,7 @@ public class ScreenTransmit extends ScreenBase<ContainerTransmit> {
     int x, y;
     x = leftPos + 8;
     y = topPos + 16;
-    btnRender = addWidget(new ButtonMachineField(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
+    btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileWirelessTransmit.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 

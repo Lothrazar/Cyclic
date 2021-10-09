@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class UtilBlockstates {
 

@@ -7,14 +7,12 @@ import com.lothrazar.cyclic.util.UtilShape;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class PeatBlock extends BlockBase {
 
@@ -47,7 +45,6 @@ public class PeatBlock extends BlockBase {
 
   /**
    * Percent chance to bake based on how much water. If touching 1 water source its just the PCT. Touching all 6 water sources means 6 * PCT
-   * 
    */
   private void tryBake(Level world, BlockPos pos, int waters) {
     if (world.random.nextDouble() < ConfigRegistry.PEATCHANCE.get().doubleValue() * waters) {

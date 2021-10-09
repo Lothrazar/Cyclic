@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.util;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.Level;
 
 public class UtilParticle {
@@ -41,7 +41,7 @@ public class UtilParticle {
 
   /**
    * always check IS CLIENTSIDE before this
-   * 
+   *
    * @param world
    * @param sparkle
    * @param x

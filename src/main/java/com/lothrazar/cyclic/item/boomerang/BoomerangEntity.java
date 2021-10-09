@@ -8,35 +8,35 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.List;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.util.Mth;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 public class BoomerangEntity extends ThrowableItemProjectile {
@@ -110,10 +110,10 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   private void moveTowardsTarget() {
-   float  newyRot = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
+    float newyRot = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
     float newxRot = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
-   this.setYRot(newyRot);
-   this.setXRot(newxRot);
+    this.setYRot(newyRot);
+    this.setXRot(newxRot);
     Vec3 moveVec = UtilEntity.lookVector(this.getYRot(), this.getXRot()).scale(SPEED);
     this.setDeltaMovement(
         0.5f * this.getDeltaMovement().x() + 0.5f * moveVec.x,
@@ -225,13 +225,13 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     switch (result.getType()) {
       case BLOCK:
         onImpactBlock((BlockHitResult) result);
-      break;
+        break;
       case ENTITY:
         onImpactEntity((EntityHitResult) result);
-      break;
+        break;
       case MISS:
       default:
-      break;
+        break;
     }
   }
 
@@ -270,7 +270,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         if (!entityHit.level.isClientSide) {
           entityHit.startRiding(this);
         }
-      break;
+        break;
       case DAMAGE:
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
@@ -280,7 +280,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             //           ("killed one");
           }
         }
-      break;
+        break;
       case STUN:
         //!entityHit.getUniqueID().equals(owner.getUniqueID()) 
         if (entityHit != owner && entityHit instanceof LivingEntity
@@ -291,9 +291,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             UtilSound.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }
-      break;
+        break;
       default:
-      break;
+        break;
     }
   }
 

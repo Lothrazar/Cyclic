@@ -3,14 +3,14 @@ package com.lothrazar.cyclic.block.dice;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.Direction;
 
-public class TileDice extends TileEntityBase  {
+public class TileDice extends TileEntityBase {
 
   private static final int TICKS_MAX_SPINNING = 45;
   private static final int TICKS_PER_CHANGE = 4;
@@ -29,13 +29,13 @@ public class TileDice extends TileEntityBase  {
   }
 
   public TileDice(BlockPos pos, BlockState state) {
-    super(TileRegistry.dice,pos,state);
+    super(TileRegistry.dice, pos, state);
   }
 
   @Override
-  public void load( CompoundTag tag) {
+  public void load(CompoundTag tag) {
     tag.putInt("spinningIfZero", spinningIfZero);
-    super.load( tag);
+    super.load(tag);
   }
 
   @Override
@@ -49,7 +49,7 @@ public class TileDice extends TileEntityBase  {
     spinningIfZero = 0;
   }
 
-//  @Override
+  //  @Override
   public void tick() {
     if (this.timer == 0) {
       this.spinningIfZero = 1;
@@ -105,10 +105,10 @@ public class TileDice extends TileEntityBase  {
     switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case SPINNING:
         spinningIfZero = value;
-      break;
+        break;
     }
   }
 }

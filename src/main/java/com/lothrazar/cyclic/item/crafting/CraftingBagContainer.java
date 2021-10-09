@@ -5,20 +5,20 @@ import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import java.util.Optional;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -114,7 +114,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
         }
       }
       craftResult.setItem(0, itemstack);
-      player.connection.send(new ClientboundContainerSetSlotPacket(containerId,this.getStateId() , 0, itemstack));
+      player.connection.send(new ClientboundContainerSetSlotPacket(containerId, this.getStateId(), 0, itemstack));
     }
   }
 
@@ -134,10 +134,10 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
       ItemStack myBag = this.slots.get(slotId).getItem();
       if (myBag.getItem() instanceof CraftingBagItem) {
         //lock the bag in place by returning empty
-        return ; // ItemStack.EMPTY;
+        return; // ItemStack.EMPTY;
       }
     }
-//    return super.clicked(slotId, dragType, clickTypeIn, player);
+    //    return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 
   @Override

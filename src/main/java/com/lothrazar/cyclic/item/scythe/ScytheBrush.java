@@ -26,12 +26,10 @@ package com.lothrazar.cyclic.item.scythe;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
-
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
 
 public class ScytheBrush extends ItemBase {
 

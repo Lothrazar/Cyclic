@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.gui;
 
-import net.minecraft.client.gui.components.Button.OnPress;
 public class ButtonMachine extends ButtonTextured {
 
   private int tileField;

@@ -26,11 +26,11 @@ package com.lothrazar.cyclic.net;
 import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
 import java.util.function.Supplier;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketRecordSound extends PacketBase {

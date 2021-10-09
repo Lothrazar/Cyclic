@@ -4,13 +4,10 @@ import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockTerraPreta extends BlockBase {
 
@@ -19,10 +16,9 @@ public class BlockTerraPreta extends BlockBase {
     super(properties.strength(1.8F));
   }
 
-
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos,BlockState state ) {
-    return new TileTerraPreta(pos,state);
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new TileTerraPreta(pos, state);
   }
 
   @Override
