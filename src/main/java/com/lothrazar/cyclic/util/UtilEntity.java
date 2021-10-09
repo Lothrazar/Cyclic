@@ -68,12 +68,8 @@ public class UtilEntity {
     if (player.getRootVehicle() != player) {
       return false;
     }
-    //    EntityTeleportEvent.EnderPearl event = new EntityTeleportEvent.EnderPearl(player, x, y, z, 0);
-    //    boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
-    //    if (wasCancelled == false) {
     //      //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
-    //      UtilEntity.teleportWallSafe(player, world, event.getTargetX(), event.getTargetY(), event.getTargetZ());
-    //    }
+    UtilEntity.teleportWallSafe(player, world, x, y, z);
     return true; //!wasCancelled;
   }
 
@@ -83,13 +79,13 @@ public class UtilEntity {
   public static boolean enderTeleportEvent(LivingEntity player, Level world, BlockPos target) {
     return enderTeleportEvent(player, world, target.getX() + .5F, target.getY() + .5F, target.getZ() + .5F);
   }
-  //  private static void teleportWallSafe(LivingEntity player, Level world, double x, double y, double z) {
-  //    BlockPos coords = new BlockPos(x, y, z);
-  // 
-  //    world.getChunk(coords).setUnsaved(true);
-  //    player.teleportTo(x, y, z);
-  //    moveEntityWallSafe(player, world);
-  //  }
+
+  private static void teleportWallSafe(LivingEntity player, Level world, double x, double y, double z) {
+    BlockPos coords = new BlockPos(x, y, z);
+    world.getChunk(coords).setUnsaved(true);
+    player.teleportTo(x, y, z);
+    moveEntityWallSafe(player, world);
+  }
 
   public static void moveEntityWallSafe(Entity entity, Level world) {
     //    world.checkBlockCollision(bb)
