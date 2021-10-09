@@ -240,6 +240,70 @@ public class MaterialRegistry {
         return Ingredient.of(new ItemStack(ItemRegistry.gem_obsidian));
       }
     };
+    public static final Tier AMETHYST = new Tier() {
+
+      @Override
+      public int getUses() {
+        return Tiers.WOOD.getUses() + Tiers.WOOD.getUses();
+      }
+
+      @Override
+      public float getSpeed() {
+        return Tiers.WOOD.getSpeed() * 2;
+      }
+
+      @Override
+      public float getAttackDamageBonus() {
+        return EMERALD_DMG.get().floatValue();
+      }
+
+      @Override
+      public int getLevel() {
+        return Tiers.WOOD.getLevel() + 5;
+      }
+
+      @Override
+      public int getEnchantmentValue() {
+        return Tiers.WOOD.getEnchantmentValue() + 2;
+      }
+
+      @Override
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(Items.AMETHYST_BLOCK));
+      }
+    };
+    public static final Tier COPPER = new Tier() {
+
+      @Override
+      public int getUses() {
+        return Tiers.WOOD.getUses() + Tiers.WOOD.getUses();
+      }
+
+      @Override
+      public float getSpeed() {
+        return Tiers.WOOD.getSpeed() * 2;
+      }
+
+      @Override
+      public float getAttackDamageBonus() {
+        return EMERALD_DMG.get().floatValue();
+      }
+
+      @Override
+      public int getLevel() {
+        return Tiers.WOOD.getLevel() + 5;
+      }
+
+      @Override
+      public int getEnchantmentValue() {
+        return Tiers.WOOD.getEnchantmentValue() + 2;
+      }
+
+      @Override
+      public Ingredient getRepairIngredient() {
+        return Ingredient.of(new ItemStack(Items.COPPER_INGOT));
+      }
+    };
     public static final Tier EMERALD = new Tier() {
 
       @Override

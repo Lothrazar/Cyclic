@@ -21,5 +21,7 @@ public class DataTags {
   public static final Named<Item> BOOKS = ItemTags.bind("forge:books");
   public static final Named<Item> ANVIL_IMMUNE = ItemTags.bind("cyclic:anvil_immune");
   public static final Named<Item> DISENCHANTER_IMMUNE = ItemTags.bind("cyclic:disenchanter_immune");
+  public static final Named<Item> COPPER_ORE = ItemTags.bind("forge:ores/copper");
+  public static final Named<Item> COPPER_INGOTS = ItemTags.bind("forge:ingots/copper");
   public static final Named<Item> WRENCH = ItemTags.createOptional(new ResourceLocation("forge", "tools/wrench"));
 }

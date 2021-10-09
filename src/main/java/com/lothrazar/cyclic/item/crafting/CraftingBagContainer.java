@@ -137,7 +137,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
         return; // ItemStack.EMPTY;
       }
     }
-    //    return super.clicked(slotId, dragType, clickTypeIn, player);
+    super.clicked(slotId, dragType, clickTypeIn, player);
   }
 
   @Override

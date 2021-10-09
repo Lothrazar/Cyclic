@@ -79,8 +79,8 @@ public class ContainerStorageBag extends ContainerBase {
             ItemStorageBag.setColour(slots.get(slotId).getItem(), dye.getDyeColor());
           }
         }
-        //lock the bag in place by returning empty
-        //        return ItemStack.EMPTY;
+        //lock the bag in place by returning  
+        return;
       }
     }
     super.clicked(slotId, dragType, clickTypeIn, player);

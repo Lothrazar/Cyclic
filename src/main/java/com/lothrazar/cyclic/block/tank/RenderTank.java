@@ -27,7 +27,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
     if (fluid.isEmpty()) {
       return;
     }
-    VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.resizableCuboid());
+    VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.TYPE_TANK);
     matrix.scale(1F, UtilFluid.getScale(tankHere.tank), 1F);
     UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.STAGES - 1),
         matrix, buffer, UtilRender.getColorARGB(fluid, 0.1F),

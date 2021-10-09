@@ -483,6 +483,16 @@ public class ItemRegistry {
     r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.CHEST, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_chestplate"));
     r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.LEGS, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_leggings"));
     r.register(new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, EquipmentSlot.HEAD, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("glowing_helmet"));
+    r.register(new SwordItem(MaterialRegistry.ToolMats.AMETHYST, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_sword"));
+    r.register(new PickaxeItem(MaterialRegistry.ToolMats.AMETHYST, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_pickaxe"));
+    r.register(new AxeItem(MaterialRegistry.ToolMats.AMETHYST, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_axe"));
+    r.register(new HoeItem(Tiers.STONE, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_hoe"));
+    r.register(new ShovelItem(MaterialRegistry.ToolMats.AMETHYST, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_shovel"));
+    r.register(new SwordItem(MaterialRegistry.ToolMats.COPPER, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_sword"));
+    r.register(new PickaxeItem(MaterialRegistry.ToolMats.COPPER, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_pickaxe"));
+    r.register(new AxeItem(MaterialRegistry.ToolMats.COPPER, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_axe"));
+    r.register(new HoeItem(Tiers.STONE, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_hoe"));
+    r.register(new ShovelItem(MaterialRegistry.ToolMats.COPPER, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_shovel"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_sword"));
     r.register(new PickaxeItem(MaterialRegistry.ToolMats.EMERALD, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_pickaxe"));
     r.register(new AxeItem(MaterialRegistry.ToolMats.EMERALD, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_axe"));

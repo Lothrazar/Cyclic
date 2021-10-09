@@ -158,7 +158,7 @@ public class ContainerCrafter extends ContainerBase {
       tile.shouldSearch = true;
       return; //ItemStack.EMPTY;
     }
-    //    return super.clicked(slotId, dragType, clickTypeIn, player);
+    super.clicked(slotId, dragType, clickTypeIn, player);
   }
 
   @Override

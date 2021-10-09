@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 
 /**
@@ -20,19 +19,45 @@ public class FluidTankRenderType extends RenderType {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
   }
 
-  public static RenderType resizableCuboid() {
-    RenderType.CompositeState.CompositeStateBuilder stateBuilder = preset(InventoryMenu.BLOCK_ATLAS); //.setAlphaState(ALPHA);
-    return create("resizable_cuboid", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
-        stateBuilder.createCompositeState(true));
-  }
-
-  private static RenderType.CompositeState.CompositeStateBuilder preset(ResourceLocation resourceLocation) {
-    return RenderType.CompositeState.builder()
-        .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
-        .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
-        .setCullState(CULL)
-        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-    //        .setShadeModelState(SMOOTH_SHADE)
-    ;
-  }
+  public static final RenderType TYPE_MELTER = create("resizable_cuboid", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+      RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_CUTOUT_SHADER) //1.17 new
+          .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
+          .setCullState(CULL)
+          .setLightmapState(LIGHTMAP)
+          .setWriteMaskState(COLOR_WRITE)
+          .setLightmapState(LIGHTMAP)
+          //          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .createCompositeState(true));
+  //
+  public static final RenderType TYPE_SPRINKLER = create("resizable_cuboidsprinkler", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+      RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_CUTOUT_MIPPED_SHADER) //1.17 new
+          .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
+          .setLightmapState(LIGHTMAP)
+          .setDepthTestState(NO_DEPTH_TEST)
+          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .createCompositeState(true));
+  //
+  //
+  public static final RenderType TYPE_SOLIDIFIER = create("resizable_cuboidtest", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+      RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_CUTOUT_MIPPED_SHADER) //1.17 new
+          .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
+          .setCullState(CULL)
+          .setLightmapState(LIGHTMAP)
+          .setDepthTestState(NO_DEPTH_TEST)
+          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .createCompositeState(true));
+  //
+  public static final RenderType TYPE_TANK = create("resizable_cuboidlol", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+      RenderType.CompositeState.builder()
+          .setShaderState(RENDERTYPE_CUTOUT_MIPPED_SHADER) //1.17 new
+          .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
+          //          .setTransparencyState(ADDITIVE_TRANSPARENCY)
+          //          .setCullState(CULL)
+          .setLightmapState(LIGHTMAP)
+          .setDepthTestState(NO_DEPTH_TEST)
+          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .createCompositeState(true));
 }

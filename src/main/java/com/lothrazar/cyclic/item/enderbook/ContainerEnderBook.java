@@ -73,6 +73,6 @@ public class ContainerEnderBook extends ContainerBase {
         return; //ItemStack.EMPTY;
       }
     }
-    //    return super.clicked(slotId, dragType, clickTypeIn, player);
+    super.clicked(slotId, dragType, clickTypeIn, player);
   }
 }

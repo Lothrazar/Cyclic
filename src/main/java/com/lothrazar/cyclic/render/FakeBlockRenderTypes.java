@@ -20,7 +20,7 @@ public class FakeBlockRenderTypes extends RenderType {
    * <p>
    * 1.17 BOOLS are this.affectsCrumbling = p_173182_; this.sortOnUpload = p_173183_;
    */
-  public static final RenderType LASER_MAIN_BEAM = create("MiningLaserMainBeam",
+  public static final RenderType LASER_MAIN_BEAM = create("mininglasermainbeam",
       DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256,
       false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
@@ -33,7 +33,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setWriteMaskState(COLOR_WRITE)
           .createCompositeState(false));
   //
-  public static final RenderType FAKE_BLOCK = create("fakeBlock",
+  public static final RenderType FAKE_BLOCK = create("fakeblock",
       DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
@@ -46,7 +46,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setCullState(NO_CULL)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
-  public static final RenderType TRANSPARENT_COLOUR = create("transparentColour",
+  public static final RenderType TRANSPARENT_COLOUR = create("transparentcolour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
@@ -58,7 +58,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setLightmapState(NO_LIGHTMAP)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
-  public static final RenderType SOLID_COLOUR = create("solidColour",
+  public static final RenderType SOLID_COLOUR = create("solidcolour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
           //RENDERTYPE_TRANSLUCENT_MOVING_BLOCK_SHADER 

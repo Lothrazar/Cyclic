@@ -27,7 +27,7 @@ public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler> {
     if (fluid.isEmpty()) {
       return;
     }
-    VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.resizableCuboid());
+    VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.TYPE_SPRINKLER);
     matrix.scale(1F, UtilFluid.getScale(tankHere.tank) / 4F, 1F);
     float f = 0.5F;
     matrix.scale(f, 1F, f);
