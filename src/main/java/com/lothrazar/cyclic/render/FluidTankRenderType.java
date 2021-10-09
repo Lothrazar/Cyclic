@@ -28,6 +28,7 @@ public class FluidTankRenderType extends RenderType {
 
   private static RenderType.CompositeState.CompositeStateBuilder preset(ResourceLocation resourceLocation) {
     return RenderType.CompositeState.builder()
+        .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
         .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
         .setCullState(CULL)
         .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
