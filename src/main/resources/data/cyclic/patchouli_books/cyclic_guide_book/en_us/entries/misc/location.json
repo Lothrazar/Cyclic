@@ -1,11 +1,11 @@
 {
-  "name": "item.cyclic.location",
-  "icon": "cyclic:location",
+  "name": "item.cyclic.location_data",
+  "icon": "cyclic:location_data",
   "category": "cyclic:misc",
   "pages": [
     {
       "type": "text",
-      "text": "item.cyclic.location.guide"
+      "text": "item.cyclic_data.location.guide"
     },
     {
       "type": "crafting",

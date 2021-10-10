@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " g ",
+    "cgc",
     "gdg",
-    " p "
+    "cpc"
   ],
   "key": {
     "d": {
@@ -11,6 +11,9 @@
     },
     "g": {
       "item": "cyclic:mason_stone"
+    },
+    "c": {
+      "tag": "forge:ingots/copper"
     },
     "p": {
       "item": "cyclic:mason_iron"

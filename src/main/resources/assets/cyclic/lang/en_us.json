@@ -4,6 +4,10 @@
 	  "curios.identifier.feet":"Feet",
 	  "curios.identifier.charm":"Charm",
 	  
+	  	"item.cyclic.copper_nugget": "Copper Nugget",
+	  	"item.cyclic.netherite_nugget": "Netherite Nugget",
+	  
+	  
 	  "cyclic.fake_player.spikes_diamond":"Diamond Spikes",
 	  "cyclic.fake_player.user":"Item User",
 
@@ -184,9 +188,9 @@
     "item.cyclic.scythe_harvest.tooltip":"Harvest the area",
     "item.cyclic.scythe_harvest.guide":"Harvest the area on use.  Sneak to harvest a smaller area.  Uses the same logic as the $(l:machines/harvester)Harvester$(/l) block. ",
     
-    "item.cyclic.location": "GPS Data Card",
-    "item.cyclic.location.tooltip": "Saves the location of a block",
-    "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.$(br2)Markers with saved locations can be used in multiple machines from this mod such as  $(l:machines/structure)Shape Builder$(/l) .",
+    "item.cyclic.location_data": "GPS Data Card",
+    "item.cyclic.location_data.tooltip": "Saves the location of a block",
+    "item.cyclic.location_data.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.$(br2)Markers with saved locations can be used in multiple machines from this mod such as  $(l:machines/structure)Shape Builder$(/l) .",
     "item.location.saved": "Saved ",
     
     "block.cyclic.computer_shape":"Shape Computer",

@@ -7,7 +7,7 @@
   ],
   "key": {
     "i": {
-      "tag": "forge:ingots/iron"
+      "item": "minecraft:amethyst_shard"
     },
     "q": {
       "item": "minecraft:bone_block"

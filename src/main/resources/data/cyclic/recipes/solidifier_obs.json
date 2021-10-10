@@ -7,7 +7,7 @@
     "item": "cyclic:gem_amber"
   },
   "inputBottom": {
-    "item": "minecraft:chorus_fruit"
+    "item": "minecraft:amethyst_block"
   },
   "mix": {
     "fluid": "cyclic:slime",

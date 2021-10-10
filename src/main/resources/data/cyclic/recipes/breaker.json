@@ -7,16 +7,16 @@
   ],
   "key": {
     "l": {
-      "item": "minecraft:lapis_lazuli"
+      "tag": "forge:nuggets/copper"
     },
     "o": {
       "item": "minecraft:mossy_cobblestone_slab"
     },
     "g": {
-      "item": "minecraft:iron_pickaxe"
+      "item": "cyclic:copper_pickaxe"
     },
     "t": {
-      "item": "minecraft:stone_shovel"
+      "item": "cyclic:copper_shovel"
     },
     "s": {
       "item": "minecraft:dispenser"

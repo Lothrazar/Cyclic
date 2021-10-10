@@ -27,7 +27,7 @@ public class MaterialRegistry {
 
     @Override
     public ItemStack makeIcon() {
-      return new ItemStack(ItemRegistry.gem_amber);
+      return new ItemStack(ItemRegistry.GEM_AMBER.get());
     }
   };
   public static IntValue EMERALD_BOOTS;
@@ -142,7 +142,7 @@ public class MaterialRegistry {
 
       @Override
       public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(ItemRegistry.gem_obsidian));
+        return Ingredient.of(new ItemStack(ItemRegistry.GEM_OBSIDIAN.get()));
       }
 
       @Override
@@ -186,7 +186,7 @@ public class MaterialRegistry {
 
       @Override
       public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(ItemRegistry.gem_amber));
+        return Ingredient.of(new ItemStack(ItemRegistry.GEM_AMBER.get()));
       }
 
       @Override
@@ -237,7 +237,7 @@ public class MaterialRegistry {
 
       @Override
       public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(ItemRegistry.gem_obsidian));
+        return Ingredient.of(new ItemStack(ItemRegistry.GEM_OBSIDIAN.get()));
       }
     };
     public static final Tier AMETHYST = new Tier() {

@@ -13,10 +13,10 @@
 			"tag": "forge:leather"
 		},
 		"e": {
-			"tag": "forge:ingots/iron"
+			"item": "minecraft:amethyst_shard"
 		},
 		"g": {
-			"tag": "forge:ingots/gold"
+			"tag": "forge:ingots/copper"
 		}
 	},
 	"result": {

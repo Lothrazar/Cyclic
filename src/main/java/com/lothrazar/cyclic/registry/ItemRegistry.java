@@ -188,12 +188,14 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SOIL = ITEMS.register("soil", () -> new BlockItem(BlockRegistry.SOIL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CLOUD = ITEMS.register("cloud", () -> new BlockItem(BlockRegistry.CLOUD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CLOUD_MEMBRANE = ITEMS.register("cloud_membrane", () -> new BlockItem(BlockRegistry.CLOUD_MEMBRANE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> GEM_OBSIDIAN = ITEMS.register("gem_obsidian", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> GEM_AMBER = ITEMS.register("gem_amber", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> NETHERITE_NUGGET = ITEMS.register("netherite_nugget", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
-  @ObjectHolder(ModCyclic.MODID + ":gem_amber")
-  public static Item gem_amber;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
   public static Item biomass;
   @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
@@ -206,8 +208,6 @@ public class ItemRegistry {
   public static CableWrench cable_wrench;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
   public static Item spawner_seeker;
-  @ObjectHolder(ModCyclic.MODID + ":gem_obsidian")
-  public static Item gem_obsidian;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
   public static Item boomerang_damage;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_carry")
@@ -238,7 +238,7 @@ public class ItemRegistry {
   public static Item antimatter_wand;
   @ObjectHolder(ModCyclic.MODID + ":filter_data")
   public static Item filter_data;
-  @ObjectHolder(ModCyclic.MODID + ":location")
+  @ObjectHolder(ModCyclic.MODID + ":location_data")
   public static Item location;
   @ObjectHolder(ModCyclic.MODID + ":shape_data")
   public static Item shape_data;
@@ -324,14 +324,12 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.experience_pylon, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("experience_pylon"));
     r.register(new ExpItemGain(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("experience_food"));
     // resources
-    r.register(new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("gem_obsidian"));
-    r.register(new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("gem_amber"));
     //energy 
     r.register(new PeatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP), PeatItemType.NORM).setRegistryName("peat_fuel"));
     r.register(new PeatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP), PeatItemType.ENRICHED).setRegistryName("peat_fuel_enriched"));
     r.register(new PeatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP), PeatItemType.BIOMASS).setRegistryName("biomass"));
     // basic tools
-    r.register(new LocationGpsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("location"));
+    r.register(new LocationGpsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("location_data"));
     r.register(new MattockItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9000), 1).setRegistryName("mattock"));
     r.register(new MattockItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9001), 2).setRegistryName("mattock_nether"));
     r.register(new SleepingMatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sleeping_mat"));

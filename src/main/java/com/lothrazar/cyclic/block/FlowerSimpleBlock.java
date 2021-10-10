@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.base.BlockBase;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
+import com.lothrazar.cyclic.base.BlockSimple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -22,11 +20,9 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IPlantable;
 
-public class FlowerSimpleBlock extends BlockBase implements IPlantable {
+public class FlowerSimpleBlock extends BlockSimple implements IPlantable {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   protected static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 10.0D, 11.0D);
@@ -57,12 +53,6 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     Vec3 vec3d = state.getOffset(worldIn, pos);
     return SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   protected boolean isValidGround(BlockState state, BlockGetter worldIn, BlockPos pos) {

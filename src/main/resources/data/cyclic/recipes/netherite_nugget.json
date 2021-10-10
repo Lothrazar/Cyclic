@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "cyclic:location_data"
+      "tag": "forge:ingots/netherite"
     }
   ],
   "result": {
-    "item": "cyclic:location_data",
-    "count": 1
+    "item": "cyclic:netherite_nugget",
+    "count": 9
   }
 }

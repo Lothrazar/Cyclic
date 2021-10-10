@@ -13,7 +13,7 @@
       "item": "minecraft:piston"
     },
     "b": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/copper"
     },
     "c": {
       "item": "minecraft:redstone"

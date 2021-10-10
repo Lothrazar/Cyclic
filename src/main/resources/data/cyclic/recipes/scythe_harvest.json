@@ -13,7 +13,7 @@
       "item": "minecraft:iron_hoe"
     },
     "r": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:nuggets/copper"
     }
   },
   "result": {
