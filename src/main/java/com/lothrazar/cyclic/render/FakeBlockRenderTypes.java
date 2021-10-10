@@ -19,6 +19,8 @@ public class FakeBlockRenderTypes extends RenderType {
    * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
    * <p>
    * 1.17 BOOLS are this.affectsCrumbling = p_173182_; this.sortOnUpload = p_173183_;
+   * 
+   * Used by laser and wireless redstone TESR blocks
    */
   public static final RenderType LASER_MAIN_BEAM = create("mininglasermainbeam",
       DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256,
@@ -32,11 +34,13 @@ public class FakeBlockRenderTypes extends RenderType {
           .setLightmapState(NO_LIGHTMAP)
           .setWriteMaskState(COLOR_WRITE)
           .createCompositeState(false));
-  //
+  /**
+   * used by TESR that render blocks with textures Shape builder, ghost muffler, render light camo.
+   */
   public static final RenderType FAKE_BLOCK = create("fakeblock",
       DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
-          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
+          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new - maybe BLOCK_SHADER
           //          .setShadeModelState(SMOOTH_SHADE)
           .setLightmapState(LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
@@ -46,32 +50,37 @@ public class FakeBlockRenderTypes extends RenderType {
           .setCullState(NO_CULL)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
+  /**
+   * used by EventRender -> RenderWorldLastEvent by most held items that pick locations, such as cyclic:location_data
+   */
   public static final RenderType TRANSPARENT_COLOUR = create("transparentcolour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
-          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
-          //          .layer(PROJECTION_LAYERING)
-          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .setShaderState(BLOCK_SHADER) //1.17 new
+          .setTransparencyState(ADDITIVE_TRANSPARENCY)
           .setTextureState(NO_TEXTURE)
-          .setDepthTestState(LEQUAL_DEPTH_TEST)
+          .setDepthTestState(NO_DEPTH_TEST)
           .setCullState(CULL)
           .setLightmapState(NO_LIGHTMAP)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
+  /**
+   * used by most blocks that select blocks such as cyclic:forester, cyclic:harvester, cyclic:miner in TESRs
+   */
   public static final RenderType SOLID_COLOUR = create("solidcolour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
       RenderType.CompositeState.builder()
-          //RENDERTYPE_TRANSLUCENT_MOVING_BLOCK_SHADER 
-          //RENDERTYPE_TRANSLUCENT_SHADER
-          .setShaderState(RenderStateShard.ShaderStateShard.RENDERTYPE_LINES_SHADER) //1.17 new
-          //          .layer(PROJECTION_LAYERING)
+          .setShaderState(RenderStateShard.ShaderStateShard.RENDERTYPE_LINES_SHADER) //1.17 new 
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
           .setTextureState(NO_TEXTURE)
-          .setDepthTestState(NO_DEPTH_TEST) //  .setDepthTestState(LEQUAL_DEPTH_TEST)
+          .setDepthTestState(NO_DEPTH_TEST)
           .setCullState(CULL)
           .setLightmapState(NO_LIGHTMAP)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
+  /**
+   * Used by cyclic:prospector
+   */
   public static final RenderType TOMB_LINES = create("tomb_lines",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.LINES, 256, false, false,
       RenderType.CompositeState.builder()
