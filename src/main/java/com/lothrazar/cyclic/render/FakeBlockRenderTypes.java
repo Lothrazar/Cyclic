@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.render;
 
 import java.util.OptionalDouble;
+import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -10,6 +11,10 @@ import net.minecraft.client.renderer.RenderType;
  * Render Types with help from direwolf20 MIT open source project https://github.com/Direwolf20-MC/BuildingGadgets/blob/1.15/LICENSE.md
  */
 public class FakeBlockRenderTypes extends RenderType {
+
+  private static final boolean SORT = false;
+  private static final boolean CRUMBLING = false;
+  private static final int BUFFERSIZE = 256;
 
   public FakeBlockRenderTypes(String nameIn, VertexFormat formatIn, VertexFormat.Mode drawModeIn, int bufferSizeIn, boolean useDelegateIn, boolean needsSortingIn, Runnable setupTaskIn, Runnable clearTaskIn) {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
@@ -22,9 +27,8 @@ public class FakeBlockRenderTypes extends RenderType {
    * 
    * Used by laser and wireless redstone TESR blocks
    */
-  public static final RenderType LASER_MAIN_BEAM = create("mininglasermainbeam",
-      DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 256,
-      false, false, // affectsCrumbling, sortOnUpload
+  public static final RenderType LASER_MAIN_BEAM = create(ModCyclic.MODID + ":mininglasermainbeam",
+      DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
           .setLayeringState(VIEW_OFFSET_Z_LAYERING)
@@ -35,17 +39,18 @@ public class FakeBlockRenderTypes extends RenderType {
           .setWriteMaskState(COLOR_WRITE)
           .createCompositeState(false));
   /**
-   * used by TESR that render blocks with textures Shape builder, ghost muffler, render light camo.
+   * used by TESR that render blocks with textures Shape builder, ghostsoundmuffler, render light camo.
+   * 
+   * TODO: test blocks
    */
-  public static final RenderType FAKE_BLOCK = create("fakeblock",
-      DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
+  public static final RenderType FAKE_BLOCK = create(ModCyclic.MODID + ":fakeblock",
+      DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new - maybe BLOCK_SHADER
-          //          .setShadeModelState(SMOOTH_SHADE)
+          .setLayeringState(POLYGON_OFFSET_LAYERING) // VIEW_OFFSET_Z_LAYERING) //                    .setShadeModelState(SMOOTH_SHADE)
           .setLightmapState(LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
-          //          .layer(PROJECTION_LAYERING)
-          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+          .setTransparencyState(ADDITIVE_TRANSPARENCY)
           .setDepthTestState(LEQUAL_DEPTH_TEST)
           .setCullState(NO_CULL)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
@@ -53,8 +58,8 @@ public class FakeBlockRenderTypes extends RenderType {
   /**
    * used by EventRender -> RenderWorldLastEvent by most held items that pick locations, such as cyclic:location_data
    */
-  public static final RenderType TRANSPARENT_COLOUR = create("transparentcolour",
-      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
+  public static final RenderType TRANSPARENT_COLOUR = create(ModCyclic.MODID + ":transparentcolour",
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
           .setShaderState(BLOCK_SHADER) //1.17 new
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
@@ -66,11 +71,15 @@ public class FakeBlockRenderTypes extends RenderType {
           .createCompositeState(false));
   /**
    * used by most blocks that select blocks such as cyclic:forester, cyclic:harvester, cyclic:miner in TESRs
+   * 
+   * TODO: tweak this
    */
-  public static final RenderType SOLID_COLOUR = create("solidcolour",
-      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, // affectsCrumbling, sortOnUpload
+  public static final RenderType SOLID_COLOUR = create(ModCyclic.MODID + ":solidcolour",
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
-          .setShaderState(RenderStateShard.ShaderStateShard.RENDERTYPE_LINES_SHADER) //1.17 new 
+          .setShaderState(RenderStateShard.ShaderStateShard.RENDERTYPE_LINES_SHADER)
+          .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+          .setOutputState(ITEM_ENTITY_TARGET)
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
           .setTextureState(NO_TEXTURE)
           .setDepthTestState(NO_DEPTH_TEST)
@@ -81,8 +90,8 @@ public class FakeBlockRenderTypes extends RenderType {
   /**
    * Used by cyclic:prospector
    */
-  public static final RenderType TOMB_LINES = create("tomb_lines",
-      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.LINES, 256, false, false,
+  public static final RenderType TOMB_LINES = create(ModCyclic.MODID + ":tomb_lines",
+      DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.LINES, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_LINES_SHADER)
           .setLineState(new LineStateShard(OptionalDouble.of(2.5D)))

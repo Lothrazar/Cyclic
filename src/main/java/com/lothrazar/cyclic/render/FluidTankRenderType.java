@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.render;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -19,7 +20,7 @@ public class FluidTankRenderType extends RenderType {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
   }
 
-  public static final RenderType TYPE_MELTER = create("resizable_cuboid", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+  public static final RenderType TYPE_MELTER = create(ModCyclic.MODID + ":resizable_cuboid", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_CUTOUT_SHADER) //1.17 new
           .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
@@ -29,8 +30,7 @@ public class FluidTankRenderType extends RenderType {
           .setLightmapState(LIGHTMAP)
           //          .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
           .createCompositeState(true));
-  //
-  public static final RenderType TYPE_SPRINKLER = create("resizable_cuboidsprinkler", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+  public static final RenderType TYPE_SPRINKLER = create(ModCyclic.MODID + ":resizable_cuboidsprinkler", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_CUTOUT_MIPPED_SHADER) //1.17 new
           .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
@@ -38,9 +38,7 @@ public class FluidTankRenderType extends RenderType {
           .setDepthTestState(NO_DEPTH_TEST)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
           .createCompositeState(true));
-  //
-  //
-  public static final RenderType TYPE_SOLIDIFIER = create("resizable_cuboidtest", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+  public static final RenderType TYPE_SOLIDIFIER = create(ModCyclic.MODID + ":resizable_cuboidtest", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_CUTOUT_MIPPED_SHADER) //1.17 new
           .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
@@ -49,8 +47,7 @@ public class FluidTankRenderType extends RenderType {
           .setDepthTestState(NO_DEPTH_TEST)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
           .createCompositeState(true));
-  //
-  public static final RenderType TYPE_TANK = create("resizable_cuboidlol", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
+  public static final RenderType TYPE_TANK = create(ModCyclic.MODID + ":resizable_cuboidlol", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, true, false,
       RenderType.CompositeState.builder()
           .setShaderState(RENDERTYPE_CUTOUT_MIPPED_SHADER) //1.17 new
           .setTextureState(new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false))
