@@ -10,13 +10,13 @@
       "item": "minecraft:emerald"
     },
     "g": {
-      "item": "minecraft:quartz"
+      "item": "cyclic:compressed_cobblestone"
     },
     "b": {
       "item": "minecraft:dispenser"
     },
     "s": {
-      "item": "cyclic:mason_plate"
+      "tag": "forge:nuggets/copper"
     }
   },
   "result": {

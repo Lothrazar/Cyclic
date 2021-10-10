@@ -102,6 +102,8 @@ public class ClientRegistryCyclic {
       i.registerClient();
     }
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_CYAN.get(), RenderType.cutoutMipped());
+    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GOLD_BARS.get(), RenderType.cutoutMipped());
+    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.COPPER_BARS.get(), RenderType.cutoutMipped());
     initColours();
     initKeybindings();
   }

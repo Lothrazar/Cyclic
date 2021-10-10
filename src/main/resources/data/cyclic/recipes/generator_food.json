@@ -10,10 +10,10 @@
       "item": "minecraft:bread"
     },
     "i": {
-      "item": "minecraft:piston"
+      "item": "cyclic:gold_bars"
     },
     "b": {
-      "item": "cyclic:mason_stone"
+      "tag": "forge:nuggets/netherite"
     },
     "c": {
       "item": "minecraft:redstone_torch"

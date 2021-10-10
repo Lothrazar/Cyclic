@@ -10,13 +10,13 @@
       "item": "minecraft:ice"
     },
     "d": {
-      "item": "cyclic:gem_amber"
+      "tag": "forge:nuggets/copper"
     },
     "s": {
       "item": "minecraft:redstone"
     },
     "i": {
-      "item": "minecraft:gold_nugget"
+      "tag": "forge:nuggets/gold"
     }
   },
   "result": {

@@ -13,7 +13,7 @@
       "item": "minecraft:piston"
     },
     "b": {
-      "item": "cyclic:mason_stone"
+      "tag": "forge:ingots/copper"
     },
     "c": {
       "item": "minecraft:redstone_torch"

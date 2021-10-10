@@ -10,13 +10,13 @@
       "item": "minecraft:dropper"
     },
     "g": {
-      "item": "cyclic:mason_stone"
+      "item": "cyclic:compressed_cobblestone"
     },
     "c": {
       "tag": "forge:ingots/copper"
     },
     "p": {
-      "item": "cyclic:mason_iron"
+      "tag": "forge:storage_blocks/iron"
     }
   },
   "result": {

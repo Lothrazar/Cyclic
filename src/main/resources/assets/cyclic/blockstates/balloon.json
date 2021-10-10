@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "lit=false": { "model": "cyclic:block/balloon" },
-        "lit=true": { "model": "cyclic:block/balloon_on" }
-    }
-}

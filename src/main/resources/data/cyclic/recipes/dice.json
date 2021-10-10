@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "sts",
-    "tst",
+    "t t",
     "sts"
   ],
   "key": {
     "t": {
-      "item": "cyclic:mason_cobble"
+      "tag": "minecraft:stone_crafting_materials"
     },
     "s": {
-      "item": "cyclic:mason_stone"
+      "tag": "forge:ingots/copper"
     }
   },
   "result": {

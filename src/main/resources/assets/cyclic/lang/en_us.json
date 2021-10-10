@@ -7,6 +7,10 @@
 	  	"item.cyclic.copper_nugget": "Copper Nugget",
 	  	"item.cyclic.netherite_nugget": "Netherite Nugget",
 	  
+	  	"item.cyclic.copper_bars": "Copper Bars",
+	  	"item.cyclic.gold_bars": "Gold Bars",
+	  	"item.cyclic.copper_plate": "Copper Pressure Plate",
+	  	"item.cyclic.compressed_cobblestone": "Compressed Cobblestone",
 	  
 	  "cyclic.fake_player.spikes_diamond":"Diamond Spikes",
 	  "cyclic.fake_player.user":"Item User",
@@ -1823,18 +1827,7 @@
     "button.fan.sound.tooltip": "Enable or disable sound",
 
 
-	"block.cyclic.mason_stone.guide.title":"Mason Blocks",
-	"block.cyclic.mason_stone.guide":"Mason blocks are a decorative block and a crafting ingredient for various machines.",
-	"block.cyclic.mason_stone":"Mason Stone",
-	"block.cyclic.mason_cobble":"Mason Cobblestone",
-	"block.cyclic.mason_iron":"Mason Iron",
-	"block.cyclic.mason_steel":"Mason Steel",
-	"block.cyclic.mason_plate":"Mason Plate",    
-	
-	
 
-
-    
     "block.cyclic.solidifier": "Solidification Chamber",
     "block.cyclic.solidifier.tooltip": "Craft fluid into items",
     "block.cyclic.solidifier.guide": "The Solidifier combines various fluids and ingredients to solidify them into something else, usually to make new crafting ingredients."

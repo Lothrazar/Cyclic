@@ -15,7 +15,7 @@
       "item": "minecraft:cookie"
     },
     {
-      "item": "minecraft:salmon"
+      "tag": "forge:nuggets/copper"
     },
     {
       "item": "minecraft:poisonous_potato"

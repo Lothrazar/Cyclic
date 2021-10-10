@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "rrr",
+    "rrr"
+  ],
+  "key": {
+    "r": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "result": {
+    "item": "cyclic:gold_bars",
+    "count": 16
+  }
+}

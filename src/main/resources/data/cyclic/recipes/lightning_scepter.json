@@ -7,7 +7,7 @@
   ],
   "key": {
     "g": {
-      "item": "cyclic:gem_obsidian"
+      "tag": "forge:nuggets/netherite"
     },
     "o": {
       "item": "minecraft:glowstone"

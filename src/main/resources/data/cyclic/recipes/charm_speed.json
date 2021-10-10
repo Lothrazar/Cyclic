@@ -10,7 +10,7 @@
       "item": "cyclic:gem_amber"
     },
     "i": {
-      "item": "cyclic:mason_iron"
+      "tag": "forge:storage_blocks/iron"
     },
     "w": {
       "item": "minecraft:sugar"

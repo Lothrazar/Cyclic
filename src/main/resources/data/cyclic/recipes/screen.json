@@ -7,10 +7,10 @@
   ],
   "key": {
     "s": {
-      "item": "cyclic:mason_stone"
+      "tag": "forge:nuggets/copper"
     },
     "f": {
-      "item": "cyclic:mason_steel"
+      "item": "minecraft:anvil"
     },
     "i": {
       "item": "minecraft:iron_bars"

@@ -10,7 +10,7 @@
       "item": "minecraft:brick_stairs"
     },
     "i": {
-      "item": "minecraft:iron_nugget"
+      "tag": "forge:nuggets/copper"
     }
   },
   "result": {

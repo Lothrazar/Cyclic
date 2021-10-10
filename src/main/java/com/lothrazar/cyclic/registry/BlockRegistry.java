@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.base.BlockSimple;
 import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.LaunchBlock;
-import com.lothrazar.cyclic.block.MasonBlock;
+import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.WaterCandleBlock;
@@ -148,6 +149,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> TERRA_PRETA = BLOCKS.register("terra_preta", () -> new BlockTerraPreta(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)));
   public static final RegistryObject<Block> LIGHT_CAMO = BLOCKS.register("light_camo", () -> new BlockLightCamo(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> LASER = BLOCKS.register("laser", () -> new BlockLaser(Block.Properties.of(Material.METAL)));
+  //// 
+  public static final RegistryObject<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockSimple(Block.Properties.of(Material.STONE).requiresCorrectToolForDrops()));
   public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.of(Material.PLANT)));
   public static final RegistryObject<Block> MEMBRANE = BLOCKS.register("membrane", () -> new MembraneBlock(Block.Properties.of(Material.DIRT)));
   public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new MembraneLamp(Block.Properties.of(Material.STONE)));
@@ -158,6 +161,9 @@ public class BlockRegistry {
   public static final RegistryObject<Block> GHOST = BLOCKS.register("ghost", () -> new GhostBlock(Block.Properties.of(Material.STONE), false));
   public static final RegistryObject<Block> GHOST_PHANTOM = BLOCKS.register("ghost_phantom", () -> new GhostBlock(Block.Properties.of(Material.STONE), true));
   public static final RegistryObject<Block> WORKBENCH = BLOCKS.register("workbench", () -> new BlockWorkbench(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> GOLD_BARS = BLOCKS.register("gold_bars", () -> new MetalBarsBlock(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> COPPER_BARS = BLOCKS.register("copper_bars", () -> new MetalBarsBlock(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> COPPER_PLATE = BLOCKS.register("copper_plate", () -> new LaunchBlock(Block.Properties.of(Material.METAL), false));
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -266,16 +272,6 @@ public class BlockRegistry {
   public static Block screen;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static Block uncrafter;
-  @ObjectHolder(ModCyclic.MODID + ":mason_cobble")
-  public static Block mason_cobble;
-  @ObjectHolder(ModCyclic.MODID + ":mason_stone")
-  public static Block mason_stone;
-  @ObjectHolder(ModCyclic.MODID + ":mason_iron")
-  public static Block mason_iron;
-  @ObjectHolder(ModCyclic.MODID + ":mason_plate")
-  public static Block mason_plate;
-  @ObjectHolder(ModCyclic.MODID + ":mason_steel")
-  public static Block mason_steel;
   @ObjectHolder(ModCyclic.MODID + ":water_candle")
   public static Block water_candle;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
@@ -317,11 +313,6 @@ public class BlockRegistry {
     r.register(new BlockScaffoldingResponsive(Block.Properties.of(Material.WOOD), false).setRegistryName("scaffold_responsive"));
     r.register(new BlockScaffoldingReplace(Block.Properties.of(Material.WOOD)).setRegistryName("scaffold_replace"));
     r.register(new DarkGlassBlock(Block.Properties.of(Material.DIRT)).setRegistryName("dark_glass"));
-    r.register(new MasonBlock(Block.Properties.of(Material.STONE).strength(5.0F, 6.0F)).setRegistryName("mason_cobble"));
-    r.register(new MasonBlock(Block.Properties.of(Material.STONE).strength(5.0F, 6.0F)).setRegistryName("mason_stone"));
-    r.register(new MasonBlock(Block.Properties.of(Material.METAL).sound(SoundType.METAL).strength(5.0F, 6.0F)).setRegistryName("mason_iron"));
-    r.register(new MasonBlock(Block.Properties.of(Material.METAL).sound(SoundType.METAL).strength(5.0F, 6.0F)).setRegistryName("mason_steel"));
-    r.register(new MasonBlock(Block.Properties.of(Material.METAL).sound(SoundType.METAL).strength(5.0F, 6.0F)).setRegistryName("mason_plate"));
     r.register(new BlockGeneratorPeat(Block.Properties.of(Material.STONE)).setRegistryName("peat_generator"));
     r.register(new PeatBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)).setRegistryName("peat_unbaked"));
     r.register(new PeatFuelBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)).setRegistryName("peat_baked"));

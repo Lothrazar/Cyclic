@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "rrr",
+    "rrr"
+  ],
+  "key": {
+    "r": {
+      "tag": "forge:ingots/copper"
+    }
+  },
+  "result": {
+    "item": "cyclic:copper_bars",
+    "count": 16
+  }
+}

@@ -13,7 +13,7 @@
       "tag": "forge:obsidian"
     },
     "g": {
-      "item": "cyclic:mason_plate"
+      "tag": "forge:nuggets/copper"
     },
     "r": {
       "tag": "forge:storage_blocks/lapis"

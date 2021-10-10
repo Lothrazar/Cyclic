@@ -10,7 +10,7 @@
       "item": "cyclic:gem_amber"
     },
     "o": {
-      "item": "cyclic:mason_plate"
+      "tag": "forge:ingots/copper"
     },
     "x": {
       "tag": "minecraft:logs"

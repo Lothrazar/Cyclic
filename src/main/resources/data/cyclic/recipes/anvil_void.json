@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ddd",
-    " s ",
+    " d ",
     "sss"
   ],
   "key": {
     "s": {
-      "item": "cyclic:mason_steel"
+      "item": "minecraft:anvil"
     },
     "d": {
-      "item": "cyclic:mason_iron"
+      "tag": "forge:storage_blocks/iron"
     }
   },
   "result": {

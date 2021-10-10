@@ -7,7 +7,7 @@
   ],
   "key": {
     "o": {
-      "item": "cyclic:mason_cobble"
+      "tag": "forge:nuggets/copper"
     },
     "s": {
       "item": "minecraft:dispenser"
@@ -16,7 +16,7 @@
       "item": "minecraft:string"
     },
     "m": {
-      "item": "cyclic:workbench"
+      "item": "cyclic:compressed_cobblestone"
     }
   },
   "result": {
