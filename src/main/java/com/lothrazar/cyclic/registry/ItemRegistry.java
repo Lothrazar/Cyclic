@@ -196,6 +196,8 @@ public class ItemRegistry {
   public static final RegistryObject<Item> COPPER_BARS = ITEMS.register("copper_bars", () -> new BlockItem(BlockRegistry.COPPER_BARS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> COPPER_PRESSURE_PLATE = ITEMS.register("copper_pressure_plate", () -> new BlockItem(BlockRegistry.COPPER_PRESSURE_PLATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> COMPRESSED_COBBLESTONE = ITEMS.register("compressed_cobblestone", () -> new BlockItem(BlockRegistry.COMPRESSED_COBBLESTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  //  public static final RegistryObject<Item> GOLD_CHAIN = ITEMS.register("gold_chain", () -> new BlockItem(BlockRegistry.GOLD_CHAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  //  public static final RegistryObject<Item> COPPER_CHAIN = ITEMS.register("copper_chain", () -> new BlockItem(BlockRegistry.COPPER_CHAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
