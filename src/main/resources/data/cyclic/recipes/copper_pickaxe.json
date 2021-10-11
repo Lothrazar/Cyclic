@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"ccc",    
+    " d ",
+    " d "
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:stick"
+  	},
+  	"c": {
+  		"tag":"forge:ingots/copper"
+  	}
+  },
+  "result": {
+    "item": "cyclic:emerald_pickaxe",
+    "count": 1
+  }
+}

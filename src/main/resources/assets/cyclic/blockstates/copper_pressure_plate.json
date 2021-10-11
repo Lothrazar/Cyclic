@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "cyclic:block/copper_pressure_plate" }
+    }
+}

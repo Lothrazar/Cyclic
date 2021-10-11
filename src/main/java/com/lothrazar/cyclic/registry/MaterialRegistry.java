@@ -244,27 +244,27 @@ public class MaterialRegistry {
 
       @Override
       public int getUses() {
-        return Tiers.WOOD.getUses() + Tiers.WOOD.getUses();
+        return (Tiers.STONE.getUses() + Tiers.DIAMOND.getUses()) / 2;
       }
 
       @Override
       public float getSpeed() {
-        return Tiers.WOOD.getSpeed() * 2;
+        return (Tiers.STONE.getSpeed() + Tiers.DIAMOND.getSpeed()) / 2;
       }
 
       @Override
       public float getAttackDamageBonus() {
-        return EMERALD_DMG.get().floatValue();
+        return (Tiers.WOOD.getAttackDamageBonus() + Tiers.DIAMOND.getAttackDamageBonus()) / 2;
       }
 
       @Override
       public int getLevel() {
-        return Tiers.WOOD.getLevel() + 5;
+        return Tiers.STONE.getLevel();
       }
 
       @Override
       public int getEnchantmentValue() {
-        return Tiers.WOOD.getEnchantmentValue() + 2;
+        return Tiers.GOLD.getEnchantmentValue() + 1;
       }
 
       @Override
@@ -276,27 +276,27 @@ public class MaterialRegistry {
 
       @Override
       public int getUses() {
-        return Tiers.WOOD.getUses() + Tiers.WOOD.getUses();
+        return Tiers.IRON.getUses();
       }
 
       @Override
       public float getSpeed() {
-        return Tiers.WOOD.getSpeed() * 2;
+        return Tiers.IRON.getSpeed();
       }
 
       @Override
       public float getAttackDamageBonus() {
-        return EMERALD_DMG.get().floatValue();
+        return (Tiers.STONE.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2;
       }
 
       @Override
       public int getLevel() {
-        return Tiers.WOOD.getLevel() + 5;
+        return Tiers.STONE.getLevel();
       }
 
       @Override
       public int getEnchantmentValue() {
-        return Tiers.WOOD.getEnchantmentValue() + 2;
+        return Tiers.GOLD.getEnchantmentValue();
       }
 
       @Override

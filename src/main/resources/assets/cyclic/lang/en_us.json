@@ -7,10 +7,10 @@
 	  	"item.cyclic.copper_nugget": "Copper Nugget",
 	  	"item.cyclic.netherite_nugget": "Netherite Nugget",
 	  
-	  	"item.cyclic.copper_bars": "Copper Bars",
-	  	"item.cyclic.gold_bars": "Gold Bars",
-	  	"item.cyclic.copper_plate": "Copper Pressure Plate",
-	  	"item.cyclic.compressed_cobblestone": "Compressed Cobblestone",
+	  	"block.cyclic.copper_bars": "Copper Bars",
+	  	"block.cyclic.gold_bars": "Gold Bars",
+	  	"block.cyclic.copper_pressure_plate": "Copper Pressure Plate",
+	  	"block.cyclic.compressed_cobblestone": "Compressed Cobblestone",
 	  
 	  "cyclic.fake_player.spikes_diamond":"Diamond Spikes",
 	  "cyclic.fake_player.user":"Item User",

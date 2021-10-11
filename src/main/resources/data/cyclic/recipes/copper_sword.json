@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" c ",    
+    " c ",
+    " d "
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:stick"
+  	},
+  	"c": {
+  		"tag":"forge:ingots/copper"
+  	}
+  },
+  "result": {
+    "item": "cyclic:copper_sword",
+    "count": 1
+  }
+}

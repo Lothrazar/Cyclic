@@ -1,3 +1,6 @@
 {
-     "parent": "cyclic:block/gold_bars"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "cyclic:blocks/gold_bars"
+    }
 }

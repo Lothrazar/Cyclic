@@ -163,7 +163,15 @@ public class BlockRegistry {
   public static final RegistryObject<Block> WORKBENCH = BLOCKS.register("workbench", () -> new BlockWorkbench(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> GOLD_BARS = BLOCKS.register("gold_bars", () -> new MetalBarsBlock(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> COPPER_BARS = BLOCKS.register("copper_bars", () -> new MetalBarsBlock(Block.Properties.of(Material.METAL)));
-  public static final RegistryObject<Block> COPPER_PLATE = BLOCKS.register("copper_plate", () -> new LaunchBlock(Block.Properties.of(Material.METAL), false));
+  public static final RegistryObject<Block> COPPER_PRESSURE_PLATE = BLOCKS.register("copper_pressure_plate", () -> new LaunchBlock(Block.Properties.of(Material.METAL), false));
+  //gold chain
+  //copper chain
+  //gold trapdoor
+  //copper trapdoor
+  //gold door
+  //copper door
+  //gold_lantern
+  //gold_soul_lantern
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")

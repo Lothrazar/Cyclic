@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" c ",    
+    " d ",
+    " d "
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:stick"
+  	},
+  	"c": {
+  		"item":"minecraft:amethyst_shard"
+  	}
+  },
+  "result": {
+    "item": "cyclic:amethyst_shovel",
+    "count": 1
+  }
+}
