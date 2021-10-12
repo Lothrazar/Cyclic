@@ -1,5 +1,10 @@
 {
-    "variants": {
-        "": { "model": "cyclic:block/obsidian_pressure_plate" }
+  "variants": {
+    "powered=false": {
+      "model": "cyclic:block/obsidian_pressure_plate"
+    },
+    "powered=true": {
+      "model": "cyclic:block/obsidian_pressure_plate_down"
     }
+  }
 }

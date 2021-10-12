@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "rrr",
+    "rrr"
+  ],
+  "key": {
+    "r": {
+      "tag": "forge:ingots/netherite"
+    }
+  },
+  "result": {
+    "item": "cyclic:netherite_bars",
+    "count": 16
+  }
+}

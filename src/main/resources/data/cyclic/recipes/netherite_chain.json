@@ -7,14 +7,14 @@
   ],
   "key": {
   	"n": {
-  		"tag":"forge:nuggets/gold"
+  		"tag":"forge:nuggets/netherite"
   	},
   	"i": {
-  		"tag":"forge:ingots/gold"
+  		"tag":"forge:ingots/netherite"
   	}
   },
   "result": {
-    "item": "cyclic:gold_chain",
-    "count": 2
+    "item": "cyclic:netherite_chain",
+    "count": 8
   }
 }

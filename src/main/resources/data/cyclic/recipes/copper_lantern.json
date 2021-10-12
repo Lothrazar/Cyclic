@@ -1,20 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-	  "n",
-	  "i",
-	  "n"
+	  "nnn",
+	  "ntn",
+	  "nnn"
   ],
   "key": {
   	"n": {
   		"tag":"forge:nuggets/copper"
   	},
-  	"i": {
-  		"tag":"forge:ingots/copper"
+  	"t": {
+  		"item":"minecraft:soul_torch"
   	}
   },
   "result": {
-    "item": "cyclic:copper_chain",
-    "count": 2
+    "item": "cyclic:copper_lantern",
+    "count": 1
   }
 }

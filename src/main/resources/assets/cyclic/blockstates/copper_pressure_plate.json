@@ -1,5 +1,10 @@
 {
-    "variants": {
-        "": { "model": "cyclic:block/copper_pressure_plate" }
+  "variants": {
+    "powered=false": {
+      "model": "cyclic:block/copper_pressure_plate"
+    },
+    "powered=true": {
+      "model": "cyclic:block/copper_pressure_plate_down"
     }
+  }
 }

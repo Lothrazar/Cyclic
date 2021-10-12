@@ -9,8 +9,10 @@
     "item.cyclic.netherite_nugget": "Netherite Nugget",
     "block.cyclic.copper_chain": "Copper Chain",
     "block.cyclic.gold_chain": "Gold Chain",
+    "block.cyclic.netherite_chain": "Netherite Chain",
     "block.cyclic.copper_bars": "Copper Bars",
     "block.cyclic.gold_bars": "Gold Bars",
+    "block.cyclic.netherite_bars": "Netherite Bars",
     "block.cyclic.copper_pressure_plate": "Copper Pressure Plate",
     "block.cyclic.compressed_cobblestone": "Compressed Cobblestone",
 	  

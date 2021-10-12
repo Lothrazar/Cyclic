@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "cyclic:block/netherite_lantern"
+    },
+    "hanging=true": {
+      "model": "cyclic:block/netherite_lantern_hanging"
+    }
+  }
+}
