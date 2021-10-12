@@ -10,7 +10,7 @@
       "tag": "minecraft:stone_crafting_materials"
     },
     "s": {
-      "tag": "forge:ingots/copper"
+      "item": "cyclic:compressed_cobblestone"
     }
   },
   "result": {

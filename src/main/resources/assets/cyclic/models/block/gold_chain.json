@@ -1,8 +1,8 @@
 {
-    "parent": "block/block",
+    "parent": "minecraft:block/block",
     "textures": {
-        "particle": "block/chain",
-        "all": "block/chain"
+        "particle": "cyclic:blocks/gold_chain",
+        "all": "cyclic:blocks/gold_chain"
     },
     "elements": [
         {
