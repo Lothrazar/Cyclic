@@ -356,15 +356,33 @@ public class ItemEvents {
   public void onBonemealEvent(BonemealEvent event) {
     Level world = event.getWorld();
     BlockPos pos = event.getPos();
-    if (world.getBlockState(pos).getBlock() == Blocks.PODZOL
-        && world.isEmptyBlock(pos.above())) {
-      world.setBlockAndUpdate(pos.above(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState());
+    BlockState state = world.getBlockState(pos);
+    if (state.getBlock() == Blocks.PODZOL && world.isEmptyBlock(pos.above())) {
       event.setResult(Result.ALLOW);
+      world.setBlockAndUpdate(pos.above(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState());
     }
-    else if (world.getBlockState(pos).getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
+    else if (state.getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setResult(Result.ALLOW);
       if (world.random.nextDouble() < 0.5) {
         UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_CYAN.get()));
+      }
+    }
+    else if (state.getBlock() == BlockRegistry.FLOWER_PURPLE_TULIP.get()) {
+      event.setResult(Result.ALLOW);
+      if (world.random.nextDouble() < 0.25) {
+        UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_PURPLE_TULIP.get()));
+      }
+    }
+    else if (state.getBlock() == BlockRegistry.FLOWER_ABSALON_TULIP.get()) {
+      event.setResult(Result.ALLOW);
+      if (world.random.nextDouble() < 0.25) {
+        UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_ABSALON_TULIP.get()));
+      }
+    }
+    else if (state.getBlock() == BlockRegistry.FLOWER_LIME_CARNATION.get()) {
+      event.setResult(Result.ALLOW);
+      if (world.random.nextDouble() < 0.25) {
+        UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_LIME_CARNATION.get()));
       }
     }
   }

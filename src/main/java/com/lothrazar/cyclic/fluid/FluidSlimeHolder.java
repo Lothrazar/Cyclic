@@ -18,8 +18,7 @@ public class FluidSlimeHolder {
   private static final String id = "slime";
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new SlimeFluidBlock.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new SlimeFluidBlock.Flowing(makeProperties()));
-  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block",
-      () -> new SlimeFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops()));
+  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new SlimeFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops()));
   //  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(id + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(MaterialRegistry.ITEM_GROUP)));
 
   private static ForgeFlowingFluid.Properties makeProperties() {

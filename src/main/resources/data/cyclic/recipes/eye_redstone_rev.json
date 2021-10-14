@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "e"
+  ],
+  "key": {
+    "e": {
+      "item": "cyclic:eye_redstone"
+    }
+  },
+  "result": {
+    "item": "minecraft:ender_eye",
+    "count": 9
+  }
+}

@@ -10,7 +10,7 @@
       "item": "minecraft:cobblestone_slab"
     },
     "g": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/copper"
     },
     "s": {
       "item": "minecraft:dropper"

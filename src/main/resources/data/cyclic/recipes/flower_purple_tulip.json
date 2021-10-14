@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "cyclic:flower_cyan"
+      "item": "cyclic:flower_purple_tulip"
     }
   ],
   "result": {
-    "item": "minecraft:cyan_dye",
+    "item": "minecraft:purple_dye",
     "count": 2
   }
 }

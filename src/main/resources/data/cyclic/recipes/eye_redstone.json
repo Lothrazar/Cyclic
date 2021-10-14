@@ -2,15 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "eee",
-    "ere",
+    "eee",
     "eee"
   ],
   "key": {
     "e": {
       "item": "minecraft:ender_eye"
-    },
-    "r": {
-      "item": "cyclic:eye_teleport"
     }
   },
   "result": {

@@ -193,6 +193,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> NETHERITE_NUGGET = ITEMS.register("netherite_nugget", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> COMPRESSED_COBBLESTONE = ITEMS.register("compressed_cobblestone", () -> new BlockItem(BlockRegistry.COMPRESSED_COBBLESTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FLINT_BLOCK = ITEMS.register("flint_block", () -> new BlockItem(BlockRegistry.FLINT_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> OBSIDIAN_PRESSURE_PLATE = ITEMS.register("obsidian_pressure_plate", () -> new BlockItem(BlockRegistry.OBSIDIAN_PRESSURE_PLATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GOLD_BARS = ITEMS.register("gold_bars", () -> new BlockItem(BlockRegistry.GOLD_BARS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GOLD_CHAIN = ITEMS.register("gold_chain", () -> new BlockItem(BlockRegistry.GOLD_CHAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -268,6 +269,9 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.apple_sprout_emerald, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout_emerald"));
     r.register(new BlockItem(BlockRegistry.computer_shape, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("computer_shape"));
     r.register(new BlockItem(BlockRegistry.FLOWER_CYAN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_cyan"));
+    r.register(new BlockItem(BlockRegistry.FLOWER_PURPLE_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_purple_tulip"));
+    r.register(new BlockItem(BlockRegistry.FLOWER_ABSALON_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_absalon_tulip"));
+    r.register(new BlockItem(BlockRegistry.FLOWER_LIME_CARNATION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_lime_carnation"));
     r.register(new BlockItem(BlockRegistry.EYE_REDSTONE, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_redstone"));
     r.register(new BlockItem(BlockRegistry.EYE_TELEPORT, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_teleport"));
     //

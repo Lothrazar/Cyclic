@@ -18,10 +18,9 @@ public class FluidMagmaHolder {
   private static final String id = "magma";
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new MagmaFluidBlock.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new MagmaFluidBlock.Flowing(makeProperties()));
-  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block",
-      () -> new MagmaFluidBlock(STILL, Block.Properties.of(Material.WATER).strength(100.0F).lightLevel((p_235456_0_) -> {
-        return 8;
-      }).noDrops()));
+  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new MagmaFluidBlock(STILL, Block.Properties.of(Material.WATER).strength(100.0F).lightLevel((p_235456_0_) -> {
+    return 8;
+  }).noDrops()));
   //  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(id + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(MaterialRegistry.ITEM_GROUP)));
 
   private static ForgeFlowingFluid.Properties makeProperties() {

@@ -32,7 +32,6 @@ public class ModCyclic {
     FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-    FluidRegistry.setup(bus);
     BlockRegistry.BLOCKS.register(bus);
     ItemRegistry.ITEMS.register(bus);
     TileRegistry.TILES.register(bus);
