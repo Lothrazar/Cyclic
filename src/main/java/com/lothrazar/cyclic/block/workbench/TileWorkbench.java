@@ -8,21 +8,15 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-@SuppressWarnings("unchecked")
 public class TileWorkbench extends TileEntityBase implements INamedContainerProvider {
 
-  private LazyOptional<IItemHandler> inventory = LazyOptional.of(() -> new ItemStackHandler(9));
-  private LazyOptional<IItemHandler> output = LazyOptional.of(() -> new ItemStackHandler(1));
+  ItemStackHandler inventory = new ItemStackHandler(9);
+  IItemHandler output = new ItemStackHandler(1);
 
   @Override
   public ITextComponent getDisplayName() {
@@ -34,38 +28,20 @@ public class TileWorkbench extends TileEntityBase implements INamedContainerProv
     return new ContainerWorkbench(i, world, pos, playerInventory, playerEntity);
   }
 
-  public enum ItemHandlers {
-    GRID, OUTPUT
-  };
-
   public TileWorkbench() {
     super(TileRegistry.workbench);
   }
 
-  protected <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers handler) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      if (handler == ItemHandlers.GRID) {
-        return inventory.cast();
-      }
-      else if (handler == ItemHandlers.OUTPUT) {
-        return output.cast();
-      }
-    }
-    return super.getCapability(cap, Direction.NORTH);
-  }
-
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(tag.getCompound("inv")));
+    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    inventory.ifPresent(h -> {
-      CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-      tag.put("inv", compound);
-    });
+    //    CompoundNBT compound = ((INBTSerializable<CompoundNBT>) inventory).serializeNBT();
+    tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
   }
 
