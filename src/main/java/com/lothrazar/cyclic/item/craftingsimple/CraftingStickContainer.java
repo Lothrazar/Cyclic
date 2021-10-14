@@ -51,7 +51,6 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
-    // 
     World world = playerInventory.player.world;
     if (!world.isRemote) {
       ServerPlayerEntity player = (ServerPlayerEntity) playerInventory.player;

@@ -52,6 +52,9 @@ public abstract class CharmBase extends ItemBaseToggle {
     if (!this.canUse(stack)) {
       return;
     }
+    if (!this.isOn(stack)) {
+      return;
+    }
     tryVoidTick(stack, worldIn, entityIn);
     if (entityIn instanceof LivingEntity == false) {
       return;
@@ -65,7 +68,7 @@ public abstract class CharmBase extends ItemBaseToggle {
 
   private void tryWingTick(ItemStack stack, Entity entityIn, LivingEntity living) {
     if (this.wingCharm && living.fallDistance > FALLDISTANCELIMIT && !living.isPotionActive(Effects.SLOW_FALLING)) {
-      EffectInstance eff = new EffectInstance(Effects.SLOW_FALLING, FALLDISTANCESECONDS * Const.TICKS_PER_SEC, Const.Potions.I);
+      EffectInstance eff = new EffectInstance(Effects.SLOW_FALLING, FALLDISTANCESECONDS * Const.TICKS_PER_SEC, Const.Potions.II);
       living.addPotionEffect(eff);
       UtilItemStack.damageItem(living, stack);
       UtilSound.playSound(living, SoundEvents.BLOCK_LADDER_FALL);

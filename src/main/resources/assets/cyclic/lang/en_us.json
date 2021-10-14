@@ -1569,7 +1569,7 @@
 
     "block.cyclic.forester": "Forester",
     "block.cyclic.forester.tooltip": "Farming saplings to wood",
-    "block.cyclic.forester.guide": "The Forester will attempt to place spalings in the area in front of itself, and harvest them when the saplings grow into trees.",
+    "block.cyclic.forester.guide": "The Forester will attempt to place saplings in the area in front of itself, and harvest them when the saplings grow into trees.",
     "block.cyclic.planter": "Planter",
     "block.cyclic.planter.tooltip": "Tilling and planting fields",
     "block.cyclic.planter.guide": "Tilling and planting fields",
