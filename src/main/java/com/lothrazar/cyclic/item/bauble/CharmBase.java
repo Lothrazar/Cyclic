@@ -56,6 +56,9 @@ public abstract class CharmBase extends ItemBaseToggle {
     if (entityIn instanceof LivingEntity == false) {
       return;
     }
+    if (!this.isOn(stack)) {
+      return;
+    }
     LivingEntity living = (LivingEntity) entityIn;
     tryPoisonTick(stack, entityIn, living);
     tryWitherTick(stack, entityIn, living);

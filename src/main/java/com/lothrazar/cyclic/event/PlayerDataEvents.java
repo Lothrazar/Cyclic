@@ -65,12 +65,10 @@ public class PlayerDataEvents {
         CyclicFile dataLoaded = new CyclicFile(player.getUUID());
         dataLoaded.read(data);
         if (DATA_QUEUE.containsKey(player.getUUID())) {
-          // 
-          ModCyclic.LOGGER.error("? overwrite PlayerEvent.LoadFromFile " + data);
+          ModCyclic.LOGGER.info(" overwrite PlayerEvent.LoadFromFile " + data);
         }
         DATA_QUEUE.put(player.getUUID(), dataLoaded);
-        ModCyclic.LOGGER.error("C PlayerEvent.LoadFromFile " + data);
-        //        ModCyclic.LOGGER.error("# of tombs " + dataLoaded.playerGraves.size());
+        ModCyclic.LOGGER.info("PlayerEvent.LoadFromFile " + data);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("IO", e);

@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "cyclic:block/flint_block" }
+    }
+}

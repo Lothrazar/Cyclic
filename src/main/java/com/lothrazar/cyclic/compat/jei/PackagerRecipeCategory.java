@@ -28,7 +28,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   public PackagerRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/packager.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.PACKAGER.get())); // helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/blocks/machine/packager.png"), 0, 0, 16, 16).setTextureSize(16, 16).build();
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.PACKAGER.get()));
   }
 
   @Override
@@ -69,7 +69,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
     if (recipe.getIngredients().size() == 0) {
       return;
     }
-    //    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
     Ingredient ingr = recipe.getIngredients().get(0);

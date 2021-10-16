@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-	" cc",    
+	  " cc",    
     " dc",
     " d "
   ],
@@ -10,7 +10,7 @@
   		"item":"minecraft:stick"
   	},
   	"c": {
-  		"tag":"forge:ingots/copper"
+  		"item":"minecraft:amethyst_shard"
   	}
   },
   "result": {

@@ -10,7 +10,7 @@
       "tag": "forge:nether_stars"
     },
     "i": {
-      "tag": "forge:ingots/gold"  
+      "tag": "forge:nuggets/netherite"  
     },
     "g": { 
       "item": "minecraft:totem_of_undying"

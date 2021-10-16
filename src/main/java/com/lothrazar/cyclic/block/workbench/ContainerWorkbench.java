@@ -25,7 +25,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implements IContainerCraftingAction {
 
@@ -46,21 +46,17 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
     this.tile = (TileWorkbench) world.getBlockEntity(pos);
     this.player = player;
     this.worldPosCallable = ContainerLevelAccess.create(world, pos);
-    this.tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileWorkbench.ItemHandlers.OUTPUT).ifPresent(h -> {
-      this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, OUTPUT_START_X, OUTPUT_START_Y));
-    });
-    this.tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileWorkbench.ItemHandlers.GRID).ifPresent(h -> {
-      int index = 0;
-      for (int rowPos = 0; rowPos < GRID_NUM_ROWS; rowPos++) {
-        for (int colPos = 0; colPos < GRID_NUM_ROWS; colPos++) {
-          this.craftMatrix.setItem(index, h.getStackInSlot(index));
-          this.addSlot(new Slot(this.craftMatrix, index,
-              GRID_START_X + colPos * Const.SQ,
-              GRID_START_Y + rowPos * Const.SQ));
-          index++;
-        }
+    this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, OUTPUT_START_X, OUTPUT_START_Y));
+    int index = 0;
+    for (int rowPos = 0; rowPos < GRID_NUM_ROWS; rowPos++) {
+      for (int colPos = 0; colPos < GRID_NUM_ROWS; colPos++) {
+        this.craftMatrix.setItem(index, tile.inventory.getStackInSlot(index));
+        this.addSlot(new Slot(this.craftMatrix, index,
+            GRID_START_X + colPos * Const.SQ,
+            GRID_START_Y + rowPos * Const.SQ));
+        index++;
       }
-    });
+    }
     for (int k = 0; k < 3; ++k) {
       for (int i1 = 0; i1 < 9; ++i1) {
         this.addSlot(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
@@ -131,12 +127,11 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
     if (!doneOpening) {
       return;
     }
-    this.tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      for (int i = 0; i < craftMatrix.getContainerSize(); i++) {
-        h.extractItem(i, h.getSlotLimit(i), false);
-        h.insertItem(i, craftMatrix.getItem(i), false);
-      }
-    });
+    ItemStackHandler inventory = tile.inventory;
+    for (int i = 0; i < craftMatrix.getContainerSize(); i++) {
+      inventory.extractItem(i, inventory.getSlotLimit(i), false);
+      inventory.insertItem(i, craftMatrix.getItem(i), false);
+    }
     this.worldPosCallable.execute((wrld, posIn) -> {
       updateCraftingResult(this.containerId, this.getStateId(), wrld, this.player, this.craftMatrix, this.craftResult);
     });

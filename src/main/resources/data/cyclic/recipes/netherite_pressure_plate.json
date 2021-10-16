@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	  "cc"
+  ],
+  "key": {
+  	"c": {
+  		"tag":"forge:nuggets/netherite"
+  	}
+  },
+  "result": {
+    "item": "cyclic:netherite_pressure_plate",
+    "count": 1
+  }
+}

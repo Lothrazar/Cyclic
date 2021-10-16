@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " io",
+    " i ",
     "ioi",
     "si "
   ],
@@ -10,7 +10,7 @@
       "item": "minecraft:stick"
     },
     "o": {
-      "item": "minecraft:flint"
+      "item": "cyclic:flint_block"
     },
     "s": {
       "tag": "forge:string"

@@ -10,7 +10,7 @@
       "item": "minecraft:blaze_rod"
     },
     "f": {
-      "item": "minecraft:flint"
+      "item": "cyclic:flint_block"
     },
     "p": {
       "tag": "forge:glass/purple"

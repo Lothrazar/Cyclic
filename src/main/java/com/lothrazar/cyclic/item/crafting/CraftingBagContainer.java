@@ -1,11 +1,9 @@
 package com.lothrazar.cyclic.item.crafting;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -21,6 +19,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class CraftingBagContainer extends ContainerBase implements IContainerCraftingAction {
 
@@ -30,7 +29,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   public ItemStack bag;
   public int slot;
   public int slotcount;
-  public CompoundTag nbt;
+  private IItemHandler handler;
 
   public CraftingBagContainer(int id, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.CRAFTING_BAG, id);
@@ -60,9 +59,8 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
         });
       }
     }
-    //
-    this.nbt = bag.getOrCreateTag();
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      this.handler = h;
       this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
@@ -75,33 +73,23 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   }
 
   @Override
-  public void removed(Player playerIn) {
+  public void removed(Player playerIn) { // onContainerClosed
     super.removed(playerIn);
-    //this is not the saving version
+    this.craftResult.setItem(0, ItemStack.EMPTY);
     if (playerIn.level.isClientSide == false) {
-      bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-        for (int i = 0; i < 9; i++) {
-          ItemStack crafty = this.craftMatrix.getItem(i);
-          if (crafty.isEmpty()) {
-            continue;
-          }
-          h.extractItem(i, 64, false);
-          ItemStack failtest = h.insertItem(i, crafty, false);
-          if (!failtest.isEmpty()) {
-            ModCyclic.LOGGER.info(failtest + " why did this fail; client= " + playerIn.level.isClientSide);
-          }
-          //
-          //          ItemStack doubleTest = h.extractItem(i, 64, true);
-          //          ModCyclic.LOGGER.info(doubleTest + " got saved in " + i);
-        }
-      });
+      if (handler == null) {
+        handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      }
+      for (int i = 0; i < 9; i++) {
+        ItemStack crafty = this.craftMatrix.getItem(i);
+        handler.extractItem(i, 64, false);
+        handler.insertItem(i, crafty, false);
+      }
     }
-    //    clearContainer(playerIn, playerIn.world, craftMatrix);
   }
 
   @Override
   public void slotsChanged(Container inventory) {
-    // 
     Level world = playerInventory.player.level;
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;

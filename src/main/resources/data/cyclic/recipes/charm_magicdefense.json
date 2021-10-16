@@ -10,13 +10,13 @@
       "item": "minecraft:polished_blackstone_pressure_plate"
     },
     "g": {
-      "item": "minecraft:gold_nugget"
+      "tag": "forge:nuggets/copper"
     },
     "f": {
       "item": "minecraft:ender_pearl"
     },
     "a": {
-      "item": "cyclic:heart"
+      "item": "cyclic:heart_empty"
     }
   },
   "result": {

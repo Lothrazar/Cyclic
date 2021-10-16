@@ -2,10 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ggg",
-    "f f",
+    "fxf",
     "gag"
   ],
   "key": {
+    "x": {
+      "item": "minecraft:amethyst_shard"
+    },
     "g": {
       "item": "minecraft:gold_nugget"
     },

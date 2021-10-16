@@ -70,35 +70,42 @@ public class TileFluidHopper extends TileEntityBase {
     }
     BlockPos target = this.worldPosition.relative(extractSide);
     Direction incomingSide = extractSide.getOpposite();
-    IFluidHandler stuff = UtilFluid.getTank(level, target, incomingSide);
+    IFluidHandler sideHandler = UtilFluid.getTank(level, target, incomingSide);
     boolean success = false;
-    if (stuff != null) {
-      success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, FLOW);
+    if (sideHandler != null) {
+      success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, sideHandler, FLOW);
     }
     if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       //test if its a source block, or a waterlogged block
       BlockState targetState = level.getBlockState(target);
-      FluidState fluid = targetState.getFluidState();
-      //cauldron WORKS but eh. idk. maybe config
-      //      if (targetState.getBlock() == Blocks.CAULDRON &&
-      //          targetState.hasProperty(BlockStateProperties.LEVEL_0_3) &&
-      //          targetState.get(BlockStateProperties.LEVEL_0_3) == 3) {
-      //        world.setBlockState(target, targetState.with(BlockStateProperties.LEVEL_0_3, 0));
-      //        //ok
-      //        tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-      //      }
-      if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
+      FluidState fluidState = level.getFluidState(target); // targetState.getFluidState();
+      //new
+      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
+        targetState = targetState.setValue(BlockStateProperties.WATERLOGGED, false);
+        //for waterlogged it is hardcoded to water
+        if (level.setBlockAndUpdate(target, targetState)) {
+          sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
+      }
+      else if (fluidState != null && fluidState.isSource()) {
         //not just water. any fluid source block
         if (level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState())) {
-          tank.fill(new FluidStack(fluid.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          sideHandler.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
-      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
-        //for waterlogged it is hardcoded to water
-        if (level.setBlockAndUpdate(target, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
-          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
+      // old
+      //      if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
+      //        //not just water. any fluid source block
+      //        if (level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState())) {
+      //          tank.fill(new FluidStack(fluid.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      //        }
+      //      }
+      //      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
+      //        //for waterlogged it is hardcoded to water
+      //        if (level.setBlockAndUpdate(target, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
+      //          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      //        }
+      //      }
     }
   }
 

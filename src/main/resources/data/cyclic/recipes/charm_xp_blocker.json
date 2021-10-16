@@ -2,12 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "dgd",
-    "g g",
+    "gxg",
     "dad"
   ],
   "key": {
+  	"x": {
+  		"item":"cyclic:flint_block"
+  	},
     "g": {
-      "item": "minecraft:iron_nugget"
+      "tag": "forge:nuggets/copper"
     },
     "d": {
       "item": "minecraft:gray_concrete_powder"
