@@ -10,7 +10,7 @@
   		"tag":"forge:nuggets/gold"
   	},
   	"t": {
-  		"item":"minecraft:soul_torch"
+  		"item":"minecraft:torch"
   	}
   },
   "result": {

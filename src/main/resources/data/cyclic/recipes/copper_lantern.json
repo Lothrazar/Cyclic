@@ -10,7 +10,7 @@
   		"tag":"forge:nuggets/copper"
   	},
   	"t": {
-  		"item":"minecraft:soul_torch"
+  		"item":"minecraft:torch"
   	}
   },
   "result": {

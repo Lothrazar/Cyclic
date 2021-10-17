@@ -1,3 +1,6 @@
 {
-     "parent": "cyclic:block/copper_chain"
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "cyclic:items/copper_chain"
+    }
 }
