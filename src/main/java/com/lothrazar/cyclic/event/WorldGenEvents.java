@@ -3,7 +3,9 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
@@ -36,39 +38,42 @@ public class WorldGenEvents {
    */
   @SubscribeEvent
   public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
+    BiomeCategory category = event.getCategory();
+    Decoration step = GenerationStep.Decoration.VEGETAL_DECORATION;
     if (ConfigRegistry.CYAN_GENERATES.get()) {
-      if (event.getCategory() == Biome.BiomeCategory.FOREST
-          || event.getCategory() == Biome.BiomeCategory.PLAINS
-          || event.getCategory() == Biome.BiomeCategory.TAIGA
-          || event.getCategory() == Biome.BiomeCategory.EXTREME_HILLS) {
-        event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FLOWER_CYAN_FEATURE);
+      if (category == Biome.BiomeCategory.FOREST
+          || category == Biome.BiomeCategory.PLAINS
+          || category == Biome.BiomeCategory.TAIGA
+          || category == Biome.BiomeCategory.EXTREME_HILLS) {
+        event.getGeneration().addFeature(step, FLOWER_CYAN_FEATURE);
       }
     }
     if (ConfigRegistry.CYAN_GENERATES.get()) {
-      if (event.getCategory() == Biome.BiomeCategory.RIVER
-          || event.getCategory() == Biome.BiomeCategory.UNDERGROUND
-          || event.getCategory() == Biome.BiomeCategory.MESA
-          || event.getCategory() == Biome.BiomeCategory.FOREST
-          || event.getCategory() == Biome.BiomeCategory.MUSHROOM) {
-        event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FLOWER_PURPLE_TULIP_FEATURE);
+      if (category == Biome.BiomeCategory.RIVER
+          || category == Biome.BiomeCategory.UNDERGROUND
+          || category == Biome.BiomeCategory.MESA
+          || category == Biome.BiomeCategory.FOREST
+          || category == Biome.BiomeCategory.MUSHROOM) {
+        event.getGeneration().addFeature(step, FLOWER_PURPLE_TULIP_FEATURE);
       }
     }
     if (ConfigRegistry.CYAN_GENERATES.get()) {
-      if (event.getCategory() == Biome.BiomeCategory.RIVER
-          || event.getCategory() == Biome.BiomeCategory.UNDERGROUND
-          || event.getCategory() == Biome.BiomeCategory.ICY
-          || event.getCategory() == Biome.BiomeCategory.JUNGLE) {
-        event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FLOWER_LIME_CARNATION_FEATURE);
+      if (category == Biome.BiomeCategory.RIVER
+          || category == Biome.BiomeCategory.UNDERGROUND
+          || category == Biome.BiomeCategory.ICY
+          || category == Biome.BiomeCategory.EXTREME_HILLS
+          || category == Biome.BiomeCategory.JUNGLE) {
+        event.getGeneration().addFeature(step, FLOWER_LIME_CARNATION_FEATURE);
       }
     }
     if (ConfigRegistry.CYAN_GENERATES.get()) {
-      if (event.getCategory() == Biome.BiomeCategory.RIVER
-          || event.getCategory() == Biome.BiomeCategory.PLAINS
-          || event.getCategory() == Biome.BiomeCategory.TAIGA
-          || event.getCategory() == Biome.BiomeCategory.UNDERGROUND
-          || event.getCategory() == Biome.BiomeCategory.MESA
-          || event.getCategory() == Biome.BiomeCategory.JUNGLE) {
-        event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FLOWER_ABSALON_TULIP_FEATURE);
+      if (category == Biome.BiomeCategory.RIVER
+          || category == Biome.BiomeCategory.PLAINS
+          || category == Biome.BiomeCategory.TAIGA
+          || category == Biome.BiomeCategory.UNDERGROUND
+          || category == Biome.BiomeCategory.MESA
+          || category == Biome.BiomeCategory.JUNGLE) {
+        event.getGeneration().addFeature(step, FLOWER_ABSALON_TULIP_FEATURE);
       }
     }
   }
