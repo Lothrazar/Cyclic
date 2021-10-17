@@ -48,8 +48,27 @@ public class WorldGenEvents {
       if (event.getCategory() == Biome.BiomeCategory.RIVER
           || event.getCategory() == Biome.BiomeCategory.UNDERGROUND
           || event.getCategory() == Biome.BiomeCategory.MESA
-          || event.getCategory() == Biome.BiomeCategory.JUNGLE) {
+          || event.getCategory() == Biome.BiomeCategory.FOREST
+          || event.getCategory() == Biome.BiomeCategory.MUSHROOM) {
         event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FLOWER_PURPLE_TULIP_FEATURE);
+      }
+    }
+    if (ConfigRegistry.CYAN_GENERATES.get()) {
+      if (event.getCategory() == Biome.BiomeCategory.RIVER
+          || event.getCategory() == Biome.BiomeCategory.UNDERGROUND
+          || event.getCategory() == Biome.BiomeCategory.ICY
+          || event.getCategory() == Biome.BiomeCategory.JUNGLE) {
+        event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FLOWER_LIME_CARNATION_FEATURE);
+      }
+    }
+    if (ConfigRegistry.CYAN_GENERATES.get()) {
+      if (event.getCategory() == Biome.BiomeCategory.RIVER
+          || event.getCategory() == Biome.BiomeCategory.PLAINS
+          || event.getCategory() == Biome.BiomeCategory.TAIGA
+          || event.getCategory() == Biome.BiomeCategory.UNDERGROUND
+          || event.getCategory() == Biome.BiomeCategory.MESA
+          || event.getCategory() == Biome.BiomeCategory.JUNGLE) {
+        event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, FLOWER_ABSALON_TULIP_FEATURE);
       }
     }
   }
