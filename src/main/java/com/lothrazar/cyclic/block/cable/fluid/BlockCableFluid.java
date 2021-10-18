@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -103,6 +104,18 @@ public class BlockCableFluid extends CableBase {
       }
     }
     worldIn.setBlockState(pos, stateIn);
+  }
+
+  @Override
+  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileCableFluid tileentity = (TileCableFluid) worldIn.getTileEntity(pos);
+      if (tileentity != null && tileentity.filter != null) {
+        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
+      }
+      worldIn.updateComparatorOutputLevel(pos, this);
+    }
+    super.onReplaced(state, worldIn, pos, newState, isMoving);
   }
 
   @Override

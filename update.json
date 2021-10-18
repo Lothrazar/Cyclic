@@ -61,6 +61,6 @@
 		,"1.5.1":"Fixed water-loggable blocks such as cables not interacting with player buckets.  Fixed Terra Glass not detecting skylight at high y-values in the overworld.  Added some more hardcoded properties to cyclic.toml config.  Fixed Packager showing empty recipes in JEI (requires jei-7.7.1.122+).  Packager will no longer try to craft Iron Trapdoors and Boots.  "
 		,"1.5.2":"Fix packager jei error recipes in logs (may only happen with certain jei versions)"
 		,"1.5.3":"Deleted 'PlayerEvent.SaveToFile' log spam.  Parachute Pauldrons will no longer trigger when turned off.  Advanced Crafting stick now correctly syncs its inventory when crafting and/or closing the window. Fixed bug when workbench saves and closes.  PR from TelepathicGrunt Honey Bucket added to forge item tag of 'forge:buckets/honey' for compatibility with Create (fluid and block tags unchanged).  Fix typo in guidebook"
-		,"1.5.4":"Fix Fluid Hopper Deletes Water Logged Blocks.  "
+		,"1.5.4":"Fix Fluid Hopper Deletes Water Logged Blocks.  Fix Fluid Cable export filter data cards not dropping when broken"
 	}
 }
