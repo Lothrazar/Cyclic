@@ -66,29 +66,26 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
     boolean success = false;
     if (stuff != null) {
       success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, FLOW);
+      if (success) {
+        return;
+      }
     }
     if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      //test if its a source block, or a waterlogged block
+      //test if its a source block, or a waterlogged block.
       BlockState targetState = world.getBlockState(target);
-      FluidState fluid = targetState.getFluidState();
-      //cauldron WORKS but eh. idk. maybe config
-      //      if (targetState.getBlock() == Blocks.CAULDRON &&
-      //          targetState.hasProperty(BlockStateProperties.LEVEL_0_3) &&
-      //          targetState.get(BlockStateProperties.LEVEL_0_3) == 3) {
-      //        world.setBlockState(target, targetState.with(BlockStateProperties.LEVEL_0_3, 0));
-      //        //ok
-      //        tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-      //      }
-      if (fluid != null && !fluid.isEmpty() && fluid.isSource()) {
-        //not just water. any fluid source block
-        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-          tank.fill(new FluidStack(fluid.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      FluidState fluidState = world.getFluidState(target); // targetState.getFluidState();
+      //new
+      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
+        targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
+        //for waterlogged it is hardcoded to water
+        if (world.setBlockState(target, targetState)) {
+          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
-      else if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
-        //for waterlogged it is hardcoded to water
-        if (world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
-          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      else if (fluidState != null && fluidState.isSource()) {
+        //not just water. any fluid source block
+        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
+          tank.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
     }

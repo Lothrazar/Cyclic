@@ -64,16 +64,10 @@ public class PlayerDataEvents {
         fileinputstream.close();
         CyclicFile dataLoaded = new CyclicFile(player.getUniqueID());
         dataLoaded.read(data);
-        if (DATA_QUEUE.containsKey(player.getUniqueID())) {
-          // 
-          ModCyclic.LOGGER.error("? overwrite PlayerEvent.LoadFromFile " + data);
-        }
         DATA_QUEUE.put(player.getUniqueID(), dataLoaded);
-        ModCyclic.LOGGER.error("C PlayerEvent.LoadFromFile " + data);
-        //        ModCyclic.LOGGER.error("# of tombs " + dataLoaded.playerGraves.size());
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("IO", e);
+        ModCyclic.LOGGER.error("IO error", e);
       }
     }
     //LOAD player data
