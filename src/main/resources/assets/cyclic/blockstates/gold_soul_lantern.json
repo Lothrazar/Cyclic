@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "cyclic:block/gold_soul_lantern"
+    },
+    "hanging=true": {
+      "model": "cyclic:block/gold_soul_lantern_hanging"
+    }
+  }
+}

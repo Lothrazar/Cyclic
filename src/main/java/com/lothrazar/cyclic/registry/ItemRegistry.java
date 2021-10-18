@@ -202,9 +202,11 @@ public class ItemRegistry {
   public static final RegistryObject<Item> GOLD_BARS = ITEMS.register("gold_bars", () -> new BlockItem(BlockRegistry.GOLD_BARS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GOLD_CHAIN = ITEMS.register("gold_chain", () -> new BlockItem(BlockRegistry.GOLD_CHAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GOLD_LANTERN = ITEMS.register("gold_lantern", () -> new BlockItem(BlockRegistry.GOLD_LANTERN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> GOLD_SOUL_LANTERN = ITEMS.register("gold_soul_lantern", () -> new BlockItem(BlockRegistry.GOLD_SOUL_LANTERN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> COPPER_BARS = ITEMS.register("copper_bars", () -> new BlockItem(BlockRegistry.COPPER_BARS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> COPPER_CHAIN = ITEMS.register("copper_chain", () -> new BlockItem(BlockRegistry.COPPER_CHAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> COPPER_LANTERN = ITEMS.register("copper_lantern", () -> new BlockItem(BlockRegistry.COPPER_LANTERN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> COPPER_SOUL_LANTERN = ITEMS.register("copper_soul_lantern", () -> new BlockItem(BlockRegistry.COPPER_SOUL_LANTERN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> COPPER_PRESSURE_PLATE = ITEMS.register("copper_pressure_plate", () -> new BlockItem(BlockRegistry.COPPER_PRESSURE_PLATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NETHERITE_BARS = ITEMS.register("netherite_bars", () -> new BlockItem(BlockRegistry.NETHERITE_BARS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NETHERTIE_CHAIN = ITEMS.register("netherite_chain", () -> new BlockItem(BlockRegistry.NETHERTIE_CHAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:waxed_copper_block",
+    "cyclic:flint_block"
+  ]
+}

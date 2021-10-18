@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	  "nnn",
+	  "ntn",
+	  "nnn"
+  ],
+  "key": {
+  	"n": {
+  		"tag":"forge:nuggets/gold"
+  	},
+  	"t": {
+  		"item":"minecraft:soul_torch"
+  	}
+  },
+  "result": {
+    "item": "cyclic:gold_soul_lantern",
+    "count": 1
+  }
+}

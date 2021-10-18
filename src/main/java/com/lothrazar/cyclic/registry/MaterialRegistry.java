@@ -1,7 +1,10 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
@@ -11,6 +14,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.common.TierSortingRegistry;
 
 public class MaterialRegistry {
 
@@ -226,70 +231,22 @@ public class MaterialRegistry {
         return Ingredient.of(new ItemStack(ItemRegistry.GEM_OBSIDIAN.get()));
       }
     };
-    public static final Tier AMETHYST = new Tier() {
-
-      @Override
-      public int getUses() {
-        return Tiers.IRON.getUses() + 5;
-      }
-
-      @Override
-      public float getSpeed() {
-        return Tiers.IRON.getSpeed() + 0.2F;
-      }
-
-      @Override
-      public float getAttackDamageBonus() {
-        return Tiers.IRON.getAttackDamageBonus() + 0.1F;
-      }
-
-      @Override
-      public int getLevel() {
-        return Tiers.IRON.getLevel();
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return Tiers.GOLD.getEnchantmentValue();
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(Items.AMETHYST_BLOCK));
-      }
-    };
-    public static final Tier COPPER = new Tier() {
-
-      @Override
-      public int getUses() {
-        return (Tiers.STONE.getUses() + Tiers.IRON.getUses()) / 2;
-      }
-
-      @Override
-      public float getSpeed() {
-        return (Tiers.STONE.getSpeed() + Tiers.IRON.getSpeed()) / 2;
-      }
-
-      @Override
-      public float getAttackDamageBonus() {
-        return (Tiers.STONE.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2;
-      }
-
-      @Override
-      public int getLevel() {
-        return Tiers.IRON.getLevel();
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return Tiers.DIAMOND.getEnchantmentValue();
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(Items.COPPER_INGOT));
-      }
-    };
+    public static final Tier AMETHYST = TierSortingRegistry.registerTier(
+        //harvestLevel, uses, toolSpeed, damage, enchantability
+        new ForgeTier(Tiers.IRON.getLevel(),
+            Tiers.IRON.getUses() + 5, Tiers.IRON.getSpeed() + 0.2F, Tiers.IRON.getAttackDamageBonus() + 0.1F, Tiers.GOLD.getEnchantmentValue() * 2,
+            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_amethyst_tool")),
+            () -> Ingredient.of(Items.AMETHYST_SHARD)),
+        new ResourceLocation(ModCyclic.MODID, "amethyst"),
+        List.of(Tiers.STONE), List.of(Tiers.IRON));
+    public static final Tier COPPER = TierSortingRegistry.registerTier(
+        //harvestLevel, uses, toolSpeed, damage, enchantability
+        new ForgeTier(Tiers.IRON.getLevel(),
+            (Tiers.STONE.getUses() + Tiers.IRON.getUses()) / 2, (Tiers.STONE.getSpeed() + Tiers.IRON.getSpeed()) / 2, (Tiers.STONE.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2, Tiers.DIAMOND.getEnchantmentValue() + 2,
+            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_copper_tool")),
+            () -> Ingredient.of(Items.COPPER_INGOT)),
+        new ResourceLocation(ModCyclic.MODID, "copper"),
+        List.of(Tiers.WOOD), List.of(Tiers.IRON));
     public static final Tier EMERALD = new Tier() {
 
       @Override
