@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "cyclic:compressed_cobblestone",
+    "cyclic:flint_block"
+  ]
+}

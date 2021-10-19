@@ -199,38 +199,15 @@ public class MaterialRegistry {
 
   public static class ToolMats {
 
-    public static final Tier GEMOBSIDIAN = new Tier() {
-
-      @Override
-      public int getUses() {
-        return Tiers.DIAMOND.getUses() * 4;
-      }
-
-      @Override
-      public float getSpeed() {
-        return Tiers.DIAMOND.getSpeed() * 4;
-      }
-
-      @Override
-      public float getAttackDamageBonus() {
-        return Tiers.DIAMOND.getAttackDamageBonus() + 1;
-      }
-
-      @Override
-      public int getLevel() {
-        return Tiers.DIAMOND.getLevel() + 1;
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return (Tiers.DIAMOND.getEnchantmentValue() + Tiers.GOLD.getEnchantmentValue()) / 2;
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(ItemRegistry.GEM_OBSIDIAN.get()));
-      }
-    };
+    public static final Tier GEMOBSIDIAN = TierSortingRegistry.registerTier(
+        //harvestLevel, uses, toolSpeed, damage, enchantability
+        new ForgeTier(Tiers.NETHERITE.getLevel(),
+            Tiers.DIAMOND.getUses() * 4, Tiers.DIAMOND.getSpeed() * 4, Tiers.DIAMOND.getAttackDamageBonus() + 1, (Tiers.DIAMOND.getEnchantmentValue() + Tiers.GOLD.getEnchantmentValue()) / 2,
+            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_obsidian_tool")),
+            () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get())),
+        new ResourceLocation(ModCyclic.MODID, "gem_obsidian"),
+        List.of(), List.of(Tiers.NETHERITE));
+    //
     public static final Tier AMETHYST = TierSortingRegistry.registerTier(
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.IRON.getLevel(),
@@ -247,101 +224,33 @@ public class MaterialRegistry {
             () -> Ingredient.of(Items.COPPER_INGOT)),
         new ResourceLocation(ModCyclic.MODID, "copper"),
         List.of(Tiers.WOOD), List.of(Tiers.IRON));
-    public static final Tier EMERALD = new Tier() {
-
-      @Override
-      public int getUses() {
-        return (Tiers.DIAMOND.getUses() + Tiers.GOLD.getUses()) / 2;
-      }
-
-      @Override
-      public float getSpeed() {
-        return (Tiers.IRON.getAttackDamageBonus() + Tiers.DIAMOND.getAttackDamageBonus()) / 2;
-      }
-
-      @Override
-      public float getAttackDamageBonus() {
-        return (Tiers.IRON.getAttackDamageBonus() + Tiers.DIAMOND.getAttackDamageBonus()) / 2;
-      }
-
-      @Override
-      public int getLevel() {
-        return Tiers.DIAMOND.getLevel();
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return Tiers.GOLD.getEnchantmentValue() + 1;
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(Items.EMERALD));
-      }
-    };
-    public static final Tier SANDSTONE = new Tier() {
-
-      @Override
-      public int getUses() {
-        return Tiers.STONE.getUses() - 2;
-      }
-
-      @Override
-      public float getSpeed() {
-        return Tiers.STONE.getSpeed();
-      }
-
-      @Override
-      public float getAttackDamageBonus() {
-        return (Tiers.WOOD.getAttackDamageBonus() + Tiers.STONE.getAttackDamageBonus()) / 2;
-      }
-
-      @Override
-      public int getLevel() {
-        return Tiers.STONE.getLevel();
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return Tiers.STONE.getLevel();
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(net.minecraft.world.level.block.Blocks.SANDSTONE));
-      }
-    };
-    public static final Tier NETHERBRICK = new Tier() {
-
-      @Override
-      public int getUses() {
-        return (Tiers.IRON.getUses() + Tiers.GOLD.getUses()) / 2;
-      }
-
-      @Override
-      public float getSpeed() {
-        return (Tiers.IRON.getSpeed() + Tiers.GOLD.getSpeed()) / 2;
-      }
-
-      @Override
-      public float getAttackDamageBonus() {
-        return (Tiers.IRON.getAttackDamageBonus() + Tiers.GOLD.getAttackDamageBonus()) / 2;
-      }
-
-      @Override
-      public int getLevel() {
-        return Tiers.IRON.getLevel();
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return Tiers.GOLD.getEnchantmentValue();
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(net.minecraft.world.level.block.Blocks.NETHER_BRICKS));
-      }
-    };
+    //
+    //
+    public static final Tier EMERALD = TierSortingRegistry.registerTier(
+        //harvestLevel, uses, toolSpeed, damage, enchantability
+        new ForgeTier(Tiers.NETHERITE.getLevel(),
+            (Tiers.DIAMOND.getUses() + Tiers.NETHERITE.getUses()) / 2, (Tiers.DIAMOND.getSpeed() + Tiers.IRON.getSpeed()) / 2, (Tiers.DIAMOND.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2, Tiers.DIAMOND.getEnchantmentValue() + 2,
+            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_emerald_tool")),
+            () -> Ingredient.of(Items.EMERALD)),
+        new ResourceLocation(ModCyclic.MODID, "emerald"),
+        List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
+    //
+    public static final Tier SANDSTONE = TierSortingRegistry.registerTier(
+        //harvestLevel, uses, toolSpeed, damage, enchantability
+        new ForgeTier(Tiers.STONE.getLevel(),
+            Tiers.STONE.getUses() + 20, Tiers.STONE.getSpeed(), (Tiers.WOOD.getAttackDamageBonus() + Tiers.STONE.getAttackDamageBonus()) / 2, Tiers.IRON.getEnchantmentValue() + 2,
+            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_sandstone_tool")),
+            () -> Ingredient.of(Items.SANDSTONE)),
+        new ResourceLocation(ModCyclic.MODID, "sandstone"),
+        List.of(Tiers.WOOD), List.of(Tiers.STONE));
+    //
+    public static final Tier NETHERBRICK = TierSortingRegistry.registerTier(
+        //harvestLevel, uses, toolSpeed, damage, enchantability
+        new ForgeTier(Tiers.IRON.getLevel(),
+            (Tiers.IRON.getUses() + Tiers.GOLD.getUses()) / 2, (Tiers.IRON.getSpeed() + Tiers.GOLD.getSpeed()) / 2, (Tiers.IRON.getAttackDamageBonus() + Tiers.GOLD.getAttackDamageBonus()) / 2, Tiers.GOLD.getEnchantmentValue() + 2,
+            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_nether_bricks_tool")),
+            () -> Ingredient.of(Items.NETHER_BRICKS)),
+        new ResourceLocation(ModCyclic.MODID, "nether_bricks"),
+        List.of(Tiers.STONE), List.of(Tiers.DIAMOND));
   }
 }
