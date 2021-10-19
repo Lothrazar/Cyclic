@@ -106,13 +106,13 @@ public class ItemEvents {
   @SubscribeEvent
   public void onArrowLooseEvent(ArrowLooseEvent event) {
     ItemStack stackBow = event.getBow();
-    int level = EnchantRegistry.MULTIBOW.getCurrentLevelTool(stackBow);
-    if (level <= 0) {
-      return;
-    }
     PlayerEntity player = event.getPlayer();
     World worldIn = player.world;
     if (worldIn.isRemote == false) {
+      int level = EnchantRegistry.MULTIBOW.getCurrentLevelTool(stackBow);
+      if (level <= 0) {
+        return;
+      }
       //use cross product to push arrows out to left and right
       Vector3d playerDirection = UtilEntity.lookVector(player.rotationYaw, player.rotationPitch);
       Vector3d left = playerDirection.crossProduct(new Vector3d(0, 1, 0));

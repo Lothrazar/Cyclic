@@ -84,13 +84,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
-      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
-      //          && item != BlockRegistry.SOLIDIFIER.asItem()
-      //                    && item != BlockRegistry.MELTER.asItem()
-      //          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
-      //          && item != BlockRegistry.PACKAGER.get().asItem()
-      //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
-      ) {
+      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())) {
         registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslationTextComponent(item.getTranslationKey() + ".guide"));
       }
     }
