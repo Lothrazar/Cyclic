@@ -392,6 +392,7 @@ public class ItemEvents {
         //test? maybe config disable? 
         event.getPlayer().swingArm(event.getHand());
         event.getWorld().destroyBlock(event.getPos(), true);
+        event.setCanceled(true);
       }
     }
   }

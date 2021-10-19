@@ -223,7 +223,7 @@ public abstract class CableBase extends BlockBase implements IWaterLoggable {
         }
       }
     }
-    return super.onBlockActivated(state, world, pos, player, handIn, hit);
+    return ActionResultType.SUCCESS; //    super.onBlockActivated(state, world, pos, player, handIn, hit);
   }
 
   /**
