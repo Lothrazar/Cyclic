@@ -74,7 +74,7 @@ public class ConfigRegistry {
   private static final ForgeConfigSpec.Builder CFGC = new ForgeConfigSpec.Builder();
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
-  private static final List<String> UNCRAFT = new ArrayList<>();
+  private static final List<String> UNCRAFT_IGNORE_ITEMS = new ArrayList<>();
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
   private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
@@ -135,13 +135,15 @@ public class ConfigRegistry {
     BEHEADING.add("minecraft:endermite:MHF_Endermite");
     //
     //most of these are ported direct from 1.12 defaults, idk if these mods or items exist anymore
-    UNCRAFT.add("minecraft:elytra");
-    UNCRAFT.add("minecraft:tipped_arrow");
-    UNCRAFT.add("minecraft:*_dye"); //getting flowers etc feels bad 
-    UNCRAFT.add("spectrite:spectrite_arrow");
-    UNCRAFT.add("spectrite:spectrite_arrow_special");
-    UNCRAFT.add("techreborn:uumatter");
-    UNCRAFT.add("projecte:*");
+    UNCRAFT_IGNORE_ITEMS.add("minecraft:elytra");
+    UNCRAFT_IGNORE_ITEMS.add("minecraft:tipped_arrow");
+    UNCRAFT_IGNORE_ITEMS.add("minecraft:magma_block");
+    UNCRAFT_IGNORE_ITEMS.add("minecraft:stick");
+    UNCRAFT_IGNORE_ITEMS.add("minecraft:*_dye"); //getting flowers etc feels bad 
+    UNCRAFT_IGNORE_ITEMS.add("spectrite:spectrite_arrow");
+    UNCRAFT_IGNORE_ITEMS.add("spectrite:spectrite_arrow_special");
+    UNCRAFT_IGNORE_ITEMS.add("techreborn:uumatter");
+    UNCRAFT_IGNORE_ITEMS.add("projecte:*");
     //
     UNCRAFT_RECIPE_IDS.add("botania:cobweb");
     UNCRAFT_RECIPE_IDS.add("minecraft:magma_cream");
@@ -151,6 +153,7 @@ public class ConfigRegistry {
     UNCRAFT_RECIPE_IDS.add("mysticalagriculture:essence*");
     UNCRAFT_RECIPE_IDS.add("mysticalagriculture:farmland_till");
     UNCRAFT_RECIPE_IDS.add("refinedstorage:coloring_recipes*");
+    UNCRAFT_RECIPE_IDS.add("forcecraft:transmutation*");
     //
     TRANSPORTBAG.add("minecraft:spawner");
     TRANSPORTBAG.add("parabox:parabox");
@@ -338,10 +341,11 @@ public class ConfigRegistry {
     CFG.pop();
     //
     CFG.comment("Uncrafter settings").push("uncrafter");
-    TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
+    TileUncraft.IGNORE_NBT = CFG.comment("False will mean you cannot uncraft damaged repairable items. When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
         + "For example, if false it will not uncraft damaged or enchanted items")
-        .define("nbt_ignored", true);
-    TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT, it -> it instanceof String);
+        .define("nbt_ignored", false);
+    TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use. For example, if you add 'minecraft:stick' here, all recipes that craft into one or more sticks will be disabled (including two wooden planks).")
+        .defineList("ignore_list", UNCRAFT_IGNORE_ITEMS, it -> it instanceof String);
     TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
         .defineList("ignore_recipes", UNCRAFT_RECIPE_IDS, it -> it instanceof String);
     TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);

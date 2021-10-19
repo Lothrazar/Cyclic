@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
@@ -201,12 +200,6 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   // matches count and has enough
   @SuppressWarnings("unchecked")
   private boolean recipeMatches(ItemStack stack, IRecipe<?> recipe) {
-    //    if (stack.getTag() != null && stack.getTag().keySet().size() == 1 && stack.getTag().keySet().contains(Const.NBT_REPAIR_COST)) {
-    //      //what is it
-    //      stack.setTag(null);
-    //    }
-    // do items match
-    //    ModCyclic.LOGGER.info("recipe id" + recipe.getId());
     if (stack.isEmpty() ||
         recipe == null ||
         recipe.getRecipeOutput().isEmpty() ||
@@ -229,7 +222,6 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     //both itemstacks are non-empty, and we have enough quantity
     boolean matches = false;
     if (TileUncraft.IGNORE_NBT.get()) {
-      ModCyclic.LOGGER.info("Uncrafter NBT ignored " + stack.getTag());
       matches = stack.getItem() == recipe.getRecipeOutput().getItem();
     }
     else {
