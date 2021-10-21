@@ -112,13 +112,13 @@ dependencies {
   //  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3361660")
   //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
   //  implementation fg.deobf("curse.maven:quark-243121:3394265")
-  //  implementation fg.deobf("curse.maven:mantle-74924:3389377")
-  //  implementation fg.deobf("curse.maven:inspirations-284007:3170862")
+  //  implementation fg.deobf("curse.maven:mantle-74924:3482897")
+  //  implementation fg.deobf("curse.maven:inspirations-284007:3414517")
   // 	implementation fg.deobf("curse.maven:titanium-287342:3346366")
   //  implementation fg.deobf("curse.maven:industrial-foregoing-266515:3386008")
   //  implementation fg.deobf("curse.maven:forcecraft-454802:3495606")
   //  implementation fg.deobf("curse.maven:plain-grinder-452000:3389092")  
-     // 
+    
   //  implementation fg.deobf("curse.maven:cofh-core-69162:3407019")
 	//  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
 	//	implementation fg.deobf("curse.maven:mekanism-268560:3206392")

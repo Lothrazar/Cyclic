@@ -12,6 +12,10 @@ import net.minecraft.util.ResourceLocation;
 public class DataTags {
 
   public static final INamedTag<Fluid> EXPERIENCE = FluidTags.makeWrapperTag("forge:experience");
+  public static final INamedTag<Fluid> HONEY = FluidTags.makeWrapperTag("forge:honey");
+  public static final INamedTag<Fluid> BIOMASS = FluidTags.makeWrapperTag("forge:biomass");
+  public static final INamedTag<Fluid> MAGMA = FluidTags.makeWrapperTag("forge:magma");
+  public static final INamedTag<Fluid> SLIME = FluidTags.makeWrapperTag("forge:slime");
   public static final INamedTag<Block> PLANTS = BlockTags.makeWrapperTag("forge:plants");
   public static final INamedTag<Block> MUSHROOMS = BlockTags.makeWrapperTag("forge:mushrooms");
   public static final INamedTag<Block> VINES = BlockTags.makeWrapperTag("forge:vines");
@@ -22,4 +26,8 @@ public class DataTags {
   public static final INamedTag<Item> ANVIL_IMMUNE = ItemTags.makeWrapperTag("cyclic:anvil_immune");
   public static final INamedTag<Item> DISENCHANTER_IMMUNE = ItemTags.makeWrapperTag("cyclic:disenchanter_immune");
   public static final INamedTag<Item> WRENCH = ItemTags.createOptional(new ResourceLocation("forge", "tools/wrench"));
+
+  public static void setup() {
+    // do not delete:! this makes the mod get classloaded so the wrapper tags correctly get added to the registry early, before recipe testing
+  }
 }

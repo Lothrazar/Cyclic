@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+   {"required":false, "id":   "inspirations:honey"},
 		"cyclic:honey"
   ]
 }
