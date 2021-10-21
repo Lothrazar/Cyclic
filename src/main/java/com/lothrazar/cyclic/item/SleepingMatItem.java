@@ -13,7 +13,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class SleepingMatItem extends ItemBase {
 
@@ -57,8 +56,7 @@ public class SleepingMatItem extends ItemBase {
     }
     player.startSleeping(at);
     player.getPersistentData().putBoolean("cyclic_sleeping", true);
-    //    tthis.sleepTimer = 0;
-    ObfuscationReflectionHelper.setPrivateValue(Player.class, player, 0, "sleepCounter");
+    player.sleepCounter = 0; //    ObfuscationReflectionHelper.setPrivateValue(Player.class, player, 0, "sleepCounter");
     if (player.level instanceof ServerLevel) {
       ((ServerLevel) player.level).updateSleepingPlayerList();
     }

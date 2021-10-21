@@ -59,7 +59,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
     if (fluid.isEmpty()) {
       return;
     }
-    VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.TYPE_SOLIDIFIER);
+    VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.RESIZABLE);
     matrixStack.pushPose();
     matrixStack.scale(1F, UtilFluid.getScale(tankHere.tank), 1F);
     UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.STAGES - 1),

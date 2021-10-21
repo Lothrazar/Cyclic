@@ -51,7 +51,7 @@ public class RenderMelter implements BlockEntityRenderer<TileMelter> {
     if (fluid.isEmpty()) {
       return;
     }
-    VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.TYPE_MELTER);
+    VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.RESIZABLE);
     matrixStack.pushPose();
     matrixStack.scale(1F, UtilFluid.getScale(tankHere.tank), 1F);
     UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.STAGES - 1),

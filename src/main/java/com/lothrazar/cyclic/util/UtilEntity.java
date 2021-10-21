@@ -23,10 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.util;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.Vector3;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
@@ -42,7 +40,6 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Villager;
@@ -51,7 +48,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class UtilEntity {
 
@@ -360,16 +356,6 @@ public class UtilEntity {
       return all.get(0);
     }
   }
-  //  public static int getVillagerCareer(VillagerEntity merchant) {
-  //    return ObfuscationReflectionHelper.getPrivateValue(VillagerEntity.class, merchant, "careerId", "field_175563_bv");
-  //  }
-  //
-  //  public static void setVillagerCareer(VillagerEntity merchant, int c) {
-  //    ObfuscationReflectionHelper.setPrivateValue(VillagerEntity.class, merchant, c, "careerId", "field_175563_bv");
-  //  }
-  //  public static String getCareerName(VillagerEntity merchant) {
-  //    return merchant.getDisplayName().getString(); //.getFormattedText();//getProfessionForge().getCareer(maybeC).getName();
-  //  }
 
   public static float yawDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2) {
     float f = (float) ((180.0f * Math.atan2(posX2 - posX, posZ2 - posZ)) / (float) Math.PI);
@@ -445,15 +431,16 @@ public class UtilEntity {
   }
 
   public static void eatingHorse(Horse ahorse) {
-    try {
-      Method m = ObfuscationReflectionHelper.findMethod(AbstractHorse.class, "eating"); // "eatingHorse");
-      //      Method m = AbstractHorseEntity.class.getDeclaredMethod("eatingHorse");
-      m.setAccessible(true);
-      m.invoke(ahorse);
-    }
-    catch (Exception e) {
-      ModCyclic.LOGGER.error("Horse eating animation error", e);
-    }
+    ahorse.eating();
+    //    try {
+    //      Method m = ObfuscationReflectionHelper.findMethod(AbstractHorse.class, "eating"); // "eatingHorse");
+    //      //      Method m = AbstractHorseEntity.class.getDeclaredMethod("eatingHorse");
+    //      m.setAccessible(true);
+    //      m.invoke(ahorse);
+    //    }
+    //    catch (Exception e) {
+    //      ModCyclic.LOGGER.error("Horse eating animation error", e);
+    //    }
   }
 
   public static void tryMakeEntityClimb(Level worldIn, LivingEntity entity, double climbSpeed) {
