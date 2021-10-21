@@ -84,13 +84,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
-      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())
-      //          && item != BlockRegistry.SOLIDIFIER.asItem()
-      //                    && item != BlockRegistry.MELTER.asItem()
-      //          && item != BlockRegistry.GENERATOR_ITEM.get().asItem()
-      //          && item != BlockRegistry.PACKAGER.get().asItem()
-      //          && item != BlockRegistry.GENERATOR_FLUID.get().asItem()
-      ) {
+      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())) {
         registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslatableComponent(item.getDescriptionId() + ".guide"));
       }
     }
@@ -110,9 +104,6 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeClickArea(ScreenGeneratorFluid.class,
         50, 8,
         20, 20, GenfluidRecipeCategory.ID);
-    //    registry.addRecipeClickArea(ScreenPackager.class,
-    //        10, 8,
-    //        50, 50, VanillaRecipeCategoryUid.CRAFTING);
     registry.addRecipeClickArea(ScreenPackager.class,
         60, 0,
         60, 30, PackagerRecipeCategory.ID);
@@ -137,8 +128,7 @@ public class CyclicPluginJEI implements IModPlugin {
         10, PLAYER_INV_SIZE);
     registry.addRecipeTransferHandler(ContainerGeneratorDrops.class, GenitemRecipeCategory.ID,
         0, 1, //recipeSLotStart, recipeSlotCount
-        1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    //JEI bug https://github.com/Lothrazar/Cyclic/issues/1742
+        1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount 
     //    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
     //        10, 9, //recipeSLotStart, recipeSlotCount
     //        30, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount

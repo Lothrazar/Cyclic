@@ -209,10 +209,6 @@ public class TileUncraft extends TileEntityBase implements MenuProvider {
   // matches count and has enough
   @SuppressWarnings("unchecked")
   private boolean recipeMatches(ItemStack stack, Recipe<?> recipe) {
-    //    if (stack.getTag() != null && stack.getTag().keySet().size() == 1 && stack.getTag().keySet().contains(Const.NBT_REPAIR_COST)) {
-    //      //what is it
-    //      stack.setTag(null);
-    //    }
     // do items match
     //    ModCyclic.LOGGER.info("recipe id" + recipe.getId());
     if (stack.isEmpty() ||

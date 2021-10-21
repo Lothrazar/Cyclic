@@ -30,7 +30,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EnchantRegistry {
 
-  public static final EnchantBase MULTIBOW = (EnchantBase) new EnchantMultishot(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND).setRegistryName(EnchantMultishot.ID);
+  public static final EnchantBase MULTIBOW = (EnchantBase) new EnchantMultishot(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND).setRegistryName(EnchantMultishot.ID);
   public static final EnchantBase EXCAVATE = (EnchantBase) new EnchantExcavation(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(EnchantExcavation.ID);
   public static final EnchantBase EXPERIENCE_BOOST = (EnchantBase) new EnchantXp(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(EnchantXp.ID);
   public static final EnchantLaunch LAUNCH = (EnchantLaunch) new EnchantLaunch(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_FEET, EquipmentSlot.FEET).setRegistryName(EnchantLaunch.ID);
@@ -40,17 +40,17 @@ public class EnchantRegistry {
     IForgeRegistry<Enchantment> r = event.getRegistry();
     register(r, EXCAVATE);
     register(r, EXPERIENCE_BOOST);
-    register(r, new EnchantBeheading(Enchantment.Rarity.COMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(EnchantBeheading.ID));
+    register(r, new EnchantBeheading(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(EnchantBeheading.ID));
     register(r, new EnchantGrowth(Enchantment.Rarity.COMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(EnchantGrowth.ID));
     register(r, LAUNCH);
     register(r, new EnchantLifeLeech(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(EnchantLifeLeech.ID));
     register(r, new EnchantMagnet(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, EquipmentSlot.MAINHAND).setRegistryName(EnchantMagnet.ID));
     register(r, MULTIBOW);
-    register(r, new EnchantQuickdraw(Enchantment.Rarity.RARE, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND).setRegistryName(EnchantQuickdraw.ID));
+    register(r, new EnchantQuickdraw(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND).setRegistryName(EnchantQuickdraw.ID));
     register(r, new EnchantReach(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_CHEST, EquipmentSlot.CHEST).setRegistryName(EnchantReach.ID));
     register(r, new EnchantStep(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS).setRegistryName(EnchantStep.ID));
-    register(r, new EnchantTraveller(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS).setRegistryName(EnchantTraveller.ID));
-    register(r, new EnchantVenom(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(EnchantVenom.ID));
+    register(r, new EnchantTraveller(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS).setRegistryName(EnchantTraveller.ID));
+    register(r, new EnchantVenom(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(EnchantVenom.ID));
     register(r, new EnchantAutoSmelt(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(EnchantAutoSmelt.ID));
     register(r, new EnchantDisarm(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(EnchantDisarm.ID));
     register(r, new EnchantCurse(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlot.CHEST).setRegistryName(EnchantCurse.ID));

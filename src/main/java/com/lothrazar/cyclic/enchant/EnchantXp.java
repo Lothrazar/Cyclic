@@ -29,11 +29,6 @@ public class EnchantXp extends EnchantBase {
     return CFG == null || CFG.get();
   }
 
-  @Override
-  public int getMinCost(int enchantmentLevel) {
-    return 11 + enchantmentLevel * 20;
-  }
-
   @SubscribeEvent
   public void handleBlockBreakEvent(BlockEvent.BreakEvent event) {
     int level = getCurrentLevelTool(event.getPlayer().getMainHandItem());
@@ -57,11 +52,6 @@ public class EnchantXp extends EnchantBase {
 
   private int getRandomExpAmount(int level, Level world) {
     return world.random.nextInt(getMaxLevel()) * (level + 1);
-  }
-
-  @Override
-  public int getMaxCost(int enchantmentLevel) {
-    return super.getMinCost(enchantmentLevel) + 24;
   }
 
   @Override

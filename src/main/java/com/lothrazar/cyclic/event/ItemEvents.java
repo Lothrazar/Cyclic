@@ -107,13 +107,13 @@ public class ItemEvents {
   @SubscribeEvent
   public void onArrowLooseEvent(ArrowLooseEvent event) {
     ItemStack stackBow = event.getBow();
-    int level = EnchantRegistry.MULTIBOW.getCurrentLevelTool(stackBow);
-    if (level <= 0) {
-      return;
-    }
     Player player = event.getPlayer();
     Level worldIn = player.level;
     if (worldIn.isClientSide == false) {
+      int level = EnchantRegistry.MULTIBOW.getCurrentLevelTool(stackBow);
+      if (level <= 0) {
+        return;
+      }
       //use cross product to push arrows out to left and right
       Vec3 playerDirection = UtilEntity.lookVector(player.getYRot(), player.getXRot());
       Vec3 left = playerDirection.cross(new Vec3(0, 1, 0));
@@ -402,16 +402,17 @@ public class ItemEvents {
     if (event.getItemStack().isEmpty()) {
       return;
     }
-    if (event.getItemStack().getItem() instanceof ItemScaffolding
-        && event.getPlayer().isCrouching()) {
+    Player player = event.getPlayer();
+    if (event.getItemStack().getItem() instanceof ItemScaffolding && player.isCrouching()) {
       scaffoldHit(event);
     }
-    if (event.getPlayer().isCrouching() && event.getItemStack().is(DataTags.WRENCH)) {
+    if (player.isCrouching() && event.getItemStack().is(DataTags.WRENCH)) {
       if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof CableBase) {
         //cyclic cable
         //test? maybe config disable? 
-        event.getPlayer().swing(event.getHand());
+        player.swing(event.getHand());
         event.getWorld().destroyBlock(event.getPos(), true);
+        event.setCanceled(true);
       }
     }
   }
