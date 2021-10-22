@@ -40,7 +40,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      return matchFluid(tile.getFluid()) && matchItems(tile);
+      return matchItems(tile) && matchFluid(tile.getFluid());
     }
     catch (ClassCastException e) {
       return false; // i think we fixed this

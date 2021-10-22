@@ -12,6 +12,10 @@ import net.minecraft.world.level.material.Fluid;
 public class DataTags {
 
   public static final Named<Fluid> EXPERIENCE = FluidTags.bind("forge:experience");
+  public static final Named<Fluid> HONEY = FluidTags.bind("forge:honey");
+  public static final Named<Fluid> BIOMASS = FluidTags.bind("forge:biomass");
+  public static final Named<Fluid> MAGMA = FluidTags.bind("forge:magma");
+  public static final Named<Fluid> SLIME = FluidTags.bind("forge:slime");
   public static final Named<Block> PLANTS = BlockTags.bind("forge:plants");
   public static final Named<Block> MUSHROOMS = BlockTags.bind("forge:mushrooms");
   public static final Named<Block> VINES = BlockTags.bind("forge:vines");
@@ -24,4 +28,8 @@ public class DataTags {
   public static final Named<Item> COPPER_ORE = ItemTags.bind("forge:ores/copper");
   public static final Named<Item> COPPER_INGOTS = ItemTags.bind("forge:ingots/copper");
   public static final Named<Item> WRENCH = ItemTags.createOptional(new ResourceLocation("forge", "tools/wrench"));
+
+  public static void setup() {
+    // do not delete:! this makes the mod get classloaded so the wrapper tags correctly get added to the registry early, before recipe testing
+  }
 }

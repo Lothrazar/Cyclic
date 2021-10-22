@@ -2,6 +2,7 @@ package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.LogManager;
 import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 import com.lothrazar.cyclic.registry.CommandRegistry;
@@ -29,6 +30,7 @@ public class ModCyclic {
     DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
     ConfigRegistry.setup();
     ConfigRegistry.setupClient();
+    DataTags.setup();
     FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

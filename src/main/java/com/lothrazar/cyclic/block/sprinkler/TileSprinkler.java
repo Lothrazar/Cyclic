@@ -6,9 +6,11 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
+import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -60,18 +62,21 @@ public class TileSprinkler extends TileEntityBase {
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
     }
-    //drain is a per tick cost. at least per timer
-    //otherwise if its slowly skipping over lots of empty plots it doesnt seem "turned off"
-    //since no animation
-    tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
-    final double d = 0.001;
-    if (TileTerraPreta.grow(level, shape.get(shapeIndex), d)) {
+    if (level.isClientSide && TileTerraPreta.isValidGrow(level, shape.get(shapeIndex))) {
+      UtilParticle.spawnParticle(level, ParticleTypes.FALLING_WATER, shape.get(shapeIndex), 9);
+    }
+    if (TileTerraPreta.grow(level, shape.get(shapeIndex), 1)) {
       //it worked, so double drain
       tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
+      //run it again since sprinkler costs fluid and therefore should double what the glass and soil do 
+      TileTerraPreta.grow(level, shape.get(shapeIndex), 1);
     }
   }
 
   private void grabWater() {
+    if (level.isClientSide) {
+      return;
+    }
     //only drink from below. similar to but updated from 1.12.2
     BlockState down = level.getBlockState(worldPosition.below());
     if (tank.isEmpty() && down.getBlock() == Blocks.WATER

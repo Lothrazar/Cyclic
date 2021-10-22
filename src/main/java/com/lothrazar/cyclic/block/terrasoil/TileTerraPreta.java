@@ -43,19 +43,17 @@ public class TileTerraPreta extends TileEntityBase {
 
   @SuppressWarnings("deprecation")
   public static boolean grow(Level world, BlockPos current, double d) {
+    if (!isValidGrow(world, current)) {
+      return false;
+    }
     BlockState bState = world.getBlockState(current);
-    if (bState == null || bState.getBlock() == null) {
-      return false;
-    }
     Block block = bState.getBlock();
-    if (!isValidGrow(world, current, bState)) {
-      return false;
-    }
     if (world instanceof ServerLevel) {
       try {
         ServerLevel sw = (ServerLevel) world;
-        block.randomTick(bState, sw, current, world.random);
-        if (world.random.nextDouble() < d) {
+        if (d >= 1 || world.random.nextDouble() < d) {
+          block.randomTick(bState, sw, current, world.random);
+          block.randomTick(bState, sw, current, world.random);
           block.randomTick(bState, sw, current, world.random);
         }
       }
@@ -66,7 +64,8 @@ public class TileTerraPreta extends TileEntityBase {
     return true;
   }
 
-  private static boolean isValidGrow(Level world, BlockPos current, BlockState bState) {
+  public static boolean isValidGrow(Level world, BlockPos current) {
+    BlockState bState = world.getBlockState(current);
     if (bState.getBlock() instanceof BonemealableBlock) {
       BonemealableBlock crop = ((BonemealableBlock) bState.getBlock());
       if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide) || !crop.isBonemealSuccess(world, world.random, current, bState)) {
