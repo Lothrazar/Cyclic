@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.rotation_wand",
+  "icon": "cyclic:rotation_wand",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.rotation_wand.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:rotation_wand"
+    }
+  ]
+}

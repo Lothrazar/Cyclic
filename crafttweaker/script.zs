@@ -5,7 +5,7 @@ craftingTable.removeByModid("botania");
 craftingTable.removeByName("minecraft:wooden_sword");
 
 
-craftingTable.removeRecipe(<item:cyclic:wrench>);
+craftingTable.removeRecipe(<item:cyclic:harvester>);
 
 craftingTable.removeRecipe(<item:minecraft:furnace>);
 

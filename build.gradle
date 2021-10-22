@@ -105,6 +105,7 @@ dependencies {
  //   compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
  //   runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
+    implementation fg.deobf("curse.maven:plain-grinder-452000:3498790")  
 //	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
 	 	
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
@@ -127,7 +128,6 @@ dependencies {
   //  implementation fg.deobf("curse.maven:rftools-base-326041:3380271")
   //  implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
   //  implementation fg.deobf("curse.maven:aquaculture-60028:3401886")
-  //  implementation fg.deobf("curse.maven:plain-grinder-452000:3389092")  
   //  implementation fg.deobf("curse.maven:liquid-blocks-301999:3323640")
   //  implementation fg.deobf("curse.maven:tinkers-construct-74072:3412365")
   //  implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")

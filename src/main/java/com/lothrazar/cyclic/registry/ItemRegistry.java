@@ -185,8 +185,6 @@ public class ItemRegistry {
   public static final RegistryObject<Item> GENERATOR_ITEM = ITEMS.register("generator_item", () -> new BlockItem(BlockRegistry.GENERATOR_ITEM.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> PACKAGER = ITEMS.register("packager", () -> new BlockItem(BlockRegistry.PACKAGER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SOUND_DATA = ITEMS.register("sound_data", () -> new SoundCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> ENDER_BUCKET = ITEMS.register("ender_bucket", () -> new ItemBase(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon", () -> new BlockItem(BlockRegistry.BALLOON.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> MEMBRANE = ITEMS.register("membrane", () -> new BlockItem(BlockRegistry.MEMBRANE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> LAMP = ITEMS.register("lamp", () -> new BlockItem(BlockRegistry.LAMP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SOIL = ITEMS.register("soil", () -> new BlockItem(BlockRegistry.SOIL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -222,10 +220,6 @@ public class ItemRegistry {
   public static Item peat_fuel;
   @ObjectHolder(ModCyclic.MODID + ":peat_fuel_enriched")
   public static Item peat_fuel_enriched;
-  @ObjectHolder(ModCyclic.MODID + ":wrench")
-  public static Item wrench;
-  @ObjectHolder(ModCyclic.MODID + ":cable_wrench")
-  public static CableWrench cable_wrench;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
   public static Item spawner_seeker;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
@@ -244,18 +238,12 @@ public class ItemRegistry {
   public static Item tile_transporter;
   @ObjectHolder(ModCyclic.MODID + ":tile_transporter_empty")
   public static Item tile_transporterempty;
-  @ObjectHolder(ModCyclic.MODID + ":glowing_helmet")
-  public static Item glowing_helmet;
-  @ObjectHolder(ModCyclic.MODID + ":elevation_wand")
-  public static Item elevation_wand;
   @ObjectHolder(ModCyclic.MODID + ":storage_bag")
   public static Item storage_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
   public static Item crafting_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
   public static Item crafting_stick;
-  @ObjectHolder(ModCyclic.MODID + ":antimatter_wand")
-  public static Item antimatter_wand;
   @ObjectHolder(ModCyclic.MODID + ":filter_data")
   public static Item filter_data;
   @ObjectHolder(ModCyclic.MODID + ":location_data")
@@ -354,7 +342,7 @@ public class ItemRegistry {
     r.register(new ShearsMaterial(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024 * 1024)).setRegistryName("shears_obsidian"));
     //weak flint n steel 
     r.register(new ShearsMaterial(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("shears_flint"));
-    r.register(new RotatorItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("wrench"));
+    r.register(new RotatorItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("rotation_wand"));
     r.register(new ScytheBrush(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("scythe_brush"));
     r.register(new ScytheForage(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("scythe_forage"));
     r.register(new ScytheLeaves(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("scythe_leaves"));

@@ -46,13 +46,13 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType FAKE_BLOCK = create(ModCyclic.MODID + ":fakeblock",
       DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
-          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new - maybe BLOCK_SHADER
+          .setShaderState(BLOCK_SHADER) //1.17 new - maybe BLOCK_SHADER
           .setLayeringState(POLYGON_OFFSET_LAYERING) // VIEW_OFFSET_Z_LAYERING) //                    .setShadeModelState(SMOOTH_SHADE)
-          .setLightmapState(LIGHTMAP)
+          .setLightmapState(NO_LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
           .setDepthTestState(LEQUAL_DEPTH_TEST)
-          .setCullState(NO_CULL)
+          .setCullState(CULL)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
   /**
