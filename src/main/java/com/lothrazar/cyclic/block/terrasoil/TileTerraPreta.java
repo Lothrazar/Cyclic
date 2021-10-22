@@ -36,19 +36,17 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
 
   @SuppressWarnings("deprecation")
   public static boolean grow(World world, BlockPos current, double d) {
+    if (!isValidGrow(world, current)) {
+      return false;
+    }
     BlockState bState = world.getBlockState(current);
-    if (bState == null || bState.getBlock() == null) {
-      return false;
-    }
     Block block = bState.getBlock();
-    if (!isValidGrow(world, current, bState)) {
-      return false;
-    }
     if (world instanceof ServerWorld) {
       try {
         ServerWorld sw = (ServerWorld) world;
-        block.randomTick(bState, sw, current, world.rand);
-        if (world.rand.nextDouble() < d) {
+        if (d >= 1 || world.rand.nextDouble() < d) {
+          block.randomTick(bState, sw, current, world.rand);
+          block.randomTick(bState, sw, current, world.rand);
           block.randomTick(bState, sw, current, world.rand);
         }
       }
@@ -59,7 +57,8 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
     return true;
   }
 
-  private static boolean isValidGrow(World world, BlockPos current, BlockState bState) {
+  public static boolean isValidGrow(World world, BlockPos current) {
+    BlockState bState = world.getBlockState(current);
     if (bState.getBlock() instanceof IGrowable) {
       IGrowable crop = ((IGrowable) bState.getBlock());
       if (!crop.canGrow(world, current, bState, world.isRemote) || !crop.canUseBonemeal(world, world.rand, current, bState)) {

@@ -1813,6 +1813,10 @@
 	"block.cyclic.mason_iron":"Mason Iron",
 	"block.cyclic.mason_steel":"Mason Steel",
 	"block.cyclic.mason_plate":"Mason Plate",    
+	"block.cyclic.mason_cobble.guide":"Mason blocks are a decorative block and a crafting ingredient for various machines.",
+	"block.cyclic.mason_iron.guide":"Mason blocks are a decorative block and a crafting ingredient for various machines.",
+	"block.cyclic.mason_steel.guide":"Mason blocks are a decorative block and a crafting ingredient for various machines.",
+	"block.cyclic.mason_plate.guide":"Mason blocks are a decorative block and a crafting ingredient for various machines.",    
 	
 	
 
