@@ -62,6 +62,7 @@ public class TileSoundPlayer extends TileEntityBase implements INamedContainerPr
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    super.read(bs, tag);
     inventory.deserializeNBT(tag.getCompound(NBTINV));
   }
 

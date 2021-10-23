@@ -27,6 +27,7 @@ public class SoundmuffTile extends TileEntityBase {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    super.read(bs, tag);
     notInventory.deserializeNBT(tag.getCompound(NBTINV));
   }
 

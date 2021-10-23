@@ -22,8 +22,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
@@ -44,7 +42,6 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileWirelessFluid() {
     super(TileRegistry.WIRELESS_FLUID.get());
@@ -64,9 +61,6 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventoryCap.cast();
-    }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return LazyOptional.of(() -> tank).cast();
     }
@@ -91,6 +85,7 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
     return super.write(tag);
   }
 
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

@@ -12,7 +12,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -25,7 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileLaser extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileLaser extends TileEntityBase implements INamedContainerProvider {
 
   static enum Fields {
     REDSTONE, THICK, RED, GREEN, BLUE, ALPHA, XOFF, YOFF, ZOFF;
@@ -80,9 +79,6 @@ public class TileLaser extends TileEntityBase implements ITickableTileEntity, IN
     }
     return this.getPos();
   }
-
-  @Override
-  public void tick() {}
 
   @Override
   public AxisAlignedBB getRenderBoundingBox() {
