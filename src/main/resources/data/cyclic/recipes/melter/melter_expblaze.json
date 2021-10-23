@@ -6,6 +6,7 @@
    {
       "item": "minecraft:blaze_rod"
   }],
+  "energy": 1000,
   "result": {
     "fluid": "cyclic:xpjuice",
     "count": 1100

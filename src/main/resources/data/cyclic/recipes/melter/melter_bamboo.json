@@ -8,6 +8,7 @@
 		  "item": "minecraft:bamboo"
 	  }
   ],
+  "energy": 5000,
   "result": {
     "fluid": "cyclic:biomass",
     "fluidTag": "forge:biomass",

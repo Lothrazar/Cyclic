@@ -1,14 +1,15 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:sugar"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:sugar"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:sugar"
-  },
+  }],
+  "energy": 100,
   "mix": {
     "fluid": "cyclic:xpjuice",
     "count": 1000

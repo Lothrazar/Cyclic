@@ -6,6 +6,7 @@
   {
       "item": "minecraft:ghast_tear"
   }],
+  "energy": 1000,
   "result": {
     "fluid": "cyclic:xpjuice",
     "count": 1200

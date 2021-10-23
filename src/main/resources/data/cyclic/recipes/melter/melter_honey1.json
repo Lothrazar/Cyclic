@@ -3,6 +3,7 @@
   "ingredients":[ {
     "item": "minecraft:honey_block"
   }],
+  "energy": 1000,
   "result": {
     "fluid": "cyclic:honey",
     "count": 1000

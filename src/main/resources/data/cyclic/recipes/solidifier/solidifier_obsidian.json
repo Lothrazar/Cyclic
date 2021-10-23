@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "tag": "forge:cobblestone"
   },
-  "inputMiddle": {
+  {
     "tag": "forge:cobblestone"
   },
-  "inputBottom": {
+   {
     "tag": "forge:cobblestone"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:lava",
     "count": 800

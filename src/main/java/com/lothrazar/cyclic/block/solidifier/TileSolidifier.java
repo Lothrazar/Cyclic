@@ -22,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -42,7 +41,6 @@ public class TileSolidifier extends TileEntityBase implements MenuProvider {
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
-  public static IntValue POWERCONF;
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank;
   ItemStackHandler inputSlots = new ItemStackHandler(3);
@@ -81,7 +79,7 @@ public class TileSolidifier extends TileEntityBase implements MenuProvider {
     if (timer < 0) {
       timer = 0;
     }
-    final int cost = POWERCONF.get();
+    final int cost = this.currentRecipe.getEnergyCost();
     if (energy.getEnergyStored() < cost && cost > 0) {
       return;
     }
@@ -154,7 +152,7 @@ public class TileSolidifier extends TileEntityBase implements MenuProvider {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return tankWrapper.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
+    if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {

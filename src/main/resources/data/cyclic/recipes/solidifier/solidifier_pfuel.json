@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "cyclic:peat_fuel"
   },
-  "inputMiddle": {
+  {
     "item": "cyclic:peat_fuel"
   },
-  "inputBottom": {
+   {
     "item": "cyclic:peat_fuel"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 500

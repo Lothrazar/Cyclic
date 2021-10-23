@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients": [{
     "item": "minecraft:prismarine"
   },
-  "inputMiddle": {
+   {
     "tag": "forge:dusts/glowstone"
   },
-  "inputBottom": {
+  {
     "item": "minecraft:prismarine"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:magma",
     "count": 100

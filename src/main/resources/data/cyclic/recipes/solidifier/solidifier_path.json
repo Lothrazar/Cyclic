@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:grass_block"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:grass_block"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:grass_block"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 10

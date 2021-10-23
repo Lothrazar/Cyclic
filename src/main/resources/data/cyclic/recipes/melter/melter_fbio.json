@@ -6,6 +6,7 @@
   {
       "item": "cyclic:biomass"
   }],
+  "energy": 1000,
   "result": {
     "fluid": "cyclic:biomass",
     "count": 1000

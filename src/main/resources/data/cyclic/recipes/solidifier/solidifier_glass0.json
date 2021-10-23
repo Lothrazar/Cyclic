@@ -3,6 +3,7 @@
   "ingredients":[ {
     "item": "minecraft:glass"
   }],
+  "energy": 100,
   "mix": {
     "fluid": "cyclic:magma",
     "count": 10

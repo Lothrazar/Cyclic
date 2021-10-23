@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:glass_bottle"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:xpjuice",
     "count": 250

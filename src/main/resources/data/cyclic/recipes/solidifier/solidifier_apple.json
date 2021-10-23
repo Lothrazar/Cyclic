@@ -9,6 +9,7 @@
    {
     "item": "minecraft:apple"
   }],
+  "energy": 1000,
   "mix": {
     "fluid": "cyclic:honey",
     "count": 300

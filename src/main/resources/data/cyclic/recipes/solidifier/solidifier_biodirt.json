@@ -9,6 +9,7 @@
    {
     "item": "minecraft:dirt"
   }],
+  "energy": 1000,
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 200

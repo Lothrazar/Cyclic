@@ -9,6 +9,7 @@
   {
     "item": "minecraft:yellow_concrete_powder"
   }],
+  "energy": 100,
   "mix": {
     "fluid": "minecraft:water",
     "count": 10

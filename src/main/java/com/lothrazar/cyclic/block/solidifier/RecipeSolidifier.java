@@ -26,10 +26,11 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack fluidInput;
+  private final int energy;
 
   public RecipeSolidifier(ResourceLocation id,
       NonNullList<Ingredient> inList, FluidStack fluid,
-      ItemStack result) {
+      ItemStack result, int energyIn) {
     super(id);
     ingredients = inList;
     if (ingredients.size() == 2) {
@@ -44,6 +45,10 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
     this.result = result;
     this.fluidInput = fluid;
+    if (energyIn < 0) {
+      energyIn = 0;
+    }
+    this.energy = energyIn;
   }
 
   @Override
@@ -110,6 +115,10 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     return CyclicRecipeType.SOLID;
   }
 
+  public int getEnergyCost() {
+    return this.energy;
+  }
+
   @Override
   public RecipeSerializer<?> getSerializer() {
     return SERIALIZER;
@@ -133,7 +142,11 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
         FluidStack fs = UtilRecipe.getFluid(json.get("mix").getAsJsonObject());
         //valid recipe created
-        r = new RecipeSolidifier(recipeId, list, fs, resultStack);
+        int energy = 5000;
+        if (json.has("energy")) {
+          energy = json.get("energy").getAsInt();
+        }
+        r = new RecipeSolidifier(recipeId, list, fs, resultStack, energy);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
@@ -150,7 +163,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       ins.add(Ingredient.fromNetwork(buffer));
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
           ins, FluidStack.readFromPacket(buffer),
-          buffer.readItem());
+          buffer.readItem(), buffer.readInt());
       return r;
     }
 
@@ -164,6 +177,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       two.toNetwork(buffer);
       recipe.fluidInput.writeToPacket(buffer);
       buffer.writeItem(recipe.getResultItem());
+      buffer.writeInt(recipe.energy);
     }
   }
 }

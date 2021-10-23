@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.peatfarm;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
@@ -30,7 +29,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
     super.init();
     fluid.guiLeft = energy.guiLeft = leftPos;
     fluid.guiTop = energy.guiTop = topPos;
-    energy.visible = TileSolidifier.POWERCONF.get() > 0;
+    energy.visible = TilePeatFarm.POWERCONF.get() > 0;
     int x, y;
     x = leftPos + 8;
     y = topPos + 8;

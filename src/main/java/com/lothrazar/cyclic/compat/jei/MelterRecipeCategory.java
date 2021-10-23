@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -16,6 +17,7 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -24,6 +26,7 @@ import net.minecraftforge.fluids.FluidAttributes;
 @SuppressWarnings("rawtypes")
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
+  private static final int FONT = 4210752;
   static ResourceLocation ID = new ResourceLocation(CyclicRecipeType.MELTER.toString());
   private IDrawable gui;
   private IDrawable icon;
@@ -69,6 +72,11 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     in.add(stuff);
     ingredients.setInputLists(VanillaTypes.ITEM, in);
     ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+  }
+
+  @Override
+  public void draw(RecipeMelter recipe, PoseStack ms, double mouseX, double mouseY) {
+    Minecraft.getInstance().font.draw(ms, recipe.getEnergyCost() + " RF", 60, 20, FONT);
   }
 
   @Override
