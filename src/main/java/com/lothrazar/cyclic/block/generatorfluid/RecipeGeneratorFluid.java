@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -117,7 +118,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
       RecipeGeneratorFluid r = null;
       try {
         //        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));
-        FluidStack fs = getFluid(json, "fuel");
+        FluidStack fs = UtilRecipe.getFluid(json.get("fuel").getAsJsonObject());
         JsonObject result = json.get("energy").getAsJsonObject();
         int ticks = result.get("ticks").getAsInt();
         int rfpertick = result.get("rfpertick").getAsInt();

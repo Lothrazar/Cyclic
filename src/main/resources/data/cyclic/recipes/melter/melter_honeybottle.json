@@ -1,11 +1,11 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients":[ {
     "item": "minecraft:honey_bottle"
   },
-  "inputSecond": {
+  {
     "item": "minecraft:honey_bottle"
-  },
+  }],
   "result": {
     "fluid": "cyclic:honey",
     "count": 500

@@ -23,18 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.recipe;
 
-import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
 
@@ -88,22 +85,5 @@ public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
       }
     }
     return false;
-  }
-
-  public static FluidStack getFluid(JsonObject json, String key) {
-    JsonObject mix = json.get(key).getAsJsonObject();
-    int count = mix.get("count").getAsInt();
-    if (count < 1) {
-      count = 1;
-    }
-    FluidStack fs = null;
-    String fluidId = GsonHelper.getAsString(mix, "fluid");
-    ResourceLocation resourceLocation = new ResourceLocation(fluidId);
-    Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
-    if (fluid == FluidStack.EMPTY.getFluid()) {
-      throw new IllegalArgumentException("Invalid fluid specified " + fluidId);
-    }
-    fs = new FluidStack(fluid, count);
-    return fs;
   }
 }

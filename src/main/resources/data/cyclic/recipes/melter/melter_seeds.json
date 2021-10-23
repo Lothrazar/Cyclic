@@ -1,11 +1,11 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [{
       "item": "cyclic:biomass"
   },
-  "inputSecond": {
-      "item": "minecraft:bamboo"
-  },
+   {
+      "tag": "forge:seeds"
+  }],
   "result": {
     "fluid": "cyclic:biomass",
     "count": 1000

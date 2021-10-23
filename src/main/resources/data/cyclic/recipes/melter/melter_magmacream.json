@@ -1,10 +1,13 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [{
     "item": "minecraft:magma_cream"
   },
+   {
+    "item": "minecraft:magma_cream"
+  }],
   "result": {
     "fluid": "cyclic:magma",
-    "count": 100
+    "count": 200
   }
 }

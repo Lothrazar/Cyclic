@@ -1,13 +1,13 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [{
       "item": "cyclic:experience_food"
   },
-  "inputSecond": {
-      "item": "minecraft:rotten_flesh"
-  },
+  {
+      "item": "cyclic:experience_food"
+  }],
   "result": {
     "fluid": "cyclic:xpjuice",
-    "count": 1050
+    "count": 2000
   }
 }

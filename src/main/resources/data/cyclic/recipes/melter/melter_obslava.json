@@ -1,11 +1,11 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
-      "tag": "forge:obsidian"
-  },
-  "inputSecond": {
+  "ingredients":[ {
       "tag": "forge:stone"
   },
+   {
+      "tag": "forge:obsidian"
+  }],
   "result": {
     "fluid": "minecraft:lava",
     "count": 1000

@@ -1,11 +1,11 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients":[ {
       "item": "cyclic:biomass"
   },
-  "inputSecond": {
-      "item": "cyclic:biomass"
-  },
+   {
+      "item": "minecraft:kelp"
+  }],
   "result": {
     "fluid": "cyclic:biomass",
     "count": 1000

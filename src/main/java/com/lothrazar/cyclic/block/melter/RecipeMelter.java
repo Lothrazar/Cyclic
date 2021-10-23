@@ -4,18 +4,16 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 @SuppressWarnings("rawtypes")
@@ -24,13 +22,15 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
 
-  public RecipeMelter(ResourceLocation id, Ingredient in, Ingredient inSecond, FluidStack out) {
+  public RecipeMelter(ResourceLocation id, NonNullList<Ingredient> ingredientsIn, FluidStack out) {
     super(id);
-    ingredients.add(in);
-    if (inSecond == null) {
-      inSecond = Ingredient.EMPTY;
+    ingredients = ingredientsIn;
+    if (ingredients.size() == 1) {
+      ingredients.add(Ingredient.EMPTY);
     }
-    ingredients.add(inSecond);
+    if (ingredients.size() != 2) {
+      throw new IllegalArgumentException("Melter recipe must have at most two ingredients");
+    }
     this.outFluid = out;
   }
 
@@ -92,6 +92,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
   public static final SerializeMelter SERIALMELTER = new SerializeMelter();
 
+  @SuppressWarnings("unchecked")
   public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
 
     SerializeMelter() {
@@ -102,36 +103,35 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     /**
      * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
      */
-    @SuppressWarnings("unchecked")
     @Override
     public RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeMelter r = null;
       try {
-        Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputFirst"));
-        Ingredient inputSecond = Ingredient.EMPTY;
-        if (GsonHelper.isValidNode(json, "inputSecond")) {
-          inputSecond = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputSecond"));
-        }
+        NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);
         JsonObject result = json.get("result").getAsJsonObject();
-        int count = result.get("count").getAsInt();
-        String fluidId = GsonHelper.getAsString(result, "fluid");
-        ResourceLocation resourceLocation = new ResourceLocation(fluidId);
-        Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
-        r = new RecipeMelter(recipeId, inputFirst, inputSecond, new FluidStack(fluid, count));
+        FluidStack fluid = UtilRecipe.getFluid(result);
+        if (json.has("energy")) {
+          // TODO: rf per tick and burn time
+          //see RecipeGeneratorFluid for energy settings
+          //          JsonObject result = json.get("energy").getAsJsonObject();
+          //          int ticks = result.get("ticks").getAsInt();
+          //          int rfpertick = result.get("rfpertick").getAsInt();
+        }
+        r = new RecipeMelter(recipeId, list, fluid);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + r.getId().toString());
+      ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
     }
 
     @Override
     public RecipeMelter fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-      RecipeMelter r = new RecipeMelter(recipeId,
-          Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), FluidStack.readFromPacket(buffer));
-      //server reading recipe from client or vice/versa 
-      return r;
+      NonNullList<Ingredient> ins = NonNullList.create();
+      ins.add(Ingredient.fromNetwork(buffer));
+      ins.add(Ingredient.fromNetwork(buffer));
+      return new RecipeMelter(recipeId, ins, FluidStack.readFromPacket(buffer));
     }
 
     @Override

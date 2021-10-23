@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -134,14 +135,14 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         if (inputTop == Ingredient.EMPTY) {
           throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
         }
-        FluidStack fs = getFluid(json, "mix");
+        FluidStack fs = UtilRecipe.getFluid(json.get("mix").getAsJsonObject());
         //valid recipe created
         r = new RecipeSolidifier(recipeId, inputTop, inputMiddle, inputBottom, fs, resultStack);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + r.getId().toString());
+      ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
     }
 

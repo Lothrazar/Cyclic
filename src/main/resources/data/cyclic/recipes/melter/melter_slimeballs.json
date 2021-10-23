@@ -1,10 +1,13 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [{
     "tag": "forge:slimeballs"
   },
+  {
+    "tag": "forge:slimeballs"
+  }],
   "result": {
     "fluid": "cyclic:slime",
-    "count": 250
+    "count": 500
   }
 }

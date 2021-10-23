@@ -1,10 +1,13 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients":[ {
       "item": "minecraft:slime_block"
   },
+  {
+      "item": "minecraft:slime_block"
+  }],
   "result": {
     "fluid": "cyclic:slime",
-    "count": 2250
+    "count": 4500
   }
 }
