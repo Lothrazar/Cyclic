@@ -106,13 +106,13 @@ dependencies {
 
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
 	 	
-	  implementation fg.deobf("curse.maven:construction-wand-399558:3285196")
-	  
-  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
+	//  implementation fg.deobf("curse.maven:construction-wand-399558:3499311")
+	
+	  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3498537")
+    
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
   //	implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")
   //	implementation fg.deobf("curse.maven:simple-generators-246010:3464413")
-  //  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3361660")
   //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
   //  implementation fg.deobf("curse.maven:quark-243121:3394265")
   //  implementation fg.deobf("curse.maven:mantle-74924:3482897")

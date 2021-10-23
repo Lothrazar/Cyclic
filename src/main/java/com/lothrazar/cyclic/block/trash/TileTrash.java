@@ -3,7 +3,9 @@ package com.lothrazar.cyclic.block.trash;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import javax.annotation.Nonnull;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -19,7 +21,13 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileTrash extends TileEntityBase implements ITickableTileEntity {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
-  ItemStackHandler inventory = new ItemStackHandler(1);
+  ItemStackHandler inventory = new ItemStackHandler(1) {
+
+    @Override
+    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+      return ItemStack.EMPTY;
+    }
+  };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);

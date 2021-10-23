@@ -28,8 +28,7 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    CompoundNBT fluid = tag.getCompound(NBTFLUID);
-    tank.readFromNBT(fluid);
+    tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
   }
 
@@ -69,9 +68,5 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
     if (below != null && below instanceof TileTank) {
       UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
     }
-    //TESTING ONLY  
-    //    if (below != null && below instanceof TileCableFluid) {
-    //      UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
-    //    }
   }
 }

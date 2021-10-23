@@ -246,6 +246,12 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     return 0;
   }
 
+  @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

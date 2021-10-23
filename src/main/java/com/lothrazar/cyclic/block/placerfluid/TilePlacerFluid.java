@@ -65,6 +65,12 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
     return p -> true;
   }
 
+  @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

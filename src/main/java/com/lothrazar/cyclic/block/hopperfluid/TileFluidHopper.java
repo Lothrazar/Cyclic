@@ -40,6 +40,16 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
   }
 
   @Override
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
+  }
+
+  @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
+  @Override
   public void tick() {
     if (this.isPowered()) {
       return;

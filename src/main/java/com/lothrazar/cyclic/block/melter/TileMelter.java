@@ -155,6 +155,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
     return CAPACITY;
   }
 
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

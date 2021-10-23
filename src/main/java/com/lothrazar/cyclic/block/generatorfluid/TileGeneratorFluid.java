@@ -56,6 +56,7 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
     this.needsRedstone = 0;
   }
 
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
