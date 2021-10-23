@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:gravel"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:gravel"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:gravel"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:lava",
     "count": 1000

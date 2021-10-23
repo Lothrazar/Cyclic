@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:terracotta"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:terracotta"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:terracotta"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 50

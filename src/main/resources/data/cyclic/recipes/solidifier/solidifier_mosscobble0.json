@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:cobblestone"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 10

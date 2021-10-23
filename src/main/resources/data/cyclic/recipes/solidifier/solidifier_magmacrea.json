@@ -1,14 +1,14 @@
 {
 	"type": "cyclic:solidifier",
-	"inputTop": {
+	"ingredients":[ {
     "tag": "forge:slimeballs"
 	},
-	"inputMiddle": {
+	 {
     "tag": "forge:slimeballs"
 	},
-	"inputBottom": {
+	{
     "tag": "forge:slimeballs"
-	},
+}},
 	"mix": {
 		"fluid": "cyclic:magma",
 		"count": 150

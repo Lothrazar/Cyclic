@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:stone_bricks"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:stone_bricks"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:stone_bricks"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 10

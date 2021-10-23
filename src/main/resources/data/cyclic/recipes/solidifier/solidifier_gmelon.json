@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "cyclic:biomass"
   },
-  "inputMiddle": {
+   {
     "item": "minecraft:charcoal"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:dirt"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 500

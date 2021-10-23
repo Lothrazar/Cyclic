@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+@SuppressWarnings("rawtypes")
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   private ItemStack result = ItemStack.EMPTY;
@@ -27,14 +28,22 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   private FluidStack fluidInput;
 
   public RecipeSolidifier(ResourceLocation id,
-      Ingredient in, Ingredient inSecond, Ingredient inThird, FluidStack fluid,
+      NonNullList<Ingredient> inList, FluidStack fluid,
       ItemStack result) {
     super(id);
+    ingredients = inList;
+    if (ingredients.size() == 2) {
+      ingredients.add(Ingredient.EMPTY);
+    }
+    else if (ingredients.size() == 1) {
+      ingredients.add(Ingredient.EMPTY);
+      ingredients.add(Ingredient.EMPTY);
+    }
+    if (ingredients.size() != 3) {
+      throw new IllegalArgumentException("Solidifier recipe must have at most three ingredients");
+    }
     this.result = result;
     this.fluidInput = fluid;
-    ingredients.add(in);
-    ingredients.add(inSecond);
-    ingredients.add(inThird);
   }
 
   @Override
@@ -108,7 +117,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   public static final SerializeSolidifier SERIALIZER = new SerializeSolidifier();
 
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
 
     SerializeSolidifier() {
@@ -116,28 +125,15 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "solidifier"));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
-        //TODO: in 1.17 make array
-        Ingredient inputTop = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputTop"));
-        Ingredient inputMiddle = Ingredient.EMPTY;
-        if (GsonHelper.isValidNode(json, "inputMiddle")) {
-          inputMiddle = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputMiddle"));
-        }
-        Ingredient inputBottom = Ingredient.EMPTY;
-        if (GsonHelper.isValidNode(json, "inputBottom")) {
-          inputBottom = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "inputBottom"));
-        }
+        NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-        if (inputTop == Ingredient.EMPTY) {
-          throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
-        }
         FluidStack fs = UtilRecipe.getFluid(json.get("mix").getAsJsonObject());
         //valid recipe created
-        r = new RecipeSolidifier(recipeId, inputTop, inputMiddle, inputBottom, fs, resultStack);
+        r = new RecipeSolidifier(recipeId, list, fs, resultStack);
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
@@ -148,8 +144,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeSolidifier fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+      NonNullList<Ingredient> ins = NonNullList.create();
+      ins.add(Ingredient.fromNetwork(buffer));
+      ins.add(Ingredient.fromNetwork(buffer));
+      ins.add(Ingredient.fromNetwork(buffer));
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
-          Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), FluidStack.readFromPacket(buffer),
+          ins, FluidStack.readFromPacket(buffer),
           buffer.readItem());
       return r;
     }

@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:grass_block"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 50

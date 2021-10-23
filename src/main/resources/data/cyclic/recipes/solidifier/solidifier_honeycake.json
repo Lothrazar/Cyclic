@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:egg"
   },
-  "inputMiddle": {
+   {
     "item": "minecraft:wheat"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:egg"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:honey",
     "count": 500

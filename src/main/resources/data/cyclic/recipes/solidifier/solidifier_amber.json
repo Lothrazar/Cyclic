@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:fire_charge"
   },
-  "inputMiddle": {
+  {
     "tag": "forge:dusts/redstone"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:magma_block"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:honey",
     "count": 500

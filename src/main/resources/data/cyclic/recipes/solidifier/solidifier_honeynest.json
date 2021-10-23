@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:honeycomb_block"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:honeycomb"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:honeycomb_block"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:honey",
     "count": 8000

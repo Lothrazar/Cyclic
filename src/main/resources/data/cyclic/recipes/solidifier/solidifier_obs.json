@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "tag": "forge:gems/emerald"
   },
-  "inputMiddle": {
+  {
     "item": "cyclic:gem_amber"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:amethyst_block"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:slime",
     "count": 500

@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:apple"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:honey",
     "count": 100
   },
   "result": {
     "item": "cyclic:apple_honey",
-		"count": 1
+	"count": 1
   }
 }

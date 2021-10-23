@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "tag": "minecraft:leaves"
   },
-  "inputMiddle": {
+   {
     "tag": "minecraft:leaves"
   },
-  "inputBottom": {
+   {
     "tag": "minecraft:leaves"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 100

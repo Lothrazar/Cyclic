@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "tag": "minecraft:leaves"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 50

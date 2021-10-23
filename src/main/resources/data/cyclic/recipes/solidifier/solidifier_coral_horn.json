@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients": [{
     "item": "minecraft:dead_horn_coral"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:horn_coral"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:dead_horn_coral"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 100

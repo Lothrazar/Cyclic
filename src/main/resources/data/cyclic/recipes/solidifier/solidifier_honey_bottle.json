@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:glass_bottle"
   },
-  "inputMiddle": {
+   {
     "item": "minecraft:glass_bottle"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:glass_bottle"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:honey",
     "count": 750

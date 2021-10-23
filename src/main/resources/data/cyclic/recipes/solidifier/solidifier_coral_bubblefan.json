@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients": [{
     "item": "minecraft:dead_bubble_coral_fan"
   },
-  "inputMiddle": {
+  {
     "item": "minecraft:bubble_coral_fan"
   },
-  "inputBottom": {
+ {
     "item": "minecraft:dead_bubble_coral_fan"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 100

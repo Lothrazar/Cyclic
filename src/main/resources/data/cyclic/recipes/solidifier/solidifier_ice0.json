@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:snow_block"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 1000

@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:fire_charge"
   },
-  "inputMiddle": {
+  {
     "tag": "forge:storage_blocks/redstone"
   },
-  "inputBottom": {
+   {
     "tag": "forge:ingots/gold"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:magma",
     "count": 1000

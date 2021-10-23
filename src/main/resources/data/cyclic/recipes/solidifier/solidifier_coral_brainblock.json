@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:dead_brain_coral_block"
   },
-  "inputMiddle": {
+   {
     "item": "minecraft:brain_coral_block"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:dead_brain_coral_block"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 100

@@ -1,14 +1,14 @@
 {
 	"type": "cyclic:solidifier",
-	"inputTop": {
+	"ingredients":[ {
 		"item": "cyclic:apple_diamond"
 	},
-	"inputMiddle": {
+	 {
 		"tag": "forge:nuggets/netherite"
 	},
-	"inputBottom": {
+	 {
 		"item": "minecraft:golden_apple"
-	},
+	}],
 	"mix": {
 		"fluid": "cyclic:honey",
 		"count": 4000

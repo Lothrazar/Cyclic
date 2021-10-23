@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:red_concrete_powder"
   },
-  "inputMiddle": {
+   {
     "item": "minecraft:red_concrete_powder"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:red_concrete_powder"
-  },
+  }],
   "mix": {
     "fluid": "minecraft:water",
     "count": 10

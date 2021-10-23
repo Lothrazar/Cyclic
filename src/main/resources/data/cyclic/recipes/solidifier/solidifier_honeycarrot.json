@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "item": "minecraft:carrot"
   },
-  "inputMiddle": {
+   {
     "item": "minecraft:gold_nugget"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:carrot"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:honey",
     "count": 100

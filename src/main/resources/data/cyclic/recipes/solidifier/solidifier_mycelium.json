@@ -1,14 +1,14 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients":[ {
     "tag": "forge:mushrooms"
   },
-  "inputMiddle": {
+   {
     "tag": "forge:mushrooms"
   },
-  "inputBottom": {
+   {
     "item": "minecraft:dirt"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:biomass",
     "count": 50

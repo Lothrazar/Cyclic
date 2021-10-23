@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  "ingredients": [{
     "item": "minecraft:stick"
-  },
+  }],
   "mix": {
     "fluid": "cyclic:honey",
     "count": 1000
