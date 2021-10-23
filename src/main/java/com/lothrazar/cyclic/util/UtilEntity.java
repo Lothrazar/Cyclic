@@ -42,6 +42,7 @@ import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Direction;
@@ -480,10 +481,11 @@ public class UtilEntity {
     }
   }
 
-  public static void dimensionTeleport(PlayerEntity player, World world, BlockPosDim loc) {
+  public static void dimensionTeleport(ServerPlayerEntity player, ServerWorld world, BlockPosDim loc) {
     if (world instanceof ServerWorld) {
-      DimensionTransit transit = new DimensionTransit((ServerWorld) world, loc);
+      DimensionTransit transit = new DimensionTransit(world, loc);
       transit.teleport(player);
+      player.changeDimension(transit.getTargetWorld(), transit);
     }
   }
 }
