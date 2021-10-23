@@ -213,7 +213,7 @@ public abstract class CableBase extends BlockBase implements IWaterLoggable {
           newState = state.with(prop, EnumConnectType.BLOCKED);
         break;
       }
-      if (world.setBlockState(pos, newState)) {
+      if (world.getBlockState(pos).getBlock() == this && world.setBlockState(pos, newState)) {
         if (updatePost) {
           newState.updatePostPlacement(sideToToggle, world.getBlockState(pos.offset(sideToToggle)), world, pos, pos.offset(sideToToggle));
         }
