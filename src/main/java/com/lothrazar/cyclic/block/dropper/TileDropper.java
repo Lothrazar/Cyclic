@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -32,7 +35,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileDropper extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
-    TIMER, REDSTONE, DROPCOUNT, DELAY, OFFSET, RENDER;
+    TIMER, REDSTONE, DROPCOUNT, DELAY, RENDER;
   }
 
   static final int MAX = 64000;
@@ -41,9 +44,20 @@ public class TileDropper extends TileEntityBase implements MenuProvider {
   private ItemStackHandler inventory = new ItemStackHandler(1);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getItem() instanceof LocationGpsCard;
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+  };
   private int dropCount = 1;
   private int delay = 10;
-  private int hOffset = 0;
 
   public TileDropper(BlockPos pos, BlockState state) {
     super(TileRegistry.DROPPER, pos, state);
@@ -117,9 +131,9 @@ public class TileDropper extends TileEntityBase implements MenuProvider {
   public void load(CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    gpsSlots.deserializeNBT(tag.getCompound(NBTINV + "gps"));
     this.delay = tag.getInt("delay");
     this.dropCount = tag.getInt("dropCount");
-    this.hOffset = tag.getInt("hOffset");
     super.load(tag);
   }
 
@@ -127,15 +141,18 @@ public class TileDropper extends TileEntityBase implements MenuProvider {
   public CompoundTag save(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV + "gps", gpsSlots.serializeNBT());
     tag.putInt("delay", delay);
     tag.putInt("dropCount", dropCount);
-    tag.putInt("hOffset", hOffset);
     return super.save(tag);
   }
 
   private BlockPos getTargetPos() {
-    BlockPos target = this.getCurrentFacingPos().relative(this.getCurrentFacing(), hOffset);
-    return target;
+    BlockPosDim loc = LocationGpsCard.getPosition(this.gpsSlots.getStackInSlot(0));
+    if (loc != null && UtilWorld.dimensionIsEqual(loc, level)) {
+      return loc.getPos();
+    }
+    return this.getCurrentFacingPos().relative(this.getCurrentFacing(), 1);
   }
 
   @Override
@@ -149,8 +166,6 @@ public class TileDropper extends TileEntityBase implements MenuProvider {
         return this.delay;
       case DROPCOUNT:
         return this.dropCount;
-      case OFFSET:
-        return this.hOffset;
       case RENDER:
         return render;
     }
@@ -171,9 +186,6 @@ public class TileDropper extends TileEntityBase implements MenuProvider {
       break;
       case DROPCOUNT:
         dropCount = Math.max(1, value);
-      break;
-      case OFFSET:
-        hOffset = Math.max(0, value);
       break;
       case RENDER:
         this.render = value % 2;

@@ -19,8 +19,8 @@ public class ContainerWirelessFluid extends ContainerBase {
     tile = (TileWirelessFluid) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.endInv = tile.inventory.getSlots();
-    addSlot(new SlotItemHandler(tile.inventory, 0, 80, 36) {
+    this.endInv = tile.gpsSlots.getSlots();
+    addSlot(new SlotItemHandler(tile.gpsSlots, 0, 80, 36) {
 
       @Override
       public int getMaxStackSize() {

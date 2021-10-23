@@ -24,8 +24,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
@@ -39,14 +37,18 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
-  ItemStackHandler inventory = new ItemStackHandler(1) {
+  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileWirelessFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.WIRELESS_FLUID.get(), pos, state);
@@ -74,9 +76,6 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventoryCap.cast();
-    }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return LazyOptional.of(() -> tank).cast();
     }
@@ -85,7 +84,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
 
   @Override
   public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
     this.transferRate = tag.getInt("transferRate");
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.load(tag);
@@ -94,7 +93,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
   @Override
   public CompoundTag save(CompoundTag tag) {
     tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, gpsSlots.serializeNBT());
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
@@ -130,7 +129,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
   }
 
   BlockPosDim getTargetInSlot(int s) {
-    return LocationGpsCard.getPosition(inventory.getStackInSlot(s));
+    return LocationGpsCard.getPosition(gpsSlots.getStackInSlot(s));
   }
 
   @Override

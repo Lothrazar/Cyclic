@@ -37,22 +37,16 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     x = leftPos + 32;
     y = topPos + 18;
     w = 120;
-    h = 20;
+    h = 16;
     int f = TileDropper.Fields.DROPCOUNT.ordinal();
     GuiSliderInteger dropcount = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
     dropcount.setTooltip("cyclic.dropper.count");
     y += h + 1;
-    f = TileDropper.Fields.OFFSET.ordinal();
-    GuiSliderInteger offsetsli = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
-        0, 16, menu.tile.getField(f)));
-    offsetsli.setTooltip("cyclic.dropper.offset");
-    y += h + 1;
     f = TileDropper.Fields.DELAY.ordinal();
     GuiSliderInteger delaysli = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 500, menu.tile.getField(f)));
     delaysli.setTooltip("cyclic.dropper.delay");
-    //    y += 22;
   }
 
   @Override
@@ -74,7 +68,8 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 9, 50);
+    this.drawSlot(ms, 88, 58);
+    this.drawSlot(ms, 9, 58, TextureRegistry.SLOT_GPS);
     energy.draw(ms, menu.getEnergy());
   }
 }

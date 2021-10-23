@@ -43,14 +43,19 @@ public class TileWirelessEnergy extends TileEntityBase implements MenuProvider {
   private int transferRate = MAX_TRANSFER / 4;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler inventory = new ItemStackHandler(1) {
+  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() instanceof LocationGpsCard;
     }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> gpsSlots);
 
   @Override
   public Component getDisplayName() {
@@ -75,7 +80,7 @@ public class TileWirelessEnergy extends TileEntityBase implements MenuProvider {
 
   @Override
   public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     this.transferRate = tag.getInt("transferRate");
     super.load(tag);
@@ -84,7 +89,7 @@ public class TileWirelessEnergy extends TileEntityBase implements MenuProvider {
   @Override
   public CompoundTag save(CompoundTag tag) {
     tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, gpsSlots.serializeNBT());
     tag.put(NBTENERGY, energy.serializeNBT());
     return super.save(tag);
   }
@@ -116,7 +121,7 @@ public class TileWirelessEnergy extends TileEntityBase implements MenuProvider {
   }
 
   BlockPosDim getTargetInSlot(int s) {
-    return LocationGpsCard.getPosition(inventory.getStackInSlot(s));
+    return LocationGpsCard.getPosition(gpsSlots.getStackInSlot(s));
   }
 
   @Override

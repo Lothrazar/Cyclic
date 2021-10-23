@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -19,10 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessTransmit extends TileEntityBase implements MenuProvider {
@@ -38,11 +33,15 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
   ItemStackHandler inventory = new ItemStackHandler(9) {
 
     @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+
+    @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   @Override
   public Component getDisplayName() {
@@ -52,14 +51,6 @@ public class TileWirelessTransmit extends TileEntityBase implements MenuProvider
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerTransmit(i, level, worldPosition, playerInventory, playerEntity);
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
   }
 
   @Override

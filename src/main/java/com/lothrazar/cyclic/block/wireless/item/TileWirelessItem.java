@@ -52,6 +52,11 @@ public class TileWirelessItem extends TileEntityBase implements MenuProvider {
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() instanceof LocationGpsCard;
     }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 

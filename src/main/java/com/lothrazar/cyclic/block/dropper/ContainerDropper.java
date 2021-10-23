@@ -24,8 +24,9 @@ public class ContainerDropper extends ContainerBase {
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 10, 51));
+      addSlot(new SlotItemHandler(h, 0, 89, 59));
     });
+    addSlot(new SlotItemHandler(tile.gpsSlots, 0, 10, 59));
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileDropper.Fields.values().length);
     trackEnergy(tile);
