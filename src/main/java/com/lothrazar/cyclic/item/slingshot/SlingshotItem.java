@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.slingshot;
 
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
@@ -48,11 +49,6 @@ public class SlingshotItem extends ItemBase {
     }
     PlayerEntity player = (PlayerEntity) entity;
     shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBase.VELOCITY_MAX);
-    stack.damageItem(1, player, (p) -> {
-      p.sendBreakAnimation(Hand.MAIN_HAND);
-    });
-    //    player.setHeldItem(player.getActiveHand(), ItemStack.EMPTY);
-    //    e.setBoomerangThrown(stack.copy());
-    //    e.setOwner(player);
+    UtilItemStack.damageItem(player, stack);
   }
 }

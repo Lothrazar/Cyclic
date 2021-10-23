@@ -31,19 +31,20 @@ public class UtilItemStack {
     s.setDamage(Math.max(0, s.getDamage() - amount));
   }
 
-  public static void damageItem(ItemStack s) {
-    s.setDamage(s.getDamage() + 1);
-    if (s.getDamage() >= s.getMaxDamage()) {
-      s.shrink(1);
-    }
-  }
-
   public static void damageItem(LivingEntity player, ItemStack stack) {
-    stack.damageItem(1, player, (p) -> {
-      p.sendBreakAnimation(Hand.MAIN_HAND);
-    });
+    if (!stack.isDamageable()) {
+      return;
+    }
+    if (player == null) {
+      stack.setDamage(stack.getDamage() + 1);
+    }
+    else {
+      stack.damageItem(1, player, (p) -> {
+        p.sendBreakAnimation(Hand.MAIN_HAND);
+      });
+    }
     if (stack.getDamage() >= stack.getMaxDamage()) {
-      stack.setCount(0);
+      stack.shrink(1);
       stack = ItemStack.EMPTY;
     }
   }

@@ -137,7 +137,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
           .build(LootParameterSets.FISHING);
       List<ItemStack> lootDrops = table.generate(lootContext);
       if (lootDrops != null && lootDrops.size() > 0) {
-        UtilItemStack.damageItem(fishingRod);
+        UtilItemStack.damageItem(null, fishingRod);
         UtilItemStack.drop(world, center, lootDrops);
       }
     }

@@ -83,9 +83,6 @@ public class EnchantMultishot extends EnchantBase {
     if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stackBow) > 0) {
       abstractarrowentity.setFire(100);
     }
-    stackBow.damageItem(1, player, (p) -> {
-      p.sendBreakAnimation(player.getActiveHand());
-    });
     worldIn.addEntity(abstractarrowentity);
   }
 }

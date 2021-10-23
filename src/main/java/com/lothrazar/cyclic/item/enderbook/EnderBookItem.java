@@ -113,7 +113,7 @@ public class EnderBookItem extends ItemBase {
             UtilEntity.dimensionTeleport((ServerPlayerEntity) p, (ServerWorld) worldIn, loc);
           }
           // done
-          UtilItemStack.damageItem(stack);
+          UtilItemStack.damageItem(p, stack);
           return;
         }
       }
