@@ -55,7 +55,6 @@ import com.lothrazar.cyclic.block.generatorfluid.BlockGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.BlockGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.BlockGeneratorFuel;
 import com.lothrazar.cyclic.block.generatoritem.BlockGeneratorDrops;
-import com.lothrazar.cyclic.block.generatorpeat.BlockGeneratorPeat;
 import com.lothrazar.cyclic.block.glass.DarkGlassBlock;
 import com.lothrazar.cyclic.block.glass.DarkGlassConnectedBlock;
 import com.lothrazar.cyclic.block.harvester.BlockHarvester;
@@ -192,10 +191,12 @@ public class BlockRegistry {
   public static final RegistryObject<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
   public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
   public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.METAL, Blocks.COPPER_BLOCK.defaultMaterialColor()).noCollission().strength(0.5F)));
-  //gold trapdoor
-  //copper trapdoor
-  //gold door
-  //copper door 
+  public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> GOLD_BOOKSHELF = BLOCKS.register("gold_bookshelf", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> XP_DRAIN = BLOCKS.register("xp_drain", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> CRUSHING_MACERATOR = BLOCKS.register("crushing_macerator", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  //gold trapdoor 
+  //gold door 
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -216,8 +217,6 @@ public class BlockRegistry {
   public static BlockScaffolding scaffold_fragile;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
   public static BlockHarvester harvester;
-  @ObjectHolder(ModCyclic.MODID + ":peat_generator")
-  public static BlockGeneratorPeat peat_generator;
   @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
   public static PeatBlock peat_unbaked;
   @ObjectHolder(ModCyclic.MODID + ":peat_baked")
@@ -345,7 +344,6 @@ public class BlockRegistry {
     r.register(new BlockScaffoldingResponsive(Block.Properties.of(Material.WOOD), false).setRegistryName("scaffold_responsive"));
     r.register(new BlockScaffoldingReplace(Block.Properties.of(Material.WOOD)).setRegistryName("scaffold_replace"));
     r.register(new DarkGlassBlock(Block.Properties.of(Material.DIRT)).setRegistryName("dark_glass"));
-    r.register(new BlockGeneratorPeat(Block.Properties.of(Material.STONE)).setRegistryName("peat_generator"));
     r.register(new PeatBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)).setRegistryName("peat_unbaked"));
     r.register(new PeatFuelBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)).setRegistryName("peat_baked"));
     r.register(new BlockPeatFarm(Block.Properties.of(Material.STONE)).setRegistryName("peat_farm"));

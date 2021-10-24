@@ -15,6 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -28,6 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -107,9 +109,9 @@ public class EnderBookItem extends ItemBase {
           if (loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(worldIn))) {
             UtilEntity.enderTeleportEvent(p, worldIn, loc.getPos());
           }
-          else {
+          else if (!worldIn.isClientSide && !(p instanceof FakePlayer)) {
             //diff dim 
-            UtilEntity.dimensionTeleport(p, worldIn, loc);
+            UtilEntity.dimensionTeleport((ServerPlayer) p, (ServerLevel) worldIn, loc);
           }
           // done
           UtilItemStack.damageItem(stack);

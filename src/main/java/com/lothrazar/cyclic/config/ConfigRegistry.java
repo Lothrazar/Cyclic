@@ -78,8 +78,6 @@ public class ConfigRegistry {
   private static final String WALL = "####################################################################################";
   private static ForgeConfigSpec COMMON_CONFIG;
   private static ForgeConfigSpec CLIENT_CONFIG;
-  public static IntValue PEATERICHPOWER;
-  public static IntValue PEATPOWER;
   public static DoubleValue PEATCHANCE;
   public static BooleanValue COMMANDDEV;
   public static BooleanValue COMMANDGETHOME;
@@ -206,12 +204,6 @@ public class ConfigRegistry {
     CFG.pop(); //logging 
     CFG.comment(WALL, " Energy related configs for machines and items", WALL)
         .push("energy");
-    CFG.comment(WALL, " Fuel gained by consuming items", WALL).push("fuel");
-    PEATPOWER = CFG.comment(" Power gained burning one of this")
-        .defineInRange("peat_fuel", 256, 1, 64000);
-    PEATERICHPOWER = CFG.comment("Power gained burning one of this")
-        .defineInRange("peat_fuel_enriched", 256 * 4, 1, 64000);
-    CFG.pop(); //fuel
     TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
         .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
     TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
@@ -224,8 +216,6 @@ public class ConfigRegistry {
     TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("disenchanter", 2500, 0, 64000);
     TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 50, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
-    //    TileMelter.POWERCONF = CFG.comment("Power per recipe melter").defineInRange("melter", 5000, 0, 64000);
-    //    TileSolidifier.POWERCONF = CFG.comment("Power per recipe solidifier").defineInRange("solidifier", 5000, 0, 64000);
     TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper", 50, 0, 64000);
     TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester", 50, 0, 64000);
     TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester", 250, 0, 64000);

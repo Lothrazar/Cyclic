@@ -23,8 +23,6 @@ import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.OreProspector;
-import com.lothrazar.cyclic.item.PeatItem;
-import com.lothrazar.cyclic.item.PeatItem.PeatItemType;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SpawnInspectorTool;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
@@ -270,7 +268,6 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.EYE_TELEPORT, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_teleport"));
     //
     r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("battery"));
-    r.register(new BlockItem(BlockRegistry.peat_generator, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_generator"));
     r.register(new BlockItem(BlockRegistry.peat_unbaked, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_unbaked"));
     r.register(new BlockItem(BlockRegistry.peat_baked, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_baked"));
     r.register(new BlockItem(BlockRegistry.SOLIDIFIER, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("solidifier"));
@@ -331,9 +328,9 @@ public class ItemRegistry {
     r.register(new ExpItemGain(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("experience_food"));
     // resources
     //energy 
-    r.register(new PeatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP), PeatItemType.NORM).setRegistryName("peat_fuel"));
-    r.register(new PeatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP), PeatItemType.ENRICHED).setRegistryName("peat_fuel_enriched"));
-    r.register(new PeatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP), PeatItemType.BIOMASS).setRegistryName("biomass"));
+    r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel"));
+    r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel_enriched"));
+    r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("biomass"));
     // basic tools
     r.register(new LocationGpsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("location_data"));
     r.register(new MattockItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9000), 1).setRegistryName("mattock"));

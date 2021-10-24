@@ -33,6 +33,7 @@ import com.lothrazar.cyclic.world.DimensionTransit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -456,10 +457,12 @@ public class UtilEntity {
     }
   }
 
-  public static void dimensionTeleport(Player player, Level world, BlockPosDim loc) {
-    if (world instanceof ServerLevel) {
-      DimensionTransit transit = new DimensionTransit((ServerLevel) world, loc);
-      transit.teleport(player);
+  public static void dimensionTeleport(ServerPlayer player, ServerLevel world, BlockPosDim loc) {
+    if (!player.canChangeDimensions()) {
+      return;
     }
+    DimensionTransit transit = new DimensionTransit(world, loc);
+    transit.teleport(player);
+    player.changeDimension(transit.getTargetLevel(), transit);
   }
 }

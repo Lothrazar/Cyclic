@@ -42,9 +42,14 @@ public class DimensionTransit implements ITeleporter {
       player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 200, false, false));
     }
     if (this.world != null && this.world.getServer() != null) {
-      ServerLevel dim = world.getServer().getLevel(UtilWorld.stringToDimension(target.getDimension()));
-      player.changeDimension(dim, this);
+      ServerLevel dim = getTargetLevel();
       this.world.playSound(null, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, SoundEvents.PORTAL_TRAVEL, SoundSource.MASTER, 0.25F, this.world.random.nextFloat() * 0.4F + 0.8F);
+      player.changeDimension(dim, this);
     }
+  }
+
+  public ServerLevel getTargetLevel() {
+    ServerLevel dim = world.getServer().getLevel(UtilWorld.stringToDimension(target.getDimension()));
+    return dim;
   }
 }

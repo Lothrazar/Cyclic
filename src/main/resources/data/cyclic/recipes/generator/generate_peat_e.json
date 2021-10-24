@@ -1,11 +1,11 @@
 {
 	"type": "cyclic:generator_item",
 	"fuel": {
-		"item": "minecraft:nether_star"
+		"item": "cyclic:peat_fuel_enriched"
 	},
 	"energy": {
-		"ticks": 100000,
-		"rfpertick": 1250
+		"ticks": 1000,
+		"rfpertick": 1000
 	},
 	"conditions": [
 		{
