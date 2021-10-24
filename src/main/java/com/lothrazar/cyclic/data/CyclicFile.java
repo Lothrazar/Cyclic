@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.data;
 
-import com.lothrazar.cyclic.ModCyclic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -66,7 +65,6 @@ public class CyclicFile {
       glist.add(row);
     }
     tag.put("tasks", glist);
-    ModCyclic.LOGGER.info("Write to file " + tag);
     return tag;
   }
 
