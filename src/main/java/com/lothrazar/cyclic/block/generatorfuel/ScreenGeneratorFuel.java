@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.FuelProgress;
+import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -20,12 +20,12 @@ public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
   private ButtonMachineField btnRedstone;
   private ButtonMachine btnToggle;
   private EnergyBar energy;
-  private FuelProgress progress;
+  private TexturedProgress progress;
 
   public ScreenGeneratorFuel(ContainerGeneratorFuel screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileGeneratorFuel.MAX);
-    this.progress = new FuelProgress(this, 76, 60);
+    this.progress = new TexturedProgress(this, 76, 60, TextureRegistry.FUEL_PROG);
   }
 
   @Override

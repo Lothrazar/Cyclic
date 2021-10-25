@@ -30,4 +30,5 @@ public class TextureRegistry {
   public static final ResourceLocation FLUID_WIDGET = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
   public static final ResourceLocation INVENTORY_SIDEBAR = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_sidebar.png");
   public static final ResourceLocation FUEL_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/fuel_prog.png");
+  public static final ResourceLocation FOOD_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/food_prog.png");
 }
