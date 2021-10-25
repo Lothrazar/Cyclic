@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.packager;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,20 +12,18 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
 
   private ButtonMachineField btnRedstone;
   private EnergyBar energy;
-  private TimerBar timer;
 
   public ScreenPackager(ContainerPackager screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TilePackager.MAX);
-    this.timer = new TimerBar(this, 70, 60, 1);
   }
 
   @Override
   public void init() {
     super.init();
     energy.visible = TilePackager.POWERCONF.get() > 0;
-    timer.guiLeft = energy.guiLeft = guiLeft;
-    timer.guiTop = energy.guiTop = guiTop;
+    energy.guiLeft = guiLeft;
+    energy.guiTop = guiTop;
     int x, y;
     x = guiLeft + 8;
     y = guiTop + 8;
@@ -39,7 +36,6 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
-    timer.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TilePackager.Fields.TIMER.ordinal()));
     btnRedstone.onValueUpdate(container.tile);
   }
 
@@ -55,8 +51,5 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     this.drawSlot(ms, 50, 40);
     this.drawSlotLarge(ms, 90, 36);
     energy.draw(ms, container.tile.getEnergy());
-    timer.capacity = container.tile.getField(TilePackager.Fields.BURNMAX.ordinal());
-    timer.visible = (timer.capacity > 0);
-    timer.draw(ms, container.tile.getField(TilePackager.Fields.TIMER.ordinal()));
   }
 }
