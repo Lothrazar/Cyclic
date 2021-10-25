@@ -185,7 +185,7 @@ public class ConfigRegistry {
         it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
-    CYAN_GENERATES = CFG.comment("Does this generate in the world").define("flower_cyan", true);
+    CYAN_GENERATES = CFG.comment("Does this generate in the world").define("flower_cyan.enabled", true);
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
@@ -202,13 +202,12 @@ public class ConfigRegistry {
     CFG.pop(); //logging 
     CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 99);
-    //
-    CFG.comment(WALL, " Settings for varios charms (curios)", WALL).push("charms");
+    // 
     AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
-    CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("luck", 10, 0, 100);
-    CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("speed", 0.5F, 0, 2F);
-    CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("attackspeed", 0.5F, 0, 2F);
-    CFG.comment(WALL, " Caving Torch Charm settings", WALL).push("caving_torch");
+    CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
+    CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
+    CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
+    CFG.comment(" Caving Torch Charm settings").push("caving_torch");
     AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 13);
     AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
         "Light level of the current block after placing down a torch. Must be greater than light_limit",
@@ -216,8 +215,7 @@ public class ConfigRegistry {
         "but might result in small dark spots between torches").defineInRange("light_target", 10, 1, 14);
     AutoCaveTorchItem.PREFER_WALLS = CFG.comment("Whether to prioritise placing torches on walls").define("prefer_walls", true);
     AutoCaveTorchItem.PREFER_LEFT_WALL = CFG.comment("Which wall to place torches on when digging a 1-wide tunnel", "True means left, False means right").define("prefer_left_wall", false);
-    CFG.pop(); // caving_torch
-    CFG.pop(); // charms 
+    CFG.pop(); // caving_torch 
     EdibleFlightItem.TICKS = CFG.comment("Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", 20 * 60, 1, 20 * 1000);
     EdibleSpecItem.TICKS = CFG.comment("Seconds of noClip per chorus_spectral").defineInRange("chorus_spectral.ticks", 20 * 30, 1, 20 * 1000);
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball.ignore_list", MBALL_IGNORE, it -> it instanceof String);
