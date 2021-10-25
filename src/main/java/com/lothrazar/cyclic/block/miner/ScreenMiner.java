@@ -29,8 +29,8 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     energy.visible = TileMiner.POWERCONF.get() > 0;
-    int x = guiLeft + 8;
-    int y = guiTop + 8;
+    int x = guiLeft + 6;
+    int y = guiTop + 6;
     int f = TileMiner.Fields.REDSTONE.ordinal();
     btnRedstone = addButton(new ButtonMachineField(x, y, f, container.tile.getPos()));
     f = TileMiner.Fields.RENDER.ordinal();

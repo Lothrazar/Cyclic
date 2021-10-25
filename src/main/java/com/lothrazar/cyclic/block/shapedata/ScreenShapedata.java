@@ -28,7 +28,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   public void init() {
     super.init();
     int x, y;
-    x = guiLeft + 8;
+    x = guiLeft + 6;
     y = guiTop + 6;
     btnRender = addButton(new ButtonMachineField(x, y, TileShapedata.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
