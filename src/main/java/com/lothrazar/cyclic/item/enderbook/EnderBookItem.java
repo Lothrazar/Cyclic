@@ -29,7 +29,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -109,7 +108,7 @@ public class EnderBookItem extends ItemBase {
           if (loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(worldIn))) {
             UtilEntity.enderTeleportEvent(p, worldIn, loc.getPos());
           }
-          else if (!worldIn.isClientSide && !(p instanceof FakePlayer)) {
+          else {
             //diff dim 
             UtilEntity.dimensionTeleport((ServerPlayer) p, (ServerLevel) worldIn, loc);
           }

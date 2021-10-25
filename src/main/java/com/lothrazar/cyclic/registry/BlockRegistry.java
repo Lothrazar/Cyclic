@@ -192,7 +192,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
   public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.METAL, Blocks.COPPER_BLOCK.defaultMaterialColor()).noCollission().strength(0.5F)));
   public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
-  public static final RegistryObject<Block> GOLD_BOOKSHELF = BLOCKS.register("gold_bookshelf", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> GILDED_BOOKSHELF = BLOCKS.register("gilded_bookshelf", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   public static final RegistryObject<Block> XP_DRAIN = BLOCKS.register("xp_drain", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   public static final RegistryObject<Block> CRUSHING_MACERATOR = BLOCKS.register("crushing_macerator", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   //gold trapdoor 
