@@ -29,4 +29,5 @@ public class TextureRegistry {
   public static final ResourceLocation WIDGETS = new ResourceLocation(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");
   public static final ResourceLocation FLUID_WIDGET = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
   public static final ResourceLocation INVENTORY_SIDEBAR = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_sidebar.png");
+  public static final ResourceLocation FUEL_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/fuel_prog.png");
 }

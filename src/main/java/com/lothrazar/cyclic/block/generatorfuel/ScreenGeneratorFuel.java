@@ -4,13 +4,14 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.FuelProgress;
 import com.lothrazar.cyclic.gui.TextureEnum;
-import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 
@@ -19,26 +20,26 @@ public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
   private ButtonMachineField btnRedstone;
   private ButtonMachine btnToggle;
   private EnergyBar energy;
-  private TimerBar timer;
+  private FuelProgress progress;
 
   public ScreenGeneratorFuel(ContainerGeneratorFuel screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileGeneratorFuel.MAX);
-    this.timer = new TimerBar(this, 70, 60, 1);
+    this.progress = new FuelProgress(this, 76, 60);
   }
 
   @Override
   public void init() {
     super.init();
     energy.visible = true; //TileGeneratorFuel.POWERCONF.get() > 0;
-    timer.guiLeft = energy.guiLeft = guiLeft;
-    timer.guiTop = energy.guiTop = guiTop;
+    progress.guiLeft = energy.guiLeft = guiLeft;
+    progress.guiTop = energy.guiTop = guiTop;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileGeneratorFuel.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     x = guiLeft + 132;
-    y = guiTop + 8;
+    y = guiTop + 36;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       int f = TileGeneratorFuel.Fields.FLOWING.ordinal();
       int tog = (container.tile.getField(f) + 1) % 2;
@@ -52,7 +53,7 @@ public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
-    timer.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TileGeneratorFuel.Fields.TIMER.ordinal()));
+    progress.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TileGeneratorFuel.Fields.TIMER.ordinal()));
     btnRedstone.onValueUpdate(container.tile);
   }
 
@@ -71,8 +72,7 @@ public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
     //    this.drawSlot(ms, 54, 34); 
     this.drawSlotLarge(ms, 70, 30);
     energy.draw(ms, container.tile.getEnergy());
-    timer.capacity = container.tile.getField(TileGeneratorFuel.Fields.BURNMAX.ordinal());
-    timer.visible = (timer.capacity > 0);
-    timer.draw(ms, container.tile.getField(TileGeneratorFuel.Fields.TIMER.ordinal()));
+    progress.max = container.tile.getField(TileGeneratorFuel.Fields.BURNMAX.ordinal());
+    progress.draw(ms, container.tile.getField(TileGeneratorFuel.Fields.TIMER.ordinal()));
   }
 }
