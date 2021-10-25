@@ -59,17 +59,20 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   @Override
   public void tick() {
     this.syncEnergy();
-    this.findMatchingRecipe();
-    if (currentRecipe == null) {
-      return;
-    }
-    this.timer--;
-    if (timer < 0) {
-      timer = 0;
-    }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
+      this.timer = 0;
       return;
+    }
+    if (currentRecipe == null || !currentRecipe.matches(this, world)) {
+      this.findMatchingRecipe();
+      if (currentRecipe == null) {
+        this.timer = 0;
+        return;
+      }
+    }
+    if (--this.timer < 0) {
+      timer = 0;
     }
     if (timer == 0 && this.tryProcessRecipe()) {
       this.timer = TIMER_FULL;
@@ -185,6 +188,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
           }
         }
         currentRecipe = rec;
+        this.timer = TIMER_FULL;
         return;
       }
     }

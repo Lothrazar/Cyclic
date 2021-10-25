@@ -36,15 +36,12 @@ public class EnergyBar {
     }
     int relX;
     int relY;
-    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_CTR);
+    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_BAR);
     relX = guiLeft + x;
     relY = guiTop + y;
-    Screen.blit(ms, relX, relY, 0, 0, width, getHeight(), width, getHeight());
-    parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.ENERGY_INNER);
-    relX = relX + 1;
-    relY = relY + 1;
+    Screen.blit(ms, relX, relY, 16, 0, width, getHeight(), 32, getHeight());
     float pct = Math.min(energ / capacity, 1.0F);
-    Screen.blit(ms, relX, relY, 0, 0, width - 2, (int) ((getHeight() - 2) * pct), width - 2, getHeight() - 2);
+    Screen.blit(ms, relX, relY, 0, 0, width, getHeight() - (int) (getHeight() * pct), 32, getHeight());
   }
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, int energ) {

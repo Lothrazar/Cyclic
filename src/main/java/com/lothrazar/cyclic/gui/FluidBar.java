@@ -75,31 +75,35 @@ public class FluidBar {
       //hack in the blue because water is grey and is filled in by the biome when in-world
       RenderSystem.color3f(0, 0, 1);
     }
-    drawTiledSprite(x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
+    drawTiledSprite(ms, x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
     if (fluid.getFluid() == Fluids.WATER) {
       RenderSystem.color4f(1, 1, 1, 1); //un-apply the water filter
     }
   }
 
-  protected void drawTiledSprite(int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-    UtilRender.drawTiledSprite(xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
+  protected void drawTiledSprite(MatrixStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
+    UtilRender.drawTiledSprite(stack.getLast().getMatrix(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {
-    return guiLeft + x < mouseX && mouseX < guiLeft + x + width
-        && guiTop + y < mouseY && mouseY < guiTop + y + height;
+    return guiLeft + x <= mouseX && mouseX <= guiLeft + x + width
+        && guiTop + y <= mouseY && mouseY <= guiTop + y + height;
   }
 
   public void renderHoveredToolTip(MatrixStack ms, int mouseX, int mouseY, FluidStack current) {
     if (this.isMouseover(mouseX, mouseY)) {
-      String tt = emtpyTooltip;
-      if (current != null && !current.isEmpty()) {
-        tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
-      }
-      List<ITextComponent> list = new ArrayList<>();
-      list.add(new TranslationTextComponent(tt));
-      parent.func_243308_b(ms, list, mouseX, mouseY);
+      renderTooltip(ms, mouseX, mouseY, current);
     }
+  }
+  
+  public void renderTooltip(MatrixStack ms, int mouseX, int mouseY, FluidStack current) {
+	String tt = emtpyTooltip;
+	if (current != null && !current.isEmpty()) {
+	  tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
+	}
+	List<ITextComponent> list = new ArrayList<>();
+	list.add(new TranslationTextComponent(tt));
+	parent.func_243308_b(ms, list, mouseX, mouseY);
   }
 
   public int getX() {
