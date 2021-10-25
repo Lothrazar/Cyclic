@@ -61,7 +61,7 @@ public class UtilRender {
    * @param textureHeight
    * @param zLevel
    */
-  public static void drawTiledSprite(int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite, int textureWidth,
+  public static void drawTiledSprite(Matrix4f matrix, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite, int textureWidth,
       int textureHeight, int zLevel) {
     if (desiredWidth == 0 || desiredHeight == 0 || textureWidth == 0 || textureHeight == 0) {
       return;
@@ -101,10 +101,10 @@ public class UtilRender {
         int y = yStart - ((yTile + 1) * textureHeight);
         int maskTop = textureHeight - height;
         float vMaxLocal = vMax - (vDif * maskTop / textureHeight);
-        vertexBuffer.pos(x, y + textureHeight, zLevel).tex(uMin, vMaxLocal).endVertex();
-        vertexBuffer.pos(shiftedX, y + textureHeight, zLevel).tex(uMaxLocal, vMaxLocal).endVertex();
-        vertexBuffer.pos(shiftedX, y + maskTop, zLevel).tex(uMaxLocal, vMin).endVertex();
-        vertexBuffer.pos(x, y + maskTop, zLevel).tex(uMin, vMin).endVertex();
+        vertexBuffer.pos(matrix, x, y + textureHeight, zLevel).tex(uMin, vMaxLocal).endVertex();
+        vertexBuffer.pos(matrix, shiftedX, y + textureHeight, zLevel).tex(uMaxLocal, vMaxLocal).endVertex();
+        vertexBuffer.pos(matrix, shiftedX, y + maskTop, zLevel).tex(uMaxLocal, vMin).endVertex();
+        vertexBuffer.pos(matrix, x, y + maskTop, zLevel).tex(uMin, vMin).endVertex();
       }
     }
     vertexBuffer.finishDrawing();
