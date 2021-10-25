@@ -56,7 +56,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   protected int flowing = 1;
   protected int needsRedstone = 1;
   protected int render = 0; // default to do not render
-  protected int timer;
+  protected int timer = 0;
 
   public TileEntityBase(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);

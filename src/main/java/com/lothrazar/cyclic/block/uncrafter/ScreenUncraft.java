@@ -1,39 +1,42 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
+import java.util.Arrays;
+
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.TimerBar;
+import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
 
-  private TimerBar timer;
+  private TexturedProgress progress;
   private EnergyBar energy;
   private ButtonMachineField btnRedstone;
 
   public ScreenUncraft(ContainerUncraft screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileUncraft.MAX);
-    this.timer = new TimerBar(this, 58, 20, TileUncraft.TIMER.get());
+    this.progress = new TexturedProgress(this, 58, 20, TextureRegistry.SAW);
+    this.progress.max = TileUncraft.TIMER.get();
   }
 
   @Override
   public void init() {
     super.init();
-    energy.guiLeft = timer.guiLeft = guiLeft;
-    energy.guiTop = timer.guiTop = guiTop;
+    energy.guiLeft = progress.guiLeft = guiLeft;
+    energy.guiTop = progress.guiTop = guiTop;
     energy.visible = TileUncraft.POWERCONF.get() > 0;
-    timer.visible = TileUncraft.TIMER.get() > 1;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileUncraft.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
@@ -50,12 +53,23 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     btnRedstone.onValueUpdate(container.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
-    if (container.tile.getStatus() != UncraftStatusEnum.EMPTY) {
-      String name = UtilChat.lang(
-          ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
-      int center = (this.getXSize() - this.font.getStringWidth(name)) / 2;
-      drawString(ms, name, center + 37, 24);
+    UncraftStatusEnum status = container.tile.getStatus();
+    if (status != UncraftStatusEnum.EMPTY && status != UncraftStatusEnum.MATCH) {
+      minecraft.getTextureManager().bindTexture(TextureRegistry.WIDGETS);
+      blit(ms, 125, 15, 228, 452, 24, 24, 512, 512);
     }
+  }
+  
+  @Override
+  protected void renderHoveredTooltip(MatrixStack matrixStack, int x, int y) {
+    super.renderHoveredTooltip(matrixStack, x, y);
+	if(this.isPointInRegion(125, 15, 24, 24, x, y)) {
+	  UncraftStatusEnum status = container.tile.getStatus();
+	  if (status != UncraftStatusEnum.EMPTY && status != UncraftStatusEnum.MATCH) {
+		TranslationTextComponent comp = new TranslationTextComponent(ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
+		GuiUtils.drawHoveringText(matrixStack, Arrays.asList(comp), x, y, this.width, this.height, 0xFFFFFF, font);
+	  }
+	}
   }
 
   @Override
@@ -67,6 +81,6 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
       this.drawSlot(ms, 7 + i * Const.SQ, 44);
       this.drawSlot(ms, 7 + i * Const.SQ, 44 + Const.SQ);
     }
-    timer.draw(ms, container.tile.getField(TileUncraft.Fields.TIMER.ordinal()));
+    progress.draw(ms, TileUncraft.TIMER.get() - container.tile.getField(TileUncraft.Fields.TIMER.ordinal()));
   }
 }

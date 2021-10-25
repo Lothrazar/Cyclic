@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TextureEnum;
-import com.lothrazar.cyclic.gui.TimerBar;
+import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -19,26 +19,26 @@ public class ScreenGeneratorFood extends ScreenBase<ContainerGeneratorFood> {
   private ButtonMachine btnToggle;
   private ButtonMachineField btnRedstone;
   private EnergyBar energy;
-  private TimerBar timer;
+  private TexturedProgress progress;
 
   public ScreenGeneratorFood(ContainerGeneratorFood screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileGeneratorFood.MAX);
-    this.timer = new TimerBar(this, 70, 60, 1);
+    this.progress = new TexturedProgress(this, 76, 60, TextureRegistry.FOOD_PROG);
   }
 
   @Override
   public void init() {
     super.init();
     energy.visible = true; //TileGeneratorFuel.POWERCONF.get() > 0;
-    timer.guiLeft = energy.guiLeft = guiLeft;
-    timer.guiTop = energy.guiTop = guiTop;
+    progress.guiLeft = energy.guiLeft = guiLeft;
+    progress.guiTop = energy.guiTop = guiTop;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileGeneratorFood.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     x = guiLeft + 132;
-    y = guiTop + 8;
+    y = guiTop + 36;
     btnToggle = addButton(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       int f = TileGeneratorFood.Fields.FLOWING.ordinal();
       int tog = (container.tile.getField(f) + 1) % 2;
@@ -52,7 +52,7 @@ public class ScreenGeneratorFood extends ScreenBase<ContainerGeneratorFood> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
-    timer.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TileGeneratorFood.Fields.TIMER.ordinal()));
+    progress.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TileGeneratorFood.Fields.TIMER.ordinal()));
     btnRedstone.onValueUpdate(container.tile);
   }
 
@@ -71,8 +71,7 @@ public class ScreenGeneratorFood extends ScreenBase<ContainerGeneratorFood> {
     //    this.drawSlot(ms, 54, 34); 
     this.drawSlotLarge(ms, 70, 30);
     energy.draw(ms, container.tile.getEnergy());
-    timer.capacity = container.tile.getField(TileGeneratorFood.Fields.BURNMAX.ordinal());
-    timer.visible = (timer.capacity > 0);
-    timer.draw(ms, container.tile.getField(TileGeneratorFood.Fields.TIMER.ordinal()));
+    progress.max = container.tile.getField(TileGeneratorFood.Fields.BURNMAX.ordinal());
+    progress.draw(ms, container.tile.getField(TileGeneratorFood.Fields.TIMER.ordinal()));
   }
 }

@@ -1109,10 +1109,10 @@
     "cyclic.gui.craft.balance":"Balance largest stack",
     "cyclic.gui.craft.match":"Balance & match largest stack",
     
-    "cyclic.gui.uncrafter.config":"Blocked by config",
-    "cyclic.gui.uncrafter.norecipe":"No recipe",
+    "cyclic.gui.uncrafter.config":"Item cannot be uncrafted (Blocked in config)",
+    "cyclic.gui.uncrafter.norecipe":"Item cannot be uncrafted (No Recipe)",
     "cyclic.gui.uncrafter.match":"Match",
-    "cyclic.gui.uncrafter.noroom":"Output blocked",
+    "cyclic.gui.uncrafter.noroom":"Output slots full!",
     
     "cyclic.screen.style0": "Normal",
     "cyclic.screen.style1": "%",

@@ -132,6 +132,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
     if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0) {
       //Nothing in Crafting grid, so don't do anything
       setPreviewSlot(previewHandler, ItemStack.EMPTY);
+      this.timer = TIMER_FULL;
       return;
     }
     else if (!itemStacksInGrid.equals(lastRecipeGrid)) {
@@ -149,6 +150,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         recipeOutput = lastValidRecipe.getRecipeOutput();
         shouldSearch = false;
         setPreviewSlot(previewHandler, lastValidRecipe.getRecipeOutput());
+        this.timer = TIMER_FULL;
       }
       else {
         reset();
@@ -169,8 +171,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       return;
     }
     if (hasValidRecipe) {
-      timer--;
-      if (timer > 0) {
+      if (--timer > 0) {
         return;
       }
       timer = TIMER_FULL;
