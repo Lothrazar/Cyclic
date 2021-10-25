@@ -54,7 +54,7 @@ public class TexturedProgress {
     } else { //Left-Right mode
         Screen.blit(ms, relX, relY, 0, height, width, height, width, height * 2);
         int rWidth = (int) (width * Math.min(current / max, 1.0F));
-        Screen.blit(ms, relX, relY, 0, 0, width - rWidth, height, width, height * 2);
+        if(current != 0) Screen.blit(ms, relX, relY, 0, 0, width - rWidth, height, width, height * 2);
     }
   }
 
