@@ -106,7 +106,7 @@ dependencies {
  //   runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
     implementation fg.deobf("curse.maven:plain-grinder-452000:3498790")  
-//	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
+	  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
 	 	
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
   //  implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")

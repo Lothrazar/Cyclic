@@ -81,6 +81,7 @@ public class BlockCableEnergy extends CableBase {
         worldIn.setBlockAndUpdate(pos, stateIn);
       }
     }
+    super.setPlacedBy(worldIn, pos, stateIn, placer, stack);
   }
 
   @Override
@@ -92,7 +93,7 @@ public class BlockCableEnergy extends CableBase {
     }
     if (isEnergy(stateIn, facing, facingState, world, currentPos, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
-      if (world instanceof Level) {
+      if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
         ((Level) world).setBlockAndUpdate(currentPos, with);
       }

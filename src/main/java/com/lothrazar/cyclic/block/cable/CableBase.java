@@ -213,7 +213,7 @@ public abstract class CableBase extends BlockBase implements SimpleWaterloggedBl
           newState = state.setValue(prop, EnumConnectType.BLOCKED);
         break;
       }
-      if (world.setBlockAndUpdate(pos, newState)) {
+      if (world.getBlockState(pos).getBlock() == this && world.setBlockAndUpdate(pos, newState)) {
         if (updatePost) {
           newState.updateShape(sideToToggle, world.getBlockState(pos.relative(sideToToggle)), world, pos, pos.relative(sideToToggle));
         }

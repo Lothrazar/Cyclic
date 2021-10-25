@@ -110,7 +110,7 @@ public class BlockCableItem extends CableBase {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
       }
     }
-    worldIn.setBlockAndUpdate(pos, stateIn);
+    super.setPlacedBy(worldIn, pos, stateIn, placer, stack);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class BlockCableItem extends CableBase {
     }
     if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
-      if (world instanceof Level) {
+      if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
         ((Level) world).setBlockAndUpdate(currentPos, with);
       }
