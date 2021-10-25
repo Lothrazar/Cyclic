@@ -8,44 +8,80 @@
 	# Enchantment related configs
 	#####################################################################################
 	[cyclic.enchantment]
-		#Set false to disable enchantment
-		traveler = true
-		#Set false to disable enchantment
-		reach = true
-		#Set false to disable enchantment
-		beekeeper = true
-		#Set false to disable enchantment
-		experience_boost = true
-		#Set false to disable Multi Jump enchantment
-		launch = true
-		#Set false to disable enchantment
-		ender = true
-		#Set false to disable enchantment
-		disarm = true
-		#Set false to disable enchantment
-		excavate = true
-		#Set false to disable enchantment
-		magnet = true
-		#Beheading enchant add player skin head drop, add any mob id and any skin
-		beheadingEntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
-		#Set false to disable enchantment
-		multishot = true
-		#Set false to disable enchantment
-		beheading = true
-		#Set false to disable enchantment
-		quickshot = true
-		#Set false to disable enchantment
-		venom = true
-		#Set false to disable enchantment
-		life_leech = true
-		#Set false to disable enchantment
-		curse = true
-		#Set false to disable enchantment
-		auto_smelt = true
-		#Set false to disable enchantment
-		growth = true
-		#Set false to disable enchantment
-		step = true
+
+		[cyclic.enchantment.traveler]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.reach]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.beekeeper]
+			#Beheading enchant add player skin head drop, add any mob id and any skin
+			EntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.experience_boost]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.launch]
+			#Set false to disable Multi Jump enchantment
+			enabled = true
+
+		[cyclic.enchantment.ender]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.disarm]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.excavate]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.magnet]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.multishot]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.beheading]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.quickshot]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.venom]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.life_leech]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.curse]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.auto_smelt]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.growth]
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.step]
+			#Set false to disable enchantment
+			enabled = true
 
 	#####################################################################################
 	# Worldgen settings  
@@ -68,6 +104,11 @@
 			#Range: 1 ~ 64
 			books_per_row = 64
 
+		[cyclic.blocks.anvil_magma]
+			#Cost of magma fluid per action
+			#Range: 1 ~ 64000
+			fluid_cost = 100
+
 		#Ender Anchor settings
 		[cyclic.blocks.eye_teleport]
 			#Maximum distance to activate
@@ -83,17 +124,30 @@
 			#Range: 1 ~ 20
 			frequency = 5
 
+		[cyclic.blocks.disenchanter]
+			#Power per use disenchanter
+			#Range: 0 ~ 64000
+			energy_cost = 2500
+			#Cost of (or payment for if negative) per enchanted book generated
+			#Range: -1000 ~ 16000
+			fluid_cost = 100
+
 		#Uncrafter settings
 		[cyclic.blocks.uncrafter]
 			#When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items
-			nbt_ignored = true
+			nbt_ignored = false
 			#Ticks used for each uncraft
 			#Range: 1 ~ 9999
 			ticks = 60
 			#ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use
-			ignore_list = ["minecraft:elytra", "minecraft:tipped_arrow", "minecraft:*_dye", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
+			ignore_list = ["minecraft:elytra", "minecraft:tipped_arrow", "minecraft:magma_block", "minecraft:stick", "minecraft:*_dye", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
 			#RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item
-			ignore_recipes = ["botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*"]
+			ignore_recipes = ["botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*"]
+
+		[cyclic.blocks.anvil_void]
+			#Payment per void action, if not zero
+			#Range: 0 ~ 16000
+			fluid_cost = 25
 
 		#Ender shelf settings
 		[cyclic.blocks.sound]
@@ -127,48 +181,14 @@
 		info = false
 
 	#####################################################################################
-	#Fluid cost for various machines
-	#####################################################################################
-	[cyclic.fluid]
-		#Cost of magma fluid per action
-		#Range: 1 ~ 64000
-		anvil_magma = 100
-		#Cost of (or payment for if negative) per enchanted book generated
-		#Range: -1000 ~ 16000
-		disenchanter = 100
-		#Payment per void action, if not zero
-		#Range: 0 ~ 16000
-		void_anvil = 25
-
-	#####################################################################################
 	# Item specific configs
 	#####################################################################################
 	[cyclic.items]
-		#Entity ids that cannot be picked up with the Monster all
-		monster_ball_ignore_list = ["minecraft:ender_dragon", "minecraft:wither"]
 
-		#####################################################################################
-		# Obsidian gear settings
-		#####################################################################################
-		[cyclic.items.obsidian]
-			#Weapon damage
-			#Range: 0.10000000149011612 ~ 99.0
-			damage = 10.5
-			#Damage Reduction
-			#Range: 1 ~ 99
-			chest = 11
-			#Damage Reduction
-			#Range: 1 ~ 99
-			boots = 7
-			#Armor toughness
-			#Range: 0.10000000149011612 ~ 99.0
-			toughness = 6.0
-			#Damage Reduction
-			#Range: 1 ~ 99
-			helm = 7
-			#Damage Reduction
-			#Range: 1 ~ 99
-			leg = 10
+		[cyclic.items.chorus_spectral]
+			#Seconds of noClip per chorus_spectral
+			#Range: 1 ~ 20000
+			ticks = 600
 
 		#Sack of Holding settings
 		[cyclic.items.tile_transporter]
@@ -179,6 +199,11 @@
 			#Ore Prospector radius around player to search for ores
 			#Range: 1 ~ 99
 			range = 32
+
+		[cyclic.items.chorus_flight]
+			#Seconds of flight per chorus_flight
+			#Range: 1 ~ 20000
+			ticks = 1200
 
 		#####################################################################################
 		# Settings for varios charms (curios)
@@ -217,13 +242,9 @@
 				#True means left, False means right
 				prefer_left_wall = false
 
-		#####################################################################################
-		# Edible chorus settings
-		#####################################################################################
-		[cyclic.items.chorus]
-			#Seconds of noClip per chorus_spectral
-			#Range: 1 ~ 20000
-			ticks = 600
+		[cyclic.items.monster_ball]
+			#Entity ids that cannot be picked up with the Monster all
+			ignore_list = ["minecraft:ender_dragon", "minecraft:wither"]
 
 		#Wand settings
 		[cyclic.items.teleport_wand]
@@ -236,29 +257,6 @@
 			#Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)
 			#Range: 0.0010000000474974513 ~ 1.0
 			conversionChance = 0.07999999821186066
-
-		#####################################################################################
-		# Emerald gear settings
-		#####################################################################################
-		[cyclic.items.emerald]
-			#Weapon damage
-			#Range: 0.10000000149011612 ~ 99.0
-			damage = 4.5
-			#Damage Reduction
-			#Range: 1 ~ 99
-			chest = 9
-			#Damage Reduction
-			#Range: 1 ~ 99
-			boots = 4
-			#Armor toughness
-			#Range: 0.10000000149011612 ~ 99.0
-			toughness = 3.0
-			#Damage Reduction
-			#Range: 1 ~ 99
-			helm = 4
-			#Damage Reduction
-			#Range: 1 ~ 99
-			leg = 7
 
 		#Heart items
 		[cyclic.items.heart]
@@ -295,9 +293,6 @@
 		#Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).
 		#####################################################################################
 		[cyclic.energy.cost]
-			#Power per use disenchanter
-			#Range: 0 ~ 64000
-			disenchanter = 2500
 			#Power per repair anvil
 			#Range: 0 ~ 64000
 			anvil = 250
@@ -319,9 +314,6 @@
 			#Power per tick while in use
 			#Range: 0 ~ 64000
 			structure = 10
-			#Power per recipe melter
-			#Range: 0 ~ 64000
-			melter = 5000
 			#Power per use harvester
 			#Range: 0 ~ 64000
 			harvester = 250
@@ -340,9 +332,6 @@
 			#Power per use user
 			#Range: 0 ~ 64000
 			user = 50
-			#Power per recipe solidifier
-			#Range: 0 ~ 64000
-			solidifier = 5000
 
 		[cyclic.energy.generator_food]
 			#RF energy per tick generated while burning food in this machine
@@ -351,17 +340,6 @@
 			#This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.
 			#Range: 1 ~ 6400
 			ticks_per_food = 100
-
-		#####################################################################################
-		# Fuel gained by consuming items
-		#####################################################################################
-		[cyclic.energy.fuel]
-			#Power gained burning one of this
-			#Range: 1 ~ 64000
-			peat_fuel_enriched = 1024
-			# Power gained burning one of this
-			#Range: 1 ~ 64000
-			peat_fuel = 256
 
 		[cyclic.energy.generator_fuel]
 			#RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks

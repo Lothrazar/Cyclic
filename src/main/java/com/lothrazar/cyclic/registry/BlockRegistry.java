@@ -195,6 +195,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> GILDED_BOOKSHELF = BLOCKS.register("gilded_bookshelf", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   public static final RegistryObject<Block> XP_DRAIN = BLOCKS.register("xp_drain", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   public static final RegistryObject<Block> CRUSHING_MACERATOR = BLOCKS.register("crushing_macerator", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> TELEPORTER = BLOCKS.register("teleporter", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> CLEAR_GLASS = BLOCKS.register("clear_glass", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   //gold trapdoor 
   //gold door 
   @ObjectHolder(ModCyclic.MODID + ":solidifier")

@@ -164,25 +164,25 @@ public class ConfigRegistry {
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
     CFG.comment(WALL, " Enchantment related configs", WALL)
         .push("enchantment");
-    EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.ID, true);
-    EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.ID, true);
-    EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.ID, true);
-    EnchantCurse.CFG = CFG.comment("Set false to disable enchantment").define(EnchantCurse.ID, true);
-    EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
-    EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.ID, true);
-    EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.ID, true);
-    EnchantLaunch.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(EnchantLaunch.ID, true);
-    EnchantLifeLeech.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLifeLeech.ID, true);
-    EnchantMagnet.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMagnet.ID, true);
-    EnchantMultishot.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMultishot.ID, true);
-    EnchantPearl.CFG = CFG.comment("Set false to disable enchantment").define(EnchantPearl.ID, true);
-    EnchantQuickdraw.CFG = CFG.comment("Set false to disable enchantment").define(EnchantQuickdraw.ID, true);
-    EnchantReach.CFG = CFG.comment("Set false to disable enchantment").define(EnchantReach.ID, true);
-    EnchantStep.CFG = CFG.comment("Set false to disable enchantment").define(EnchantStep.ID, true);
-    EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.ID, true);
-    EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.ID, true);
-    EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.ID, true);
-    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList("beheadingEntityMHF", BEHEADING,
+    EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.ID + ".enabled", true);
+    EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.ID + ".enabled", true);
+    EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.ID + ".enabled", true);
+    EnchantCurse.CFG = CFG.comment("Set false to disable enchantment").define(EnchantCurse.ID + ".enabled", true);
+    EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID + ".enabled", true);
+    EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.ID + ".enabled", true);
+    EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.ID + ".enabled", true);
+    EnchantLaunch.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(EnchantLaunch.ID + ".enabled", true);
+    EnchantLifeLeech.CFG = CFG.comment("Set false to disable enchantment").define(EnchantLifeLeech.ID + ".enabled", true);
+    EnchantMagnet.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMagnet.ID + ".enabled", true);
+    EnchantMultishot.CFG = CFG.comment("Set false to disable enchantment").define(EnchantMultishot.ID + ".enabled", true);
+    EnchantPearl.CFG = CFG.comment("Set false to disable enchantment").define(EnchantPearl.ID + ".enabled", true);
+    EnchantQuickdraw.CFG = CFG.comment("Set false to disable enchantment").define(EnchantQuickdraw.ID + ".enabled", true);
+    EnchantReach.CFG = CFG.comment("Set false to disable enchantment").define(EnchantReach.ID + ".enabled", true);
+    EnchantStep.CFG = CFG.comment("Set false to disable enchantment").define(EnchantStep.ID + ".enabled", true);
+    EnchantTraveller.CFG = CFG.comment("Set false to disable enchantment").define(EnchantTraveller.ID + ".enabled", true);
+    EnchantVenom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantVenom.ID + ".enabled", true);
+    EnchantXp.CFG = CFG.comment("Set false to disable enchantment").define(EnchantXp.ID + ".enabled", true);
+    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(EnchantBeekeeper.ID + ".EntityMHF", BEHEADING,
         it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL)
@@ -213,7 +213,6 @@ public class ConfigRegistry {
     CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
         .push("cost");
     TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager", 50, 0, 64000);
-    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("disenchanter", 2500, 0, 64000);
     TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 50, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
     TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper", 50, 0, 64000);
@@ -229,12 +228,6 @@ public class ConfigRegistry {
     TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon", 0, 0, 64000);
     CFG.pop(); //cost
     CFG.pop(); //energy
-    CFG.comment(WALL, "Fluid cost for various machines", WALL)
-        .push("fluid");
-    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost of magma fluid per action").defineInRange("anvil_magma", 100, 1, 64000);
-    TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("disenchanter", 100, -1000, 16000);
-    TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("void_anvil", 25, 0, 16000);
-    CFG.pop(); //fluid
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 99);
     //
@@ -251,18 +244,13 @@ public class ConfigRegistry {
         "but might result in small dark spots between torches").defineInRange("light_target", 10, 1, 14);
     AutoCaveTorchItem.PREFER_WALLS = CFG.comment("Whether to prioritise placing torches on walls").define("prefer_walls", true);
     AutoCaveTorchItem.PREFER_LEFT_WALL = CFG.comment("Which wall to place torches on when digging a 1-wide tunnel", "True means left, False means right").define("prefer_left_wall", false);
-    CFG.pop();
-    //
+    CFG.pop(); // caving_torch
     CFG.pop(); // charms
-    //
-    //
-    CFG.comment(WALL, " Edible chorus settings", WALL).push("chorus");
-    EdibleFlightItem.TICKS = CFG.comment("Seconds of flight per chorus_flight").defineInRange("ticks", 20 * 60, 1, 20 * 1000);
-    //
-    EdibleSpecItem.TICKS = CFG.comment("Seconds of noClip per chorus_spectral").defineInRange("ticks", 20 * 30, 1, 20 * 1000);
-    CFG.pop(); // chorus
-    //
-    MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball_ignore_list", MBALL_IGNORE, it -> it instanceof String);
+    //    CFG.comment(WALL, " Edible chorus settings", WALL).push("chorus");
+    EdibleFlightItem.TICKS = CFG.comment("Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", 20 * 60, 1, 20 * 1000);
+    EdibleSpecItem.TICKS = CFG.comment("Seconds of noClip per chorus_spectral").defineInRange("chorus_spectral.ticks", 20 * 30, 1, 20 * 1000);
+    //    CFG.pop(); // chorus
+    MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball.ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");
     TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 256, 8, 1024);
     CFG.pop();
@@ -285,7 +273,18 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL)
         .push("blocks");
-    CFG.comment("Ender shelf settings").push("sound");
+    //
+    CFG.push("anvil_magma");
+    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost of magma fluid per action").defineInRange("fluid_cost", 100, 1, 64000);
+    CFG.pop();
+    CFG.push("disenchanter");
+    TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("fluid_cost", 100, -1000, 16000);
+    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("energy_cost", 2500, 0, 64000);
+    CFG.pop();
+    CFG.push("anvil_void");
+    TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, 16000);
+    CFG.pop();
+    CFG.comment("Settings").push("sound");
     BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
     CFG.comment("Ender shelf settings").push("ender_shelf");
@@ -308,7 +307,6 @@ public class ConfigRegistry {
     TileEye.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")
         .defineInRange("frequency", 5, 1, 20);
     CFG.pop();
-    //
     CFG.comment("Uncrafter settings").push("uncrafter");
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
         + "For example, if false it will not uncraft damaged or enchanted items")
@@ -321,6 +319,10 @@ public class ConfigRegistry {
     CFG.pop(); //blocks
     CFG.pop(); //ROOT
     COMMON_CONFIG = CFG.build();
+    initClientConfig();
+  }
+
+  private static void initClientConfig() {
     CFGC.comment(WALL, "Client-side properties", WALL)
         .push(ModCyclic.MODID);
     CFGC.comment(WALL, "Block Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
