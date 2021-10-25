@@ -145,7 +145,7 @@ public class TileFisher extends TileEntityBase implements MenuProvider {
           .create(LootContextParamSets.FISHING);
       List<ItemStack> lootDrops = table.getRandomItems(lootContext);
       if (lootDrops != null && lootDrops.size() > 0) {
-        UtilItemStack.damageItem(fishingRod);
+        UtilItemStack.damageItem(null, fishingRod);
         UtilItemStack.drop(world, center, lootDrops);
       }
     }

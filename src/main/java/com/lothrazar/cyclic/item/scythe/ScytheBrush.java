@@ -53,7 +53,7 @@ public class ScytheBrush extends ItemBase {
       PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
     }
     context.getPlayer().swing(context.getHand());
-    UtilItemStack.damageItem(context.getItemInHand());
+    UtilItemStack.damageItem(context.getPlayer(), context.getItemInHand());
     return super.useOn(context);
   }
 }

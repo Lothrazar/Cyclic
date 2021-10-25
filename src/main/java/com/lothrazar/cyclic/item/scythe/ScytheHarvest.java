@@ -37,7 +37,7 @@ public class ScytheHarvest extends ItemBase {
       TileHarvester.tryHarvestSingle(context.getLevel(), p);
     }
     context.getPlayer().swing(context.getHand());
-    UtilItemStack.damageItem(context.getItemInHand());
+    UtilItemStack.damageItem(context.getPlayer(), context.getItemInHand());
     return super.useOn(context);
   }
 }

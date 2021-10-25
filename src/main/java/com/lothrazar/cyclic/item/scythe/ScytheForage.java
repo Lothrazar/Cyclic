@@ -52,7 +52,7 @@ public class ScytheForage extends ItemBase {
       PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
     }
     context.getPlayer().swing(context.getHand());
-    UtilItemStack.damageItem(context.getItemInHand());
+    UtilItemStack.damageItem(context.getPlayer(), context.getItemInHand());
     return super.useOn(context);
   }
 }
