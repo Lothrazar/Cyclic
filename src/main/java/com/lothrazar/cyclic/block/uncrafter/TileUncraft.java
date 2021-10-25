@@ -48,8 +48,16 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   public static ConfigValue<List<? extends String>> IGNORELIST;
   public static ConfigValue<List<? extends String>> IGNORELIST_RECIPES;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  ItemStackHandler inputSlots = new ItemStackHandler(1);
-  ItemStackHandler outputSlots = new ItemStackHandler(8 * 2);
+  ItemStackHandler inputSlots = new ItemStackHandler(1){
+	  protected void onContentsChanged(int slot) {
+			TileUncraft.this.status = UncraftStatusEnum.EMPTY;  
+	  };
+  };
+  ItemStackHandler outputSlots = new ItemStackHandler(8 * 2) {
+	  protected void onContentsChanged(int slot) {
+			if(TileUncraft.this.status == UncraftStatusEnum.NOROOM) TileUncraft.this.status = UncraftStatusEnum.EMPTY;  
+	  };
+  };
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -64,6 +72,7 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     ItemStack dropMe = inputSlots.getStackInSlot(0).copy();
     if (dropMe.isEmpty()) {
       this.status = UncraftStatusEnum.EMPTY;
+      timer = TIMER.get();
       return;
     }
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -76,8 +85,13 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     }
     setLitProperty(true);
     //only tick down if we have enough energy and have a valid item
-    timer--;
-    if (timer > 0) {
+    
+    if(this.status != UncraftStatusEnum.EMPTY && this.status != UncraftStatusEnum.MATCH) {
+    	this.timer = TIMER.get();
+    	return;
+    }
+    
+    if (--timer > 0) {
       return;
     }
     timer = TIMER.get();
@@ -157,14 +171,13 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     //do we have space for out?
     boolean simulate = true;
     for (ItemStack r : result) {
-      ItemStack rOut = ItemStack.EMPTY;
+      ItemStack rOut = r;
       for (int i = 0; i < outputSlots.getSlots(); i++) {
-        if (!r.isEmpty()) {
-          rOut = ItemStack.EMPTY;
-          rOut = outputSlots.insertItem(i, r.copy(), simulate);
+        if (!rOut.isEmpty()) {
+          rOut = outputSlots.insertItem(i, rOut, simulate);
         }
       }
-      if (!rOut.isEmpty()) {
+      if (!rOut.isEmpty()) { //This doesn't actually work - it will succeed if there is so much as 1 open slot. But idk how to fix it without being lag-inducing.
         this.status = UncraftStatusEnum.NOROOM;
         return false;
       }
