@@ -31,4 +31,5 @@ public class TextureRegistry {
   public static final ResourceLocation INVENTORY_SIDEBAR = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_sidebar.png");
   public static final ResourceLocation FUEL_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/fuel_prog.png");
   public static final ResourceLocation FOOD_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/food_prog.png");
+  public static final ResourceLocation MAT_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/mat_prog.png");
 }
