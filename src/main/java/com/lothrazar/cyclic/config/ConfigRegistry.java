@@ -162,8 +162,7 @@ public class ConfigRegistry {
 
   private static void initConfig() {
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
-    CFG.comment(WALL, " Enchantment related configs", WALL)
-        .push("enchantment");
+    CFG.comment(WALL, " Enchantment related configs", WALL).push("enchantment"); ////////////////////////////////////////////////////////////////// enchantment
     EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.ID + ".enabled", true);
     EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.ID + ".enabled", true);
     EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.ID + ".enabled", true);
@@ -185,8 +184,7 @@ public class ConfigRegistry {
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(EnchantBeekeeper.ID + ".EntityMHF", BEHEADING,
         it -> it instanceof String);
     CFG.pop(); //enchantment
-    CFG.comment(WALL, " Worldgen settings  ", WALL)
-        .push("worldgen");
+    CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     CYAN_GENERATES = CFG.comment("Does this generate in the world").define("flower_cyan", true);
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
@@ -202,33 +200,7 @@ public class ConfigRegistry {
         .push("logging");
     LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
-    CFG.comment(WALL, " Energy related configs for machines and items", WALL)
-        .push("energy");
-    TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
-        .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
-    TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
-        .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
-    TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
-        .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
-    CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
-        .push("cost");
-    TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager", 50, 0, 64000);
-    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 50, 0, 64000);
-    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
-    TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper", 50, 0, 64000);
-    TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester", 50, 0, 64000);
-    TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester", 250, 0, 64000);
-    TilePotion.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon", 10, 0, 64000);
-    TileMiner.POWERCONF = CFG.comment("Power per use miner").defineInRange("miner", 10, 0, 64000);
-    TileUncraft.POWERCONF = CFG.comment("Power per use uncraft").defineInRange("uncraft", 1000, 0, 64000);
-    TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid", 500, 0, 64000);
-    TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm", 500, 0, 64000);
-    TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter", 500, 0, 64000);
-    TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure", 10, 0, 64000);
-    TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon", 0, 0, 64000);
-    CFG.pop(); //cost
-    CFG.pop(); //energy
-    CFG.comment(WALL, " Item specific configs", WALL).push("items");
+    CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 99);
     //
     CFG.comment(WALL, " Settings for varios charms (curios)", WALL).push("charms");
@@ -245,11 +217,9 @@ public class ConfigRegistry {
     AutoCaveTorchItem.PREFER_WALLS = CFG.comment("Whether to prioritise placing torches on walls").define("prefer_walls", true);
     AutoCaveTorchItem.PREFER_LEFT_WALL = CFG.comment("Which wall to place torches on when digging a 1-wide tunnel", "True means left, False means right").define("prefer_left_wall", false);
     CFG.pop(); // caving_torch
-    CFG.pop(); // charms
-    //    CFG.comment(WALL, " Edible chorus settings", WALL).push("chorus");
+    CFG.pop(); // charms 
     EdibleFlightItem.TICKS = CFG.comment("Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", 20 * 60, 1, 20 * 1000);
     EdibleSpecItem.TICKS = CFG.comment("Seconds of noClip per chorus_spectral").defineInRange("chorus_spectral.ticks", 20 * 30, 1, 20 * 1000);
-    //    CFG.pop(); // chorus
     MBALL_IGNORE_LIST = CFG.comment("Entity ids that cannot be picked up with the Monster all").defineList("monster_ball.ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment("Wand settings").push("teleport_wand");
     TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 256, 8, 1024);
@@ -258,25 +228,37 @@ public class ConfigRegistry {
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
         .defineList("disable_pickup", TRANSPORTBAG, it -> it instanceof String);
     CFG.pop();
-    CFG.comment("Peat blocks").push("peat");
-    PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
-        .defineInRange("conversionChance",
-            0.08000000000000F,
-            0.0010000000000F, 1F);
-    CFG.pop(); //peat
     CFG.comment("Heart items").push("heart");
-    HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart")
-        .defineInRange("experience", 500, 0, 99999);
-    HeartItem.MAX = CFG.comment("Maximum number of hearts that can be attained (including initial 10)")
-        .defineInRange("maximum", 100, 1, 200);
+    HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
+    HeartItem.MAX = CFG.comment("Maximum number of hearts that can be attained (including initial 10)").defineInRange("maximum", 100, 1, 200);
     CFG.pop(); //heart
     CFG.pop(); //items
-    CFG.comment(WALL, " Block specific configs", WALL)
-        .push("blocks");
-    //
-    CFG.push("anvil_magma");
-    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost of magma fluid per action").defineInRange("fluid_cost", 100, 1, 64000);
-    CFG.pop();
+    CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
+    TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
+        .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
+    TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
+        .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
+    TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
+        .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
+    TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, 64000);
+    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user.energy_cost", 0, 0, 64000);
+    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, 64000);
+    TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper.energy_cost", 50, 0, 64000);
+    TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester.energy_cost", 50, 0, 64000);
+    TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester.energy_cost", 250, 0, 64000);
+    TilePotion.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon.energy_cost", 10, 0, 64000);
+    TileMiner.POWERCONF = CFG.comment("Power per use miner").defineInRange("miner.energy_cost", 10, 0, 64000);
+    TileUncraft.POWERCONF = CFG.comment("Power per use uncraft").defineInRange("uncraft.energy_cost", 1000, 0, 64000);
+    TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid.energy_cost", 500, 0, 64000);
+    TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm.energy_cost", 500, 0, 64000);
+    TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter.energy_cost", 500, 0, 64000);
+    TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure.energy_cost", 10, 0, 64000);
+    TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon.energy_cost", 0, 0, 64000);
+    PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
+        .defineInRange("peat.conversion_chance",
+            0.08000000000000F,
+            0.0010000000000F, 1F);
+    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost of magma fluid per action").defineInRange("anvil_magma.fluid_cost", 100, 1, 64000);
     CFG.push("disenchanter");
     TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("fluid_cost", 100, -1000, 16000);
     TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("energy_cost", 2500, 0, 64000);
@@ -287,7 +269,7 @@ public class ConfigRegistry {
     CFG.comment("Settings").push("sound");
     BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
-    CFG.comment("Ender shelf settings").push("ender_shelf");
+    CFG.push("ender_shelf");
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
@@ -307,7 +289,7 @@ public class ConfigRegistry {
     TileEye.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")
         .defineInRange("frequency", 5, 1, 20);
     CFG.pop();
-    CFG.comment("Uncrafter settings").push("uncrafter");
+    CFG.push("uncrafter");
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
         + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", false);

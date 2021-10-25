@@ -8,7 +8,7 @@
 	},
 	{
     "tag": "forge:slimeballs"
-}},
+}],
 	"mix": {
 		"fluid": "cyclic:magma",
 		"count": 150

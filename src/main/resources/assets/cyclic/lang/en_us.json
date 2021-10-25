@@ -1393,9 +1393,8 @@
   "block.cyclic.peat_baked": "Saturated Peat Deposit",
   "block.cyclic.peat_baked.tooltip": "Wet peat ready to be harvested and smelted",
   "block.cyclic.peat_baked.guide": "Saturated Peat Deposits form over time when Dry Peat Bog is placed next to water. Once harvested, it can be smelted to create fuel for the Peat Generator.",
-  "block.cyclic.peat_generator": "Peat Generator",
-  "block.cyclic.peat_generator.tooltip": "Generate power",
-  "block.cyclic.peat_generator.guide": "The Peat Generator can burn either Peat or Enriched Peat to generate energy.",
+ 
+
   "block.cyclic.generator_fuel": "Combustion Generator",
   "block.cyclic.generator_fuel.tooltip": "Generate power from anything that burns as fuel in Furnaces",
   "block.cyclic.generator_fuel.guide": "Generate power from anything that burns as fuel in Furnaces.  Burn time is the same number of ticks as the furnace time, for example 1 coal = 1600 ticks.  Energy per ticks is in the config file, defaults to 80 RF/t",

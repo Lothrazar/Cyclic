@@ -1,6 +1,6 @@
 {
   "type": "cyclic:solidifier",
-  "ingredients": {
+  "ingredients": [{
     "item": "minecraft:dead_bubble_coral"
   },
    {

@@ -7,13 +7,13 @@
   ],
   "key": {
     "i": {
-      "item": "minecraft:gold_ingot"
+      "item": "minecraft:copper_ingot"
     },
     "p": {
       "item": "minecraft:dispenser"
     },
     "f": {
-      "item": "cyclic:peat_generator"
+      "item": "cyclic:generator_item"
     },
     "o": {
       "item": "minecraft:observer"
