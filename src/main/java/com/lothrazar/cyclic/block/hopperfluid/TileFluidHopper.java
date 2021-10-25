@@ -33,6 +33,16 @@ public class TileFluidHopper extends TileEntityBase {
   }
 
   @Override
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
+  }
+
+  @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return LazyOptional.of(() -> tank).cast();

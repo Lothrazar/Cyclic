@@ -173,6 +173,12 @@ public class TileAnvilMagma extends TileEntityBase implements MenuProvider {
     }
   }
 
+  @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

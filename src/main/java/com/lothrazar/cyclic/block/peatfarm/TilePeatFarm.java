@@ -204,6 +204,12 @@ public class TilePeatFarm extends TileEntityBase implements MenuProvider {
     return outer;
   }
 
+  @Override
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
+  }
+
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

@@ -391,6 +391,10 @@ public abstract class TileEntityBase extends BlockEntity implements Container {
     this.needsRedstone = value % 2;
   }
 
+  public FluidStack getFluid() {
+    return FluidStack.EMPTY;
+  }
+
   public void setFluid(FluidStack fluid) {}
 
   /************************** IInventory needed for IRecipe **********************************/

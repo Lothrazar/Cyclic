@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,7 +22,13 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileTrash extends TileEntityBase {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
-  ItemStackHandler inventory = new ItemStackHandler(1);
+  ItemStackHandler inventory = new ItemStackHandler(1) {
+
+    @Override
+    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+      return ItemStack.EMPTY;
+    }
+  };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);

@@ -123,6 +123,11 @@ public class TileSprinkler extends TileEntityBase {
   }
 
   @Override
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
+  }
+
+  @Override
   public void setField(int field, int value) {}
 
   @Override

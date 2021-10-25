@@ -173,6 +173,11 @@ public class TileExpPylon extends TileEntityBase implements MenuProvider {
     tank.setFluid(fluid);
   }
 
+  @Override
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
+  }
+
   public int getStoredXp() {
     return tank.getFluidAmount() / FLUID_PER_EXP;
   }

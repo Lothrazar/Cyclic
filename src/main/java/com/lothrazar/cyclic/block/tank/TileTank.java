@@ -32,7 +32,7 @@ public class TileTank extends TileEntityBase {
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTank e) {
-    e.tick();
+    //    e.tick();
   }
 
   @Override
@@ -78,9 +78,5 @@ public class TileTank extends TileEntityBase {
     if (below != null && below instanceof TileTank) {
       UtilFluid.tryFillPositionFromTank(level, this.worldPosition.below(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
     }
-    //TESTING ONLY  
-    //    if (below != null && below instanceof TileCableFluid) {
-    //      UtilFluid.tryFillPositionFromTank(world, this.pos.down(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
-    //    }
   }
 }
