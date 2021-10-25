@@ -109,7 +109,6 @@ public class EnderBookItem extends ItemBase {
             UtilEntity.enderTeleportEvent(p, worldIn, loc.getPos());
           }
           else if (!worldIn.isRemote) {
-            //diff dim 
             UtilEntity.dimensionTeleport((ServerPlayerEntity) p, (ServerWorld) worldIn, loc);
           }
           // done

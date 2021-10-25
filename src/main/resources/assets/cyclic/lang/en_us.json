@@ -186,7 +186,7 @@
     
     "item.cyclic.location": "GPS Data Card",
     "item.cyclic.location.tooltip": "Saves the location of a block",
-    "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.  Markers with saved locations can be used in multiple machines from this mod such as the Shape Builder.",
+    "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.  Crouch to select offset position instead of precise position.  Markers with saved locations can be used in multiple machines from this mod such as the Shape Builder.",
     "item.location.saved": "Saved ",
     
     "block.cyclic.computer_shape":"Shape Computer",
@@ -577,7 +577,7 @@
     "guide.title": "Cyclic Guidebook",
     "guide.landing_text": "Learn about everything Cyclic adds!",
 
-    "item.cyclic.ender_book.guide": "A magical book that stores your current location as a waypoint.   Crouch and scroll to pick location.  Crouch and use to teleport.  Jump to cancel the port.  Repair with energy or ender pearls",
+    "item.cyclic.ender_book.guide": "A magical book that stores your current location as a waypoint.   Crouch and scroll to pick location (break the block or you will TP inside it).  Crouch and use to teleport.  Jump to cancel the port.  Repair with energy or ender pearls",
     "item.cyclic.ender_book": "Ender Book",
     "item.cyclic.ender_book.countdown": "Teleporting in ",
     "item.cyclic.ender_book.start": "Teleporting... (jump to cancel)  ",

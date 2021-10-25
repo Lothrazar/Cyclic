@@ -11,6 +11,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.ITeleporter;
@@ -27,13 +28,26 @@ public class DimensionTransit implements ITeleporter {
 
   @Override
   public PortalInfo getPortalInfo(Entity entity, ServerWorld destWorld, Function<ServerWorld, PortalInfo> defaultPortalInfo) {
-    return new PortalInfo(new Vector3d(target.getX(), target.getY(), target.getZ()), Vector3d.ZERO, entity.rotationYaw, entity.rotationPitch);
+    BlockPos myPos = moveToSafeCoords(destWorld, target.getPos());
+    return new PortalInfo(new Vector3d(myPos.getX() + 0.5F, myPos.getY() + 0.5F, myPos.getZ() + 0.5F), Vector3d.ZERO, entity.rotationYaw, entity.rotationPitch);
+  }
+
+  private BlockPos moveToSafeCoords(ServerWorld world, BlockPos pos) {
+    int tries = 10;
+    while (tries > 0) {
+      tries--;
+      if (world.getBlockState(pos).isSolid()) {
+        pos = pos.up();
+      }
+    }
+    return pos;
   }
 
   @Override
   public Entity placeEntity(Entity newEntity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
     if (newEntity instanceof LivingEntity) {
       ((LivingEntity) newEntity).addPotionEffect(new EffectInstance(Effects.RESISTANCE, 200, 200, false, false));
+      ((LivingEntity) newEntity).addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20, 20, false, false));
     }
     newEntity.fallDistance = 0;
     return repositionEntity.apply(false); //Must be false or we fall on vanilla. thanks /Mrbysco/TelePastries/
