@@ -32,8 +32,8 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     energy.guiTop = fluid.guiTop = guiTop;
     energy.visible = TileFluidCollect.POWERCONF.get() > 0;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     btnRender = addButton(new ButtonMachineField(x, y + 20, TileFluidCollect.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));

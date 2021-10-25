@@ -26,8 +26,8 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
   @Override
   public void init() {
     super.init();
-    int x = guiLeft + 8;
-    int y = guiTop + 8;
+    int x = guiLeft + 6;
+    int y = guiTop + 6;
     int f = TileItemCollector.Fields.REDSTONE.ordinal();
     btnRedstone = addButton(new ButtonMachineField(x, y, f, container.tile.getPos()));
     f = TileItemCollector.Fields.RENDER.ordinal();

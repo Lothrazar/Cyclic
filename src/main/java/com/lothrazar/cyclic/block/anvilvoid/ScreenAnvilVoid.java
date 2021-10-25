@@ -26,8 +26,8 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
     fluid.guiLeft = guiLeft;
     fluid.guiTop = guiTop;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileAnvilVoid.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 

@@ -30,8 +30,8 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     energy.visible = TilePotion.POWERCONF.get() > 0;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TilePotion.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     y += 51;
     btnEntity = addButton(new ButtonMachine(x, y, 60, 20, "", (p) -> {

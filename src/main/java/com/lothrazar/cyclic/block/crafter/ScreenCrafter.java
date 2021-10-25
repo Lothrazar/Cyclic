@@ -56,8 +56,8 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
     energy.guiLeft = progress.guiLeft = guiLeft;
     energy.guiTop = progress.guiTop = guiTop;
     energy.visible = TileCrafter.POWERCONF.get() > 0;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileCrafter.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 

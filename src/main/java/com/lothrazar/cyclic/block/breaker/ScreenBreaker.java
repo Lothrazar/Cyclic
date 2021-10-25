@@ -19,8 +19,8 @@ public class ScreenBreaker extends ScreenBase<ContainerBreaker> {
   public void init() {
     super.init();
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileBreaker.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 
