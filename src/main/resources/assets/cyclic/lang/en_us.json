@@ -632,6 +632,7 @@
     "item.cyclic.tile_transporter.inventory": "Only works on inventories",
     "item.cyclic.tile_transporter_empty": "Empty Sack of Holding",
     "item.cyclic.tile_transporter_empty.tooltip": "Transport a container with its contents",
+    "item.cyclic.tile_transporter_empty.guide": "Right click on any machine or container with the Sack of Holding to pick it up.  Right click on any block with a filled Sack of Holding to place the machine again.",
    
     "item.crafting_food.guide": "Unlock a permanent 3x3 crafting table inside your inventory.  Once unlocked, you can open it with a keybinding or with a button in your inventory.",
     "item.crafting_food": "Inventory Crafting Table",
