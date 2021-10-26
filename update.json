@@ -1,8 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.5.6",
-		"1.16.5-recommended": "1.5.6"
+		"1.16.5-latest": "1.5.8",
+		"1.16.5-recommended": "1.5.8"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -65,5 +65,6 @@
 		,"1.5.5":"Fix Sprinkler not growing crops and increased growth rate.  Fix Solidifier not accepting fluids that were already correctly tagged such as forge:honey.  Fix some incorrect JEI Info guide tab text. "
 		,"1.5.6":"All cables now build correctly with Construction Wands mod.  Fixed fluid levels in GUI screens not showing contained values (desync of disenchanter, etc). Excavate enchant will no longer damage unbreakable tools (example: Supremium Paxel). Changed order of operations for EnderBook dimension transit (call player.changeDimension and attempt to allow chunk to load so player wont fall thru blocks). "
 		,"1.5.7":"GPS Card allows you to pick the empty offset position if you crouch while using.  Ender Book now tries to move you up if you are about to TP into a solid block, also it applies slowfall for 1 second after landing. "
+		,"1.5.8":"Merge #1951 Gui Facelift with new Progress bar. Fix bugfix where the evaporation generator would only burn for 1 tick unless it got more than 1 bucket inserted at a time : Shadows-of-fire.  "
 	}
 }
