@@ -208,16 +208,18 @@ public class ItemRegistry {
   public static final RegistryObject<Item> NETHERTIE_CHAIN = ITEMS.register("netherite_chain", () -> new BlockItem(BlockRegistry.NETHERTIE_CHAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NETHERITE_PRESSURE_PLATE = ITEMS.register("netherite_pressure_plate", () -> new BlockItem(BlockRegistry.NETHERITE_PRESSURE_PLATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NETHERITE_LANTERN = ITEMS.register("netherite_lantern", () -> new BlockItem(BlockRegistry.NETHERITE_LANTERN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SPONGE_LAVA = ITEMS.register("sponge_lava", () -> new BlockItem(BlockRegistry.SPONGE_LAVA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> GILDED_BOOKSHELF = ITEMS.register("gilded_bookshelf", () -> new BlockItem(BlockRegistry.GILDED_BOOKSHELF.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> XP_DRAIN = ITEMS.register("xp_drain", () -> new BlockItem(BlockRegistry.XP_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CRUSHING_MACERATOR = ITEMS.register("crushing_macerator", () -> new BlockItem(BlockRegistry.CRUSHING_MACERATOR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> TELEPORTER = ITEMS.register("teleporter", () -> new BlockItem(BlockRegistry.TELEPORTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CLEAR_GLASS = ITEMS.register("clear_glass", () -> new BlockItem(BlockRegistry.CLEAR_GLASS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
   @ObjectHolder(ModCyclic.MODID + ":biomass")
   public static Item biomass;
-  @ObjectHolder(ModCyclic.MODID + ":peat_fuel")
-  public static Item peat_fuel;
-  @ObjectHolder(ModCyclic.MODID + ":peat_fuel_enriched")
-  public static Item peat_fuel_enriched;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
   public static Item spawner_seeker;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
