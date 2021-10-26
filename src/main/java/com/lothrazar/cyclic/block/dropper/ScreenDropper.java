@@ -28,8 +28,8 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     energy.visible = TileDropper.POWERCONF.get() > 0;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileDropper.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     y += 20;
     btnRender = addButton(new ButtonMachineField(x, y, TileDropper.Fields.RENDER.ordinal(),

@@ -31,8 +31,8 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
     fluid.guiTop = energy.guiTop = guiTop;
     energy.visible = TilePeatFarm.POWERCONF.get() > 0;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TilePeatFarm.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     btnRender = addButton(new ButtonMachineField(x, y + 20, TilePeatFarm.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));

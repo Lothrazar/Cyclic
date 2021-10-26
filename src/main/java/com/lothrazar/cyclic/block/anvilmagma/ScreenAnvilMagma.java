@@ -24,8 +24,8 @@ public class ScreenAnvilMagma extends ScreenBase<ContainerAnvilMagma> {
     int x, y;
     fluid.guiLeft = guiLeft;
     fluid.guiTop = guiTop;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileAnvilMagma.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 

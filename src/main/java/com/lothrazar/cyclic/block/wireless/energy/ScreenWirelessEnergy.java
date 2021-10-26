@@ -24,8 +24,8 @@ public class ScreenWirelessEnergy extends ScreenBase<ContainerWirelessEnergy> {
     energy.guiLeft = guiLeft;
     energy.guiTop = guiTop;
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileWirelessEnergy.Fields.REDSTONE.ordinal(), container.tile.getPos()));
   }
 

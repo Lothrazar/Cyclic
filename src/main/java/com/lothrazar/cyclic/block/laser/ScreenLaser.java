@@ -28,8 +28,8 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
   public void init() {
     super.init();
     int x, y;
-    x = guiLeft + 8;
-    y = guiTop + 8;
+    x = guiLeft + 6;
+    y = guiTop + 6;
     btnRedstone = addButton(new ButtonMachineField(x, y, TileLaser.Fields.REDSTONE.ordinal(), container.tile.getPos()));
     //
     y += 26;
