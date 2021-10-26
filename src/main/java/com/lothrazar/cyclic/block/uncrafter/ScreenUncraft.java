@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
 import java.util.Arrays;
-
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
@@ -59,17 +58,17 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
       blit(ms, 125, 15, 228, 452, 24, 24, 512, 512);
     }
   }
-  
+
   @Override
   protected void renderHoveredTooltip(MatrixStack matrixStack, int x, int y) {
     super.renderHoveredTooltip(matrixStack, x, y);
-	if(this.isPointInRegion(125, 15, 24, 24, x, y)) {
-	  UncraftStatusEnum status = container.tile.getStatus();
-	  if (status != UncraftStatusEnum.EMPTY && status != UncraftStatusEnum.MATCH) {
-		TranslationTextComponent comp = new TranslationTextComponent(ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
-		GuiUtils.drawHoveringText(matrixStack, Arrays.asList(comp), x, y, this.width, this.height, 0xFFFFFF, font);
-	  }
-	}
+    if (this.isPointInRegion(125, 15, 24, 24, x, y)) {
+      UncraftStatusEnum status = container.tile.getStatus();
+      if (status != UncraftStatusEnum.EMPTY && status != UncraftStatusEnum.MATCH) {
+        TranslationTextComponent comp = new TranslationTextComponent(ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
+        GuiUtils.drawHoveringText(matrixStack, Arrays.asList(comp), x, y, this.width, this.height, 0xFFFFFF, font);
+      }
+    }
   }
 
   @Override

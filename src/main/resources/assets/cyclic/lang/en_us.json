@@ -186,7 +186,7 @@
     
     "item.cyclic.location": "GPS Data Card",
     "item.cyclic.location.tooltip": "Saves the location of a block",
-    "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker.  Crouch to select offset position instead of precise position.  Markers with saved locations can be used in multiple machines from this mod such as the Shape Builder.",
+    "item.cyclic.location.guide": "Right click on a block with the GPS Marker in hand to save its position to the Marker; crouch to use on inventories/machines. Markers with saved locations can be used in multiple machines from this mod such as the Shape Builder, and items like Ender Book. Use while jumping to select the offset of the targeted block instead. ",
     "item.location.saved": "Saved ",
     
     "block.cyclic.computer_shape":"Shape Computer",

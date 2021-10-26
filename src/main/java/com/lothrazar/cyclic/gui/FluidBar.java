@@ -95,15 +95,15 @@ public class FluidBar {
       renderTooltip(ms, mouseX, mouseY, current);
     }
   }
-  
+
   public void renderTooltip(MatrixStack ms, int mouseX, int mouseY, FluidStack current) {
-	String tt = emtpyTooltip;
-	if (current != null && !current.isEmpty()) {
-	  tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
-	}
-	List<ITextComponent> list = new ArrayList<>();
-	list.add(new TranslationTextComponent(tt));
-	parent.func_243308_b(ms, list, mouseX, mouseY);
+    String tt = emtpyTooltip;
+    if (current != null && !current.isEmpty()) {
+      tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
+    }
+    List<ITextComponent> list = new ArrayList<>();
+    list.add(new TranslationTextComponent(tt));
+    parent.func_243308_b(ms, list, mouseX, mouseY);
   }
 
   public int getX() {

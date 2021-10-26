@@ -35,5 +35,4 @@ public class TextureRegistry {
   public static final ResourceLocation LAVA_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/lava_prog.png");
   public static final ResourceLocation ARROW = new ResourceLocation(ModCyclic.MODID, "textures/gui/arrow.png");
   public static final ResourceLocation SAW = new ResourceLocation(ModCyclic.MODID, "textures/gui/saw.png");
-
 }

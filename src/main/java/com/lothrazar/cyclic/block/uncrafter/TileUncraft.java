@@ -48,15 +48,21 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
   public static ConfigValue<List<? extends String>> IGNORELIST;
   public static ConfigValue<List<? extends String>> IGNORELIST_RECIPES;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  ItemStackHandler inputSlots = new ItemStackHandler(1){
-	  protected void onContentsChanged(int slot) {
-			TileUncraft.this.status = UncraftStatusEnum.EMPTY;  
-	  };
+  ItemStackHandler inputSlots = new ItemStackHandler(1) {
+
+    @Override
+    protected void onContentsChanged(int slot) {
+      TileUncraft.this.status = UncraftStatusEnum.EMPTY;
+    };
   };
   ItemStackHandler outputSlots = new ItemStackHandler(8 * 2) {
-	  protected void onContentsChanged(int slot) {
-			if(TileUncraft.this.status == UncraftStatusEnum.NOROOM) TileUncraft.this.status = UncraftStatusEnum.EMPTY;  
-	  };
+
+    @Override
+    protected void onContentsChanged(int slot) {
+      if (TileUncraft.this.status == UncraftStatusEnum.NOROOM) {
+        TileUncraft.this.status = UncraftStatusEnum.EMPTY;
+      }
+    };
   };
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
@@ -85,12 +91,10 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
     }
     setLitProperty(true);
     //only tick down if we have enough energy and have a valid item
-    
-    if(this.status != UncraftStatusEnum.EMPTY && this.status != UncraftStatusEnum.MATCH) {
-    	this.timer = TIMER.get();
-    	return;
+    if (this.status != UncraftStatusEnum.EMPTY && this.status != UncraftStatusEnum.MATCH) {
+      this.timer = TIMER.get();
+      return;
     }
-    
     if (--timer > 0) {
       return;
     }

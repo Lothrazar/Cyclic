@@ -58,7 +58,6 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     this.renderHoveredTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getEnergy());
     progress.renderHoveredToolTip(ms, mouseX, mouseY, container.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
-    
     ms.push();
     ms.translate(this.width / 2, this.height / 2, 0);
     ms.rotate(Vector3f.ZP.rotationDegrees(-90));
@@ -66,8 +65,8 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     Vector4f vec = new Vector4f(mouseX, mouseY, 0, 1);
     vec.transform(ms.getLast().getMatrix());
     ms.pop(); //Look, it's a bit hacky, but it gets the job done.  Rotation Math!
-    if(fluid.isMouseover((int) vec.getX(), (int) vec.getY())) {
-        fluid.renderTooltip(ms, mouseX, mouseY, container.tile.getFluid());
+    if (fluid.isMouseover((int) vec.getX(), (int) vec.getY())) {
+      fluid.renderTooltip(ms, mouseX, mouseY, container.tile.getFluid());
     }
     btnRedstone.onValueUpdate(container.tile);
   }

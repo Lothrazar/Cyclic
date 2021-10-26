@@ -94,7 +94,7 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
       //we have room in the tank, burn one tck and fill up 
       energy.receiveEnergy(currentRecipe.getRfpertick(), false);
     }
-    else if(this.burnTime <= 0) {
+    else if (this.burnTime <= 0) {
       this.findMatchingRecipe();
       if (currentRecipe == null) {
         this.burnTime = 0;
