@@ -1298,7 +1298,7 @@
     "block.cyclic.uncrafter.notenoughitems": "Not enough items to satisfy recipe",
     "block.cyclic.uncrafter.success": "Recipe found",
     "block.cyclic.uncrafter.unknown": "Unknown Recipe Type",
-    "block.cyclic.uncrafter.guide": "This will lookup and reverse any vanilla 2x2 or 3x3 recipe.  May not work with specialized modded recipes / machine recipes.",
+    "block.cyclic.uncrafter.guide": "This will lookup and reverse any vanilla 2x2 or 3x3 recipe.  Modpacks and config files can disable many items from going through this.  If all slots remain full, items may be lost with future transactions. ",
     "block.cyclic.uncrafter": "Uncrafting Grinder",
     "block.cyclic.uncrafter.tooltip": "Reverses most recipes",
     "block.cyclic.wireless_redstone.guide.title": "Wireless Redstone",
