@@ -20,8 +20,8 @@ public class ScreenFan extends ScreenBase<ContainerFan> {
   public void init() {
     super.init();
     int x, y;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileFan.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     //
     int w = 160;

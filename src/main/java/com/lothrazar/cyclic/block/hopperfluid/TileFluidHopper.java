@@ -89,7 +89,7 @@ public class TileFluidHopper extends TileEntityBase {
       }
     }
     if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      //test if its a source block, or a waterlogged block.
+      //test if its a source block, or a waterlogged block. 
       BlockState targetState = level.getBlockState(target);
       FluidState fluidState = level.getFluidState(target); // targetState.getFluidState();
       //new

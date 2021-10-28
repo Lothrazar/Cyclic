@@ -18,7 +18,7 @@
   "item.cyclic.glove_climb": "攀岩手套",
   "item.cyclic.glove_climb.tooltip": "能攀登任何的垂直平面，它必须放在你的快捷栏或副手栏才能生效",
   "block.cyclic.breaker": "方块破坏者",
-  "item.cyclic.wrench": "木制扳手",
+  "item.cyclic.rotation_wand": "木制扳手",
   "item.cyclic.rotation_wand.tooltip": "旋转普通方块",
   "gui.cyclic.flowing0": "正在存入能量",
   "gui.cyclic.flowing1": "正在输出能量",

@@ -29,8 +29,8 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     fluid.guiLeft = energy.guiLeft = leftPos;
     fluid.guiTop = energy.guiTop = topPos;
     int x, y;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileDisenchant.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     energy.visible = TileDisenchant.POWERCONF.get() > 0;
   }

@@ -8,6 +8,10 @@
 		{
 			"id": "cyclic:charm_torch",
 			"required": false
+		},
+		{
+			"id": "cyclic:ender_book",
+			"required": false
 		}
 	]
 }

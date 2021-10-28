@@ -71,6 +71,9 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
     }
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
+    if (recipe.getIngredients().size() == 0) {
+      return;
+    }
     Ingredient ingr = recipe.getIngredients().get(0);
     Collections.addAll(stuff, ingr.getItems());
     in.add(stuff);
@@ -81,7 +84,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
   public void setRecipe(IRecipeLayout recipeLayout, CraftingRecipe recipe, IIngredients ingredients) {
     //    if (!TilePackager.isRecipeValid(recipe)) {
     //      return;
-    //    }
+    //    } 
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     guiItemStacks.init(0, true, 5, 6);

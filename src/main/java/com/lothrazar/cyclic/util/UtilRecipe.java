@@ -26,7 +26,7 @@ public class UtilRecipe {
 
   public static FluidStack getFluid(JsonObject fluidJson) {
     if (fluidJson.has("fluidTag")) {
-      String fluidTag = fluidJson.get("fluidTag").getAsString();
+      //      String fluidTag = fluidJson.get("fluidTag").getAsString();
     }
     String fluidId = GsonHelper.getAsString(fluidJson, "fluid");
     ResourceLocation resourceLocation = new ResourceLocation(fluidId);

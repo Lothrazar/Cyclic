@@ -118,13 +118,13 @@ public class TileSprinkler extends TileEntityBase {
   }
 
   @Override
-  public void setFluid(FluidStack fluid) {
-    tank.setFluid(fluid);
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
   @Override
-  public FluidStack getFluid() {
-    return tank == null ? FluidStack.EMPTY : tank.getFluid();
+  public void setFluid(FluidStack fluid) {
+    tank.setFluid(fluid);
   }
 
   @Override

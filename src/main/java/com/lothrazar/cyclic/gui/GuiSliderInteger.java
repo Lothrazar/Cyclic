@@ -51,8 +51,17 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
     RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     int i = (this.isHovered() ? 2 : 1) * 20;
-    this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i, 4, this.height);
-    this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, this.height);
+    if (this.height != 20) {
+      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i + 20 - this.height, 4, this.height);
+      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i + 20 - this.height, 4, this.height);
+      int height = this.height - 2;
+      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i, 4, height);
+      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, height);
+    }
+    else {
+      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i, 4, this.height);
+      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, this.height);
+    }
   }
 
   /**
@@ -68,9 +77,7 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
    */
   @Override
   public void setTooltip(String tt) {
-    //    if (tooltip == null) {
     tooltip = new ArrayList<>();
-    //    }
     this.tooltip.add(new TranslatableComponent(tt));
     this.tooltip.add(new TranslatableComponent("cyclic.gui.sliderkeys").withStyle(ChatFormatting.DARK_GRAY));
   }

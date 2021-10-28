@@ -16,7 +16,6 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileWorkbench extends TileEntityBase implements MenuProvider {
 
   protected ItemStackHandler inventory = new ItemStackHandler(9);
-  //  private ItemStackHandler output = new ItemStackHandler(1);
 
   @Override
   public Component getDisplayName() {

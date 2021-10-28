@@ -30,8 +30,8 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     energy.visible = TileForester.POWERCONF.get() > 0;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileForester.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     y += 20;
     btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileForester.Fields.RENDER.ordinal(),

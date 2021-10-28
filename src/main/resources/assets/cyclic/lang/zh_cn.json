@@ -294,7 +294,7 @@
 	"block.cyclic.breaker": "方块破坏者",
 	"block.cyclic.breaker.tooltip": "破坏放在它前面的方块",
 	"block.cyclic.breaker.guide": "方块破坏者可以用来破坏放在它前面的方块，就像玩家一样。$(br2)方块破坏者没有内部存储，所以被打破的方块（或它的战利品）会掉落在地上。",
-	"item.cyclic.wrench": "方向旋转器",
+	"item.cyclic.rotation_wand": "方向旋转器",
 	"item.cyclic.rotation_wand.tooltip": "旋转简单的方块",
 	"item.cyclic.rotation_wand.guide": "它不是真正的扳手，请参阅数据标签，此工具可以旋转一些简单的方块，例如楼梯，活板门等等具有方向的方块。",
 	"item.cyclic.cable_wrench": "管道扳手",

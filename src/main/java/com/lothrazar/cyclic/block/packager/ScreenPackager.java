@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.packager;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.TimerBar;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
@@ -13,23 +12,21 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
 
   private ButtonMachineField btnRedstone;
   private EnergyBar energy;
-  private TimerBar timer;
 
   public ScreenPackager(ContainerPackager screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TilePackager.MAX);
-    this.timer = new TimerBar(this, 70, 60, 1);
   }
 
   @Override
   public void init() {
     super.init();
     energy.visible = TilePackager.POWERCONF.get() > 0;
-    timer.guiLeft = energy.guiLeft = leftPos;
-    timer.guiTop = energy.guiTop = topPos;
+    energy.guiLeft = leftPos;
+    energy.guiTop = topPos;
     int x, y;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TilePackager.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
@@ -39,7 +36,7 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
-    timer.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
+    //    timer.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
     btnRedstone.onValueUpdate(menu.tile);
   }
 
@@ -55,8 +52,9 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     this.drawSlot(ms, 50, 40);
     this.drawSlotLarge(ms, 90, 36);
     energy.draw(ms, menu.tile.getEnergy());
-    timer.capacity = menu.tile.getField(TilePackager.Fields.BURNMAX.ordinal());
-    timer.visible = (timer.capacity > 0);
-    timer.draw(ms, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
+    //    timer.capacity = menu.tile.getField(TilePackager.Fields.BURNMAX.ordinal());
+    //    timer.visible = (timer.capacity > 0);
+    //    timer.draw(ms, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
+    // 
   }
 }

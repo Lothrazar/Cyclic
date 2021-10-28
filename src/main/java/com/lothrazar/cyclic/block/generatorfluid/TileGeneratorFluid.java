@@ -43,7 +43,7 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(0);
-  FluidTankBase tank;
+  protected final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
@@ -54,7 +54,6 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
 
   public TileGeneratorFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.GENERATOR_FLUID.get(), pos, state);
-    tank = new FluidTankBase(this, CAPACITY, p -> true);
     this.needsRedstone = 0;
   }
 
@@ -66,6 +65,7 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
     e.tick();
   }
 
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
@@ -98,16 +98,18 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
 
   private void tryConsumeFuel() {
     //pull in new fuel
-    this.findMatchingRecipe();
-    if (currentRecipe == null) {
-      this.burnTime = 0;
-      return;
-    }
     if (this.burnTime > 0 && this.energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()) {
       setLitProperty(true);
       this.burnTime--;
       //we have room in the tank, burn one tck and fill up 
       energy.receiveEnergy(currentRecipe.getRfpertick(), false);
+    }
+    else if (this.burnTime <= 0) {
+      this.findMatchingRecipe();
+      if (currentRecipe == null) {
+        this.burnTime = 0;
+        return;
+      }
     }
   }
 

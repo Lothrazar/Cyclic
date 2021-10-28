@@ -30,6 +30,7 @@ public class ModCyclic {
     DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
     ConfigRegistry.setup();
     ConfigRegistry.setupClient();
+    //    FluidRegistry.setup();
     DataTags.setup();
     FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());

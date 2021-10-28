@@ -27,9 +27,8 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   private final ResultContainer craftResult = new ResultContainer();
   //
   public ItemStack bag;
-  public int slot;
-  public int slotcount;
   private IItemHandler handler;
+  //  public int slot;
 
   public CraftingBagContainer(int id, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.CRAFTING_BAG, id);
@@ -41,11 +40,11 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     //
     if (player.getMainHandItem().getItem() instanceof CraftingBagItem) {
       this.bag = player.getMainHandItem();
-      this.slot = player.getInventory().selected;
+      //      this.slot = player.getInventory().selected;
     }
     else if (player.getOffhandItem().getItem() instanceof CraftingBagItem) {
       this.bag = player.getOffhandItem();
-      this.slot = 40;
+      //      this.slot = 40;
     }
     //grid
     for (int i = 0; i < 3; i++) {
@@ -61,7 +60,6 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     }
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.handler = h;
-      this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {

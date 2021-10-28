@@ -51,7 +51,6 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public void slotsChanged(Container inventory) {
-    // 
     Level world = playerInventory.player.level;
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;

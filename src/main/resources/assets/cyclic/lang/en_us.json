@@ -1,4 +1,4 @@
-{
+{ 
   "_comments": "Thanks to https://tterrag.com/lang2json/",
   "curios.identifier.feet": "Feet",
   "curios.identifier.charm": "Charm",
@@ -301,7 +301,7 @@
   "block.cyclic.breaker": "Block Breaker",
   "block.cyclic.breaker.tooltip": "Breaks blocks placed in front of it",
   "block.cyclic.breaker.guide": "Breakers can be used to break the block placed directly in front of it, like a player would.Breakers do not have internal item storage, so the broken block will drop itself (or its loot) in the world to be picked up.",
-  "item.cyclic.wrench": "Block Rotatator",
+  "item.cyclic.rotation_wand": "Block Rotatator",
   "item.cyclic.rotation_wand.tooltip": "Rotates simple blocks",
   "item.cyclic.rotation_wand.guide": "Its not really a wrench, see the data tags.  This sipmle tool can be used to rotate simple blocks such as stairs, slabs, and similar compatible blocks that face certain directions.  Try hitting blocks from different angles",
   "item.cyclic.cable_wrench": "Wrench",
@@ -1394,6 +1394,7 @@
   "block.cyclic.peat_baked.tooltip": "Wet peat ready to be harvested and smelted",
   "block.cyclic.peat_baked.guide": "Saturated Peat Deposits form over time when Dry Peat Bog is placed next to water. Once harvested, it can be smelted to create fuel for the Peat Generator.",
  
+
 
   "block.cyclic.generator_fuel": "Combustion Generator",
   "block.cyclic.generator_fuel.tooltip": "Generate power from anything that burns as fuel in Furnaces",

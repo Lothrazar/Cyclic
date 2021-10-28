@@ -92,7 +92,6 @@ public abstract class ContainerBase extends AbstractContainerMenu {
       return itemstack;
     }
     catch (Exception e) {
-      //      ModCyclic.LOGGER.error("Shift click error", e);
       return ItemStack.EMPTY;
     }
   }

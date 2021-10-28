@@ -75,8 +75,22 @@ public class TileMelter extends TileEntityBase implements MenuProvider {
       timer = 0;
     }
     final int cost = this.currentRecipe.getEnergyCost();
+    //=======
+    //    final int cost = POWERCONF.get();
+    //>>>>>>> 54f4445a2d7902cf4ef454efe328c9667ca5b652
     if (energy.getEnergyStored() < cost && cost > 0) {
+      this.timer = 0;
       return;
+    }
+    if (currentRecipe == null || !currentRecipe.matches(this, level)) {
+      this.findMatchingRecipe();
+      if (currentRecipe == null) {
+        this.timer = 0;
+        return;
+      }
+    }
+    if (--this.timer < 0) {
+      timer = 0;
     }
     if (timer == 0 && this.tryProcessRecipe()) {
       this.timer = TIMER_FULL;
@@ -162,6 +176,7 @@ public class TileMelter extends TileEntityBase implements MenuProvider {
     return CAPACITY;
   }
 
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
@@ -191,6 +206,7 @@ public class TileMelter extends TileEntityBase implements MenuProvider {
           }
         }
         currentRecipe = rec;
+        this.timer = TIMER_FULL;
         return;
       }
     }

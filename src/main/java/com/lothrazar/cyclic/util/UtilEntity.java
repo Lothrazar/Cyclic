@@ -459,14 +459,16 @@ public class UtilEntity {
   }
 
   public static void dimensionTeleport(ServerPlayer player, ServerLevel world, BlockPosDim loc) {
-    if (!(player instanceof FakePlayer)) {
+    if (player instanceof FakePlayer) {
       return;
     }
     if (!player.canChangeDimensions()) {
       return;
     }
-    DimensionTransit transit = new DimensionTransit(world, loc);
-    transit.teleport(player);
-    player.changeDimension(transit.getTargetLevel(), transit);
+    if (!world.isClientSide) {
+      DimensionTransit transit = new DimensionTransit(world, loc);
+      transit.teleport(player);
+      player.changeDimension(transit.getTargetLevel(), transit);
+    }
   }
 }

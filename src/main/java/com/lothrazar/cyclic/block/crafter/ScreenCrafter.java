@@ -27,7 +27,7 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
-import com.lothrazar.cyclic.gui.TimerBar;
+import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
@@ -37,25 +37,27 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
 
   private EnergyBar energy;
   private ButtonMachineField btnRedstone;
-  private TimerBar timer;
+  private TexturedProgress progress;
 
   public ScreenCrafter(ContainerCrafter screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.imageHeight = 256;
     this.energy = new EnergyBar(this, TileCrafter.MAX);
     this.energy.setHeight(120);
-    this.timer = new TimerBar(this, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ + 2, TileCrafter.TIMER_FULL);
+    this.progress = new TexturedProgress(this, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ, 24, 17, TextureRegistry.ARROW);
+    this.progress.max = TileCrafter.TIMER_FULL;
+    this.progress.setTopDown(false);
   }
 
   @Override
   protected void init() {
     super.init();
     int x, y;
-    energy.guiLeft = timer.guiLeft = leftPos;
-    energy.guiTop = timer.guiTop = topPos;
+    energy.guiLeft = progress.guiLeft = leftPos;
+    energy.guiTop = progress.guiTop = topPos;
     energy.visible = TileCrafter.POWERCONF.get() > 0;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileCrafter.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 
@@ -93,6 +95,6 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
             ContainerCrafter.GRID_START_Y - 1 + rowPos * Const.SQ);
       }
     }
-    timer.draw(ms, menu.tile.getField(TileCrafter.Fields.TIMER.ordinal()));
+    progress.draw(ms, menu.tile.getField(TileCrafter.Fields.TIMER.ordinal()));
   }
 }

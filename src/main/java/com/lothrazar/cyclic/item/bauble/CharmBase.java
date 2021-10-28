@@ -52,6 +52,9 @@ public abstract class CharmBase extends ItemBaseToggle {
     if (!this.canUse(stack)) {
       return;
     }
+    if (!this.isOn(stack)) {
+      return;
+    }
     tryVoidTick(stack, worldIn, entityIn);
     if (entityIn instanceof LivingEntity == false) {
       return;

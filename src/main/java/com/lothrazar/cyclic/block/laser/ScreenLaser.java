@@ -28,10 +28,9 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
   public void init() {
     super.init();
     int x, y;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileLaser.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
-    //
     y += 26;
     int w = 160;
     int h = 14;

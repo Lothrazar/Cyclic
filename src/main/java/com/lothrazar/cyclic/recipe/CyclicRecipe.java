@@ -77,6 +77,7 @@ public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
     if (tileFluid.getFluid() == this.getRecipeFluid().getFluid()) {
       return true;
     }
+    // FluidTags.makeWrapperTag
     //if the fluids are not identical, they might have a matching tag
     //see /data/forge/tags/fluids/
     for (Tag<Fluid> fluidTag : FluidTags.getAllTags().getAllTags().values()) { // FluidTags.getStaticTags()) {

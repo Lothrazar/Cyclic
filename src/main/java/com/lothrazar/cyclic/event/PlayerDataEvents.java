@@ -67,7 +67,7 @@ public class PlayerDataEvents {
         DATA_QUEUE.put(player.getUUID(), dataLoaded);
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("IO", e);
+        ModCyclic.LOGGER.error("IO error", e);
       }
     }
     //LOAD player data

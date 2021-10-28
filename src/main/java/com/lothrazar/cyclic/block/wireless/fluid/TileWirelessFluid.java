@@ -100,6 +100,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
     return super.save(tag);
   }
 
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

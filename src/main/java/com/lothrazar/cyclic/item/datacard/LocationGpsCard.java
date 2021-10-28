@@ -43,9 +43,9 @@ public class LocationGpsCard extends ItemBase {
       if (Screen.hasShiftDown()) {
         String side = "S: " + dim.getSide().toString().toUpperCase();
         tooltip.add(new TranslatableComponent(side).withStyle(ChatFormatting.GRAY));
-        //        String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
-        //        tooltip.add(new TranslationTextComponent(sideF).mergeStyle(TextFormatting.GRAY));
-        tooltip.add(new TranslatableComponent("H: " + dim.getHitVec().toString()).withStyle(ChatFormatting.GRAY));
+        if (!dim.getHitVec().equals(Vec3.ZERO)) {
+          tooltip.add(new TranslatableComponent("H: " + dim.getHitVec().toString()).withStyle(ChatFormatting.GRAY));
+        }
       }
       else {
         tooltip.add(new TranslatableComponent("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
@@ -62,23 +62,27 @@ public class LocationGpsCard extends ItemBase {
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
     InteractionHand hand = context.getHand();
+    player.swing(hand);
+    if (player.level.isClientSide) {
+      return InteractionResult.PASS;
+    }
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     ItemStack held = player.getItemInHand(hand);
-    player.swing(hand);
+    if (!player.isOnGround()) {
+      pos = pos.relative(side);
+    }
     UtilNBT.setItemStackBlockPos(held, pos);
     held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.level));
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
-    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
-        + UtilChat.blockPosToString(pos));
+    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved") + UtilChat.blockPosToString(pos));
     // fl
     Vec3 vec = context.getClickLocation();
     held.getOrCreateTag().putDouble("hitx", vec.x - pos.getX());
     held.getOrCreateTag().putDouble("hity", vec.y - pos.getY());
     held.getOrCreateTag().putDouble("hitz", vec.z - pos.getZ());
     return InteractionResult.SUCCESS;
-    //this.write 
   }
 
   public static BlockPosDim getPosition(ItemStack item) {

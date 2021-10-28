@@ -24,8 +24,8 @@ public class ScreenPlacerFluid extends ScreenBase<ContainerPlacerFluid> {
     fluid.guiLeft = leftPos;
     fluid.guiTop = topPos;
     int x, y;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TilePlacerFluid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
   }
 

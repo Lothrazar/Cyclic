@@ -26,10 +26,9 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     int x, y;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileUser.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
-    //
     x = leftPos + 32;
     y = topPos + 26;
     int w = 120;

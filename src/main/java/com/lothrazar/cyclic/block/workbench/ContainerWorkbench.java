@@ -45,12 +45,21 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
     super(ContainerScreenRegistry.WORKBENCH, windowId);
     this.tile = (TileWorkbench) world.getBlockEntity(pos);
     this.player = player;
+    //<<<<<<< HEAD
     this.worldPosCallable = ContainerLevelAccess.create(world, pos);
     this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, OUTPUT_START_X, OUTPUT_START_Y));
     int index = 0;
     for (int rowPos = 0; rowPos < GRID_NUM_ROWS; rowPos++) {
       for (int colPos = 0; colPos < GRID_NUM_ROWS; colPos++) {
         this.craftMatrix.setItem(index, tile.inventory.getStackInSlot(index));
+        //=======
+        //    this.worldPosCallable = IWorldPosCallable.of(world, pos);
+        //    this.addSlot(new CraftingResultSlot(player, this.craftMatrix, this.craftResult, 0, OUTPUT_START_X, OUTPUT_START_Y));
+        //    int index = 0;
+        //    for (int rowPos = 0; rowPos < GRID_NUM_ROWS; rowPos++) {
+        //      for (int colPos = 0; colPos < GRID_NUM_ROWS; colPos++) {
+        //        this.craftMatrix.setInventorySlotContents(index, tile.inventory.getStackInSlot(index));
+        //>>>>>>> 54f4445a2d7902cf4ef454efe328c9667ca5b652
         this.addSlot(new Slot(this.craftMatrix, index,
             GRID_START_X + colPos * Const.SQ,
             GRID_START_Y + rowPos * Const.SQ));

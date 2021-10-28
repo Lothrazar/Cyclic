@@ -161,12 +161,13 @@ public class TileSolidifier extends TileEntityBase implements MenuProvider {
     return super.getCapability(cap, side);
   }
 
-  public FluidStack getFluid() {
-    return tank == null ? FluidStack.EMPTY : tank.getFluid();
-  }
-
   public float getCapacity() {
     return CAPACITY;
+  }
+
+  @Override
+  public FluidStack getFluid() {
+    return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
   @Override

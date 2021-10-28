@@ -35,8 +35,8 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     int x, y;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
-    x = leftPos + 8;
-    y = topPos + 8;
+    x = leftPos + 6;
+    y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileStructure.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
     btnRender = addRenderableWidget(new ButtonMachineField(x + 20, y, TileStructure.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
