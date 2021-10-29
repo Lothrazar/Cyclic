@@ -14,6 +14,7 @@ import com.lothrazar.cyclic.block.collectfluid.ContainerFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.ContainerItemCollector;
 import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclic.block.crate.ContainerCrate;
+import com.lothrazar.cyclic.block.crusher.ContainerCrusher;
 import com.lothrazar.cyclic.block.detectorentity.ContainerDetector;
 import com.lothrazar.cyclic.block.detectoritem.ContainerDetectorItem;
 import com.lothrazar.cyclic.block.disenchant.ContainerDisenchant;
@@ -208,6 +209,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerSoundPlayer(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("sound_player"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerCrusher(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("crusher"));
     //
     //  Items with containers
     //
@@ -219,6 +223,8 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":crusher")
+  public static MenuType<ContainerCrusher> CRUSHER;
   @ObjectHolder(ModCyclic.MODID + ":sound_player")
   public static MenuType<ContainerSoundPlayer> SOUND_PLAYER;
   @ObjectHolder(ModCyclic.MODID + ":sound_recorder")

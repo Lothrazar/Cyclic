@@ -19,6 +19,7 @@ import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.TileItemInfinite;
+import com.lothrazar.cyclic.block.crusher.TileCrusher;
 import com.lothrazar.cyclic.block.detectmoon.TileMoon;
 import com.lothrazar.cyclic.block.detectorentity.TileDetector;
 import com.lothrazar.cyclic.block.detectoritem.TileDetectorItem;
@@ -114,7 +115,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> BlockEntityType.Builder.of(TilePackager::new, BlockRegistry.PACKAGER.get()).build(null));
   public static final RegistryObject<BlockEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> BlockEntityType.Builder.of(MembraneLampTile::new, BlockRegistry.LAMP.get()).build(null));
   public static final RegistryObject<BlockEntityType<SoilTile>> SOIL = TILES.register("soil", () -> BlockEntityType.Builder.of(SoilTile::new, BlockRegistry.SOIL.get()).build(null));
-  //  public static final RegistryObject<TileEntityType<BalloonTile>> BALLOON = TILES.register("balloon", () -> TileEntityType.Builder.create( BalloonTile(), BlockRegistry.BALLOON.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileCrusher>> CRUSHER = TILES.register("crusher", () -> BlockEntityType.Builder.of(TileCrusher::new, BlockRegistry.CRUSHER.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> event) {

@@ -29,7 +29,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class BlockEnderCtrl extends BlockBase {
 
-  public BlockEnderCtrl(Properties properties, boolean isController) {
+  public BlockEnderCtrl(Properties properties) {
     super(properties.strength(1.0F));
   }
 

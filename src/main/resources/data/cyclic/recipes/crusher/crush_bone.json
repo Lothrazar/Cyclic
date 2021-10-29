@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"tag": "forge:bones"
+	},
+	"energy": {
+		"ticks": 100,
+		"rfpertick": 10
+	},
+	"result": {
+		"item": "minecraft:bone_meal",
+		"count": 3
+	},
+	"percent": 50,
+	"bonus": {
+		"item": "minecraft:bone_meal",
+		"count": 1
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

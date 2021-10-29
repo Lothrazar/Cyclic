@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.compat.jei;
 
 import java.util.Objects;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.crusher.ContainerCrusher;
+import com.lothrazar.cyclic.block.crusher.ScreenCrusher;
 import com.lothrazar.cyclic.block.generatorfluid.ScreenGeneratorFluid;
 import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
 import com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops;
@@ -34,6 +36,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -44,7 +47,9 @@ public class CyclicPluginJEI implements IModPlugin {
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "jei");
 
   @Override
-  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
+  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+    //TODO: an uncrafter hook here?
+  }
 
   @Override
   public ResourceLocation getPluginUid() {
@@ -59,6 +64,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeCategories(new GenitemRecipeCategory(guiHelper));
     registry.addRecipeCategories(new GenfluidRecipeCategory(guiHelper));
     registry.addRecipeCategories(new PackagerRecipeCategory(guiHelper));
+    registry.addRecipeCategories(new CrusherRecipeCategory(guiHelper));
   }
 
   @Override
@@ -72,16 +78,19 @@ public class CyclicPluginJEI implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.SOLIDIFIER), SolidifierRecipeCategory.ID);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.GENERATOR_ITEM.get()), GenitemRecipeCategory.ID);
     registration.addRecipeCatalyst(new ItemStack(BlockRegistry.GENERATOR_FLUID.get()), GenfluidRecipeCategory.ID);
+    registration.addRecipeCatalyst(new ItemStack(BlockRegistry.CRUSHER.get()), CrusherRecipeCategory.ID);
   }
 
   @Override
   public void registerRecipes(IRecipeRegistration registry) {
     ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
-    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING), PackagerRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER), MelterRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM), GenitemRecipeCategory.ID);
-    registry.addRecipes(world.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
+    RecipeManager rm = world.getRecipeManager();
+    registry.addRecipes(rm.getAllRecipesFor(RecipeType.CRAFTING), PackagerRecipeCategory.ID);
+    registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.MELTER), MelterRecipeCategory.ID);
+    registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.SOLID), SolidifierRecipeCategory.ID);
+    registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM), GenitemRecipeCategory.ID);
+    registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
+    registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER), CrusherRecipeCategory.ID);
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
       if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())) {
@@ -107,6 +116,9 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeClickArea(ScreenPackager.class,
         60, 0,
         60, 30, PackagerRecipeCategory.ID);
+    registry.addRecipeClickArea(ScreenCrusher.class,
+        60, 0,
+        60, 30, CrusherRecipeCategory.ID);
   }
 
   @Override
@@ -127,6 +139,9 @@ public class CyclicPluginJEI implements IModPlugin {
         1, 9, //recipeSLotStart, recipeSlotCount
         10, PLAYER_INV_SIZE);
     registry.addRecipeTransferHandler(ContainerGeneratorDrops.class, GenitemRecipeCategory.ID,
+        0, 1, //recipeSLotStart, recipeSlotCount
+        1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount 
+    registry.addRecipeTransferHandler(ContainerCrusher.class, CrusherRecipeCategory.ID,
         0, 1, //recipeSLotStart, recipeSlotCount
         1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount 
     //    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,

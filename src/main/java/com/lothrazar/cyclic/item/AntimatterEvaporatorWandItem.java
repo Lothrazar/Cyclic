@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,10 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
@@ -99,7 +97,7 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       else if (fluidMode == EvaporateMode.LAVA && fluidHere.getType().is(FluidTags.LAVA)) {
         tryHere = true;
       }
-      if (tryHere && removeLiquid(world, blockHere, posTarget)) {
+      if (tryHere && UtilWorld.removeFlowingLiquid(world, posTarget, true)) {
         countSuccess++;
       }
     }
@@ -112,29 +110,6 @@ public class AntimatterEvaporatorWandItem extends ItemBase {
       }
     }
     return InteractionResult.SUCCESS;
-  }
-
-  private boolean removeLiquid(Level world, BlockState blockHere, BlockPos pos) {
-    if (blockHere.getBlock() instanceof BucketPickup) {
-      BucketPickup block = (BucketPickup) blockHere.getBlock();
-      //
-      ItemStack res = block.pickupBlock(world, pos, blockHere);
-      if (!res.isEmpty()) {
-        // flowing block
-        return world.setBlock(pos, Blocks.AIR.defaultBlockState(), 18);
-      }
-      else {
-        return true; // was source block
-      }
-    }
-    else if (blockHere.hasProperty(BlockStateProperties.WATERLOGGED)) {
-      // un-water log
-      return world.setBlock(pos, blockHere.setValue(BlockStateProperties.WATERLOGGED, false), 18);
-    }
-    else {
-      //ok just nuke it 
-      return world.setBlock(pos, Blocks.AIR.defaultBlockState(), 18);
-    }
   }
 
   @Override

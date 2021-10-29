@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
 import com.lothrazar.cyclic.block.LaunchBlock;
+import com.lothrazar.cyclic.block.LavaSpongeBlock;
 import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
@@ -34,6 +35,7 @@ import com.lothrazar.cyclic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
 import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.BlockItemInfinite;
+import com.lothrazar.cyclic.block.crusher.BlockCrusher;
 import com.lothrazar.cyclic.block.detectmoon.BlockMoon;
 import com.lothrazar.cyclic.block.detectorentity.BlockDetector;
 import com.lothrazar.cyclic.block.detectoritem.BlockDetectorItem;
@@ -191,10 +193,9 @@ public class BlockRegistry {
   public static final RegistryObject<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
   public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
   public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.METAL, Blocks.COPPER_BLOCK.defaultMaterialColor()).noCollission().strength(0.5F)));
-  //  public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
-  //  public static final RegistryObject<Block> GILDED_BOOKSHELF = BLOCKS.register("gilded_bookshelf", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of(Material.SPONGE)));
+  public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of(Material.METAL)));
   //  public static final RegistryObject<Block> XP_DRAIN = BLOCKS.register("xp_drain", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
-  //  public static final RegistryObject<Block> CRUSHING_MACERATOR = BLOCKS.register("crushing_macerator", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   //  public static final RegistryObject<Block> TELEPORTER = BLOCKS.register("teleporter", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   //  public static final RegistryObject<Block> CLEAR_GLASS = BLOCKS.register("clear_glass", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
   //  public static final RegistryObject<Block> CLEAR_GLASS = BLOCKS.register("gold_trapdoor", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
@@ -407,7 +408,7 @@ public class BlockRegistry {
     r.register(new FireplaceBlock(Block.Properties.of(Material.STONE)).setRegistryName("fireplace"));
     r.register(new UnbreakableBlock(Block.Properties.of(Material.STONE)).setRegistryName("unbreakable_block")); //stable, only changes with player interaction
     r.register(new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE)).setRegistryName("unbreakable_reactive")); //reactive and unstable, ignores players and reads redstone 
-    r.register(new BlockEnderShelf(Block.Properties.of(Material.STONE), false).setRegistryName("ender_shelf"));
-    r.register(new BlockEnderCtrl(Block.Properties.of(Material.STONE), true).setRegistryName("ender_controller"));
+    r.register(new BlockEnderShelf(Block.Properties.of(Material.STONE)).setRegistryName("ender_shelf"));
+    r.register(new BlockEnderCtrl(Block.Properties.of(Material.STONE)).setRegistryName("ender_controller"));
   }
 }

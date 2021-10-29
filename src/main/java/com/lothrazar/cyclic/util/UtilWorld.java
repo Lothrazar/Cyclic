@@ -15,10 +15,37 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class UtilWorld {
+
+  public static boolean removeFlowingLiquid(Level world, BlockPos pos, boolean nukeOption) {
+    BlockState blockHere = world.getBlockState(pos);
+    if (blockHere.hasProperty(BlockStateProperties.WATERLOGGED)) {
+      // un-water log
+      return world.setBlock(pos, blockHere.setValue(BlockStateProperties.WATERLOGGED, false), 18);
+    }
+    if (blockHere.getBlock() instanceof BucketPickup) {
+      BucketPickup block = (BucketPickup) blockHere.getBlock();
+      //
+      ItemStack res = block.pickupBlock(world, pos, blockHere);
+      if (!res.isEmpty()) {
+        // flowing block
+        return world.setBlock(pos, Blocks.AIR.defaultBlockState(), 18);
+      }
+      else {
+        return true; // was source block
+      }
+    }
+    else if (nukeOption) {
+      //ok just nuke it 
+      return world.setBlock(pos, Blocks.AIR.defaultBlockState(), 18);
+    }
+    return false;
+  }
 
   public static String dimensionToString(Level world) {
     //example: returns "minecraft:overworld" resource location

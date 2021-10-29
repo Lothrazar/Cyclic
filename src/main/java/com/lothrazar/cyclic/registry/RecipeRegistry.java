@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import com.lothrazar.cyclic.block.crusher.RecipeCrusher;
 import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
@@ -9,18 +10,22 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RecipeRegistry {
 
   public static void registerRecipeSerializers(Register<RecipeSerializer<?>> event) {
+    IForgeRegistry<RecipeSerializer<?>> r = event.getRegistry();
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.SOLID.toString(), CyclicRecipeType.SOLID);
-    event.getRegistry().register(RecipeSolidifier.SERIALIZER);
+    r.register(RecipeSolidifier.SERIALIZER);
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.MELTER.toString(), CyclicRecipeType.MELTER);
-    event.getRegistry().register(RecipeMelter.SERIALMELTER);
+    r.register(RecipeMelter.SERIALMELTER);
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.GENERATOR_ITEM.toString(), CyclicRecipeType.GENERATOR_ITEM);
-    event.getRegistry().register(RecipeGeneratorItem.SERIALGENERATOR);
+    r.register(RecipeGeneratorItem.SERIALGENERATOR);
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.GENERATOR_FLUID.toString(), CyclicRecipeType.GENERATOR_FLUID);
-    event.getRegistry().register(RecipeGeneratorFluid.SERIALGENERATORF);
+    r.register(RecipeGeneratorFluid.SERIALGENERATORF);
+    Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.CRUSHER.toString(), CyclicRecipeType.CRUSHER);
+    r.register(RecipeCrusher.SERIALCRUSH);
   }
 }

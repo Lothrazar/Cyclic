@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "minecraft:magma_cream"
+	},
+	"energy": {
+		"ticks": 600,
+		"rfpertick": 60
+	},
+	"result": {
+		"item": "minecraft:slime_ball",
+		"count": 1
+	},
+	"percent": 5,
+	"bonus": {
+		"item": "minecraft:netherrack",
+		"count": 1
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

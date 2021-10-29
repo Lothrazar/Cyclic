@@ -31,13 +31,13 @@ import net.minecraft.world.phys.Vec3;
 
 public class BlockEnderShelf extends BlockBase {
 
-  public BlockEnderShelf(Properties properties, boolean isController) {
+  public BlockEnderShelf(Properties properties) {
     super(properties.strength(1.2F).noOcclusion());
   }
 
   @Override
   public float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos) {
-    return Blocks.BOOKSHELF.getEnchantPowerBonus(Blocks.BOOKSHELF.defaultBlockState(), world, pos);
+    return 3 * Blocks.BOOKSHELF.getEnchantPowerBonus(Blocks.BOOKSHELF.defaultBlockState(), world, pos);
   }
 
   @Override
