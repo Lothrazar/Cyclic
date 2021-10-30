@@ -42,6 +42,18 @@
   "cyclic.fake_player.user": "Item User",
   "itemGroup.cyclic": "Cyclic Blocks",
   "itemGroup.cyclicitems": "Cyclic Items",
+
+
+  "block.cyclic.sponge_lava": "Lava Sponge",
+  "block.cyclic.sponge_lava.tooltip": "Eats up nearby lava source blocks",
+  "block.cyclic.sponge_lava.guide": "Place and wait for some time to let it soak up nearby lava.  Source lava is not recoverable, it is deleted by the sponge",
+
+
+  "block.cyclic.crusher": "Crushing Macerator",
+  "block.cyclic.crusher.tooltip": "Grind up materials or break down components",
+  "block.cyclic.crusher.guide": "Grinding recipes sometimes have a chance for a bonus extra product",
+
+
   "block.cyclic.doorbell": "Doorbell",
   "block.cyclic.doorbell.tooltip": "Doorbell",
   "block.cyclic.doorbell.guide": "Light level 4 and redstone power of 1 while pressed.  Plays sound cyclic:doorbell_mikekoenig",

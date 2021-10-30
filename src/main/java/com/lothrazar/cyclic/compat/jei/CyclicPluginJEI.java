@@ -117,8 +117,8 @@ public class CyclicPluginJEI implements IModPlugin {
         60, 0,
         60, 30, PackagerRecipeCategory.ID);
     registry.addRecipeClickArea(ScreenCrusher.class,
-        60, 0,
-        60, 30, CrusherRecipeCategory.ID);
+        50, 0,
+        40, 30, CrusherRecipeCategory.ID);
   }
 
   @Override

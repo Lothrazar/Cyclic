@@ -1,20 +1,15 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:grass_block"
 	},
 	"energy": {
 		"ticks": 100,
-		"rfpertick": 40
+		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
-	},
-	"percent": 90,
-	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:dirt_path",
+		"count": 1
 	},
 	"conditions": [
 		{

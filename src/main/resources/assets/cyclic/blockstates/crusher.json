@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/crusher" },
+        "lit=true": { "model": "cyclic:block/crusher_lit" }
+    }
+}

@@ -11,10 +11,10 @@
 		"item": "minecraft:magma_cream",
 		"count": 2
 	},
-	"percent": 50,
+	"percent": 60,
 	"bonus": {
 		"item": "minecraft:magma_cream",
-		"count": 1
+		"count": 2
 	},
 	"conditions": [
 		{

@@ -14,7 +14,7 @@
 	"percent": 50,
 	"bonus": {
 		"item": "minecraft:bone_meal",
-		"count": 1
+		"count": 3
 	},
 	"conditions": [
 		{

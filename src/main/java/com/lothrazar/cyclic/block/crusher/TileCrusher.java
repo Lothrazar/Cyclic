@@ -1,8 +1,11 @@
 package com.lothrazar.cyclic.block.crusher;
 
+import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,6 +40,9 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
   ItemStackHandler outputSlots = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private int burnTimeMax = 0; //only non zero if processing
+  private int burnTime = 0; //how much of current fuel is left
+  private RecipeCrusher<?> currentRecipe;
 
   public TileCrusher(BlockPos pos, BlockState state) {
     super(TileRegistry.CRUSHER.get(), pos, state);
@@ -92,31 +98,56 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
       return;
     }
     setLitProperty(true);
-    //
-    //    ItemStack stack = inventory.getStackInSlot(0);
-    //    if (stack.isEmpty() || stack.is(DataTags.ANVIL_IMMUNE)) {
-    //      return;
-    //    }
-    //    final int repair = POWERCONF.get();
-    //    boolean work = false;
-    //    if (repair > 0 &&
-    //        energy.getEnergyStored() >= repair &&
-    //        stack.isRepairable() &&
-    //        stack.getDamageValue() > 0) {
-    //      //we can repair so steal some power 
-    //      //ok drain power  
-    //      energy.extractEnergy(repair, false);
-    //      work = true;
-    //    }
-    //    //shift to other slot
-    //    if (work) {
-    //      UtilItemStack.repairItem(stack);
-    //      boolean done = stack.getDamageValue() == 0;
-    //      if (done && outputSlots.getStackInSlot(0).isEmpty()) {
-    //        outputSlots.insertItem(0, stack.copy(), false);
-    //        inputSlots.extractItem(0, stack.getCount(), false);
-    //      }
-    //    }
+    if (level.isClientSide) {
+      return;
+    }
+    if (this.burnTime <= 0 && this.currentRecipe != null) {
+      this.burnTimeMax = 0;
+      this.burnTime = 0;
+      // FIRE AWAY
+      ModCyclic.LOGGER.info("extr  c" + currentRecipe.getId());
+      if (!currentRecipe.getResultItem().isEmpty()) {
+        this.outputSlots.insertItem(0, currentRecipe.getResultItem().copy(), false);
+      }
+      if (!currentRecipe.bonus.isEmpty() && currentRecipe.percent > 0) {
+        // 1 is always, 0 is never so yeah
+        //if you put 90, and i roll between 0 and 90 gj u win
+        if (currentRecipe.percent == 1 || level.random.nextInt(100) < currentRecipe.percent) {
+          this.outputSlots.insertItem(1, this.currentRecipe.createBonus(level.random), false);
+        }
+      }
+      level.levelEvent((Player) null, 1042, worldPosition, 0);
+      currentRecipe = null;
+    }
+    this.findMatchingRecipe();
+    if (currentRecipe == null) {
+      return;
+    }
+    setLitProperty(true); // has recipe so lit
+    int onSim = energy.extractEnergy(currentRecipe.getRfpertick(), true);
+    if (onSim >= currentRecipe.getRfpertick()) {
+      //gen up. we burned away a tick of this fuel 
+      energy.extractEnergy(currentRecipe.getRfpertick(), false);
+      this.burnTime--; // paying per tick for this recipe
+    }
+  }
+
+  private void findMatchingRecipe() {
+    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+      return;
+    }
+    currentRecipe = null;
+    List<RecipeCrusher<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER);
+    for (RecipeCrusher<?> rec : recipes) {
+      if (rec.matches(this, level)) {
+        this.currentRecipe = rec;
+        this.burnTimeMax = this.currentRecipe.getTicks();
+        this.burnTime = this.burnTimeMax;
+        this.inputSlots.extractItem(0, 1, false); // TODO: only 1 not # items per recipe
+        ModCyclic.LOGGER.info("found  c" + currentRecipe.getId());
+        return;
+      }
+    }
   }
 
   @Override

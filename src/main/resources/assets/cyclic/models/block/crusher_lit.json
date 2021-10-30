@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"particle": "cyclic:blocks/plate",
+		"down": "cyclic:blocks/machine/battery_on",
+		"up": "cyclic:blocks/machine/battery_on",
+		"north": "cyclic:blocks/machine/crusher",
+		"south": "cyclic:blocks/machine/crusher",
+		"west": "cyclic:blocks/machine/crusher",
+		"east": "cyclic:blocks/machine/crusher"
+	}
+}

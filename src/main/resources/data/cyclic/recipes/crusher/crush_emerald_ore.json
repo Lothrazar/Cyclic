@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"tag": "forge:ores/emerald"
 	},
 	"energy": {
-		"ticks": 100,
-		"rfpertick": 40
+		"ticks": 600,
+		"rfpertick": 60
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
-	},
-	"percent": 90,
-	"bonus": {
-		"item": "minecraft:blaze_powder",
+		"item": "minecraft:emerald",
 		"count": 3
+	},
+	"percent": 50,
+	"bonus": {
+		"item": "minecraft:emerald",
+		"count": 2
 	},
 	"conditions": [
 		{

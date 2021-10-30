@@ -47,8 +47,9 @@ public class ScreenCrusher extends ScreenBase<ContainerCrusher> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 54, 34);
-    this.drawSlotLarge(ms, 104, 30);
+    this.drawSlot(ms, 52, 34);
+    this.drawSlotLarge(ms, 104, 20);
+    this.drawSlot(ms, 108, 54);
     energy.draw(ms, menu.tile.getEnergy());
   }
 }

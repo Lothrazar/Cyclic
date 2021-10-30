@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -82,12 +81,10 @@ public class TileGeneratorDrops extends TileEntityBase implements MenuProvider {
       this.burnTimeMax = 0;
       this.burnTime = 0;
     }
-    //    if (currentRecipe != null && burnTime > 0) { // && energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()
     tryConsumeFuel();
   }
 
   private void tryConsumeFuel() {
-    //    this.burnTimeMax = 0;
     //to consume fuel we first need recipe
     this.findMatchingRecipe();
     if (currentRecipe == null) {
@@ -113,8 +110,7 @@ public class TileGeneratorDrops extends TileEntityBase implements MenuProvider {
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
-        this.inputSlots.extractItem(0, 1, false);
-        ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
+        this.inputSlots.extractItem(0, 1, false); // TODO: only 1 not # items per recipe
         return;
       }
     }

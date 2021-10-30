@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pip",
+    "cbc",
+    "pip"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:stonecutter"
+    },
+    "i": {
+      "item": "minecraft:piston"
+    },
+    "b": {
+      "tag": "forge:nuggets/copper"
+    },
+    "c": {
+      "item": "cyclic:compressed_cobblestone"
+    }
+  },
+  "result": {
+    "item": "cyclic:crusher"
+  }
+}

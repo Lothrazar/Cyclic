@@ -8,12 +8,12 @@
 		"rfpertick": 60
 	},
 	"result": {
-		"item": "minecraft:slime_ball",
+		"item": "minecraft:netherrack",
 		"count": 1
 	},
-	"percent": 5,
+	"percent": 60,
 	"bonus": {
-		"item": "minecraft:netherrack",
+		"item": "minecraft:slime_ball",
 		"count": 1
 	},
 	"conditions": [

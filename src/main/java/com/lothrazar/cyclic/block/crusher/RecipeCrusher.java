@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.crusher;
 
+import java.util.Random;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
@@ -24,17 +25,17 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
   private int ticks;
   private int rfpertick;
   public ItemStack bonus = ItemStack.EMPTY;
-  private int percent;
+  public int percent;
 
-  public RecipeCrusher(ResourceLocation id, Ingredient in, int ticks, int rfpertick, ItemStack out, int percent, ItemStack optional) {
+  public RecipeCrusher(ResourceLocation id, Ingredient in, int ticks, int rfpertick, ItemStack out, int percIn, ItemStack optional) {
     super(id);
     ingredients.add(in);
     this.setTicks(Math.max(1, ticks));
     this.rfpertick = Math.max(1, rfpertick);
     this.result = out;
-    this.percent = Math.max(0, rfpertick);
-    if (percent > 100) {
-      percent = 100;
+    this.percent = Math.max(0, percIn);
+    if (percIn > 100) {
+      percIn = 100;
     }
     bonus = optional;
   }
@@ -238,15 +239,15 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
   //
   //sea lantern stuff to glowstone dust
   //
-  // 
-  //
   //  
-  //
-  //grass blocks to path
-  //
-  // 
-  //
-  //coarse dirt to dirt
-  //
-  //dirt to ?
+
+  public ItemStack createBonus(Random rand) {
+    ItemStack getBonus = this.bonus.copy();
+    if (this.bonus.getCount() > 1) {
+      //if its 1 just leave it. otherwise RNG
+      //so if getCount==3 , then get rand [0,2] + 1 = [1,3]
+      getBonus.setCount(1 + rand.nextInt(this.bonus.getCount()));
+    }
+    return getBonus;
+  }
 }

@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"tag": "forge:ores/redstone"
 	},
 	"energy": {
-		"ticks": 100,
-		"rfpertick": 40
+		"ticks": 1100,
+		"rfpertick": 70
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:redstone",
+		"count": 4
 	},
-	"percent": 90,
+	"percent": 60,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:redstone",
+		"count": 6
 	},
 	"conditions": [
 		{

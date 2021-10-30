@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.crusher.RecipeCrusher;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -32,7 +31,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   private IDrawable icon;
 
   public CrusherRecipeCategory(IGuiHelper helper) {
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_item.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
+    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
     icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.GENERATOR_ITEM.get()));
   }
 
@@ -81,21 +80,25 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
 
   @Override
   public void draw(RecipeCrusher recipe, PoseStack ms, double mouseX, double mouseY) {
-    Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", 60, 0, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.getRfTotal() + " RF", 60, 20, FONT);
+    int x = 78;
+    Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", x, 6, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getRfpertick() + " RF/t", x, 16, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getRfTotal() + " RF", x, 26, FONT);
+    if (!recipe.bonus.isEmpty() && recipe.percent > 0) {
+      Minecraft.getInstance().font.draw(ms, recipe.percent + "%", 56, 36, FONT);
+    }
   }
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, RecipeCrusher recipe, IIngredients ingredients) {
     IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    guiItemStacks.init(0, true, 5, 6);
+    guiItemStacks.init(0, true, 2, 13);
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     guiItemStacks.set(0, inputs.get(0));
-    guiItemStacks.init(1, false, 90, 6 + Const.SQ);
+    guiItemStacks.init(1, false, 34, 5);
     guiItemStacks.set(1, recipe.getResultItem());
-    if (!recipe.bonus.isEmpty()) {
-      guiItemStacks.init(2, false, 104, 16 + Const.SQ);
+    if (!recipe.bonus.isEmpty() && recipe.percent > 0) {
+      guiItemStacks.init(2, false, 33, 30);
       guiItemStacks.set(2, recipe.bonus);
     }
   }

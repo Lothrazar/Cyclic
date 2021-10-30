@@ -11,7 +11,7 @@
 		"item": "minecraft:string",
 		"count": 4
 	},
-	"percent": 50,
+	"percent": 5,
 	"bonus": {
 		"item": "minecraft:string",
 		"count": 1

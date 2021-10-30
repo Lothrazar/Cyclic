@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"tag": "forge:ores/quartz"
 	},
 	"energy": {
-		"ticks": 100,
-		"rfpertick": 40
+		"ticks": 900,
+		"rfpertick": 60
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
+		"item": "minecraft:quartz",
 		"count": 2
 	},
-	"percent": 90,
+	"percent": 40,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:quartz",
+		"count": 4
 	},
 	"conditions": [
 		{

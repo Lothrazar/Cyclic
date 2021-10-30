@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sts",
+    "tit",
+    "sts"
+  ],
+  "key": {
+    "t": {
+      "item": "minecraft:sponge"
+    },
+    "s": {
+      "item": "minecraft:blaze_rod"
+    },
+    "i": {
+      "tag": "forge:nuggets/netherite"
+    }
+  },
+  "result": {
+    "item": "cyclic:sponge_lava",
+    "count": 4
+  }
+}
