@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"tag": "minecraft:sapling"
 	},
 	"energy": {
-		"ticks": 160,
-		"rfpertick": 40
+		"ticks": 100,
+		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:stick",
+		"count": 1
 	},
-	"percent": 90,
+	"percent": 50,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:stick",
+		"count": 1
 	},
 	"conditions": [
 		{

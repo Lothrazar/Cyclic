@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:glow_lichen"
 	},
 	"energy": {
-		"ticks": 160,
+		"ticks": 600,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:glowstone_dust",
+		"count": 1
 	},
-	"percent": 90,
+	"percent": 10,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:vine",
+		"count": 1
 	},
 	"conditions": [
 		{

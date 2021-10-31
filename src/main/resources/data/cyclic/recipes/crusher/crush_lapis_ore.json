@@ -4,7 +4,7 @@
 		"tag": "forge:ores/lapis"
 	},
 	"energy": {
-		"ticks": 1100,
+		"ticks": 160,
 		"rfpertick": 70
 	},
 	"result": {

@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:dark_prismarine"
 	},
 	"energy": {
 		"ticks": 160,
-		"rfpertick": 40
+		"rfpertick": 20
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:prismarine_shard",
+		"count": 8
 	},
 	"percent": 90,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:black_dye",
+		"count": 1
 	},
 	"conditions": [
 		{

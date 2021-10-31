@@ -5,7 +5,7 @@
 	},
 	"energy": {
 		"ticks": 600,
-		"rfpertick": 60
+		"rfpertick": 20
 	},
 	"result": {
 		"item": "minecraft:emerald",

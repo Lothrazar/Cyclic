@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:glow_ink_sac"
 	},
 	"energy": {
-		"ticks": 160,
+		"ticks": 600,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
-	},
-	"percent": 90,
-	"bonus": {
-		"item": "minecraft:blaze_powder",
+		"item": "minecraft:glowstone_dust",
 		"count": 3
+	},
+	"percent": 75,
+	"bonus": {
+		"item": "minecraft:gunpowder",
+		"count": 2
 	},
 	"conditions": [
 		{

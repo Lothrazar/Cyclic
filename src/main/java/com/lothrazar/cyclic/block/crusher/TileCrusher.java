@@ -30,7 +30,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileCrusher extends TileEntityBase implements MenuProvider {
 
   static enum Fields {
-    TIMER, REDSTONE;
+    TIMER, REDSTONE, TIMERMAX;
   }
 
   static final int MAX = 64000;
@@ -81,11 +81,15 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
   public void load(CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    this.burnTime = tag.getInt("burnTime");
+    this.burnTimeMax = tag.getInt("burnTimeMax");
     super.load(tag);
   }
 
   @Override
   public CompoundTag save(CompoundTag tag) {
+    tag.putInt("burnTime", burnTime);
+    tag.putInt("burnTimeMax", burnTimeMax);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     return super.save(tag);
@@ -156,9 +160,9 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
-        return this.timer;
-      default:
-      break;
+        return this.burnTime;
+      case TIMERMAX:
+        return this.burnTimeMax;
     }
     return 0;
   }
@@ -170,7 +174,10 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
         this.needsRedstone = value % 2;
       break;
       case TIMER:
-        this.timer = value;
+        this.burnTime = value;
+      break;
+      case TIMERMAX:
+        this.burnTimeMax = value;
       break;
     }
   }

@@ -1,21 +1,17 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:prismarine_bricks"
 	},
 	"energy": {
-		"ticks": 160,
-		"rfpertick": 40
+		"ticks": 200,
+		"rfpertick": 20
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:prismarine_shard",
+		"count": 9
 	},
-	"percent": 90,
-	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
-	},
+	"percent": 0,
 	"conditions": [
 		{
 			"values": [

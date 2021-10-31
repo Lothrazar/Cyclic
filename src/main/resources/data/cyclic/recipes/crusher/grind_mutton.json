@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:beef"
 	},
 	"energy": {
-		"ticks": 160,
+		"ticks": 200,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:rotten_flesh",
+		"count": 1
 	},
-	"percent": 90,
+	"percent": 10,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:bone",
+		"count": 9
 	},
 	"conditions": [
 		{

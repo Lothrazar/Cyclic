@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:end_stone"
 	},
 	"energy": {
-		"ticks": 160,
-		"rfpertick": 40
+		"ticks": 600,
+		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:cobblestone",
+		"count": 1
 	},
-	"percent": 90,
+	"percent": 10,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:ender_pearl",
+		"count": 1
 	},
 	"conditions": [
 		{

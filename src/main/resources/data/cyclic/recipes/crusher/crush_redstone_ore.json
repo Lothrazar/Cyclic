@@ -4,8 +4,8 @@
 		"tag": "forge:ores/redstone"
 	},
 	"energy": {
-		"ticks": 1100,
-		"rfpertick": 70
+		"ticks": 300,
+		"rfpertick": 20
 	},
 	"result": {
 		"item": "minecraft:redstone",

@@ -13,7 +13,7 @@
 	},
 	"percent": 70,
 	"bonus": {
-		"item": "minecraft:copper_nugget",
+		"item": "cyclic:copper_nugget",
 		"count": 9
 	},
 	"conditions": [

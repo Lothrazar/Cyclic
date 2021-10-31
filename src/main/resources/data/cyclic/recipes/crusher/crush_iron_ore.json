@@ -9,12 +9,12 @@
 	},
 	"result": {
 		"item": "minecraft:raw_iron",
-		"count": 3
+		"count": 4
 	},
-	"percent": 60,
+	"percent": 75,
 	"bonus": {
-		"item": "minecraft:raw_iron",
-		"count": 1
+		"item": "minecraft:iron_nugget",
+		"count": 9
 	},
 	"conditions": [
 		{

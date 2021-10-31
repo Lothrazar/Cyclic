@@ -1,21 +1,17 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:amethyst_block"
 	},
 	"energy": {
-		"ticks": 160,
-		"rfpertick": 40
+		"ticks": 100,
+		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:amethyst_shard",
+		"count": 4
 	},
-	"percent": 90,
-	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
-	},
+	"percent": 0,
 	"conditions": [
 		{
 			"values": [

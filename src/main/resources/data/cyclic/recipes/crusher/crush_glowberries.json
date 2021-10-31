@@ -1,19 +1,19 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:glow_berries"
 	},
 	"energy": {
-		"ticks": 160,
+		"ticks": 600,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:glowstone_dust",
+		"count": 3
 	},
-	"percent": 90,
+	"percent": 75,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
+		"item": "minecraft:gunpowder",
 		"count": 3
 	},
 	"conditions": [

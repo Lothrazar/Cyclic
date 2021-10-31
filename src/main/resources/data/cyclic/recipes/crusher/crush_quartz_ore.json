@@ -4,8 +4,8 @@
 		"tag": "forge:ores/quartz"
 	},
 	"energy": {
-		"ticks": 900,
-		"rfpertick": 60
+		"ticks": 200,
+		"rfpertick": 20
 	},
 	"result": {
 		"item": "minecraft:quartz",

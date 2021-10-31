@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:warped_nylium"
 	},
 	"energy": {
-		"ticks": 160,
+		"ticks": 200,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:cobblestone",
+		"count": 1
 	},
-	"percent": 90,
+	"percent": 25,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:blaze_rod",
+		"count": 1
 	},
 	"conditions": [
 		{

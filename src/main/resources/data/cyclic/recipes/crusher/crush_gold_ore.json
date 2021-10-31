@@ -4,17 +4,17 @@
 		"tag": "forge:ores/gold"
 	},
 	"energy": {
-		"ticks": 600,
-		"rfpertick": 60
+		"ticks": 200,
+		"rfpertick": 40
 	},
 	"result": {
 		"item": "minecraft:raw_gold",
 		"count": 3
 	},
-	"percent": 60,
+	"percent": 75,
 	"bonus": {
-		"item": "minecraft:raw_gold",
-		"count": 2
+		"item": "minecraft:gold_nugget",
+		"count": 9
 	},
 	"conditions": [
 		{

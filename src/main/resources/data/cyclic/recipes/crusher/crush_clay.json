@@ -4,7 +4,7 @@
 		"item": "minecraft:clay"
 	},
 	"energy": {
-		"ticks": 600,
+		"ticks": 200,
 		"rfpertick": 20
 	},
 	"result": {

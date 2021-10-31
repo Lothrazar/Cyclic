@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.crusher;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
+import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
@@ -12,17 +13,19 @@ public class ScreenCrusher extends ScreenBase<ContainerCrusher> {
 
   private ButtonMachineField btnRedstone;
   private EnergyBar energy;
+  private TexturedProgress progress;
 
   public ScreenCrusher(ContainerCrusher screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.energy = new EnergyBar(this, TileCrusher.MAX);
+    this.progress = new TexturedProgress(this, 78, 40, TextureRegistry.SAW);
   }
 
   @Override
   public void init() {
     super.init();
-    energy.guiLeft = leftPos;
-    energy.guiTop = topPos;
+    progress.guiLeft = energy.guiLeft = leftPos;
+    progress.guiTop = energy.guiTop = topPos;
     int x, y;
     x = leftPos + 6;
     y = topPos + 6;
@@ -51,5 +54,8 @@ public class ScreenCrusher extends ScreenBase<ContainerCrusher> {
     this.drawSlotLarge(ms, 104, 20);
     this.drawSlot(ms, 108, 54);
     energy.draw(ms, menu.tile.getEnergy());
+    final int max = menu.tile.getField(TileCrusher.Fields.TIMERMAX.ordinal());
+    progress.max = max;
+    progress.draw(ms, max - menu.tile.getField(TileCrusher.Fields.TIMER.ordinal()));
   }
 }

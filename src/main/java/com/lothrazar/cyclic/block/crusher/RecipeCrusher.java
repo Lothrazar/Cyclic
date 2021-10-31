@@ -135,7 +135,6 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
           percent = json.get("percent").getAsInt();
         }
         RecipeCrusher r = new RecipeCrusher(recipeId, inputFirst, ticks, rfpertick, resultStack, percent, bonusStack);
-        ModCyclic.LOGGER.error("   Recipe loaded " + r.getId().toString());
         return r;
       }
       catch (Exception e) {
@@ -165,26 +164,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
   }
   //
   //optional recipes for grinder ores / other mod ores
-  //
   // 
-  //
-  //grind up raw meat into rotten flesh. like 1 raw beef to 4-6 zombie stuff etc
-  //
-  //--- rare chance to get bones from this too.  ie: 4 flesh, 25% chance of one bone
-  //
-  //  
-  //
-  //ender dust - chance drom from grind endstone
-  //
-  // 
-  //
-  //?? gunpowder ? from nether stuff?  from blaze powder
-  //
-  // 
-  //
-  //get blaze powder from glowstone or gunpowder > ?
-  // 
-  //??? Ghast Tear get. maybe a chance from netherrite. red cracked brick etc
   //
   //steal ideas from ExNihilo and sfone sivs
   // 
@@ -197,44 +177,15 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
   //
   //??plant fiber
   //
-  // 
+  //  
   //
-  //woolx3 , 50x 2 or 1
-  //
-  // 
-  //
-  //tons of redstone item uncrafting
-  //
-  // 
-  //
+  //tons of redstone item uncrafting 
   //tons of glass stuff to plain sand
-  //
-  //concrete powder: 4 gravel, and a 1/8th chance to get dye back
-  //
   // 
   //
-  //ore blocks to ore chunks ( pre smelting )
-  //
-  //glow berries to glowstone dust
-  //
-  // 
+  //   
   //
   //uncarving pumpkins
-  //
-  // 
-  //
-  //magma block - 2 magma cream , RNG of up to +2 more
-  //
-  // 
-  //
-  //magma cream -> to air with a chance of slimeball? is this possible
-  //
-  // 
-  //
-  // 
-  //
-  //glow ink sac -> ink sac + 25% of glowstone dust
-  //
   // 
   //
   //sea lantern stuff to glowstone dust

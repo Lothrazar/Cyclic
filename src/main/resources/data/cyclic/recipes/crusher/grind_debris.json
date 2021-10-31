@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:ancient_debris"
 	},
 	"energy": {
-		"ticks": 160,
-		"rfpertick": 40
+		"ticks": 1200,
+		"rfpertick": 60
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:netherite_scrap",
+		"count": 1
 	},
-	"percent": 90,
+	"percent": 10,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:netherite_scrap",
+		"count": 1
 	},
 	"conditions": [
 		{

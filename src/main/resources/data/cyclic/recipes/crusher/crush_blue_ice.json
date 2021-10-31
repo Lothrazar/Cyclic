@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:blue_ice"
 	},
 	"energy": {
-		"ticks": 160,
+		"ticks": 200,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
-		"count": 2
+		"item": "minecraft:packed_ice",
+		"count": 7
 	},
 	"percent": 90,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:ice",
+		"count": 9
 	},
 	"conditions": [
 		{

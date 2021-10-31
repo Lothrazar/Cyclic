@@ -32,7 +32,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
 
   public CrusherRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.GENERATOR_ITEM.get()));
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.CRUSHER.get()));
   }
 
   @Override
@@ -81,7 +81,13 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   @Override
   public void draw(RecipeCrusher recipe, PoseStack ms, double mouseX, double mouseY) {
     int x = 78;
-    Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", x, 6, FONT);
+    if (recipe.getTicks() < 40) {
+      Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", x, 6, FONT);
+    }
+    else {
+      int sec = recipe.getTicks() / 20;
+      Minecraft.getInstance().font.draw(ms, sec + " s", x, 6, FONT);
+    }
     Minecraft.getInstance().font.draw(ms, recipe.getRfpertick() + " RF/t", x, 16, FONT);
     Minecraft.getInstance().font.draw(ms, recipe.getRfTotal() + " RF", x, 26, FONT);
     if (!recipe.bonus.isEmpty() && recipe.percent > 0) {

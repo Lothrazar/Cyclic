@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:blaze_rod"
+		"item": "minecraft:wither_rose"
 	},
 	"energy": {
-		"ticks": 160,
+		"ticks": 600,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:blaze_powder",
+		"item": "minecraft:soul_sand",
 		"count": 2
 	},
-	"percent": 90,
+	"percent": 50,
 	"bonus": {
-		"item": "minecraft:blaze_powder",
-		"count": 3
+		"item": "minecraft:ghast_tear",
+		"count": 2
 	},
 	"conditions": [
 		{
