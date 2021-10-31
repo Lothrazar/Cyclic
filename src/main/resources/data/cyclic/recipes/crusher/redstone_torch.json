@@ -1,19 +1,14 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"tag": "minecraft:saplings"
+		"item": "minecraft:redstone_torch"
 	},
 	"energy": {
 		"ticks": 100,
 		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:stick",
-		"count": 1
-	},
-	"percent": 50,
-	"bonus": {
-		"item": "minecraft:stick",
+		"item": "minecraft:redstone",
 		"count": 1
 	},
 	"conditions": [

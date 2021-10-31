@@ -11,6 +11,11 @@
 		"item": "minecraft:sand",
 		"count": 1
 	},
+	"percent": 5,
+	"bonus": {
+		"item": "minecraft:flint",
+		"count": 1
+	},
 	"conditions": [
 		{
 			"values": [
