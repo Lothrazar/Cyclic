@@ -1,7 +1,7 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:beef"
+		"item": "minecraft:mutton"
 	},
 	"energy": {
 		"ticks": 200,
