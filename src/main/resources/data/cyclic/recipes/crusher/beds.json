@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"tag": "minecraft:beds"
+	},
+	"energy": {
+		"ticks": 100,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "minecraft:string",
+		"count": 6
+	},
+	"percent": 75,
+	"bonus": {
+		"item": "minecraft:string",
+		"count": 6
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

@@ -4,14 +4,14 @@
 		"item": "minecraft:magma_cream"
 	},
 	"energy": {
-		"ticks": 200,
+		"ticks": 300,
 		"rfpertick": 60
 	},
 	"result": {
 		"item": "minecraft:blaze_powder",
 		"count": 1
 	},
-	"percent": 60,
+	"percent": 25,
 	"bonus": {
 		"item": "minecraft:slime_ball",
 		"count": 1

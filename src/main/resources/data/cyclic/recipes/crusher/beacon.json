@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "minecraft:beacon"
+	},
+	"energy": {
+		"ticks": 120,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "minecraft:obsidian",
+		"count": 3
+	},
+	"percent": 90,
+	"bonus": {
+		"item": "minecraft:nether_star",
+		"count": 1
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

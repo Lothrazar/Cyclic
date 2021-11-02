@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -27,14 +27,15 @@ public class MattockItem extends DiggerItem {
 
   final int radius; //radius 2 is 5x5 area square
 
-  public MattockItem(Properties builder, int radius) {
-    super(5.0F, -3.0F, Tiers.DIAMOND, BlockTags.MINEABLE_WITH_SHOVEL, builder);
+  public MattockItem(Tiers tr, Properties builder, int radius) {
+    super(5.0F, -3.0F, tr, DataTags.WITH_MATTOCK, builder);
     this.radius = radius;
   }
 
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
     Level world = player.level;
+    //    this.getTier()
     HitResult ray = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
     int yoff = 0;
     if (radius == 2 && player.isCrouching()) {
@@ -62,10 +63,17 @@ public class MattockItem extends DiggerItem {
       }
       for (BlockPos posCurrent : shape) {
         BlockState bsCurrent = world.getBlockState(posCurrent);
+        if (bsCurrent.isAir()) {
+          continue;
+        }
         if (bsCurrent.destroySpeed >= 0 // -1 is unbreakable
             && player.mayUseItemAt(posCurrent, sideHit, stack)
             && ForgeEventFactory.doPlayerHarvestCheck(player, bsCurrent, true)
-            && this.getDestroySpeed(stack, bsCurrent) > 1) {
+            && this.getDestroySpeed(stack, bsCurrent) > 1
+            && (bsCurrent.canHarvestBlock(world, pos, player)
+                || this.getTier().getTag().contains(bsCurrent.getBlock()))
+        //end of OR
+        ) {
           stack.mineBlock(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
           if (world.isClientSide) {
@@ -102,7 +110,9 @@ public class MattockItem extends DiggerItem {
 
   @Override
   public float getDestroySpeed(ItemStack stack, BlockState state) {
-    return Math.max(Items.DIAMOND_PICKAXE.getDestroySpeed(stack, state),
-        Items.DIAMOND_SHOVEL.getDestroySpeed(stack, state));
+    if (this.getTier() == Tiers.STONE) {
+      return Math.max(Items.STONE_PICKAXE.getDestroySpeed(stack, state), Items.STONE_SHOVEL.getDestroySpeed(stack, state));
+    }
+    return Math.max(Items.DIAMOND_PICKAXE.getDestroySpeed(stack, state), Items.DIAMOND_SHOVEL.getDestroySpeed(stack, state));
   }
 }

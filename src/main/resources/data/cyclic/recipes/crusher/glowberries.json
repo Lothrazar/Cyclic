@@ -9,9 +9,9 @@
 	},
 	"result": {
 		"item": "minecraft:glowstone_dust",
-		"count": 3
+		"count": 4
 	},
-	"percent": 75,
+	"percent": 35,
 	"bonus": {
 		"item": "minecraft:gunpowder",
 		"count": 3

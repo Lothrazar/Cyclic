@@ -4,14 +4,14 @@
 		"tag": "minecraft:wool"
 	},
 	"energy": {
-		"ticks": 100,
+		"ticks": 30,
 		"rfpertick": 10
 	},
 	"result": {
 		"item": "minecraft:string",
-		"count": 4
+		"count": 3
 	},
-	"percent": 5,
+	"percent": 90,
 	"bonus": {
 		"item": "minecraft:string",
 		"count": 1

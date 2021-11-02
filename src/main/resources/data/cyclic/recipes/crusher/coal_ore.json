@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"tag": "forge:ores/coal"
+	},
+	"energy": {
+		"ticks": 120,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "minecraft:coal",
+		"count": 2
+	},
+	"percent": 80,
+	"bonus": {
+		"item": "minecraft:coal",
+		"count": 3
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

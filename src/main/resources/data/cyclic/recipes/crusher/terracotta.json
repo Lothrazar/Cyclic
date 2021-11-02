@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "minecraft:terracotta"
+	},
+	"energy": {
+		"ticks": 100,
+		"rfpertick": 80
+	},
+	"result": {
+		"item": "minecraft:clay_ball",
+		"count": 1
+	},
+	"percent": 80,
+	"bonus": {
+		"item": "minecraft:clay_ball",
+		"count": 3
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

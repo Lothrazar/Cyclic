@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ooo",
+    "oeo",
+    " e "
+  ],
+  "key": {
+    "o": {
+      "item": "cyclic:compressed_cobblestone"
+    },
+    "e": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "cyclic:mattock_stone"
+  }
+}

@@ -4,7 +4,7 @@
 		"item": "minecraft:crimson_nylium"
 	},
 	"energy": {
-		"ticks": 200,
+		"ticks": 400,
 		"rfpertick": 40
 	},
 	"result": {
@@ -13,7 +13,7 @@
 	},
 	"percent": 25,
 	"bonus": {
-		"item": "minecraft:blaze_rod",
+		"item": "minecraft:blaze_powder",
 		"count": 1
 	},
 	"conditions": [

@@ -109,7 +109,7 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
       this.burnTimeMax = 0;
       this.burnTime = 0;
       // FIRE AWAY
-      ModCyclic.LOGGER.info("extr  c" + currentRecipe.getId());
+      ModCyclic.LOGGER.info("result " + currentRecipe.getId());
       if (!currentRecipe.getResultItem().isEmpty()) {
         this.outputSlots.insertItem(0, currentRecipe.getResultItem().copy(), false);
       }
@@ -123,16 +123,21 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
       level.levelEvent((Player) null, 1042, worldPosition, 0);
       currentRecipe = null;
     }
-    this.findMatchingRecipe();
+    // if MAX is zero, we are not currently burning 
+    if (this.burnTime <= 0 && this.burnTimeMax == 0) {
+      this.findMatchingRecipe();
+    }
     if (currentRecipe == null) {
       return;
     }
-    setLitProperty(true); // has recipe so lit
-    int onSim = energy.extractEnergy(currentRecipe.getRfpertick(), true);
-    if (onSim >= currentRecipe.getRfpertick()) {
-      //gen up. we burned away a tick of this fuel 
-      energy.extractEnergy(currentRecipe.getRfpertick(), false);
-      this.burnTime--; // paying per tick for this recipe
+    if (this.burnTimeMax > 0) {
+      setLitProperty(true); // has recipe so lit
+      int onSim = energy.extractEnergy(currentRecipe.getRfpertick(), true);
+      if (onSim >= currentRecipe.getRfpertick()) {
+        //gen up. we burned away a tick of this fuel 
+        energy.extractEnergy(currentRecipe.getRfpertick(), false);
+        this.burnTime--; // paying per tick for this recipe
+      }
     }
   }
 
@@ -148,7 +153,7 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
         this.inputSlots.extractItem(0, 1, false); // TODO: only 1 not # items per recipe
-        ModCyclic.LOGGER.info("found  c" + currentRecipe.getId());
+        ModCyclic.LOGGER.info(burnTime + " found  " + currentRecipe.getId());
         return;
       }
     }

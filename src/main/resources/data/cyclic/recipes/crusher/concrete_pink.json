@@ -1,20 +1,15 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:glow_ink_sac"
+		"item": "minecraft:pink_concrete"
 	},
 	"energy": {
-		"ticks": 600,
+		"ticks": 60,
 		"rfpertick": 40
 	},
 	"result": {
-		"item": "minecraft:glowstone_dust",
-		"count": 3
-	},
-	"percent": 75,
-	"bonus": {
-		"item": "minecraft:gunpowder",
-		"count": 2
+		"item": "minecraft:pink_concrete_powder",
+		"count": 1
 	},
 	"conditions": [
 		{

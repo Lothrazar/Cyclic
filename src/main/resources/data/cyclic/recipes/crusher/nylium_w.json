@@ -4,16 +4,16 @@
 		"item": "minecraft:warped_nylium"
 	},
 	"energy": {
-		"ticks": 200,
+		"ticks": 400,
 		"rfpertick": 40
 	},
 	"result": {
 		"item": "minecraft:cobblestone",
 		"count": 1
 	},
-	"percent": 25,
+	"percent": 15,
 	"bonus": {
-		"item": "minecraft:blaze_rod",
+		"item": "minecraft:blaze_powder",
 		"count": 1
 	},
 	"conditions": [

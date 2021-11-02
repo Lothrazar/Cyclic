@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "minecraft:end_crystal"
+	},
+	"energy": {
+		"ticks": 20,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "minecraft:ghast_tear",
+		"count": 1
+	},
+	"percent": 25,
+	"bonus": {
+		"item": "minecraft:ender_eye",
+		"count": 1
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

@@ -11,7 +11,11 @@
 		"item": "minecraft:amethyst_shard",
 		"count": 4
 	},
-	"percent": 0,
+	"percent": 1,
+	"bonus": {
+		"item": "minecraft:calcite",
+		"count": 5
+	},
 	"conditions": [
 		{
 			"values": [

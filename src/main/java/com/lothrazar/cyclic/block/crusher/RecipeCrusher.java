@@ -162,28 +162,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
       buffer.writeItem(recipe.bonus);
     }
   }
-  //
   //optional recipes for grinder ores / other mod ores
-  // 
-  // 
-  //
-  //  concrete -> powder same color x16
-  //
-  //terracotta (not dyed) -> clay block
-  //
-  //tons of redstone item uncrafting 
-  //tons of glass stuff to plain sand
-  // 
-  //   watermelon -> seeds, chance of biomass
-  // pumpkin - same
-  // flowers-> dyes with more bonus. 1->2-3
-  //cacuts to dye etc too?
-  //
-  //uncarving pumpkins
-  // 
-  //
-  //sea lantern stuff to glowstone dust
-  //
   //  
 
   public ItemStack createBonus(Random rand) {

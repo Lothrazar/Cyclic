@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "minecraft:tinted_glass"
+	},
+	"energy": {
+		"ticks": 20,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "minecraft:amethyst_shard",
+		"count": 2
+	},
+	"percent": 30,
+	"bonus": {
+		"item": "minecraft:glass",
+		"count": 1
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

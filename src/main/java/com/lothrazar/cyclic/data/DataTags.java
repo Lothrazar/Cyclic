@@ -16,6 +16,7 @@ public class DataTags {
   public static final Named<Fluid> BIOMASS = FluidTags.bind("forge:biomass");
   public static final Named<Fluid> MAGMA = FluidTags.bind("forge:magma");
   public static final Named<Fluid> SLIME = FluidTags.bind("forge:slime");
+  public static final Named<Block> WITH_MATTOCK = BlockTags.bind("minecraft:mineable/mattock");
   public static final Named<Block> PLANTS = BlockTags.bind("forge:plants");
   public static final Named<Block> MUSHROOMS = BlockTags.bind("forge:mushrooms");
   public static final Named<Block> VINES = BlockTags.bind("forge:vines");

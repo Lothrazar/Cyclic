@@ -1,0 +1,29 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "minecraft:sea_lantern"
+	},
+	"energy": {
+		"ticks": 30,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "minecraft:prismarine_crystals",
+		"count": 5
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

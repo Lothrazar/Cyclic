@@ -6,16 +6,16 @@
     "pip"
   ],
   "key": {
-    "p": {
+    "c": {
       "item": "minecraft:stonecutter"
     },
-    "i": {
-      "item": "minecraft:piston"
-    },
     "b": {
+      "item": "cyclic:flint_block"
+    },
+    "i": {
       "tag": "forge:nuggets/copper"
     },
-    "c": {
+    "p": {
       "item": "cyclic:compressed_cobblestone"
     }
   },

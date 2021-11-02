@@ -105,12 +105,13 @@ dependencies {
  //   compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
  //   runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
-    implementation fg.deobf("curse.maven:plain-grinder-452000:3498790")  
-	  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
+  
+ //    implementation fg.deobf("curse.maven:plain-grinder-452000:3498790")  
+	//  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
 	 	
 	//  implementation fg.deobf("curse.maven:construction-wand-399558:3499311")
-    implementation fg.deobf("curse.maven:glass-cutter-368921:3185268")
-	  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3498537")
+  //  implementation fg.deobf("curse.maven:glass-cutter-368921:3185268")
+	//  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3498537")
     
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
   //  implementation fg.deobf("curse.maven:refined-storage-243076:3157354")
