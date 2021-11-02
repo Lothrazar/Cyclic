@@ -1,0 +1,13 @@
+{
+	"type": "cyclic:auto_smelt",
+	"conditions": [
+		{
+			"condition": "minecraft:match_tool",
+			"predicate": {
+				"items": [
+					"cyclic:cleaver"
+				]
+			}
+		}
+	]
+}

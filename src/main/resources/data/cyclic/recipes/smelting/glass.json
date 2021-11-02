@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "tag": "forge:glass/colorless"
+  },
+  "result": "cyclic:glass_connected",
+  "experience": 0.38,
+  "cookingtime": 400
+}

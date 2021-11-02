@@ -211,6 +211,8 @@ public class ItemRegistry {
   public static final RegistryObject<Item> NETHERITE_LANTERN = ITEMS.register("netherite_lantern", () -> new BlockItem(BlockRegistry.NETHERITE_LANTERN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SPONGE_LAVA = ITEMS.register("sponge_lava", () -> new BlockItem(BlockRegistry.SPONGE_LAVA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CRUSHER = ITEMS.register("crusher", () -> new BlockItem(BlockRegistry.CRUSHER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> GLASS_CONNECTED = ITEMS.register("glass_connected", () -> new BlockItem(BlockRegistry.GLASS_CONNECTED.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CLEAVER = ITEMS.register("cleaver", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //
   public static List<ItemBase> items = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
@@ -394,6 +396,13 @@ public class ItemRegistry {
     r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h * 4).saturationMod(s * 4)
         .build())).setRegistryName("apple_honey"));
     //
+    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
+        //        .effect(new MobEffectInstance(MobEffects.LEVITATION, largePotionDur, 1), 1)
+        //        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, largePotionDur, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 4 * 20, 1), 1)
+        .effect(new MobEffectInstance(MobEffects.REGENERATION, 6 * 20, 1), 1)
+        .alwaysEat()
+        .build())).setRegistryName("poultice"));
     r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
         .effect(new MobEffectInstance(MobEffects.LEVITATION, largePotionDur, 1), 1)
         .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, largePotionDur, 0), 1)
