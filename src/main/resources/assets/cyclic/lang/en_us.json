@@ -48,6 +48,10 @@
   "block.cyclic.sponge_lava": "Lava Sponge",
   "block.cyclic.sponge_lava.tooltip": "Eats up nearby lava source blocks",
   "block.cyclic.sponge_lava.guide": "Place and wait for some time to let it soak up nearby lava.  Source lava is not recoverable, it is deleted by the sponge",
+ 
+  "block.cyclic.teleport": "Translocation Platform",
+  "block.cyclic.teleport.tooltip": "Teleport player using energy",
+  "block.cyclic.teleport.guide": "Place and feed with energy.  Use a GPS Location device to track a target destination for the teleport.  Crouch to use",
 
 
   "block.cyclic.crusher": "Crushing Macerator",
@@ -276,9 +280,13 @@
   "block.cyclic.fan_slab.guide": "The Fan Slab is a simple block machine designed to push players, mobs, items and other entities.",
   "cyclic.fan.range": "Range",
   "cyclic.fan.speed": "Speed",
+  "block.cyclic.peace_candle": "Peace Candle",
+  "block.cyclic.peace_candle.tooltip": "Prevents nearby hostile mob spawns",
+  "block.cyclic.peace_candle.guide": "Prevents natural hostile mob spawns in a large radius, and about 8 blocks above. ",
+
   "block.cyclic.water_candle": "Water Candle",
-  "block.cyclic.water_candle.tooltip": "Light with Flint and Steel to increase mob spawns",
-  "block.cyclic.water_candle.guide": "The Water Candle can be lit with Flint and Steel to increase the rate at which mobs naturally spawn nearby.For the candle to work, mobs must be able to spawn naturally in its vicinity.In most cases, this means it must be dark enough to spawn mobs!",
+  "block.cyclic.water_candle.tooltip": "Increases mob spawns while lit",
+  "block.cyclic.water_candle.guide": "The Water Candle can be lit by a player to increase the rate at which mobs naturally spawn nearby.For the candle to work, mobs must be able to spawn naturally in its vicinity.In most cases, this means it must be dark enough to spawn mobs!",
   "block.cyclic.water_candle.guide0": "When lit, has a random chance to extinguish itself while spawning a mob. When this happens, you must relight the candle for it to continue spawning.",
   "block.cyclic.unbreakable_block": "Stable Quantum Bedrock",
   "block.cyclic.unbreakable_block.tooltip": "Right-click with Redstone to toggle Unbreakable state",

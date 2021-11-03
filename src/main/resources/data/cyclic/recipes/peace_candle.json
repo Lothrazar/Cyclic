@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " s ",
-    "qdq",
+    " d ",
     "ggg"
   ],
   "key": {
@@ -10,17 +10,14 @@
       "tag": "minecraft:candles"
     },
     "g": {
-      "item": "minecraft:light_weighted_pressure_plate"
+      "item": "minecraft:calcite"
     },
     "s": {
-      "item": "minecraft:amethyst_block"
-    },
-    "q": {
-      "item": "minecraft:quartz"
+      "item": "minecraft:emerald"
     }
   },
   "result": {
-    "item": "cyclic:water_candle",
+    "item": "cyclic:peace_candle",
     "count": 1
   }
 }

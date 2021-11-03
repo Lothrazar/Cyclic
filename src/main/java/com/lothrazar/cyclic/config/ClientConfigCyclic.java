@@ -62,7 +62,7 @@ public class ClientConfigCyclic {
       return parseColor(STRUCTURE.get());
     }
     else {
-      ModCyclic.LOGGER.info("Default color for tile " + tile);
+      ModCyclic.LOGGER.error("Default color for tile " + tile);
       return DEFAULTC;
     }
   }
@@ -80,10 +80,10 @@ public class ClientConfigCyclic {
   }
 
   public static Color getColor(ItemStack item) {
-    if (item.getItem() == ItemRegistry.location) {
+    if (item.getItem() == ItemRegistry.LOCATION_DATA.get()) {
       return parseColor(LOCATION.get());
     }
-    else if (item.getItem() == ItemRegistry.shape_data) {
+    else if (item.getItem() == ItemRegistry.SHAPE_DATA.get()) {
       return parseColor(SHAPE_DATA.get());
     }
     else if (item.getItem() == ItemRegistry.RANDOMIZE_SCEPTER.get()) {
@@ -99,7 +99,7 @@ public class ClientConfigCyclic {
       return parseColor(BUILD_SCEPTER.get());
     }
     else {
-      ModCyclic.LOGGER.info("Default color for item " + item.getItem());
+      ModCyclic.LOGGER.error("Default color for item " + item.getItem());
       return DEFAULTC;
     }
   }

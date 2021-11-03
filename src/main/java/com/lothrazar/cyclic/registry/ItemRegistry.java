@@ -212,13 +212,21 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SPONGE_LAVA = ITEMS.register("sponge_lava", () -> new BlockItem(BlockRegistry.SPONGE_LAVA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CRUSHER = ITEMS.register("crusher", () -> new BlockItem(BlockRegistry.CRUSHER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GLASS_CONNECTED = ITEMS.register("glass_connected", () -> new BlockItem(BlockRegistry.GLASS_CONNECTED.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> CLEAVER = ITEMS.register("cleaver", () -> new GemstoneItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> LOCATION_DATA = ITEMS.register("location_data", () -> new LocationGpsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SETTINGS_DATA = ITEMS.register("settings_data", () -> new SettingsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SHAPE_DATA = ITEMS.register("shape_data", () -> new ShapeCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> FILTER_DATA = ITEMS.register("filter_data", () -> new FilterCardItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> FLOWER_CUAN = ITEMS.register("flower_cyan", () -> new BlockItem(BlockRegistry.FLOWER_CYAN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FLOWER_PURPLE = ITEMS.register("flower_purple_tulip", () -> new BlockItem(BlockRegistry.FLOWER_PURPLE_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FLOWER_BROWN = ITEMS.register("flower_absalon_tulip", () -> new BlockItem(BlockRegistry.FLOWER_ABSALON_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FLOWER_LIME = ITEMS.register("flower_lime_carnation", () -> new BlockItem(BlockRegistry.FLOWER_LIME_CARNATION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> WATER_CANDLE = ITEMS.register("water_candle", () -> new BlockItem(BlockRegistry.WATER_CANDLE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> PEACE_CANDLE = ITEMS.register("peace_candle", () -> new BlockItem(BlockRegistry.PEACE_CANDLE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> TELEPORT = ITEMS.register("teleport", () -> new BlockItem(BlockRegistry.TELEPORT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //
-  public static List<ItemBase> items = new ArrayList<>();
+  public static List<ItemBase> items = new ArrayList<>(); // TODO: delet this. only used for legacy registerClient hax
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
-  @ObjectHolder(ModCyclic.MODID + ":biomass")
-  public static Item biomass;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
   public static Item spawner_seeker;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
@@ -229,8 +237,6 @@ public class ItemRegistry {
   public static Item boomerang_stun;
   @ObjectHolder(ModCyclic.MODID + ":mob_container")
   public static ItemMobContainer mob_container;
-  @ObjectHolder(ModCyclic.MODID + ":experience_food")
-  public static Item experience_food;
   @ObjectHolder(ModCyclic.MODID + ":magic_net")
   public static Item magic_net;
   @ObjectHolder(ModCyclic.MODID + ":tile_transporter")
@@ -243,12 +249,6 @@ public class ItemRegistry {
   public static Item crafting_bag;
   @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
   public static Item crafting_stick;
-  @ObjectHolder(ModCyclic.MODID + ":filter_data")
-  public static Item filter_data;
-  @ObjectHolder(ModCyclic.MODID + ":location_data")
-  public static Item location;
-  @ObjectHolder(ModCyclic.MODID + ":shape_data")
-  public static Item shape_data;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -261,13 +261,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.apple_sprout_diamond, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout_diamond"));
     r.register(new BlockItem(BlockRegistry.apple_sprout_emerald, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout_emerald"));
     r.register(new BlockItem(BlockRegistry.computer_shape, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("computer_shape"));
-    r.register(new BlockItem(BlockRegistry.FLOWER_CYAN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_cyan"));
-    r.register(new BlockItem(BlockRegistry.FLOWER_PURPLE_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_purple_tulip"));
-    r.register(new BlockItem(BlockRegistry.FLOWER_ABSALON_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_absalon_tulip"));
-    r.register(new BlockItem(BlockRegistry.FLOWER_LIME_CARNATION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("flower_lime_carnation"));
     r.register(new BlockItem(BlockRegistry.EYE_REDSTONE, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_redstone"));
     r.register(new BlockItem(BlockRegistry.EYE_TELEPORT, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_teleport"));
-    //
     r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("battery"));
     r.register(new BlockItem(BlockRegistry.peat_unbaked, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_unbaked"));
     r.register(new BlockItem(BlockRegistry.peat_baked, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("peat_baked"));
@@ -315,7 +310,6 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.item_infinite, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("item_infinite"));
     r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("dice"));
     r.register(new BlockItem(BlockRegistry.TERRA_PRETA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("terra_preta"));
-    r.register(new BlockItem(BlockRegistry.water_candle, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("water_candle"));
     r.register(new BlockItem(BlockRegistry.fireplace, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fireplace"));
     r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.unbreakable_block, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("unbreakable_block"));
@@ -333,7 +327,6 @@ public class ItemRegistry {
     r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel_enriched"));
     r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("biomass"));
     // basic tools
-    r.register(new LocationGpsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("location_data"));
     r.register(new MattockItem(Tiers.DIAMOND, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9000), 1).setRegistryName("mattock"));
     r.register(new MattockItem(Tiers.NETHERITE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9001), 2).setRegistryName("mattock_nether"));
     r.register(new MattockItem(Tiers.STONE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024), 1).setRegistryName("mattock_stone"));
@@ -373,9 +366,6 @@ public class ItemRegistry {
     r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ElevationWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("elevation_wand"));
     r.register(new TeleporterWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("teleport_wand"));
-    r.register(new SettingsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("settings_data"));
-    r.register(new ShapeCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("shape_data"));
-    r.register(new FilterCardItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("filter_data"));
     r.register(new ScytheHarvest(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024)).setRegistryName("scythe_harvest"));
     r.register(new ItemStorageBag(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()).setRegistryName("crafting_bag"));
@@ -396,13 +386,6 @@ public class ItemRegistry {
     r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h * 4).saturationMod(s * 4)
         .build())).setRegistryName("apple_honey"));
     //
-    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
-        //        .effect(new MobEffectInstance(MobEffects.LEVITATION, largePotionDur, 1), 1)
-        //        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 4 * 20, 1), 1)
-        .effect(new MobEffectInstance(MobEffects.REGENERATION, 6 * 20, 1), 1)
-        .alwaysEat()
-        .build())).setRegistryName("poultice"));
     r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
         .effect(new MobEffectInstance(MobEffects.LEVITATION, largePotionDur, 1), 1)
         .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, largePotionDur, 0), 1)
@@ -517,6 +500,7 @@ public class ItemRegistry {
     r.register(new ShovelItem(MaterialRegistry.ToolMats.SANDSTONE, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_shovel"));
     r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_shovel"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.AMETHYST, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_sword"));
+    //  r.register(new SwordCleaverItem(MaterialRegistry.ToolMats.AMETHYST, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("cleaver"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.COPPER, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_sword"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_sword"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_sword"));

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=true":  { "model": "cyclic:block/peace_candle_lit" },
+    "lit=false": { "model": "cyclic:block/peace_candle" }
+  }
+}

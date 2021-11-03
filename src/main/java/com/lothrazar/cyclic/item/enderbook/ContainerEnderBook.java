@@ -51,7 +51,7 @@ public class ContainerEnderBook extends ContainerBase {
 
           @Override
           public boolean mayPlace(@Nonnull ItemStack stack) {
-            return stack.getItem() == ItemRegistry.location && super.mayPlace(stack);
+            return stack.getItem() == ItemRegistry.LOCATION_DATA.get() && super.mayPlace(stack);
           }
         });
       }

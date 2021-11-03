@@ -240,24 +240,24 @@ public class UtilEntity {
     float z = Mth.cos(entity.getYRot() * 0.017453292F) * factor;
     entity.setDeltaMovement(x, entity.getDeltaMovement().y, z);
   }
-
-  public static int moveEntityLivingNonplayers(Level world, double x, double y, double z, int horizRadius, int height, boolean towardsPos, float speed) {
-    AABB range = UtilEntity.makeBoundingBox(x, y, z, horizRadius, height);
-    List<LivingEntity> nonPlayer = getLivingHostile(world, range);
-    return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed);
-  }
-
-  public static List<LivingEntity> getLivingHostile(Level world, AABB range) {
-    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, range);
-    List<LivingEntity> nonPlayer = new ArrayList<LivingEntity>();
-    for (LivingEntity ent : all) {
-      if (ent instanceof Player == false) {
-        //&& ent.isCreatureType(EnumCreatureType.MONSTER, false)) {//players are not monsters so, redundant?
-        nonPlayer.add(ent);
-      }
-    }
-    return nonPlayer;
-  }
+  //
+  //  public static int moveEntityLivingNonplayers(Level world, double x, double y, double z, int horizRadius, int height, boolean towardsPos, float speed) {
+  //    AABB range = UtilEntity.makeBoundingBox(x, y, z, horizRadius, height);
+  //    List<LivingEntity> nonPlayer = getLivingNonPlayer(world, range);
+  //    return pullEntityList(x, y, z, towardsPos, nonPlayer, speed, speed);
+  //  }
+  //
+  //  public static List<LivingEntity> getLivingNonPlayer(Level world, AABB range) {
+  //    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, range);
+  //    List<LivingEntity> nonPlayer = new ArrayList<LivingEntity>();
+  //    for (LivingEntity ent : all) {
+  //      if (ent instanceof Player == false) {
+  //        //&& ent.isCreatureType(EnumCreatureType.MONSTER, false)) {//players are not monsters so, redundant?
+  //        nonPlayer.add(ent);
+  //      }
+  //    }
+  //    return nonPlayer;
+  //  }
 
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
     return pullEntityList(x, y, z, towardsPos, all, ITEMSPEEDCLOSE, ITEMSPEEDFAR);

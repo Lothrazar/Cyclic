@@ -108,6 +108,27 @@ public class UtilWorld {
   //    return new BlockPos(posX, here.getY(), posZ);
   //  }
 
+  public static boolean doesBlockExist(Level world, BlockPos start, BlockState blockHunt, final int radius, final int height) {
+    int xMin = start.getX() - radius;
+    int xMax = start.getX() + radius;
+    int yMin = start.getY();
+    int yMax = start.getY() + height;
+    int zMin = start.getZ() - radius;
+    int zMax = start.getZ() + radius;
+    BlockPos posCurrent = null;
+    for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
+      for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
+        for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+          posCurrent = new BlockPos(xLoop, yLoop, zLoop);
+          if (world.getBlockState(posCurrent) == blockHunt) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   public static ArrayList<BlockPos> findBlocks(Level world, BlockPos start, Block blockHunt, final int radius) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
     int xMin = start.getX() - radius;

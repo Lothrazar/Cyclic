@@ -46,7 +46,7 @@ public class TileCableFluid extends TileEntityBase implements MenuProvider {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem() == ItemRegistry.filter_data;
+      return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
   };
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;

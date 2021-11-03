@@ -1,3 +1,6 @@
 {
-     "parent": "cyclic:block/netherite_chain"
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "cyclic:items/netherite_chain"
+    }
 }

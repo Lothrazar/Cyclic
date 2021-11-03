@@ -69,6 +69,7 @@ import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.block.terraglass.TileTerraGlass;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
+import com.lothrazar.cyclic.block.tp.TileTeleport;
 import com.lothrazar.cyclic.block.trash.TileTrash;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
@@ -116,6 +117,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> BlockEntityType.Builder.of(MembraneLampTile::new, BlockRegistry.LAMP.get()).build(null));
   public static final RegistryObject<BlockEntityType<SoilTile>> SOIL = TILES.register("soil", () -> BlockEntityType.Builder.of(SoilTile::new, BlockRegistry.SOIL.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileCrusher>> CRUSHER = TILES.register("crusher", () -> BlockEntityType.Builder.of(TileCrusher::new, BlockRegistry.CRUSHER.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileTeleport>> TELEPORT = TILES.register("teleport", () -> BlockEntityType.Builder.of(TileTeleport::new, BlockRegistry.TELEPORT.get()).build(null));
 
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> event) {

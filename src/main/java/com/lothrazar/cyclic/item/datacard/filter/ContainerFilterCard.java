@@ -46,7 +46,7 @@ public class ContainerFilterCard extends ContainerBase {
 
           @Override
           public boolean mayPlace(@Nonnull ItemStack stack) {
-            if (stack.getItem() == ItemRegistry.filter_data) {
+            if (stack.getItem() == ItemRegistry.FILTER_DATA.get()) {
               return false;
             }
             return super.mayPlace(stack);

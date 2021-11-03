@@ -5,6 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.BlockSimple;
+import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
@@ -14,7 +15,6 @@ import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.PressurePlateMetal;
-import com.lothrazar.cyclic.block.WaterCandleBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
@@ -99,6 +99,7 @@ import com.lothrazar.cyclic.block.tank.BlockFluidTank;
 import com.lothrazar.cyclic.block.tankcask.BlockCask;
 import com.lothrazar.cyclic.block.terraglass.BlockTerraGlass;
 import com.lothrazar.cyclic.block.terrasoil.BlockTerraPreta;
+import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.trash.BlockTrash;
 import com.lothrazar.cyclic.block.uncrafter.BlockUncraft;
 import com.lothrazar.cyclic.block.user.BlockUser;
@@ -189,13 +190,13 @@ public class BlockRegistry {
   public static final RegistryObject<Block> WORKBENCH = BLOCKS.register("workbench", () -> new BlockWorkbench(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> OBSIDIAN_PRESSURE_PLATE = BLOCKS.register("obsidian_pressure_plate", () -> new PressurePlateMetal(Block.Properties.of(Material.METAL, Blocks.OBSIDIAN.defaultMaterialColor()).noCollission().strength(0.5F)));
   public static final RegistryObject<Block> GOLD_BARS = BLOCKS.register("gold_bars", () -> new MetalBarsBlock(Block.Properties.of(Material.METAL)));
-  public static final RegistryObject<Block> GOLD_CHAIN = BLOCKS.register("gold_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
-  public static final RegistryObject<Block> GOLD_LANTERN = BLOCKS.register("gold_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 14)));
-  public static final RegistryObject<Block> GOLD_SOUL_LANTERN = BLOCKS.register("gold_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 14)));
+  public static final RegistryObject<Block> GOLD_CHAIN = BLOCKS.register("gold_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).strength(1).sound(SoundType.CHAIN).noOcclusion()));
+  public static final RegistryObject<Block> GOLD_LANTERN = BLOCKS.register("gold_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 14)));
+  public static final RegistryObject<Block> GOLD_SOUL_LANTERN = BLOCKS.register("gold_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 14)));
   public static final RegistryObject<Block> COPPER_BARS = BLOCKS.register("copper_bars", () -> new MetalBarsBlock(Block.Properties.of(Material.METAL)));
-  public static final RegistryObject<Block> COPPER_CHAIN = BLOCKS.register("copper_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
-  public static final RegistryObject<Block> COPPER_LANTERN = BLOCKS.register("copper_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 12))); //soul_lantern=10
-  public static final RegistryObject<Block> COPPER_SOUL_LANTERN = BLOCKS.register("copper_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 12))); //soul_lantern=10
+  public static final RegistryObject<Block> COPPER_CHAIN = BLOCKS.register("copper_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).strength(1.0F).sound(SoundType.CHAIN).noOcclusion()));
+  public static final RegistryObject<Block> COPPER_LANTERN = BLOCKS.register("copper_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 12))); //soul_lantern=10
+  public static final RegistryObject<Block> COPPER_SOUL_LANTERN = BLOCKS.register("copper_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 12))); //soul_lantern=10
   public static final RegistryObject<Block> COPPER_PRESSURE_PLATE = BLOCKS.register("copper_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.METAL, Blocks.COPPER_BLOCK.defaultMaterialColor()).noCollission().strength(0.5F)) {
 
     @Override
@@ -204,17 +205,16 @@ public class BlockRegistry {
     }
   });
   public static final RegistryObject<Block> NETHERITE_BARS = BLOCKS.register("netherite_bars", () -> new MetalBarsBlock(Block.Properties.of(Material.METAL)));
-  public static final RegistryObject<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
-  public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).requiresCorrectToolForDrops().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
+  public static final RegistryObject<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
+  public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
   public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.METAL, Blocks.COPPER_BLOCK.defaultMaterialColor()).noCollission().strength(0.5F)));
   public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of(Material.SPONGE).lightLevel(p -> 2)));
   public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of(Material.METAL)));
-  // FUTURE: 
-  //  public static final RegistryObject<Block> XP_DRAIN = BLOCKS.register("xp_drain", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
-  //  public static final RegistryObject<Block> TELEPORTER = BLOCKS.register("teleporter", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
-  //  public static final RegistryObject<Block> CLEAR_GLASS = BLOCKS.register("clear_glass", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
-  //  public static final RegistryObject<Block> CLEAR_GLASS = BLOCKS.register("gold_trapdoor", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
-  //  public static final RegistryObject<Block> CLEAR_GLASS = BLOCKS.register("gold_door", () -> new SoilBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> PEACE_CANDLE = BLOCKS.register("peace_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
+      .lightLevel(p -> p.getValue(BlockBase.LIT) ? 6 : 0)));
+  public static final RegistryObject<Block> WATER_CANDLE = BLOCKS.register("water_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
+      .lightLevel(p -> p.getValue(BlockBase.LIT) ? 1 : 0)));
+  public static final RegistryObject<Block> TELEPORT = BLOCKS.register("teleport", () -> new BlockTeleport(Block.Properties.of(Material.STONE)));
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -321,8 +321,6 @@ public class BlockRegistry {
   public static Block screen;
   @ObjectHolder(ModCyclic.MODID + ":uncrafter")
   public static Block uncrafter;
-  @ObjectHolder(ModCyclic.MODID + ":water_candle")
-  public static Block water_candle;
   @ObjectHolder(ModCyclic.MODID + ":crafter")
   public static Block crafter;
   @ObjectHolder(ModCyclic.MODID + ":fireplace")
@@ -419,7 +417,6 @@ public class BlockRegistry {
     r.register(new SpikesDiamond(Block.Properties.of(Material.METAL)).setRegistryName("spikes_diamond"));
     r.register(new BlockBatteryInfinite(Block.Properties.of(Material.STONE)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.of(Material.STONE)).setRegistryName("item_infinite"));
-    r.register(new WaterCandleBlock(Block.Properties.of(Material.STONE)).setRegistryName("water_candle"));
     r.register(new FireplaceBlock(Block.Properties.of(Material.STONE)).setRegistryName("fireplace"));
     r.register(new UnbreakableBlock(Block.Properties.of(Material.STONE)).setRegistryName("unbreakable_block")); //stable, only changes with player interaction
     r.register(new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE)).setRegistryName("unbreakable_reactive")); //reactive and unstable, ignores players and reads redstone 

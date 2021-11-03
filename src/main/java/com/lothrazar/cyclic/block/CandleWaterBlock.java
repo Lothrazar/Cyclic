@@ -42,7 +42,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -55,20 +54,19 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.Event;
 
-public class WaterCandleBlock extends BlockBase {
+public class CandleWaterBlock extends BlockBase {
 
-  private static int TICK_RATE = 50;
-  private static int RADIUS = 5;
-  private static double CHANCE_OFF = 0.02;
+  private static int TICK_RATE = 50; // TODO: CONFIG
+  private static int RADIUS = 6; // TODO: CONFIG
   private MobCategory type = MobCategory.MONSTER;
   private static final double BOUNDS = 3;
   private static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
       16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
   private static final double CHANCE_SOUND = 0.3;
 
-  public WaterCandleBlock(Properties properties) {
+  public CandleWaterBlock(Properties properties) {
     super(properties.strength(1.8F).noOcclusion().randomTicks());
-    this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
+    this.registerDefaultState(this.defaultBlockState().setValue(LIT, true));
   }
 
   @Override
@@ -78,20 +76,11 @@ public class WaterCandleBlock extends BlockBase {
 
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-    if (!state.getValue(LIT)
-        && player.getItemInHand(hand).getItem() == Items.FLINT_AND_STEEL) {
-      world.setBlockAndUpdate(pos, state.setValue(LIT, true));
-      UtilSound.playSound(world, pos, SoundEvents.FIRE_AMBIENT);
-      return InteractionResult.SUCCESS;
-    }
-    else if (state.getValue(LIT)
-        && player.getItemInHand(hand).isEmpty()) {
-          //turn it off
-          world.setBlockAndUpdate(pos, state.setValue(LIT, false));
-          UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-          return InteractionResult.SUCCESS;
-        }
-    return InteractionResult.FAIL;
+    boolean old = state.getValue(LIT);
+    world.setBlockAndUpdate(pos, state.setValue(LIT, !old));
+    UtilSound.playSound(world, pos, old ? SoundEvents.FIRE_EXTINGUISH : SoundEvents.FIRE_AMBIENT);
+    UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+    return InteractionResult.SUCCESS;
   }
 
   @Override
@@ -150,19 +139,7 @@ public class WaterCandleBlock extends BlockBase {
 
   private void afterSpawnSuccess(Mob monster, Level world, BlockPos pos, Random rand) {
     monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
-    if (rand.nextDouble() < CHANCE_OFF) {
-      turnOff(world, pos);
-    }
-    else {
-      world.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
-    }
-  }
-
-  private void turnOff(Level world, BlockPos pos) {
-    UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-    UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos, 12);
-    UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
-    world.setBlockAndUpdate(pos, world.getBlockState(pos).setValue(LIT, false));
+    world.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
   }
 
   private Mob findMonsterToSpawn(Level world, BlockPos pos, Random rand) {

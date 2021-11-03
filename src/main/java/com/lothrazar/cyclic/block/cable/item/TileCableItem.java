@@ -39,7 +39,7 @@ public class TileCableItem extends TileEntityBase implements MenuProvider {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem() == ItemRegistry.filter_data;
+      return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
   };
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();

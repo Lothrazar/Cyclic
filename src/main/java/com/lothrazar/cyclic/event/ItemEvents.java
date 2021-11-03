@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.ItemEntityInteractable;
+import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
@@ -37,6 +39,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -60,6 +63,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionAddedEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -75,6 +79,17 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemEvents {
+
+  @SubscribeEvent
+  public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
+    LivingEntity mob = event.getEntityLiving();
+    MobSpawnType res = event.getSpawnReason();
+    if (CandlePeaceBlock.isBad(mob, res)
+        && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockBase.LIT, true), CandlePeaceBlock.RADIUS, CandlePeaceBlock.HEIGHT)) {
+      ModCyclic.LOGGER.info("PeaceCandle: Cancel spawn " + mob);
+      event.setResult(Result.DENY);
+    }
+  }
 
   @SubscribeEvent
   public void onLivingJumpEvent(LivingJumpEvent event) {

@@ -41,6 +41,7 @@ import com.lothrazar.cyclic.block.shapedata.ContainerShapedata;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.soundplay.ContainerSoundPlayer;
 import com.lothrazar.cyclic.block.soundrecord.ContainerSoundRecorder;
+import com.lothrazar.cyclic.block.tp.ContainerTeleport;
 import com.lothrazar.cyclic.block.uncrafter.ContainerUncraft;
 import com.lothrazar.cyclic.block.user.ContainerUser;
 import com.lothrazar.cyclic.block.wireless.energy.ContainerWirelessEnergy;
@@ -212,6 +213,9 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create((windowId, inv, data) -> {
       return new ContainerCrusher(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("crusher"));
+    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+      return new ContainerTeleport(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
+    }).setRegistryName("teleport"));
     //
     //  Items with containers
     //
@@ -223,6 +227,8 @@ public class ContainerScreenRegistry {
     r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
+  @ObjectHolder(ModCyclic.MODID + ":teleport")
+  public static MenuType<ContainerTeleport> TELEPORT;
   @ObjectHolder(ModCyclic.MODID + ":crusher")
   public static MenuType<ContainerCrusher> CRUSHER;
   @ObjectHolder(ModCyclic.MODID + ":sound_player")

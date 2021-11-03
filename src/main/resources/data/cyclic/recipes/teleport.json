@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "nsn",
+    "ccc"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:end_stone"
+    },
+    "c": {
+      "item": "minecraft:calcite"
+    },
+    "n": {
+      "tag": "forge:nuggets/netherite"
+    }
+  },
+  "result": {
+    "item": "cyclic:teleport",
+    "count": 1
+  }
+}
