@@ -101,6 +101,7 @@ public class BlockCableFluid extends CableBase {
       IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
+        worldIn.setBlockState(pos, stateIn);
       }
     }
     super.onBlockPlacedBy(worldIn, pos, stateIn, placer, stack);

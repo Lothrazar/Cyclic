@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -23,13 +24,27 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final int SLOT_CHARGING_RATE = 8000;
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   static final int MAX = 6400000;
+  ItemStackHandler batterySlots = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return true; // TODO: is energy stack
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+  };
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;
@@ -52,6 +67,24 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     setLitProperty(isFlowing);
     if (isFlowing) {
       this.tickCableFlow();
+    }
+    this.chargeSlot();
+  }
+
+  private void chargeSlot() {
+    if (world.isRemote) {
+      return;
+    }
+    ItemStack targ = this.batterySlots.getStackInSlot(0);
+    IEnergyStorage storage = targ.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (storage != null) {
+      //
+      int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE, true);
+      if (extracted > 0 && storage.getEnergyStored() + extracted <= storage.getMaxEnergyStored()) {
+        // no sim, fo real
+        energy.extractEnergy(extracted, false);
+        storage.receiveEnergy(extracted, false);
+      }
     }
   }
 
@@ -116,6 +149,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    batterySlots.deserializeNBT(tag.getCompound(NBTINV + "batt"));
     super.read(bs, tag);
   }
 
@@ -126,6 +160,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     }
     tag.putInt("flowing", getFlowing());
     tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTINV + "batt", batterySlots.serializeNBT());
     return super.write(tag);
   }
 

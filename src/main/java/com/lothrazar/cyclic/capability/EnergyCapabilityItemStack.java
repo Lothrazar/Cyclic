@@ -7,39 +7,15 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyCapabilityItemStack implements ICapabilityProvider {
 
   public static final String NBTENERGY = "energy";
   private LazyOptional<IEnergyStorage> energy = LazyOptional.of(this::createEnergy);
-  //  private ItemStack stack;
   private int max;
   private ItemStack stack;
-
-  private IEnergyStorage createEnergy() {
-    return new CustomEnergyStorage(max, max / 4) {
-
-      @Override
-      public int getEnergyStored() {
-        if (stack.hasTag()) {
-          return stack.getTag().getInt(NBTENERGY);
-        }
-        else {
-          return super.getEnergyStored();
-        }
-      }
-
-      @Override
-      public void setEnergy(int energy) {
-        if (!stack.hasTag()) {
-          stack.setTag(new CompoundNBT());
-        }
-        stack.getTag().putInt(NBTENERGY, energy);
-        super.setEnergy(energy);
-      }
-    };
-  }
 
   public EnergyCapabilityItemStack(final ItemStack stack, int capacity) {
     this.max = capacity;
@@ -47,9 +23,35 @@ public class EnergyCapabilityItemStack implements ICapabilityProvider {
     energy = LazyOptional.of(this::createEnergy);
   }
 
+  private IEnergyStorage createEnergy() {
+    return new EnergyStorage(max, max) {
+
+      @Override
+      public int receiveEnergy(int maxReceive, boolean simulate) {
+        int r = super.receiveEnergy(maxReceive, simulate);
+        this.syncEnergy();
+        return r;
+      }
+
+      @Override
+      public int extractEnergy(int maxExtract, boolean simulate) {
+        int r = super.extractEnergy(maxExtract, simulate);
+        this.syncEnergy();
+        return r;
+      }
+
+      private void syncEnergy() {
+        if (!stack.hasTag()) {
+          stack.setTag(new CompoundNBT());
+        }
+        stack.getTag().putInt(NBTENERGY, getEnergyStored());
+      }
+    };
+  }
+
   @Override
   public String toString() {
-    return "EnergyCapabilityItemStack [energy=" + energy + ", max=" + max + "]";
+    return "EnergyCapabilityItemStack [energy=" + energy + ", stack=" + stack + "]";
   }
 
   @Override

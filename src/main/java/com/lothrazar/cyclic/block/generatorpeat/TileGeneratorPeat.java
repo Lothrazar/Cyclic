@@ -116,7 +116,7 @@ public class TileGeneratorPeat extends TileEntityBase implements ITickableTileEn
   }
 
   private void addEnergy(int i) {
-    energy.addEnergy(i);
+    energy.receiveEnergy(i, false);
   }
 
   public int getBurnTime() {

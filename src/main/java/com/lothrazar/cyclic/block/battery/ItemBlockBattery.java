@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.battery;
 
+import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
 import java.util.List;
 import net.minecraft.block.Block;
@@ -23,8 +24,8 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public boolean showDurabilityBar(ItemStack stack) {
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    return storage != null && storage.getEnergyStored() > 0;
+    //    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    return stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY); //storage != null && storage.getEnergyStored() > 0;
   }
 
   @Override
@@ -34,12 +35,15 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    int current = 0;
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    if (storage != null) {
-      TranslationTextComponent t = new TranslationTextComponent(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
-      t.mergeStyle(TextFormatting.RED);
-      tooltip.add(t);
+    if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
+      current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
     }
+    else if (storage != null) {
+      current = storage.getEnergyStored();
+    }
+    tooltip.add(new TranslationTextComponent(current + "/" + TileBattery.MAX).mergeStyle(TextFormatting.RED));
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }
 
@@ -52,12 +56,16 @@ public class ItemBlockBattery extends BlockItem {
    */
   @Override
   public double getDurabilityForDisplay(ItemStack stack) {
+    double current = 0;
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    if (storage == null) {
-      return 0;
+    if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
+      current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
     }
-    double energy = storage.getEnergyStored();
-    return 1 - energy / storage.getMaxEnergyStored();
+    else if (storage != null) {
+      current = storage.getEnergyStored();
+    }
+    double max = TileBattery.MAX;
+    return 1.0 - current / max;
   }
 
   @Override

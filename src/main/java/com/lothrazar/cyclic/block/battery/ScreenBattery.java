@@ -105,8 +105,6 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.tile.getFlowing()));
     btnToggle.setTextureId(container.tile.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
-    //    btnU.setTooltip("gui.cyclic.flowing" + container.tile.getField(Fields.U.ordinal()));
-    //    btnD.setTooltip("gui.cyclic.flowing" + container.tile.getField(Fields.D.ordinal()));
     btnU.setTextureId(getTextureId(Fields.U));
     btnD.setTextureId(getTextureId(Fields.D));
     btnN.setTextureId(getTextureId(Fields.N));
@@ -124,7 +122,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   @Override
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    //    this.drawSlot(60, 20);
+    this.drawSlot(ms, 133, 53, TextureRegistry.SLOT_CHARGE);
     energy.draw(ms, container.getEnergy());
   }
 }

@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class SleepingMatItem extends ItemBase {
 
+  public static final String CYCLIC_SLEEPING = "cyclic_sleeping";
+
   public SleepingMatItem(Properties properties) {
     super(properties.maxStackSize(1).maxDamage(256));
   }
@@ -54,15 +56,14 @@ public class SleepingMatItem extends ItemBase {
         player.setBedPosition(at);
         return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
       }
+      player.startSleeping(at);
+      player.getPersistentData().putBoolean(CYCLIC_SLEEPING, true);
+      ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "field_71076_b");
+      if (player.world instanceof ServerWorld) {
+        ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
+      }
+      UtilItemStack.damageItem(player, itemstack);
     }
-    player.startSleeping(at);
-    player.getPersistentData().putBoolean("cyclic_sleeping", true);
-    //    tthis.sleepTimer = 0;
-    ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "field_71076_b");
-    if (player.world instanceof ServerWorld) {
-      ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
-    }
-    UtilItemStack.damageItem(player, itemstack);
     return Either.right(Unit.INSTANCE);
   }
 }

@@ -50,18 +50,20 @@ public class BlockBattery extends BlockBase {
   @Override
   public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
     super.harvestBlock(world, player, pos, state, ent, stack);
-    //    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());//is this needed???
     ItemStack battery = new ItemStack(this);
     if (ent != null) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
       IEnergyStorage storage = battery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (storage != null) {
+      if (storage instanceof CustomEnergyStorage) {
         ((CustomEnergyStorage) storage).setEnergy(handlerHere.getEnergyStored());
+      }
+      else {
+        storage.receiveEnergy(handlerHere.getEnergyStored(), false);
       }
     }
     //even if energy fails 
     if (world.isRemote == false) {
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), battery));
+      world.addEntity(new ItemEntity(world, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, battery));
     }
   }
 
@@ -77,18 +79,18 @@ public class BlockBattery extends BlockBase {
 
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-    try {
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (storage != null) {
-        TileBattery container = (TileBattery) world.getTileEntity(pos);
-        CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-        if (storageTile != null) {
-          storageTile.setEnergy(storage.getEnergyStored());
-        }
-      }
+    int current = 0;
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
+      current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
     }
-    catch (Exception e) {
-      //
+    else if (storage != null) {
+      current = storage.getEnergyStored();
+    }
+    TileBattery container = (TileBattery) world.getTileEntity(pos);
+    CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (storageTile != null) {
+      storageTile.setEnergy(current);
     }
   }
 }

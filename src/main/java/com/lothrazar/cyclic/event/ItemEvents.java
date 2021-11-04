@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
+import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.apple.LoftyStatureApple;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
@@ -371,7 +372,7 @@ public class ItemEvents {
   public void onBedCheck(SleepingLocationCheckEvent event) {
     if (event.getEntity() instanceof PlayerEntity) {
       PlayerEntity p = (PlayerEntity) event.getEntity();
-      if (p.getPersistentData().getBoolean("cyclic_sleeping")) { // TODO: const in sleeping mat
+      if (p.getPersistentData().getBoolean(SleepingMatItem.CYCLIC_SLEEPING)) {
         event.setResult(Result.ALLOW);
       }
     }

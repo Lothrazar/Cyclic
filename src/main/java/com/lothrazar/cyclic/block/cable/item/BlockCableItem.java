@@ -105,6 +105,7 @@ public class BlockCableItem extends CableBase {
       IItemHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
+        worldIn.setBlockState(pos, stateIn);
       }
     }
     super.onBlockPlacedBy(worldIn, pos, stateIn, placer, stack);
