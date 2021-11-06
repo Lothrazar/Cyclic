@@ -107,6 +107,6 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
       fluidstack = (fluid == null) ? FluidStack.EMPTY : new FluidStack(fluid, count);
     }
     String ftag = mix.has("tag") ? mix.get("tag").getAsString() : "";
-    return new FluidTagIngredient(fluidstack, ftag);
+    return new FluidTagIngredient(fluidstack, ftag, count);
   }
 }

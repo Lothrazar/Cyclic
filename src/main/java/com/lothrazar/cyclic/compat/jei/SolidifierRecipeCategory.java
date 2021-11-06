@@ -12,6 +12,7 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -60,8 +61,10 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   @Override
   public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {
     if (recipe.getRecipeFluid().isEmpty()) {
-      //TODO 
-      System.out.println("how 2 dispaly fluidtag" + recipe.fluidIng.getTag());
+      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+      if (matchingFluids != null) {
+        ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIng.getMatchingFluids());
+      }
     }
     else {
       ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
@@ -98,13 +101,15 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
         guiItemStacks.set(i, input);
       }
     } //getname is the same   
-    recipeLayout.getFluidStacks().init(0, true, 4, 25, Const.SQ - 2, Const.SQ - 2,
-        FluidAttributes.BUCKET_VOLUME, false,
-        null);
-    if (recipe.getRecipeFluid().isEmpty()) {
-      //TODO 
+    recipeLayout.getFluidStacks().init(0, true, 4, 25, Const.SQ - 2, Const.SQ - 2, FluidAttributes.BUCKET_VOLUME, false, null);
+    //tag or stack?
+    if (recipe.fluidIng.hasTag()) {
+      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+      if (matchingFluids != null) {
+        recipeLayout.getFluidStacks().set(0, matchingFluids);
+      }
     }
-    else {
+    else if (!recipe.getRecipeFluid().isEmpty()) {
       recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
     }
   }

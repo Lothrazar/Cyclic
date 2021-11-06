@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.recipe.FluidTagIngredient;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
@@ -40,6 +41,18 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   @Override
   public FluidStack getRecipeFluid() {
     return this.fluidIng.getFluidStack();
+  }
+
+  public List<FluidStack> getRecipeFluids() {
+    List<Fluid> fluids = fluidIng.list();
+    if (fluids == null) {
+      return null;
+    }
+    List<FluidStack> me = new ArrayList<>();
+    for (Fluid f : fluids) {
+      me.add(new FluidStack(f, fluidIng.getFluidStack().getAmount()));
+    }
+    return me;
   }
 
   @Override

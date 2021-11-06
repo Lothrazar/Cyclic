@@ -38,7 +38,7 @@ public class SolidManager implements IRecipeManager {
         inputFirst.asVanillaIngredient(),
         inputSecond.asVanillaIngredient(),
         inputThird.asVanillaIngredient(),
-        new FluidTagIngredient(new FluidStack(f.getFluid(), f.getAmount()), ""),
+        new FluidTagIngredient(new FluidStack(f.getFluid(), f.getAmount()), "", f.getAmount()),
         output.getInternal());
     CraftTweakerAPI.apply(new ActionAddRecipe(this, m, ""));
     ModCyclic.LOGGER.info("CRAFT TWEAKER: Recipe loaded " + m.getId().toString());
