@@ -210,7 +210,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       //some silly old mods dont use age for compatibility
       // https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/blob/a9f47439d103c1c17ca7a4ffd05c2dc0397e5e5f/src/main/java/com/ki11erwolf/resynth/plant/block/BlockBiochemicalPlant.java#L59
       //so we hack it
-      age = CompatConstants.CROPSTAGE_RESYNTH;
+      age = CompatConstants.RESYNTH_GROWTH_STAGE;
     }
     for (Property<?> p : blockState.getProperties()) {
       if (p != null && p.getName() != null

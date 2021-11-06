@@ -6,13 +6,24 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class UtilItemStack {
+
+  public static ItemStack findItem(String id) {
+    Item head = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryCreate(id));
+    if (head != null) {
+      return new ItemStack(head);
+    }
+    return ItemStack.EMPTY;
+  }
 
   public static void dropAll(IItemHandler items, World world, BlockPos pos) {
     if (items == null) {

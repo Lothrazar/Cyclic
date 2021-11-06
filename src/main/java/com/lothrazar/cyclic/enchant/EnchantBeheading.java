@@ -23,7 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
@@ -42,6 +44,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
 public class EnchantBeheading extends EnchantBase {
 
@@ -95,10 +98,7 @@ public class EnchantBeheading extends EnchantBase {
       String key = target.getType().getRegistryName().toString();
       ////we allow all these, which include config, to override the vanilla skulls below 
       Map<String, String> mappedBeheading = ConfigRegistry.getMappedBeheading();
-      if (mappedBeheading.containsKey(key)) {
-        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mappedBeheading.get(key)));
-      }
-      else if (target.getType() == EntityType.ENDER_DRAGON) {
+      if (target.getType() == EntityType.ENDER_DRAGON) {
         UtilItemStack.drop(world, pos, new ItemStack(Items.DRAGON_HEAD));
       }
       else if (target.getType() == EntityType.CREEPER) {
@@ -113,13 +113,46 @@ public class EnchantBeheading extends EnchantBase {
       else if (target.getType() == EntityType.WITHER_SKELETON) {
         UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL));
       }
-      else if (target.getType() == EntityType.WITHER) {
-        //Drop number of heads equal to level of enchant [1,3] 
-        UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL, level));
+      else if (target.getType() == EntityType.WITHER) { //Drop number of heads equal to level of enchant [1,3] 
+        UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL, Math.max(level, 3)));
       }
-      //      else {
-      //        ModCyclic.LOGGER.error("Beheading : mob not found in EntityList, update config file " + target.getName());
-      //      }
+      else if (ModList.get().isLoaded(CompatConstants.TCONSTRUCT)) {
+        //tconstruct: drowned_head husk_head enderman_head cave_spider_head stray_head
+        String id = CompatConstants.TCONSTRUCT;
+        ItemStack tFound = ItemStack.EMPTY;
+        if (target.getType() == EntityType.DROWNED) {
+          tFound = UtilItemStack.findItem(id + ":drowned_head");
+        }
+        else if (target.getType() == EntityType.HUSK) {
+          tFound = UtilItemStack.findItem(id + ":husk_head");
+        }
+        else if (target.getType() == EntityType.ENDERMAN) {
+          tFound = UtilItemStack.findItem(id + ":enderman_head");
+        }
+        else if (target.getType() == EntityType.SPIDER) {
+          tFound = UtilItemStack.findItem(id + ":spider_head");
+        }
+        else if (target.getType() == EntityType.CAVE_SPIDER) {
+          tFound = UtilItemStack.findItem(id + ":cave_spider_head");
+        }
+        else if (target.getType() == EntityType.STRAY) {
+          tFound = UtilItemStack.findItem(id + ":stray_head");
+        }
+        else if (target.getType() == EntityType.BLAZE) {
+          tFound = UtilItemStack.findItem(id + ":blaze_head");
+        }
+        if (!tFound.isEmpty()) {
+          UtilItemStack.drop(world, pos, tFound);
+          return;
+        }
+      }
+      else if (mappedBeheading.containsKey(key)) {
+        //otherwise not a real mob, try the config last
+        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mappedBeheading.get(key)));
+      }
+      else {
+        ModCyclic.LOGGER.info("Beheading : mob not found in EntityList, update config file " + target.getName());
+      }
     }
   }
 }
