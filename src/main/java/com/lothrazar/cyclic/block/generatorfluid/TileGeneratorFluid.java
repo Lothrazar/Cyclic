@@ -114,11 +114,8 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
-        //        this.inputSlots.extractItem(0, 1, false);
-        //no items to extract
-        tank.drain(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
-        // ash?
-        //        ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
+        //  extract
+        tank.drain(this.currentRecipe.fluidIng.getAmount(), FluidAction.EXECUTE);
         return;
       }
     }

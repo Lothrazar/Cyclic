@@ -75,4 +75,8 @@ public class FluidTagIngredient {
     buffer.writeString(tag);
     buffer.writeInt(amount);
   }
+
+  public int getAmount() {
+    return amount;
+  }
 }

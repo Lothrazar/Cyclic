@@ -24,15 +24,16 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   private final ItemStack result;
-  public final FluidTagIngredient fluidIng;
-  private NonNullList<Ingredient> ingredients = NonNullList.create();
+  public final FluidTagIngredient fluidIngredient;
+  private final NonNullList<Ingredient> ingredients;
 
   public RecipeSolidifier(ResourceLocation id,
       Ingredient in, Ingredient inSecond, Ingredient inThird, FluidTagIngredient fluid,
       ItemStack result) {
     super(id);
     this.result = result;
-    fluidIng = fluid;
+    fluidIngredient = fluid;
+    ingredients = NonNullList.create();
     ingredients.add(in);
     ingredients.add(inSecond);
     ingredients.add(inThird);
@@ -40,17 +41,17 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   @Override
   public FluidStack getRecipeFluid() {
-    return this.fluidIng.getFluidStack();
+    return this.fluidIngredient.getFluidStack();
   }
 
   public List<FluidStack> getRecipeFluids() {
-    List<Fluid> fluids = fluidIng.list();
+    List<Fluid> fluids = fluidIngredient.list();
     if (fluids == null) {
       return null;
     }
     List<FluidStack> me = new ArrayList<>();
     for (Fluid f : fluids) {
-      me.add(new FluidStack(f, fluidIng.getFluidStack().getAmount()));
+      me.add(new FluidStack(f, fluidIngredient.getFluidStack().getAmount()));
     }
     return me;
   }
@@ -59,7 +60,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      return matchItems(tile) && CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIng);
+      return matchItems(tile) && CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIngredient);
     }
     catch (ClassCastException e) {
       return false; // i think we fixed this
@@ -175,7 +176,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       zero.write(buffer);
       one.write(buffer);
       two.write(buffer);
-      recipe.fluidIng.writeToPacket(buffer);
+      recipe.fluidIngredient.writeToPacket(buffer);
       buffer.writeItemStack(recipe.getRecipeOutput());
     }
   }

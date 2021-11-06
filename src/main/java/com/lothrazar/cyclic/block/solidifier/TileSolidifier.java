@@ -195,7 +195,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
-      tank.drain(this.currentRecipe.getRecipeFluid().getAmount(), FluidAction.EXECUTE);
+      tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
       outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), false);
       return true;
     }

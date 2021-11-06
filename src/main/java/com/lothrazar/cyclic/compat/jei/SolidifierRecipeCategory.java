@@ -61,9 +61,9 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   @Override
   public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {
     if (recipe.getRecipeFluid().isEmpty()) {
-      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+      List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
       if (matchingFluids != null) {
-        ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIng.getMatchingFluids());
+        ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIngredient.getMatchingFluids());
       }
     }
     else {
@@ -103,8 +103,8 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     } //getname is the same   
     recipeLayout.getFluidStacks().init(0, true, 4, 25, Const.SQ - 2, Const.SQ - 2, FluidAttributes.BUCKET_VOLUME, false, null);
     //tag or stack?
-    if (recipe.fluidIng.hasTag()) {
-      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+    if (recipe.fluidIngredient.hasTag()) {
+      List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
       if (matchingFluids != null) {
         recipeLayout.getFluidStacks().set(0, matchingFluids);
       }
