@@ -106,14 +106,14 @@ dependencies {
 
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
 	 	
-  //  implementation fg.deobf("curse.maven:mantle-74924:3482897")
-  //  implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
+    implementation fg.deobf("curse.maven:mantle-74924:3482897")
+    implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
 	//  implementation fg.deobf("curse.maven:construction-wand-399558:3499311")
-  //  implementation fg.deobf("curse.maven:glass-cutter-368921:3185268")
+    implementation fg.deobf("curse.maven:glass-cutter-368921:3185268")
 	//  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3498537")
     
-  //  implementation fg.deobf("curse.maven:inspirations-284007:3414517")
-  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
+    implementation fg.deobf("curse.maven:inspirations-284007:3414517")
+    implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
   //	implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")
   //	implementation fg.deobf("curse.maven:simple-generators-246010:3464413")
   //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
@@ -125,8 +125,8 @@ dependencies {
     
   //  implementation fg.deobf("curse.maven:cofh-core-69162:3407019")
 	//  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
-	//	implementation fg.deobf("curse.maven:mekanism-268560:3206392")
-	//	implementation fg.deobf("curse.maven:mekanism-generators-268566:3206395")
+		implementation fg.deobf("curse.maven:mekanism-268560:3206392")
+		implementation fg.deobf("curse.maven:mekanism-generators-268566:3206395")
 	//	implementation fg.deobf("curse.maven:mcjtylib-233105:3402861")
 	//	implementation fg.deobf("curse.maven:rftools-base-326041:3380271")
   //  implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
