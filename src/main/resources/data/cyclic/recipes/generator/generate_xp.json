@@ -1,7 +1,7 @@
 {
 	"type": "cyclic:generator_fluid",
 	"fuel": {
-		"fluid": "cyclic:xpjuice",
+		"tag": "forge:experience",
 		"count": 1000
 	},
 	"energy": {

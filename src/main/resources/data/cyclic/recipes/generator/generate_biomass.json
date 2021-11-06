@@ -1,12 +1,12 @@
 {
 	"type": "cyclic:generator_fluid",
 	"fuel": {
-		"tag": "forge:magma",
+		"tag": "forge:biomass",
 		"count": 1000
 	},
 	"energy": {
-		"ticks": 800,
-		"rfpertick": 60
+		"ticks": 400,
+		"rfpertick": 20
 	},
 	"conditions": [
 		{
