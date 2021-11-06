@@ -63,6 +63,16 @@ public class EntityMagicNetEmpty extends ProjectileItemEntity {
       CompoundNBT compound = new CompoundNBT();
       target.writeUnlessPassenger(compound);
       //
+      if (target.getType() == EntityType.CHEST_MINECART
+          || target.getType() == EntityType.COMMAND_BLOCK_MINECART
+          || target.getType() == EntityType.FURNACE_MINECART
+          || target.getType() == EntityType.HOPPER_MINECART) {
+        //non-config; hardcoded any minecart with inventory
+        //because they cheat
+        //and dont follow the logic of other mobs
+        //example: donkey with chest and chest containing diamonds, no issues
+        return;
+      }
       String id = EntityType.getKey(target.getType()).toString();
       if (UtilString.isInList(ConfigRegistry.getMagicNetList(), EntityType.getKey(target.getType()))) {
         ModCyclic.LOGGER.info("ignored by: CONFIG LIST" + id);
