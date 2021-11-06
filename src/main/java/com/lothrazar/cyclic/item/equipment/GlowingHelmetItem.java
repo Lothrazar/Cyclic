@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.item.equipment;
 
 import com.lothrazar.cyclic.base.IHasClickToggle;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilPlayer;
@@ -21,11 +23,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
-  public static final String NBT_GLOW = Const.MODID + "_glow";
   public static final String NBT_STATUS = "onoff";
 
   public GlowingHelmetItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn) {
@@ -51,19 +51,18 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }
 
-  private void addNightVision(PlayerEntity player) {
+  private static void addNightVision(PlayerEntity player) {
     player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
   }
 
   public static void removeNightVision(PlayerEntity player, boolean hidden) {
-    //flag it so we know the purple glow was from this item, not something else
-    player.getPersistentData().putBoolean(NBT_GLOW, hidden);
+    //flag it so we know the purple glow was from this item, not something else 
     player.removeActivePotionEffect(Effects.NIGHT_VISION);
   }
 
-  private void checkIfHelmOff(PlayerEntity player) {
+  private static void checkIfHelmOff(PlayerEntity player) {
     Item itemInSlot = UtilPlayer.getItemArmorSlot(player, EquipmentSlotType.HEAD);
-    if (itemInSlot == this) {
+    if (itemInSlot instanceof GlowingHelmetItem) {
       //turn it off once, from the message
       removeNightVision(player, false);
     }
@@ -78,6 +77,10 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   @Override
   public boolean isOn(ItemStack held) {
+    return isOnStatic(held);
+  }
+
+  private static boolean isOnStatic(ItemStack held) {
     CompoundNBT tags = UtilNBT.getItemStackNBT(held);
     if (!tags.contains(NBT_STATUS)) {
       return true;
@@ -85,13 +88,23 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
     return tags.getInt(NBT_STATUS) == 1;
   }
 
-  @SubscribeEvent
-  public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
+  //from ItemEvents- curios slot
+  public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
     //reduce check to only once per second instead  of per tick
     if (event.getEntity().world.getGameTime() % 20 == 0 &&
-        event.getEntityLiving() != null) { //some of the items need an off switch
+        event.getEntityLiving() instanceof PlayerEntity) { //some of the items need an off switch
       PlayerEntity player = (PlayerEntity) event.getEntityLiving();
       checkIfHelmOff(player);
+      // get helm
+      ItemStack helm = CharmUtil.getCurio(player, ItemRegistry.glowing_helmet);
+      if (!helm.isEmpty()) {
+        if (isOnStatic(helm)) {
+          addNightVision(player);
+        }
+        else {
+          removeNightVision(player, false);
+        }
+      }
     }
   }
 }

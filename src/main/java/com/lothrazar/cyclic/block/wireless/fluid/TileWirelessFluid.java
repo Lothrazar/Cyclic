@@ -35,7 +35,7 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
-  ItemStackHandler inventory = new ItemStackHandler(1) {
+  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
@@ -69,7 +69,7 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
     this.transferRate = tag.getInt("transferRate");
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
@@ -78,7 +78,7 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, gpsSlots.serializeNBT());
     CompoundNBT fluid = new CompoundNBT();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
@@ -115,7 +115,7 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   }
 
   BlockPosDim getTargetInSlot(int s) {
-    return LocationGpsCard.getPosition(inventory.getStackInSlot(s));
+    return LocationGpsCard.getPosition(gpsSlots.getStackInSlot(s));
   }
 
   @Override

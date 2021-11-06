@@ -16,6 +16,7 @@ import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
+import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -304,6 +305,7 @@ public class ItemEvents {
       CharmBase.charmExpSpeed(player);
       //step
       LoftyStatureApple.onUpdate(player);
+      GlowingHelmetItem.onEntityUpdate(event);
     }
   }
 

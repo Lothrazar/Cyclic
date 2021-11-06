@@ -21,8 +21,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessEnergy extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
@@ -41,14 +39,13 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   private int transferRate = MAX_TRANSFER / 4;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler inventory = new ItemStackHandler(1) {
+  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   @Override
   public ITextComponent getDisplayName() {
@@ -62,9 +59,6 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return inventoryCap.cast();
-    }
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();
     }
@@ -73,7 +67,7 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     this.transferRate = tag.getInt("transferRate");
     super.read(bs, tag);
@@ -82,7 +76,7 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, gpsSlots.serializeNBT());
     tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
   }
@@ -107,7 +101,7 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   }
 
   BlockPosDim getTargetInSlot(int s) {
-    return LocationGpsCard.getPosition(inventory.getStackInSlot(s));
+    return LocationGpsCard.getPosition(gpsSlots.getStackInSlot(s));
   }
 
   @Override
