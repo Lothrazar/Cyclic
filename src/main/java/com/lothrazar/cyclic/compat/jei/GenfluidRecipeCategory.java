@@ -70,11 +70,17 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, RecipeGeneratorFluid recipe, IIngredients ingredients) {
-    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     //getname is the same   
     recipeLayout.getFluidStacks().init(0, true, 6, 7, Const.SQ - 2, Const.SQ - 2,
         FluidAttributes.BUCKET_VOLUME, false,
         null);
-    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+    if (recipe.getRecipeFluid().isEmpty()) {
+      System.out.println("how 2 dispaly fluidtag" + recipe.fluidIng.getTag());
+      //TODO 
+    }
+    else {
+      recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+    }
   }
 }

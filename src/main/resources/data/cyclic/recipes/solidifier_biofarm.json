@@ -11,10 +11,11 @@
   },
   "mix": {
     "fluid": "cyclic:biomass",
+    "tag": "forge:biomass",
     "count": 100
   },
   "result": {
     "item": "minecraft:farmland",
-	"count": 3
+		"count": 3
   }
 }

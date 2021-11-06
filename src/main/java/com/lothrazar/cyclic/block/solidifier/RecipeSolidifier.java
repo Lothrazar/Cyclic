@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.recipe.FluidTagIngredient;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.ItemStack;
@@ -21,26 +22,31 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
-  private ItemStack result = ItemStack.EMPTY;
+  private final ItemStack result;
+  public final FluidTagIngredient fluidIng;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  private FluidStack fluidInput;
 
   public RecipeSolidifier(ResourceLocation id,
-      Ingredient in, Ingredient inSecond, Ingredient inThird, FluidStack fluid,
+      Ingredient in, Ingredient inSecond, Ingredient inThird, FluidTagIngredient fluid,
       ItemStack result) {
     super(id);
     this.result = result;
-    this.fluidInput = fluid;
+    fluidIng = fluid;
     ingredients.add(in);
     ingredients.add(inSecond);
     ingredients.add(inThird);
   }
 
   @Override
+  public FluidStack getRecipeFluid() {
+    return this.fluidIng.getFluidStack();
+  }
+
+  @Override
   public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      return matchItems(tile) && matchFluid(tile.getFluid());
+      return matchItems(tile) && CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIng);
     }
     catch (ClassCastException e) {
       return false; // i think we fixed this
@@ -91,11 +97,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public FluidStack getRecipeFluid() {
-    return fluidInput.copy();
-  }
-
-  @Override
   public IRecipeType<?> getType() {
     return CyclicRecipeType.SOLID;
   }
@@ -134,7 +135,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         if (inputTop == Ingredient.EMPTY) {
           throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
         }
-        FluidStack fs = getFluid(json, "mix");
+        FluidTagIngredient fs = parseFluid(json, "mix");
         //valid recipe created
         r = new RecipeSolidifier(recipeId, inputTop, inputMiddle, inputBottom, fs, resultStack);
       }
@@ -148,7 +149,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     @Override
     public RecipeSolidifier read(ResourceLocation recipeId, PacketBuffer buffer) {
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
-          Ingredient.read(buffer), Ingredient.read(buffer), Ingredient.read(buffer), FluidStack.readFromPacket(buffer),
+          Ingredient.read(buffer), Ingredient.read(buffer), Ingredient.read(buffer), FluidTagIngredient.readFromPacket(buffer),
           buffer.readItemStack());
       return r;
     }
@@ -161,7 +162,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       zero.write(buffer);
       one.write(buffer);
       two.write(buffer);
-      recipe.fluidInput.writeToPacket(buffer);
+      recipe.fluidIng.writeToPacket(buffer);
       buffer.writeItemStack(recipe.getRecipeOutput());
     }
   }

@@ -11,6 +11,7 @@
   },
   "mix": {
     "fluid": "cyclic:slime",
+    "tag": "forge:slime",
     "count": 500
   },
   "result": {

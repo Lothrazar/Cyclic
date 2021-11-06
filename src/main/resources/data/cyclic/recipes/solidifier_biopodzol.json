@@ -11,10 +11,11 @@
   },
   "mix": {
     "fluid": "cyclic:biomass",
-    "count": 200
+    "tag": "forge:biomass",
+    "count": 50
   },
   "result": {
     "item": "minecraft:podzol",
-	"count": 3
+		"count": 3
   }
 }

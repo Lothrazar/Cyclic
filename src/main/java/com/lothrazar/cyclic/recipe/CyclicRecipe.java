@@ -73,38 +73,40 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
     return null;
   }
 
-  public boolean matchFluid(FluidStack tileFluid) {
+  public static boolean matchFluid(FluidStack tileFluid, FluidTagIngredient ing) {
     if (tileFluid == null || tileFluid.isEmpty()) {
       return false;
     }
-    if (tileFluid.getFluid() == this.getRecipeFluid().getFluid()) {
+    if (ing.hasFluid() && tileFluid.getFluid() == ing.getFluidStack().getFluid()) {
       return true;
     }
-    // FluidTags.makeWrapperTag
-    //if the fluids are not identical, they might have a matching tag
-    //see /data/forge/tags/fluids/  
-    for (INamedTag<Fluid> fluidTag : FluidTags.getAllTags()) {
-      if (getRecipeFluid().getFluid().isIn(fluidTag) && tileFluid.getFluid().isIn(fluidTag)) {
-        return true;
+    //either recipe has no fluid or didnt match, try for tag
+    if (ing.hasTag()) {
+      //see /data/<id>/tags/fluids/  
+      for (INamedTag<Fluid> fluidTag : FluidTags.getAllTags()) {
+        if (ing.getTag().equalsIgnoreCase(fluidTag.getName().toString())) {
+          //this fluidTag is the one given in the recipe. now if its on the fluid ok
+          return tileFluid.getFluid().isIn(fluidTag);
+        }
       }
     }
     return false;
   }
 
-  public static FluidStack getFluid(JsonObject json, String key) {
+  public static FluidTagIngredient parseFluid(JsonObject json, String key) {
     JsonObject mix = json.get(key).getAsJsonObject();
     int count = mix.get("count").getAsInt();
     if (count < 1) {
       count = 1;
     }
-    FluidStack fs = null;
-    String fluidId = JSONUtils.getString(mix, "fluid");
-    ResourceLocation resourceLocation = new ResourceLocation(fluidId);
-    Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
-    if (fluid == FluidStack.EMPTY.getFluid()) {
-      throw new IllegalArgumentException("Invalid fluid specified " + fluidId);
+    FluidStack fluidstack = FluidStack.EMPTY;
+    if (mix.has("fluid")) {
+      String fluidId = JSONUtils.getString(mix, "fluid");
+      ResourceLocation resourceLocation = new ResourceLocation(fluidId);
+      Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
+      fluidstack = (fluid == null) ? FluidStack.EMPTY : new FluidStack(fluid, count);
     }
-    fs = new FluidStack(fluid, count);
-    return fs;
+    String ftag = mix.has("tag") ? mix.get("tag").getAsString() : "";
+    return new FluidTagIngredient(fluidstack, ftag);
   }
 }

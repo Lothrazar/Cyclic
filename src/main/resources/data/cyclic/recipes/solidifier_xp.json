@@ -10,7 +10,7 @@
     "item": "minecraft:glass_bottle"
   },
   "mix": {
-    "fluid": "cyclic:xpjuice",
+    "tag": "forge:experience",
     "count": 750
   },
   "result": {

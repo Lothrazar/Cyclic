@@ -59,7 +59,13 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {
-    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    if (recipe.getRecipeFluid().isEmpty()) {
+      //TODO 
+      System.out.println("how 2 dispaly fluidtag" + recipe.fluidIng.getTag());
+    }
+    else {
+      ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    }
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
     //    for (int i = 0; i <= 2; i++) {
@@ -95,6 +101,11 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     recipeLayout.getFluidStacks().init(0, true, 4, 25, Const.SQ - 2, Const.SQ - 2,
         FluidAttributes.BUCKET_VOLUME, false,
         null);
-    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+    if (recipe.getRecipeFluid().isEmpty()) {
+      //TODO 
+    }
+    else {
+      recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+    }
   }
 }

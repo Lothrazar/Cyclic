@@ -10,7 +10,7 @@
     "item": "minecraft:sugar"
   },
   "mix": {
-    "fluid": "cyclic:xpjuice",
+    "tag": "forge:experience",
     "count": 1000
   },
   "result": {

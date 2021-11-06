@@ -10,7 +10,7 @@
     "item": "minecraft:dirt"
   },
   "mix": {
-    "fluid": "cyclic:biomass",
+    "tag": "forge:biomass",
     "count": 200
   },
   "result": {

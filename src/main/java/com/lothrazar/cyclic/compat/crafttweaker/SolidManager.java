@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.recipe.FluidTagIngredient;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
@@ -37,7 +38,7 @@ public class SolidManager implements IRecipeManager {
         inputFirst.asVanillaIngredient(),
         inputSecond.asVanillaIngredient(),
         inputThird.asVanillaIngredient(),
-        new FluidStack(f.getFluid(), f.getAmount()),
+        new FluidTagIngredient(new FluidStack(f.getFluid(), f.getAmount()), ""),
         output.getInternal());
     CraftTweakerAPI.apply(new ActionAddRecipe(this, m, ""));
     ModCyclic.LOGGER.info("CRAFT TWEAKER: Recipe loaded " + m.getId().toString());
