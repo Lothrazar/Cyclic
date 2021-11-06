@@ -58,6 +58,7 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,12 +156,18 @@ public class ConfigRegistry {
     UNCRAFT_RECIPE_IDS.add("refinedstorage:coloring_recipes*");
     UNCRAFT_RECIPE_IDS.add("forcecraft:transmutation*");
     //
-    TRANSPORTBAG.add("minecraft:spawner");
-    TRANSPORTBAG.add("parabox:parabox");
-    TRANSPORTBAG.add("extracells:fluidcrafter");
-    TRANSPORTBAG.add("extracells:ecbaseblock");
-    TRANSPORTBAG.add("extracells:fluidfiller");
-    //
+    TRANSPORTBAG.addAll(Arrays.asList(
+        //legacy
+        "parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller",
+        //entire mods
+        "exnihilosequentia:*", "refinedstorage:*",
+        //tconctruct fluid processing
+        "tconstruct:seared_fuel_tank", "tconstruct:smeltery_controller", "tconstruct:seared_drain", "tconstruct:seared_fuel_gauge", "tconstruct:seared_ingot_tank", "tconstruct:seared_ingot_gauge", "tconstruct:seared_melter", "tconstruct:seared_heater",
+        //drains and ducts
+        "tconstruct:scorched_drain", "tconstruct:scorched_duct", "tconstruct:scorched_chute", "tconstruct:foundry_controller", "tconstruct:scorched_alloyer",
+        //rftools batteries
+        "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1", "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1"));
+    // 
     MBALL_IGNORE.add("minecraft:ender_dragon");
     MBALL_IGNORE.add("minecraft:wither");
   }
