@@ -11,6 +11,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -50,20 +51,24 @@ public class BlockBattery extends BlockBase {
   @Override
   public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
     super.harvestBlock(world, player, pos, state, ent, stack);
-    ItemStack battery = new ItemStack(this);
+    ItemStack newStackBattery = new ItemStack(this);
     if (ent != null) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      IEnergyStorage storage = battery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (storage instanceof CustomEnergyStorage) {
-        ((CustomEnergyStorage) storage).setEnergy(handlerHere.getEnergyStored());
+      IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (newStackCap instanceof CustomEnergyStorage) {
+        ((CustomEnergyStorage) newStackCap).setEnergy(handlerHere.getEnergyStored());
       }
       else {
-        storage.receiveEnergy(handlerHere.getEnergyStored(), false);
+        newStackCap.receiveEnergy(handlerHere.getEnergyStored(), false);
+      }
+      if (handlerHere.getEnergyStored() > 0) {
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, handlerHere.getEnergyStored());
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, handlerHere.getMaxEnergyStored());
       }
     }
     //even if energy fails 
     if (world.isRemote == false) {
-      world.addEntity(new ItemEntity(world, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, battery));
+      world.addEntity(new ItemEntity(world, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, newStackBattery));
     }
   }
 
@@ -92,5 +97,17 @@ public class BlockBattery extends BlockBase {
     if (storageTile != null) {
       storageTile.setEnergy(current);
     }
+  }
+
+  @Override
+  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileBattery tileentity = (TileBattery) worldIn.getTileEntity(pos);
+      if (tileentity != null && tileentity.batterySlots != null) {
+        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.batterySlots.getStackInSlot(0));
+      }
+      worldIn.updateComparatorOutputLevel(pos, this);
+    }
+    super.onReplaced(state, worldIn, pos, newState, isMoving);
   }
 }

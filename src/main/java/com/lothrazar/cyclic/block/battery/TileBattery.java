@@ -32,7 +32,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  static final int MAX = 6400000;
+  public static final int MAX = 6400000;
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
