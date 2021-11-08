@@ -13,9 +13,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class FluidRegistry {
 
   public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, ModCyclic.MODID);
-  public static final FluidXpJuiceHolder xpjuice = new FluidXpJuiceHolder();
-  public static final FluidSlimeHolder slime = new FluidSlimeHolder();
-  public static final FluidBiomassHolder biomass = new FluidBiomassHolder();
-  public static final FluidHoneyHolder honey = new FluidHoneyHolder();
-  public static final FluidMagmaHolder magma = new FluidMagmaHolder();
+  public static final FluidXpJuiceHolder XPJUICE = new FluidXpJuiceHolder();
+  public static final FluidSlimeHolder SLIME = new FluidSlimeHolder();
+  public static final FluidBiomassHolder BIOMASS = new FluidBiomassHolder();
+  public static final FluidHoneyHolder HONEY = new FluidHoneyHolder();
+  public static final FluidMagmaHolder MAGMA = new FluidMagmaHolder();
 }

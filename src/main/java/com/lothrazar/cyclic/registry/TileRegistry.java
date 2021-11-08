@@ -134,11 +134,11 @@ public class TileRegistry {
     r.register(BlockEntityType.Builder.of(TileBatteryInfinite::new, BlockRegistry.battery_infinite).build(null).setRegistryName("battery_infinite"));
     r.register(BlockEntityType.Builder.of(TileItemInfinite::new, BlockRegistry.item_infinite).build(null).setRegistryName("item_infinite"));
     r.register(BlockEntityType.Builder.of(TileDice::new, BlockRegistry.dice).build(null).setRegistryName("dice"));
-    r.register(BlockEntityType.Builder.of(TileDropper::new, BlockRegistry.dropper).build(null).setRegistryName("dropper"));
+    r.register(BlockEntityType.Builder.of(TileDropper::new, BlockRegistry.DROPPER).build(null).setRegistryName("dropper"));
     r.register(BlockEntityType.Builder.of(TileForester::new, BlockRegistry.forester).build(null).setRegistryName("forester"));
-    r.register(BlockEntityType.Builder.of(TileMiner::new, BlockRegistry.miner).build(null).setRegistryName("miner"));
-    r.register(BlockEntityType.Builder.of(TileScreentext::new, BlockRegistry.screen).build(null).setRegistryName("screen"));
-    r.register(BlockEntityType.Builder.of(TileUncraft::new, BlockRegistry.uncrafter).build(null).setRegistryName("uncrafter"));
+    r.register(BlockEntityType.Builder.of(TileMiner::new, BlockRegistry.MINER).build(null).setRegistryName("miner"));
+    r.register(BlockEntityType.Builder.of(TileScreentext::new, BlockRegistry.SCREEN).build(null).setRegistryName("screen"));
+    r.register(BlockEntityType.Builder.of(TileUncraft::new, BlockRegistry.UNCRAFTER).build(null).setRegistryName("uncrafter"));
     //
     r.register(BlockEntityType.Builder.of(TilePlacerFluid::new, BlockRegistry.placer_fluid).build(null).setRegistryName("placer_fluid"));
     r.register(BlockEntityType.Builder.of(TileCask::new, BlockRegistry.cask).build(null).setRegistryName("cask"));
@@ -169,8 +169,8 @@ public class TileRegistry {
     r.register(BlockEntityType.Builder.of(TileStructure::new, BlockRegistry.structure).build(null).setRegistryName("structure"));
     r.register(BlockEntityType.Builder.of(TileFisher::new, BlockRegistry.fisher).build(null).setRegistryName("fisher"));
     r.register(BlockEntityType.Builder.of(TileUser::new, BlockRegistry.user).build(null).setRegistryName("user"));
-    r.register(BlockEntityType.Builder.of(TileCrafter::new, BlockRegistry.crafter).build(null).setRegistryName("crafter"));
-    r.register(BlockEntityType.Builder.of(TileShapedata::new, BlockRegistry.computer_shape).build(null).setRegistryName("computer_shape"));
+    r.register(BlockEntityType.Builder.of(TileCrafter::new, BlockRegistry.CRAFTER).build(null).setRegistryName("crafter"));
+    r.register(BlockEntityType.Builder.of(TileShapedata::new, BlockRegistry.COMPUTER_SHAPE).build(null).setRegistryName("computer_shape"));
     r.register(BlockEntityType.Builder.of(UnbreakablePoweredTile::new, BlockRegistry.unbreakable_reactive).build(null).setRegistryName("unbreakable_reactive"));
     r.register(BlockEntityType.Builder.of(TileLaser::new, BlockRegistry.LASER.get()).build(null).setRegistryName("laser"));
     r.register(BlockEntityType.Builder.of(TileConveyor::new, BlockRegistry.CONVEYOR).build(null).setRegistryName("conveyor"));

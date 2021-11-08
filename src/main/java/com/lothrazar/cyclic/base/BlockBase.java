@@ -50,7 +50,8 @@ public class BlockBase extends BaseEntityBlock {
     BlockRegistry.blocksClientRegistry.add(this);
   }
 
-  public RenderShape getRenderShape(BlockState p_49232_) {
+  @Override
+  public RenderShape getRenderShape(BlockState st) {
     return RenderShape.MODEL;
   }
 
@@ -65,7 +66,7 @@ public class BlockBase extends BaseEntityBlock {
   }
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+  public BlockEntity newBlockEntity(BlockPos p, BlockState st) {
     return null;
   }
 

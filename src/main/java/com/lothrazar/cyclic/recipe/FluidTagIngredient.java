@@ -42,10 +42,9 @@ public class FluidTagIngredient {
     if (!hasTag()) {
       return null;
     }
- 
-    for (Map.Entry<ResourceLocation,Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
+    for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
       if (fluidTag.getKey().toString().equalsIgnoreCase(tag)) {
-        //add all fluids for tag?
+        //add all fluids for tag? 
         return fluidTag.getValue().getValues();
       }
     }
@@ -69,7 +68,7 @@ public class FluidTagIngredient {
     return me;
   }
 
-  public static FluidTagIngredient readFromPacket(FriendlyByteBuf buffer) { 
+  public static FluidTagIngredient readFromPacket(FriendlyByteBuf buffer) {
     return new FluidTagIngredient(FluidStack.readFromPacket(buffer), buffer.readUtf(), buffer.readInt());
   }
 

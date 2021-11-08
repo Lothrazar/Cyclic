@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-import com.lothrazar.cyclic.recipe.FluidTagIngredient; 
+import com.lothrazar.cyclic.recipe.FluidTagIngredient;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level; 
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -108,7 +108,6 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
       RecipeGeneratorFluid r = null;
       try {
         //        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));
-
         FluidTagIngredient fs = parseFluid(json, "fuel");
         JsonObject result = json.get("energy").getAsJsonObject();
         int ticks = result.get("ticks").getAsInt();
@@ -122,23 +121,22 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
       return r;
     }
 
-    @Override 
+    @Override
     public RecipeGeneratorFluid fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
       RecipeGeneratorFluid r = new RecipeGeneratorFluid(recipeId,
           FluidTagIngredient.readFromPacket(buffer),
-          buffer.readInt(), buffer.readInt()); 
+          buffer.readInt(), buffer.readInt());
       //server reading recipe from client or vice/versa 
       return r;
     }
 
-    @Override 
+    @Override
     public void toNetwork(FriendlyByteBuf buffer, RecipeGeneratorFluid recipe) {
       recipe.getRecipeFluid().writeToPacket(buffer);
       recipe.fluidIng.writeToPacket(buffer);
       buffer.writeInt(recipe.getTicks());
       buffer.writeInt(recipe.rfpertick);
     }
- 
   }
 
   public int getRfTotal() {

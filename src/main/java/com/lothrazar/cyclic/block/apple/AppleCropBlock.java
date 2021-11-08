@@ -14,7 +14,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -97,10 +96,5 @@ public class AppleCropBlock extends BlockBase implements BonemealableBlock {
   @Override
   public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
     worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(state.getValue(AGE) + 1)), 2);
-  }
-
-  @Override
-  public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-    return null;
   }
 }

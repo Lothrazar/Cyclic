@@ -258,10 +258,10 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.GHOST_PHANTOM.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ghost_phantom"));
     r.register(new BlockItem(BlockRegistry.GHOST.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ghost"));
     r.register(new BlockItem(BlockRegistry.LASER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("laser"));
-    r.register(new BlockItem(BlockRegistry.apple_sprout, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout"));
+    r.register(new BlockItem(BlockRegistry.APPLE_SPROUT, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout"));
     r.register(new BlockItem(BlockRegistry.apple_sprout_diamond, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout_diamond"));
-    r.register(new BlockItem(BlockRegistry.apple_sprout_emerald, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout_emerald"));
-    r.register(new BlockItem(BlockRegistry.computer_shape, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("computer_shape"));
+    r.register(new BlockItem(BlockRegistry.APPLE_SPROUT_EMERALD, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("apple_sprout_emerald"));
+    r.register(new BlockItem(BlockRegistry.COMPUTER_SHAPE, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("computer_shape"));
     r.register(new BlockItem(BlockRegistry.EYE_REDSTONE, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_redstone"));
     r.register(new BlockItem(BlockRegistry.EYE_TELEPORT, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("eye_teleport"));
     r.register(new ItemBlockBattery(BlockRegistry.battery, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("battery"));
@@ -273,9 +273,9 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.placer, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("placer"));
     r.register(new BlockItem(BlockRegistry.breaker, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("breaker"));
     r.register(new BlockItem(BlockRegistry.user, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("user"));
-    r.register(new BlockItem(BlockRegistry.dropper, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("dropper"));
+    r.register(new BlockItem(BlockRegistry.DROPPER, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("dropper"));
     r.register(new BlockItem(BlockRegistry.forester, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("forester"));
-    r.register(new BlockItem(BlockRegistry.miner, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("miner"));
+    r.register(new BlockItem(BlockRegistry.MINER, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("miner"));
     r.register(new BlockItem(BlockRegistry.structure, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("structure"));
     r.register(new BlockItem(BlockRegistry.harvester, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("harvester"));
     r.register(new BlockItem(BlockRegistry.collector, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("collector"));
@@ -293,8 +293,8 @@ public class ItemRegistry {
     // machine blocks   
     r.register(new BlockItem(BlockRegistry.detector_item, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("detector_item"));
     r.register(new BlockItem(BlockRegistry.detector_entity, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("detector_entity"));
-    r.register(new BlockItem(BlockRegistry.screen, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("screen"));
-    r.register(new BlockItem(BlockRegistry.uncrafter, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("uncrafter"));
+    r.register(new BlockItem(BlockRegistry.SCREEN, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("screen"));
+    r.register(new BlockItem(BlockRegistry.UNCRAFTER, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("uncrafter"));
     r.register(new BlockItem(BlockRegistry.fisher, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fisher"));
     r.register(new BlockItem(BlockRegistry.disenchanter, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("disenchanter"));
     r.register(new BlockItem(BlockRegistry.fan, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fan"));
@@ -311,8 +311,8 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.item_infinite, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("item_infinite"));
     r.register(new BlockItem(BlockRegistry.dice, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("dice"));
     r.register(new BlockItem(BlockRegistry.TERRA_PRETA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("terra_preta"));
-    r.register(new BlockItem(BlockRegistry.fireplace, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fireplace"));
-    r.register(new BlockItem(BlockRegistry.crafter, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("crafter"));
+    r.register(new BlockItem(BlockRegistry.FIREPLACE, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fireplace"));
+    r.register(new BlockItem(BlockRegistry.CRAFTER, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("crafter"));
     r.register(new BlockItem(BlockRegistry.unbreakable_block, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("unbreakable_block"));
     r.register(new BlockItem(BlockRegistry.unbreakable_reactive, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("unbreakable_reactive"));
     r.register(new BlockItem(BlockRegistry.CONVEYOR, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("conveyor"));

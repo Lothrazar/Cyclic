@@ -172,6 +172,6 @@ public class ContainerCrafter extends ContainerBase {
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.crafter);
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.CRAFTER);
   }
 }

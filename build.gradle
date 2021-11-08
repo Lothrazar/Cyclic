@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
-//apply plugin: 'checkstyle'
+apply plugin: 'checkstyle'
 
 import net.minecraftforge.gradle.common.tasks.SignJar
 import groovy.json.JsonSlurper
@@ -24,14 +24,13 @@ version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Cyclic'
 
-//checkstyle {
-//    toolVersion '8.23'
-//    configFile file("checkstyle.xml")
-//}
-
-//checkstyleMain {
-//    source ='src/main/java'
-//}
+checkstyle {
+    toolVersion '8.23'
+    configFile file("checkstyle.xml")
+}
+checkstyleMain {
+    source ='src/main/java'
+}
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
@@ -98,67 +97,7 @@ dependencies {
     
     implementation fg.deobf("mezz.jei:${jei_version}")
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-    
- //   compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
- //   runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
-
- //   compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
- //   runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
-
-  
- //    implementation fg.deobf("curse.maven:plain-grinder-452000:3498790")  
-	//  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
-	 	
-    implementation fg.deobf("curse.maven:mantle-74924:3482897")
-    implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
-	//  implementation fg.deobf("curse.maven:construction-wand-399558:3499311")
-<<<<<<< HEAD
-  //  implementation fg.deobf("curse.maven:glass-cutter-368921:3185268")
-	//  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3498537")
-    
-  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
-=======
-    implementation fg.deobf("curse.maven:glass-cutter-368921:3185268")
-	//  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3498537")
-    
-    implementation fg.deobf("curse.maven:inspirations-284007:3414517")
-    implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
-  //	implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")
-  //	implementation fg.deobf("curse.maven:simple-generators-246010:3464413")
-  //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
-  //  implementation fg.deobf("curse.maven:quark-243121:3394265")
-  // 	implementation fg.deobf("curse.maven:titanium-287342:3346366")
-  //  implementation fg.deobf("curse.maven:industrial-foregoing-266515:3446262")
-  //  implementation fg.deobf("curse.maven:forcecraft-454802:3495606")
-  //  implementation fg.deobf("curse.maven:plain-grinder-452000:3389092")  
-    
-  //  implementation fg.deobf("curse.maven:cofh-core-69162:3407019")
-	//  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
-		implementation fg.deobf("curse.maven:mekanism-268560:3206392")
-		implementation fg.deobf("curse.maven:mekanism-generators-268566:3206395")
-	//	implementation fg.deobf("curse.maven:mcjtylib-233105:3402861")
-	//	implementation fg.deobf("curse.maven:rftools-base-326041:3380271")
-  //  implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
-  //  implementation fg.deobf("curse.maven:aquaculture-60028:3401886")
-	//  implementation fg.deobf("curse.maven:ensorcellation-349447:3407021")
-	//  implementation fg.deobf("curse.maven:liquid-blocks-301999:3323640")
-	//  implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
-  //  implementation fg.deobf("curse.maven:cucumber-272335:3349690")
-  //  implementation fg.deobf("curse.maven:mystical-agriculture-246640:3467262")
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
-  //  implementation fg.deobf("curse.maven:refined-storage-243076:3157354")
-  //  implementation fg.deobf("curse.maven:ex-nihilo-sequentia-400012:3060647")
-  //  implementation fg.deobf("curse.maven:storage-drawers-223852:3180569")
-  //  implementation fg.deobf("curse.maven:create-328085:328085")
-  
-  
-    // To use any mod in /libs/ folder, place it in and set the mod and version to match jar filename
-   // runtimeOnly fg.deobf("libs:SimpleStorageNetwork:1.16.4-1.3.1")
-   // runtimeOnly fg.deobf("libs:refinedstorage:1.16.4-1.9.11")
-    
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
+      
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
