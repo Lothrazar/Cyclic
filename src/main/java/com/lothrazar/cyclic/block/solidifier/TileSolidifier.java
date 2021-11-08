@@ -202,8 +202,13 @@ public class TileSolidifier extends TileEntityBase implements MenuProvider {
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
+<<<<<<< HEAD
       tank.drain(this.currentRecipe.getRecipeFluid().getAmount(), FluidAction.EXECUTE);
       outputSlots.insertItem(0, currentRecipe.getResultItem(), false);
+=======
+      tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
+      outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), false);
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
       return true;
     }
     ModCyclic.LOGGER.info(worldPosition + " recipe stop on fluid not enoughl");

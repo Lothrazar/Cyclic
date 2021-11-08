@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.enchant.EnchantMultishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
+import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.apple.LoftyStatureApple;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
@@ -17,6 +18,7 @@ import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
+import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -320,6 +322,7 @@ public class ItemEvents {
       CharmBase.charmExpSpeed(player);
       //step
       LoftyStatureApple.onUpdate(player);
+      GlowingHelmetItem.onEntityUpdate(event);
     }
   }
 
@@ -406,7 +409,7 @@ public class ItemEvents {
   public void onBedCheck(SleepingLocationCheckEvent event) {
     if (event.getEntity() instanceof Player) {
       Player p = (Player) event.getEntity();
-      if (p.getPersistentData().getBoolean("cyclic_sleeping")) { // TODO: const in sleeping mat
+      if (p.getPersistentData().getBoolean(SleepingMatItem.CYCLIC_SLEEPING)) { // TODO: const in sleeping mat
         event.setResult(Result.ALLOW);
       }
     }

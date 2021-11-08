@@ -37,7 +37,7 @@ public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank;
-  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
+  public ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
     public int getSlotLimit(int slot) {

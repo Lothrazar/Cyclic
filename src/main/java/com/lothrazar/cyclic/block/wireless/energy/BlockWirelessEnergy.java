@@ -1,12 +1,14 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.wireless.fluid.TileWirelessFluid;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -60,5 +62,17 @@ public class BlockWirelessEnergy extends BlockBase {
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.WIRELESS_ENERGY.get(), world.isClientSide ? TileWirelessEnergy::clientTick : TileWirelessEnergy::serverTick);
+  }
+
+  @Override
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileWirelessFluid tileentity = (TileWirelessFluid) worldIn.getBlockEntity(pos);
+      if (tileentity != null && tileentity.gpsSlots != null) {
+        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.gpsSlots.getStackInSlot(0));
+      }
+      worldIn.updateNeighbourForOutputSignal(pos, this);
+    }
+    super.onRemove(state, worldIn, pos, newState, isMoving);
   }
 }

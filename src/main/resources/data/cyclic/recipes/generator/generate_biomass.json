@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"type": "cyclic:generator_item",
 	"fuel": {
 		"item": "cyclic:biomass"
@@ -6,6 +7,16 @@
 	"energy": {
 		"ticks": 100,
 		"rfpertick": 10
+=======
+	"type": "cyclic:generator_fluid",
+	"fuel": {
+		"tag": "forge:biomass",
+		"count": 1000
+	},
+	"energy": {
+		"ticks": 400,
+		"rfpertick": 20
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
 	},
 	"conditions": [
 		{
@@ -15,7 +26,11 @@
 					"type": "forge:mod_loaded"
 				},
 				{
+<<<<<<< HEAD
 					"item": "cyclic:generator_item",
+=======
+					"item": "cyclic:generator_fluid",
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
 					"type": "forge:item_exists"
 				}
 			],

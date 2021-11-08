@@ -6,6 +6,8 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage implements INBTSerializable<net.minecraft.nbt.Tag> {
 
+  public static final String NBTENERGY = "energy";
+
   public CustomEnergyStorage(int capacity, int maxTransfer) {
     super(capacity, maxTransfer);
   }
@@ -20,23 +22,16 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
     this.energy = energyIn;
   }
 
-  public void addEnergy(int energy) {
-    this.energy += energy;
-    if (this.energy > getMaxEnergyStored()) {
-      this.energy = getEnergyStored();
-    }
-  }
-
   @Override
   public CompoundTag serializeNBT() {
     CompoundTag tag = new CompoundTag();
-    tag.putInt("energy", getEnergyStored());
+    tag.putInt(NBTENERGY, getEnergyStored());
     return tag;
   }
 
   @Override
   public void deserializeNBT(net.minecraft.nbt.Tag nbt) {
     CompoundTag real = (CompoundTag) nbt;
-    setEnergy(real.getInt("energy"));
+    setEnergy(real.getInt(NBTENERGY));
   }
 }

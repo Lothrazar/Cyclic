@@ -11,7 +11,7 @@
   }],
   "mix": {
     "fluid": "minecraft:water",
-    "count": 100
+    "count": 50
   },
   "result": {
     "item": "cyclic:biomass",

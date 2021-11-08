@@ -11,7 +11,7 @@
   }],
   "energy": 1000,
   "mix": {
-    "fluid": "cyclic:biomass",
+    "tag": "forge:biomass",
     "count": 200
   },
   "result": {

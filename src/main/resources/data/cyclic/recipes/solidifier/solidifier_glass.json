@@ -12,6 +12,7 @@
   "energy": 100,
   "mix": {
     "fluid": "cyclic:magma",
+    "tag": "forge:magma",
     "count": 10
   },
   "result": {

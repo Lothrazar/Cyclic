@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+<<<<<<< HEAD
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -21,17 +22,44 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+=======
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TileBattery extends TileEntityBase implements MenuProvider {
 
+  private static final int SLOT_CHARGING_RATE = 8000;
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  static final int MAX = 6400000;
+  public static final int MAX = 6400000;
+  ItemStackHandler batterySlots = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return true; // TODO: is energy stack
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+  };
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;
@@ -61,6 +89,24 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
     setLitProperty(isFlowing);
     if (isFlowing) {
       this.tickCableFlow();
+    }
+    this.chargeSlot();
+  }
+
+  private void chargeSlot() {
+    if (world.isRemote) {
+      return;
+    }
+    ItemStack targ = this.batterySlots.getStackInSlot(0);
+    IEnergyStorage storage = targ.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (storage != null) {
+      //
+      int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE, true);
+      if (extracted > 0 && storage.getEnergyStored() + extracted <= storage.getMaxEnergyStored()) {
+        // no sim, fo real
+        energy.extractEnergy(extracted, false);
+        storage.receiveEnergy(extracted, false);
+      }
     }
   }
 
@@ -125,7 +171,12 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
+<<<<<<< HEAD
     super.load(tag);
+=======
+    batterySlots.deserializeNBT(tag.getCompound(NBTINV + "batt"));
+    super.read(bs, tag);
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
   }
 
   @Override
@@ -135,7 +186,12 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
     }
     tag.putInt("flowing", getFlowing());
     tag.put(NBTENERGY, energy.serializeNBT());
+<<<<<<< HEAD
     return super.save(tag);
+=======
+    tag.put(NBTINV + "batt", batterySlots.serializeNBT());
+    return super.write(tag);
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
   }
 
   @Override

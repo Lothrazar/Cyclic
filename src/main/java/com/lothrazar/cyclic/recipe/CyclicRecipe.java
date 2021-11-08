@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.recipe;
 
+import java.util.Map;
+import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
@@ -32,6 +34,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
 
@@ -70,21 +73,48 @@ public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
     return null;
   }
 
-  public boolean matchFluid(FluidStack tileFluid) {
+  public static boolean matchFluid(FluidStack tileFluid, FluidTagIngredient ing) {
     if (tileFluid == null || tileFluid.isEmpty()) {
       return false;
     }
-    if (tileFluid.getFluid() == this.getRecipeFluid().getFluid()) {
+    if (ing.hasFluid() && tileFluid.getFluid() == ing.getFluidStack().getFluid()) {
       return true;
     }
-    // FluidTags.makeWrapperTag
-    //if the fluids are not identical, they might have a matching tag
-    //see /data/forge/tags/fluids/
-    for (Tag<Fluid> fluidTag : FluidTags.getAllTags().getAllTags().values()) { // FluidTags.getStaticTags()) {
-      if (getRecipeFluid().getFluid().is(fluidTag) && tileFluid.getFluid().is(fluidTag)) {
-        return true;
+    //<<<<<<< HEAD
+    //    // FluidTags.makeWrapperTag
+    //    //if the fluids are not identical, they might have a matching tag
+    //    //see /data/forge/tags/fluids/
+    //    for (Tag<Fluid> fluidTag : FluidTags.getAllTags().getAllTags().values()) { // FluidTags.getStaticTags()) {
+    //      if (getRecipeFluid().getFluid().is(fluidTag) && tileFluid.getFluid().is(fluidTag)) {
+    //        return true;
+    //=======
+    //either recipe has no fluid or didnt match, try for tag
+    if (ing.hasTag()) {
+      //see /data/<id>/tags/fluids/     
+      for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
+        if (ing.getTag().equalsIgnoreCase(fluidTag.getKey().toString())) {
+          //this fluidTag is the one given in the recipe. now if its on the fluid ok
+          return tileFluid.getFluid().is(fluidTag.getValue());
+        }
       }
     }
     return false;
+  }
+
+  public static FluidTagIngredient parseFluid(JsonObject json, String key) {
+    JsonObject mix = json.get(key).getAsJsonObject();
+    int count = mix.get("count").getAsInt();
+    if (count < 1) {
+      count = 1;
+    }
+    FluidStack fluidstack = FluidStack.EMPTY;
+    if (mix.has("fluid")) {
+      String fluidId = mix.get("fluid").getAsString(); // JSONUtils.getString(mix, "fluid");
+      ResourceLocation resourceLocation = new ResourceLocation(fluidId);
+      Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
+      fluidstack = (fluid == null) ? FluidStack.EMPTY : new FluidStack(fluid, count);
+    }
+    String ftag = mix.has("tag") ? mix.get("tag").getAsString() : "";
+    return new FluidTagIngredient(fluidstack, ftag, count);
   }
 }

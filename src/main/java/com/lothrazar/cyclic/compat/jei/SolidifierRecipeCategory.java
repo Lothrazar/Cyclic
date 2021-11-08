@@ -22,6 +22,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
 
 @SuppressWarnings("rawtypes")
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
@@ -63,7 +64,15 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {
-    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    if (recipe.getRecipeFluid().isEmpty()) {
+      List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
+      if (matchingFluids != null) {
+        ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIngredient.getMatchingFluids());
+      }
+    }
+    else {
+      ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    }
     List<List<ItemStack>> in = new ArrayList<>();
     List<ItemStack> stuff = new ArrayList<>();
     //    for (int i = 0; i <= 2; i++) {
@@ -101,9 +110,16 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
         guiItemStacks.set(i, input);
       }
     } //getname is the same   
-    recipeLayout.getFluidStacks().init(0, true, 4, 25, Const.SQ - 2, Const.SQ - 2,
-        FluidAttributes.BUCKET_VOLUME, false,
-        null);
-    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+    recipeLayout.getFluidStacks().init(0, true, 4, 25, Const.SQ - 2, Const.SQ - 2, FluidAttributes.BUCKET_VOLUME, false, null);
+    //tag or stack?
+    if (recipe.fluidIngredient.hasTag()) {
+      List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
+      if (matchingFluids != null) {
+        recipeLayout.getFluidStacks().set(0, matchingFluids);
+      }
+    }
+    else if (!recipe.getRecipeFluid().isEmpty()) {
+      recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+    }
   }
 }

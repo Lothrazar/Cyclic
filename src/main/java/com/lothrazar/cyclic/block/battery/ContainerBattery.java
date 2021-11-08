@@ -10,6 +10,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerBattery extends ContainerBase {
 
@@ -20,6 +21,14 @@ public class ContainerBattery extends ContainerBase {
     tile = (TileBattery) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
+    addSlot(new SlotItemHandler(tile.batterySlots, 0, 134, 54) {
+
+      @Override
+      public int getSlotStackLimit() {
+        return 1;
+      }
+    });
+    this.endInv = 1;
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
     this.trackAllIntFields(tile, TileBattery.Fields.values().length);

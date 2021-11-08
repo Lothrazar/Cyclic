@@ -69,9 +69,6 @@ public class LocationGpsCard extends ItemBase {
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     ItemStack held = player.getItemInHand(hand);
-    if (!player.isOnGround()) {
-      pos = pos.relative(side);
-    }
     UtilNBT.setItemStackBlockPos(held, pos);
     held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.level));
     UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());

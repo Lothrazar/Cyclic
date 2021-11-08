@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -60,5 +61,17 @@ public class BlockWirelessFluid extends BlockBase {
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.WIRELESS_FLUID.get(), world.isClientSide ? TileWirelessFluid::clientTick : TileWirelessFluid::serverTick);
+  }
+
+  @Override
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileWirelessFluid tileentity = (TileWirelessFluid) worldIn.getBlockEntity(pos);
+      if (tileentity != null && tileentity.gpsSlots != null) {
+        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.gpsSlots.getStackInSlot(0));
+      }
+      worldIn.updateNeighbourForOutputSignal(pos, this);
+    }
+    super.onRemove(state, worldIn, pos, newState, isMoving);
   }
 }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.compat.jei;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.data.Const;
@@ -18,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
 
 @SuppressWarnings("rawtypes")
 public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFluid> {
@@ -59,7 +61,15 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   @Override
   public void setIngredients(RecipeGeneratorFluid recipe, IIngredients ingredients) {
-    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    if (recipe.getRecipeFluid().isEmpty()) {
+      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+      if (matchingFluids != null) {
+        ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIng.getMatchingFluids());
+      }
+    }
+    else {
+      ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
+    }
   }
 
   @Override
@@ -71,11 +81,18 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, RecipeGeneratorFluid recipe, IIngredients ingredients) {
-    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
-    //getname is the same   
+    //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
     recipeLayout.getFluidStacks().init(0, true, 6, 7, Const.SQ - 2, Const.SQ - 2,
-        FluidAttributes.BUCKET_VOLUME, false,
-        null);
-    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+        FluidAttributes.BUCKET_VOLUME, false, null);
+    //tag or stack?
+    if (recipe.fluidIng.hasTag()) {
+      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+      if (matchingFluids != null) {
+        recipeLayout.getFluidStacks().set(0, matchingFluids);
+      }
+    }
+    else if (!recipe.getRecipeFluid().isEmpty()) {
+      recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
+    }
   }
 }

@@ -5,6 +5,7 @@
   }],
   "mix": {
     "fluid": "cyclic:honey",
+    "tag": "forge:honey",
     "count": 1000
   },
   "result": {

@@ -5,6 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+<<<<<<< HEAD
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -20,6 +21,24 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+=======
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -50,20 +69,38 @@ public class BlockBattery extends BlockBase {
   }
 
   @Override
+<<<<<<< HEAD
   public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity ent, ItemStack stack) {
     super.playerDestroy(world, player, pos, state, ent, stack);
     //    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());//is this needed???
     ItemStack battery = new ItemStack(this);
+=======
+  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
+    super.harvestBlock(world, player, pos, state, ent, stack);
+    ItemStack newStackBattery = new ItemStack(this);
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
     if (ent != null) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      IEnergyStorage storage = battery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (storage != null) {
-        ((CustomEnergyStorage) storage).setEnergy(handlerHere.getEnergyStored());
+      IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (newStackCap instanceof CustomEnergyStorage) {
+        ((CustomEnergyStorage) newStackCap).setEnergy(handlerHere.getEnergyStored());
+      }
+      else {
+        newStackCap.receiveEnergy(handlerHere.getEnergyStored(), false);
+      }
+      if (handlerHere.getEnergyStored() > 0) {
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, handlerHere.getEnergyStored());
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, handlerHere.getMaxEnergyStored());
       }
     }
     //even if energy fails 
+<<<<<<< HEAD
     if (world.isClientSide == false) {
       world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), battery));
+=======
+    if (world.isRemote == false) {
+      world.addEntity(new ItemEntity(world, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, newStackBattery));
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
     }
   }
 
@@ -78,6 +115,7 @@ public class BlockBattery extends BlockBase {
   }
 
   @Override
+<<<<<<< HEAD
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     try {
       IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
@@ -88,9 +126,33 @@ public class BlockBattery extends BlockBase {
           storageTile.setEnergy(storage.getEnergyStored());
         }
       }
+=======
+  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    int current = 0;
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
+      current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
     }
-    catch (Exception e) {
-      //
+    else if (storage != null) {
+      current = storage.getEnergyStored();
     }
+    TileBattery container = (TileBattery) world.getTileEntity(pos);
+    CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (storageTile != null) {
+      storageTile.setEnergy(current);
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+    }
+  }
+
+  @Override
+  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileBattery tileentity = (TileBattery) worldIn.getTileEntity(pos);
+      if (tileentity != null && tileentity.batterySlots != null) {
+        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.batterySlots.getStackInSlot(0));
+      }
+      worldIn.updateComparatorOutputLevel(pos, this);
+    }
+    super.onReplaced(state, worldIn, pos, newState, isMoving);
   }
 }

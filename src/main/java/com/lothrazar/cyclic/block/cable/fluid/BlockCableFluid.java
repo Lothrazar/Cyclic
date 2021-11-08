@@ -102,7 +102,23 @@ public class BlockCableFluid extends CableBase {
       BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
       IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
       if (cap != null) {
+<<<<<<< HEAD
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
+=======
+        stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
+        worldIn.setBlockState(pos, stateIn);
+      }
+    }
+    super.onBlockPlacedBy(worldIn, pos, stateIn, placer, stack);
+  }
+
+  @Override
+  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileCableFluid tileentity = (TileCableFluid) worldIn.getTileEntity(pos);
+      if (tileentity != null && tileentity.filter != null) {
+        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
+>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
       }
     }
     super.setPlacedBy(worldIn, pos, stateIn, placer, stack);

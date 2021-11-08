@@ -16,6 +16,8 @@ import net.minecraft.world.level.Level;
 
 public class SleepingMatItem extends ItemBase {
 
+  public static final String CYCLIC_SLEEPING = "cyclic_sleeping";
+
   public SleepingMatItem(Properties properties) {
     super(properties.stacksTo(1).durability(256));
   }
@@ -53,14 +55,14 @@ public class SleepingMatItem extends ItemBase {
         player.setSleepingPos(at);
         return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
       }
+      player.startSleeping(at);
+      player.getPersistentData().putBoolean(SleepingMatItem.CYCLIC_SLEEPING, true);
+      player.sleepCounter = 0; //    ObfuscationReflectionHelper.setPrivateValue(Player.class, player, 0, "sleepCounter");
+      if (player.level instanceof ServerLevel) {
+        ((ServerLevel) player.level).updateSleepingPlayerList();
+      }
+      UtilItemStack.damageItem(player, itemstack);
     }
-    player.startSleeping(at);
-    player.getPersistentData().putBoolean("cyclic_sleeping", true);
-    player.sleepCounter = 0; //    ObfuscationReflectionHelper.setPrivateValue(Player.class, player, 0, "sleepCounter");
-    if (player.level instanceof ServerLevel) {
-      ((ServerLevel) player.level).updateSleepingPlayerList();
-    }
-    UtilItemStack.damageItem(player, itemstack);
     return Either.right(Unit.INSTANCE);
   }
 }

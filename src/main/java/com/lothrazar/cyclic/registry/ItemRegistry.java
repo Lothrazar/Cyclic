@@ -124,6 +124,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ItemRegistry {
 
   public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModCyclic.MODID);
+  public static final RegistryObject<Item> GLOWING_HELMET = ITEMS.register("glowing_helmet", () -> new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, EquipmentSlot.HEAD, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FLUIDHOPPER = ITEMS.register("hopper_fluid", () -> new BlockItem(BlockRegistry.FLUIDHOPPER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> HOPPER = ITEMS.register("hopper", () -> new BlockItem(BlockRegistry.HOPPER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> HOPPERGOLD = ITEMS.register("hopper_gold", () -> new BlockItem(BlockRegistry.HOPPERGOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -474,7 +475,6 @@ public class ItemRegistry {
     r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.HEAD, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_helmet"));
     r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.CHEST, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_chestplate"));
     r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.LEGS, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_leggings"));
-    r.register(new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, EquipmentSlot.HEAD, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("glowing_helmet"));
     r.register(new AmethystPickaxeItem(MaterialRegistry.ToolMats.AMETHYST, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_pickaxe"));
     r.register(new PickaxeItem(MaterialRegistry.ToolMats.COPPER, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_pickaxe"));
     r.register(new PickaxeItem(MaterialRegistry.ToolMats.EMERALD, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_pickaxe"));

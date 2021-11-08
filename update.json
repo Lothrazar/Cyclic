@@ -6,5 +6,9 @@
 	},
 	"1.17.1": {
 		"1.6.0":"Ported Cyclic[1.16.5]-1.5.8 to Minecraft [1.17.1] & forge-37.0.85+.  Altered a few crafting recipes to use new items.  Removed Peat Generator (Use Peat items in Material Generator).  Removed 5 Mason blocks, replaced with Compressed Cobblestone, Flint Block.  Added Peace Candle, Translocation Platform, Stone Mattock, Crushing Macerator, and Lava Sponge.  Added Copper Tools and Amethyst Tools, Copper Lantern, Copper Chain, Copper Bars, Gold Chain, Gold Bars, Gold Lantern (Art by @shynieke).  Added Copper Nuggets and Netherite Nuggets.  Added Netherite Lanterns, chains, and bars.  Added 3 Pressure Plates: Copper Netherite and Obsidian. "
+
+,"1.6.1":"Fix Battery energy tooltip not updating when charged in an item slot.  Added charging slot to Battery.  Fix sleeping mat bug when used in nether.  Fix Fluid cables visual disconnection when placing.  "
+		,"1.6.10":"Machines that use fluid ingredients now accept fluid tags such as 'forge:experience' in place of fluid ID; updated some existing recipes on Solidifier and Evap Generator to match (old recipe JSONs still all compatible/valid).  Fixed battery energy item stack capability provider.  Refreshed texture of Air charm. Vision helmet compat with curios head slot.  Revert GPS card fixes to v1.5.6.  One recipe added to cyclic:generator_fluid for tag forge:biomass.  Default config value updated for disable_pickup on the Sack of Holding.  Add compat for Beheading enchant with the 7 Tinkers Construct mob heads (config heads are still checked last.  no changes if tinkers not installed).  "
+
 	}
 }

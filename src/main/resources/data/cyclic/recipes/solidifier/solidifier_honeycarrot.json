@@ -10,7 +10,7 @@
     "item": "minecraft:carrot"
   }],
   "mix": {
-    "fluid": "cyclic:honey",
+    "tag": "forge:honey",
     "count": 100
   },
   "result": {

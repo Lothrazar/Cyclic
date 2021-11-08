@@ -24,6 +24,22 @@ public class CharmUtil {
     return stack;
   }
 
+  public static ItemStack getCurio(Player player, Item match) {
+    if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
+      //check curios slots IF mod is loaded
+      try {
+        final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
+        if (equipped != null && isMatching(equipped.right, match)) {
+          return equipped.right;
+        }
+      }
+      catch (Exception e) {
+        // if API not installed or fails 
+      }
+    }
+    return ItemStack.EMPTY;
+  }
+
   /**
    * First check curios. Then player inventory. Then left/right hands, not ender chest
    *
