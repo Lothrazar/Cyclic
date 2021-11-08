@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-<<<<<<< HEAD
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -19,22 +18,10 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-=======
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -94,7 +81,7 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
   }
 
   private void chargeSlot() {
-    if (world.isRemote) {
+    if (level.isClientSide) {
       return;
     }
     ItemStack targ = this.batterySlots.getStackInSlot(0);
@@ -171,12 +158,8 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-<<<<<<< HEAD
-    super.load(tag);
-=======
     batterySlots.deserializeNBT(tag.getCompound(NBTINV + "batt"));
-    super.read(bs, tag);
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+    super.load(tag);
   }
 
   @Override
@@ -184,14 +167,10 @@ public class TileBattery extends TileEntityBase implements MenuProvider {
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
+    tag.put(NBTINV + "batt", batterySlots.serializeNBT());
     tag.putInt("flowing", getFlowing());
     tag.put(NBTENERGY, energy.serializeNBT());
-<<<<<<< HEAD
     return super.save(tag);
-=======
-    tag.put(NBTINV + "batt", batterySlots.serializeNBT());
-    return super.write(tag);
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
   }
 
   @Override

@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
-<<<<<<< HEAD
+import com.lothrazar.cyclic.recipe.FluidTagIngredient;
 import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,46 +18,19 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-=======
-import com.lothrazar.cyclic.recipe.FluidTagIngredient;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 @SuppressWarnings("rawtypes")
 public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
-<<<<<<< HEAD
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  private FluidStack fluidInput;
   private final int energy;
-
-  public RecipeSolidifier(ResourceLocation id,
-      NonNullList<Ingredient> inList, FluidStack fluid,
-      ItemStack result, int energyIn) {
-=======
-  private final ItemStack result;
   public final FluidTagIngredient fluidIngredient;
-  private final NonNullList<Ingredient> ingredients;
 
-  public RecipeSolidifier(ResourceLocation id,
-      Ingredient in, Ingredient inSecond, Ingredient inThird, FluidTagIngredient fluid,
-      ItemStack result) {
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+  public RecipeSolidifier(ResourceLocation id, NonNullList<Ingredient> inList, FluidTagIngredient fluid, ItemStack result, int energyIn) {
     super(id);
     ingredients = inList;
     if (ingredients.size() == 2) {
@@ -70,23 +43,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     if (ingredients.size() != 3) {
       throw new IllegalArgumentException("Solidifier recipe must have at most three ingredients");
     }
+    this.fluidIngredient = fluid;
     this.result = result;
-<<<<<<< HEAD
-    this.fluidInput = fluid;
     if (energyIn < 0) {
       energyIn = 0;
     }
     this.energy = energyIn;
-  }
-
-  @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
-=======
-    fluidIngredient = fluid;
-    ingredients = NonNullList.create();
-    ingredients.add(in);
-    ingredients.add(inSecond);
-    ingredients.add(inThird);
   }
 
   @Override
@@ -107,8 +69,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
       return matchItems(tile) && CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIngredient);
@@ -162,16 +123,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-<<<<<<< HEAD
-  public FluidStack getRecipeFluid() {
-    return fluidInput.copy();
-  }
-
-  @Override
   public RecipeType<?> getType() {
-=======
-  public IRecipeType<?> getType() {
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
     return CyclicRecipeType.SOLID;
   }
 
@@ -198,27 +150,9 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
-<<<<<<< HEAD
         NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-        FluidStack fs = UtilRecipe.getFluid(json.get("mix").getAsJsonObject());
-=======
-        //TODO: in 1.17 make array
-        Ingredient inputTop = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputTop"));
-        Ingredient inputMiddle = Ingredient.EMPTY;
-        if (JSONUtils.hasField(json, "inputMiddle")) {
-          inputMiddle = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputMiddle"));
-        }
-        Ingredient inputBottom = Ingredient.EMPTY;
-        if (JSONUtils.hasField(json, "inputBottom")) {
-          inputBottom = Ingredient.deserialize(JSONUtils.getJsonObject(json, "inputBottom"));
-        }
-        ItemStack resultStack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-        if (inputTop == Ingredient.EMPTY) {
-          throw new IllegalArgumentException("Invalid items: inputTop required to be non-empty: " + json);
-        }
         FluidTagIngredient fs = parseFluid(json, "mix");
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
         //valid recipe created
         int energy = 5000;
         if (json.has("energy")) {
@@ -240,13 +174,8 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       ins.add(Ingredient.fromNetwork(buffer));
       ins.add(Ingredient.fromNetwork(buffer));
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
-<<<<<<< HEAD
-          ins, FluidStack.readFromPacket(buffer),
+          ins, FluidTagIngredient.readFromPacket(buffer),
           buffer.readItem(), buffer.readInt());
-=======
-          Ingredient.read(buffer), Ingredient.read(buffer), Ingredient.read(buffer), FluidTagIngredient.readFromPacket(buffer),
-          buffer.readItemStack());
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
       return r;
     }
 
@@ -255,20 +184,12 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       Ingredient one = (Ingredient) recipe.ingredients.get(1);
       Ingredient two = (Ingredient) recipe.ingredients.get(2);
-<<<<<<< HEAD
       zero.toNetwork(buffer);
       one.toNetwork(buffer);
       two.toNetwork(buffer);
-      recipe.fluidInput.writeToPacket(buffer);
+      recipe.fluidIngredient.writeToPacket(buffer);
       buffer.writeItem(recipe.getResultItem());
       buffer.writeInt(recipe.energy);
-=======
-      zero.write(buffer);
-      one.write(buffer);
-      two.write(buffer);
-      recipe.fluidIngredient.writeToPacket(buffer);
-      buffer.writeItemStack(recipe.getRecipeOutput());
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
     }
   }
 }

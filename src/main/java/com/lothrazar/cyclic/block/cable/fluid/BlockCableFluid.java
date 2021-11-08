@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -102,26 +103,23 @@ public class BlockCableFluid extends CableBase {
       BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
       IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
       if (cap != null) {
-<<<<<<< HEAD
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
-=======
-        stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
-        worldIn.setBlockState(pos, stateIn);
-      }
-    }
-    super.onBlockPlacedBy(worldIn, pos, stateIn, placer, stack);
-  }
-
-  @Override
-  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
-      TileCableFluid tileentity = (TileCableFluid) worldIn.getTileEntity(pos);
-      if (tileentity != null && tileentity.filter != null) {
-        InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+        worldIn.setBlockAndUpdate(pos, stateIn);
       }
     }
     super.setPlacedBy(worldIn, pos, stateIn, placer, stack);
+  }
+
+  @Override
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileCableFluid tileentity = (TileCableFluid) worldIn.getBlockEntity(pos);
+      if (tileentity != null && tileentity.filter != null) {
+        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
+      }
+      worldIn.updateNeighbourForOutputSignal(pos, this);
+    }
+    super.onRemove(state, worldIn, pos, newState, isMoving);
   }
 
   @Override

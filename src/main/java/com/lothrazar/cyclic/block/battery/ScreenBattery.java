@@ -102,17 +102,9 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   }
 
   @Override
-<<<<<<< HEAD
   protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + menu.tile.getFlowing()));
     btnToggle.setTextureId(menu.tile.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
-    //    btnU.setTooltip("gui.cyclic.flowing" + container.tile.getField(Fields.U.ordinal()));
-    //    btnD.setTooltip("gui.cyclic.flowing" + container.tile.getField(Fields.D.ordinal()));
-=======
-  protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + container.tile.getFlowing()));
-    btnToggle.setTextureId(container.tile.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
     btnU.setTextureId(getTextureId(Fields.U));
     btnD.setTextureId(getTextureId(Fields.D));
     btnN.setTextureId(getTextureId(Fields.N));
@@ -130,12 +122,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-<<<<<<< HEAD
-    //    this.drawSlot(60, 20);
-    energy.draw(ms, menu.getEnergy());
-=======
     this.drawSlot(ms, 133, 53, TextureRegistry.SLOT_CHARGE);
-    energy.draw(ms, container.getEnergy());
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+    energy.draw(ms, menu.getEnergy());
   }
 }

@@ -1,11 +1,7 @@
 package com.lothrazar.cyclic.block.battery;
 
-<<<<<<< HEAD
-=======
-import com.lothrazar.cyclic.capability.CapabilityProviderEnergyStack;
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
 import java.util.List;
-import com.lothrazar.cyclic.capability.EnergyCapabilityItemStack;
+import com.lothrazar.cyclic.capability.CapabilityProviderEnergyStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -39,20 +35,11 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
-<<<<<<< HEAD
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    if (storage != null) {
-      TranslatableComponent t = new TranslatableComponent(storage.getEnergyStored() + "/" + storage.getMaxEnergyStored());
-      t.withStyle(ChatFormatting.RED);
-      tooltip.add(t);
-=======
-  public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
       int current = stack.getTag().getInt(ENERGYTT);
       int energyttmax = stack.getTag().getInt(ENERGYTTMAX);
-      tooltip.add(new TranslationTextComponent(current + "/" + energyttmax).mergeStyle(TextFormatting.RED));
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
+      tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
@@ -75,18 +62,14 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
-<<<<<<< HEAD
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new EnergyCapabilityItemStack(stack, TileBattery.MAX);
-=======
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
     return new CapabilityProviderEnergyStack(TileBattery.MAX);
   }
 
   // ShareTag for server->client capability data sync
   @Override
-  public CompoundNBT getShareTag(ItemStack stack) {
-    CompoundNBT nbt = stack.getOrCreateTag();
+  public CompoundTag getShareTag(ItemStack stack) {
+    CompoundTag nbt = stack.getOrCreateTag();
     IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     //on server  this runs . also has correct values.
     //set data for sync to client
@@ -99,13 +82,12 @@ public class ItemBlockBattery extends BlockItem {
 
   //clientside read tt
   @Override
-  public void readShareTag(ItemStack stack, CompoundNBT nbt) {
+  public void readShareTag(ItemStack stack, CompoundTag nbt) {
     if (nbt != null) {
-      CompoundNBT stackTag = stack.getOrCreateTag();
+      CompoundTag stackTag = stack.getOrCreateTag();
       stackTag.putInt(ENERGYTT, nbt.getInt(ENERGYTT));
       stackTag.putInt(ENERGYTTMAX, nbt.getInt(ENERGYTTMAX));
     }
     super.readShareTag(stack, nbt);
->>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
   }
 }

@@ -24,7 +24,7 @@ public class ContainerBattery extends ContainerBase {
     addSlot(new SlotItemHandler(tile.batterySlots, 0, 134, 54) {
 
       @Override
-      public int getSlotStackLimit() {
+      public int getMaxStackSize() {
         return 1;
       }
     });
