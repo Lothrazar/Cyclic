@@ -10,7 +10,7 @@
 		"item": "minecraft:golden_apple"
 	}],
 	"mix": {
-		"fluid": "cyclic:honey",
+		"tag": "forge:honey",
 		"count": 4000
 	},
 	"result": {

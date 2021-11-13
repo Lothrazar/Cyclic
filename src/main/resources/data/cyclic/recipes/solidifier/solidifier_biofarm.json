@@ -10,7 +10,6 @@
     "item": "minecraft:grass_block"
   }],
   "mix": {
-    "fluid": "cyclic:biomass",
     "tag": "forge:biomass",
     "count": 100
   },

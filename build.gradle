@@ -97,8 +97,11 @@ dependencies {
     
     implementation fg.deobf("mezz.jei:${jei_version}")
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-      
+    
 
+    implementation fg.deobf("curse.maven:simple-storage-network-268495:3476722")
+    implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
+    
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -131,11 +134,7 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"cyclicsareus",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            
-            //'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-	        //'MixinConfigs': 'mixins.myplugin.json',
-	        //'FMLCorePluginContainsFMLMod': 'true',
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }

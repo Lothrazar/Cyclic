@@ -4,7 +4,6 @@
     "item": "minecraft:apple"
   }],
   "mix": {
-    "fluid": "cyclic:honey",
     "tag": "forge:honey",
     "count": 100
   },

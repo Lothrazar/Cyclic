@@ -1,0 +1,26 @@
+{
+	"type": "cyclic:generator_fluid",
+	"fuel": {
+		"tag": "forge:biomass",
+		"count": 1000
+	},
+	"energy": {
+		"ticks": 400,
+		"rfpertick": 100
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{ 
+					"item": "cyclic:generator_fluid", 
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

@@ -10,7 +10,6 @@
     "item": "minecraft:honeycomb"
   }],
   "mix": {
-    "fluid": "cyclic:honey",
     "tag": "forge:honey",
     "count": 100
   },
