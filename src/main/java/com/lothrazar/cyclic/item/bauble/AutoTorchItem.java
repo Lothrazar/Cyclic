@@ -29,6 +29,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
@@ -58,10 +59,11 @@ public class AutoTorchItem extends ItemBaseToggle {
       return;
     }
     BlockPos pos = entityIn.getPosition();
+    // 
     if (world.getLight(pos) <= LIGHT_LEVEL.get()
         //            && player.isSpectator() == false
-        //            && world.isSideSolid(pos.down(), Direction.UP)
-        && world.getBlockState(pos.down()).isSolid()
+        && world.getBlockState(pos.down()).isSolidSide(world, pos, Direction.UP)
+        //        && world.getBlockState(pos.down()).isSolid()
         && world.isAirBlock(pos)) { // dont overwrite liquids
       if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.getDefaultState())) {
         UtilItemStack.damageItem(player, stack);

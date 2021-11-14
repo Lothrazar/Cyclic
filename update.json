@@ -68,6 +68,6 @@
 		,"1.5.8":"Revert GPS card change, works on all machines and blocks regardless of crouching/sneaking state (instead offset is only when jumping/falling).  Merge #1951 Gui Facelift with new Progress bar. Fix bugfix where the evaporation generator would only burn for 1 tick unless it got more than 1 bucket inserted at a time : Shadows-of-fire.  "
 		,"1.5.9":"Fix Battery energy tooltip not updating when charged in an item slot.  Added charging slot to Battery.  Fix sleeping mat bug when used in nether.  Fix Fluid cables visual disconnection when placing.  "
 		,"1.5.10":"Machines that use fluid ingredients now accept fluid tags such as 'forge:experience' in place of fluid ID; updated some existing recipes on Solidifier and Evap Generator to match (old recipe JSONs still all compatible/valid).  Fixed battery energy item stack capability provider.  Refreshed texture of Air charm. Vision helmet compat with curios head slot.  Revert GPS card fixes to v1.5.6.  One recipe added to cyclic:generator_fluid for tag forge:biomass.  Default config value updated for disable_pickup on the Sack of Holding.  Add compat for Beheading enchant with the 7 Tinkers Construct mob heads (config heads are still checked last.  no changes if tinkers not installed).  "
-		,"1.5.11":"Fix a bugged interaction with Settings data card and Filter data card #1970 "
+		,"1.5.11":"Fix a bugged interaction with Settings data card and Filter data card #1970 . Torch Charm now tries to avoid placing on non-solid blocks such as top side of a bottom Slab where the torch breaks right away. "
 	}
-}
+ }
