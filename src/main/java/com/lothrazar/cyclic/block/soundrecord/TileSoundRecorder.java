@@ -116,7 +116,6 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
 
   private void saveSoundToCard(int value) {
     String igme = sounds.get(value);
-    ModCyclic.LOGGER.error("TODO SAVE " + value + igme);
     if (!inputSlots.getStackInSlot(0).isEmpty()) {
       SoundCard.saveSound(inputSlots.getStackInSlot(0), igme);
     }
@@ -155,7 +154,6 @@ public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
 
   public void clearSounds() {
     sounds = NonNullList.withSize(MAX_SOUNDS, "");
-    ModCyclic.LOGGER.error("clear success string ");
   }
 
   public boolean onSoundHeard(String soundIn) {

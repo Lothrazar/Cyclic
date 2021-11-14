@@ -26,6 +26,7 @@ package com.lothrazar.cyclic.item.bauble;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -59,8 +60,7 @@ public class AutoTorchItem extends ItemBaseToggle {
     }
     BlockPos pos = entityIn.blockPosition();
     if (world.getMaxLocalRawBrightness(pos) <= LIGHT_LEVEL.get()
-        //            && player.isSpectator() == false
-        //            && world.isSideSolid(pos.down(), Direction.UP)
+        && world.getBlockState(pos.below()).isFaceSturdy(world, pos, Direction.UP)
         && world.getBlockState(pos.below()).canOcclude()
         && world.isEmptyBlock(pos)) { // dont overwrite liquids
       if (UtilPlaceBlocks.placeStateSafe(world, player, pos, Blocks.TORCH.defaultBlockState())) {

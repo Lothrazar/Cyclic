@@ -24,6 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SettingsCard extends ItemBase {
 
+  private static final String NBT_ID = "id";
   private static final String NBT_SETSAVED = "settingsSaved";
 
   public SettingsCard(Properties properties) {
@@ -35,8 +36,8 @@ public class SettingsCard extends ItemBase {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     CompoundTag stackdata = stack.getOrCreateTag();
-    if (stackdata.contains("id")) {
-      String tiledataID = stackdata.getString("id");
+    if (stackdata.contains(NBT_ID)) {
+      String tiledataID = stackdata.getString(NBT_ID);
       TranslatableComponent t = new TranslatableComponent("[" + tiledataID + "]");
       t.withStyle(ChatFormatting.DARK_GRAY);
       tooltip.add(t);
@@ -66,9 +67,9 @@ public class SettingsCard extends ItemBase {
         //for now, only do cyclic tile entities
         //in future / intheory could be any TE from any mod / vanilla . but thats broken
         CompoundTag tiledata = new CompoundTag();
-        //generic style
+        //generic style 
         tile.save(tiledata);
-        String[] wipers = new String[] { "x", "y", "z", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer" };
+        String[] wipers = new String[] { "x", "y", "z", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
         for (String wipe : wipers) {
           tiledata.remove(wipe);
         }
@@ -78,26 +79,21 @@ public class SettingsCard extends ItemBase {
       }
     }
     else if (stackdata.getBoolean(NBT_SETSAVED)) {
-      //yep put data into tile
-      ModCyclic.LOGGER.error("VALID data tack settingsSaved : " + stackdata);
-      String stackdataID = stackdata.getString("id");
+      //yep put data into tile 
+      String stackdataID = stackdata.getString(NBT_ID);
       if (tile instanceof TileEntityBase) {
         //for now, only do cyclic tile entities
         //WRITE TO TILE from my stackdata
         CompoundTag tiledata = new CompoundTag();
         //generic style
         tiledata = tile.save(tiledata);
-        String tiledataID = stackdata.getString("id");
+        String tiledataID = stackdata.getString(NBT_ID);
         //go merge and let it read
         if (tiledataID.equalsIgnoreCase(stackdataID)) {
           stackdata = stackdata.copy();
           stackdata.remove(NBT_SETSAVED);
-          stackdata.remove("id");
+          stackdata.remove(NBT_ID);
           tiledata = tiledata.merge(stackdata);
-          //
-          ModCyclic.LOGGER.error("MERGE data tack settingsSaved : " + tiledata + " -> ");
-          //
-          //player.level.getBlockState(pos),
           tile.load(tiledata);
           UtilChat.addChatMessage(player, getDescriptionId() + ".written");
         }
