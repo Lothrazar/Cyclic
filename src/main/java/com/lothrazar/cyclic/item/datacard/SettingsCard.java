@@ -68,7 +68,7 @@ public class SettingsCard extends ItemBase {
         CompoundNBT tiledata = new CompoundNBT();
         //generic style
         tile.write(tiledata);
-        String[] wipers = new String[] { "x", "y", "z", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer" };
+        String[] wipers = new String[] { "x", "y", "z", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
         for (String wipe : wipers) {
           tiledata.remove(wipe);
         }
@@ -78,8 +78,7 @@ public class SettingsCard extends ItemBase {
       }
     }
     else if (stackdata.getBoolean(NBT_SETSAVED)) {
-      //yep put data into tile
-      ModCyclic.LOGGER.error("VALID data tack settingsSaved : " + stackdata);
+      //yep put data into tile 
       String stackdataID = stackdata.getString("id");
       if (tile instanceof TileEntityBase) {
         //for now, only do cyclic tile entities
@@ -94,9 +93,6 @@ public class SettingsCard extends ItemBase {
           stackdata.remove(NBT_SETSAVED);
           stackdata.remove("id");
           tiledata = tiledata.merge(stackdata);
-          //
-          ModCyclic.LOGGER.error("MERGE data tack settingsSaved : " + tiledata + " -> ");
-          //
           //
           tile.read(player.world.getBlockState(pos), tiledata);
           UtilChat.addChatMessage(player, getTranslationKey() + ".written");
