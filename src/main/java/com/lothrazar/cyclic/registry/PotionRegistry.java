@@ -102,8 +102,6 @@ public class PotionRegistry {
     public static Potion wither;
     @ObjectHolder(ModCyclic.MODID + ":resistance")
     public static Potion resistance;
-    //    @ObjectHolder(ModCyclic.MODID + ":saturation")
-    //    public static Potion saturation;
   }
   //resistance : strength pot + iron ingot
   //wither : fermented spider eye + weakness pot 
@@ -114,34 +112,22 @@ public class PotionRegistry {
     final ItemStack awkwardPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
     final ItemStack thickPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.THICK);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.haste, Items.EMERALD);
-    //    splashBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.haste),
         PotionRegistry.PotionItem.strong_haste, Items.REDSTONE);
-    //    splashBrewing(PotionRegistry.PotionItem.strong_haste, Items.EMERALD);
-    //    lingerBrewing(PotionRegistry.PotionItem.haste, Items.EMERALD);
     //STUN recipes
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.stun, Items.CLAY);
-    //    splashBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
-    //    lingerBrewing(PotionRegistry.PotionItem.stun, Items.CLAY);
     //swimspeed recipes
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
-    //    splashBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
-    //    lingerBrewing(PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
     //    PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste).gr
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.NIGHT_VISION), PotionRegistry.PotionItem.blind, Items.BEETROOT);
-    //    splashBrewing(PotionRegistry.PotionItem.blind, Items.BEETROOT);
-    //    lingerBrewing(PotionRegistry.PotionItem.blind, Items.BEETROOT);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), PotionItem.levitation, Items.FERMENTED_SPIDER_EYE);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), PotionItem.resistance, Items.IRON_INGOT);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WEAKNESS), PotionItem.wither, Items.NETHER_BRICK);
-    //    basicBrewing(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.hunger), PotionItem.saturation, Items.CAKE);
     basicBrewing(thickPotion.copy(), PotionRegistry.PotionItem.hunger, Items.ROTTEN_FLESH);
   }
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {
-    //hmm wat 
-    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(inputPot, Ingredient.of(item),
-        PotionUtils.setPotion(new ItemStack(Items.POTION), pot)));
+    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(inputPot, Ingredient.of(item), PotionUtils.setPotion(new ItemStack(Items.POTION), pot)));
   }
 
   static void splashBrewing(Potion pot, Item item) {

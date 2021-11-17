@@ -173,8 +173,9 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       ins.add(Ingredient.fromNetwork(buffer));
       ins.add(Ingredient.fromNetwork(buffer));
       ins.add(Ingredient.fromNetwork(buffer));
+      FluidTagIngredient fsi = FluidTagIngredient.readFromPacket(buffer);
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
-          ins, FluidTagIngredient.readFromPacket(buffer),
+          ins, fsi,
           buffer.readItem(), buffer.readInt());
       return r;
     }

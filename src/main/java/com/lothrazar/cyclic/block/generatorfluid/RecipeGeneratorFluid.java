@@ -31,6 +31,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
     this.rfpertick = Math.max(1, rfpertick);
   }
 
+  @Override
   public FluidStack getRecipeFluid() {
     return fluidIng.getFluidStack();
   }
@@ -132,7 +133,6 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, RecipeGeneratorFluid recipe) {
-      recipe.getRecipeFluid().writeToPacket(buffer);
       recipe.fluidIng.writeToPacket(buffer);
       buffer.writeInt(recipe.getTicks());
       buffer.writeInt(recipe.rfpertick);

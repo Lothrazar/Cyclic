@@ -17,14 +17,19 @@ public class RecipeRegistry {
 
   public static void registerRecipeSerializers(Register<RecipeSerializer<?>> event) {
     IForgeRegistry<RecipeSerializer<?>> r = event.getRegistry();
+    // cyclic:solidifier
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.SOLID.toString(), CyclicRecipeType.SOLID);
     r.register(RecipeSolidifier.SERIALIZER);
+    // cyclic:melter
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.MELTER.toString(), CyclicRecipeType.MELTER);
     r.register(RecipeMelter.SERIALMELTER);
+    //
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.GENERATOR_ITEM.toString(), CyclicRecipeType.GENERATOR_ITEM);
     r.register(RecipeGeneratorItem.SERIALGENERATOR);
+    //
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.GENERATOR_FLUID.toString(), CyclicRecipeType.GENERATOR_FLUID);
     r.register(RecipeGeneratorFluid.SERIALGENERATORF);
+    //
     Registry.register(Registry.RECIPE_TYPE, CyclicRecipeType.CRUSHER.toString(), CyclicRecipeType.CRUSHER);
     r.register(RecipeCrusher.SERIALCRUSH);
   }
