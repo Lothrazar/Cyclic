@@ -1,0 +1,6 @@
+{
+  "replace": false,
+  "values": [
+    { "id":"cyclic:compressed_cobblestone","required":false}
+  ]
+}

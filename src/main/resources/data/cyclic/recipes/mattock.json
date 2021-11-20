@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ooo",
-    "ses",
+    "oeo",
     " e "
   ],
   "key": {
@@ -10,10 +10,7 @@
       "tag": "forge:storage_blocks/quartz"
     },
     "o": {
-      "item": "cyclic:gem_obsidian"
-    },
-    "s": {
-      "item": "minecraft:lead"
+      "tag": "forge:obsidian"
     }
   },
   "result": {

@@ -91,6 +91,9 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   public static BooleanValue CYAN_GENERATES;
+  public static BooleanValue PURPLE_GENERATES;
+  public static BooleanValue BROWN_GENERATES;
+  public static BooleanValue LIME_GENERATES;
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
   public static DoubleValue CHARM_ATTACKSPEED;
@@ -193,6 +196,9 @@ public class ConfigRegistry {
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     CYAN_GENERATES = CFG.comment("Does this generate in the world").define("flower_cyan.enabled", true);
+    PURPLE_GENERATES = CFG.comment("Does this generate in the world").define("flower_purple_tulip.enabled", true);
+    BROWN_GENERATES = CFG.comment("Does this generate in the world").define("flower_absalon_tulip.enabled", true);
+    LIME_GENERATES = CFG.comment("Does this generate in the world").define("flower_lime_carnation.enabled", true);
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");

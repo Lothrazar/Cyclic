@@ -27,9 +27,7 @@ import com.lothrazar.cyclic.base.EnchantBase;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -62,11 +60,7 @@ public class EnchantReach extends EnchantBase {
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    //anything that goes on your feet
-    boolean yes = stack.getItem() == Items.ELYTRA ||
-        (stack.getItem() instanceof ArmorItem)
-            && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.CHEST;
-    return yes;
+    return true;
   }
 
   @Override

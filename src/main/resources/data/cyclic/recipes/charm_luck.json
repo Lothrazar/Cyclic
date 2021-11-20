@@ -13,7 +13,7 @@
       "item": "minecraft:brain_coral_block"
     },
     "a": {
-      "item": "cyclic:flint_block"
+      "tag": "forge:storage_blocks/flint"
     },
     "b": {
       "item": "minecraft:light_weighted_pressure_plate"

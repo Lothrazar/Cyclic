@@ -13,7 +13,7 @@
       "item": "minecraft:tuff"
     },
     "i": {
-      "tag": "forge:nuggets/netherite"
+      "item": "minecraft:magma_block"
     }
   },
   "result": {

@@ -1,19 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " os",
-    " eo",
-    "e  "
+    "ooo",
+    "oeo",
+    " e "
   ],
   "key": {
     "e": {
-      "item": "minecraft:netherite_ingot"
+      "tag": "forge:nuggets/netherite"
     },
     "o": {
-      "item": "minecraft:nether_star"
-    },
-    "s": {
-      "item": "cyclic:mattock"
+      "item": "cyclic:gem_obsidian"
     }
   },
   "result": {

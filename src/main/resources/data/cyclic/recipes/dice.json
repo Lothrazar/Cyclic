@@ -10,7 +10,7 @@
       "tag": "minecraft:stone_crafting_materials"
     },
     "s": {
-      "item": "cyclic:compressed_cobblestone"
+      "tag": "forge:storage_blocks/cobblestone"
     }
   },
   "result": {

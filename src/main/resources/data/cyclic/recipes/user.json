@@ -7,7 +7,7 @@
   ],
   "key": {
     "o": {
-      "tag": "forge:obsidian"
+      "tag": "forge:storage_blocks/flint"
     },
     "s": {
       "item": "minecraft:dispenser"
@@ -16,10 +16,10 @@
       "item": "minecraft:tripwire_hook"
     },
     "m": {
-      "item": "minecraft:magma_block"
+      "tag": "forge:storage_blocks/cobblestone"
     },
     "r": {
-      "tag": "forge:storage_blocks/gold"
+      "tag": "forge:ingots/gold"
     }
   },
   "result": {

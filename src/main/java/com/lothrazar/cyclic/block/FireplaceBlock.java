@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -49,21 +50,24 @@ public class FireplaceBlock extends BlockBase {
   }
 
   private boolean setFire(Level worldIn, BlockPos pos, boolean extinguish) {
+    BlockState state = worldIn.getBlockState(pos);
+    if ((state.getBlock() == Blocks.CAMPFIRE
+        || state.getBlock() == Blocks.SOUL_CAMPFIRE)
+        && extinguish == state.getValue(CampfireBlock.LIT)) {
+      //set lit since its not lit
+      return worldIn.setBlockAndUpdate(pos, state.setValue(CampfireBlock.LIT, !extinguish));
+    }
     if (extinguish && canExtinguish(worldIn, pos)) {
-      worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-      return true;
+      return worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
     }
     else if (extinguish && canExtinguishInfiniteFire(worldIn, pos)) {
-      worldIn.setBlockAndUpdate(pos.relative(Direction.UP), Blocks.AIR.defaultBlockState());
-      return true;
+      return worldIn.setBlockAndUpdate(pos.relative(Direction.UP), Blocks.AIR.defaultBlockState());
     }
     else if ((!extinguish && canSetFire(worldIn, pos))) {
-      worldIn.setBlockAndUpdate(pos, Blocks.FIRE.defaultBlockState());
-      return true;
+      return worldIn.setBlockAndUpdate(pos, Blocks.FIRE.defaultBlockState());
     }
     else if (!extinguish && canSetInfiniteFire(worldIn, pos)) {
-      worldIn.setBlockAndUpdate(pos.relative(Direction.UP), Blocks.FIRE.defaultBlockState());
-      return true;
+      return worldIn.setBlockAndUpdate(pos.relative(Direction.UP), Blocks.FIRE.defaultBlockState());
     }
     return false;
   }

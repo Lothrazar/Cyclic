@@ -2,21 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "cdc",
-    "csc",
+    "cic",
     " i "
   ],
   "key": {
     "c": {
-      "item": "minecraft:ender_pearl"
+      "tag": "forge:storage_blocks/ender_pearl"
     },
     "d": {
       "item": "cyclic:gem_amber"
     },
-    "s": {
-      "item": "minecraft:redstone"
-    },
     "i": {
-      "item": "minecraft:gold_nugget"
+      "tag": "forge:nuggets/netherite"
     }
   },
   "result": {

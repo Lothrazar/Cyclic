@@ -6,11 +6,11 @@
   ],
   "key": {
     "g": {
-      "item": "minecraft:tinted_glass"
+      "item": "minecraft:glass"
     }
   },
   "result": {
-    "item": "cyclic:dark_glass",
+    "item": "cyclic:glass_connected",
     "count": 4
   }
 }

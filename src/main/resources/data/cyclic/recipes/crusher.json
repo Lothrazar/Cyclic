@@ -10,13 +10,13 @@
       "item": "minecraft:stonecutter"
     },
     "b": {
-      "item": "cyclic:flint_block"
+      "tag": "forge:storage_blocks/flint"
     },
     "i": {
       "tag": "forge:nuggets/copper"
     },
     "p": {
-      "item": "cyclic:compressed_cobblestone"
+      "tag": "forge:storage_blocks/cobblestone"
     }
   },
   "result": {

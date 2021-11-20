@@ -1,11 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "rsr",
-    "g g",
-    "ooo"
+    "ror",
+    "gsg",
+    "ccc"
   ],
   "key": {
+    "c": {
+      "item": "minecraft:calcite"
+    },
     "s": {
       "item": "cyclic:gem_obsidian"
     },

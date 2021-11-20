@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "r r",
+    "ror",
     "gbg",
     "sss"
   ],
@@ -10,13 +10,16 @@
       "item": "minecraft:emerald"
     },
     "g": {
-      "item": "cyclic:compressed_cobblestone"
+      "tag": "forge:storage_blocks/cobblestone"
     },
     "b": {
-      "item": "minecraft:dispenser"
+      "item": "cyclic:biomass"
     },
     "s": {
       "tag": "forge:nuggets/copper"
+    },
+    "o": {
+      "item": "cyclic:obsidian_pressure_plate"
     }
   },
   "result": {

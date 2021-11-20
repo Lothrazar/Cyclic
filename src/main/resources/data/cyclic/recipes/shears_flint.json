@@ -10,7 +10,7 @@
       "item": "minecraft:stick"
     },
     "o": {
-      "item": "cyclic:flint_block"
+      "tag": "forge:storage_blocks/flint"
     },
     "s": {
       "tag": "forge:string"

@@ -1,13 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "eee",
+    "aaa",
     "ete",
     "ooo"
   ],
   "key": {
     "e": {
-      "tag": "forge:gems/emerald"
+      "tag": "forge:storage_blocks/emerald"
+    },
+    "a": {
+      "item": "minecraft:amethyst_block"
     },
     "t": {
       "item": "minecraft:enchanting_table"

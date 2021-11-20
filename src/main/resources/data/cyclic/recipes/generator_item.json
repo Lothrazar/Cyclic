@@ -6,13 +6,13 @@
     "pip"
   ],
   "key": {
+    "b": {
+      "tag": "forge:storage_blocks/ender_eye"
+    },
     "p": {
-      "item": "minecraft:ender_eye"
+      "item": "minecraft:observer"
     },
     "i": {
-      "item": "minecraft:piston"
-    },
-    "b": {
       "tag": "forge:ingots/copper"
     },
     "c": {

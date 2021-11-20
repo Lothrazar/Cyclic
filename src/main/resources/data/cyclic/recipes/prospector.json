@@ -7,7 +7,7 @@
   ],
   "key": {
     "b": {
-      "item": "minecraft:blaze_rod"
+      "tag": "forge:nuggets/copper"
     },
     "i": {
       "item": "minecraft:iron_block"

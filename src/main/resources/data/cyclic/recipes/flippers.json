@@ -3,11 +3,14 @@
   "pattern": [
     "bbb",
     "blb",
-    " l "
+    "dld"
   ],
   "key": {
     "l": {
       "item": "minecraft:clay_ball"
+    },
+    "d": {
+      "item": "minecraft:cyan_dye"
     },
     "b": {
       "tag": "forge:leather"

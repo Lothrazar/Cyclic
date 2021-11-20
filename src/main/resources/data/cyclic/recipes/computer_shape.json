@@ -10,7 +10,7 @@
       "item": "minecraft:redstone_block"
     },
     "p": {
-      "item": "minecraft:furnace"
+      "tag": "forge:storage_blocks/cobblestone"
     },
     "f": {
       "item": "cyclic:fan"

@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -34,7 +35,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -59,23 +59,19 @@ public class EnchantLaunch extends EnchantBase {
     return CFG.get();
   }
 
-  private static final float LAUNCH_POWER = 1.05F;
-  private static final int ROTATIONPITCH = 70;
-  private static final int COOLDOWN = 3 * 20;
+  public static final int COOLDOWN = 7 * Const.TPS;
+  private static final float POWER = 1.07F;
+  private static final int ROTATIONPITCH = 68;
   private static final String NBT_USES = "launchuses";
 
   @Override
   public int getMaxLevel() {
-    return 10;
+    return 1;
   }
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    //anything that goes on your feet 
-    boolean yes = stack.getItem() instanceof ElytraItem ||
-        (stack.getItem() instanceof ArmorItem)
-            && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.FEET;
-    return yes;
+    return stack.getItem() instanceof ElytraItem;
   }
 
   @Override
@@ -91,8 +87,8 @@ public class EnchantLaunch extends EnchantBase {
       if (armorStack.isEmpty()) {
         return;
       }
-      //if you are on the ground (or not airborne, should be same thing
-      if ((p.hasImpulse == false || p.isOnGround()) && //onGround
+      //if you are on the ground or not airborne, should be same thing
+      if ((p.hasImpulse == false || p.isOnGround()) &&
           armorStack.getOrCreateTag().getInt(NBT_USES) > 0) {
         //you have landed on the ground, dont count previous jumps
         UtilNBT.setItemStackNBTVal(armorStack, NBT_USES, 0);
@@ -121,10 +117,8 @@ public class EnchantLaunch extends EnchantBase {
       int uses = feet.getOrCreateTag().getInt(NBT_USES);
       player.fallDistance = 0;
       float angle = (player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0) ? 90 : ROTATIONPITCH;
-      UtilEntity.launch(player, angle, LAUNCH_POWER);
+      UtilEntity.launch(player, angle, POWER);
       UtilParticle.spawnParticle(player.getCommandSenderWorld(), ParticleTypes.CRIT, player.blockPosition(), 7);
-      //      UtilSound.playSound(player, player.getPosition(), SoundRegistry.enchant_launch, SoundCategory.PLAYERS, 0.04F);
-      //      UtilItemStack.damageItem(player, feet);
       uses++;
       if (uses >= level) { // level is maxuses
         //now block useage for a while
@@ -135,7 +129,6 @@ public class EnchantLaunch extends EnchantBase {
       }
       UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
       player.fallDistance = 0;
-      //
       PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage()); //reset at bottom of jump
     }
   }

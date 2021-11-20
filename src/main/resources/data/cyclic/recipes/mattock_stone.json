@@ -7,7 +7,7 @@
   ],
   "key": {
     "o": {
-      "item": "cyclic:compressed_cobblestone"
+      "tag": "forge:storage_blocks/cobblestone"
     },
     "e": {
       "tag": "minecraft:logs"

@@ -13,7 +13,7 @@
       "item": "minecraft:piston"
     },
     "b": {
-      "item": "cyclic:compressed_cobblestone"
+      "tag": "forge:storage_blocks/cobblestone"
     },
     "c": {
       "item": "minecraft:redstone_torch"

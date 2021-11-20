@@ -2,8 +2,7 @@
 	"type": "crafting_shapeless",
 	"ingredients": [
 		{
-      "item": "cyclic:compressed_cobblestone",
-			"count": 1
+      "tag": "forge:storage_blocks/cobblestone"
 		},
 		{
 			"item": "minecraft:book",

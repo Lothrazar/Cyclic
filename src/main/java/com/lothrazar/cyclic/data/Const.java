@@ -28,6 +28,7 @@ public class Const {
   public static final int SQ = 18;
   // not a regular propert. : class ItemSkull:  {"skeleton", "wither", "zombie", "char", "creeper", "dragon"};
   public static final int TICKS_PER_SEC = 20;
+  public static final int TPS = TICKS_PER_SEC;
   public static final int CHUNK_SIZE = 16;
   public static final String SKULLOWNER = "SkullOwner";
 

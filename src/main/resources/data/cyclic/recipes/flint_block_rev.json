@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-    "item": "cyclic:flint_block"
+      "tag": "forge:storage_blocks/flint"
     }
   ],
   "result": {

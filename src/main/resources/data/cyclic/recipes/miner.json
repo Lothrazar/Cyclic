@@ -7,10 +7,10 @@
   ],
   "key": {
     "b": {
-      "item": "cyclic:gem_amber"
+      "item": "minecraft:diamond"
     },
     "o": {
-      "tag": "forge:obsidian"
+      "tag": "forge:storage_blocks/flint"
     },
     "g": {
       "tag": "forge:nuggets/copper"

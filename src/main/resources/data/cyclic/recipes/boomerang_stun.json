@@ -7,13 +7,13 @@
   ],
   "key": {
     "d": {
-      "item": "minecraft:glowstone_dust"
+      "tag": "forge:nuggets/copper"
     },
     "g": {
-      "item": "minecraft:slime_block"
+      "item": "minecraft:redstone"
     },
     "f": {
-      "item": "minecraft:acacia_fence"
+      "item": "minecraft:stick"
     }
   },
   "result": {

@@ -48,25 +48,27 @@ public class WorldGenEvents {
         event.getGeneration().addFeature(step, FLOWER_CYAN_FEATURE);
       }
     }
-    if (ConfigRegistry.CYAN_GENERATES.get()) {
+    if (ConfigRegistry.PURPLE_GENERATES.get()) {
       if (category == Biome.BiomeCategory.RIVER
           || category == Biome.BiomeCategory.UNDERGROUND
           || category == Biome.BiomeCategory.MESA
+          || category == Biome.BiomeCategory.SAVANNA
           || category == Biome.BiomeCategory.FOREST
           || category == Biome.BiomeCategory.MUSHROOM) {
         event.getGeneration().addFeature(step, FLOWER_PURPLE_TULIP_FEATURE);
       }
     }
-    if (ConfigRegistry.CYAN_GENERATES.get()) {
+    if (ConfigRegistry.LIME_GENERATES.get()) {
       if (category == Biome.BiomeCategory.RIVER
-          || category == Biome.BiomeCategory.UNDERGROUND
           || category == Biome.BiomeCategory.ICY
+          || category == Biome.BiomeCategory.BEACH
+          || category == Biome.BiomeCategory.OCEAN
           || category == Biome.BiomeCategory.EXTREME_HILLS
           || category == Biome.BiomeCategory.JUNGLE) {
         event.getGeneration().addFeature(step, FLOWER_LIME_CARNATION_FEATURE);
       }
     }
-    if (ConfigRegistry.CYAN_GENERATES.get()) {
+    if (ConfigRegistry.BROWN_GENERATES.get()) {
       if (category == Biome.BiomeCategory.RIVER
           || category == Biome.BiomeCategory.PLAINS
           || category == Biome.BiomeCategory.TAIGA
