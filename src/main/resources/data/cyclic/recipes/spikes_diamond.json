@@ -1,9 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " s ",
-    "sts",
-    "ttt"
+    "s",
+    "t"
   ],
   "key": {
     "s": {
@@ -15,6 +14,6 @@
   },
   "result": {
     "item": "cyclic:spikes_diamond",
-    "count": 4
+    "count": 1
   }
 }

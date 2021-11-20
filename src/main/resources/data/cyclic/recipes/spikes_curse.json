@@ -1,23 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " s ",
-    "srs",
-    "ttt"
+    "s",
+    "t"
   ],
   "key": {
     "s": {
-      "item": "minecraft:iron_bars"
+      "item": "minecraft:spider_eye"
     },
     "t": {
-      "item": "minecraft:iron_block"
-    },
-    "r": {
-      "item": "minecraft:spider_eye"
+      "item": "cyclic:spikes_iron"
     }
   },
   "result": {
     "item": "cyclic:spikes_curse",
-    "count": 4
+    "count": 1
   }
 }

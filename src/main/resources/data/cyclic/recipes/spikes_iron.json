@@ -10,10 +10,10 @@
       "item": "minecraft:iron_bars"
     },
     "t": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:iron_ingot"
     },
     "r": {
-      "item": "minecraft:redstone"
+      "item": "minecraft:repeater"
     }
   },
   "result": {

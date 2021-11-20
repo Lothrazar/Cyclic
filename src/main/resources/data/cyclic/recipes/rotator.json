@@ -10,10 +10,10 @@
       "tag": "forge:nuggets/copper"
     },
     "s": {
-      "item": "minecraft:dispenser"
+      "item": "minecraft:piston"
     },
     "l": {
-      "item": "minecraft:string"
+      "tag": "minecraft:logs"
     },
     "m": {
       "tag": "forge:storage_blocks/cobblestone"

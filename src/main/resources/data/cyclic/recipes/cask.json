@@ -7,17 +7,17 @@
   ],
   "key": {
     "s": {
-      "tag": "forge:string"
+      "item": "minecraft:barrel"
     },
     "r": {
-      "tag": "forge:leather"
+      "tag": "minecraft:logs"
     },
     "c": {
-      "item": "minecraft:barrel"
+      "item": "minecraft:sandstone"
     }
   },
   "result": {
     "item": "cyclic:cask",
-    "count": 1
+    "count": 2
   }
 }

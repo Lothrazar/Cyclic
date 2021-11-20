@@ -7,16 +7,16 @@
   ],
   "key": {
     "i": {
-      "item": "minecraft:redstone_block"
+      "item": "minecraft:repeater"
     },
     "p": {
       "tag": "forge:storage_blocks/cobblestone"
     },
     "f": {
-      "item": "cyclic:fan"
+      "item": "minecraft:iron_block"
     },
     "o": {
-      "item": "minecraft:observer"
+      "item": "minecraft:green_concrete"
     }
   },
   "result": {
