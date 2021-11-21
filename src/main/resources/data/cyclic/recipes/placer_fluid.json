@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "rsr",
+    "r r",
     "gbg",
     "ooo"
   ],
@@ -12,14 +12,11 @@
     "g": {
       "item": "minecraft:bucket"
     },
-    "s": {
-      "item": "minecraft:dropper"
-    },
     "r": {
-      "item": "minecraft:andesite"
+      "tag": "forge:nuggets/copper"
     },
     "b": {
-      "item": "cyclic:gem_amber"
+      "item": "cyclic:placer"
     }
   },
   "result": {

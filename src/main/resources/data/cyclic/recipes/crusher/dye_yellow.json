@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:clay"
+		"item": "minecraft:dandelion"
 	},
 	"energy": {
-		"ticks": 200,
-		"rfpertick": 20
+		"ticks": 100,
+		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:clay_ball",
-		"count": 4
+		"item": "minecraft:yellow_dye",
+		"count": 2
 	},
-	"percent": 0,
+	"percent": 50,
 	"bonus": {
-		"item": "minecraft:netherrack",
-		"count": 64
+		"item": "minecraft:yellow_dye",
+		"count": 1
 	},
 	"conditions": [
 		{

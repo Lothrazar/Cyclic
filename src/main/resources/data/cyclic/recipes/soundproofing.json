@@ -6,11 +6,11 @@
     " s "
   ],
   "key": {
-    "s": {
+    "o": {
       "item": "minecraft:orange_dye"
     },
-    "o": {
-      "item": "minecraft:bone_block"
+    "s": {
+      "item": "minecraft:white_terracotta"
     }
   },
   "result": {

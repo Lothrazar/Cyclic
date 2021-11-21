@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:glowstone"
+		"item": "minecraft:lapis_lazuli"
 	},
 	"energy": {
 		"ticks": 100,
-		"rfpertick": 20
+		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:glowstone_dust",
-		"count": 4
+		"item": "minecraft:blue_dye",
+		"count": 2
 	},
-	"percent": 0,
+	"percent": 75,
 	"bonus": {
-		"item": "minecraft:netherrack",
-		"count": 1
+		"item": "minecraft:blue_dye",
+		"count": 3
 	},
 	"conditions": [
 		{

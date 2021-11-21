@@ -7,13 +7,13 @@
   ],
   "key": {
     "i": {
-      "tag": "forge:ingots/iron"
+      "tag": "forge:nuggets/iron"
     },
     "r": {
       "tag": "forge:dusts/redstone"
     },
     "q": {
-      "item": "minecraft:comparator"
+      "item": "minecraft:repeater"
     }
   },
   "result": {

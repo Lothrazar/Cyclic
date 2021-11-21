@@ -2,11 +2,11 @@
 	"type": "minecraft:crafting_shapeless",
 	"ingredients": [
 		{
-			"item": "minecraft:melon"
+			"item": "minecraft:clay"
 		}
 	],
 	"result": {
-		"item": "minecraft:melon_slice",
-		"count": 9
+		"item": "minecraft:clay_ball",
+		"count": 4
 	}
 }
