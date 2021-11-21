@@ -13,7 +13,7 @@
       "item": "minecraft:gold_block"
     },
     "o": {
-      "item": "cyclic:gem_amber"
+      "tag": "forge:ingots/copper"
     }
   },
   "result": {

@@ -7,16 +7,16 @@
   ],
   "key": {
     "p": {
-      "item": "minecraft:bucket"
+      "item": "minecraft:lava_bucket"
     },
     "i": {
       "item": "minecraft:piston"
     },
     "b": {
-      "tag": "forge:storage_blocks/cobblestone"
+      "item": "minecraft:magma_block"
     },
     "c": {
-      "item": "minecraft:redstone_torch"
+      "item": "minecraft:repeater"
     }
   },
   "result": {

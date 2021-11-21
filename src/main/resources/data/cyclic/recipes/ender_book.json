@@ -1,16 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ccc",
+    "cpc",
     "cac",
-    "ccc"
+    "cpc"
   ],
   "key": {
     "a": {
       "item": "minecraft:book"
     },
     "c": {
-      "item": "minecraft:ender_pearl"
+      "item": "cyclic:eye_redstone"
+    },
+    "p": {
+      "item": "minecraft:end_rod"
     }
   },
   "result": {

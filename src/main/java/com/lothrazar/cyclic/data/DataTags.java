@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.data;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
@@ -20,6 +19,7 @@ public class DataTags {
   public static final Named<Block> PLANTS = BlockTags.bind("forge:plants");
   public static final Named<Block> MUSHROOMS = BlockTags.bind("forge:mushrooms");
   public static final Named<Block> VINES = BlockTags.bind("forge:vines");
+  public static final Named<Block> GLASS_DARK = BlockTags.bind("forge:glass/dark");
   public static final Named<Block> CACTUS = BlockTags.bind("forge:cactus");
   public static final Named<Block> CROP_BLOCKS = BlockTags.bind("forge:crop_blocks");
   public static final Named<Item> FISHING_RODS = ItemTags.bind("forge:fishing_rods");
@@ -28,7 +28,7 @@ public class DataTags {
   public static final Named<Item> DISENCHANTER_IMMUNE = ItemTags.bind("cyclic:disenchanter_immune");
   public static final Named<Item> COPPER_ORE = ItemTags.bind("forge:ores/copper");
   public static final Named<Item> COPPER_INGOTS = ItemTags.bind("forge:ingots/copper");
-  public static final Named<Item> WRENCH = ItemTags.createOptional(new ResourceLocation("forge", "tools/wrench"));
+  public static final Named<Item> WRENCH = ItemTags.bind("forge:tools/wrench");
 
   public static void setup() {
     // do not delete:! this makes the mod get classloaded so the wrapper tags correctly get added to the registry early, before recipe testing

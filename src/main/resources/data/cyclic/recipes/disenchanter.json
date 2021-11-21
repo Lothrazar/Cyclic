@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "aaa",
+    " a ",
     "ete",
     "ooo"
   ],
@@ -10,13 +10,13 @@
       "tag": "forge:storage_blocks/emerald"
     },
     "a": {
-      "item": "minecraft:amethyst_block"
+      "item": "cyclic:gem_obsidian"
     },
     "t": {
       "item": "minecraft:enchanting_table"
     },
     "o": {
-      "tag": "forge:obsidian"
+      "item": "cyclic:obsidian_pressure_plate"
     }
   },
   "result": {

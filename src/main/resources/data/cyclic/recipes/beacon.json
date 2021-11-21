@@ -10,7 +10,7 @@
       "item": "minecraft:beacon"
     },
     "o": {
-      "tag": "forge:gems/emerald"
+      "tag": "forge:storage_blocks/emerald"
     },
     "s": {
       "tag": "forge:glass/colorless"

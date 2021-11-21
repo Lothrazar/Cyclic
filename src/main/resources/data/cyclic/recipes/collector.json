@@ -7,7 +7,7 @@
   ],
   "key": {
     "l": {
-      "item": "minecraft:lapis_block"
+      "item": "minecraft:lapis_lazuli"
     },
     "g": {
       "item": "minecraft:dropper"
@@ -19,7 +19,7 @@
       "item": "minecraft:hopper"
     },
     "q": {
-      "item": "cyclic:gem_amber"
+      "item": "cyclic:flint_block"
     }
   },
   "result": {

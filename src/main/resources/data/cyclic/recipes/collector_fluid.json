@@ -19,7 +19,7 @@
       "item": "minecraft:hopper"
     },
     "q": {
-      "item": "cyclic:gem_amber"
+      "item": "minecraft:comparator"
     }
   },
   "result": {

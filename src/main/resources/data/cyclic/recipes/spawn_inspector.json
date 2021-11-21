@@ -7,7 +7,7 @@
   ],
   "key": {
     "s": {
-      "item": "minecraft:blaze_rod"
+      "item": "cyclic:gem_amber"
     },
     "f": {
       "tag": "forge:storage_blocks/flint"

@@ -7,7 +7,7 @@
   ],
   "key": {
     "o": {
-      "item": "minecraft:obsidian"
+      "tag": "forge:obsidian"
     },
     "r": {
       "item": "minecraft:repeater"
@@ -15,6 +15,6 @@
   },
   "result": {
     "item": "cyclic:unbreakable_reactive",
-    "count": 2
+    "count": 4
   }
 }

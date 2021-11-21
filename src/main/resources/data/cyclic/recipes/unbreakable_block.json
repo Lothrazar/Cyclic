@@ -7,14 +7,14 @@
   ],
   "key": {
     "o": {
-      "item": "minecraft:obsidian"
+      "tag": "forge:obsidian"
     },
     "r": {
-      "item": "minecraft:redstone_block"
+      "item": "minecraft:redstone"
     }
   },
   "result": {
     "item": "cyclic:unbreakable_block",
-    "count": 2
+    "count": 4
   }
 }
