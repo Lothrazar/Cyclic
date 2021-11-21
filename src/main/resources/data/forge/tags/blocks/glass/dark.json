@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
 	"minecraft:tinted_glass",
-     {"required":false, "id": "cyclic:dark_glass"      }
+     {"required":false, "id": "cyclic:dark_glass"      },
      {"required":false, "id": "cyclic:dark_glass_connected"      }
   ]
 }
