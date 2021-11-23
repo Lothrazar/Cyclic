@@ -28,7 +28,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProvider {
 
-  static final int MAX_SOUNDS = 10; // locked by gui size. TODO: scrollbar
+  static final int MAX_SOUNDS = 10; // locked by gui size. 
   private static final String SOUNDAT = "soundat";
   private static final String IGNORED = "ignored";
 

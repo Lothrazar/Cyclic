@@ -75,9 +75,6 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
         level.setBlockAndUpdate(targetPos, target.setValue(BlockStateProperties.POWERED, isPowered));
         //and update myself too   
         level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
-        //TODO: send exact 1-16 power level
-        //        world.getTileEntity(targetPos) instanceof TileWirelessRec
-        //        && target.getBlock() instanceof BlockWirelessRec
       }
     }
   }

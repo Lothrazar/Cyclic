@@ -90,20 +90,9 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE);
-    //    this.minecraft.getTextureManager().bind(TextureRegistry.INVENTORY_SIDEBAR);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, TextureRegistry.INVENTORY_SIDEBAR);
     Screen.blit(ms, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
-    //this.container.bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-    //  for (int i = 0; i < h.getSlots(); i++) {
-    //    int row = (int) i / 9;
-    //    int col = i % 9;
-    //    int xPos = 7 + col * Const.SQ;
-    //    int yPos = 18 + row * Const.SQ;
-    //
-    //    this.drawSlot(ms, xPos, yPos);
-    //  }
-    //});
   }
 
   private class ToggleButton extends Button {

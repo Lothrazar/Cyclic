@@ -187,7 +187,6 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.OFF_HAND);
     if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
       ItemStack tool = new ItemStack(Items.DIAMOND_AXE);
-      //TODO:we can do both silk/fortune with toggle
       tool.enchant(Enchantments.BLOCK_FORTUNE, 3);
       TileBlockEntityCyclic.tryEquipItem(tool, fakePlayer, InteractionHand.MAIN_HAND);
     }

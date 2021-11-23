@@ -23,8 +23,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BlockTeleport extends BlockCyclic {
 
-  private static final int COST = 400;
-  private static final int COSTDIM = 4000;
+  private static final int COST = 400; // TODO: config
+  private static final int COSTDIM = 4000; // TODO: config
   public static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
 
   public BlockTeleport(Properties properties) {
@@ -46,7 +46,6 @@ public class BlockTeleport extends BlockCyclic {
     BlockPosDim dimpos = tile.getTargetInSlot(0);
     if (dimpos != null && worldIn instanceof ServerLevel) {
       final int pay = UtilWorld.dimensionIsEqual(dimpos, worldIn) ? COST : COSTDIM;
-      // TODO: more cost if x-dim
       int sim = tile.energy.extractEnergy(pay, true);
       if (sim == pay) {
         tile.energy.extractEnergy(pay, false);

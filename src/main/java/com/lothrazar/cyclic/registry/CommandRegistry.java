@@ -117,7 +117,6 @@ public class CommandRegistry {
             .requires((p) -> {
               return p.hasPermission(ConfigRegistry.COMMANDDEV.get() ? 3 : 0);
             })
-            //TODO: copy version. send network packet to client for clipboard
             .then(Commands.literal("nbt")
                 .executes(x -> {
                   return CommandNbt.executePrintNbt(x);

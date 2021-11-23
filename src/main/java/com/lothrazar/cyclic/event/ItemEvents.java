@@ -409,7 +409,7 @@ public class ItemEvents {
   public void onBedCheck(SleepingLocationCheckEvent event) {
     if (event.getEntity() instanceof Player) {
       Player p = (Player) event.getEntity();
-      if (p.getPersistentData().getBoolean(SleepingMatItem.CYCLIC_SLEEPING)) { // TODO: const in sleeping mat
+      if (p.getPersistentData().getBoolean(SleepingMatItem.CYCLIC_SLEEPING)) {
         event.setResult(Result.ALLOW);
       }
     }

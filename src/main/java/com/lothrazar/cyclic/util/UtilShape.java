@@ -221,8 +221,7 @@ public class UtilShape {
         else {
           newOffset = p.below(i);
         }
-        //        if (newOffset.getY() > 3) {}
-        // TODO: put in const, 
+        // TODO: 1.18 world min and max height not zero here 
         if (newOffset.getY() >= 0 && newOffset.getY() <= Const.WORLDHEIGHT) {
           newShape.add(newOffset);
         }

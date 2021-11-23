@@ -24,7 +24,6 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
   int padding = 0;
   int fontSize = 1;
   int offset = 0;
-  //TODO: shadow toggle
   private boolean dropShadow;
 
   static enum Fields {

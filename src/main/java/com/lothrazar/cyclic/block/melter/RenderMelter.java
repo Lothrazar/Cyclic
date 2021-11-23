@@ -25,7 +25,6 @@ public class RenderMelter implements BlockEntityRenderer<TileMelter> {
   @Override
   public void render(TileMelter tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
-    //TODO: recipe from tag
     IItemHandler itemHandler = tankHere.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).orElse(null);
     if (itemHandler != null) {
       ItemStack stack = itemHandler.getStackInSlot(0);

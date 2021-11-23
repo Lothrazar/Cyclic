@@ -96,34 +96,9 @@ public class EventRender {
     int height = mc.getWindow().getGuiScaledHeight();
     mc.getItemRenderer().renderAndDecorateItem(stack, width / 2, height / 2);
   }
-  //  @SubscribeEvent
-  //  public void addCustomButtonToInventory(GuiScreenEvent.InitGuiEvent.Post event) {
-  //   // TODO: invo cake
-  //    PlayerEntity player = Minecraft.getInstance().player;
-  //    if (event.getGui() instanceof HorseInventoryScreen
-  //        && player != null
-  //        && player.getRidingEntity() != null) {
-  //      Entity liv = player.getRidingEntity();
-  //      if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
-  //          && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
-  //        //
-  //        int ct = liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE);
-  //        ExtendedButton bt2 = new ExtendedButton(event.getGui().width / 2 + 68,
-  //            event.getGui().height / 2 - 80,
-  //            //cyclic.carrot_ender.charges
-  //            18, 14, new StringTextComponent("" + ct), b -> {
-  //              //              if(event.i)
-  //              UtilChat.addChatMessage(player, "item.cyclic.carrot_ender.tooltip");
-  //              //                  test);
-  //            });
-  //        event.addRenderableWidget(bt2);
-  //      }
-  //    }
-  //  }
 
-  ///////////////////// asdfasdf TODO REFACTOR THIS 
   @SubscribeEvent
-  public void renderOverlay(RenderWorldLastEvent event) {
+  public void onRenderWorldLast(RenderWorldLastEvent event) {
     Player player = Minecraft.getInstance().player;
     if (player == null) {
       return;
@@ -132,7 +107,6 @@ public class EventRender {
     double range = 6F;
     float alpha = 0.125F * 2;
     Map<BlockPos, Color> renderCubes = new HashMap<>();
-    // could refactor here, three cases
     ///////////////////// BuilderItem
     ItemStack stack = BuilderItem.getIfHeld(player);
     if (stack.getItem() instanceof BuilderItem) {
@@ -191,8 +165,6 @@ public class EventRender {
       RelativeShape shape = RelativeShape.read(stack);
       if (shape != null) {
         BlockPos here = player.blockPosition();
-        //TODO: offsetTo
-        //        shape.offsetTo(pos)
         for (BlockPos s : shape.getShape()) {
           renderCubes.put(here.offset(s), ClientConfigCyclic.getColor(stack));
         }

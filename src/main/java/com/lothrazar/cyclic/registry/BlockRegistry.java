@@ -344,7 +344,6 @@ public class BlockRegistry {
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 1 : 0)));
   public static final RegistryObject<Block> TELEPORT = BLOCKS.register("teleport", () -> new BlockTeleport(Block.Properties.of(Material.STONE)));
 
-  //TODO: convert to dynams
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
     IForgeRegistry<Block> r = event.getRegistry();

@@ -142,7 +142,7 @@ public class TileFanSlab extends TileBlockEntityCyclic {
     AABB region = new AABB(start, end);
     List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
     int moved = 0;
-    boolean doPush = true; // TODO this toggle
+    final boolean doPush = true;
     int direction = 1;
     float speed = this.getSpeedCalc();
     for (Entity entity : entitiesFound) {
@@ -188,6 +188,7 @@ public class TileFanSlab extends TileBlockEntityCyclic {
     return moved;
   }
 
+  @Override
   public void load(CompoundTag tag) {
     speed = tag.getInt("speed");
     range = tag.getInt("range");

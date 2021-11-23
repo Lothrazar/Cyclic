@@ -143,7 +143,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
     AABB region = new AABB(start, end);
     List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
     int moved = 0;
-    boolean doPush = true; // TODO this toggle
+    final boolean doPush = true;
     int direction = 1;
     float speed = this.getSpeedCalc();
     for (Entity entity : entitiesFound) {

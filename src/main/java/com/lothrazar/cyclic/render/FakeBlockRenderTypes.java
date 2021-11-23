@@ -41,7 +41,6 @@ public class FakeBlockRenderTypes extends RenderType {
   /**
    * used by TESR that render blocks with textures Shape builder, ghostsoundmuffler, render light camo.
    * 
-   * TODO: test blocks
    */
   public static final RenderType FAKE_BLOCK = create(ModCyclic.MODID + ":fakeblock",
       DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
@@ -72,7 +71,7 @@ public class FakeBlockRenderTypes extends RenderType {
   /**
    * used by most blocks that select blocks such as cyclic:forester, cyclic:harvester, cyclic:miner in TESRs
    * 
-   * TODO: tweak this
+   * 
    */
   public static final RenderType SOLID_COLOUR = create(ModCyclic.MODID + ":solidcolour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,

@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -47,36 +48,33 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof Horse
-        //        && event.getWorld().isRemote == false
         && event.getWorld() instanceof ServerLevel
         && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
       // lets go 
-      Horse ahorse = (Horse) event.getTarget();
-      ZombieHorse zombie = EntityType.ZOMBIE_HORSE.spawn((ServerLevel) event.getWorld(), null, null, event.getPlayer(), event.getPos(), MobSpawnType.NATURAL, false, false);
-      event.getWorld().addFreshEntity(zombie);
-      if (ahorse.isTamed() && ahorse.getOwnerUUID() == event.getPlayer().getUUID()) {
+      Horse horseOldEntity = (Horse) event.getTarget();
+      ZombieHorse zombieNewEntity = EntityType.ZOMBIE_HORSE.spawn((ServerLevel) event.getWorld(), null, null, event.getPlayer(), event.getPos(), MobSpawnType.NATURAL, false, false);
+      event.getWorld().addFreshEntity(zombieNewEntity);
+      if (horseOldEntity.isTamed() && horseOldEntity.getOwnerUUID() == event.getPlayer().getUUID()) {
         // you still tamed it
-        zombie.tameWithName(event.getPlayer());
+        zombieNewEntity.tameWithName(event.getPlayer());
       }
-      if (ahorse.isSaddled()) {
-        //TODO:1.16 TEST  zombie.setHorseSaddled(true); 
-        //        zombie.updateContainerEquipment();// 
-        //try to copy the EXACT saddle as well if possible
-        IItemHandler horseChest = ahorse.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-        if (horseChest != null) {
-          UtilItemStack.drop(event.getWorld(), event.getPos(), horseChest.getStackInSlot(0));
-        }
-        //        zombie.replaceItemInInventory(0, new ItemStack(Items.SADDLE));
+      if (horseOldEntity.isSaddled()) {
+        zombieNewEntity.equipSaddle(SoundSource.PLAYERS);
       }
-      if (ahorse.hasCustomName()) {
-        zombie.setCustomName(ahorse.getCustomName());
+      IItemHandler horseChest = horseOldEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      if (horseChest != null && horseChest.getSlots() >= 2) {
+        //dont drop saddle since i re-saddle. drop horse arm
+        UtilItemStack.drop(event.getWorld(), event.getPos(), horseChest.getStackInSlot(1));
+      }
+      if (horseOldEntity.hasCustomName()) {
+        zombieNewEntity.setCustomName(horseOldEntity.getCustomName());
       }
       //remove the horse    
-      ahorse.remove(Entity.RemovalReason.DISCARDED);
-      event.setCanceled(true);
-      event.setCancellationResult(InteractionResult.SUCCESS);
+      horseOldEntity.remove(Entity.RemovalReason.DISCARDED);
       event.getPlayer().getCooldowns().addCooldown(this, 10);
       event.getItemStack().shrink(1);
+      event.setCanceled(true);
+      event.setCancellationResult(InteractionResult.SUCCESS);
     }
   }
 }

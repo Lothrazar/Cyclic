@@ -10,16 +10,6 @@ import net.minecraft.world.item.ItemStack;
 
 public class CommandNbt {
 
-  // TODO: send network packet for clipboard. maybe in future
-  //      try {
-  //        StringSelection selection = new StringSelection(held.getTag().toString()); 
-  //        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-  //        clipboard.setContents(selection, selection);
-  //      }
-  //      catch (Exception e) {
-  //        //
-  //        ModCyclic.LOGGER.error("?", e);
-  //      }
   public static int executePrintNbt(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     ItemStack held = player.getMainHandItem();

@@ -47,9 +47,6 @@ public class TileConveyor extends TileBlockEntityCyclic {
     }
   }
 
-  /**
-   * TODO: move to utility class
-   */
   public static void makeEntitiesTravel(Entity entity, BlockState bs, BlockPos pos, Level world) {
     if (entity instanceof Player) {
       Player p = (Player) entity;

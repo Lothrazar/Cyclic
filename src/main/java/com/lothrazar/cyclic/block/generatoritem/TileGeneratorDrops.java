@@ -110,7 +110,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
-        this.inputSlots.extractItem(0, 1, false); // TODO: only 1 not # items per recipe
+        this.inputSlots.extractItem(0, 1, false); // always slot 0 and amount 1
         return;
       }
     }

@@ -1,6 +1,9 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.item.storagebag.DepositMode;
+import com.lothrazar.cyclic.item.storagebag.PickupMode;
+import com.lothrazar.cyclic.item.storagebag.RefillMode;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
@@ -46,11 +49,10 @@ public class PacketStorageBagScreen extends PacketBaseCyclic {
         if (0 <= message.slot && message.slot < player.getInventory().getContainerSize()) {
           serverStack = player.getInventory().getItem(message.slot);
         }
-        //TODO: fix refactor this whole thing with a RefilMode Enum 
         String key = message.nbtKey.getAsString();
         if (!serverStack.isEmpty()
             && serverStack.getItem() == ItemRegistry.storage_bag
-            && (key.equals("refill_mode") || key.equals("deposit_mode") || key.equals("pickup_mode"))) {
+            && (key.equals(RefillMode.NBT) || key.equals(DepositMode.NBT) || key.equals(PickupMode.NBT))) {
           //its validated this item and nbt key so now save value in the tag
           serverStack.getOrCreateTag().put(key, message.nbtValue);
         }

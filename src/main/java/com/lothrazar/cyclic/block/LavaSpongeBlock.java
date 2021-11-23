@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.Fluids;
 
 public class LavaSpongeBlock extends BlockCyclic {
 
-  public static final int RADIUS = 6; // TODO: config i guess
+  public static final int RADIUS = 6; // TODO: config 
 
   public LavaSpongeBlock(Properties properties) {
     super(properties.randomTicks().strength(0.7F));
@@ -35,13 +35,10 @@ public class LavaSpongeBlock extends BlockCyclic {
       BlockState blockHere = world.getBlockState(posSide);
       FluidState fluidHere = blockHere.getFluidState();
       if (Fluids.LAVA == fluidHere.getType()) { // this check does source only, not flowing
-        //      if (fluidHere.getType().is(FluidTags.LAVA)) { // tag does flowing AND source
-        //only lava and only flowing
         boolean success = world.setBlock(posSide, Blocks.AIR.defaultBlockState(), 3);
         if (success) {
           current++;
         }
-        //TODO: on eat lava count up blockstate . at full do something 
       }
     }
   }

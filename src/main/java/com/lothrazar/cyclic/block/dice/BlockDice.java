@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.dice;
 
-import java.util.Random;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -9,8 +8,6 @@ import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -80,7 +77,6 @@ public class BlockDice extends BlockCyclic {
 
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-    //
     BlockEntity tile = world.getBlockEntity(pos);
     if (hand == InteractionHand.MAIN_HAND && tile instanceof TileDice) {
       ((TileDice) tile).startSpinning();
@@ -90,16 +86,5 @@ public class BlockDice extends BlockCyclic {
       return InteractionResult.SUCCESS;
     }
     return super.use(state, world, pos, player, hand, result);
-  }
-
-  /**
-   * TODO: util
-   *
-   * @param rand
-   * @return
-   */
-  public static Direction getRandom(Random rand) {
-    int index = Mth.nextInt(rand, 0, Direction.values().length - 1);
-    return Direction.values()[index];
   }
 }

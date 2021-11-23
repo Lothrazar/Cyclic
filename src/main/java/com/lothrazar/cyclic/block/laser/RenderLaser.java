@@ -68,7 +68,6 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
     Vector3f to = new Vector3f(tile.xOffset.getOffset(), tile.yOffset.getOffset(), tile.zOffset.getOffset());
     VertexConsumer builder = bufferIn.getBuffer(FakeBlockRenderTypes.LASER_MAIN_BEAM);
     drawDirewolfLaser(builder, positionMatrix, from, to, tile.getRed(), tile.getGreen(), tile.getBlue(), tile.getAlpha(), tile.getThick(), tilePos);
-    //TODO: boolean to toggle core with tiny thickness
     final float coreThick = 0.01F;
     drawDirewolfLaser(builder, positionMatrix, from, to, 1, 1, 1, tile.getAlpha(), coreThick, tilePos);
     matrixStackIn.popPose();

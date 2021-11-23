@@ -40,10 +40,6 @@ public class BlockSoundRecorder extends BlockCyclic {
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileSoundRecorder(pos, state);
   }
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.SOUND_RECORDER, world.isClientSide ? TileSoundRecorder::clientTick : TileSoundRecorder::serverTick);
-  //  }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -56,7 +52,6 @@ public class BlockSoundRecorder extends BlockCyclic {
         new BlockPos(event.getSound().getX(), event.getSound().getY(), event.getSound().getZ()), this, RADIUS.get());
     for (BlockPos nearby : blocks) {
       String sid = event.getSound().getLocation().toString();
-      //TODO: only send packet if block is in 'listening' / 'lit' blocksate?
       PacketRegistry.INSTANCE.sendToServer(new PacketRecordSound(sid, nearby));
       //hack save to client. otherwise have to hard sync or reload world
       BlockEntity tile = clientWorld.getBlockEntity(nearby);

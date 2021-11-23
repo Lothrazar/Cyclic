@@ -58,16 +58,16 @@ public class PotionRegistry {
   @SubscribeEvent
   public static void onPotRegistry(RegistryEvent.Register<Potion> event) {
     IForgeRegistry<Potion> r = event.getRegistry();
-    //TODO: config options for potions?
     int normal = 3600;
     int smal = 1800;
     r.register(new Potion(ModCyclic.MODID + "_haste", new MobEffectInstance(MobEffects.DIG_SPEED, normal)).setRegistryName(ModCyclic.MODID + ":haste"));
-    r.register(new Potion(ModCyclic.MODID + "_strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, smal, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste"));
+    r.register(new Potion(ModCyclic.MODID + "_strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, smal, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste")); // strong 1 level instead of default 0
     r.register(new Potion(ModCyclic.MODID + "_stun", new MobEffectInstance(PotionEffects.stun, smal)).setRegistryName(ModCyclic.MODID + ":stun"));
     r.register(new Potion(ModCyclic.MODID + "_swimspeed", new MobEffectInstance(PotionEffects.swimspeed, normal)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
     r.register(new Potion(ModCyclic.MODID + "_blind", new MobEffectInstance(MobEffects.BLINDNESS, normal)).setRegistryName(ModCyclic.MODID + ":blind"));
     r.register(new Potion(ModCyclic.MODID + "_levitation", new MobEffectInstance(MobEffects.LEVITATION, smal)).setRegistryName(ModCyclic.MODID + ":levitation"));
     r.register(new Potion(ModCyclic.MODID + "_hunger", new MobEffectInstance(MobEffects.HUNGER, normal)).setRegistryName(ModCyclic.MODID + ":hunger"));
+    r.register(new Potion(ModCyclic.MODID + "_strong_hunger", new MobEffectInstance(MobEffects.HUNGER, smal, 1)).setRegistryName(ModCyclic.MODID + ":strong_hunger")); // strong 1 level instead of default 0
     r.register(new Potion(ModCyclic.MODID + "_wither", new MobEffectInstance(MobEffects.WITHER, smal)).setRegistryName(ModCyclic.MODID + ":wither"));
     r.register(new Potion(ModCyclic.MODID + "_resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, smal)).setRegistryName(ModCyclic.MODID + ":resistance"));
   }
@@ -85,23 +85,25 @@ public class PotionRegistry {
   public static class PotionItem {
 
     @ObjectHolder(ModCyclic.MODID + ":strong_haste")
-    public static Potion strong_haste;
+    public static Potion STRONG_HASTE;
     @ObjectHolder(ModCyclic.MODID + ":haste")
-    public static Potion haste;
+    public static Potion HASTE;
     @ObjectHolder(ModCyclic.MODID + ":stun")
-    public static Potion stun;
+    public static Potion STUN;
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
-    public static Potion swimspeed;
+    public static Potion SWIMSPEED;
     @ObjectHolder(ModCyclic.MODID + ":blind")
-    public static Potion blind;
+    public static Potion BLIND;
     @ObjectHolder(ModCyclic.MODID + ":levitation")
-    public static Potion levitation;
+    public static Potion LEVITATION;
     @ObjectHolder(ModCyclic.MODID + ":hunger")
-    public static Potion hunger;
+    public static Potion HUNGER;
+    @ObjectHolder(ModCyclic.MODID + ":strong_hunger")
+    public static Potion STRONG_HUNGER;
     @ObjectHolder(ModCyclic.MODID + ":wither")
-    public static Potion wither;
+    public static Potion WITHER;
     @ObjectHolder(ModCyclic.MODID + ":resistance")
-    public static Potion resistance;
+    public static Potion RESISTANCE;
   }
   //resistance : strength pot + iron ingot
   //wither : fermented spider eye + weakness pot 
@@ -111,19 +113,20 @@ public class PotionRegistry {
     ///haste recipes
     final ItemStack awkwardPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
     final ItemStack thickPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.THICK);
-    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.haste, Items.EMERALD);
-    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.haste),
-        PotionRegistry.PotionItem.strong_haste, Items.REDSTONE);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.HASTE, Items.EMERALD);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.HASTE),
+        PotionRegistry.PotionItem.STRONG_HASTE, Items.REDSTONE);
     //STUN recipes
-    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.stun, Items.CLAY);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.STUN, Items.CLAY);
     //swimspeed recipes
-    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.swimspeed, Items.DRIED_KELP_BLOCK);
-    //    PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionItem.haste).gr
-    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.NIGHT_VISION), PotionRegistry.PotionItem.blind, Items.BEETROOT);
-    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), PotionItem.levitation, Items.FERMENTED_SPIDER_EYE);
-    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), PotionItem.resistance, Items.IRON_INGOT);
-    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WEAKNESS), PotionItem.wither, Items.NETHER_BRICK);
-    basicBrewing(thickPotion.copy(), PotionRegistry.PotionItem.hunger, Items.ROTTEN_FLESH);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.SWIMSPEED, Items.DRIED_KELP_BLOCK);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.NIGHT_VISION), PotionRegistry.PotionItem.BLIND, Items.BEETROOT);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), PotionItem.LEVITATION, Items.FERMENTED_SPIDER_EYE);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), PotionItem.RESISTANCE, Items.IRON_INGOT);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WEAKNESS), PotionItem.WITHER, Items.NETHER_BRICK);
+    basicBrewing(thickPotion.copy(), PotionRegistry.PotionItem.HUNGER, Items.ROTTEN_FLESH);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.HUNGER),
+        PotionRegistry.PotionItem.STRONG_HUNGER, Items.REDSTONE);
   }
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {

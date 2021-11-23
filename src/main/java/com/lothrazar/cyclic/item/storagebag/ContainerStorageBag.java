@@ -73,7 +73,6 @@ public class ContainerStorageBag extends ContainerBase {
         // if its a normal click with a Dye item, then update stack color
         if (clickTypeIn == ClickType.PICKUP) {
           ItemStack mouseStack = player.containerMenu.getCarried();
-          //          mouseStack =  player.getInventory().getSelected();
           if (mouseStack.getItem() instanceof DyeItem) {
             DyeItem dye = (DyeItem) mouseStack.getItem();
             ItemStorageBag.setColour(slots.get(slotId).getItem(), dye.getDyeColor());

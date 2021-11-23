@@ -228,7 +228,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> PEACE_CANDLE = ITEMS.register("peace_candle", () -> new BlockItem(BlockRegistry.PEACE_CANDLE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> TELEPORT = ITEMS.register("teleport", () -> new BlockItem(BlockRegistry.TELEPORT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //
-  public static List<ItemBaseCyclic> items = new ArrayList<>(); // TODO: delet this. only used for legacy registerClient hax
+  public static List<ItemBaseCyclic> items = new ArrayList<>(); // TODO: refactor legacy registerClient loop
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")

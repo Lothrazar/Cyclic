@@ -30,7 +30,6 @@ public class FilterCardItem extends ItemBaseCyclic {
 
   public static final int SLOT_FLUID = 8;
   private static final String NBTFILTER = "filter";
-  // TODO: could match on tags, nbt exact match like enchants, 
 
   public FilterCardItem(Properties properties) {
     super(properties.stacksTo(1));

@@ -53,7 +53,6 @@ public class BuilderItem extends ItemBaseCyclic {
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     BuildStyle buildStyle = ((BuilderItem) stack.getItem()).style;
-    //TODO: ??INSIDE building no offset
     // on top of selected = do offset
     if (side != null && buildStyle.isOffset()) {
       pos = pos.relative(side);

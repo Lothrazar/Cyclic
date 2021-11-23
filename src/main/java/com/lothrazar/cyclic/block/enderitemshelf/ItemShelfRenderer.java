@@ -47,7 +47,6 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
       ms.translate(0, 0, 1);
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
-      // TODO: use light offset
       //      float lf = tile.getWorld().getLight(tile.getPos().offset(tile.getCurrentFacing()));
       Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer, combinedLightIn);
       ms.popPose();

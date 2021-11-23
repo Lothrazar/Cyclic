@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.Const;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +23,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class UtilWorld {
+
+  public static Direction getRandomDirection(Random rand) {
+    int index = Mth.nextInt(rand, 0, Direction.values().length - 1);
+    return Direction.values()[index];
+  }
 
   public static boolean removeFlowingLiquid(Level world, BlockPos pos, boolean nukeOption) {
     BlockState blockHere = world.getBlockState(pos);

@@ -412,6 +412,7 @@
   "cyclic.screen.filter.item.count": "Count: ",
   "cyclic.screen.filter.item.empty": "Items Empty",
   "cyclic.screen.filter.fluid.empty": "Fluid Empty",
+  "cyclic.screen.xp":"XP",
   "button.height.down": "Decrease height",
   "button.height.up": "Increase height",
   "button.inventory.hotbarswap": "Swap row with hotbar",

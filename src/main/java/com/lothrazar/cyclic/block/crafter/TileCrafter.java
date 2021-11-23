@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
@@ -195,22 +194,16 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
           } //docraft simulate false is done, and we have space for output 
           energy.extractEnergy(cost, false);
           //compare to what it was
-          ArrayList<ItemStack> itemStacksInGridBackup = getItemsInCraftingGrid();
+          //   ArrayList<ItemStack> itemStacksInGridBackup = getItemsInCraftingGrid();
           for (int i = 0; i < this.craftMatrix.getContainerSize(); i++) {
             ItemStack recipeLeftover = this.craftMatrix.getItem(i);
             if (!recipeLeftover.isEmpty()) {
               if (recipeLeftover.getContainerItem().isEmpty() == false) {
-                // TODO: shared code refactor
-                ModCyclic.LOGGER.info(i + " recipe leftovers " + recipeLeftover + " ||| itemStacksInGridBackup " + itemStacksInGridBackup.get(i));
+                //   ModCyclic.LOGGER.info(i + " recipe leftovers " + recipeLeftover + " ||| itemStacksInGridBackup " + itemStacksInGridBackup.get(i));
                 boolean leftoverEqual = (recipeLeftover.getItem() == recipeLeftover.getContainerItem().getItem());
                 if (leftoverEqual) {
-                  ModCyclic.LOGGER.info(i + "leftoverEqual TRUE  " + recipeLeftover.getContainerItem());
+                  //  ModCyclic.LOGGER.info(i + "leftoverEqual TRUE  " + recipeLeftover.getContainerItem());
                   ItemStack result = recipeLeftover.getContainerItem().copy();
-                  //                  if (!result.isEmpty() && result.isDamageable() && result.isDamaged()) {
-                  //                    // push damage forward to next cycle
-                  //                    ModCyclic.LOGGER.info(i + " !craft matrix " + result);
-                  //                    craftMatrix.setInventorySlotContents(i, result);
-                  //                  }
                   for (int j = 0; j < inputHandler.getSlots(); j++) {
                     //test it
                     result = inputHandler.insertItem(j, result, false);
