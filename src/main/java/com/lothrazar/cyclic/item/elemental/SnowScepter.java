@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.elemental;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class SnowScepter extends ItemBase {
+public class SnowScepter extends ItemBaseCyclic {
 
   private static final int COOLDOWN = 6;
 
@@ -24,9 +24,9 @@ public class SnowScepter extends ItemBase {
     if (player.getCooldowns().isOnCooldown(this)) {
       return super.use(world, player, handIn);
     }
-    shootMe(world, player, new SnowEntity(player, world), 0, ItemBase.VELOCITY_MAX);
-    shootMe(world, player, new SnowEntity(player, world), 10, ItemBase.VELOCITY_MAX);
-    shootMe(world, player, new SnowEntity(player, world), -10, ItemBase.VELOCITY_MAX);
+    shootMe(world, player, new SnowEntity(player, world), 0, ItemBaseCyclic.VELOCITY_MAX);
+    shootMe(world, player, new SnowEntity(player, world), 10, ItemBaseCyclic.VELOCITY_MAX);
+    shootMe(world, player, new SnowEntity(player, world), -10, ItemBaseCyclic.VELOCITY_MAX);
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, stack);
     UtilSound.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH);

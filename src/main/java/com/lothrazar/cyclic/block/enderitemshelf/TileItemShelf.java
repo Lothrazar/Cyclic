@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileItemShelf extends TileEntityBase {
+public class TileItemShelf extends TileBlockEntityCyclic {
 
   public final ItemStackHandler inventory = new ClientAutoSyncItemHandler(this, EnderShelfItemHandler.ROWS);
   private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> inventory);

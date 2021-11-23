@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.peatfarm;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-public class BlockPeatFarm extends BlockBase {
+public class BlockPeatFarm extends BlockCyclic {
 
   public BlockPeatFarm(Properties properties) {
     super(properties.strength(1.2F).noOcclusion());

@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.item.transporter;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -47,7 +47,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
-public class TileTransporterEmptyItem extends ItemBase {
+public class TileTransporterEmptyItem extends ItemBaseCyclic {
 
   public static ConfigValue<List<? extends String>> IGNORELIST;
 

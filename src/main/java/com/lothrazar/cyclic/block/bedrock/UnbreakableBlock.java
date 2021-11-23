@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.bedrock;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class UnbreakableBlock extends BlockBase {
+public class UnbreakableBlock extends BlockCyclic {
 
   public static final BooleanProperty BREAKABLE = BooleanProperty.create("breakable");
 

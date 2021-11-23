@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import java.util.List;
 import java.util.function.Predicate;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -32,7 +32,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileExpPylon extends TileEntityBase implements MenuProvider {
+public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE;

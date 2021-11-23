@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.hopperfluid;
 
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileFluidHopper extends TileEntityBase {
+public class TileFluidHopper extends TileBlockEntityCyclic {
 
   private static final int FLOW = FluidAttributes.BUCKET_VOLUME;
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;

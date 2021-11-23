@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -78,8 +79,13 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   @Override
   public void setTooltip(String tt) {
     tooltip = new ArrayList<>();
-    this.tooltip.add(new TranslatableComponent(tt));
+    addTooltip(tt);
     this.tooltip.add(new TranslatableComponent("cyclic.gui.sliderkeys").withStyle(ChatFormatting.DARK_GRAY));
+  }
+
+  @Override
+  public void addTooltip(String ttIn) {
+    tooltip.add(new TranslatableComponent(ttIn));
   }
 
   /**

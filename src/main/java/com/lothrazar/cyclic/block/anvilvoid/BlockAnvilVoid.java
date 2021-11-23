@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.anvilvoid;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockAnvilVoid extends BlockBase {
+public class BlockAnvilVoid extends BlockCyclic {
 
   //copy from anvilblock 
   public BlockAnvilVoid(Properties properties) {

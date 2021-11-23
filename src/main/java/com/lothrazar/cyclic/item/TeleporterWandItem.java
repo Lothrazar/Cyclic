@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -24,7 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TeleporterWandItem extends ItemBase {
+public class TeleporterWandItem extends ItemBaseCyclic {
 
   private static final int TICK_REPAIR = 4;
   private static final int TICKS_USING = 93000;

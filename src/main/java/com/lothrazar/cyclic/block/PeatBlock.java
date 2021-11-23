@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -14,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class PeatBlock extends BlockBase {
+public class PeatBlock extends BlockCyclic {
 
   public static final int FUEL_WEAK = 256;
   public static final int FUEL_STRONG = 4096;

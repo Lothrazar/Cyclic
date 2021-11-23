@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.findspawner;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
-public class ItemProjectileDungeon extends ItemBase {
+public class ItemProjectileDungeon extends ItemBaseCyclic {
 
   private static final int DUNGEONRADIUS = 64;
 
@@ -26,7 +26,7 @@ public class ItemProjectileDungeon extends ItemBase {
   public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
     ItemStack stack = player.getItemInHand(hand);
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
-    shootMe(world, player, ball, 0, ItemBase.VELOCITY_MAX);
+    shootMe(world, player, ball, 0, ItemBaseCyclic.VELOCITY_MAX);
     stack.shrink(1);
     UtilSound.playSound(player, SoundRegistry.DUNGEONFINDER, 0.1F, 1.0F);
     findTargetLocation(player, ball);

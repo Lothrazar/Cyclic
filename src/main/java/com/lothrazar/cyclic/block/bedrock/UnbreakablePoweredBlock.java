@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.bedrock;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class UnbreakablePoweredBlock extends BlockBase {
+public class UnbreakablePoweredBlock extends BlockCyclic {
 
   public static final BooleanProperty BREAKABLE = UnbreakableBlock.BREAKABLE;
 

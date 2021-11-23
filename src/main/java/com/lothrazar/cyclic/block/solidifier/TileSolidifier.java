@@ -2,10 +2,10 @@ package com.lothrazar.cyclic.block.solidifier;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -35,7 +35,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
-public class TileSolidifier extends TileEntityBase implements MenuProvider {
+public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider {
 
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 5;
   public static final int MAX = 64000;
@@ -180,7 +180,7 @@ public class TileSolidifier extends TileEntityBase implements MenuProvider {
       return;
     }
     currentRecipe = null;
-    List<RecipeSolidifier<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID);
+    List<RecipeSolidifier<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID);
     for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, level)) {
         currentRecipe = rec;

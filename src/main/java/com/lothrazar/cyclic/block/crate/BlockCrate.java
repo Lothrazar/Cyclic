@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.crate;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BlockCrate extends BlockBase {
+public class BlockCrate extends BlockCyclic {
 
   private static final String NBTCRATE = "crate";
 

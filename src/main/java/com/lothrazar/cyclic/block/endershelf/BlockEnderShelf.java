@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.endershelf;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
 import com.lothrazar.cyclic.data.DataTags;
@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class BlockEnderShelf extends BlockBase {
+public class BlockEnderShelf extends BlockCyclic {
 
   public BlockEnderShelf(Properties properties) {
     super(properties.strength(1.2F).noOcclusion());

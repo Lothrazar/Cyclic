@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.anvilmagma;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -25,7 +25,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockAnvilMagma extends BlockBase {
+public class BlockAnvilMagma extends BlockCyclic {
 
   public BlockAnvilMagma(Properties properties) {
     super(properties.strength(1.8F).sound(SoundType.ANVIL));

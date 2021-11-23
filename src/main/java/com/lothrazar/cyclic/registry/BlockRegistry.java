@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.registry;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.base.BlockSimple;
+import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.block.BlockSimple;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
@@ -137,7 +137,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class BlockRegistry {
 
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
-  public static List<BlockBase> blocksClientRegistry = new ArrayList<>();
+  public static List<BlockCyclic> blocksClientRegistry = new ArrayList<>();
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
   public static Block SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
@@ -184,14 +184,6 @@ public class BlockRegistry {
   public static Block battery;
   @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
   public static Block energy_pipe;
-  @ObjectHolder(ModCyclic.MODID + ":spikes_iron")
-  public static Block spikes_iron;
-  @ObjectHolder(ModCyclic.MODID + ":spikes_curse")
-  public static Block spikes_curse;
-  @ObjectHolder(ModCyclic.MODID + ":spikes_fire")
-  public static Block spikes_fire;
-  @ObjectHolder(ModCyclic.MODID + ":spikes_diamond")
-  public static Block spikes_diamond;
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
   public static Block fluid_pipe;
   @ObjectHolder(ModCyclic.MODID + ":item_pipe")
@@ -270,6 +262,10 @@ public class BlockRegistry {
   public static Block EYE_REDSTONE;
   @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
   public static Block EYE_TELEPORT;
+  public static final RegistryObject<Block> SPIKES_IRON = BLOCKS.register("spikes_iron", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.PLAIN));
+  public static final RegistryObject<Block> SPIKES_FIRE = BLOCKS.register("spikes_fire", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.FIRE));
+  public static final RegistryObject<Block> SPIKES_CURSE = BLOCKS.register("spikes_curse", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.CURSE));
+  public static final RegistryObject<Block> SPIKES_DIAMOND = BLOCKS.register("spikes_diamond", () -> new SpikesDiamond(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> FLUIDHOPPER = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> HOPPERGOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.of(Material.METAL)));
@@ -343,9 +339,9 @@ public class BlockRegistry {
   public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of(Material.SPONGE).lightLevel(p -> 2)));
   public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> PEACE_CANDLE = BLOCKS.register("peace_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
-      .lightLevel(p -> p.getValue(BlockBase.LIT) ? 6 : 0)));
+      .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 6 : 0)));
   public static final RegistryObject<Block> WATER_CANDLE = BLOCKS.register("water_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
-      .lightLevel(p -> p.getValue(BlockBase.LIT) ? 1 : 0)));
+      .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 1 : 0)));
   public static final RegistryObject<Block> TELEPORT = BLOCKS.register("teleport", () -> new BlockTeleport(Block.Properties.of(Material.STONE)));
 
   //TODO: convert to dynams
@@ -411,10 +407,6 @@ public class BlockRegistry {
     r.register(new BlockCableFluid(Block.Properties.of(Material.WOOL).sound(SoundType.STONE)).setRegistryName("fluid_pipe"));
     r.register(new LaunchBlock(Block.Properties.of(Material.STONE), false).setRegistryName("plate_launch"));
     r.register(new LaunchBlock(Block.Properties.of(Material.STONE), true).setRegistryName("plate_launch_redstone"));
-    r.register(new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.PLAIN).setRegistryName("spikes_iron"));
-    r.register(new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.FIRE).setRegistryName("spikes_fire"));
-    r.register(new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.CURSE).setRegistryName("spikes_curse"));
-    r.register(new SpikesDiamond(Block.Properties.of(Material.METAL)).setRegistryName("spikes_diamond"));
     r.register(new BlockBatteryInfinite(Block.Properties.of(Material.STONE)).setRegistryName("battery_infinite"));
     r.register(new BlockItemInfinite(Block.Properties.of(Material.STONE)).setRegistryName("item_infinite"));
     r.register(new FireplaceBlock(Block.Properties.of(Material.STONE)).setRegistryName("fireplace"));

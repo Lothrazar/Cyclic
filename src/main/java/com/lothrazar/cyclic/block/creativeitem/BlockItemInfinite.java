@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.creativeitem;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockItemInfinite extends BlockBase {
+public class BlockItemInfinite extends BlockCyclic {
 
   public BlockItemInfinite(Properties properties) {
     super(properties.strength(1.8F));

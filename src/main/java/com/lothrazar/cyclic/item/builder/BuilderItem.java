@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.builder;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.ChatFormatting;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BuilderItem extends ItemBase {
+public class BuilderItem extends ItemBaseCyclic {
 
   public BuildStyle style;
 

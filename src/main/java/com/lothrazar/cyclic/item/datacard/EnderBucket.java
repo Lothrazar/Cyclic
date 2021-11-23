@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EnderBucket extends ItemBase {
+public class EnderBucket extends ItemBaseCyclic {
 
   private static final String NBT_SIDE = "side";
   private static final String NBT_DIM = "dim";

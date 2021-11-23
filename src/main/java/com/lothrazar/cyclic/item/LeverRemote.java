@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -23,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LeverRemote extends ItemBase {
+public class LeverRemote extends ItemBaseCyclic {
 
   public LeverRemote(Properties properties) {
     super(properties);

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.shears;
 
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.IForgeShearable;
 
-public class BlockShearing extends BlockBase {
+public class BlockShearing extends BlockCyclic {
 
   public BlockShearing(Properties properties) {
     super(properties.strength(1.1F).randomTicks().noOcclusion().sound(SoundType.CHAIN));

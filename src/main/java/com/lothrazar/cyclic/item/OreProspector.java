@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilNBT;
@@ -20,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.Tags;
 
-public class OreProspector extends ItemBase {
+public class OreProspector extends ItemBaseCyclic {
 
   private static final String ORESIZE = "oresize";
   private static final String NBT_DIM = "dim";

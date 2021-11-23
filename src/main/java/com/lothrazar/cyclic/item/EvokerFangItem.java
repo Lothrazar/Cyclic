@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
@@ -8,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.EvokerFangs;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class EvokerFangItem extends ItemBase {
+public class EvokerFangItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = 10;
 

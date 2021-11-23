@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.fishing;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -37,7 +37,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileFisher extends TileEntityBase implements MenuProvider {
+public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
 
   private static final int RADIUS = 12;
   private static final double CHANCE = 0.1;

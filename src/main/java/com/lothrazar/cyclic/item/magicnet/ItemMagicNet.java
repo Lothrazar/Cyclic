@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.magicnet;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-public class ItemMagicNet extends ItemBase {
+public class ItemMagicNet extends ItemBaseCyclic {
 
   private static final int TICKS_USING = 93000; //bow has 72000
 
@@ -48,7 +48,7 @@ public class ItemMagicNet extends ItemBase {
       return;
     }
     Player player = (Player) entity;
-    shootMe(worldIn, player, new EntityMagicNetEmpty(worldIn, player), 0F, percentageCharged * ItemBase.VELOCITY_MAX);
+    shootMe(worldIn, player, new EntityMagicNetEmpty(worldIn, player), 0F, percentageCharged * ItemBaseCyclic.VELOCITY_MAX);
     if (!player.isCreative()) {
       stack.shrink(1);
     }

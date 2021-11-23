@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.endereye;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemEnderEyeReuse extends ItemBase {
+public class ItemEnderEyeReuse extends ItemBaseCyclic {
 
   public ItemEnderEyeReuse(Properties properties) {
     super(properties.durability(256));

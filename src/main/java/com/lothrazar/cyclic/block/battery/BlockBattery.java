@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.battery;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class BlockBattery extends BlockBase {
+public class BlockBattery extends BlockCyclic {
 
   public static final EnumProperty<EnumBatteryPercent> PERCENT = EnumProperty.create("percent", EnumBatteryPercent.class);
 

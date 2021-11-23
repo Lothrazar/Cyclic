@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.forester;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class BlockForester extends BlockBase {
+public class BlockForester extends BlockCyclic {
 
   public BlockForester(Properties properties) {
     super(properties.strength(1.8F));

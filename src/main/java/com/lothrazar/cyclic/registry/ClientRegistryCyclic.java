@@ -2,8 +2,7 @@ package com.lothrazar.cyclic.registry;
 
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.RenderItemCollect;
 import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
@@ -30,6 +29,7 @@ import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -95,10 +95,10 @@ public class ClientRegistryCyclic {
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
-    for (BlockBase b : BlockRegistry.blocksClientRegistry) {
+    for (BlockCyclic b : BlockRegistry.blocksClientRegistry) {
       b.registerClient();
     }
-    for (ItemBase i : ItemRegistry.items) {
+    for (ItemBaseCyclic i : ItemRegistry.items) {
       i.registerClient();
     }
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_LIME_CARNATION.get(), RenderType.cutoutMipped());

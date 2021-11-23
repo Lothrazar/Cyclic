@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.heart;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.world.InteractionHand;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class HeartToxicItem extends ItemBase {
+public class HeartToxicItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = HeartItem.COOLDOWN;
 

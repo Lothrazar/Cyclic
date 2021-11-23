@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.hopperfluid;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.hopper.BlockSimpleHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockFluidHopper extends BlockBase {
+public class BlockFluidHopper extends BlockCyclic {
 
   public static final DirectionProperty FACING = BlockStateProperties.FACING_HOPPER;
 

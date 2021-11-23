@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -36,7 +35,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
-public class SpelunkerCaveFinder extends ItemBase {
+public class SpelunkerCaveFinder extends ItemBaseCyclic {
 
   public SpelunkerCaveFinder(Properties properties) {
     super(properties.durability(10));

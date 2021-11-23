@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.tp;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockTeleport extends BlockBase {
+public class BlockTeleport extends BlockCyclic {
 
   private static final int COST = 400;
   private static final int COSTDIM = 4000;

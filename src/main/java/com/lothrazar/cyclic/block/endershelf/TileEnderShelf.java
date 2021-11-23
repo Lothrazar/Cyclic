@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class TileEnderShelf extends TileEntityBase {
+public class TileEnderShelf extends TileBlockEntityCyclic {
 
   public final EnderShelfItemHandler inventory = new EnderShelfItemHandler(this);
   private final LazyOptional<EnderShelfItemHandler> inventoryCap = LazyOptional.of(() -> inventory);

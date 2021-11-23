@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.gui;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -36,7 +36,7 @@ public class ButtonMachineField extends ButtonMachine {
     return this;
   }
 
-  public void onValueUpdate(TileEntityBase tile) {
+  public void onValueUpdate(TileBlockEntityCyclic tile) {
     int val = tile.getField(this.getTileField());
     this.onValueUpdate(val);
   }

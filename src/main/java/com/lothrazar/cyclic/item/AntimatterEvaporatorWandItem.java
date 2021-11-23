@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item;
 
 import java.util.List;
 import java.util.Locale;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -27,7 +26,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AntimatterEvaporatorWandItem extends ItemBase {
+public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
 
   private static final int SIZE = 4;
   private static final String NBT_MODE = "mode";

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class BlockWirelessRec extends BlockBase {
+public class BlockWirelessRec extends BlockCyclic {
 
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 

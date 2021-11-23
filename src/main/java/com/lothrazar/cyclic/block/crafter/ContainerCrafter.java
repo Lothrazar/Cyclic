@@ -24,8 +24,8 @@
 package com.lothrazar.cyclic.block.crafter;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.core.BlockPos;

@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.user;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,7 +31,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileUser extends TileEntityBase implements MenuProvider {
+public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
 
   public static IntValue POWERCONF;
 
@@ -93,7 +93,7 @@ public class TileUser extends TileEntityBase implements MenuProvider {
       energy.extractEnergy(repair, false);
     }
     try {
-      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
+      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       //start of SUPERHACK
       ResourceLocation registryItem = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem().getRegistryName();
       if (registryItem.getNamespace().equalsIgnoreCase("mysticalagriculture")
@@ -112,9 +112,9 @@ public class TileUser extends TileEntityBase implements MenuProvider {
       }
       //end of SUPERHACK
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
-      TileEntityBase.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
+      TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
       // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
-      TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
+      TileBlockEntityCyclic.syncEquippedItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);

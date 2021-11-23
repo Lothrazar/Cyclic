@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileString;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ public class TextBoxAutosave extends EditBox {
   private static final int KEY_DELETE = 261;
   private static final int KEY_BACKSPACE = 259;
   private BlockPos pos;
-  private TileEntityBase tile;
+  private TileBlockEntityCyclic tile;
 
   public TextBoxAutosave(Font fontIn, int xIn, int yIn, int widthIn, BlockPos pos, int field) {
     super(fontIn, xIn, yIn, widthIn, 16, null);
@@ -26,7 +26,7 @@ public class TextBoxAutosave extends EditBox {
     this.setTextColor(16777215);
     this.pos = pos;
     this.tileFieldId = field;
-    this.tile = (TileEntityBase) Minecraft.getInstance().level.getBlockEntity(pos);
+    this.tile = (TileBlockEntityCyclic) Minecraft.getInstance().level.getBlockEntity(pos);
   }
 
   @Override

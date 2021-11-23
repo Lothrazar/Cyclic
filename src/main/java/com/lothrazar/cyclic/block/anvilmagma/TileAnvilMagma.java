@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.anvilmagma;
 
 import java.util.function.Predicate;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -33,7 +33,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileAnvilMagma extends TileEntityBase implements MenuProvider {
+public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE;

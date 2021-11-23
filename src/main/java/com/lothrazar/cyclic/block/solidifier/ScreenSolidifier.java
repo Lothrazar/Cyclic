@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
+import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;

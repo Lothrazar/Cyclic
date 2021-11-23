@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.transporter;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -53,7 +53,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class TileTransporterItem extends ItemBase {
+public class TileTransporterItem extends ItemBaseCyclic {
 
   public static final String KEY_BLOCKID = "block";
   public static final String KEY_BLOCKTILE = "tile";

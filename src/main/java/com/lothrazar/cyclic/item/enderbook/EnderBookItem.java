@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.enderbook;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -33,7 +33,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class EnderBookItem extends ItemBase {
+public class EnderBookItem extends ItemBaseCyclic {
 
   private static final String ITEMCOUNT = "itemCount";
   private static final int TP_COUNTDOWN = 60;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.shapedata;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BlockShapedata extends BlockBase {
+public class BlockShapedata extends BlockCyclic {
 
   public BlockShapedata(Properties properties) {
     super(properties.strength(1.8F));

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.conveyor;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 
-public class TileConveyor extends TileEntityBase {
+public class TileConveyor extends TileBlockEntityCyclic {
 
   public TileConveyor(BlockPos pos, BlockState state) {
     super(TileRegistry.conveyor, pos, state);

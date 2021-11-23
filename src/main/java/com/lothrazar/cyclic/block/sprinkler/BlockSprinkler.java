@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.sprinkler;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockSprinkler extends BlockBase {
+public class BlockSprinkler extends BlockCyclic {
 
   private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D,
       12.0D, 5.0D, 12.0D);

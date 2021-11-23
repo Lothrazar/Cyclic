@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.random;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class RandomizerItem extends ItemBase {
+public class RandomizerItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = 15;
 

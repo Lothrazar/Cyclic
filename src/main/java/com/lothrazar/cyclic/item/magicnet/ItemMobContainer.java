@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.magicnet;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemMobContainer extends ItemBase {
+public class ItemMobContainer extends ItemBaseCyclic {
 
   public ItemMobContainer(Properties properties) {
     super(properties);

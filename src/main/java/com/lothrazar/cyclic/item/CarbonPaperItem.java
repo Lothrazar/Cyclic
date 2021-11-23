@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +20,7 @@ import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class CarbonPaperItem extends ItemBase {
+public class CarbonPaperItem extends ItemBaseCyclic {
 
   public CarbonPaperItem(Properties properties) {
     super(properties.stacksTo(1));

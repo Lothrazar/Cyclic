@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.scaffolding;
 
 import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockScaffolding extends BlockBase {
+public class BlockScaffolding extends BlockCyclic {
 
   private static final double CLIMB_SPEED = 0.31D; //climbing glove is 0.288D
   private static final double OFFSET = 0.125D;

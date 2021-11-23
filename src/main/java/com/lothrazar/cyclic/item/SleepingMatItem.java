@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
@@ -14,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class SleepingMatItem extends ItemBase {
+public class SleepingMatItem extends ItemBaseCyclic {
 
   public static final String CYCLIC_SLEEPING = "cyclic_sleeping";
 

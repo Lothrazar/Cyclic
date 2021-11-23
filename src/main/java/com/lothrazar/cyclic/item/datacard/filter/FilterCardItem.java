@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.ChatFormatting;
@@ -26,7 +26,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class FilterCardItem extends ItemBase {
+public class FilterCardItem extends ItemBaseCyclic {
 
   public static final int SLOT_FLUID = 8;
   private static final String NBTFILTER = "filter";

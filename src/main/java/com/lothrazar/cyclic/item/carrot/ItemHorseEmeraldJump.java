@@ -24,7 +24,8 @@
 package com.lothrazar.cyclic.item.carrot;
 
 import java.util.UUID;
-import com.lothrazar.cyclic.base.ItemEntityInteractable;
+import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.world.InteractionResult;
@@ -34,7 +35,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseEmeraldJump extends ItemEntityInteractable {
+public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInteractable {
 
   private static final int JUMP_MAX = 10;
   private static final double JUMP_AMT = 0.08;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.collectitem;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -28,7 +28,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileItemCollector extends TileEntityBase implements MenuProvider {
+public class TileItemCollector extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;

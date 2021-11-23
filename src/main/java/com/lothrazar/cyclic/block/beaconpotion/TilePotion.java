@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.beaconpotion;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -32,7 +32,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePotion extends TileEntityBase implements MenuProvider {
+public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, RANGE, ENTITYTYPE;

@@ -2,11 +2,11 @@ package com.lothrazar.cyclic.block.shapedata;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.Fields;
 import com.lothrazar.cyclic.block.shapedata.TileShapedata.StructCommands;
 import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
+import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;

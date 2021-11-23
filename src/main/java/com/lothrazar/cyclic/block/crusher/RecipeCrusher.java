@@ -41,7 +41,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
+  public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
     try {
       TileCrusher tile = (TileCrusher) inv;
       return matches(tile.inputSlots.getStackInSlot(0), ingredients.get(0));
@@ -109,7 +109,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
 
   public static final SerializeGenerateItem SERIALCRUSH = new SerializeGenerateItem();
 
-  public static class SerializeGenerateItem extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeCrusher<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
+  public static class SerializeGenerateItem extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeCrusher<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
 
     SerializeGenerateItem() {
       // This registry name is what people will specify in their json files.
@@ -121,7 +121,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public RecipeCrusher<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
+    public RecipeCrusher<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
       try {
         Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
         JsonObject energy = json.get("energy").getAsJsonObject();

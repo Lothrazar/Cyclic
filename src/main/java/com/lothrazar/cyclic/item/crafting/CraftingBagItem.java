@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.crafting;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class CraftingBagItem extends ItemBase {
+public class CraftingBagItem extends ItemBaseCyclic {
 
   public CraftingBagItem(Properties properties) {
     super(properties);

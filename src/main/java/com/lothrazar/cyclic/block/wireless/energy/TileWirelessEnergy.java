@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -25,7 +25,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessEnergy extends TileEntityBase implements MenuProvider {
+public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;

@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketTileString extends PacketBase {
+public class PacketTileString extends PacketBaseCyclic {
 
   private int field;
   private String value;
@@ -32,8 +31,8 @@ public class PacketTileString extends PacketBase {
       ServerPlayer player = ctx.get().getSender();
       Level world = player.getCommandSenderWorld();
       BlockEntity tile = world.getBlockEntity(message.pos);
-      if (tile instanceof TileEntityBase) {
-        TileEntityBase base = (TileEntityBase) tile;
+      if (tile instanceof TileBlockEntityCyclic) {
+        TileBlockEntityCyclic base = (TileBlockEntityCyclic) tile;
         base.setFieldString(message.field, message.value);
         BlockState oldState = world.getBlockState(message.pos);
         world.sendBlockUpdated(message.pos, oldState, oldState, 3);

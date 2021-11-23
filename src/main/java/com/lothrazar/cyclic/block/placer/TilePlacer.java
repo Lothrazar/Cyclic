@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.placer;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePlacer extends TileEntityBase implements MenuProvider {
+public class TilePlacer extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER;

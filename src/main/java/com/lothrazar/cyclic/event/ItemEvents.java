@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.base.ItemEntityInteractable;
+import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.enchant.EnchantMultishot;
+import com.lothrazar.cyclic.enchant.Multishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.apple.LoftyStatureApple;
@@ -87,7 +87,7 @@ public class ItemEvents {
     LivingEntity mob = event.getEntityLiving();
     MobSpawnType res = event.getSpawnReason();
     if (CandlePeaceBlock.isBad(mob, res)
-        && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockBase.LIT, true), CandlePeaceBlock.RADIUS, CandlePeaceBlock.HEIGHT)) {
+        && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), CandlePeaceBlock.RADIUS, CandlePeaceBlock.HEIGHT)) {
       ModCyclic.LOGGER.info("PeaceCandle: Cancel spawn " + mob);
       event.setResult(Result.DENY);
     }
@@ -135,8 +135,8 @@ public class ItemEvents {
       Vec3 playerDirection = UtilEntity.lookVector(player.getYRot(), player.getXRot());
       Vec3 left = playerDirection.cross(new Vec3(0, 1, 0));
       Vec3 right = playerDirection.cross(new Vec3(0, -1, 0));
-      EnchantMultishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
-      EnchantMultishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
+      Multishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
+      Multishot.spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
     }
   }
 
@@ -449,8 +449,8 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
-    if (event.getItemStack().getItem() instanceof ItemEntityInteractable) {
-      ItemEntityInteractable item = (ItemEntityInteractable) event.getItemStack().getItem();
+    if (event.getItemStack().getItem() instanceof IEntityInteractable) {
+      IEntityInteractable item = (IEntityInteractable) event.getItemStack().getItem();
       item.interactWith(event);
     }
   }

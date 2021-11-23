@@ -1,15 +1,14 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.IHasClickToggle;
-import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.api.IHasClickToggle;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketItemToggle extends PacketBase {
+public class PacketItemToggle extends PacketBaseCyclic {
 
   private int slot;
 
@@ -30,8 +29,7 @@ public class PacketItemToggle extends PacketBase {
         return;
       }
       Slot slotObj = player.containerMenu.getSlot(message.slot);
-      if (slotObj != null
-          && !slotObj.getItem().isEmpty()) {
+      if (slotObj != null && !slotObj.getItem().isEmpty()) {
         ItemStack maybeCharm = slotObj.getItem();
         if (maybeCharm.getItem() instanceof IHasClickToggle) {
           //example: is a charm or something

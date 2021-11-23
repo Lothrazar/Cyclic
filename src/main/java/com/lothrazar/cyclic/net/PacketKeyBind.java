@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.item.inventorycake.ContainerProviderCake;
@@ -34,7 +33,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class PacketKeyBind extends PacketBase {
+public class PacketKeyBind extends PacketBaseCyclic {
 
   private String action;
 

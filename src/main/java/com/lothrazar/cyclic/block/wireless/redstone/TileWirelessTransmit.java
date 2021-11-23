@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessTransmit extends TileEntityBase implements MenuProvider {
+public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     RENDER;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.phantom;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class SoilBlock extends BlockBase {
+public class SoilBlock extends BlockCyclic {
 
   public SoilBlock(Properties properties) {
     super(properties.strength(1.0F, 1.0F));

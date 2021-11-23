@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.bauble;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.IHasClickToggle;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.api.IHasClickToggle;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ItemBaseToggle extends ItemBase implements IHasClickToggle {
+public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
 
   public ItemBaseToggle(Properties properties) {
     super(properties);

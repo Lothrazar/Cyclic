@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.apple;
 
 import java.util.Random;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 
-public class AppleCropBlock extends BlockBase implements BonemealableBlock {
+public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
 
   private static final int MAX_AGE = 7;
   private static final IntegerProperty AGE = BlockStateProperties.AGE_7;

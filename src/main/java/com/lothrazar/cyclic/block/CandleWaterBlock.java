@@ -25,7 +25,6 @@ package com.lothrazar.cyclic.block;
 
 import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.core.BlockPos;
@@ -54,7 +53,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.Event;
 
-public class CandleWaterBlock extends BlockBase {
+public class CandleWaterBlock extends BlockCyclic {
 
   private static int TICK_RATE = 50; // TODO: CONFIG
   private static int RADIUS = 6; // TODO: CONFIG

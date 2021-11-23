@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.sprinkler;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilParticle;
@@ -25,7 +25,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TileSprinkler extends TileEntityBase {
+public class TileSprinkler extends TileBlockEntityCyclic {
 
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public static IntValue TIMER_FULL;

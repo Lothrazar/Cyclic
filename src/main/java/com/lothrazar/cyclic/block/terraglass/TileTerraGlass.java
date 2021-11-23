@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.terraglass;
 
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TileTerraGlass extends TileEntityBase {
+public class TileTerraGlass extends TileBlockEntityCyclic {
 
   private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL / 2;
   private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
@@ -36,7 +36,7 @@ public class TileTerraGlass extends TileEntityBase {
       return;
     }
     timer = TIMER_FULL;
-    boolean lit = this.getBlockState().getValue(BlockBase.LIT);
+    boolean lit = this.getBlockState().getValue(BlockCyclic.LIT);
     boolean newLit = canBlockSeeSky(level, worldPosition);
     if (lit != newLit) {
       this.setLitProperty(newLit);

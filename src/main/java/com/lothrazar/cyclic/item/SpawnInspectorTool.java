@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -18,7 +17,7 @@ import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 
-public class SpawnInspectorTool extends ItemBase {
+public class SpawnInspectorTool extends ItemBaseCyclic {
 
   public SpawnInspectorTool(Properties properties) {
     super(properties);

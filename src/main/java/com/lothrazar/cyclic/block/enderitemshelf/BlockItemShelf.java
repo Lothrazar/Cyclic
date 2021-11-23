@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.enderitemshelf;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class BlockItemShelf extends BlockBase {
+public class BlockItemShelf extends BlockCyclic {
 
   public BlockItemShelf(Properties properties) {
     super(properties.strength(0.8F).noOcclusion());

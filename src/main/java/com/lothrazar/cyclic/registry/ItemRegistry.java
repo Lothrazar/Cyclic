@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.registry;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
@@ -17,6 +16,7 @@ import com.lothrazar.cyclic.item.ElevationWandItem;
 import com.lothrazar.cyclic.item.EnderBagItem;
 import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.SleepingMatItem;
@@ -163,7 +163,10 @@ public class ItemRegistry {
   public static final RegistryObject<Item> ENDER_BOOK = ITEMS.register("ender_book", () -> new EnderBookItem(new Item.Properties().durability(8).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> DARK_GLASS_CONNECTED = ITEMS.register("dark_glass_connected", () -> new BlockItem(BlockRegistry.DARK_GLASS_CONNECTED.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> ENDER_ITEM_SHELF = ITEMS.register("ender_item_shelf", () -> new BlockItem(BlockRegistry.ENDER_ITEM_SHELF.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> SPIKES_DIAMOND = ITEMS.register("spikes_diamond", () -> new BlockItem(BlockRegistry.spikes_diamond, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SPIKES_DIAMOND = ITEMS.register("spikes_diamond", () -> new BlockItem(BlockRegistry.SPIKES_DIAMOND.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SPIKES_IRON = ITEMS.register("spikes_iron", () -> new BlockItem(BlockRegistry.SPIKES_IRON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SPIKES_CURSE = ITEMS.register("spikes_curse", () -> new BlockItem(BlockRegistry.SPIKES_CURSE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SPIKES_FIRE = ITEMS.register("spikes_fire", () -> new BlockItem(BlockRegistry.SPIKES_FIRE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> DOORBELL = ITEMS.register("doorbell", () -> new BlockItem(BlockRegistry.DOORBELL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_ENERGY = ITEMS.register("wireless_energy", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_ITEM = ITEMS.register("wireless_item", () -> new BlockItem(BlockRegistry.WIRELESS_ITEM.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -225,7 +228,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> PEACE_CANDLE = ITEMS.register("peace_candle", () -> new BlockItem(BlockRegistry.PEACE_CANDLE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> TELEPORT = ITEMS.register("teleport", () -> new BlockItem(BlockRegistry.TELEPORT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //
-  public static List<ItemBase> items = new ArrayList<>(); // TODO: delet this. only used for legacy registerClient hax
+  public static List<ItemBaseCyclic> items = new ArrayList<>(); // TODO: delet this. only used for legacy registerClient hax
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
   @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
@@ -324,9 +327,9 @@ public class ItemRegistry {
     r.register(new ExpItemGain(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("experience_food"));
     // resources
     //energy 
-    r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel"));
-    r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel_enriched"));
-    r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("biomass"));
+    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel"));
+    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel_enriched"));
+    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("biomass"));
     // basic tools
     r.register(new MattockItem(Tiers.DIAMOND, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9000), 1).setRegistryName("mattock"));
     r.register(new MattockItem(Tiers.NETHERITE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9001), 2).setRegistryName("mattock_nether"));
@@ -384,7 +387,7 @@ public class ItemRegistry {
     r.register(new LoftyStatureApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(0).alwaysEat()
         .build())).setRegistryName("apple_lofty_stature"));
     //
-    r.register(new ItemBase(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h * 4).saturationMod(s * 4)
+    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h * 4).saturationMod(s * 4)
         .build())).setRegistryName("apple_honey"));
     //
     r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
@@ -446,9 +449,6 @@ public class ItemRegistry {
     r.register(new ItemScaffolding(BlockRegistry.scaffold_replace, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_replace"));
     r.register(new ItemScaffolding(BlockRegistry.scaffold_fragile, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_fragile"));
     r.register(new ItemScaffolding(BlockRegistry.scaffold_responsive, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_responsive"));
-    r.register(new BlockItem(BlockRegistry.spikes_iron, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("spikes_iron"));
-    r.register(new BlockItem(BlockRegistry.spikes_curse, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("spikes_curse"));
-    r.register(new BlockItem(BlockRegistry.spikes_fire, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("spikes_fire"));
     r.register(new BlockItem(BlockRegistry.energy_pipe, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("energy_pipe"));
     r.register(new BlockItem(BlockRegistry.item_pipe, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("item_pipe"));
     r.register(new BlockItem(BlockRegistry.fluid_pipe, new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fluid_pipe"));

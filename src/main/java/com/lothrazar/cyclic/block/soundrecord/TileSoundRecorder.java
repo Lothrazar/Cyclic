@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.soundrecord;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -26,7 +26,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileSoundRecorder extends TileEntityBase implements MenuProvider {
+public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProvider {
 
   static final int MAX_SOUNDS = 10; // locked by gui size. TODO: scrollbar
   private static final String SOUNDAT = "soundat";

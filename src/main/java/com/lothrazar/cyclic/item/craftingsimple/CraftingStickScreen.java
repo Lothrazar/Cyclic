@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.craftingsimple;
 
-import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.gui.ButtonTextured;
+import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.registry.PacketRegistry;

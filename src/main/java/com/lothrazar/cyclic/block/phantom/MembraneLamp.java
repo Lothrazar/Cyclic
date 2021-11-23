@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.phantom;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class MembraneLamp extends BlockBase {
+public class MembraneLamp extends BlockCyclic {
 
   public static final IntegerProperty POWER = BlockStateProperties.POWER;
 

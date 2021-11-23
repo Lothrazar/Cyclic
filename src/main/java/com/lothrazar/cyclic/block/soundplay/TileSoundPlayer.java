@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.soundplay;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -23,7 +23,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileSoundPlayer extends TileEntityBase implements MenuProvider {
+public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvider {
 
   ItemStackHandler inventory = new ItemStackHandler(1) {
 

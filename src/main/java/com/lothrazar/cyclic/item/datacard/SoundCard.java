@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class SoundCard extends ItemBase {
+public class SoundCard extends ItemBaseCyclic {
 
   public static final String SOUND_ID = "sound_id";
 

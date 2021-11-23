@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.apple;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilStepHeight;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 
-public class LoftyStatureApple extends ItemBase {
+public class LoftyStatureApple extends ItemBaseCyclic {
 
   public LoftyStatureApple(Properties properties) {
     super(properties);

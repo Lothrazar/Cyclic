@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.workbench;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockWorkbench extends BlockBase {
+public class BlockWorkbench extends BlockCyclic {
 
   public BlockWorkbench(Properties properties) {
     super(properties.strength(1.8F));

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.collectitem;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-public class BlockItemCollector extends BlockBase {
+public class BlockItemCollector extends BlockCyclic {
 
   public BlockItemCollector(Properties properties) {
     super(properties.strength(1.8F).sound(SoundType.STONE));

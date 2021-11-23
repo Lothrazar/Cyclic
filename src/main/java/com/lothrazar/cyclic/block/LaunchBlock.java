@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class LaunchBlock extends BlockBase {
+public class LaunchBlock extends BlockCyclic {
 
   private static final float ANGLE = 90;
   protected static final VoxelShape PRESSED_AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);

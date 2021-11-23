@@ -4,8 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
@@ -40,7 +40,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileForester extends TileEntityBase implements MenuProvider {
+public class TileForester extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE;
@@ -112,7 +112,7 @@ public class TileForester extends TileEntityBase implements MenuProvider {
       this.equipTool();
       ItemStack dropMe = inventory.getStackInSlot(0).copy();
       if (this.isTree(targetPos)) {
-        if (TileEntityBase.tryHarvestBlock(fakePlayer, level, targetPos)) {
+        if (TileBlockEntityCyclic.tryHarvestBlock(fakePlayer, level, targetPos)) {
           //ok then DRAIN POWER
           energy.extractEnergy(cost, false);
         }
@@ -120,7 +120,7 @@ public class TileForester extends TileEntityBase implements MenuProvider {
       else if (this.isSapling(dropMe)) {
         //plant me  . if im on the lowest level 
         if (targetPos.getY() == this.worldPosition.getY()) {
-          InteractionResult result = TileEntityBase.rightClickBlock(fakePlayer, level, targetPos, InteractionHand.OFF_HAND, Direction.DOWN);
+          InteractionResult result = TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, targetPos, InteractionHand.OFF_HAND, Direction.DOWN);
           if (result == InteractionResult.CONSUME) {
             //ok then DRAIN POWER
             energy.extractEnergy(cost, false);
@@ -184,12 +184,12 @@ public class TileForester extends TileEntityBase implements MenuProvider {
     if (fakePlayer == null) {
       return;
     }
-    TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.OFF_HAND);
+    TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.OFF_HAND);
     if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
       ItemStack tool = new ItemStack(Items.DIAMOND_AXE);
       //TODO:we can do both silk/fortune with toggle
       tool.enchant(Enchantments.BLOCK_FORTUNE, 3);
-      TileEntityBase.tryEquipItem(tool, fakePlayer, InteractionHand.MAIN_HAND);
+      TileBlockEntityCyclic.tryEquipItem(tool, fakePlayer, InteractionHand.MAIN_HAND);
     }
   }
 

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.detectweather;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-public class BlockWeather extends BlockBase {
+public class BlockWeather extends BlockCyclic {
 
   public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 3);
 

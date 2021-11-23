@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.glass;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class DarkGlassBlock extends BlockBase {
+public class DarkGlassBlock extends BlockCyclic {
 
   public DarkGlassBlock(Properties properties) {
     super(properties.strength(0.5F, 3600000.0F).sound(SoundType.GLASS).noOcclusion());

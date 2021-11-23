@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.inventorycake;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.net.PacketKeyBind;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class ItemCakeInventory extends ItemBase {
+public class ItemCakeInventory extends ItemBaseCyclic {
 
   public ItemCakeInventory(Properties properties) {
     super(properties);

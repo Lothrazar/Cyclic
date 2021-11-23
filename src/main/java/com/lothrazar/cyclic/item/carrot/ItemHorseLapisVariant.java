@@ -23,13 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.carrot;
 
-import com.lothrazar.cyclic.base.ItemEntityInteractable;
+import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseLapisVariant extends ItemEntityInteractable {
+public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInteractable {
 
   public ItemHorseLapisVariant(Properties prop) {
     super(prop);

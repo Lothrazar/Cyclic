@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +10,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class EdibleFlightItem extends ItemBase {
+public class EdibleFlightItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = 2;
   public static IntValue TICKS;

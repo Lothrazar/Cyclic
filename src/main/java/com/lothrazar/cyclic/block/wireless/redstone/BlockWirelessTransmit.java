@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class BlockWirelessTransmit extends BlockBase {
+public class BlockWirelessTransmit extends BlockCyclic {
 
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 

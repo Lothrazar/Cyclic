@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.trash;
 
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,7 +19,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileTrash extends TileEntityBase {
+public class TileTrash extends TileBlockEntityCyclic {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   ItemStackHandler inventory = new ItemStackHandler(1) {

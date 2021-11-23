@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.fan;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockFan extends BlockBase {
+public class BlockFan extends BlockCyclic {
 
   private static final double BOUNDS = 4;
   private static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,

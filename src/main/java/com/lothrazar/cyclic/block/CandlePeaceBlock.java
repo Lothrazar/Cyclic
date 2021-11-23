@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.block;
 
 import java.util.Random;
-import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.core.BlockPos;
@@ -49,7 +48,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class CandlePeaceBlock extends BlockBase {
+public class CandlePeaceBlock extends BlockCyclic {
 
   public static int HEIGHT = 8; // TODO: CONFIG
   public static int RADIUS = 32; // TODO: CONFIG

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.detectoritem;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockDetectorItem extends BlockBase {
+public class BlockDetectorItem extends BlockCyclic {
 
   private static final double BOUNDS = 1;
   private static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,

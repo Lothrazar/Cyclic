@@ -40,7 +40,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
+  public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
     try {
       TileMelter tile = (TileMelter) inv;
       //if first one matches check second
@@ -98,7 +98,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   public static final SerializeMelter SERIALMELTER = new SerializeMelter();
 
   @SuppressWarnings("unchecked")
-  public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
+  public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
 
     SerializeMelter() {
       // This registry name is what people will specify in their json files.
@@ -109,7 +109,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
      * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
      */
     @Override
-    public RecipeMelter<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
+    public RecipeMelter<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeMelter r = null;
       try {
         NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.dice;
 
 import java.util.Random;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
@@ -31,7 +31,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockDice extends BlockBase {
+public class BlockDice extends BlockCyclic {
 
   private static final double BOUNDS = 1;
   private static final VoxelShape AABB = Block.box(BOUNDS, BOUNDS, BOUNDS,

@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -32,7 +32,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
+public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX, FLOWING;
@@ -118,7 +118,7 @@ public class TileGeneratorFluid extends TileEntityBase implements MenuProvider {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorFluid<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID);
+    List<RecipeGeneratorFluid<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID);
     for (RecipeGeneratorFluid<?> rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;

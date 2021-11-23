@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.lightcompr;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileLightCamo extends TileEntityBase {
+public class TileLightCamo extends TileBlockEntityCyclic {
 
   ItemStackHandler notInventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> notInventory);

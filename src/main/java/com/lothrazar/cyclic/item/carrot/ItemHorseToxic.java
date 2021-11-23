@@ -23,7 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.carrot;
 
-import com.lothrazar.cyclic.base.ItemEntityInteractable;
+import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
@@ -36,7 +37,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class ItemHorseToxic extends ItemEntityInteractable {
+public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractable {
 
   public ItemHorseToxic(Properties prop) {
     super(prop);

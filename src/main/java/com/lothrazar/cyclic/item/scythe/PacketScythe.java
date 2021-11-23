@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.net.PacketBaseCyclic;
 import com.lothrazar.cyclic.util.UtilScythe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,7 +33,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketScythe extends PacketBase {
+public class PacketScythe extends PacketBaseCyclic {
 
   private BlockPos pos;
   private ScytheType type;

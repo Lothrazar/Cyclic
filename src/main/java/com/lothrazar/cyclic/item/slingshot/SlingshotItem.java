@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.slingshot;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-public class SlingshotItem extends ItemBase {
+public class SlingshotItem extends ItemBaseCyclic {
 
   private static final int TICKS_USING = 93000;
 
@@ -48,7 +48,7 @@ public class SlingshotItem extends ItemBase {
       return;
     }
     Player player = (Player) entity;
-    shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBase.VELOCITY_MAX);
+    shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBaseCyclic.VELOCITY_MAX);
     UtilItemStack.damageItem(player, stack);
   }
 }

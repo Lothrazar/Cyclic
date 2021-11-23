@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.soundrecord;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -21,7 +21,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class BlockSoundRecorder extends BlockBase {
+public class BlockSoundRecorder extends BlockCyclic {
 
   public static IntValue RADIUS;
 

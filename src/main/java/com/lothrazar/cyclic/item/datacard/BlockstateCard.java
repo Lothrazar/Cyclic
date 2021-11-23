@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockstateCard extends ItemBase {
+public class BlockstateCard extends ItemBaseCyclic {
 
   private static final String EXACT_TAG = "doExactState";
   private static final String STATESTAG = "states";

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -63,6 +64,11 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   @Override
   public void setTooltip(String ttIn) {
     tooltip = new ArrayList<>();
+    addTooltip(ttIn);
+  }
+
+  @Override
+  public void addTooltip(String ttIn) {
     tooltip.add(new TranslatableComponent(ttIn));
   }
 }

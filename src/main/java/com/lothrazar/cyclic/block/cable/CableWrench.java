@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.cable;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 
-public class CableWrench extends ItemBase {
+public class CableWrench extends ItemBaseCyclic {
 
   public CableWrench(Properties properties) {
     super(properties.stacksTo(1));

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.laser;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
-public class BlockLaser extends BlockBase {
+public class BlockLaser extends BlockCyclic {
 
   public BlockLaser(Properties properties) {
     super(properties.strength(1.3F).noOcclusion());

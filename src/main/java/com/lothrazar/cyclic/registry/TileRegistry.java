@@ -122,7 +122,7 @@ public class TileRegistry {
   @SubscribeEvent
   public static void onTileEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> event) {
     IForgeRegistry<BlockEntityType<?>> r = event.getRegistry();
-    r.register(BlockEntityType.Builder.of(TileDiamondSpikes::new, BlockRegistry.spikes_diamond).build(null).setRegistryName("spikes_diamond"));
+    r.register(BlockEntityType.Builder.of(TileDiamondSpikes::new, BlockRegistry.SPIKES_DIAMOND.get()).build(null).setRegistryName("spikes_diamond"));
     r.register(BlockEntityType.Builder.of(TileLightCamo::new, BlockRegistry.LIGHT_CAMO.get()).build(null).setRegistryName("light_camo"));
     r.register(BlockEntityType.Builder.of(SoundmuffTile::new, BlockRegistry.soundproofing_ghost).build(null).setRegistryName("soundproofing_ghost"));
     r.register(BlockEntityType.Builder.of(TileTerraPreta::new, BlockRegistry.TERRA_PRETA.get()).build(null).setRegistryName("terra_preta"));

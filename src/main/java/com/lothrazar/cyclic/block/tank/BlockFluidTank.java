@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.tank;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
+import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -35,7 +35,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
-public class BlockFluidTank extends BlockBase {
+public class BlockFluidTank extends BlockCyclic {
 
   public static final BooleanProperty TANK_ABOVE = BooleanProperty.create("above");
   public static final BooleanProperty TANK_BELOW = BooleanProperty.create("below");

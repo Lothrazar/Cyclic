@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -37,7 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketRotateBlock extends PacketBase {
+public class PacketRotateBlock extends PacketBaseCyclic {
 
   private BlockPos pos;
   private Direction side;

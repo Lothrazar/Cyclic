@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.random.PacketRandomize;
 import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
+import com.lothrazar.cyclic.net.PacketBaseCyclic;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.net.PacketFilterCard;
@@ -63,7 +63,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketRecordSound.class, PacketRecordSound::encode, PacketRecordSound::decode, PacketRecordSound::handle);
   }
 
-  public static void sendToAllClients(Level world, PacketBase packet) {
+  public static void sendToAllClients(Level world, PacketBaseCyclic packet) {
     if (world.isClientSide) {
       return;
     }

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.apple;
 
 import java.util.Iterator;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.PotionEvent;
 
-public class AppleChocolate extends ItemBase {
+public class AppleChocolate extends ItemBaseCyclic {
 
   public AppleChocolate(Properties properties) {
     super(properties);

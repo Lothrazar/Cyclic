@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.gui.Font;
@@ -66,10 +67,13 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
 
   @Override
   public void setTooltip(String tt) {
-    if (tooltip == null) {
-      tooltip = new ArrayList<>();
-    }
-    this.tooltip.add(new TranslatableComponent(tt));
+    tooltip = new ArrayList<>();
+    addTooltip(tt);
+  }
+
+  @Override
+  public void addTooltip(String ttIn) {
+    tooltip.add(new TranslatableComponent(ttIn));
   }
 
   public int getCurrent() {

@@ -26,7 +26,6 @@ package com.lothrazar.cyclic.net;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -35,7 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketCraftAction extends PacketBase {
+public class PacketCraftAction extends PacketBaseCyclic {
 
   private CraftingActionEnum action;
 

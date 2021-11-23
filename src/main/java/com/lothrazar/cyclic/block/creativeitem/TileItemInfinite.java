@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.creativeitem;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +18,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileItemInfinite extends TileEntityBase {
+public class TileItemInfinite extends TileBlockEntityCyclic {
 
   public TileItemInfinite(BlockPos pos, BlockState state) {
     super(TileRegistry.item_infinite, pos, state);

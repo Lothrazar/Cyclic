@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.melter;
 
 import java.util.List;
 import java.util.function.Predicate;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -34,7 +34,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
-public class TileMelter extends TileEntityBase implements MenuProvider {
+public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER, RENDER;
@@ -196,7 +196,7 @@ public class TileMelter extends TileEntityBase implements MenuProvider {
       return;
     }
     currentRecipe = null;
-    List<RecipeMelter<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER);
+    List<RecipeMelter<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER);
     for (RecipeMelter rec : recipes) {
       if (rec.matches(this, level)) {
         if (this.tank.getFluid() != null && !this.tank.getFluid().isEmpty()) {

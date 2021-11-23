@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.heart;
 
 import java.util.UUID;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class HeartItem extends ItemBase {
+public class HeartItem extends ItemBaseCyclic {
 
   public static IntValue MAX;
   static final int COOLDOWN = 10;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.screen;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 
-public class BlockScreentext extends BlockBase {
+public class BlockScreentext extends BlockCyclic {
 
   public BlockScreentext(Properties properties) {
     super(properties.strength(1.8F).sound(SoundType.ANVIL).noOcclusion());

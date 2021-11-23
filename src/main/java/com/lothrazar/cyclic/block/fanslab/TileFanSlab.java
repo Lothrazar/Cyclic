@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.fanslab;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class TileFanSlab extends TileEntityBase {
+public class TileFanSlab extends TileBlockEntityCyclic {
 
   static enum Fields {
     REDSTONE, RANGE, SPEED;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.wireless.fluid;
 
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWirelessFluid extends TileEntityBase implements MenuProvider {
+public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     RENDER, TRANSFER_RATE, REDSTONE;

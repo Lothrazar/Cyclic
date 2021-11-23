@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.glass;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class GlassConnectedBlock extends BlockBase {
+public class GlassConnectedBlock extends BlockCyclic {
 
   public static final BooleanProperty CONNECTED_DOWN = BooleanProperty.create("connected_down");
   public static final BooleanProperty CONNECTED_UP = BooleanProperty.create("connected_up");

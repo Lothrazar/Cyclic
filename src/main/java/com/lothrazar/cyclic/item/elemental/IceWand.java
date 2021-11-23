@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.item.elemental;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -37,7 +37,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
 
-public class IceWand extends ItemBase {
+public class IceWand extends ItemBaseCyclic {
 
   public IceWand(Properties properties) {
     super(properties);

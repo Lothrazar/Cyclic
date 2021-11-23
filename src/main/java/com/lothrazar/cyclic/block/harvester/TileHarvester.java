@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.api.IHarvesterOverride;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -41,7 +41,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileHarvester extends TileEntityBase implements MenuProvider {
+public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;

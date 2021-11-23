@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.IHasClickToggle;
+import com.lothrazar.cyclic.api.IHasClickToggle;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;

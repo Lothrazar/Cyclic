@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.tankcask;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
-import com.lothrazar.cyclic.capability.FluidHandlerCapabilityStack;
+import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
-public class BlockCask extends BlockBase {
+public class BlockCask extends BlockCyclic {
 
   public BlockCask(Properties properties) {
     super(properties.strength(1.2F));

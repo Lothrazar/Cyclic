@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.spikes;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -29,7 +29,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SpikesBlock extends BlockBase implements SimpleWaterloggedBlock {
+public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final double CURSE_CHANCE = 0.2;

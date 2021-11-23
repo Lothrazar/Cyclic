@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -31,7 +31,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableItem extends TileEntityBase implements MenuProvider {
+public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider {
 
   private static final int FLOW_QTY = 64; // fixed, for non-extract motion
   private int extractQty = 64; // default

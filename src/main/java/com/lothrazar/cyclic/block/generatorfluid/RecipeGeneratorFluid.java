@@ -37,7 +37,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
+  public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
     try {
       TileGeneratorFluid tile = (TileGeneratorFluid) inv;
       return CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIng);
@@ -93,7 +93,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
 
   public static final SerializeGenerateFluid SERIALGENERATORF = new SerializeGenerateFluid();
 
-  public static class SerializeGenerateFluid extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeGeneratorFluid<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
+  public static class SerializeGenerateFluid extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeGeneratorFluid<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
 
     SerializeGenerateFluid() {
       // This registry name is what people will specify in their json files.
@@ -105,7 +105,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public RecipeGeneratorFluid<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
+    public RecipeGeneratorFluid<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeGeneratorFluid r = null;
       try {
         //        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));

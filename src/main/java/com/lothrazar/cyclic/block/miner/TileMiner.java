@@ -4,8 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.datacard.BlockStateMatcher;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -39,7 +39,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileMiner extends TileEntityBase implements MenuProvider {
+public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
@@ -157,7 +157,7 @@ public class TileMiner extends TileEntityBase implements MenuProvider {
       fakePlayer = setupBeforeTrigger((ServerLevel) level, "miner");
     }
     try {
-      TileEntityBase.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
+      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       List<BlockPos> shape = getShape();
       if (shape.size() == 0) {
         return;

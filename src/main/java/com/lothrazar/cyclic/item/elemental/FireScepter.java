@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.elemental;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class FireScepter extends ItemBase {
+public class FireScepter extends ItemBaseCyclic {
 
   public FireScepter(Properties properties) {
     super(properties);
@@ -18,9 +18,9 @@ public class FireScepter extends ItemBase {
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
-    shootMe(worldIn, player, new FireEntity(player, worldIn), 0, ItemBase.VELOCITY_MAX);
-    shootMe(worldIn, player, new FireEntity(player, worldIn), 10, ItemBase.VELOCITY_MAX);
-    shootMe(worldIn, player, new FireEntity(player, worldIn), -10, ItemBase.VELOCITY_MAX);
+    shootMe(worldIn, player, new FireEntity(player, worldIn), 0, ItemBaseCyclic.VELOCITY_MAX);
+    shootMe(worldIn, player, new FireEntity(player, worldIn), 10, ItemBaseCyclic.VELOCITY_MAX);
+    shootMe(worldIn, player, new FireEntity(player, worldIn), -10, ItemBaseCyclic.VELOCITY_MAX);
     //    ent = new FireEntity(player, worldIn);
     //    ent.shoot(player.rotationPitch, player.rotationYaw - 0.1F, 0.0F, 1.5F, 1.0F);
     //    ent.forceSetPosition(ent.getPosX(), ent.getPosY() + 1, ent.getPosZ());

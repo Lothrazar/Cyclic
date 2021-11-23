@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.shapedata;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -28,7 +28,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileShapedata extends TileEntityBase implements MenuProvider {
+public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider {
 
   private static final int SLOT_A = 0;
   private static final int SLOT_B = 1;

@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -33,7 +32,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketRecordSound extends PacketBase {
+public class PacketRecordSound extends PacketBaseCyclic {
 
   private String sound;
   private BlockPos pos;

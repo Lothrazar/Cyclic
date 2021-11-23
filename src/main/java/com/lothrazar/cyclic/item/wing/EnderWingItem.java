@@ -24,8 +24,8 @@
 package com.lothrazar.cyclic.item.wing;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.base.IHasClickToggle;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.api.IHasClickToggle;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -42,7 +42,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-public class EnderWingItem extends ItemBase implements IHasClickToggle {
+public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
 
   private static final int COOLDOWN = 600; //ticks not seconds 
 

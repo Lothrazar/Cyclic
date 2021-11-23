@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.wing;
 
-import com.lothrazar.cyclic.base.IHasClickToggle;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.api.IHasClickToggle;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -37,7 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 
-public class EnderWingSp extends ItemBase implements IHasClickToggle {
+public class EnderWingSp extends ItemBaseCyclic implements IHasClickToggle {
 
   public EnderWingSp(Properties properties) {
     super(properties);

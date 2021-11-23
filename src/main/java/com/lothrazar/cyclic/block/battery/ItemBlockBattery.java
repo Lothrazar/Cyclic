@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.battery;
 
 import java.util.List;
-import com.lothrazar.cyclic.capability.CapabilityProviderEnergyStack;
+import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

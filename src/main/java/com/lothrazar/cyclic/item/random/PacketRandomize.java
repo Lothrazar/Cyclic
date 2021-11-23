@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.net.PacketBaseCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketRandomize extends PacketBase {
+public class PacketRandomize extends PacketBaseCyclic {
 
   private BlockPos pos;
   private Direction side;

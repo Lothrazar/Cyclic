@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.eyetp;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilPlayer;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TileEyeTp extends TileEntityBase {
+public class TileEyeTp extends TileBlockEntityCyclic {
 
   public static IntValue RANGE;
   public static IntValue HUNGER;

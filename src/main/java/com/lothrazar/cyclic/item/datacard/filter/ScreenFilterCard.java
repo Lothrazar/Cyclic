@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
-import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.gui.ButtonTextured;
+import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketFilterCard;
 import com.lothrazar.cyclic.registry.PacketRegistry;

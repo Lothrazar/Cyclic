@@ -4,7 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileDiamondSpikes extends TileEntityBase {
+public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
   WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.base.BlockSimple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

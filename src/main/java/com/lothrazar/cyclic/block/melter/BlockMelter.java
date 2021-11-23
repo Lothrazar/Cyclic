@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.melter;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 
-public class BlockMelter extends BlockBase {
+public class BlockMelter extends BlockCyclic {
 
   public BlockMelter(Properties properties) {
     super(properties.strength(1.2F).noOcclusion());

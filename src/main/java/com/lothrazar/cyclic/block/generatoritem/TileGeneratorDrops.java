@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -28,7 +28,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileGeneratorDrops extends TileEntityBase implements MenuProvider {
+public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, BURNMAX, FLOWING;
@@ -104,7 +104,7 @@ public class TileGeneratorDrops extends TileEntityBase implements MenuProvider {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorItem<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM);
+    List<RecipeGeneratorItem<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM);
     for (RecipeGeneratorItem<?> rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;

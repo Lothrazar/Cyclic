@@ -25,10 +25,10 @@ package com.lothrazar.cyclic.block.peatfarm;
 
 import java.util.List;
 import java.util.function.Predicate;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -61,7 +61,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePeatFarm extends TileEntityBase implements MenuProvider {
+public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, RENDER;

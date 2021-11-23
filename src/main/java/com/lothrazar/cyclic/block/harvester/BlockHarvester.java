@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.harvester;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class BlockHarvester extends BlockBase {
+public class BlockHarvester extends BlockCyclic {
 
   public BlockHarvester(Properties properties) {
     super(properties.strength(1.3F));

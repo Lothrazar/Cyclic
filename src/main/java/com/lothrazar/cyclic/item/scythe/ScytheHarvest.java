@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
@@ -11,7 +11,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class ScytheHarvest extends ItemBase {
+public class ScytheHarvest extends ItemBaseCyclic {
 
   public ScytheHarvest(Properties properties) {
     super(properties);

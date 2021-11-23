@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.block.phantom;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class MembraneLampTile extends TileEntityBase {
+public class MembraneLampTile extends TileBlockEntityCyclic {
 
   public MembraneLampTile(BlockPos pos, BlockState state) {
     super(TileRegistry.LAMP.get(), pos, state);

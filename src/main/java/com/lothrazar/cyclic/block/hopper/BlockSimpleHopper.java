@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.hopper;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +22,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 @SuppressWarnings("deprecation")
-public class BlockSimpleHopper extends BlockBase {
+public class BlockSimpleHopper extends BlockCyclic {
 
   public static final DirectionProperty FACING = BlockStateProperties.FACING_HOPPER;
 

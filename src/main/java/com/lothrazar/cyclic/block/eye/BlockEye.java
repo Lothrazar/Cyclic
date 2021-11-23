@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.eye;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-public class BlockEye extends BlockBase {
+public class BlockEye extends BlockCyclic {
 
   public BlockEye(Properties properties) {
     super(properties.strength(1.8F));

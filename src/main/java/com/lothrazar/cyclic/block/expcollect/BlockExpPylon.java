@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.expcollect;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
-public class BlockExpPylon extends BlockBase {
+public class BlockExpPylon extends BlockCyclic {
 
   public BlockExpPylon(Properties properties) {
     super(properties.strength(1.8F).sound(SoundType.GLASS).noOcclusion());

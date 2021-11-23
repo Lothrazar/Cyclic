@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.recipe;
 
 import java.util.Map;
 import com.google.gson.JsonObject;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
@@ -36,7 +36,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
+public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
 
   private final ResourceLocation id;
 
@@ -45,7 +45,7 @@ public abstract class CyclicRecipe implements Recipe<TileEntityBase> {
   }
 
   @Override
-  public ItemStack assemble(TileEntityBase inv) {
+  public ItemStack assemble(TileBlockEntityCyclic inv) {
     return ItemStack.EMPTY;
   }
 

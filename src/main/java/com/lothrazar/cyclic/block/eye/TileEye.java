@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.eye;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class TileEye extends TileEntityBase {
+public class TileEye extends TileBlockEntityCyclic {
 
   public static IntValue RANGE;
   public static IntValue FREQUENCY;

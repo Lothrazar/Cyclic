@@ -24,7 +24,8 @@
 package com.lothrazar.cyclic.item.carrot;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.ItemEntityInteractable;
+import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -36,7 +37,7 @@ import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseEnder extends ItemEntityInteractable {
+public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractable {
 
   public static final String NBT_KEYACTIVE = ModCyclic.MODID + "_carrot_ender";
 

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.placerfluid;
 
 import java.util.function.Predicate;
-import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-public class TilePlacerFluid extends TileEntityBase implements MenuProvider {
+public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvider {
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   FluidTankBase tank;

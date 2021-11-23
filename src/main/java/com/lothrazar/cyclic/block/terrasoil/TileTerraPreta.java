@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.terrasoil;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TileTerraPreta extends TileEntityBase {
+public class TileTerraPreta extends TileBlockEntityCyclic {
 
   public static final int TIMER_FULL = 100;
   public static final int HEIGHT = 16;

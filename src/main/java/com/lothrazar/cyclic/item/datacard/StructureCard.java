@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class StructureCard extends ItemBase {
+public class StructureCard extends ItemBaseCyclic {
 
   private static final String NBTSTRUCTURE = "structure";
 

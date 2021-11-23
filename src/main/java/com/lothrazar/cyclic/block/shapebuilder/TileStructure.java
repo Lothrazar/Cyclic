@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.shapebuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -35,7 +35,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileStructure extends TileEntityBase implements MenuProvider {
+public class TileStructure extends TileBlockEntityCyclic implements MenuProvider {
 
   public static IntValue POWERCONF;
   static final int SLOT_BUILD = 0;

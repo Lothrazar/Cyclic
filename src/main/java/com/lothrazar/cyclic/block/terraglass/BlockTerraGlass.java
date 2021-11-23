@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.terraglass;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockTerraGlass extends BlockBase {
+public class BlockTerraGlass extends BlockCyclic {
 
   public BlockTerraGlass(Properties properties) {
     //https://en.wikipedia.org/wiki/Terra_preta

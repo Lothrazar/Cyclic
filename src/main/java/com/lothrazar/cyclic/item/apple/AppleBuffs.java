@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.apple;
 
 import java.util.List;
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class AppleBuffs extends ItemBase {
+public class AppleBuffs extends ItemBaseCyclic {
 
   public AppleBuffs(Properties properties) {
     super(properties);

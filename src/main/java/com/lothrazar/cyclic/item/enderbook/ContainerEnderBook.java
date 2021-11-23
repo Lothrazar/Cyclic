@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.enderbook;
 
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.nbt.CompoundTag;

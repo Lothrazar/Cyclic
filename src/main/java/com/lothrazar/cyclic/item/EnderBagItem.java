@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
@@ -37,7 +36,7 @@ import net.minecraft.world.inventory.PlayerEnderChestContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class EnderBagItem extends ItemBase {
+public class EnderBagItem extends ItemBaseCyclic {
 
   public EnderBagItem(Properties properties) {
     super(properties.stacksTo(1));

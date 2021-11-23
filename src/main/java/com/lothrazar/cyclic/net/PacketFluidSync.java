@@ -24,8 +24,7 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +33,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketFluidSync extends PacketBase {
+public class PacketFluidSync extends PacketBaseCyclic {
 
   private BlockPos pos;
   private FluidStack fluid;
@@ -53,8 +52,8 @@ public class PacketFluidSync extends PacketBase {
 
   private static void doWork(PacketFluidSync message) {
     BlockEntity te = Minecraft.getInstance().level.getBlockEntity(message.pos);
-    if (te instanceof TileEntityBase) {
-      ((TileEntityBase) te).setFluid(message.fluid);
+    if (te instanceof TileBlockEntityCyclic) {
+      ((TileBlockEntityCyclic) te).setFluid(message.fluid);
     }
   }
 

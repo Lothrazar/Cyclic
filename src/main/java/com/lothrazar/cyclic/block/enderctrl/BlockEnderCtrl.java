@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
 import java.util.Map;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.data.DataTags;
@@ -27,7 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockEnderCtrl extends BlockBase {
+public class BlockEnderCtrl extends BlockCyclic {
 
   public BlockEnderCtrl(Properties properties) {
     super(properties.strength(1.0F));

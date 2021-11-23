@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.ItemBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class SettingsCard extends ItemBase {
+public class SettingsCard extends ItemBaseCyclic {
 
   private static final String NBT_ID = "id";
   private static final String NBT_SETSAVED = "settingsSaved";
@@ -63,7 +63,7 @@ public class SettingsCard extends ItemBase {
     CompoundTag stackdata = held.getOrCreateTag();
     if (stackdata == null || stackdata.isEmpty()) {
       //do read from tile
-      if (tile instanceof TileEntityBase) {
+      if (tile instanceof TileBlockEntityCyclic) {
         //for now, only do cyclic tile entities
         //in future / intheory could be any TE from any mod / vanilla . but thats broken
         CompoundTag tiledata = new CompoundTag();
@@ -81,7 +81,7 @@ public class SettingsCard extends ItemBase {
     else if (stackdata.getBoolean(NBT_SETSAVED)) {
       //yep put data into tile 
       String stackdataID = stackdata.getString(NBT_ID);
-      if (tile instanceof TileEntityBase) {
+      if (tile instanceof TileBlockEntityCyclic) {
         //for now, only do cyclic tile entities
         //WRITE TO TILE from my stackdata
         CompoundTag tiledata = new CompoundTag();

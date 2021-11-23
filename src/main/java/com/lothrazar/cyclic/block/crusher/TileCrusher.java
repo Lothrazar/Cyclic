@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.crusher;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.capability.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -27,7 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCrusher extends TileEntityBase implements MenuProvider {
+public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, TIMERMAX;
@@ -146,7 +146,7 @@ public class TileCrusher extends TileEntityBase implements MenuProvider {
       return;
     }
     currentRecipe = null;
-    List<RecipeCrusher<TileEntityBase>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER);
+    List<RecipeCrusher<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER);
     for (RecipeCrusher<?> rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;

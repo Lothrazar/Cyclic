@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.scythe;
 
-import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.core.BlockPos;
@@ -31,7 +31,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class ScytheForage extends ItemBase {
+public class ScytheForage extends ItemBaseCyclic {
 
   public ScytheForage(Properties properties) {
     super(properties);

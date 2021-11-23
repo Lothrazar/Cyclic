@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.storagebag;
 
 import java.util.LinkedList;
 import java.util.List;
-import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketStorageBagScreen;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;

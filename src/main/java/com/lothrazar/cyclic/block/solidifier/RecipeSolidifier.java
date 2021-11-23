@@ -69,7 +69,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, Level worldIn) {
+  public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
       return matchItems(tile) && CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIngredient);
@@ -139,7 +139,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public static final SerializeSolidifier SERIALIZER = new SerializeSolidifier();
 
   @SuppressWarnings("unchecked")
-  public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
+  public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
 
     SerializeSolidifier() {
       // This registry name is what people will specify in their json files.
@@ -147,7 +147,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> fromJson(ResourceLocation recipeId, JsonObject json) {
+    public RecipeSolidifier<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
         NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);

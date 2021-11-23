@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.clock;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TileRedstoneClock extends TileEntityBase implements MenuProvider {
+public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     TIMER, DELAY, DURATION, POWER, REDSTONE, N, E, S, W, U, D;

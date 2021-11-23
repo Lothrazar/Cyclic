@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.eyetp;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BlockEyeTp extends BlockBase {
+public class BlockEyeTp extends BlockCyclic {
 
   public BlockEyeTp(Properties properties) {
     super(properties.strength(1.8F));

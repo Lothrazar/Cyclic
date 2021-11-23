@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.soundmuff;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,7 +16,7 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class SoundmufflerBlock extends BlockBase {
+public class SoundmufflerBlock extends BlockCyclic {
 
   private static final int VOL_REDUCE_PER_BLOCK = 2;
   private static final int RADIUS = 6;

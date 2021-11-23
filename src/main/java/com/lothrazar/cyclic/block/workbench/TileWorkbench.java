@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.workbench;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +13,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileWorkbench extends TileEntityBase implements MenuProvider {
+public class TileWorkbench extends TileBlockEntityCyclic implements MenuProvider {
 
   protected ItemStackHandler inventory = new ItemStackHandler(9);
 

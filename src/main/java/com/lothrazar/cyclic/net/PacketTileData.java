@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketTileData extends PacketBase {
+public class PacketTileData extends PacketBaseCyclic {
 
   private int field;
   private int value;
@@ -41,8 +40,8 @@ public class PacketTileData extends PacketBase {
       ServerPlayer player = ctx.get().getSender();
       Level world = player.getCommandSenderWorld();
       BlockEntity tile = world.getBlockEntity(message.pos);
-      if (tile instanceof TileEntityBase) {
-        TileEntityBase base = (TileEntityBase) tile;
+      if (tile instanceof TileBlockEntityCyclic) {
+        TileBlockEntityCyclic base = (TileBlockEntityCyclic) tile;
         if (message.autoIncrement) {
           //ignore message.value, do a ++
           int incr = base.getField(message.field) + 1;

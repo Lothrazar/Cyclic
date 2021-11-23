@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
@@ -21,7 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketStorageBagScreen extends PacketBase {
+public class PacketStorageBagScreen extends PacketBaseCyclic {
 
   private ItemStack stack;
   private byte type;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.breaker;
 
-import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TileBreaker extends TileEntityBase implements MenuProvider {
+public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     REDSTONE, TIMER;

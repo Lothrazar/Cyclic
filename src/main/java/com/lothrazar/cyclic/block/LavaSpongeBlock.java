@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block;
 
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -11,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
-public class LavaSpongeBlock extends BlockBase {
+public class LavaSpongeBlock extends BlockCyclic {
 
   public static final int RADIUS = 6; // TODO: config i guess
 

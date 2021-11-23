@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.lightcompr;
 
-import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.block.BlockCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class BlockLightCamo extends BlockBase {
+public class BlockLightCamo extends BlockCyclic {
 
   public BlockLightCamo(Properties properties) {
     super(properties.lightLevel(state -> 15).strength(1F).noOcclusion());

@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.item.transporter;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.base.PacketBase;
+import com.lothrazar.cyclic.net.PacketBaseCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,7 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
-public class PacketChestSack extends PacketBase {
+public class PacketChestSack extends PacketBaseCyclic {
 
   private BlockPos pos;
 
