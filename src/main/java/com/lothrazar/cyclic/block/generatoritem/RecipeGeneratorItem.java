@@ -123,9 +123,8 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
         r = new RecipeGeneratorItem(recipeId, inputFirst, ticks, rfpertick);
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
+        ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + r.getId().toString());
       return r;
     }
 

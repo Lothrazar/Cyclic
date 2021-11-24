@@ -41,7 +41,6 @@ public class PlayerDataEvents {
         FileOutputStream fileoutputstream = new FileOutputStream(mctomb);
         NbtIo.writeCompressed(data, fileoutputstream);
         fileoutputstream.close();
-        ModCyclic.LOGGER.info("Cyclic PlayerEvent.SaveToFile success" + data);
       }
       catch (IOException e) {
         ModCyclic.LOGGER.error("IO cyclic file error", e);

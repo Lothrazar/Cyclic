@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.workbench;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.gui.ContainerBase;
@@ -186,7 +185,6 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
       return itemstack;
     }
     catch (Exception e) {
-      ModCyclic.LOGGER.error(index + "Shift click error", e);
       return ItemStack.EMPTY;
     }
   }

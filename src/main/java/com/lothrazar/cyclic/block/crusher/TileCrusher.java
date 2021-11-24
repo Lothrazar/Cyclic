@@ -153,7 +153,6 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
         this.inputSlots.extractItem(0, 1, false);
-        ModCyclic.LOGGER.info(burnTime + " found  " + currentRecipe.getId());
         return;
       }
     }

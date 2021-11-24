@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -27,13 +26,8 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit>
     if (te.getField(TileWirelessTransmit.Fields.RENDER.ordinal()) < 1) {
       return;
     }
-    try {
-      for (int slot = 0; slot < te.inventory.getSlots(); slot++) {
-        draw(slot, te, matrixStack, iRenderTypeBuffer);
-      }
-    }
-    catch (Exception e) {
-      ModCyclic.LOGGER.error("TileWirelessTransmit.java ", e);
+    for (int slot = 0; slot < te.inventory.getSlots(); slot++) {
+      draw(slot, te, matrixStack, iRenderTypeBuffer);
     }
   }
 
@@ -51,7 +45,7 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit>
     return adjustedVec;
   }
 
-  public static void draw(int slot, TileWirelessTransmit tile, PoseStack matrixStackIn, MultiBufferSource bufferIn) throws Exception {
+  public static void draw(int slot, TileWirelessTransmit tile, PoseStack matrixStackIn, MultiBufferSource bufferIn) {
     BlockPosDim posPosTarget = tile.getTargetInSlot(slot);
     if (posPosTarget == null) {
       return;

@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.core.BlockPos;
@@ -112,10 +111,6 @@ public class ExcavationEnchant extends EnchantmentCyclic {
         UtilItemStack.damageItem(player, stackHarvestingWith);
       }
     }
-    else {
-      ModCyclic.LOGGER.info(stackHarvestingWith + "  TOOL NOT EFFECTIVE ON " + world.getBlockState(pos));
-    }
-    //else wtf why is this false for redstone ore
   }
 
   /**

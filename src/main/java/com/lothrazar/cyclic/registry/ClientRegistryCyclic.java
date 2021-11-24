@@ -40,7 +40,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -124,9 +123,7 @@ public class ClientRegistryCyclic {
       @Override
       public boolean isActive() {
         //client side cant know when active. stored on server player file 
-        //maybe when no gui is open
-        Player player = Minecraft.getInstance().player;
-        ModCyclic.LOGGER.info("only active when this is null? " + player.containerMenu);
+        //maybe when no gui is open 
         return true;
       }
 

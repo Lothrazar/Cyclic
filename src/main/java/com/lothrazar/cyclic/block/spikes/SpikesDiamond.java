@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.spikes;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +33,6 @@ public class SpikesDiamond extends SpikesBlock {
       //attck from fake player
       TileDiamondSpikes tile = (TileDiamondSpikes) worldIn.getBlockEntity(pos);
       if (tile.fakePlayer == null || tile.fakePlayer.get() == null) {
-        ModCyclic.LOGGER.error("null player sup +" + tile, tile.fakePlayer);
         return;
       }
       if (tile.getTimer() == 1) {

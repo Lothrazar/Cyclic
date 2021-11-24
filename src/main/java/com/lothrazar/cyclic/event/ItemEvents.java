@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.event;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
@@ -58,7 +57,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -88,7 +86,6 @@ public class ItemEvents {
     MobSpawnType res = event.getSpawnReason();
     if (CandlePeaceBlock.isBad(mob, res)
         && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), CandlePeaceBlock.RADIUS, CandlePeaceBlock.HEIGHT)) {
-      ModCyclic.LOGGER.info("PeaceCandle: Cancel spawn " + mob);
       event.setResult(Result.DENY);
     }
   }
@@ -149,10 +146,6 @@ public class ItemEvents {
         event.setCanceled(true);
         UtilItemStack.damageItem(ply, find);
       }
-    }
-    if (event.getEntityLiving() instanceof FakePlayer) {
-      // 
-      ModCyclic.LOGGER.info("KB fake" + event.getEntityLiving().getDisplayName().getString());
     }
   }
 

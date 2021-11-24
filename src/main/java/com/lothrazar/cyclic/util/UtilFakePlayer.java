@@ -44,14 +44,7 @@ public class UtilFakePlayer {
 
   public static WeakReference<FakePlayer> initFakePlayer(ServerLevel ws, UUID uname, String blockName) {
     GameProfile breakerProfile = new GameProfile(uname, ModCyclic.MODID + ".fake_player." + blockName);
-    WeakReference<FakePlayer> fakePlayer;
-    try {
-      fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
-    }
-    catch (Exception e) {
-      ModCyclic.LOGGER.error("Exception thrown trying to create fake player : ", e);
-      fakePlayer = null;
-    }
+    WeakReference<FakePlayer> fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
     if (fakePlayer == null || fakePlayer.get() == null) {
       fakePlayer = null;
       return null; // trying to get around https://github.com/PrinceOfAmber/Cyclic/issues/113

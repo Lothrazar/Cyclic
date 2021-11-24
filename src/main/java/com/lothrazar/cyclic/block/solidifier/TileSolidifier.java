@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.solidifier;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
@@ -194,7 +193,6 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     if (test.getAmount() >= this.currentRecipe.getRecipeFluid().getAmount()) {
       //wait is output slot compatible
       if (!outputSlots.insertItem(0, currentRecipe.getResultItem(), true).isEmpty()) {
-        ModCyclic.LOGGER.info(worldPosition + "recipe stop on output is full");
         return false;
         //there was non-empty left after this, so no room for all
       }
@@ -206,7 +204,6 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       outputSlots.insertItem(0, currentRecipe.getResultItem(), false);
       return true;
     }
-    ModCyclic.LOGGER.info(worldPosition + " recipe stop on fluid not enoughl");
     return false;
   }
 

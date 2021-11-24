@@ -54,11 +54,9 @@ public class BlockCask extends BlockCyclic {
       }
     }
     catch (Exception e) {
-      //
       ModCyclic.LOGGER.error("Error during fill from item ", e);
     }
-    //set default state
-    //    state = state.with(TANK_ABOVE, false).with(TANK_BELOW, false);
+    //set default state 
     world.setBlockAndUpdate(pos, state);
   }
 

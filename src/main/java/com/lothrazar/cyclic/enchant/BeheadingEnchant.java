@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.enchant;
 
 import java.util.Map;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -148,9 +147,6 @@ public class BeheadingEnchant extends EnchantmentCyclic {
       else if (mappedBeheading.containsKey(key)) {
         //otherwise not a real mob, try the config last
         UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mappedBeheading.get(key)));
-      }
-      else {
-        ModCyclic.LOGGER.info("Beheading : mob not found in EntityList, update config file " + target.getName());
       }
     }
   }

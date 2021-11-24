@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -101,7 +100,7 @@ public class TileConveyor extends TileBlockEntityCyclic {
       double hackEdge = 0.1;
       if (normalizedX < hackEdge || normalizedZ < hackEdge
           || normalizedX > 1 - hackEdge || normalizedZ > 1 - hackEdge) {
-        ModCyclic.LOGGER.info("jump hacks " + entity);
+        // TODO: investigate jump hacks here
         entity.setPos(entity.getX(), entity.getY() + .2, entity.getZ());
       }
       ySpeed = speed * 1.3;

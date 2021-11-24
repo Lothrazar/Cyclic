@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.soundrecord;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
@@ -133,9 +132,6 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
   public void setFieldString(int field, String value) {
     if (field < MAX_SOUNDS) {
       sounds.set(field, value);
-    }
-    else {
-      ModCyclic.LOGGER.error("Invalid string " + field + value);
     }
   }
 

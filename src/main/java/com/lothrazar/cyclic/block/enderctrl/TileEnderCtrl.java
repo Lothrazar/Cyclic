@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -52,8 +51,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
    *
    * @param shelvesIn
    */
-  public void setShelves(Set<BlockPos> shelvesIn) {
-    ModCyclic.LOGGER.info("resetting and sorting the shelves " + shelvesIn.size());
+  public void setAndSort(Set<BlockPos> shelvesIn) {
     this.connectedShelves = shelvesIn.stream().sorted(Comparator.comparing(o -> o.distSqr(this.worldPosition))).collect(Collectors.toList());
   }
 

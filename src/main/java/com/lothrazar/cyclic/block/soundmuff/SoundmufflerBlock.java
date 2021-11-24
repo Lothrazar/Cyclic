@@ -49,7 +49,7 @@ public class SoundmufflerBlock extends BlockCyclic {
       event.setResultSound(newSound);
     }
     catch (Exception e) {
-      ModCyclic.LOGGER.error("Error trying to detect volume of sound from 3rd party ", e);
+      ModCyclic.LOGGER.error("Error trying to detect volume of sound " + sound, e);
     }
   }
 }

@@ -116,9 +116,8 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
         r = new RecipeGeneratorFluid(recipeId, fs, ticks, rfpertick);
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
+        ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + r);
       return r;
     }
 

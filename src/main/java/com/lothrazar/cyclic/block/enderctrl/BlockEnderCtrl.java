@@ -54,7 +54,7 @@ public class BlockEnderCtrl extends BlockCyclic {
       TileEnderCtrl ctrl = (TileEnderCtrl) world.getBlockEntity(pos);
       //i placed a shelf? find nearby
       if (ctrl != null) {
-        ctrl.setShelves(EnderShelfHelper.findConnectedShelves(world, pos, ctrl.getCurrentFacing()));
+        ctrl.setAndSort(EnderShelfHelper.findConnectedShelves(world, pos, ctrl.getCurrentFacing()));
       }
     }
   }
@@ -66,7 +66,7 @@ public class BlockEnderCtrl extends BlockCyclic {
     TileEnderCtrl ctrl = (TileEnderCtrl) worldIn.getBlockEntity(pos);
     if (isCurrentlyShelf && !isNewShelf && ctrl != null) {
       //trigger controller reindex
-      ctrl.setShelves(EnderShelfHelper.findConnectedShelves(worldIn, pos, ctrl.getCurrentFacing()));
+      ctrl.setAndSort(EnderShelfHelper.findConnectedShelves(worldIn, pos, ctrl.getCurrentFacing()));
     }
     if (state.getBlock() != newState.getBlock()) {
       worldIn.removeBlockEntity(pos);

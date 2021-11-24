@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.packager;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
@@ -92,9 +91,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
       }
       //test matching recipe and its size
       int total = getCostIfMatched(stack, rec);
-      if (total > 0 &&
-          outputSlots.insertItem(0, rec.getResultItem().copy(), true).isEmpty()) {
-        ModCyclic.LOGGER.info("Packager recipe match of size " + total + " producing -> " + rec.getResultItem().copy());
+      if (total > 0 && outputSlots.insertItem(0, rec.getResultItem().copy(), true).isEmpty()) {
         //consume items, produce output
         inputSlots.extractItem(0, total, false);
         outputSlots.insertItem(0, rec.getResultItem().copy(), false);

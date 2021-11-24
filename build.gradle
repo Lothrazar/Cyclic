@@ -98,9 +98,10 @@ dependencies {
     implementation fg.deobf("mezz.jei:${jei_version}")
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     
-
-    implementation fg.deobf("curse.maven:simple-storage-network-268495:3476722")
-    implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
+  //  implementation fg.deobf("libs:SimpleStorageNetwork:1.16.4-1.3.1")
+  
+  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3476722")
+  //  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
     
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.disenchant;
 
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
@@ -152,22 +151,19 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     inputSlots.extractItem(SLOT_BOOK, 1, false);
     outputSlots.insertItem(0, eBook, false);
     //do i replace input with a book?
-    if (input.getItem() == Items.ENCHANTED_BOOK && inputEnchants.size() == 0) {
-      ModCyclic.LOGGER.info("book size zero");
+    if (input.getItem() == Items.ENCHANTED_BOOK && inputEnchants.size() == 0) { // empty ench on enchbook override
       inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
       inputSlots.insertItem(SLOT_INPUT, new ItemStack(Items.BOOK), false);
     }
     else {
       //was a normal item, so ok to set its ench list to empty
-      if (input.getItem() == Items.ENCHANTED_BOOK) { //hotfix workaround for book: so it dont try to merge eh
-        ModCyclic.LOGGER.info("book normal flow");
+      if (input.getItem() == Items.ENCHANTED_BOOK) { // normal enchanted book
         ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(inputEnchants, inputCopy); //set as remove
         inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
         inputSlots.insertItem(SLOT_INPUT, inputCopy, false);
       }
-      else {
-        ModCyclic.LOGGER.info("non-book set as removed from item");
+      else { // non-book set as removed from item
         EnchantmentHelper.setEnchantments(inputEnchants, input); //set as removed
       }
     }

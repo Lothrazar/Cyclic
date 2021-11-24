@@ -100,7 +100,7 @@ public class LocationGpsCard extends ItemBaseCyclic {
           tag.getDouble("hitz"));
       dim.setHitVec(vec);
     }
-    catch (Throwable e) {
+    catch (Exception e) {
       ModCyclic.LOGGER.error("SIde error in GPS", e);
     }
     return dim;

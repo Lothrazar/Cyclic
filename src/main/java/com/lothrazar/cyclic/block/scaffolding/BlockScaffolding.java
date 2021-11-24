@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
 import java.util.Random;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -22,16 +21,15 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BlockScaffolding extends BlockCyclic {
 
-  private static final double CLIMB_SPEED = 0.31D; //climbing glove is 0.288D
+  private static final double CHANCE_CRUMBLE = 0.5;
+  private static final double CLIMB_SPEED = 0.31D; // compare to climbing glove
   private static final double OFFSET = 0.125D;
-  //shearing & cactus are  0.0625D;
   public static final VoxelShape AABB = Block.box(OFFSET, OFFSET, OFFSET,
       16 - OFFSET, 16 - OFFSET, 16 - OFFSET); //required to make entity collied happen for ladder climbing
   private boolean doesAutobreak = true;
 
   public BlockScaffolding(Properties properties, boolean autobreak) {
     super(properties.strength(0.1F).randomTicks().noOcclusion().sound(SoundRegistry.SCAFFOLD));
-    ModCyclic.LOGGER.error("TODO: +harvestLevel(0)");
     this.doesAutobreak = autobreak;
   }
 
@@ -50,11 +48,9 @@ public class BlockScaffolding extends BlockCyclic {
     return AABB;
   }
 
-  // TICK
   @Override
-  @Deprecated
   public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-    if (doesAutobreak && worldIn.random.nextDouble() < 0.5) {
+    if (doesAutobreak && worldIn.random.nextDouble() < CHANCE_CRUMBLE) {
       worldIn.destroyBlock(pos, true);
     }
   }

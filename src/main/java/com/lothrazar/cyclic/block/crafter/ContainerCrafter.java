@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -128,7 +127,6 @@ public class ContainerCrafter extends ContainerBase {
         }
       }
       else if (index <= playerEnd && !this.moveItemStackTo(stack, 0, 9, false)) {
-        ModCyclic.LOGGER.info("less than playerend and merge to self start-end");
         return ItemStack.EMPTY;
       }
       if (stack.isEmpty()) {

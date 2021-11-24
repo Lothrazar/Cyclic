@@ -84,7 +84,6 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
           //read from WORLD to CARD
           //only works if all three cards set
           worldShape.write(shapeCard);
-          ModCyclic.LOGGER.info(cmd + " success");
           /// shape set
         }
       break;
@@ -92,7 +91,6 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
         //copy shape from CARD to BUFFER
         //only works
         this.copiedShape = new RelativeShape(cardShape);
-        ModCyclic.LOGGER.info(cmd + " success");
       break;
       case PASTE:
         //from BUFFER to CARD

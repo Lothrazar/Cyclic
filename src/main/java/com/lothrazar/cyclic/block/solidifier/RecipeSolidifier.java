@@ -161,9 +161,8 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         r = new RecipeSolidifier(recipeId, list, fs, resultStack, energy);
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
+        ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
     }
 

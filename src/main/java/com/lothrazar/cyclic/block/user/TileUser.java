@@ -99,8 +99,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       if (registryItem.getNamespace().equalsIgnoreCase("mysticalagriculture")
           && registryItem.getPath().contains("watering_can") &&
           fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getTag() != null) {
-        //        boolean water = fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag().getBoolean("Water");
-        ModCyclic.LOGGER.info(registryItem + " id hack ");
         //hack around mysttical ag id throttling   fail system 
         //when they fill water, id is set. uses id and gametime 
         //to reject actions to 'throttle'. but fakeplayer confuses this

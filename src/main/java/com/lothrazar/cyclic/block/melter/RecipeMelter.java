@@ -122,9 +122,8 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         r = new RecipeMelter(recipeId, list, fluid, energy);
       }
       catch (Exception e) {
-        ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
+        ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + recipeId);
       return r;
     }
 
