@@ -361,6 +361,44 @@ public class ItemRegistry {
   public static final RegistryObject<Item> EMERALD_CARROT_JUMP = ITEMS.register("emerald_carrot_jump", () -> new ItemHorseEmeraldJump(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> LAPIS_CARROT_VARIANT = ITEMS.register("lapis_carrot_variant", () -> new ItemHorseLapisVariant(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> TOXIC_CARROT = ITEMS.register("toxic_carrot", () -> new ItemHorseToxic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_BOOTS = ITEMS.register("crystal_boots", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.FEET, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_HELMET = ITEMS.register("crystal_helmet", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.HEAD, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_CHESTPLATE = ITEMS.register("crystal_chestplate", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.CHEST, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_LEGGINGS = ITEMS.register("crystal_leggings", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.LEGS, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_BOOTS = ITEMS.register("emerald_boots", () -> new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.FEET, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_HELMET = ITEMS.register("emerald_helmet", () -> new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.HEAD, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_CHESTPLATE = ITEMS.register("emerald_chestplate", () -> new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.CHEST, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_LEGGINGS = ITEMS.register("emerald_leggings", () -> new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.LEGS, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> AMETHYST_PICKAXE = ITEMS.register("amethyst_pickaxe", () -> new AmethystPickaxeItem(MaterialRegistry.ToolMats.AMETHYST, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> COPPER_PICKAXE = ITEMS.register("copper_pickaxe", () -> new PickaxeItem(MaterialRegistry.ToolMats.COPPER, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_PICKAXE = ITEMS.register("emerald_pickaxe", () -> new PickaxeItem(MaterialRegistry.ToolMats.EMERALD, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_PICKAXE = ITEMS.register("crystal_pickaxe", () -> new PickaxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SANDSTONE_PICKAXE = ITEMS.register("sandstone_pickaxe", () -> new PickaxeItem(MaterialRegistry.ToolMats.SANDSTONE, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> NETHERBRICK_PICKAXE = ITEMS.register("netherbrick_pickaxe", () -> new PickaxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> AMETHYST_AXE = ITEMS.register("amethyst_axe", () -> new AmethystAxeItem(MaterialRegistry.ToolMats.AMETHYST, 6.0F, -3.1F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(MaterialRegistry.ToolMats.COPPER, 6.0F, -3.1F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_AXE = ITEMS.register("emerald_axe", () -> new AxeItem(MaterialRegistry.ToolMats.EMERALD, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_AXE = ITEMS.register("crystal_axe", () -> new AxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SANDSTONE_AXE = ITEMS.register("sandstone_axe", () -> new AxeItem(MaterialRegistry.ToolMats.SANDSTONE, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> NETHERBRICK_AXE = ITEMS.register("netherbrick_axe", () -> new AxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> AMETHYST_HOE = ITEMS.register("amethyst_hoe", () -> new AmethystHoeItem(ToolMats.AMETHYST, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(ToolMats.COPPER, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_HOE = ITEMS.register("emerald_hoe", () -> new HoeItem(ToolMats.EMERALD, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_HOE = ITEMS.register("crystal_hoe", () -> new HoeItem(ToolMats.GEMOBSIDIAN, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SANDSTONE_HOE = ITEMS.register("sandstone_hoe", () -> new HoeItem(ToolMats.SANDSTONE, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> NETHERBRICK_HOE = ITEMS.register("netherbrick_hoe", () -> new HoeItem(ToolMats.NETHERBRICK, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> AMETHYST_SHOVEL = ITEMS.register("amethyst_shovel", () -> new AmethystShovelItem(MaterialRegistry.ToolMats.AMETHYST, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(MaterialRegistry.ToolMats.COPPER, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_SHOVEL = ITEMS.register("emerald_shovel", () -> new ShovelItem(MaterialRegistry.ToolMats.EMERALD, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_SHOVEL = ITEMS.register("crystal_shovel", () -> new ShovelItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SANDSTONE_SHOVEL = ITEMS.register("sandstone_shovel", () -> new ShovelItem(MaterialRegistry.ToolMats.SANDSTONE, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> NETHERBRICK_SHOVEL = ITEMS.register("netherbrick_shovel", () -> new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> AMETHYST_SWORD = ITEMS.register("amethyst_sword", () -> new SwordItem(MaterialRegistry.ToolMats.AMETHYST, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> COPPER_SWORD = ITEMS.register("copper_sword", () -> new SwordItem(MaterialRegistry.ToolMats.COPPER, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> EMERALD_SWORD = ITEMS.register("emerald_sword", () -> new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword", () -> new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SANDSTONE_SWORD = ITEMS.register("sandstone_sword", () -> new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> NETHERBRICK_SWORD = ITEMS.register("netherbrick_sword", () -> new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   ///////////////////////// apples                           "",()->
   final static int SMALLPOTIONDUR = 20 * 90; // 1:30
   final static int LARGEPOTIONDUR = 3 * 20 * 60; // 3:00 
@@ -423,43 +461,5 @@ public class ItemRegistry {
         .alwaysEat().build())).setRegistryName("apple_emerald"));
     r.register(new AppleChocolate(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(APPLESATUR * 4)
         .alwaysEat().build())).setRegistryName("apple_chocolate"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.FEET, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_boots"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.HEAD, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_helmet"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.CHEST, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_chestplate"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.LEGS, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_leggings"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.FEET, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_boots"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.HEAD, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_helmet"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.CHEST, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_chestplate"));
-    r.register(new ArmorItem(MaterialRegistry.ArmorMats.EMERALD, EquipmentSlot.LEGS, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_leggings"));
-    r.register(new AmethystPickaxeItem(MaterialRegistry.ToolMats.AMETHYST, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_pickaxe"));
-    r.register(new PickaxeItem(MaterialRegistry.ToolMats.COPPER, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_pickaxe"));
-    r.register(new PickaxeItem(MaterialRegistry.ToolMats.EMERALD, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_pickaxe"));
-    r.register(new PickaxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_pickaxe"));
-    r.register(new PickaxeItem(MaterialRegistry.ToolMats.SANDSTONE, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_pickaxe"));
-    r.register(new PickaxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 1, -2.8F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_pickaxe"));
-    r.register(new AmethystAxeItem(MaterialRegistry.ToolMats.AMETHYST, 6.0F, -3.1F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_axe"));
-    r.register(new AxeItem(MaterialRegistry.ToolMats.COPPER, 6.0F, -3.1F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_axe"));
-    r.register(new AxeItem(MaterialRegistry.ToolMats.EMERALD, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_axe"));
-    r.register(new AxeItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_axe"));
-    r.register(new AxeItem(MaterialRegistry.ToolMats.SANDSTONE, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_axe"));
-    r.register(new AxeItem(MaterialRegistry.ToolMats.NETHERBRICK, 5.0F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_axe"));
-    r.register(new AmethystHoeItem(ToolMats.AMETHYST, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_hoe"));
-    r.register(new HoeItem(ToolMats.COPPER, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_hoe"));
-    r.register(new HoeItem(ToolMats.EMERALD, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_hoe"));
-    r.register(new HoeItem(ToolMats.GEMOBSIDIAN, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_hoe"));
-    r.register(new HoeItem(ToolMats.SANDSTONE, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_hoe"));
-    r.register(new HoeItem(ToolMats.NETHERBRICK, -4, 0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_hoe"));
-    r.register(new AmethystShovelItem(MaterialRegistry.ToolMats.AMETHYST, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_shovel"));
-    r.register(new ShovelItem(MaterialRegistry.ToolMats.COPPER, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_shovel"));
-    r.register(new ShovelItem(MaterialRegistry.ToolMats.EMERALD, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_shovel"));
-    r.register(new ShovelItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_shovel"));
-    r.register(new ShovelItem(MaterialRegistry.ToolMats.SANDSTONE, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_shovel"));
-    r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_shovel"));
-    r.register(new SwordItem(MaterialRegistry.ToolMats.AMETHYST, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_sword"));
-    r.register(new SwordItem(MaterialRegistry.ToolMats.COPPER, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_sword"));
-    r.register(new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_sword"));
-    r.register(new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_sword"));
-    r.register(new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_sword"));
-    r.register(new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_sword"));
   }
 }
