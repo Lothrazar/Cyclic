@@ -14,9 +14,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -79,7 +79,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
       this.renderStyle = RenderTextType.values()[rt];
     }
     if (tag.contains(NBT_SHELVES)) {
-      ListTag shelves = tag.getList(NBT_SHELVES, Constants.NBT.TAG_COMPOUND);
+      ListTag shelves = tag.getList(NBT_SHELVES, Tag.TAG_COMPOUND);
       for (int i = 0; i < shelves.size(); i++) {
         BlockPos pos = NbtUtils.readBlockPos(shelves.getCompound(i));
         this.connectedShelves.add(pos);

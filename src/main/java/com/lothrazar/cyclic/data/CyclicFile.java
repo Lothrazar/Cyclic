@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class CyclicFile {
@@ -40,7 +40,7 @@ public class CyclicFile {
     stepHeightForceOff = tag.getBoolean("stepHeightForceOff");
     stepHeight = tag.getBoolean("stepHeight");
     if (tag.contains("tasks")) {
-      ListTag glist = tag.getList("tasks", Constants.NBT.TAG_COMPOUND);
+      ListTag glist = tag.getList("tasks", Tag.TAG_COMPOUND);
       for (int i = 0; i < glist.size(); i++) {
         CompoundTag row = glist.getCompound(i);
         todoTasks.add(row.getString("todo"));

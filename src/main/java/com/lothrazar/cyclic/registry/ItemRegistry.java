@@ -303,131 +303,123 @@ public class ItemRegistry {
   public static final RegistryObject<Item> COLLECTOR = ITEMS.register("collector", () -> new BlockItem(BlockRegistry.COLLECTOR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> COLLECTOR_FLUID = ITEMS.register("collector_fluid", () -> new BlockItem(BlockRegistry.COLLECTOR_FLUID.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> PLACER_FLUID = ITEMS.register("placer_fluid", () -> new BlockItem(BlockRegistry.PLACER_FLUID.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CASK = ITEMS.register("cask", () -> new BlockItem(BlockRegistry.CASK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CRATE = ITEMS.register("crate", () -> new BlockItem(BlockRegistry.CRATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CLOCK = ITEMS.register("clock", () -> new BlockItem(BlockRegistry.CLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> WIRELESS_TRANSMITTER = ITEMS.register("wireless_transmitter", () -> new BlockItem(BlockRegistry.WIRELESS_TRANSMITTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> WIRELESS_RECEIVER = ITEMS.register("wireless_receiver", () -> new BlockItem(BlockRegistry.WIRELESS_RECEIVER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> PLATE_LAUNCH_REDSTONE = ITEMS.register("plate_launch_redstone", () -> new BlockItem(BlockRegistry.PLATE_LAUNCH_REDSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> PLATE_LAUNCH = ITEMS.register("plate_launch", () -> new BlockItem(BlockRegistry.PLATE_LAUNCH.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DETECTOR_ITEM = ITEMS.register("detector_item", () -> new BlockItem(BlockRegistry.DETECTOR_ITEM.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DETECTOR_ENTITY = ITEMS.register("detector_entity", () -> new BlockItem(BlockRegistry.DETECTOR_ENTITY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SCREEN = ITEMS.register("screen", () -> new BlockItem(BlockRegistry.SCREEN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> UNCRAFTER = ITEMS.register("uncrafter", () -> new BlockItem(BlockRegistry.UNCRAFTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FISHER = ITEMS.register("fisher", () -> new BlockItem(BlockRegistry.FISHER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DISENCHANTER = ITEMS.register("disenchanter", () -> new BlockItem(BlockRegistry.DISENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FAN = ITEMS.register("fan", () -> new BlockItem(BlockRegistry.FAN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> LIGHT_CAMO = ITEMS.register("light_camo", () -> new BlockItem(BlockRegistry.LIGHT_CAMO.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SOUNDPROOFING_GHOST = ITEMS.register("soundproofing_ghost", () -> new BlockItem(BlockRegistry.SOUNDPROOFING_GHOST.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SOUNDPROOFING = ITEMS.register("soundproofing", () -> new BlockItem(BlockRegistry.SOUNDPROOFING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ANVIL = ITEMS.register("anvil", () -> new BlockItem(BlockRegistry.ANVIL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ANVIL_MAGMA = ITEMS.register("anvil_magma", () -> new BlockItem(BlockRegistry.ANVIL_MAGMA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> BEACON = ITEMS.register("beacon", () -> new BlockItem(BlockRegistry.BEACON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> TANK = ITEMS.register("tank", () -> new ItemBlockTank(BlockRegistry.TANK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DARK_GLASS = ITEMS.register("dark_glass", () -> new BlockItem(BlockRegistry.DARK_GLASS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> TRASH = ITEMS.register("trash", () -> new BlockItem(BlockRegistry.TRASH.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> BATTERY_INFINITE = ITEMS.register("battery_infinite", () -> new BlockItem(BlockRegistry.BATTERY_INFINITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ITEM_INFINITE = ITEMS.register("item_infinite", () -> new BlockItem(BlockRegistry.ITEM_INFINITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DICE = ITEMS.register("dice", () -> new BlockItem(BlockRegistry.DICE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> TERRA_PRETA = ITEMS.register("terra_preta", () -> new BlockItem(BlockRegistry.TERRA_PRETA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FIREPLACE = ITEMS.register("fireplace", () -> new BlockItem(BlockRegistry.FIREPLACE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CRAFTER = ITEMS.register("crafter", () -> new BlockItem(BlockRegistry.CRAFTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> UNBREAKABLE_BLOCK = ITEMS.register("unbreakable_block", () -> new BlockItem(BlockRegistry.UNBREAKABLE_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP))); // TODO 1.18
+  public static final RegistryObject<Item> UNBREAKABLE_REACTIVE = ITEMS.register("unbreakable_reactive", () -> new BlockItem(BlockRegistry.UNBREAKABLE_REACTIVE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> CONVEYOR = ITEMS.register("conveyor", () -> new BlockItem(BlockRegistry.CONVEYOR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP))); // TODO 1.18 placermod
+  public static final RegistryObject<Item> ENDER_SHELF = ITEMS.register("ender_shelf", () -> new BlockItem(BlockRegistry.ENDER_SHELF.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ENDER_CONTROLLER = ITEMS.register("ender_controller", () -> new BlockItem(BlockRegistry.ENDER_CONTROLLER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(BlockRegistry.WORKBENCH.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> EXPERIENCE_PYLON = ITEMS.register("experience_pylon", () -> new BlockItem(BlockRegistry.EXPERIENCE_PYLON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> EXPERIENCE_FOOD = ITEMS.register("experience_food", () -> new ExpItemGain(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> PEAT_FUEL = ITEMS.register("peat_fuel", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> PEAT_FUEL_ENRICHED = ITEMS.register("peat_fuel_enriched", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> MATTOCK = ITEMS.register("mattock", () -> new MattockItem(Tiers.DIAMOND, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9000), 1));
+  public static final RegistryObject<Item> MATTOCK_NETHER = ITEMS.register("mattock_nether", () -> new MattockItem(Tiers.NETHERITE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9001), 2));
+  public static final RegistryObject<Item> MATTOCK_STONE = ITEMS.register("mattock_stone", () -> new MattockItem(Tiers.STONE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024), 1));
+  public static final RegistryObject<Item> SLEEPING_MAT = ITEMS.register("sleeping_mat", () -> new SleepingMatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SHEARS_OBSIDIAN = ITEMS.register("shears_obsidian", () -> new ShearsMaterial(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024 * 1024)));
+  ///////////////////////// apples                           "",()->
+  final static int SMALLPOTIONDUR = 20 * 90; // 1:30
+  final static int LARGEPOTIONDUR = 3 * 20 * 60; // 3:00 
+  final static float APPLESATUR = Foods.APPLE.getSaturationModifier();
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
   public static void onItemsRegistry(RegistryEvent.Register<Item> event) {
     IForgeRegistry<Item> r = event.getRegistry();
     //redstone
-    r.register(new BlockItem(BlockRegistry.CASK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("cask"));
-    r.register(new BlockItem(BlockRegistry.CRATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("crate"));
-    r.register(new BlockItem(BlockRegistry.CLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("clock"));
-    r.register(new BlockItem(BlockRegistry.WIRELESS_TRANSMITTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("wireless_transmitter"));
-    r.register(new BlockItem(BlockRegistry.WIRELESS_RECEIVER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("wireless_receiver"));
-    //fun
-    r.register(new BlockItem(BlockRegistry.PLATE_LAUNCH_REDSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("plate_launch_redstone"));
-    r.register(new BlockItem(BlockRegistry.PLATE_LAUNCH.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("plate_launch"));
-    // machine blocks   
-    r.register(new BlockItem(BlockRegistry.DETECTOR_ITEM.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("detector_item"));
-    r.register(new BlockItem(BlockRegistry.DETECTOR_ENTITY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("detector_entity"));
-    r.register(new BlockItem(BlockRegistry.SCREEN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("screen"));
-    r.register(new BlockItem(BlockRegistry.UNCRAFTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("uncrafter"));
-    r.register(new BlockItem(BlockRegistry.FISHER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fisher"));
-    r.register(new BlockItem(BlockRegistry.DISENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("disenchanter"));
-    r.register(new BlockItem(BlockRegistry.FAN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fan"));
-    r.register(new BlockItem(BlockRegistry.LIGHT_CAMO.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("light_camo"));
-    r.register(new BlockItem(BlockRegistry.SOUNDPROOFING_GHOST.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("soundproofing_ghost"));
-    r.register(new BlockItem(BlockRegistry.SOUNDPROOFING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("soundproofing"));
-    r.register(new BlockItem(BlockRegistry.ANVIL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("anvil"));
-    r.register(new BlockItem(BlockRegistry.ANVIL_MAGMA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("anvil_magma"));
-    r.register(new BlockItem(BlockRegistry.BEACON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("beacon"));
-    r.register(new ItemBlockTank(BlockRegistry.TANK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("tank"));
-    r.register(new BlockItem(BlockRegistry.DARK_GLASS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("dark_glass"));
-    r.register(new BlockItem(BlockRegistry.TRASH.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("trash"));
-    r.register(new BlockItem(BlockRegistry.BATTERY_INFINITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("battery_infinite"));
-    r.register(new BlockItem(BlockRegistry.ITEM_INFINITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("item_infinite"));
-    r.register(new BlockItem(BlockRegistry.DICE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("dice"));
-    r.register(new BlockItem(BlockRegistry.TERRA_PRETA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("terra_preta"));
-    r.register(new BlockItem(BlockRegistry.FIREPLACE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fireplace"));
-    r.register(new BlockItem(BlockRegistry.CRAFTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("crafter"));
-    r.register(new BlockItem(BlockRegistry.UNBREAKABLE_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("unbreakable_block"));
-    r.register(new BlockItem(BlockRegistry.UNBREAKABLE_REACTIVE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("unbreakable_reactive"));
-    r.register(new BlockItem(BlockRegistry.CONVEYOR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("conveyor"));
-    r.register(new BlockItem(BlockRegistry.ENDER_SHELF.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_shelf"));
-    r.register(new BlockItem(BlockRegistry.ENDER_CONTROLLER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("ender_controller"));
-    r.register(new BlockItem(BlockRegistry.WORKBENCH.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("workbench"));
-    r.register(new BlockItem(BlockRegistry.EXPERIENCE_PYLON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("experience_pylon"));
-    r.register(new ExpItemGain(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("experience_food"));
-    // resources
-    //energy 
-    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel"));
-    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("peat_fuel_enriched"));
-    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("biomass"));
-    // basic tools
-    r.register(new MattockItem(Tiers.DIAMOND, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9000), 1).setRegistryName("mattock"));
-    r.register(new MattockItem(Tiers.NETHERITE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(9001), 2).setRegistryName("mattock_nether"));
-    r.register(new MattockItem(Tiers.STONE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024), 1).setRegistryName("mattock_stone"));
-    r.register(new SleepingMatItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sleeping_mat"));
-    r.register(new ShearsMaterial(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024 * 1024)).setRegistryName("shears_obsidian"));
-    // magic tools
-    ///////////////////////// apples
-    final int smallPotionDur = 20 * 90; // 1:30
-    final int largePotionDur = 3 * 20 * 60; // 3:00
-    int h = Foods.APPLE.getNutrition();
-    float s = Foods.APPLE.getSaturationModifier();
     //honey is basic. fast to eat, gives lots of food but no potion effects 
-    r.register(new EnderApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(0).alwaysEat()
+    r.register(new EnderApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(0).alwaysEat()
         .build())).setRegistryName("apple_ender"));
     //
-    r.register(new LoftyStatureApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(0).alwaysEat()
+    r.register(new LoftyStatureApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(0).alwaysEat()
         .build())).setRegistryName("apple_lofty_stature"));
     //
-    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h * 4).saturationMod(s * 4)
+    r.register(new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition() * 4).saturationMod(APPLESATUR * 4)
         .build())).setRegistryName("apple_honey"));
     //
-    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
-        .effect(new MobEffectInstance(MobEffects.LEVITATION, largePotionDur, 1), 1)
-        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.UNLUCK, largePotionDur, 1), 1)
-        .effect(new MobEffectInstance(MobEffects.SLOW_FALLING, smallPotionDur, 1), 1)
+    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(APPLESATUR)
+        .effect(new MobEffectInstance(MobEffects.LEVITATION, LARGEPOTIONDUR, 1), 1)
+        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.UNLUCK, LARGEPOTIONDUR, 1), 1)
+        .effect(new MobEffectInstance(MobEffects.SLOW_FALLING, SMALLPOTIONDUR, 1), 1)
         .alwaysEat()
         .build())).setRegistryName("apple_chorus"));
     //
-    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
-        .effect(new MobEffectInstance(MobEffects.JUMP, largePotionDur, 4 + 5), 1)
-        .effect(new MobEffectInstance(MobEffects.INVISIBILITY, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.WEAKNESS, largePotionDur, 2), 1)
-        .effect(new MobEffectInstance(MobEffects.UNLUCK, largePotionDur, 0), 1)
+    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(APPLESATUR)
+        .effect(new MobEffectInstance(MobEffects.JUMP, LARGEPOTIONDUR, 4 + 5), 1)
+        .effect(new MobEffectInstance(MobEffects.INVISIBILITY, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.WEAKNESS, LARGEPOTIONDUR, 2), 1)
+        .effect(new MobEffectInstance(MobEffects.UNLUCK, LARGEPOTIONDUR, 0), 1)
         .alwaysEat()
         .build())).setRegistryName("apple_bone"));
     //
-    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
-        .effect(new MobEffectInstance(MobEffects.DIG_SPEED, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.GLOWING, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.WATER_BREATHING, largePotionDur, 0), 1)
+    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(APPLESATUR)
+        .effect(new MobEffectInstance(MobEffects.DIG_SPEED, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.GLOWING, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.WATER_BREATHING, LARGEPOTIONDUR, 0), 1)
         .alwaysEat()
         .build())).setRegistryName("apple_prismarine"));
     //
     //iron and lapis are basic ones
-    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s * 4)
-        .effect(new MobEffectInstance(MobEffects.NIGHT_VISION, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.WATER_BREATHING, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.CONDUIT_POWER, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.SLOW_FALLING, largePotionDur, 0), 1)
-        .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, largePotionDur, 0), 1)
+    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(APPLESATUR * 4)
+        .effect(new MobEffectInstance(MobEffects.NIGHT_VISION, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.WATER_BREATHING, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.CONDUIT_POWER, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.SLOW_FALLING, LARGEPOTIONDUR, 0), 1)
+        .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, LARGEPOTIONDUR, 0), 1)
         //        .effect(new EffectInstance(PotionRegistry.PotionEffects.swimspeed, FIVEMIN, 0), 1)
         .fast().alwaysEat()
         .build())).setRegistryName("apple_lapis"));
-    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s)
-        .effect(new MobEffectInstance(MobEffects.HEALTH_BOOST, largePotionDur, 2), 1)
-        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, largePotionDur, 2), 1)
+    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(APPLESATUR)
+        .effect(new MobEffectInstance(MobEffects.HEALTH_BOOST, LARGEPOTIONDUR, 2), 1)
+        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, LARGEPOTIONDUR, 2), 1)
         .fast().alwaysEat()
         .build())).setRegistryName("apple_iron"));
     //stronger ones 
     r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(1).saturationMod(1)
-        .effect(new MobEffectInstance(MobEffects.HEALTH_BOOST, smallPotionDur, 4), 1)
-        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, smallPotionDur, 4), 1)
+        .effect(new MobEffectInstance(MobEffects.HEALTH_BOOST, SMALLPOTIONDUR, 4), 1)
+        .effect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, SMALLPOTIONDUR, 4), 1)
         .fast().alwaysEat()
         .build())).setRegistryName("apple_diamond"));
-    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h * 3).saturationMod(s)
-        .effect(new MobEffectInstance(MobEffects.DIG_SPEED, smallPotionDur, 2), 1)
-        .effect(new MobEffectInstance(MobEffects.LUCK, smallPotionDur, 1), 1)
-        .effect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, smallPotionDur, 1), 1)
-        .effect(new MobEffectInstance(MobEffects.SLOW_FALLING, smallPotionDur, 1), 1)
+    r.register(new AppleBuffs(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition() * 3).saturationMod(APPLESATUR)
+        .effect(new MobEffectInstance(MobEffects.DIG_SPEED, SMALLPOTIONDUR, 2), 1)
+        .effect(new MobEffectInstance(MobEffects.LUCK, SMALLPOTIONDUR, 1), 1)
+        .effect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, SMALLPOTIONDUR, 1), 1)
+        .effect(new MobEffectInstance(MobEffects.SLOW_FALLING, SMALLPOTIONDUR, 1), 1)
         .alwaysEat().build())).setRegistryName("apple_emerald"));
-    r.register(new AppleChocolate(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s * 4)
+    r.register(new AppleChocolate(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(APPLESATUR * 4)
         .alwaysEat().build())).setRegistryName("apple_chocolate"));
-    ////////////////////////////////////////
     r.register(new ItemScaffolding(BlockRegistry.SCAFFOLD_REPLACE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_replace"));
     r.register(new ItemScaffolding(BlockRegistry.SCAFFOLD_FRAGILE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_fragile"));
     r.register(new ItemScaffolding(BlockRegistry.SCAFFOLD_RESPONSIVE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_responsive"));
@@ -474,7 +466,6 @@ public class ItemRegistry {
     r.register(new ShovelItem(MaterialRegistry.ToolMats.SANDSTONE, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_shovel"));
     r.register(new ShovelItem(MaterialRegistry.ToolMats.NETHERBRICK, 1.5F, -3.0F, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_shovel"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.AMETHYST, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("amethyst_sword"));
-    //  r.register(new SwordCleaverItem(MaterialRegistry.ToolMats.AMETHYST, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("cleaver"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.COPPER, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("copper_sword"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.EMERALD, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("emerald_sword"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_sword"));
