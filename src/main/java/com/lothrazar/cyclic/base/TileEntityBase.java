@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -45,6 +47,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class TileEntityBase extends TileEntity implements IInventory {
@@ -249,36 +252,56 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public void tryExtract(IItemHandler myself, Direction extractSide, int qty, ItemStackHandler nullableFilter) {
-    if (extractSide == null) {
+    if (qty <= 0)
       return;
-    }
-    if (extractSide == null || !myself.getStackInSlot(0).isEmpty()) {
+
+    if (extractSide == null)
       return;
-    }
-    BlockPos posTarget = pos.offset(extractSide);
-    TileEntity tile = world.getTileEntity(posTarget);
-    if (tile != null) {
-      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
-      //
-      ItemStack itemTarget;
-      if (itemHandlerFrom != null) {
-        //ok go
-        for (int i = 0; i < itemHandlerFrom.getSlots(); i++) {
-          itemTarget = itemHandlerFrom.extractItem(i, qty, true);
-          if (itemTarget.isEmpty()) {
-            continue;
-          }
-          // and then pull 
-          if (nullableFilter != null &&
-              !FilterCardItem.filterAllowsExtract(nullableFilter.getStackInSlot(0), itemTarget)) {
-            continue;
-          }
-          itemTarget = itemHandlerFrom.extractItem(i, qty, false);
-          ItemStack result = myself.insertItem(0, itemTarget.copy(), false);
-          itemTarget.setCount(result.getCount());
-          return;
-        }
+
+    final BlockPos posTarget = pos.offset(extractSide);
+    final TileEntity tile = world.getTileEntity(posTarget);
+    if (tile == null)
+      return;
+
+    final IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
+    if (itemHandlerFrom == null)
+      return;
+
+    final ItemStack stackInSlot = myself.getStackInSlot(0);
+    if (!stackInSlot.isEmpty())
+      return;
+
+    final int slotLimit = Math.min(myself.getSlotLimit(0), qty);
+
+    for (int slot = 0; slot < itemHandlerFrom.getSlots(); slot++) {
+      final ItemStack itemStackToExtract = itemHandlerFrom.getStackInSlot(slot);
+      if (itemStackToExtract.isEmpty())
+        continue;
+
+      if (nullableFilter != null &&
+              !FilterCardItem.filterAllowsExtract(nullableFilter.getStackInSlot(0), itemStackToExtract))
+        continue;
+
+      //find the theoretical maximum we can extract
+      int limit = Math.min(itemStackToExtract.getCount(), itemStackToExtract.getMaxStackSize());
+      limit = Math.min(limit, slotLimit);
+
+      //check there is room to extract more
+      if (limit <= 0)
+        return;
+
+      final ItemStack extractedItemStack = itemHandlerFrom.extractItem(slot, limit, false);
+      ItemStack remainderItemStack = myself.insertItem(0, extractedItemStack, false);
+
+      //sanity check
+      if (!remainderItemStack.isEmpty()) {
+        ModCyclic.LOGGER.error("Incorrect number of items extracted, have to re-insert " + remainderItemStack);
+        remainderItemStack = itemHandlerFrom.insertItem(slot, remainderItemStack, false);
+        if (!remainderItemStack.isEmpty())
+          ModCyclic.LOGGER.error("Incorrect number of items extracted and now unable to re-insert, " + remainderItemStack + " have been lost");
       }
+
+      return;
     }
   }
 
@@ -287,41 +310,77 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public boolean moveItems(Direction myFacingDir, BlockPos posTarget, int max, IItemHandler handlerHere, int theslot) {
-    if (this.world.isRemote()) {
+    if (max <= 0)
       return false;
-    }
-    if (handlerHere == null) {
+
+    if (this.world.isRemote())
       return false;
-    }
-    Direction themFacingMe = myFacingDir.getOpposite();
-    TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget == null) {
+
+    if (handlerHere == null)
       return false;
-    }
-    IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
-    if (handlerOutput == null) {
+
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    final TileEntity tileTarget = world.getTileEntity(posTarget);
+    if (tileTarget == null)
       return false;
-    }
-    if (handlerHere != null && handlerOutput != null) {
-      //first simulate 
-      ItemStack drain = handlerHere.extractItem(theslot, max, true); // handlerHere.getStackInSlot(theslot).copy();
-      int sizeStarted = drain.getCount();
-      if (!drain.isEmpty()) {
-        //now push it into output, but find out what was ACTUALLY taken
-        for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
-          drain = handlerOutput.insertItem(slot, drain, false);
-          if (drain.isEmpty()) {
-            break; //done draining
-          }
-        }
+
+    final IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
+    if (handlerOutput == null)
+      return false;
+
+    //first get the original ItemStack as creating new ones is expensive
+    final ItemStack originalItemStack = handlerHere.getStackInSlot(theslot);
+    if (originalItemStack.isEmpty())
+      return false;
+
+    final int maxStackSize = originalItemStack.getMaxStackSize();
+    final int originalCount = originalItemStack.getCount();
+    int remainingItemCount = originalCount;
+
+    //lazily create an ItemStack for inserting and re-use it for future inserts
+    final Supplier<ItemStack> itemStackToInsert = originalItemStack::copy;
+
+    //attempt to push into output
+    for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
+      //find the theoretical maximum we can insert
+      int limit = Math.min(remainingItemCount, maxStackSize);
+      limit = Math.min(limit, handlerOutput.getSlotLimit(slot));
+
+      //reduce limit by amount already in the output slot
+      final ItemStack stackInOutputSlot = handlerOutput.getStackInSlot(slot);
+      if (!stackInOutputSlot.isEmpty()) {
+        //if the output slot is not compatible then skip this slot
+        if (!ItemHandlerHelper.canItemStacksStack(originalItemStack, stackInOutputSlot))
+          continue;
+        limit -= stackInOutputSlot.getCount();
       }
-      int sizeAfter = sizeStarted - drain.getCount();
-      if (sizeAfter > 0) {
-        handlerHere.extractItem(theslot, sizeAfter, false);
-      }
-      return sizeAfter > 0;
+      limit = Math.min(limit, max);
+
+      //skip this output slot if we cannot insert more
+      if (limit <= 0)
+        continue;
+
+      itemStackToInsert.get().setCount(limit);
+
+      //only perform an insert (even simulated) if required as it creates at least one new ItemStack in the process
+      final ItemStack remainderItemStack = handlerOutput.insertItem(slot, itemStackToInsert.get(), false);
+      remainingItemCount -= (limit - remainderItemStack.getCount());
+      if (remainingItemCount <= 0)
+        break;
     }
-    return false;
+
+    final int insertedItemCount = originalCount - remainingItemCount;
+    final boolean didInsertItems = insertedItemCount > 0;
+    if (didInsertItems) {
+      //only perform an extraction if required as it creates a new ItemStack in the process
+      final ItemStack finalItemStack = handlerHere.extractItem(theslot, insertedItemCount, false);
+
+      //sanity check
+      final int finalItemCount = finalItemStack.getCount();
+      if (finalItemCount != remainingItemCount)
+        ModCyclic.LOGGER.error("Incorrect number of items moved, " + finalItemStack + " remaining not " + remainingItemCount);
+    }
+    return didInsertItems;
   }
 
   protected boolean moveEnergy(Direction myFacingDir, int quantity) {
@@ -329,40 +388,44 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   protected boolean moveEnergy(Direction myFacingDir, BlockPos posTarget, int quantity) {
-    if (this.world.isRemote) {
-      return false; //important to not desync cables
-    }
-    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
-    if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
+    if (quantity <= 0)
       return false;
-    }
+
+    if (this.world.isRemote)
+      return false; //important to not desync cables
+
+    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
+    if (handlerHere == null)
+      return false;
+
     Direction themFacingMe = myFacingDir.getOpposite();
     TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget == null) {
+    if (tileTarget == null)
       return false;
-    }
     IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe).orElse(null);
-    if (handlerOutput == null) {
+    if (handlerOutput == null)
       return false;
+
+    //first simulate
+    int drain = handlerHere.extractEnergy(quantity, true);
+    if (drain <= 0)
+      return false;
+
+    //now push it into output, but find out what was ACTUALLY taken
+    int filled = handlerOutput.receiveEnergy(drain, false);
+    if (filled <= 0)
+      return false;
+
+    //now actually drain that much from here
+    handlerHere.extractEnergy(filled, false);
+
+    if (tileTarget instanceof TileCableEnergy) {
+      // not so compatible with other fluid systems. it will do i guess
+      TileCableEnergy cable = (TileCableEnergy) tileTarget;
+      cable.updateIncomingEnergyFace(themFacingMe);
     }
-    if (handlerHere != null && handlerOutput != null
-        && handlerHere.canExtract() && handlerOutput.canReceive()) {
-      //first simulate
-      int drain = handlerHere.extractEnergy(quantity, true);
-      if (drain > 0) {
-        //now push it into output, but find out what was ACTUALLY taken
-        int filled = handlerOutput.receiveEnergy(drain, false);
-        //now actually drain that much from here
-        handlerHere.extractEnergy(filled, false);
-        if (filled > 0 && tileTarget instanceof TileCableEnergy) {
-          // not so compatible with other fluid systems. itl do i guess
-          TileCableEnergy cable = (TileCableEnergy) tileTarget;
-          cable.updateIncomingEnergyFace(themFacingMe);
-        }
-        return filled > 0;
-      }
-    }
-    return false;
+
+    return true;
   }
 
   @Override

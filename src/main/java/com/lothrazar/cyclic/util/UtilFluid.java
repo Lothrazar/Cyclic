@@ -95,37 +95,32 @@ public class UtilFluid {
   }
 
   public static boolean tryFillPositionFromTank(World world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, int amount) {
-    if (tankFrom == null) {
+    if (amount <= 0)
       return false;
-    }
-    try {
-      IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp).orElse(null);
-      if (fluidTo != null) {
-        //its not my facing dir
-        // SO: pull fluid from that into myself
-        FluidStack wasDrained = tankFrom.drain(amount, FluidAction.SIMULATE);
-        if (wasDrained == null) {
-          return false;
-        }
-        int filled = fluidTo.fill(wasDrained, FluidAction.SIMULATE);
-        if (wasDrained != null && wasDrained.getAmount() > 0
-            && filled > 0) {
-          int realAmt = Math.min(filled, wasDrained.getAmount());
-          wasDrained = tankFrom.drain(realAmt, FluidAction.EXECUTE);
-          if (wasDrained == null) {
-            return false;
-          }
-          return fluidTo.fill(wasDrained, FluidAction.EXECUTE) > 0;
-        }
-      }
+
+    if (tankFrom == null)
       return false;
-    }
-    catch (Exception e) {
-      ModCyclic.LOGGER.error("A fluid tank had an issue when we tried to fill", e);
-      //charset crashes here i guess
-      //https://github.com/PrinceOfAmber/Cyclic/issues/605
-      // https://github.com/PrinceOfAmber/Cyclic/issues/605https://pastebin.com/YVtMYsF6
+
+    IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp).orElse(null);
+    if (fluidTo == null)
       return false;
-    }
+
+    //first we simulate
+    final FluidStack toBeDrained = tankFrom.drain(amount, FluidAction.SIMULATE);
+    if (toBeDrained.isEmpty())
+      return false;
+
+    final int filledAmount = fluidTo.fill(toBeDrained, FluidAction.EXECUTE);
+    if (filledAmount <= 0)
+      return false;
+
+    final FluidStack drained = tankFrom.drain(filledAmount, FluidAction.EXECUTE);
+    final int drainedAmount = drained.getAmount();
+
+    //sanity check
+    if (drainedAmount != filledAmount)
+      ModCyclic.LOGGER.error("Incorrect amount of fluid transferred, filled " + filledAmount + " drained " + drainedAmount);
+
+    return true;
   }
 }
