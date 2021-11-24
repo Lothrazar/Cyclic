@@ -117,10 +117,6 @@ public class UtilFluid {
     final FluidStack drained = tankFrom.drain(filledAmount, FluidAction.EXECUTE);
     final int drainedAmount = drained.getAmount();
 
-    //sanity check
-    if (drainedAmount != filledAmount)
-      ModCyclic.LOGGER.error("Incorrect amount of fluid transferred, filled " + filledAmount + " drained " + drainedAmount);
-
     return true;
   }
 }

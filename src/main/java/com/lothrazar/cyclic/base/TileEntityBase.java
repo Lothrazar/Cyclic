@@ -16,13 +16,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -337,14 +335,12 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     final int originalCount = originalItemStack.getCount();
     int remainingItemCount = originalCount;
 
-    //lazily create an ItemStack for inserting and re-use it for future inserts
-    final Supplier<ItemStack> itemStackToInsert = originalItemStack::copy;
+    ItemStack itemStackToInsert = null;
 
     //attempt to push into output
     for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
       //find the theoretical maximum we can insert
-      int limit = Math.min(remainingItemCount, maxStackSize);
-      limit = Math.min(limit, handlerOutput.getSlotLimit(slot));
+      int limit = Math.min(handlerOutput.getSlotLimit(slot), maxStackSize);
 
       //reduce limit by amount already in the output slot
       final ItemStack stackInOutputSlot = handlerOutput.getStackInSlot(slot);
@@ -354,16 +350,20 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
           continue;
         limit -= stackInOutputSlot.getCount();
       }
+      limit = Math.min(limit, remainingItemCount);
       limit = Math.min(limit, max);
 
       //skip this output slot if we cannot insert more
       if (limit <= 0)
         continue;
 
-      itemStackToInsert.get().setCount(limit);
+      //lazily create an ItemStack for inserting and re-use it for future inserts
+      if (itemStackToInsert == null)
+        itemStackToInsert = originalItemStack.copy();
+      itemStackToInsert.setCount(limit);
 
       //only perform an insert (even simulated) if required as it creates at least one new ItemStack in the process
-      final ItemStack remainderItemStack = handlerOutput.insertItem(slot, itemStackToInsert.get(), false);
+      final ItemStack remainderItemStack = handlerOutput.insertItem(slot, itemStackToInsert, false);
       remainingItemCount -= (limit - remainderItemStack.getCount());
       if (remainingItemCount <= 0)
         break;
@@ -374,11 +374,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (didInsertItems) {
       //only perform an extraction if required as it creates a new ItemStack in the process
       final ItemStack finalItemStack = handlerHere.extractItem(theslot, insertedItemCount, false);
-
-      //sanity check
-      final int finalItemCount = finalItemStack.getCount();
-      if (finalItemCount != remainingItemCount)
-        ModCyclic.LOGGER.error("Incorrect number of items moved, " + finalItemStack + " remaining not " + remainingItemCount);
     }
     return didInsertItems;
   }
