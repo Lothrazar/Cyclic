@@ -24,7 +24,7 @@ public class TileCrate extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileCrate(BlockPos pos, BlockState state) {
-    super(TileRegistry.crate, pos, state);
+    super(TileRegistry.CRATE.get(), pos, state);
   }
 
   @Override

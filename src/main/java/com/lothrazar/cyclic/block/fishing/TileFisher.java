@@ -55,7 +55,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public TileFisher(BlockPos pos, BlockState state) {
-    super(TileRegistry.fisher, pos, state);
+    super(TileRegistry.FISHER.get(), pos, state);
     this.needsRedstone = 0;
   }
 

@@ -34,7 +34,7 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
   }
 
   public TilePlacerFluid(BlockPos pos, BlockState state) {
-    super(TileRegistry.placer_fluid, pos, state);
+    super(TileRegistry.PLACER_FLUID.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
   }

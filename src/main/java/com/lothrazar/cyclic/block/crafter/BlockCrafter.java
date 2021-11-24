@@ -86,7 +86,7 @@ public class BlockCrafter extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.crafter, world.isClientSide ? TileCrafter::clientTick : TileCrafter::serverTick);
+    return createTickerHelper(type, TileRegistry.CRAFTER.get(), world.isClientSide ? TileCrafter::clientTick : TileCrafter::serverTick);
   }
 
   @Override

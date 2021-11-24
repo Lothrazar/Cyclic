@@ -48,7 +48,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public TileBattery(BlockPos pos, BlockState state) {
-    super(TileRegistry.batterytile, pos, state);
+    super(TileRegistry.BATTERY.get(), pos, state);
     flowing = 0;
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {

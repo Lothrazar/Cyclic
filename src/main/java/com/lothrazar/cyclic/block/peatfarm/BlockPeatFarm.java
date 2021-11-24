@@ -55,7 +55,7 @@ public class BlockPeatFarm extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.PEAT_FARM, world.isClientSide ? TilePeatFarm::clientTick : TilePeatFarm::serverTick);
+    return createTickerHelper(type, TileRegistry.PEAT_FARM.get(), world.isClientSide ? TilePeatFarm::clientTick : TilePeatFarm::serverTick);
   }
 
   @Override

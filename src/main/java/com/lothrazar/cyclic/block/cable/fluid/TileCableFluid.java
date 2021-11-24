@@ -56,7 +56,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
   private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
   public TileCableFluid(BlockPos pos, BlockState state) {
-    super(TileRegistry.fluid_pipeTile, pos, state);
+    super(TileRegistry.FLUID_PIPE.get(), pos, state);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, CAPACITY, p -> true)));
     }

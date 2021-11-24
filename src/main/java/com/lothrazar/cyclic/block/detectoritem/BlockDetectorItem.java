@@ -69,6 +69,6 @@ public class BlockDetectorItem extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.DETECTOR_ITEM, world.isClientSide ? TileDetectorItem::clientTick : TileDetectorItem::serverTick);
+    return createTickerHelper(type, TileRegistry.DETECTOR_ITEM.get(), world.isClientSide ? TileDetectorItem::clientTick : TileDetectorItem::serverTick);
   }
 }

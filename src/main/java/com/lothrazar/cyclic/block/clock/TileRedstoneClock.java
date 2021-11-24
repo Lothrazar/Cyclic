@@ -30,7 +30,7 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
   private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
 
   public TileRedstoneClock(BlockPos pos, BlockState state) {
-    super(TileRegistry.clock, pos, state);
+    super(TileRegistry.CLOCK.get(), pos, state);
     timer = 0;
     delay = 60;
     duration = 60;

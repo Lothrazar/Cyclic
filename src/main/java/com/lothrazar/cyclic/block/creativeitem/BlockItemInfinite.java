@@ -27,7 +27,7 @@ public class BlockItemInfinite extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.item_infinite, world.isClientSide ? TileItemInfinite::clientTick : TileItemInfinite::serverTick);
+    return createTickerHelper(type, TileRegistry.ITEM_INFINITE.get(), world.isClientSide ? TileItemInfinite::clientTick : TileItemInfinite::serverTick);
   }
 
   @Override

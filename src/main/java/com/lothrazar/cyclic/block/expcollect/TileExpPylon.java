@@ -47,7 +47,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   public FluidTankBase tank;
 
   public TileExpPylon(BlockPos pos, BlockState state) {
-    super(TileRegistry.experience_pylontile, pos, state);
+    super(TileRegistry.EXPERIENCE_PYLON.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }

@@ -19,7 +19,7 @@ public class TileEyeTp extends TileBlockEntityCyclic {
   public static IntValue FREQUENCY;
 
   public TileEyeTp(BlockPos pos, BlockState state) {
-    super(TileRegistry.eye_teleport, pos, state);
+    super(TileRegistry.EYE_TELEPORT.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEyeTp e) {

@@ -36,7 +36,7 @@ public class BlockFluidCollect extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.COLLECTOR_FLUID, world.isClientSide ? TileFluidCollect::clientTick : TileFluidCollect::serverTick);
+    return createTickerHelper(type, TileRegistry.COLLECTOR_FLUID.get(), world.isClientSide ? TileFluidCollect::clientTick : TileFluidCollect::serverTick);
   }
 
   @Override

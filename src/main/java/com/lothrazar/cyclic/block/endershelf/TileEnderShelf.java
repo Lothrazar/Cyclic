@@ -21,7 +21,7 @@ public class TileEnderShelf extends TileBlockEntityCyclic {
   }
 
   public TileEnderShelf(BlockPos pos, BlockState state) {
-    super(TileRegistry.ender_shelf, pos, state);
+    super(TileRegistry.ENDER_SHELF.get(), pos, state);
   }
 
   @Override

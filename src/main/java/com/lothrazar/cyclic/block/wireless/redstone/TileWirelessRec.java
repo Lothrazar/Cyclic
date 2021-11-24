@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class TileWirelessRec extends TileBlockEntityCyclic {
 
   public TileWirelessRec(BlockPos pos, BlockState state) {
-    super(TileRegistry.wireless_receiver, pos, state);
+    super(TileRegistry.WIRELESS_RECEIVER.get(), pos, state);
   }
 
   @Override

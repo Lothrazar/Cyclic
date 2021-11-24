@@ -60,7 +60,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileHarvester(BlockPos pos, BlockState state) {
-    super(TileRegistry.HARVESTER, pos, state);
+    super(TileRegistry.HARVESTER.get(), pos, state);
     timer = 1;
   }
 

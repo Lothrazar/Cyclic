@@ -37,7 +37,7 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
   private boolean isPoweredNow = false;
 
   public TileDetectorItem(BlockPos pos, BlockState state) {
-    super(TileRegistry.DETECTOR_ITEM, pos, state);
+    super(TileRegistry.DETECTOR_ITEM.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDetectorItem e) {

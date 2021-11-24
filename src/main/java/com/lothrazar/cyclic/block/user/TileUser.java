@@ -49,7 +49,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   static final int MAX = 640000;
 
   public TileUser(BlockPos pos, BlockState state) {
-    super(TileRegistry.user, pos, state);
+    super(TileRegistry.USER.get(), pos, state);
     this.needsRedstone = 1;
   }
 

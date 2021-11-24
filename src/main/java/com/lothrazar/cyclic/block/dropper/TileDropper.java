@@ -60,7 +60,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
   private int delay = 10;
 
   public TileDropper(BlockPos pos, BlockState state) {
-    super(TileRegistry.DROPPER, pos, state);
+    super(TileRegistry.DROPPER.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDropper e) {

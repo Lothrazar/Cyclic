@@ -27,7 +27,7 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
   }
 
   public TileWirelessTransmit(BlockPos pos, BlockState state) {
-    super(TileRegistry.wireless_transmitter, pos, state);
+    super(TileRegistry.WIRELESS_TRANSMITTER.get(), pos, state);
   }
 
   ItemStackHandler inventory = new ItemStackHandler(9) {

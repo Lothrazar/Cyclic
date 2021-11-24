@@ -26,7 +26,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
   private UUID uuid;
 
   public TileDiamondSpikes(BlockPos pos, BlockState state) {
-    super(TileRegistry.spikes_diamond, pos, state);
+    super(TileRegistry.SPIKES_DIAMOND.get(), pos, state);
   }
 
   @Override

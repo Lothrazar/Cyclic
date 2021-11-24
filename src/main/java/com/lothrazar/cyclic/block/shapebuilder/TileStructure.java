@@ -82,7 +82,7 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   private int shapeIndex = 0;
 
   public TileStructure(BlockPos pos, BlockState state) {
-    super(TileRegistry.STRUCTURE, pos, state);
+    super(TileRegistry.STRUCTURE.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileStructure e) {

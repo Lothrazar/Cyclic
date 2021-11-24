@@ -60,7 +60,7 @@ public class BlockDice extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.dice, world.isClientSide ? TileDice::clientTick : TileDice::serverTick);
+    return createTickerHelper(type, TileRegistry.DICE.get(), world.isClientSide ? TileDice::clientTick : TileDice::serverTick);
   }
 
   @Override

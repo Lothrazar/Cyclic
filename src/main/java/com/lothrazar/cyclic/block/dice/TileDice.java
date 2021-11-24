@@ -30,7 +30,7 @@ public class TileDice extends TileBlockEntityCyclic {
   }
 
   public TileDice(BlockPos pos, BlockState state) {
-    super(TileRegistry.dice, pos, state);
+    super(TileRegistry.DICE.get(), pos, state);
   }
 
   @Override

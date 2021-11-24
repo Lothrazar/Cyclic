@@ -87,7 +87,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
   private boolean directionIsUp = false;
 
   public TileMiner(BlockPos pos, BlockState state) {
-    super(TileRegistry.MINER, pos, state);
+    super(TileRegistry.MINER.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMiner e) {

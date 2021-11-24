@@ -17,7 +17,7 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
   public static final int HEIGHT = 16;
 
   public TileTerraPreta(BlockPos pos, BlockState state) {
-    super(TileRegistry.terra_preta, pos, state);
+    super(TileRegistry.TERRA_PRETA.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraPreta e) {

@@ -35,7 +35,7 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileBatteryInfinite(BlockPos pos, BlockState state) {
-    super(TileRegistry.battery_infinite, pos, state);
+    super(TileRegistry.BATTERY_INFINITE.get(), pos, state);
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, true);

@@ -22,7 +22,7 @@ public class TileLightCamo extends TileBlockEntityCyclic {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> notInventory);
 
   public TileLightCamo(BlockPos pos, BlockState state) {
-    super(TileRegistry.light_camo, pos, state);
+    super(TileRegistry.LIGHT_CAMO.get(), pos, state);
   }
 
   @Override

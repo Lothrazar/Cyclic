@@ -31,34 +31,34 @@ public class ClientConfigCyclic {
   public static Color getColor(BlockEntity tile) {
     //passing in tile in case of data overrides in future
     // but client config makes sense right now
-    if (tile.getType() == TileRegistry.COLLECTOR_ITEM) {
+    if (tile.getType() == TileRegistry.COLLECTOR.get()) {
       return parseColor(COLLECTOR_ITEM.get());
     }
-    else if (tile.getType() == TileRegistry.COLLECTOR_FLUID) {
+    else if (tile.getType() == TileRegistry.COLLECTOR_FLUID.get()) {
       return parseColor(COLLECTOR_FLUID.get());
     }
-    else if (tile.getType() == TileRegistry.DETECTOR_ENTITY) {
+    else if (tile.getType() == TileRegistry.DETECTOR_ENTITY.get()) {
       return parseColor(DETECTOR_ENTITY.get());
     }
-    else if (tile.getType() == TileRegistry.DETECTOR_ITEM) {
+    else if (tile.getType() == TileRegistry.DETECTOR_ITEM.get()) {
       return parseColor(DETECTOR_ITEM.get());
     }
-    else if (tile.getType() == TileRegistry.DROPPER) {
+    else if (tile.getType() == TileRegistry.DROPPER.get()) {
       return parseColor(DROPPER.get());
     }
-    else if (tile.getType() == TileRegistry.FORESTER) {
+    else if (tile.getType() == TileRegistry.FORESTER.get()) {
       return parseColor(FORESTER.get());
     }
-    else if (tile.getType() == TileRegistry.HARVESTER) {
+    else if (tile.getType() == TileRegistry.HARVESTER.get()) {
       return parseColor(HARVESTER.get());
     }
-    else if (tile.getType() == TileRegistry.MINER) {
+    else if (tile.getType() == TileRegistry.MINER.get()) {
       return parseColor(MINER.get());
     }
-    else if (tile.getType() == TileRegistry.PEAT_FARM) {
+    else if (tile.getType() == TileRegistry.PEAT_FARM.get()) {
       return parseColor(PEAT_FARM.get());
     }
-    else if (tile.getType() == TileRegistry.STRUCTURE) {
+    else if (tile.getType() == TileRegistry.STRUCTURE.get()) {
       return parseColor(STRUCTURE.get());
     }
     else {

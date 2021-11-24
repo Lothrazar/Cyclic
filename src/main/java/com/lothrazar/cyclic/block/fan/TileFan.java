@@ -35,7 +35,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
   private int speed = 5;
 
   public TileFan(BlockPos pos, BlockState state) {
-    super(TileRegistry.fantile, pos, state);
+    super(TileRegistry.FAN.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFan e) {

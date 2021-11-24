@@ -36,7 +36,7 @@ public class BlockBreaker extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.breakerTile, world.isClientSide ? TileBreaker::clientTick : TileBreaker::serverTick);
+    return createTickerHelper(type, TileRegistry.BREAKER.get(), world.isClientSide ? TileBreaker::clientTick : TileBreaker::serverTick);
   }
 
   @Override

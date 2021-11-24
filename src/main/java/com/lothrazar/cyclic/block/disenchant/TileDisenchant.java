@@ -76,7 +76,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   public FluidTankBase tank;
 
   public TileDisenchant(BlockPos pos, BlockState state) {
-    super(TileRegistry.disenchanter, pos, state);
+    super(TileRegistry.DISENCHANTER.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> {
       return p.getFluid().is(DataTags.EXPERIENCE);
     });

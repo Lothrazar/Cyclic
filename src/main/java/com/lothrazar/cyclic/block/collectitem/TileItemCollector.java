@@ -51,7 +51,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
   private int radius = 8;
 
   public TileItemCollector(BlockPos pos, BlockState state) {
-    super(TileRegistry.COLLECTOR_ITEM, pos, state);
+    super(TileRegistry.COLLECTOR.get(), pos, state);
     this.needsRedstone = 0; // default on
   }
 

@@ -86,6 +86,6 @@ public class BlockDisenchant extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.disenchanter, world.isClientSide ? TileDisenchant::clientTick : TileDisenchant::serverTick);
+    return createTickerHelper(type, TileRegistry.DISENCHANTER.get(), world.isClientSide ? TileDisenchant::clientTick : TileDisenchant::serverTick);
   }
 }

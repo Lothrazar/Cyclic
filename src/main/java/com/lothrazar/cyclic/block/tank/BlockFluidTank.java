@@ -92,7 +92,7 @@ public class BlockFluidTank extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.tank, world.isClientSide ? TileTank::clientTick : TileTank::serverTick);
+    return createTickerHelper(type, TileRegistry.TANK.get(), world.isClientSide ? TileTank::clientTick : TileTank::serverTick);
   }
 
   @Override

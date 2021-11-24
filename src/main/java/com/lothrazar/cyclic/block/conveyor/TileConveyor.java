@@ -18,7 +18,7 @@ import net.minecraft.world.phys.AABB;
 public class TileConveyor extends TileBlockEntityCyclic {
 
   public TileConveyor(BlockPos pos, BlockState state) {
-    super(TileRegistry.conveyor, pos, state);
+    super(TileRegistry.CONVEYOR.get(), pos, state);
   }
 
   @Override

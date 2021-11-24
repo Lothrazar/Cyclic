@@ -48,7 +48,7 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileLaser(BlockPos pos, BlockState state) {
-    super(TileRegistry.laser, pos, state);
+    super(TileRegistry.LASER.get(), pos, state);
     this.needsRedstone = 0;
   }
   //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {

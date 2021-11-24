@@ -22,7 +22,7 @@ public class SoundmuffTile extends TileBlockEntityCyclic {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> notInventory);
 
   public SoundmuffTile(BlockPos pos, BlockState state) {
-    super(TileRegistry.soundproofing_ghost, pos, state);
+    super(TileRegistry.SOUNDPROOFING_GHOST.get(), pos, state);
   }
 
   @Override

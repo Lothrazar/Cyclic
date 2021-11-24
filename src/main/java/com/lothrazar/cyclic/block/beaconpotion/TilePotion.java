@@ -65,7 +65,7 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TilePotion(BlockPos pos, BlockState state) {
-    super(TileRegistry.beacon, pos, state);
+    super(TileRegistry.BEACON.get(), pos, state);
     timer = 0;
   }
 

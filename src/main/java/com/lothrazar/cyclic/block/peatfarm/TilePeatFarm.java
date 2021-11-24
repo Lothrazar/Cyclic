@@ -174,7 +174,7 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   public TilePeatFarm(BlockPos pos, BlockState state) {
-    super(TileRegistry.PEAT_FARM, pos, state);
+    super(TileRegistry.PEAT_FARM.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

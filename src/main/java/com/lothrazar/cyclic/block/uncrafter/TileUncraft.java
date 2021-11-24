@@ -70,7 +70,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileUncraft(BlockPos pos, BlockState state) {
-    super(TileRegistry.uncrafter, pos, state);
+    super(TileRegistry.UNCRAFTER.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileUncraft e) {

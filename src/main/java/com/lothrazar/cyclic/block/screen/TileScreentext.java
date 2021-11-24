@@ -31,7 +31,7 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
   }
 
   public TileScreentext(BlockPos pos, BlockState state) {
-    super(TileRegistry.screen, pos, state);
+    super(TileRegistry.SCREEN.get(), pos, state);
     this.needsRedstone = 0;
   }
 

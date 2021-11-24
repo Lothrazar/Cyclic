@@ -23,6 +23,6 @@ public class BlockTerraPreta extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.terra_preta, world.isClientSide ? TileTerraPreta::clientTick : TileTerraPreta::serverTick);
+    return createTickerHelper(type, TileRegistry.TERRA_PRETA.get(), world.isClientSide ? TileTerraPreta::clientTick : TileTerraPreta::serverTick);
   }
 }

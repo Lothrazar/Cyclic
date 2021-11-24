@@ -66,7 +66,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
   private int shapeIndex = 0;
 
   public TileForester(BlockPos pos, BlockState state) {
-    super(TileRegistry.FORESTER, pos, state);
+    super(TileRegistry.FORESTER.get(), pos, state);
     this.needsRedstone = 1;
     this.render = 0;
   }

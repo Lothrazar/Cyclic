@@ -23,7 +23,7 @@ public class TileTank extends TileBlockEntityCyclic {
   public FluidTankBase tank;
 
   public TileTank(BlockPos pos, BlockState state) {
-    super(TileRegistry.tank, pos, state);
+    super(TileRegistry.TANK.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 

@@ -28,7 +28,7 @@ public class TileWorkbench extends TileBlockEntityCyclic implements MenuProvider
   }
 
   public TileWorkbench(BlockPos pos, BlockState state) {
-    super(TileRegistry.workbench, pos, state);
+    super(TileRegistry.WORKBENCH.get(), pos, state);
   }
 
   @Override

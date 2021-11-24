@@ -50,7 +50,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileAnvilAuto(BlockPos pos, BlockState state) {
-    super(TileRegistry.anvil, pos, state);
+    super(TileRegistry.ANVIL.get(), pos, state);
   }
 
   public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilAuto tileAnvilAuto) {

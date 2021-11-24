@@ -40,6 +40,6 @@ public class BlockFisher extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.fisher, world.isClientSide ? TileFisher::clientTick : TileFisher::serverTick);
+    return createTickerHelper(type, TileRegistry.FISHER.get(), world.isClientSide ? TileFisher::clientTick : TileFisher::serverTick);
   }
 }

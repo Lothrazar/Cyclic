@@ -119,7 +119,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
   }
 
   public TileShapedata(BlockPos pos, BlockState state) {
-    super(TileRegistry.computer_shape, pos, state);
+    super(TileRegistry.COMPUTER_SHAPE.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileShapedata e) {

@@ -54,7 +54,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   public FluidTankBase tank;
 
   public TileAnvilMagma(BlockPos pos, BlockState state) {
-    super(TileRegistry.anvil_magma, pos, state);
+    super(TileRegistry.ANVIL_MAGMA.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }

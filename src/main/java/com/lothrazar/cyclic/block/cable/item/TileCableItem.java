@@ -45,7 +45,7 @@ public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider
   private Map<Direction, LazyOptional<IItemHandler>> flow = Maps.newHashMap();
 
   public TileCableItem(BlockPos pos, BlockState state) {
-    super(TileRegistry.item_pipeTile, pos, state);
+    super(TileRegistry.ITEM_PIPE.get(), pos, state);
     for (Direction f : Direction.values()) {
       flow.put(f, LazyOptional.of(TileCableItem::createHandler));
     }

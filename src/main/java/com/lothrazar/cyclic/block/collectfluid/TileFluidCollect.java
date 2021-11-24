@@ -65,7 +65,7 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileFluidCollect(BlockPos pos, BlockState state) {
-    super(TileRegistry.COLLECTOR_FLUID, pos, state);
+    super(TileRegistry.COLLECTOR_FLUID.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 

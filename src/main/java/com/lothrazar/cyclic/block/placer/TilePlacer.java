@@ -36,7 +36,7 @@ public class TilePlacer extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TilePlacer(BlockPos pos, BlockState state) {
-    super(TileRegistry.placer, pos, state);
+    super(TileRegistry.PLACER.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePlacer e) {

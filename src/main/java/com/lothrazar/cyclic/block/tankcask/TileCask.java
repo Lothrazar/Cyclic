@@ -34,7 +34,7 @@ public class TileCask extends TileBlockEntityCyclic {
   }
 
   public TileCask(BlockPos pos, BlockState state) {
-    super(TileRegistry.cask, pos, state);
+    super(TileRegistry.CASK.get(), pos, state);
     flowing = 0;
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     poweredSides = new HashMap<Direction, Boolean>();

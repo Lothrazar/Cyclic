@@ -50,7 +50,7 @@ public class BlockSolidifier extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.solidifier, world.isClientSide ? TileSolidifier::clientTick : TileSolidifier::serverTick);
+    return createTickerHelper(type, TileRegistry.SOLIDIFIER.get(), world.isClientSide ? TileSolidifier::clientTick : TileSolidifier::serverTick);
   }
 
   @Override

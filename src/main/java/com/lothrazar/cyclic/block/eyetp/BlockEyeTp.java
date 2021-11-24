@@ -22,6 +22,6 @@ public class BlockEyeTp extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.eye_teleport, world.isClientSide ? TileEyeTp::clientTick : TileEyeTp::serverTick);
+    return createTickerHelper(type, TileRegistry.EYE_TELEPORT.get(), world.isClientSide ? TileEyeTp::clientTick : TileEyeTp::serverTick);
   }
 }

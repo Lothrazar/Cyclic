@@ -14,7 +14,7 @@ public class TileEye extends TileBlockEntityCyclic {
   public static IntValue FREQUENCY;
 
   public TileEye(BlockPos pos, BlockState state) {
-    super(TileRegistry.eye_redstone, pos, state);
+    super(TileRegistry.EYE_REDSTONE.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEye e) {

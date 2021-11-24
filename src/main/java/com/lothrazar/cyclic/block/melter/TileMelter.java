@@ -52,7 +52,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   private RecipeMelter currentRecipe;
 
   public TileMelter(BlockPos pos, BlockState state) {
-    super(TileRegistry.melter, pos, state);
+    super(TileRegistry.MELTER.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 

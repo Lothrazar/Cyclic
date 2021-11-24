@@ -69,29 +69,29 @@ public class ClientRegistryCyclic {
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
     //    import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
     //    BlockEntityRendererProvider.Context lol; //  is required in constructor
-    event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM, RenderPeatFarm::new);
-    event.registerBlockEntityRenderer(TileRegistry.STRUCTURE, RenderStructure::new);
-    event.registerBlockEntityRenderer(TileRegistry.COLLECTOR_FLUID, RenderFluidCollect::new);
-    event.registerBlockEntityRenderer(TileRegistry.COLLECTOR_ITEM, RenderItemCollect::new);
-    event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ENTITY, RenderDetector::new);
-    event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ITEM, RenderDetectorItem::new);
-    event.registerBlockEntityRenderer(TileRegistry.DROPPER, RenderDropper::new);
+    event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM.get(), RenderPeatFarm::new);
+    event.registerBlockEntityRenderer(TileRegistry.STRUCTURE.get(), RenderStructure::new);
+    event.registerBlockEntityRenderer(TileRegistry.COLLECTOR_FLUID.get(), RenderFluidCollect::new);
+    event.registerBlockEntityRenderer(TileRegistry.COLLECTOR.get(), RenderItemCollect::new);
+    event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ENTITY.get(), RenderDetector::new);
+    event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ITEM.get(), RenderDetectorItem::new);
+    event.registerBlockEntityRenderer(TileRegistry.DROPPER.get(), RenderDropper::new);
     event.registerBlockEntityRenderer(TileRegistry.ENDER_ITEM_SHELF.get(), ItemShelfRenderer::new);
-    event.registerBlockEntityRenderer(TileRegistry.ender_shelf, EnderShelfRenderer::new);
-    event.registerBlockEntityRenderer(TileRegistry.fisher, RenderFisher::new);
-    event.registerBlockEntityRenderer(TileRegistry.FORESTER, RenderForester::new);
-    event.registerBlockEntityRenderer(TileRegistry.HARVESTER, RenderHarvester::new);
-    event.registerBlockEntityRenderer(TileRegistry.laser, RenderLaser::new);
-    event.registerBlockEntityRenderer(TileRegistry.light_camo, RenderLightCamo::new);
-    event.registerBlockEntityRenderer(TileRegistry.melter, RenderMelter::new);
-    event.registerBlockEntityRenderer(TileRegistry.MINER, RenderMiner::new);
-    event.registerBlockEntityRenderer(TileRegistry.screen, RenderScreentext::new);
-    event.registerBlockEntityRenderer(TileRegistry.computer_shape, RenderShapedata::new);
-    event.registerBlockEntityRenderer(TileRegistry.solidifier, RenderSolidifier::new);
-    event.registerBlockEntityRenderer(TileRegistry.soundproofing_ghost, SoundmuffRender::new);
+    event.registerBlockEntityRenderer(TileRegistry.ENDER_SHELF.get(), EnderShelfRenderer::new);
+    event.registerBlockEntityRenderer(TileRegistry.FISHER.get(), RenderFisher::new);
+    event.registerBlockEntityRenderer(TileRegistry.FORESTER.get(), RenderForester::new);
+    event.registerBlockEntityRenderer(TileRegistry.HARVESTER.get(), RenderHarvester::new);
+    event.registerBlockEntityRenderer(TileRegistry.LASER.get(), RenderLaser::new);
+    event.registerBlockEntityRenderer(TileRegistry.LIGHT_CAMO.get(), RenderLightCamo::new);
+    event.registerBlockEntityRenderer(TileRegistry.MELTER.get(), RenderMelter::new);
+    event.registerBlockEntityRenderer(TileRegistry.MINER.get(), RenderMiner::new);
+    event.registerBlockEntityRenderer(TileRegistry.SCREEN.get(), RenderScreentext::new);
+    event.registerBlockEntityRenderer(TileRegistry.COMPUTER_SHAPE.get(), RenderShapedata::new);
+    event.registerBlockEntityRenderer(TileRegistry.SOLIDIFIER.get(), RenderSolidifier::new);
+    event.registerBlockEntityRenderer(TileRegistry.SOUNDPROOFING_GHOST.get(), SoundmuffRender::new);
     event.registerBlockEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
-    event.registerBlockEntityRenderer(TileRegistry.tank, RenderTank::new);
-    event.registerBlockEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
+    event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
+    event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {

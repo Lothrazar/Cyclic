@@ -29,7 +29,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
   RenderTextType renderStyle = RenderTextType.TEXT;
 
   public TileEnderCtrl(BlockPos pos, BlockState state) {
-    super(TileRegistry.ender_controller, pos, state);
+    super(TileRegistry.ENDER_CONTROLLER.get(), pos, state);
   }
 
   //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {

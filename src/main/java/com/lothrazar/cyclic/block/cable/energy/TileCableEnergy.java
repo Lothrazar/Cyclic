@@ -30,7 +30,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
   private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
 
   public TileCableEnergy(BlockPos pos, BlockState state) {
-    super(TileRegistry.energy_pipeTile, pos, state);
+    super(TileRegistry.ENERGY_PIPE.get(), pos, state);
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }

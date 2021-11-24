@@ -56,7 +56,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   public TileSolidifier(BlockPos pos, BlockState state) {
-    super(TileRegistry.solidifier, pos, state);
+    super(TileRegistry.SOLIDIFIER.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 

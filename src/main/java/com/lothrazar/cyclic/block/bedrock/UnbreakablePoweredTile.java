@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class UnbreakablePoweredTile extends TileBlockEntityCyclic {
 
   public UnbreakablePoweredTile(BlockPos pos, BlockState state) {
-    super(TileRegistry.unbreakable_reactive, pos, state);
+    super(TileRegistry.UNBREAKABLE_REACTIVE.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, UnbreakablePoweredTile e) {

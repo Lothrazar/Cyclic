@@ -34,7 +34,7 @@ public class TileTrash extends TileBlockEntityCyclic {
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
 
   public TileTrash(BlockPos pos, BlockState state) {
-    super(TileRegistry.trashtile, pos, state);
+    super(TileRegistry.TRASH.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 

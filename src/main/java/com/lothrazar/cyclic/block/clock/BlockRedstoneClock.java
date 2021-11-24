@@ -50,7 +50,7 @@ public class BlockRedstoneClock extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.clock, world.isClientSide ? TileRedstoneClock::clientTick : TileRedstoneClock::serverTick);
+    return createTickerHelper(type, TileRegistry.CLOCK.get(), world.isClientSide ? TileRedstoneClock::clientTick : TileRedstoneClock::serverTick);
   }
 
   @Override

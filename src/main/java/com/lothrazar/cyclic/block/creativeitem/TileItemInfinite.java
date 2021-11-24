@@ -21,7 +21,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileItemInfinite extends TileBlockEntityCyclic {
 
   public TileItemInfinite(BlockPos pos, BlockState state) {
-    super(TileRegistry.item_infinite, pos, state);
+    super(TileRegistry.ITEM_INFINITE.get(), pos, state);
   }
 
   ItemStackHandler inputSlots = new ItemStackHandler(1);

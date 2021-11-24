@@ -92,7 +92,7 @@ public class BlockCableItem extends CableBase {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.item_pipeTile, world.isClientSide ? TileCableItem::clientTick : TileCableItem::serverTick);
+    return createTickerHelper(type, TileRegistry.ITEM_PIPE.get(), world.isClientSide ? TileCableItem::clientTick : TileCableItem::serverTick);
   }
 
   @Override

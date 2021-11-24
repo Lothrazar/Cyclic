@@ -58,7 +58,7 @@ public class BlockFan extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.fantile, world.isClientSide ? TileFan::clientTick : TileFan::serverTick);
+    return createTickerHelper(type, TileRegistry.FAN.get(), world.isClientSide ? TileFan::clientTick : TileFan::serverTick);
   }
 
   @Override
