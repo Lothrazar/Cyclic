@@ -70,7 +70,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
-    //
     ItemStack stack = context.getItemInHand();
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
@@ -83,7 +82,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
       player.setItemInHand(context.getHand(), ItemStack.EMPTY);
       UtilSound.playSound(player, SoundRegistry.THUNK);
       if (player.isCreative() == false) {
-        UtilItemStack.drop(world, player.blockPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
+        UtilItemStack.drop(world, player.blockPosition(), new ItemStack(ItemRegistry.TILE_TRANSPORTER_EMPTY.get()));
       }
     }
     return InteractionResult.SUCCESS;

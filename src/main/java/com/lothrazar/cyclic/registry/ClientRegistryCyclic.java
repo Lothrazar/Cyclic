@@ -141,7 +141,7 @@ public class ClientRegistryCyclic {
   @OnlyIn(Dist.CLIENT)
   private static void initColours() {
     Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> {
-      if (stack.getItem() == ItemRegistry.storage_bag) {
+      if (stack.getItem() == ItemRegistry.STORAGE_BAG.get()) {
         // ok
         if (tintIndex == 0) { //layer zero is outline, ignore this 
           return 0xFFFFFFFF;
@@ -150,7 +150,7 @@ public class ClientRegistryCyclic {
         int c = ItemStorageBag.getColour(stack);
         return c;
       }
-      else if (stack.getItem() == ItemRegistry.mob_container) {
+      else if (stack.getItem() == ItemRegistry.MOB_CONTAINER.get()) {
         if (stack.hasTag() && tintIndex > 0) {
           //what entity is inside
           EntityType<?> thing = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
@@ -163,7 +163,7 @@ public class ClientRegistryCyclic {
         }
       }
       return -1;
-    }, ItemRegistry.mob_container, ItemRegistry.storage_bag);
+    }, ItemRegistry.MOB_CONTAINER.get(), ItemRegistry.STORAGE_BAG.get());
   }
 
   @OnlyIn(Dist.CLIENT)

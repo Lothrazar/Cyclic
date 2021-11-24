@@ -69,7 +69,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
         if (!player.isCreative()) {
           //and replace with empty 
           //if config says drop?
-          player.drop(new ItemStack(ItemRegistry.magic_net), true);
+          player.drop(new ItemStack(ItemRegistry.MAGIC_NET.get()), true);
         }
         return InteractionResult.SUCCESS;
       }

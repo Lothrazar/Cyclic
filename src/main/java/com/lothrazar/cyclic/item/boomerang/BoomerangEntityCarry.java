@@ -23,6 +23,6 @@ public class BoomerangEntityCarry extends BoomerangEntity {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.boomerang_carry;
+    return ItemRegistry.BOOMERANG_CARRY.get();
   }
 }

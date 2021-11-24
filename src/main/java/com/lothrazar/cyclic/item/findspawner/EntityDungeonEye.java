@@ -166,12 +166,11 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.spawner_seeker;
+    return ItemRegistry.SPAWNER_SEEKER.get();
   }
 
   @Override
   protected void onHit(HitResult result) {
-    //    this.remove(); 
-    //     .println("onimpact" + result);
+    //    this.remove();  
   }
 }

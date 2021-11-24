@@ -23,6 +23,6 @@ public class BoomerangEntityStun extends BoomerangEntity {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.boomerang_stun;
+    return ItemRegistry.BOOMERANG_STUN.get();
   }
 }

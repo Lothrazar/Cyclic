@@ -114,7 +114,7 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
           world.setBlockAndUpdate(pos, state);
           return; // and dont drop the full item stack or shrink the empty just end
         }
-        ItemStack drop = new ItemStack(ItemRegistry.tile_transporter);
+        ItemStack drop = new ItemStack(ItemRegistry.TILE_TRANSPORTER.get());
         drop.setTag(itemData);
         UtilItemStack.drop(world, player.blockPosition(), drop);
         if (player.isCreative() == false && held.getCount() > 0) {

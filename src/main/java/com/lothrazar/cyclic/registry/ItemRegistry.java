@@ -123,6 +123,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
+  public static List<ItemBaseCyclic> items = new ArrayList<>(); // TODO: refactor legacy registerClient loop
   public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModCyclic.MODID);
   public static final RegistryObject<Item> GLOWING_HELMET = ITEMS.register("glowing_helmet", () -> new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, EquipmentSlot.HEAD, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FLUIDHOPPER = ITEMS.register("hopper_fluid", () -> new BlockItem(BlockRegistry.FLUIDHOPPER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -227,31 +228,19 @@ public class ItemRegistry {
   public static final RegistryObject<Item> WATER_CANDLE = ITEMS.register("water_candle", () -> new BlockItem(BlockRegistry.WATER_CANDLE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> PEACE_CANDLE = ITEMS.register("peace_candle", () -> new BlockItem(BlockRegistry.PEACE_CANDLE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> TELEPORT = ITEMS.register("teleport", () -> new BlockItem(BlockRegistry.TELEPORT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static List<ItemBaseCyclic> items = new ArrayList<>(); // TODO: refactor legacy registerClient loop
+  public static final RegistryObject<Item> STORAGE_BAG = ITEMS.register("storage_bag", () -> new ItemStorageBag(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()));
+  public static final RegistryObject<Item> CRAFTING_BAG = ITEMS.register("crafting_bag", () -> new CraftingBagItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()));
+  public static final RegistryObject<Item> CRAFTING_STICK = ITEMS.register("crafting_stick", () -> new CraftingStickItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()));
+  public static final RegistryObject<Item> MOB_CONTAINER = ITEMS.register("mob_container", () -> new ItemMobContainer(new Item.Properties().stacksTo(1)).setRegistryName(""));
+  public static final RegistryObject<Item> TILE_TRANSPORTER_EMPTY = ITEMS.register("tile_transporter_empty", () -> new TileTransporterEmptyItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> TILE_TRANSPORTER = ITEMS.register("tile_transporter", () -> new TileTransporterItem(new Item.Properties()));
+  public static final RegistryObject<Item> MAGIC_NET = ITEMS.register("magic_net", () -> new ItemMagicNet(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> BOOMERANG_STUN = ITEMS.register("boomerang_stun", () -> new BoomerangItem(Boomer.STUN, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)));
+  public static final RegistryObject<Item> BOOMERANG_CARRY = ITEMS.register("boomerang_carry", () -> new BoomerangItem(Boomer.CARRY, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)));
+  public static final RegistryObject<Item> BOOMERANG_DAMAGE = ITEMS.register("boomerang_damage", () -> new BoomerangItem(Boomer.DAMAGE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)));
+  public static final RegistryObject<Item> SPAWNER_SEEKER = ITEMS.register("spawner_seeker", () -> new ItemProjectileDungeon(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   @ObjectHolder(ModCyclic.MODID + ":charm_fire")
   public static Item charm_fire;
-  @ObjectHolder(ModCyclic.MODID + ":spawner_seeker")
-  public static Item spawner_seeker;
-  @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
-  public static Item boomerang_damage;
-  @ObjectHolder(ModCyclic.MODID + ":boomerang_carry")
-  public static Item boomerang_carry;
-  @ObjectHolder(ModCyclic.MODID + ":boomerang_stun")
-  public static Item boomerang_stun;
-  @ObjectHolder(ModCyclic.MODID + ":mob_container")
-  public static ItemMobContainer mob_container;
-  @ObjectHolder(ModCyclic.MODID + ":magic_net")
-  public static Item magic_net;
-  @ObjectHolder(ModCyclic.MODID + ":tile_transporter")
-  public static Item tile_transporter;
-  @ObjectHolder(ModCyclic.MODID + ":tile_transporter_empty")
-  public static Item tile_transporterempty;
-  @ObjectHolder(ModCyclic.MODID + ":storage_bag")
-  public static Item storage_bag;
-  @ObjectHolder(ModCyclic.MODID + ":crafting_bag")
-  public static Item crafting_bag;
-  @ObjectHolder(ModCyclic.MODID + ":crafting_stick")
-  public static Item crafting_stick;
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -360,18 +349,10 @@ public class ItemRegistry {
     r.register(new ItemEnderEyeReuse(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("ender_eye_reuse"));
     r.register(new EnderPearlReuse(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("ender_pearl_reuse"));
     r.register(new EnderPearlMount(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("ender_pearl_mounted"));
-    r.register(new ItemProjectileDungeon(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("spawner_seeker"));
     r.register(new SpelunkerCaveFinder(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("spelunker"));
-    r.register(new ItemMagicNet(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("magic_net"));
-    r.register(new ItemMobContainer(new Item.Properties().stacksTo(1)).setRegistryName("mob_container"));
-    r.register(new TileTransporterEmptyItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("tile_transporter_empty"));
-    r.register(new TileTransporterItem(new Item.Properties()).setRegistryName("tile_transporter"));
     r.register(new ElevationWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("elevation_wand"));
     r.register(new TeleporterWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("teleport_wand"));
     r.register(new ScytheHarvest(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024)).setRegistryName("scythe_harvest"));
-    r.register(new ItemStorageBag(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()).setRegistryName("storage_bag"));
-    r.register(new CraftingBagItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()).setRegistryName("crafting_bag"));
-    r.register(new CraftingStickItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()).setRegistryName("crafting_stick"));
     r.register(new AntimatterEvaporatorWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024)).setRegistryName("antimatter_wand"));
     ///////////////////////// apples
     final int smallPotionDur = 20 * 90; // 1:30
@@ -441,9 +422,6 @@ public class ItemRegistry {
     r.register(new AppleChocolate(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(h).saturationMod(s * 4)
         .alwaysEat().build())).setRegistryName("apple_chocolate"));
     ////////////////////////////////////////
-    r.register(new BoomerangItem(Boomer.STUN, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("boomerang_stun"));
-    r.register(new BoomerangItem(Boomer.CARRY, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("boomerang_carry"));
-    r.register(new BoomerangItem(Boomer.DAMAGE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("boomerang_damage"));
     r.register(new ItemScaffolding(BlockRegistry.SCAFFOLD_REPLACE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_replace"));
     r.register(new ItemScaffolding(BlockRegistry.SCAFFOLD_FRAGILE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_fragile"));
     r.register(new ItemScaffolding(BlockRegistry.SCAFFOLD_RESPONSIVE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("scaffold_responsive"));

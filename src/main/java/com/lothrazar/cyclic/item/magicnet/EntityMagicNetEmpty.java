@@ -41,7 +41,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.magic_net;
+    return ItemRegistry.MAGIC_NET.get();
   }
 
   @Override
@@ -82,7 +82,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       //
       //
       compound.putString(NBT_ENTITYID, id);
-      ItemStack drop = new ItemStack(ItemRegistry.mob_container);
+      ItemStack drop = new ItemStack(ItemRegistry.MOB_CONTAINER.get());
       drop.setTag(compound);
       targetHeightOffset = target.getBbHeight() / 2;
       particleType = ParticleTypes.PORTAL;
@@ -95,7 +95,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       BlockPos pos = this.blockPosition();
       targetHeightOffset = 0.0D;
       particleType = ParticleTypes.POOF;
-      UtilItemStack.drop(level, pos, new ItemStack(ItemRegistry.magic_net));
+      UtilItemStack.drop(level, pos, new ItemStack(ItemRegistry.MAGIC_NET.get()));
     }
     if (particleType != null) {
       Vec3 hitVec = result.getLocation();

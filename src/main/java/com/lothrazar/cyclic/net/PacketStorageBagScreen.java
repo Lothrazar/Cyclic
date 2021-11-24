@@ -51,7 +51,7 @@ public class PacketStorageBagScreen extends PacketBaseCyclic {
         }
         String key = message.nbtKey.getAsString();
         if (!serverStack.isEmpty()
-            && serverStack.getItem() == ItemRegistry.storage_bag
+            && serverStack.getItem() == ItemRegistry.STORAGE_BAG.get()
             && (key.equals(RefillMode.NBT) || key.equals(DepositMode.NBT) || key.equals(PickupMode.NBT))) {
           //its validated this item and nbt key so now save value in the tag
           serverStack.getOrCreateTag().put(key, message.nbtValue);

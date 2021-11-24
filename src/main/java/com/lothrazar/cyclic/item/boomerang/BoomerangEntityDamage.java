@@ -23,6 +23,6 @@ public class BoomerangEntityDamage extends BoomerangEntity {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.boomerang_damage;
+    return ItemRegistry.BOOMERANG_DAMAGE.get();
   }
 }
