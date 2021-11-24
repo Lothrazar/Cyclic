@@ -118,7 +118,6 @@ import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
@@ -231,7 +230,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> STORAGE_BAG = ITEMS.register("storage_bag", () -> new ItemStorageBag(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()));
   public static final RegistryObject<Item> CRAFTING_BAG = ITEMS.register("crafting_bag", () -> new CraftingBagItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()));
   public static final RegistryObject<Item> CRAFTING_STICK = ITEMS.register("crafting_stick", () -> new CraftingStickItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1).setNoRepair()));
-  public static final RegistryObject<Item> MOB_CONTAINER = ITEMS.register("mob_container", () -> new ItemMobContainer(new Item.Properties().stacksTo(1)).setRegistryName(""));
+  public static final RegistryObject<Item> MOB_CONTAINER = ITEMS.register("mob_container", () -> new ItemMobContainer(new Item.Properties().stacksTo(1)));
   public static final RegistryObject<Item> TILE_TRANSPORTER_EMPTY = ITEMS.register("tile_transporter_empty", () -> new TileTransporterEmptyItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> TILE_TRANSPORTER = ITEMS.register("tile_transporter", () -> new TileTransporterItem(new Item.Properties()));
   public static final RegistryObject<Item> MAGIC_NET = ITEMS.register("magic_net", () -> new ItemMagicNet(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
@@ -239,8 +238,37 @@ public class ItemRegistry {
   public static final RegistryObject<Item> BOOMERANG_CARRY = ITEMS.register("boomerang_carry", () -> new BoomerangItem(Boomer.CARRY, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)));
   public static final RegistryObject<Item> BOOMERANG_DAMAGE = ITEMS.register("boomerang_damage", () -> new BoomerangItem(Boomer.DAMAGE, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)));
   public static final RegistryObject<Item> SPAWNER_SEEKER = ITEMS.register("spawner_seeker", () -> new ItemProjectileDungeon(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  @ObjectHolder(ModCyclic.MODID + ":charm_fire")
-  public static Item charm_fire;
+  public static final RegistryObject<Item> GLOVE_CLIMB = ITEMS.register("glove_climb", () -> new GloveItem(new Item.Properties().durability(256 * 8).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> FLIPPERS = ITEMS.register("flippers", () -> new FlippersItem(new Item.Properties().durability(256 * 4).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> ANTIGRAVITY = ITEMS.register("antigravity", () -> new AirAntiGravity(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024 * 4)));
+  public static final RegistryObject<Item> CHARM_VOID = ITEMS.register("charm_void", () -> new CharmVoid(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)));
+  public static final RegistryObject<Item> CHARM_ANTIDOTE = ITEMS.register("charm_antidote", () -> new CharmAntidote(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)));
+  public static final RegistryObject<Item> CHARM_FIRE = ITEMS.register("charm_fire", () -> new CharmFire(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)));
+  public static final RegistryObject<Item> CHARM_WITHER = ITEMS.register("charm_wither", () -> new CharmWither(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)));
+  public static final RegistryObject<Item> CHARM_ULTIMATE = ITEMS.register("charm_ultimate", () -> new CharmOverpowered(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)));
+  public static final RegistryObject<Item> HEART = ITEMS.register("heart", () -> new HeartItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(16)).setRegistryName(""));
+  public static final RegistryObject<Item> HEART_EMPTY = ITEMS.register("heart_empty", () -> new HeartToxicItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(16)).setRegistryName(""));
+  public static final RegistryObject<Item> CARBON_PAPER = ITEMS.register("carbon_paper", () -> new CarbonPaperItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName(""));
+  public static final RegistryObject<Item> ICE_SCEPTER = ITEMS.register("ice_scepter", () -> new SnowScepter(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> FIRE_SCEPTER = ITEMS.register("fire_scepter", () -> new FireScepter(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> LIGHTNING_SCEPTER = ITEMS.register("lightning_scepter", () -> new LightningScepter(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> ENDER_BAG = ITEMS.register("ender_bag", () -> new EnderBagItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName(""));
+  public static final RegistryObject<Item> SPELL_WATER = ITEMS.register("spell_water", () -> new WaterSpreaderItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> SPELL_ICE = ITEMS.register("spell_ice", () -> new IceWand(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> TORCH_LAUNCHER = ITEMS.register("torch_launcher", () -> new ItemTorchThrower(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName(""));
+  public static final RegistryObject<Item> CHARM_TORCH = ITEMS.register("charm_torch", () -> new AutoTorchItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256 * 4)).setRegistryName(""));
+  public static final RegistryObject<Item> CHARM_TORCH_CAVE = ITEMS.register("charm_torch_cave", () -> new AutoCaveTorchItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256 * 4)).setRegistryName(""));
+  public static final RegistryObject<Item> CHARM_HOME = ITEMS.register("charm_home", () -> new EnderWingItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> CHARM_WORLD = ITEMS.register("charm_world", () -> new EnderWingSp(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> EVOKER_FANG = ITEMS.register("evoker_fang", () -> new EvokerFangItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName(""));
+  public static final RegistryObject<Item> ENDER_EYE_REUSE = ITEMS.register("ender_eye_reuse", () -> new ItemEnderEyeReuse(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName(""));
+  public static final RegistryObject<Item> ENDER_PEARL_REUSE = ITEMS.register("ender_pearl_reuse", () -> new EnderPearlReuse(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName(""));
+  public static final RegistryObject<Item> ENDER_PEARL_MOUNTED = ITEMS.register("ender_pearl_mounted", () -> new EnderPearlMount(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName(""));
+  public static final RegistryObject<Item> SPELUNKER = ITEMS.register("spelunker", () -> new SpelunkerCaveFinder(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> ELEVATION_WAND = ITEMS.register("elevation_wand", () -> new ElevationWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName(""));
+  public static final RegistryObject<Item> TELEPORT_WAND = ITEMS.register("teleport_wand", () -> new TeleporterWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName(""));
+  public static final RegistryObject<Item> SCYTHE_HARVEST = ITEMS.register("scythe_harvest", () -> new ScytheHarvest(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024)).setRegistryName(""));
+  public static final RegistryObject<Item> ANTIMATTER_WAND = ITEMS.register("antimatter_wand", () -> new AntimatterEvaporatorWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024)).setRegistryName(""));
 
   @SuppressWarnings("deprecation")
   @SubscribeEvent
@@ -333,27 +361,6 @@ public class ItemRegistry {
     r.register(new StirrupsReverseItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("stirrups_reverse"));
     r.register(new LeverRemote(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(1)).setRegistryName("lever_remote"));
     // magic tools
-    r.register(new CarbonPaperItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("carbon_paper"));
-    r.register(new SnowScepter(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("ice_scepter"));
-    r.register(new FireScepter(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("fire_scepter"));
-    r.register(new LightningScepter(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("lightning_scepter"));
-    r.register(new EnderBagItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("ender_bag"));
-    r.register(new WaterSpreaderItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("spell_water"));
-    r.register(new IceWand(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("spell_ice"));
-    r.register(new ItemTorchThrower(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("torch_launcher"));
-    r.register(new AutoTorchItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256 * 4)).setRegistryName("charm_torch"));
-    r.register(new AutoCaveTorchItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256 * 4)).setRegistryName("charm_torch_cave"));
-    r.register(new EnderWingItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("charm_home"));
-    r.register(new EnderWingSp(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("charm_world"));
-    r.register(new EvokerFangItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("evoker_fang"));
-    r.register(new ItemEnderEyeReuse(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("ender_eye_reuse"));
-    r.register(new EnderPearlReuse(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("ender_pearl_reuse"));
-    r.register(new EnderPearlMount(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("ender_pearl_mounted"));
-    r.register(new SpelunkerCaveFinder(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("spelunker"));
-    r.register(new ElevationWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("elevation_wand"));
-    r.register(new TeleporterWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("teleport_wand"));
-    r.register(new ScytheHarvest(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024)).setRegistryName("scythe_harvest"));
-    r.register(new AntimatterEvaporatorWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024)).setRegistryName("antimatter_wand"));
     ///////////////////////// apples
     final int smallPotionDur = 20 * 90; // 1:30
     final int largePotionDur = 3 * 20 * 60; // 3:00
@@ -429,14 +436,6 @@ public class ItemRegistry {
     r.register(new BlockItem(BlockRegistry.ITEM_PIPE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("item_pipe"));
     r.register(new BlockItem(BlockRegistry.FLUID_PIPE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)).setRegistryName("fluid_pipe"));
     r.register(new CableWrench(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("cable_wrench"));
-    r.register(new GloveItem(new Item.Properties().durability(256 * 8).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("glove_climb"));
-    r.register(new FlippersItem(new Item.Properties().durability(256 * 4).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("flippers"));
-    r.register(new AirAntiGravity(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024 * 4)).setRegistryName("antigravity"));
-    r.register(new CharmVoid(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("charm_void"));
-    r.register(new CharmAntidote(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("charm_antidote"));
-    r.register(new CharmFire(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("charm_fire"));
-    r.register(new CharmWither(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(64)).setRegistryName("charm_wither"));
-    r.register(new CharmOverpowered(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(256)).setRegistryName("charm_ultimate"));
     r.register(new ItemHorseEnder(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("carrot_ender"));
     r.register(new ItemHorseHealthDiamondCarrot(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("diamond_carrot_health"));
     r.register(new ItemHorseRedstoneSpeed(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("redstone_carrot_speed"));
@@ -482,7 +481,5 @@ public class ItemRegistry {
     r.register(new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("crystal_sword"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("sandstone_sword"));
     r.register(new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)).setRegistryName("netherbrick_sword"));
-    r.register(new HeartItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(16)).setRegistryName("heart"));
-    r.register(new HeartToxicItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).stacksTo(16)).setRegistryName("heart_empty"));
   }
 }
