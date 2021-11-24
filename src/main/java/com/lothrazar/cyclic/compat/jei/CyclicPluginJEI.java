@@ -34,6 +34,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -91,7 +92,9 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER), CrusherRecipeCategory.ID);
     for (Item item : ForgeRegistries.ITEMS.getValues()) {
       ItemStack st = new ItemStack(item);
-      if (!st.isEmpty() && UtilString.isCyclic(item.getRegistryName())) {
+      if (!st.isEmpty()
+          && (st.getItem() instanceof BucketItem == false)
+          && UtilString.isCyclic(item.getRegistryName())) {
         registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslatableComponent(item.getDescriptionId() + ".guide"));
       }
     }
