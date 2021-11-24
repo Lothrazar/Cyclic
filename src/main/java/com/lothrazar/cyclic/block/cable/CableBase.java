@@ -148,8 +148,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
           break;
         }
       }
-      if (hasExtractor
-          && (this == BlockRegistry.item_pipe || this == BlockRegistry.fluid_pipe)) {
+      if (hasExtractor && (this == BlockRegistry.ITEM_PIPE.get() || this == BlockRegistry.FLUID_PIPE.get())) {
         //if has extractor
         if (!world.isClientSide) {
           BlockEntity tileEntity = world.getBlockEntity(pos);

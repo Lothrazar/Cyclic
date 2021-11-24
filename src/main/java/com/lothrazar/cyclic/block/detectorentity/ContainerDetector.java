@@ -23,6 +23,6 @@ public class ContainerDetector extends ContainerBase {
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.detector_entity);
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.DETECTOR_ENTITY.get());
   }
 }

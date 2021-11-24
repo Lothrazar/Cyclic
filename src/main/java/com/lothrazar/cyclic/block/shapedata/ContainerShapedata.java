@@ -32,6 +32,6 @@ public class ContainerShapedata extends ContainerBase {
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.COMPUTER_SHAPE);
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.COMPUTER_SHAPE.get());
   }
 }

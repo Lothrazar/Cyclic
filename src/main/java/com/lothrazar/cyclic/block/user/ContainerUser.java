@@ -31,6 +31,6 @@ public class ContainerUser extends ContainerBase {
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.user);
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.USER.get());
   }
 }

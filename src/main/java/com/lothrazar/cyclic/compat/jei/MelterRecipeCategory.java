@@ -33,12 +33,12 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   public MelterRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.MELTER));
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.MELTER.get()));
   }
 
   @Override
   public Component getTitle() {
-    return UtilChat.ilang(BlockRegistry.MELTER.getDescriptionId());
+    return UtilChat.ilang(BlockRegistry.MELTER.get().getDescriptionId());
   }
 
   @Override

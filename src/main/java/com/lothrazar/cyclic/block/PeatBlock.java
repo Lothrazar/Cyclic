@@ -47,7 +47,7 @@ public class PeatBlock extends BlockCyclic {
    */
   private void tryBake(Level world, BlockPos pos, int waters) {
     if (world.random.nextDouble() < ConfigRegistry.PEATCHANCE.get().doubleValue() * waters) {
-      world.setBlockAndUpdate(pos, BlockRegistry.peat_baked.defaultBlockState());
+      world.setBlockAndUpdate(pos, BlockRegistry.PEAT_BAKED.get().defaultBlockState());
     }
   }
 }

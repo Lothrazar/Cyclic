@@ -23,7 +23,7 @@ public class MaterialRegistry {
 
     @Override
     public ItemStack makeIcon() {
-      return new ItemStack(BlockRegistry.trash);
+      return new ItemStack(BlockRegistry.TRASH.get());
     }
   };
   public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(ModCyclic.MODID + "items") {

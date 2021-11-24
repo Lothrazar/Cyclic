@@ -130,138 +130,22 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
 
+  public static List<BlockCyclic> blocksClientRegistry = new ArrayList<>(); // TODO: refactor this
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
-  public static List<BlockCyclic> blocksClientRegistry = new ArrayList<>();
-  @ObjectHolder(ModCyclic.MODID + ":solidifier")
-  public static Block SOLIDIFIER;
-  @ObjectHolder(ModCyclic.MODID + ":melter")
-  public static Block MELTER;
-  @ObjectHolder(ModCyclic.MODID + ":structure")
-  public static Block structure;
-  @ObjectHolder(ModCyclic.MODID + ":anvil")
-  public static Block anvil;
-  @ObjectHolder(ModCyclic.MODID + ":anvil_magma")
-  public static Block anvil_magma;
-  @ObjectHolder(ModCyclic.MODID + ":tank")
-  public static BlockFluidTank tank;
-  @ObjectHolder(ModCyclic.MODID + ":scaffold_replace")
-  public static BlockScaffolding scaffold_replace;
-  @ObjectHolder(ModCyclic.MODID + ":scaffold_responsive")
-  public static BlockScaffolding scaffold_responsive;
-  @ObjectHolder(ModCyclic.MODID + ":scaffold_fragile")
-  public static BlockScaffolding scaffold_fragile;
-  @ObjectHolder(ModCyclic.MODID + ":harvester")
-  public static BlockHarvester harvester;
-  @ObjectHolder(ModCyclic.MODID + ":peat_unbaked")
-  public static PeatBlock peat_unbaked;
-  @ObjectHolder(ModCyclic.MODID + ":peat_baked")
-  public static PeatFuelBlock peat_baked;
-  @ObjectHolder(ModCyclic.MODID + ":peat_farm")
-  public static BlockPeatFarm peat_farm;
-  @ObjectHolder(ModCyclic.MODID + ":breaker")
-  public static Block breaker;
-  @ObjectHolder(ModCyclic.MODID + ":fan")
-  public static Block fan;
-  @ObjectHolder(ModCyclic.MODID + ":soundproofing_ghost")
-  public static Block soundproofing_ghost;
-  @ObjectHolder(ModCyclic.MODID + ":soundproofing")
-  public static Block soundproofing;
-  @ObjectHolder(ModCyclic.MODID + ":dark_glass")
-  public static DarkGlassBlock dark_glass;
-  @ObjectHolder(ModCyclic.MODID + ":trash")
-  public static BlockTrash trash;
-  @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
-  public static BlockExpPylon experience_pylon;
-  @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static BlockItemCollector collector;
-  @ObjectHolder(ModCyclic.MODID + ":battery")
-  public static Block battery;
-  @ObjectHolder(ModCyclic.MODID + ":energy_pipe")
-  public static Block energy_pipe;
-  @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
-  public static Block fluid_pipe;
-  @ObjectHolder(ModCyclic.MODID + ":item_pipe")
-  public static Block item_pipe;
-  @ObjectHolder(ModCyclic.MODID + ":placer")
-  public static Block placer;
-  @ObjectHolder(ModCyclic.MODID + ":user")
-  public static Block user;
-  @ObjectHolder(ModCyclic.MODID + ":fisher")
-  public static Block fisher;
-  @ObjectHolder(ModCyclic.MODID + ":disenchanter")
-  public static Block disenchanter;
-  @ObjectHolder(ModCyclic.MODID + ":collector_fluid")
-  public static Block collector_fluid;
-  @ObjectHolder(ModCyclic.MODID + ":detector_entity")
-  public static Block detector_entity;
-  @ObjectHolder(ModCyclic.MODID + ":detector_item")
-  public static Block detector_item;
-  @ObjectHolder(ModCyclic.MODID + ":plate_launch")
-  public static Block plate_launch;
-  @ObjectHolder(ModCyclic.MODID + ":plate_launch_redstone")
-  public static Block plate_launch_redstone;
-  @ObjectHolder(ModCyclic.MODID + ":wireless_transmitter")
-  public static Block wireless_transmitter;
-  @ObjectHolder(ModCyclic.MODID + ":wireless_receiver")
-  public static Block wireless_receiver;
-  @ObjectHolder(ModCyclic.MODID + ":clock")
-  public static Block clock;
-  @ObjectHolder(ModCyclic.MODID + ":crate")
-  public static Block crate;
-  @ObjectHolder(ModCyclic.MODID + ":cask")
-  public static Block cask;
-  @ObjectHolder(ModCyclic.MODID + ":placer_fluid")
-  public static Block placer_fluid;
-  @ObjectHolder(ModCyclic.MODID + ":beacon")
-  public static Block beacon;
-  @ObjectHolder(ModCyclic.MODID + ":battery_infinite")
-  public static Block battery_infinite;
-  @ObjectHolder(ModCyclic.MODID + ":item_infinite")
-  public static Block item_infinite;
-  @ObjectHolder(ModCyclic.MODID + ":dice")
-  public static Block dice;
-  @ObjectHolder(ModCyclic.MODID + ":dropper")
-  public static Block DROPPER;
-  @ObjectHolder(ModCyclic.MODID + ":forester")
-  public static Block forester;
-  @ObjectHolder(ModCyclic.MODID + ":miner")
-  public static Block MINER;
-  @ObjectHolder(ModCyclic.MODID + ":screen")
-  public static Block SCREEN;
-  @ObjectHolder(ModCyclic.MODID + ":uncrafter")
-  public static Block UNCRAFTER;
-  @ObjectHolder(ModCyclic.MODID + ":crafter")
-  public static Block CRAFTER;
-  @ObjectHolder(ModCyclic.MODID + ":fireplace")
-  public static Block FIREPLACE;
-  @ObjectHolder(ModCyclic.MODID + ":computer_shape")
-  public static Block COMPUTER_SHAPE;
-  @ObjectHolder(ModCyclic.MODID + ":apple_sprout")
-  public static Block APPLE_SPROUT;
-  @ObjectHolder(ModCyclic.MODID + ":apple_sprout_emerald")
-  public static Block APPLE_SPROUT_EMERALD;
-  @ObjectHolder(ModCyclic.MODID + ":apple_sprout_diamond")
-  public static Block apple_sprout_diamond;
-  @ObjectHolder(ModCyclic.MODID + ":unbreakable_block")
-  public static Block unbreakable_block;
-  @ObjectHolder(ModCyclic.MODID + ":unbreakable_reactive")
-  public static Block unbreakable_reactive;
-  @ObjectHolder(ModCyclic.MODID + ":conveyor")
-  public static Block CONVEYOR;
-  @ObjectHolder(ModCyclic.MODID + ":ender_shelf")
-  public static Block ENDER_SHELF;
-  @ObjectHolder(ModCyclic.MODID + ":ender_controller")
-  public static Block ENDER_CONTROLLER;
-  @ObjectHolder(ModCyclic.MODID + ":eye_redstone")
-  public static Block EYE_REDSTONE;
-  @ObjectHolder(ModCyclic.MODID + ":eye_teleport")
-  public static Block EYE_TELEPORT;
+  public static final RegistryObject<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockSimple(Block.Properties.of(Material.STONE, DyeColor.GRAY).strength(1.0F, 7.0F)) {
+
+    @Override
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
+  });
+  public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> new BlockSimple(Block.Properties.of(Material.STONE, DyeColor.BLACK).strength(1.3F, 5.0F)) {
+
+    @Override
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
+  });
   public static final RegistryObject<Block> SPIKES_IRON = BLOCKS.register("spikes_iron", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.PLAIN));
   public static final RegistryObject<Block> SPIKES_FIRE = BLOCKS.register("spikes_fire", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.FIRE));
   public static final RegistryObject<Block> SPIKES_CURSE = BLOCKS.register("spikes_curse", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.CURSE));
@@ -294,16 +178,6 @@ public class BlockRegistry {
   public static final RegistryObject<Block> TERRA_PRETA = BLOCKS.register("terra_preta", () -> new BlockTerraPreta(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)));
   public static final RegistryObject<Block> LIGHT_CAMO = BLOCKS.register("light_camo", () -> new BlockLightCamo(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> LASER = BLOCKS.register("laser", () -> new BlockLaser(Block.Properties.of(Material.METAL)));
-  public static final RegistryObject<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockSimple(Block.Properties.of(Material.STONE, DyeColor.GRAY).strength(1.0F, 7.0F)) {
-
-    @Override
-    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
-  });
-  public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> new BlockSimple(Block.Properties.of(Material.STONE, DyeColor.BLACK).strength(1.3F, 5.0F)) {
-
-    @Override
-    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
-  });
   public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.of(Material.PLANT, DyeColor.CYAN)));
   public static final RegistryObject<Block> FLOWER_PURPLE_TULIP = BLOCKS.register("flower_purple_tulip", () -> new FlowerSimpleBlock(Block.Properties.of(Material.PLANT, DyeColor.PURPLE)));
   public static final RegistryObject<Block> FLOWER_LIME_CARNATION = BLOCKS.register("flower_lime_carnation", () -> new FlowerSimpleBlock(Block.Properties.of(Material.PLANT, DyeColor.LIME)));
@@ -343,75 +217,71 @@ public class BlockRegistry {
   public static final RegistryObject<Block> WATER_CANDLE = BLOCKS.register("water_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 1 : 0)));
   public static final RegistryObject<Block> TELEPORT = BLOCKS.register("teleport", () -> new BlockTeleport(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> APPLE_SPROUT_EMERALD = BLOCKS.register("apple_sprout_emerald", () -> new AppleCropBlock(Block.Properties.of(Material.PLANT), false));
+  public static final RegistryObject<Block> APPLE_SPROUT_DIAMOND = BLOCKS.register("apple_sprout_diamond", () -> new AppleCropBlock(Block.Properties.of(Material.PLANT), false));
+  public static final RegistryObject<Block> APPLE_SPROUT = BLOCKS.register("apple_sprout", () -> new AppleCropBlock(Block.Properties.of(Material.PLANT), true));
+  public static final RegistryObject<Block> COMPUTER_SHAPE = BLOCKS.register("computer_shape", () -> new BlockShapedata(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> SCAFFOLD_FRAGILE = BLOCKS.register("scaffold_fragile", () -> new BlockScaffolding(Block.Properties.of(Material.WOOD), true));
+  public static final RegistryObject<Block> SCAFFOLD_RESPONSIVE = BLOCKS.register("scaffold_responsive", () -> new BlockScaffoldingResponsive(Block.Properties.of(Material.WOOD), false));
+  public static final RegistryObject<Block> SCAFFOLD_REPLACE = BLOCKS.register("scaffold_replace", () -> new BlockScaffoldingReplace(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> DARK_GLASS = BLOCKS.register("dark_glass", () -> new DarkGlassBlock(Block.Properties.of(Material.DIRT)));
+  public static final RegistryObject<Block> PEAT_UNBAKED = BLOCKS.register("peat_unbaked", () -> new PeatBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)));
+  public static final RegistryObject<Block> PEAT_BAKED = BLOCKS.register("peat_baked", () -> new PeatFuelBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)));
+  public static final RegistryObject<Block> PEAT_FARM = BLOCKS.register("peat_farm", () -> new BlockPeatFarm(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> SOLIDIFIER = BLOCKS.register("solidifier", () -> new BlockSolidifier(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> MELTER = BLOCKS.register("melter", () -> new BlockMelter(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> BATTERY = BLOCKS.register("battery", () -> new BlockBattery(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> CASK = BLOCKS.register("cask", () -> new BlockCask(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> CRATE = BLOCKS.register("crate", () -> new BlockCrate(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> EYE_REDSTONE = BLOCKS.register("eye_redstone", () -> new BlockEye(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> EYE_TELEPORT = BLOCKS.register("eye_teleport", () -> new BlockEyeTp(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> PLACER = BLOCKS.register("placer", () -> new BlockPlacer(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> BREAKER = BLOCKS.register("breaker", () -> new BlockBreaker(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> DROPPER = BLOCKS.register("dropper", () -> new BlockDropper(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> FORESTER = BLOCKS.register("forester", () -> new BlockForester(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> HARVESTER = BLOCKS.register("harvester", () -> new BlockHarvester(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> MINER = BLOCKS.register("miner", () -> new BlockMiner(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> PLACER_FLUID = BLOCKS.register("placer_fluid", () -> new BlockPlacerFluid(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> USER = BLOCKS.register("user", () -> new BlockUser(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> COLLECTOR = BLOCKS.register("collector", () -> new BlockItemCollector(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> COLLECTOR_FLUID = BLOCKS.register("collector_fluid", () -> new BlockFluidCollect(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> STRUCTURE = BLOCKS.register("structure", () -> new BlockStructure(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> UNCRAFTER = BLOCKS.register("uncrafter", () -> new BlockUncraft(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> CRAFTER = BLOCKS.register("crafter", () -> new BlockCrafter(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> CONVEYOR = BLOCKS.register("conveyor", () -> new BlockConveyor(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> TANK = BLOCKS.register("tank", () -> new BlockFluidTank(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ANVIL = BLOCKS.register("anvil", () -> new BlockAnvilAuto(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)));
+  public static final RegistryObject<Block> ANVIL_MAGMA = BLOCKS.register("anvil_magma", () -> new BlockAnvilMagma(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)));
+  public static final RegistryObject<Block> BEACON = BLOCKS.register("beacon", () -> new BlockPotion(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> SOUNDPROOFING_GHOST = BLOCKS.register("soundproofing_ghost", () -> new SoundmufflerBlockGhost(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> SOUNDPROOFING = BLOCKS.register("soundproofing", () -> new SoundmufflerBlock(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> CLOCK = BLOCKS.register("clock", () -> new BlockRedstoneClock(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> WIRELESS_RECEIVER = BLOCKS.register("wireless_receiver", () -> new BlockWirelessRec(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> WIRELESS_TRANSMITTER = BLOCKS.register("wireless_transmitter", () -> new BlockWirelessTransmit(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> FISHER = BLOCKS.register("fisher", () -> new BlockFisher(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> DISENCHANTER = BLOCKS.register("disenchanter", () -> new BlockDisenchant(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> EXPERIENCE_PYLON = BLOCKS.register("experience_pylon", () -> new BlockExpPylon(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> FAN = BLOCKS.register("fan", () -> new BlockFan(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> TRASH = BLOCKS.register("trash", () -> new BlockTrash(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> DICE = BLOCKS.register("dice", () -> new BlockDice(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> SCREEN = BLOCKS.register("screen", () -> new BlockScreentext(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> DETECTOR_ITEM = BLOCKS.register("detector_item", () -> new BlockDetectorItem(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> DETECTOR_ENTITY = BLOCKS.register("detector_entity", () -> new BlockDetector(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ENERGY_PIPE = BLOCKS.register("energy_pipe", () -> new BlockCableEnergy(Block.Properties.of(Material.WOOL).sound(SoundType.STONE)));
+  public static final RegistryObject<Block> ITEM_PIPE = BLOCKS.register("item_pipe", () -> new BlockCableItem(Block.Properties.of(Material.WOOL).sound(SoundType.STONE)));
+  public static final RegistryObject<Block> FLUID_PIPE = BLOCKS.register("fluid_pipe", () -> new BlockCableFluid(Block.Properties.of(Material.WOOL).sound(SoundType.STONE)));
+  public static final RegistryObject<Block> PLATE_LAUNCH = BLOCKS.register("plate_launch", () -> new LaunchBlock(Block.Properties.of(Material.STONE), false));
+  public static final RegistryObject<Block> PLATE_LAUNCH_REDSTONE = BLOCKS.register("plate_launch_redstone", () -> new LaunchBlock(Block.Properties.of(Material.STONE), true));
+  public static final RegistryObject<Block> BATTERY_INFINITE = BLOCKS.register("battery_infinite", () -> new BlockBatteryInfinite(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ITEM_INFINITE = BLOCKS.register("item_infinite", () -> new BlockItemInfinite(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> FIREPLACE = BLOCKS.register("fireplace", () -> new FireplaceBlock(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> UNBREAKABLE_BLOCK = BLOCKS.register("unbreakable_block", () -> new UnbreakableBlock(Block.Properties.of(Material.STONE))); //stable, only changes with player interaction
+  public static final RegistryObject<Block> UNBREAKABLE_REACTIVE = BLOCKS.register("unbreakable_reactive", () -> new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE))); //reactive and unstable, ignores players and reads redstone 
+  public static final RegistryObject<Block> ENDER_SHELF = BLOCKS.register("ender_shelf", () -> new BlockEnderShelf(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ENDER_CONTROLLER = BLOCKS.register("ender_controller", () -> new BlockEnderCtrl(Block.Properties.of(Material.STONE)));
 
   @SubscribeEvent
   public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-    IForgeRegistry<Block> r = event.getRegistry();
-    r.register(new AppleCropBlock(Block.Properties.of(Material.PLANT), false).setRegistryName("apple_sprout_emerald"));
-    r.register(new AppleCropBlock(Block.Properties.of(Material.PLANT), false).setRegistryName("apple_sprout_diamond"));
-    r.register(new AppleCropBlock(Block.Properties.of(Material.PLANT), true).setRegistryName("apple_sprout"));
-    r.register(new BlockShapedata(Block.Properties.of(Material.METAL)).setRegistryName("computer_shape"));
-    r.register(new BlockScaffolding(Block.Properties.of(Material.WOOD), true).setRegistryName("scaffold_fragile"));
-    r.register(new BlockScaffoldingResponsive(Block.Properties.of(Material.WOOD), false).setRegistryName("scaffold_responsive"));
-    r.register(new BlockScaffoldingReplace(Block.Properties.of(Material.WOOD)).setRegistryName("scaffold_replace"));
-    r.register(new DarkGlassBlock(Block.Properties.of(Material.DIRT)).setRegistryName("dark_glass"));
-    r.register(new PeatBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)).setRegistryName("peat_unbaked"));
-    r.register(new PeatFuelBlock(Block.Properties.of(Material.DIRT).sound(SoundType.GRAVEL)).setRegistryName("peat_baked"));
-    r.register(new BlockPeatFarm(Block.Properties.of(Material.STONE)).setRegistryName("peat_farm"));
-    r.register(new BlockSolidifier(Block.Properties.of(Material.STONE)).setRegistryName("solidifier"));
-    r.register(new BlockMelter(Block.Properties.of(Material.STONE)).setRegistryName("melter"));
-    r.register(new BlockBattery(Block.Properties.of(Material.STONE)).setRegistryName("battery"));
-    r.register(new BlockCask(Block.Properties.of(Material.WOOD)).setRegistryName("cask"));
-    r.register(new BlockCrate(Block.Properties.of(Material.WOOD)).setRegistryName("crate"));
-    r.register(new BlockEye(Block.Properties.of(Material.WOOD)).setRegistryName("eye_redstone"));
-    r.register(new BlockEyeTp(Block.Properties.of(Material.WOOD)).setRegistryName("eye_teleport"));
-    //
-    r.register(new BlockPlacer(Block.Properties.of(Material.STONE)).setRegistryName("placer"));
-    r.register(new BlockBreaker(Block.Properties.of(Material.STONE)).setRegistryName("breaker"));
-    r.register(new BlockDropper(Block.Properties.of(Material.METAL)).setRegistryName("dropper"));
-    r.register(new BlockForester(Block.Properties.of(Material.METAL)).setRegistryName("forester"));
-    r.register(new BlockHarvester(Block.Properties.of(Material.STONE)).setRegistryName("harvester"));
-    r.register(new BlockMiner(Block.Properties.of(Material.METAL)).setRegistryName("miner"));
-    r.register(new BlockPlacerFluid(Block.Properties.of(Material.METAL)).setRegistryName("placer_fluid"));
-    r.register(new BlockUser(Block.Properties.of(Material.STONE)).setRegistryName("user"));
-    r.register(new BlockItemCollector(Block.Properties.of(Material.STONE)).setRegistryName("collector"));
-    r.register(new BlockFluidCollect(Block.Properties.of(Material.STONE)).setRegistryName("collector_fluid"));
-    r.register(new BlockStructure(Block.Properties.of(Material.STONE)).setRegistryName("structure"));
-    r.register(new BlockUncraft(Block.Properties.of(Material.METAL)).setRegistryName("uncrafter"));
-    r.register(new BlockCrafter(Block.Properties.of(Material.METAL)).setRegistryName("crafter"));
-    r.register(new BlockConveyor(Block.Properties.of(Material.METAL)).setRegistryName("conveyor"));
-    //
-    r.register(new BlockFluidTank(Block.Properties.of(Material.STONE)).setRegistryName("tank"));
-    //
-    r.register(new BlockAnvilAuto(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)).setRegistryName("anvil"));
-    r.register(new BlockAnvilMagma(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)).setRegistryName("anvil_magma"));
-    r.register(new BlockPotion(Block.Properties.of(Material.METAL)).setRegistryName("beacon"));
-    //
-    r.register(new SoundmufflerBlockGhost(Block.Properties.of(Material.STONE)).setRegistryName("soundproofing_ghost"));
-    r.register(new SoundmufflerBlock(Block.Properties.of(Material.STONE)).setRegistryName("soundproofing"));
-    r.register(new BlockRedstoneClock(Block.Properties.of(Material.STONE)).setRegistryName("clock"));
-    r.register(new BlockWirelessRec(Block.Properties.of(Material.STONE)).setRegistryName("wireless_receiver"));
-    r.register(new BlockWirelessTransmit(Block.Properties.of(Material.STONE)).setRegistryName("wireless_transmitter"));
-    r.register(new BlockFisher(Block.Properties.of(Material.STONE)).setRegistryName("fisher"));
-    r.register(new BlockDisenchant(Block.Properties.of(Material.STONE)).setRegistryName("disenchanter"));
-    r.register(new BlockExpPylon(Block.Properties.of(Material.STONE)).setRegistryName("experience_pylon"));
-    r.register(new BlockFan(Block.Properties.of(Material.STONE)).setRegistryName("fan"));
-    r.register(new BlockTrash(Block.Properties.of(Material.STONE)).setRegistryName("trash"));
-    r.register(new BlockDice(Block.Properties.of(Material.STONE)).setRegistryName("dice"));
-    r.register(new BlockScreentext(Block.Properties.of(Material.METAL)).setRegistryName("screen"));
-    r.register(new BlockDetectorItem(Block.Properties.of(Material.STONE)).setRegistryName("detector_item"));
-    r.register(new BlockDetector(Block.Properties.of(Material.STONE)).setRegistryName("detector_entity"));
-    r.register(new BlockCableEnergy(Block.Properties.of(Material.WOOL).sound(SoundType.STONE)).setRegistryName("energy_pipe"));
-    r.register(new BlockCableItem(Block.Properties.of(Material.WOOL).sound(SoundType.STONE)).setRegistryName("item_pipe"));
-    r.register(new BlockCableFluid(Block.Properties.of(Material.WOOL).sound(SoundType.STONE)).setRegistryName("fluid_pipe"));
-    r.register(new LaunchBlock(Block.Properties.of(Material.STONE), false).setRegistryName("plate_launch"));
-    r.register(new LaunchBlock(Block.Properties.of(Material.STONE), true).setRegistryName("plate_launch_redstone"));
-    r.register(new BlockBatteryInfinite(Block.Properties.of(Material.STONE)).setRegistryName("battery_infinite"));
-    r.register(new BlockItemInfinite(Block.Properties.of(Material.STONE)).setRegistryName("item_infinite"));
-    r.register(new FireplaceBlock(Block.Properties.of(Material.STONE)).setRegistryName("fireplace"));
-    r.register(new UnbreakableBlock(Block.Properties.of(Material.STONE)).setRegistryName("unbreakable_block")); //stable, only changes with player interaction
-    r.register(new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE)).setRegistryName("unbreakable_reactive")); //reactive and unstable, ignores players and reads redstone 
-    r.register(new BlockEnderShelf(Block.Properties.of(Material.STONE)).setRegistryName("ender_shelf"));
-    r.register(new BlockEnderCtrl(Block.Properties.of(Material.STONE)).setRegistryName("ender_controller"));
+    //    IForgeRegistry<Block> r = event.getRegistry();
   }
 }

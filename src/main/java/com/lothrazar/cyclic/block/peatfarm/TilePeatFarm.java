@@ -63,6 +63,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider {
 
+  private static final int SIZE = 6;
+
   static enum Fields {
     REDSTONE, RENDER;
   }
@@ -79,12 +81,13 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return Block.byItem(stack.getItem()) == BlockRegistry.peat_unbaked;
+      return Block.byItem(stack.getItem()) == BlockRegistry.PEAT_UNBAKED.get();
     }
   };
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int blockPointer = 0;
+  List<BlockPos> outer = null;
 
   @Override
   public Component getDisplayName() {
@@ -94,20 +97,6 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerPeatFarm(i, level, worldPosition, playerInventory, playerEntity);
-  }
-
-  private void init() {
-    if (baked == null) {
-      baked = BlockRegistry.peat_baked;
-    }
-    if (unbaked == null) {
-      unbaked = BlockRegistry.peat_unbaked;
-    }
-    if (outer == null) {
-      outer = getShape();
-      List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.worldPosition, 6);
-      outer.addAll(waterShape);
-    }
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePeatFarm e) {
@@ -120,7 +109,6 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
 
   public void tick() {
     this.syncEnergy();
-    this.init();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       blockPointer = 0;
@@ -134,6 +122,11 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && cost > 0) {
       return;
+    }
+    if (outer == null) {
+      outer = getShape();
+      List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.getBlockPos(), SIZE);
+      outer.addAll(waterShape);
     }
     for (int i = 0; i < PER_TICK; i++) {
       if (blockPointer < outer.size()) {
@@ -185,17 +178,13 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
-  Block baked = null;
-  Block unbaked = null;
-  List<BlockPos> outer = null;
-
   public Predicate<FluidStack> isFluidValid() {
     return p -> true;
   }
 
   @Override
   public boolean canPlaceItem(int index, ItemStack stack) {
-    return Block.byItem(stack.getItem()) == unbaked;
+    return Block.byItem(stack.getItem()) == BlockRegistry.PEAT_UNBAKED.get();
   }
 
   List<BlockPos> getShape() {

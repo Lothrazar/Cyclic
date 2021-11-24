@@ -34,12 +34,12 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   public SolidifierRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/solidifier_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.SOLIDIFIER));
+    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.SOLIDIFIER.get()));
   }
 
   @Override
   public Component getTitle() {
-    return UtilChat.ilang(BlockRegistry.SOLIDIFIER.getDescriptionId());
+    return UtilChat.ilang(BlockRegistry.SOLIDIFIER.get().getDescriptionId());
   }
 
   @Override
