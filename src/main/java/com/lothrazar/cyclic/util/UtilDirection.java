@@ -6,9 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import net.minecraft.util.Direction;
 
 public class UtilDirection {
@@ -30,16 +27,4 @@ public class UtilDirection {
     public static final Iterator<List<Direction>> inDifferingOrder = Iterables
             .cycle(permutateDirections(Arrays.asList(Direction.values()), 0))
             .iterator();
-
-    private static final Stream<Direction> directionStream = Arrays.stream(Direction.values());
-
-    public static final Map<Direction, String> energyNBTKeyMapping = directionStream
-            .collect(Collectors.toMap(direction -> direction, direction -> direction.getString() + "_incenergy"));
-
-    public static final Map<Direction, String> fluidNBTKeyMapping = directionStream
-            .collect(Collectors.toMap(direction -> direction, direction -> "fluid" + direction.getString()));
-
-    public static final Map<Direction, String> itemNBTKeyMapping = directionStream
-            .collect(Collectors.toMap(direction -> direction, direction -> "item" + direction.getString()));
-
 }

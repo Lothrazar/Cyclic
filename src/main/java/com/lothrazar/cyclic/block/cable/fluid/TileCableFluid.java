@@ -161,7 +161,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   public void read(BlockState bs, CompoundNBT tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
     for (final Direction direction : Direction.values()) {
-      final String key = UtilDirection.fluidNBTKeyMapping.get(direction);
+      final String key = "fluid" + direction.getString();
       final CompoundNBT fluidTag = tag.getCompound(key);
       if (!fluidTag.isEmpty()) {
         final FluidTankBase fluidHandler = flow.get(direction).orElse(null);
@@ -179,7 +179,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
       final FluidTankBase fluidHandler = flow.get(direction).orElse(null);
       if (fluidHandler != null)
         fluidHandler.writeToNBT(fluidTag);
-      final String key = UtilDirection.fluidNBTKeyMapping.get(direction);
+      final String key = "fluid" + direction.getString();
       tag.put(key, fluidTag);
     }
     return super.write(tag);

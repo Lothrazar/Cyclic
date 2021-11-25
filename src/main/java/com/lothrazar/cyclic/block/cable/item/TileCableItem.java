@@ -103,7 +103,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
     extractQty = tag.getInt("extractCount");
     for (final Direction direction : Direction.values()) {
       flow.get(direction).ifPresent(itemHandler -> {
-        final String key = UtilDirection.itemNBTKeyMapping.get(direction);
+        final String key = "item" + direction.getString();
         final CompoundNBT itemTag = tag.getCompound(key);
         ((INBTSerializable<CompoundNBT>) itemHandler).deserializeNBT(itemTag);
       });
@@ -120,7 +120,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
     for (final Direction direction : Direction.values()) {
       flow.get(direction).ifPresent(itemHandler -> {
         final CompoundNBT itemTag = ((INBTSerializable<CompoundNBT>) itemHandler).serializeNBT();
-        final String key = UtilDirection.itemNBTKeyMapping.get(direction);
+        final String key = "item" + direction.getString();
         tag.put(key, itemTag);
       });
     }
