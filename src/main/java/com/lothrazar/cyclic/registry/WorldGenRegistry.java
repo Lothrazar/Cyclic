@@ -6,8 +6,14 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
 public class WorldGenRegistry {
+
+  public static BooleanValue CYAN_GENERATES;
+  public static BooleanValue PURPLE_GENERATES;
+  public static BooleanValue BROWN_GENERATES;
+  public static BooleanValue LIME_GENERATES;
 
   /**
    * unlike blocks/items etc, no event hooks for this

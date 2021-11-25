@@ -156,6 +156,22 @@
 			#Range: 1 ~ 64
 			radius = 8
 
+		[cyclic.blocks.water_candle]
+			#Reach of the candle
+			#Range: 1 ~ 64
+			radius = 8
+			#Tick rate of the candle
+			#Range: 1 ~ 2000
+			tick_rate = 60
+
+		[cyclic.blocks.teleport]
+			#Power per use
+			#Range: 0 ~ 64000
+			energy_cost = 400
+			#Power per use while crossing dimensions
+			#Range: 0 ~ 64000
+			energy_cost_xdim = 8000
+
 		[cyclic.blocks.generator_fuel]
 			#RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks
 			#Range: 1 ~ 6400
@@ -190,6 +206,11 @@
 			#Payment per void action, if not zero
 			#Range: 0 ~ 16000
 			fluid_cost = 25
+
+		[cyclic.blocks.sponge_lava]
+			#Reach of the sponge
+			#Range: 1 ~ 64
+			radius = 8
 
 		#Ender Trigger settings
 		[cyclic.blocks.eye_redstone]

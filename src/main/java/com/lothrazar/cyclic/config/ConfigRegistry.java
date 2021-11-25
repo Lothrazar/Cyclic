@@ -7,8 +7,12 @@ import java.util.List;
 import java.util.Map;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.lothrazar.cyclic.CyclicLogger;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
+import com.lothrazar.cyclic.block.CandleWaterBlock;
+import com.lothrazar.cyclic.block.LavaSpongeBlock;
+import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -31,6 +35,7 @@ import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
+import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
@@ -57,47 +62,32 @@ import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
+import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.heart.HeartItem;
+import com.lothrazar.cyclic.item.heart.HeartToxicItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
+import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
+import com.lothrazar.cyclic.registry.WorldGenRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 public class ConfigRegistry {
 
   private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
   private static final ForgeConfigSpec.Builder CFGC = new ForgeConfigSpec.Builder();
+  private static ForgeConfigSpec COMMON_CONFIG;
+  private static ForgeConfigSpec CLIENT_CONFIG;
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> UNCRAFT_IGNORE_ITEMS = new ArrayList<>();
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
   private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
-  private static final String WALL = "####################################################################################";
-  private static ForgeConfigSpec COMMON_CONFIG;
-  private static ForgeConfigSpec CLIENT_CONFIG;
-  public static DoubleValue PEATCHANCE;
-  public static BooleanValue COMMANDDEV;
-  public static BooleanValue COMMANDGETHOME;
-  public static BooleanValue COMMANDHEALTH;
-  public static BooleanValue COMMANDHOME;
-  public static BooleanValue COMMANDHUNGER;
-  public static BooleanValue COMMANDPING;
-  public static BooleanValue LOGINFO;
-  public static IntValue HEARTXPMINUS;
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
-  public static BooleanValue CYAN_GENERATES;
-  public static BooleanValue PURPLE_GENERATES;
-  public static BooleanValue BROWN_GENERATES;
-  public static BooleanValue LIME_GENERATES;
-  public static IntValue CHARM_LUCK;
-  public static DoubleValue CHARM_SPEED;
-  public static DoubleValue CHARM_ATTACKSPEED;
+  private static final String WALL = "####################################################################################";
   static {
     buildDefaults();
     initConfig();
@@ -196,31 +186,31 @@ public class ConfigRegistry {
         it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
-    CYAN_GENERATES = CFG.comment("Does this generate in the world").define("flower_cyan.enabled", true);
-    PURPLE_GENERATES = CFG.comment("Does this generate in the world").define("flower_purple_tulip.enabled", true);
-    BROWN_GENERATES = CFG.comment("Does this generate in the world").define("flower_absalon_tulip.enabled", true);
-    LIME_GENERATES = CFG.comment("Does this generate in the world").define("flower_lime_carnation.enabled", true);
+    WorldGenRegistry.CYAN_GENERATES = CFG.comment("Does this generate in the world").define("flower_cyan.enabled", true);
+    WorldGenRegistry.PURPLE_GENERATES = CFG.comment("Does this generate in the world").define("flower_purple_tulip.enabled", true);
+    WorldGenRegistry.BROWN_GENERATES = CFG.comment("Does this generate in the world").define("flower_absalon_tulip.enabled", true);
+    WorldGenRegistry.LIME_GENERATES = CFG.comment("Does this generate in the world").define("flower_lime_carnation.enabled", true);
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
-    COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.GETHOME.toString(), false);
-    COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HEALTH.toString(), true);
-    COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HOME.toString(), true);
-    COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HUNGER.toString(), true);
-    COMMANDDEV = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.DEV.toString(), false);
-    COMMANDPING = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.PING.toString(), false);
+    CommandRegistry.COMMANDGETHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.GETHOME.toString(), false);
+    CommandRegistry.COMMANDHEALTH = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HEALTH.toString(), true);
+    CommandRegistry.COMMANDHOME = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HOME.toString(), true);
+    CommandRegistry.COMMANDHUNGER = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.HUNGER.toString(), true);
+    CommandRegistry.COMMANDDEV = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.DEV.toString(), false);
+    CommandRegistry.COMMANDPING = CFG.comment("True means only players with OP can use this /cyclic command").define(CyclicCommands.PING.toString(), false);
     CFG.pop(); //command
     CFG.comment(WALL, " Logging related configs", WALL)
         .push("logging");
-    LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
+    CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
     CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 99);
     // 
     AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
-    CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
-    CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
-    CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
+    CharmBase.CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
+    CharmBase.CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
+    CharmBase.CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
     CFG.comment(" Caving Torch Charm settings").push("caving_torch");
     AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 13);
     AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
@@ -241,7 +231,7 @@ public class ConfigRegistry {
         .defineList("disable_pickup", TRANSPORTBAG, it -> it instanceof String);
     CFG.pop();
     CFG.comment("Heart items").push("heart");
-    HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
+    HeartToxicItem.HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
     HeartItem.MAX = CFG.comment("Maximum number of hearts that can be attained (including initial 10)").defineInRange("maximum", 100, 1, 200);
     CFG.pop(); //heart
     CFG.pop(); //items
@@ -252,8 +242,11 @@ public class ConfigRegistry {
         .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
     TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
         .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
+    LavaSpongeBlock.RADIUS = CFG.comment("Reach of the sponge").defineInRange("sponge_lava.radius", 8, 1, 64);
     CandlePeaceBlock.HEIGHT = CFG.comment("Height reach of the candle for spawn prevention").defineInRange("peace_candle.height", 8, 1, 128);
     CandlePeaceBlock.RADIUS = CFG.comment("Reach of the candle for spawn prevention").defineInRange("peace_candle.radius", 32, 1, 128);
+    CandleWaterBlock.RADIUS = CFG.comment("Reach of the candle").defineInRange("water_candle.radius", 8, 1, 64);
+    CandleWaterBlock.TICK_RATE = CFG.comment("Tick rate of the candle").defineInRange("water_candle.tick_rate", 60, 1, 2000);
     TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, 64000);
     TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user.energy_cost", 0, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, 64000);
@@ -267,8 +260,10 @@ public class ConfigRegistry {
     TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm.energy_cost", 500, 0, 64000);
     TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter.energy_cost", 500, 0, 64000);
     TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure.energy_cost", 10, 0, 64000);
+    BlockTeleport.POWERCONF = CFG.comment("Power per use").defineInRange("teleport.energy_cost", 400, 0, 64000);
+    BlockTeleport.COSTDIM = CFG.comment("Power per use while crossing dimensions").defineInRange("teleport.energy_cost_xdim", 8000, 0, 64000);
     TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon.energy_cost", 0, 0, 64000);
-    PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
+    PeatBlock.PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
         .defineInRange("peat.conversion_chance",
             0.08000000000000F,
             0.0010000000000F, 1F);

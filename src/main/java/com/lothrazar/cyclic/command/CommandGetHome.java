@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -12,10 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 public class CommandGetHome {
-
-  public boolean needsOp() {
-    return ConfigRegistry.COMMANDGETHOME.get();
-  }
 
   public static int execute(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();

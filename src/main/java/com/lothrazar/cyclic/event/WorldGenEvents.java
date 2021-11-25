@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.event;
 
-import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.WorldGenRegistry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -40,7 +40,7 @@ public class WorldGenEvents {
   public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
     BiomeCategory category = event.getCategory();
     Decoration step = GenerationStep.Decoration.VEGETAL_DECORATION;
-    if (ConfigRegistry.CYAN_GENERATES.get()) {
+    if (WorldGenRegistry.CYAN_GENERATES.get()) {
       if (category == Biome.BiomeCategory.FOREST
           || category == Biome.BiomeCategory.PLAINS
           || category == Biome.BiomeCategory.TAIGA
@@ -48,7 +48,7 @@ public class WorldGenEvents {
         event.getGeneration().addFeature(step, FLOWER_CYAN_FEATURE);
       }
     }
-    if (ConfigRegistry.PURPLE_GENERATES.get()) {
+    if (WorldGenRegistry.PURPLE_GENERATES.get()) {
       if (category == Biome.BiomeCategory.RIVER
           || category == Biome.BiomeCategory.UNDERGROUND
           || category == Biome.BiomeCategory.MESA
@@ -58,7 +58,7 @@ public class WorldGenEvents {
         event.getGeneration().addFeature(step, FLOWER_PURPLE_TULIP_FEATURE);
       }
     }
-    if (ConfigRegistry.LIME_GENERATES.get()) {
+    if (WorldGenRegistry.LIME_GENERATES.get()) {
       if (category == Biome.BiomeCategory.RIVER
           || category == Biome.BiomeCategory.ICY
           || category == Biome.BiomeCategory.BEACH
@@ -68,7 +68,7 @@ public class WorldGenEvents {
         event.getGeneration().addFeature(step, FLOWER_LIME_CARNATION_FEATURE);
       }
     }
-    if (ConfigRegistry.BROWN_GENERATES.get()) {
+    if (WorldGenRegistry.BROWN_GENERATES.get()) {
       if (category == Biome.BiomeCategory.RIVER
           || category == Biome.BiomeCategory.PLAINS
           || category == Biome.BiomeCategory.TAIGA

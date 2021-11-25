@@ -50,13 +50,14 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.Event;
 
 public class CandleWaterBlock extends BlockCyclic {
 
-  private static int TICK_RATE = 50; // TODO: CONFIG
-  private static int RADIUS = 6; // TODO: CONFIG
+  public static IntValue TICK_RATE;
+  public static IntValue RADIUS;
   private MobCategory type = MobCategory.MONSTER;
   private static final double BOUNDS = 3;
   private static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
@@ -113,9 +114,9 @@ public class CandleWaterBlock extends BlockCyclic {
 
   private void trySpawn(Level world, BlockPos pos, Random rand) throws Exception {
     //if radius is 3, then go be
-    float x = pos.getX() + Mth.nextInt(rand, -1 * RADIUS, RADIUS);
+    float x = pos.getX() + Mth.nextInt(rand, -1 * RADIUS.get(), RADIUS.get());
     float y = pos.getY();
-    float z = pos.getZ() + Mth.nextInt(rand, -1 * RADIUS, RADIUS);
+    float z = pos.getZ() + Mth.nextInt(rand, -1 * RADIUS.get(), RADIUS.get());
     BlockPos posTarget = new BlockPos(x, y, z);
     Mob monster = findMonsterToSpawn(world, posTarget, rand);
     if (monster == null || !world.isEmptyBlock(posTarget)) {
@@ -133,12 +134,12 @@ public class CandleWaterBlock extends BlockCyclic {
   }
 
   private void afterSpawnFailure(Level world, BlockPos pos) {
-    world.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+    world.getBlockTicks().scheduleTick(pos, this, TICK_RATE.get());
   }
 
   private void afterSpawnSuccess(Mob monster, Level world, BlockPos pos, Random rand) {
     monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
-    world.getBlockTicks().scheduleTick(pos, this, TICK_RATE);
+    world.getBlockTicks().scheduleTick(pos, this, TICK_RATE.get());
   }
 
   private Mob findMonsterToSpawn(Level world, BlockPos pos, Random rand) {

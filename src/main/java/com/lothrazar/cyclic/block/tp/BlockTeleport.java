@@ -20,11 +20,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class BlockTeleport extends BlockCyclic {
 
-  private static final int COST = 400; // TODO: config
-  private static final int COSTDIM = 4000; // TODO: config
+  public static IntValue POWERCONF;
+  public static IntValue COSTDIM;
   public static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
 
   public BlockTeleport(Properties properties) {
@@ -45,9 +46,9 @@ public class BlockTeleport extends BlockCyclic {
     TileTeleport tile = (TileTeleport) worldIn.getBlockEntity(pos);
     BlockPosDim dimpos = tile.getTargetInSlot(0);
     if (dimpos != null && worldIn instanceof ServerLevel) {
-      final int pay = UtilWorld.dimensionIsEqual(dimpos, worldIn) ? COST : COSTDIM;
+      final int pay = UtilWorld.dimensionIsEqual(dimpos, worldIn) ? POWERCONF.get() : COSTDIM.get();
       int sim = tile.energy.extractEnergy(pay, true);
-      if (sim == pay) {
+      if (pay == 0 || sim == pay) {
         tile.energy.extractEnergy(pay, false);
         //tp now
         DimensionTransit transit = new DimensionTransit((ServerLevel) worldIn, dimpos);

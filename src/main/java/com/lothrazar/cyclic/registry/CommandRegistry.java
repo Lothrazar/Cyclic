@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.command.CommandHunger;
 import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
 import com.lothrazar.cyclic.command.CommandTask;
-import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -23,6 +22,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameType;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -41,27 +41,34 @@ public class CommandRegistry {
     }
   }
 
+  public static BooleanValue COMMANDDEV;
+  public static BooleanValue COMMANDGETHOME;
+  public static BooleanValue COMMANDHEALTH;
+  public static BooleanValue COMMANDHOME;
+  public static BooleanValue COMMANDHUNGER;
+  public static BooleanValue COMMANDPING;
+
   @SubscribeEvent
   public void onRegisterCommandsEvent(RegisterCommandsEvent event) {
     CommandDispatcher<CommandSourceStack> r = event.getDispatcher();
     r.register(LiteralArgumentBuilder.<CommandSourceStack> literal(ModCyclic.MODID)
         .then(Commands.literal(CyclicCommands.HOME.toString())
             .requires((p) -> {
-              return p.hasPermission(ConfigRegistry.COMMANDHOME.get() ? 3 : 0);
+              return p.hasPermission(COMMANDHOME.get() ? 3 : 0);
             })
             .executes(x -> {
               return CommandHome.execute(x);
             }))
         .then(Commands.literal(CyclicCommands.GETHOME.toString())
             .requires((p) -> {
-              return p.hasPermission(ConfigRegistry.COMMANDGETHOME.get() ? 3 : 0);
+              return p.hasPermission(COMMANDGETHOME.get() ? 3 : 0);
             })
             .executes(x -> {
               return CommandGetHome.execute(x);
             }))
         .then(Commands.literal(CyclicCommands.HEALTH.toString())
             .requires((p) -> {
-              return p.hasPermission(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
+              return p.hasPermission(COMMANDHEALTH.get() ? 3 : 0);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, FloatArgumentType.floatArg(0, 100F))
@@ -70,7 +77,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.HEARTS.toString())
             .requires((p) -> {
-              return p.hasPermission(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
+              return p.hasPermission(COMMANDHEALTH.get() ? 3 : 0);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(1, 100))
@@ -106,7 +113,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.HUNGER.toString())
             .requires((p) -> {
-              return p.hasPermission(ConfigRegistry.COMMANDHUNGER.get() ? 3 : 0);
+              return p.hasPermission(COMMANDHUNGER.get() ? 3 : 0);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 20))
@@ -115,7 +122,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.DEV.toString())
             .requires((p) -> {
-              return p.hasPermission(ConfigRegistry.COMMANDDEV.get() ? 3 : 0);
+              return p.hasPermission(COMMANDDEV.get() ? 3 : 0);
             })
             .then(Commands.literal("nbt")
                 .executes(x -> {
@@ -127,7 +134,7 @@ public class CommandRegistry {
                 })))
         .then(Commands.literal(CyclicCommands.PING.toString())
             .requires((p) -> {
-              return p.hasPermission(ConfigRegistry.COMMANDPING.get() ? 3 : 0);
+              return p.hasPermission(COMMANDPING.get() ? 3 : 0);
             })
             .then(Commands.literal("nether")
                 .executes(x -> {

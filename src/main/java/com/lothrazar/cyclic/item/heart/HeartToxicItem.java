@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.heart;
 
-import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
@@ -12,10 +11,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class HeartToxicItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = HeartItem.COOLDOWN;
+  public static IntValue HEARTXPMINUS;
 
   public HeartToxicItem(Properties properties) {
     super(properties);
@@ -42,7 +43,7 @@ public class HeartToxicItem extends ItemBaseCyclic {
       playerIn.getItemInHand(handIn).shrink(1);
       UtilSound.playSound(playerIn, SoundRegistry.FILL);
       playerIn.getFoodData().eat(3, 1);
-      playerIn.giveExperiencePoints(ConfigRegistry.HEARTXPMINUS.get());
+      playerIn.giveExperiencePoints(HEARTXPMINUS.get());
     }
     //replace the modifier on the main attribute
     healthAttribute.removeModifier(HeartItem.ID);

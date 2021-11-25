@@ -1,11 +1,12 @@
 package com.lothrazar.cyclic;
 
 import org.apache.logging.log4j.Logger;
-import com.lothrazar.cyclic.config.ConfigRegistry;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
 public class CyclicLogger {
 
   private Logger logger;
+  public static BooleanValue LOGINFO;
 
   public CyclicLogger(Logger logger) {
     this.logger = logger;
@@ -21,7 +22,7 @@ public class CyclicLogger {
 
   public void info(String string) {
     //default for all releases is false to prevent spam-logs slipping out
-    if (ConfigRegistry.LOGINFO.get()) {
+    if (LOGINFO.get()) {
       logger.info(string);
     }
   }

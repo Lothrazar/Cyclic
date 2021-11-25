@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
@@ -12,9 +11,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 
 public class PeatBlock extends BlockCyclic {
 
+  public static DoubleValue PEATCHANCE;
   public static final int FUEL_WEAK = 256;
   public static final int FUEL_STRONG = 4096;
 
@@ -46,7 +47,7 @@ public class PeatBlock extends BlockCyclic {
    * Percent chance to bake based on how much water. If touching 1 water source its just the PCT. Touching all 6 water sources means 6 * PCT
    */
   private void tryBake(Level world, BlockPos pos, int waters) {
-    if (world.random.nextDouble() < ConfigRegistry.PEATCHANCE.get().doubleValue() * waters) {
+    if (world.random.nextDouble() < PEATCHANCE.get().doubleValue() * waters) {
       world.setBlockAndUpdate(pos, BlockRegistry.PEAT_BAKED.get().defaultBlockState());
     }
   }

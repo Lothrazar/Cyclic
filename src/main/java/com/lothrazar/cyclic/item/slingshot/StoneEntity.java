@@ -21,6 +21,8 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 public class StoneEntity extends ThrowableItemProjectile {
 
+  private static final float CHANCE_STUN = 0.5F;
+
   public StoneEntity(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
     super(entityType, world);
   }
@@ -45,8 +47,7 @@ public class StoneEntity extends ThrowableItemProjectile {
       Entity owner = getOwner();
       if (target.isAlive()) {
         target.hurt(DamageSource.thrown(this, owner), Mth.nextInt(level.random, 2, 6));
-        // 50% chance to stun for 2sec TODO: config
-        if (target.level.random.nextDouble() < 0.5F && !target.level.isClientSide && target instanceof LivingEntity) {
+        if (target.level.random.nextDouble() < CHANCE_STUN && !target.level.isClientSide && target instanceof LivingEntity) {
           LivingEntity living = (LivingEntity) target;
           MobEffectInstance effect = new MobEffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 2, 1);
           effect.visible = false;
