@@ -88,6 +88,18 @@
 	#####################################################################################
 	[cyclic.worldgen]
 
+		[cyclic.worldgen.flower_absalon_tulip]
+			#Does this generate in the world
+			enabled = true
+
+		[cyclic.worldgen.flower_purple_tulip]
+			#Does this generate in the world
+			enabled = true
+
+		[cyclic.worldgen.flower_lime_carnation]
+			#Does this generate in the world
+			enabled = true
+
 		[cyclic.worldgen.flower_cyan]
 			#Does this generate in the world
 			enabled = true
@@ -96,6 +108,14 @@
 	# Block specific configs
 	#####################################################################################
 	[cyclic.blocks]
+
+		[cyclic.blocks.peace_candle]
+			#Reach of the candle for spawn prevention
+			#Range: 1 ~ 128
+			radius = 32
+			#Height reach of the candle for spawn prevention
+			#Range: 1 ~ 128
+			height = 8
 
 		#Ender Anchor settings
 		[cyclic.blocks.eye_teleport]
@@ -261,7 +281,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
+		info = false
 
 	#####################################################################################
 	# Item specific configs

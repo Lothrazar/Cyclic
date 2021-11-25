@@ -47,11 +47,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class CandlePeaceBlock extends BlockCyclic {
 
-  public static int HEIGHT = 8; // TODO: CONFIG
-  public static int RADIUS = 32; // TODO: CONFIG
+  public static IntValue HEIGHT;
+  public static IntValue RADIUS;
   private static final double BOUNDS = 3;
   private static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
       16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);

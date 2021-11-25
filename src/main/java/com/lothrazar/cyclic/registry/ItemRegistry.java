@@ -384,7 +384,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> TERRA_PRETA = ITEMS.register("terra_preta", () -> new BlockItem(BlockRegistry.TERRA_PRETA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> FIREPLACE = ITEMS.register("fireplace", () -> new BlockItem(BlockRegistry.FIREPLACE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CRAFTER = ITEMS.register("crafter", () -> new BlockItem(BlockRegistry.CRAFTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> UNBREAKABLE_BLOCK = ITEMS.register("unbreakable_block", () -> new BlockItem(BlockRegistry.UNBREAKABLE_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP))); // TODO 1.18
+  public static final RegistryObject<Item> UNBREAKABLE_BLOCK = ITEMS.register("unbreakable_block", () -> new BlockItem(BlockRegistry.UNBREAKABLE_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP))); // TODO 1.18 rename _block part
   public static final RegistryObject<Item> UNBREAKABLE_REACTIVE = ITEMS.register("unbreakable_reactive", () -> new BlockItem(BlockRegistry.UNBREAKABLE_REACTIVE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CONVEYOR = ITEMS.register("conveyor", () -> new BlockItem(BlockRegistry.CONVEYOR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP))); // TODO 1.18 placermod
   public static final RegistryObject<Item> ENDER_SHELF = ITEMS.register("ender_shelf", () -> new BlockItem(BlockRegistry.ENDER_SHELF.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));

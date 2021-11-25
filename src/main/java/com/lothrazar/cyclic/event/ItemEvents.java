@@ -85,7 +85,9 @@ public class ItemEvents {
     LivingEntity mob = event.getEntityLiving();
     MobSpawnType res = event.getSpawnReason();
     if (CandlePeaceBlock.isBad(mob, res)
-        && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), CandlePeaceBlock.RADIUS, CandlePeaceBlock.HEIGHT)) {
+        && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
+            BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
+            CandlePeaceBlock.RADIUS.get(), CandlePeaceBlock.HEIGHT.get())) {
       event.setResult(Result.DENY);
     }
   }

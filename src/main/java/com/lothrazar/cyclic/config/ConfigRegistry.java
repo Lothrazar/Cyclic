@@ -8,6 +8,7 @@ import java.util.Map;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -251,6 +252,8 @@ public class ConfigRegistry {
         .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
     TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
         .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
+    CandlePeaceBlock.HEIGHT = CFG.comment("Height reach of the candle for spawn prevention").defineInRange("peace_candle.height", 8, 1, 128);
+    CandlePeaceBlock.RADIUS = CFG.comment("Reach of the candle for spawn prevention").defineInRange("peace_candle.radius", 32, 1, 128);
     TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, 64000);
     TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user.energy_cost", 0, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, 64000);

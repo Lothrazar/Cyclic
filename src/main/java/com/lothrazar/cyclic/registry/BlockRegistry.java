@@ -124,8 +124,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -279,9 +277,4 @@ public class BlockRegistry {
   public static final RegistryObject<Block> UNBREAKABLE_REACTIVE = BLOCKS.register("unbreakable_reactive", () -> new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE))); //reactive and unstable, ignores players and reads redstone 
   public static final RegistryObject<Block> ENDER_SHELF = BLOCKS.register("ender_shelf", () -> new BlockEnderShelf(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ENDER_CONTROLLER = BLOCKS.register("ender_controller", () -> new BlockEnderCtrl(Block.Properties.of(Material.STONE)));
-
-  @SubscribeEvent
-  public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-    //    IForgeRegistry<Block> r = event.getRegistry();
-  }
 }
