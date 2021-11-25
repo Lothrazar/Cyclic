@@ -241,11 +241,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public void moveFluids(Direction myFacingDir, BlockPos posTarget, int toFlow, IFluidHandler tank) {
-    // posTarget = pos.offset(myFacingDir);
-    if (tank == null || tank.getFluidInTank(0).getAmount() <= 0) {
+    if (tank == null || tank.getFluidInTank(0).isEmpty())
       return;
-    }
-    Direction themFacingMe = myFacingDir.getOpposite();
+
+    final Direction themFacingMe = myFacingDir.getOpposite();
     UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
   }
 
@@ -329,7 +328,9 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (tileTarget == null)
       return false;
 
-    final IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
+    final IItemHandler handlerOutput = tileTarget
+            .getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe)
+            .orElse(null);
     if (handlerOutput == null)
       return false;
 
@@ -524,20 +525,24 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public void setEnergy(int value) {
-    IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-    if (energ != null && energ instanceof CustomEnergyStorage) {
-      ((CustomEnergyStorage) energ).setEnergy(value);
+    IEnergyStorage energy = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+    if (energy != null && energy instanceof CustomEnergyStorage) {
+      ((CustomEnergyStorage) energy).setEnergy(value);
     }
   }
 
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
-    if (world.isRemote == false && world.getGameTime() % 20 == 0) { //if serverside then 
-      IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-      if (energ != null) {
-        PacketRegistry.sendToAllClients(this.getWorld(), new PacketEnergySync(this.getPos(), energ.getEnergyStored()));
-      }
-    }
+    //skip if clientside
+    if (world.isRemote || world.getGameTime() % 20 != 0)
+      return;
+
+    final IEnergyStorage energy = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+    if (energy == null)
+      return;
+
+    final PacketEnergySync packetEnergySync = new PacketEnergySync(this.getPos(), energy.getEnergyStored());
+    PacketRegistry.sendToAllClients(world, packetEnergySync);
   }
 
   public void exportEnergyAllSides() {

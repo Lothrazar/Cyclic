@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
@@ -8,12 +9,9 @@ import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.cyclic.util.UtilFluid;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,6 +22,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -51,8 +50,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
   public static final int FLOW_RATE = CAPACITY; //normal non-extract flow
   public static final int EXTRACT_RATE = CAPACITY;
-  public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 2;
-  private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
+  private final Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
@@ -61,70 +59,89 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     }
   }
 
-  List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
-
   @Override
   public void tick() {
-    for (Direction side : Direction.values()) {
-      EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(side));
-      if (connection.isExtraction()) {
-        tryExtract(side);
-      }
+    for (final Direction extractSide : Direction.values()) {
+      final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
+      final EnumConnectType connection = this.getBlockState().get(extractFace);
+      if (connection.isExtraction())
+        tryExtract(extractSide);
     }
     normalFlow();
   }
 
   private void tryExtract(Direction extractSide) {
-    if (extractSide == null) {
+    if (extractSide == null)
+      return;
+
+    final BlockPos target = this.pos.offset(extractSide);
+    final Direction incomingSide = extractSide.getOpposite();
+    final IFluidHandler tank = UtilFluid.getTank(world, target, incomingSide);
+    if (tank == null)
+      return;
+    else if (tank.getTanks() <= 0)
+      return;
+    else if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tank.getFluidInTank(0)))
+      return;
+
+    //first try standard fluid transfer
+    if (UtilFluid.tryFillPositionFromTank(world, pos, extractSide, tank, EXTRACT_RATE))
+      return;
+
+    //handle special cases
+    final FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
+    if (sideHandler == null)
+      return;
+    else if (sideHandler.getSpace() < FluidAttributes.BUCKET_VOLUME)
+      return;
+
+    final BlockState targetState = world.getBlockState(target);
+    final FluidState fluidState = world.getFluidState(target);
+
+    //handle waterlogged blocks
+    if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
+            && targetState.get(BlockStateProperties.WATERLOGGED)
+            && world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
+      //the waterlogged block contained a bucket amount of water
+      final FluidStack bucketAmountOfWater = new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME);
+      final int filledAmount = sideHandler.fill(bucketAmountOfWater, FluidAction.EXECUTE);
+
+      //sanity check
+      if (filledAmount != bucketAmountOfWater.getAmount())
+        ModCyclic.LOGGER.error("Imbalance filling water extracted from waterlogged block, filled " + filledAmount + " expected " + bucketAmountOfWater);
+
       return;
     }
-    BlockPos target = this.pos.offset(extractSide);
-    Direction incomingSide = extractSide.getOpposite();
-    IFluidHandler stuff = UtilFluid.getTank(world, target, incomingSide);
-    if (stuff != null
-        && stuff.getTanks() > 0
-        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
+
+    //handle source blocks
+    if (fluidState.isSource()
+            && world.setBlockState(target, Blocks.AIR.getDefaultState())) {
+      //the fluid source block contained a bucket amount of that fluid
+      final FluidStack bucketAmountOfFluid = new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME);
+      final int filledAmount = sideHandler.fill(bucketAmountOfFluid, FluidAction.EXECUTE);
+
+      //sanity check
+      if (filledAmount != bucketAmountOfFluid.getAmount())
+        ModCyclic.LOGGER.error("Incorrect amount of fluid extracted from fluid source, filled " + filledAmount + " expected " + bucketAmountOfFluid);
+
+      //noinspection UnnecessaryReturnStatement
       return;
-    }
-    boolean success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, EXTRACT_RATE);
-    FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
-    if (!success && sideHandler != null
-        && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      //test if its a source block, or a waterlogged block
-      BlockState targetState = world.getBlockState(target);
-      FluidState fluidState = world.getFluidState(target);
-      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
-        targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
-        //for waterlogged it is hardcoded to water
-        if (world.setBlockState(target, targetState)) {
-          sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
-      else if (fluidState != null && fluidState.isSource()) {
-        //not just water. any fluid source block
-        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-          sideHandler.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
     }
   }
 
   private void normalFlow() {
-    IFluidHandler sideHandler;
-    Direction outgoingSide;
     for (Direction incomingSide : Direction.values()) {
-      sideHandler = flow.get(incomingSide).orElse(null);
-      //thise items came from that
-      Collections.shuffle(rawList);
-      for (Integer i : rawList) {
-        outgoingSide = Direction.values()[i];
-        if (outgoingSide == incomingSide) {
+      final IFluidHandler sideHandler = flow.get(incomingSide).orElse(null);
+
+      for (final Direction outgoingSide : UtilDirection.inDifferingOrder.next()) {
+        if (outgoingSide == incomingSide)
           continue;
-        }
-        EnumConnectType connection = this.getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
-        if (connection.isExtraction() || connection.isBlocked()) {
+
+        final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
+        final EnumConnectType connection = this.getBlockState().get(outgoingFace);
+        if (connection.isExtraction() || connection.isBlocked())
           continue;
-        }
+
         this.moveFluids(outgoingSide, pos.offset(outgoingSide), FLOW_RATE, sideHandler);
       }
     }
@@ -143,11 +160,12 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
-    FluidTankBase fluidh;
-    for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir).orElse(null);
-      if (tag.contains("fluid" + dir.toString())) {
-        fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
+    for (final Direction direction : Direction.values()) {
+      final String key = UtilDirection.fluidNBTKeyMapping.get(direction);
+      final CompoundNBT fluidTag = tag.getCompound(key);
+      if (!fluidTag.isEmpty()) {
+        final FluidTankBase fluidHandler = flow.get(direction).orElse(null);
+        fluidHandler.readFromNBT(fluidTag);
       }
     }
     super.read(bs, tag);
@@ -156,14 +174,13 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put("filter", filter.serializeNBT());
-    FluidTankBase fluidh;
-    for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir).orElse(null);
-      CompoundNBT fluidtag = new CompoundNBT();
-      if (fluidh != null) {
-        fluidh.writeToNBT(fluidtag);
-      }
-      tag.put("fluid" + dir.toString(), fluidtag);
+    for (final Direction direction : Direction.values()) {
+      final CompoundNBT fluidTag = new CompoundNBT();
+      final FluidTankBase fluidHandler = flow.get(direction).orElse(null);
+      if (fluidHandler != null)
+        fluidHandler.writeToNBT(fluidTag);
+      final String key = UtilDirection.fluidNBTKeyMapping.get(direction);
+      tag.put(key, fluidTag);
     }
     return super.write(tag);
   }
