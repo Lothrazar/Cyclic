@@ -1,9 +1,9 @@
 {
 	"parent": "minecraft:block/cube",
 	"textures": {
-		"particle": "cyclic:blocks/cask_bottom",
-		"down": "cyclic:blocks/machine/cobble",
-		"up": "cyclic:blocks/machine/stonecutter",
+		"particle": "cyclic:blocks/machine/back",
+		"down": "cyclic:blocks/machine/iron",
+		"up": "cyclic:blocks/machine/back",
 		"north": "cyclic:blocks/machine/fuel_item_on",
 		"south": "cyclic:blocks/machine/fuel_item_on",
 		"west": "cyclic:blocks/machine/fuel_item_on",
