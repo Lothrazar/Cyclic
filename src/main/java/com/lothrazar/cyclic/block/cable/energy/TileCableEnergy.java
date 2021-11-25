@@ -70,10 +70,10 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
       return;
 
     final int energyReceived = energy.receiveEnergy(energyToExtract, false);
-    if (energyReceived <= 0 )
+    if (energyReceived <= 0)
       return;
 
-    final int energyExtracted = itemHandlerFrom.extractEnergy(energyToExtract, false);
+    final int energyExtracted = itemHandlerFrom.extractEnergy(energyReceived, false);
 
     //sanity check
     if (energyExtracted != energyReceived)
