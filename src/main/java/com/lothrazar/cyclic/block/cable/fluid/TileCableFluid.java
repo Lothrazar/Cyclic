@@ -160,12 +160,11 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
-    for (final Direction direction : Direction.values()) {
-      final String key = "fluid" + direction.getString();
-      final CompoundNBT fluidTag = tag.getCompound(key);
-      if (!fluidTag.isEmpty()) {
-        final FluidTankBase fluidHandler = flow.get(direction).orElse(null);
-        fluidHandler.readFromNBT(fluidTag);
+    FluidTankBase fluidh;
+    for (Direction dir : Direction.values()) {
+      fluidh = flow.get(dir).orElse(null);
+      if (tag.contains("fluid" + dir.toString())) {
+        fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
       }
     }
     super.read(bs, tag);
@@ -174,13 +173,14 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put("filter", filter.serializeNBT());
-    for (final Direction direction : Direction.values()) {
-      final CompoundNBT fluidTag = new CompoundNBT();
-      final FluidTankBase fluidHandler = flow.get(direction).orElse(null);
-      if (fluidHandler != null)
-        fluidHandler.writeToNBT(fluidTag);
-      final String key = "fluid" + direction.getString();
-      tag.put(key, fluidTag);
+    FluidTankBase fluidh;
+    for (Direction dir : Direction.values()) {
+      fluidh = flow.get(dir).orElse(null);
+      CompoundNBT fluidtag = new CompoundNBT();
+      if (fluidh != null) {
+        fluidh.writeToNBT(fluidtag);
+      }
+      tag.put("fluid" + dir.toString(), fluidtag);
     }
     return super.write(tag);
   }

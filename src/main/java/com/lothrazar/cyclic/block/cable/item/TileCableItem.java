@@ -101,11 +101,12 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     extractQty = tag.getInt("extractCount");
-    for (final Direction direction : Direction.values()) {
-      flow.get(direction).ifPresent(itemHandler -> {
-        final String key = "item" + direction.getString();
-        final CompoundNBT itemTag = tag.getCompound(key);
-        ((INBTSerializable<CompoundNBT>) itemHandler).deserializeNBT(itemTag);
+    LazyOptional<IItemHandler> item;
+    for (Direction f : Direction.values()) {
+      item = flow.get(f);
+      item.ifPresent(h -> {
+        CompoundNBT itemTag = tag.getCompound("item" + f.toString());
+        ((INBTSerializable<CompoundNBT>) h).deserializeNBT(itemTag);
       });
     }
     filter.deserializeNBT(tag.getCompound("filter"));
@@ -117,11 +118,12 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   public CompoundNBT write(CompoundNBT tag) {
     tag.put("filter", filter.serializeNBT());
     tag.putInt("extractCount", extractQty);
-    for (final Direction direction : Direction.values()) {
-      flow.get(direction).ifPresent(itemHandler -> {
-        final CompoundNBT itemTag = ((INBTSerializable<CompoundNBT>) itemHandler).serializeNBT();
-        final String key = "item" + direction.getString();
-        tag.put(key, itemTag);
+    LazyOptional<IItemHandler> item;
+    for (Direction f : Direction.values()) {
+      item = flow.get(f);
+      item.ifPresent(h -> {
+        CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+        tag.put("item" + f.toString(), compound);
       });
     }
     return super.write(tag);

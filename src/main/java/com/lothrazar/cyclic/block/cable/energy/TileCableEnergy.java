@@ -112,9 +112,8 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
-    for (final Direction direction : Direction.values()) {
-      final String key = direction.getString() + "_incenergy";
-      mapIncomingEnergy.put(direction, tag.getInt(key));
+    for (Direction f : Direction.values()) {
+      mapIncomingEnergy.put(f, tag.getInt(f.getString() + "_incenergy"));
     }
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     super.read(bs, tag);
@@ -122,9 +121,8 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    for (final Direction direction : Direction.values()) {
-      final String key = direction.getString() + "_incenergy";
-      tag.putInt(key, mapIncomingEnergy.get(direction));
+    for (Direction f : Direction.values()) {
+      tag.putInt(f.getString() + "_incenergy", mapIncomingEnergy.get(f));
     }
     tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
