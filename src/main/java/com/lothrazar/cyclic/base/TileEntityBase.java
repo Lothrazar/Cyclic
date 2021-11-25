@@ -253,6 +253,10 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (qty <= 0)
       return;
 
+    final ItemStack stackInSlot = myself.getStackInSlot(0);
+    if (!stackInSlot.isEmpty())
+      return;
+
     if (extractSide == null)
       return;
 
@@ -263,10 +267,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
     final IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
     if (itemHandlerFrom == null)
-      return;
-
-    final ItemStack stackInSlot = myself.getStackInSlot(0);
-    if (!stackInSlot.isEmpty())
       return;
 
     final int slotLimit = Math.min(myself.getSlotLimit(0), qty);
@@ -284,13 +284,15 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       int limit = Math.min(itemStackToExtract.getCount(), itemStackToExtract.getMaxStackSize());
       limit = Math.min(limit, slotLimit);
 
-      //check there is room to extract more
+      //check there is anything to extract
       if (limit <= 0)
-        return;
+        continue;
 
       final ItemStack extractedItemStack = itemHandlerFrom.extractItem(slot, limit, false);
-      ItemStack remainderItemStack = myself.insertItem(0, extractedItemStack, false);
+      if (extractedItemStack.isEmpty())
+        continue;
 
+      ItemStack remainderItemStack = myself.insertItem(0, extractedItemStack, false);
       //sanity check
       if (!remainderItemStack.isEmpty()) {
         ModCyclic.LOGGER.error("Incorrect number of items extracted, have to re-insert " + remainderItemStack);
@@ -317,6 +319,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (handlerHere == null)
       return false;
 
+    //first get the original ItemStack as creating new ones is expensive
+    final ItemStack originalItemStack = handlerHere.getStackInSlot(theslot);
+    if (originalItemStack.isEmpty())
+      return false;
+
     final Direction themFacingMe = myFacingDir.getOpposite();
     final TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null)
@@ -324,11 +331,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
     final IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
     if (handlerOutput == null)
-      return false;
-
-    //first get the original ItemStack as creating new ones is expensive
-    final ItemStack originalItemStack = handlerHere.getStackInSlot(theslot);
-    if (originalItemStack.isEmpty())
       return false;
 
     final int maxStackSize = originalItemStack.getMaxStackSize();
@@ -341,6 +343,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
       //find the theoretical maximum we can insert
       int limit = Math.min(handlerOutput.getSlotLimit(slot), maxStackSize);
+      int amountInOutputSlot = 0;
 
       //reduce limit by amount already in the output slot
       final ItemStack stackInOutputSlot = handlerOutput.getStackInSlot(slot);
@@ -348,7 +351,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
         //if the output slot is not compatible then skip this slot
         if (!ItemHandlerHelper.canItemStacksStack(originalItemStack, stackInOutputSlot))
           continue;
-        limit -= stackInOutputSlot.getCount();
+        amountInOutputSlot = stackInOutputSlot.getCount();
+        limit -= amountInOutputSlot;
       }
       limit = Math.min(limit, remainingItemCount);
       limit = Math.min(limit, max);
@@ -364,6 +368,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
       //only perform an insert (even simulated) if required as it creates at least one new ItemStack in the process
       final ItemStack remainderItemStack = handlerOutput.insertItem(slot, itemStackToInsert, false);
+
+      //check the remainder to calculate how much was actually inserted
       remainingItemCount -= (limit - remainderItemStack.getCount());
       if (remainingItemCount <= 0)
         break;
@@ -373,7 +379,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     final boolean didInsertItems = insertedItemCount > 0;
     if (didInsertItems) {
       //only perform an extraction if required as it creates a new ItemStack in the process
-      final ItemStack finalItemStack = handlerHere.extractItem(theslot, insertedItemCount, false);
+      final ItemStack extractedItemStack = handlerHere.extractItem(theslot, insertedItemCount, false);
+
+      //sanity check
+      if (extractedItemStack.getCount() != insertedItemCount)
+        ModCyclic.LOGGER.error("Imbalance moving items, extracted " + extractedItemStack + " inserted " + insertedItemCount);
     }
     return didInsertItems;
   }
