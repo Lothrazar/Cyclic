@@ -114,11 +114,11 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
 
     //handle source blocks
     final FluidState fluidState = world.getFluidState(target);
-    if (!fluidState.isSource())
+    final Fluid fluid = fluidState.getFluid();
+    if (!fluid.isSource(fluidState))
       return;
 
-    //get the type of fluid before trying to change the block to air
-    final Fluid fluid = fluidState.getFluid();
+    //remove the fluid source block
     if (!world.setBlockState(target, Blocks.AIR.getDefaultState()))
       return;
 
