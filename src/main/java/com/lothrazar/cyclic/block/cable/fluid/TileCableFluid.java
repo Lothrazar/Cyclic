@@ -77,12 +77,12 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
 
     final BlockPos target = this.pos.offset(extractSide);
     final Direction incomingSide = extractSide.getOpposite();
+
+    //when draining from a tank (instead of a source/waterlogged block) check the filter
     final IFluidHandler tank = UtilFluid.getTank(world, target, incomingSide);
-    if (tank == null)
-      return;
-    else if (tank.getTanks() <= 0)
-      return;
-    else if (!FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tank.getFluidInTank(0)))
+    if (tank != null
+            && tank.getTanks() > 0
+            && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tank.getFluidInTank(0)))
       return;
 
     //first try standard fluid transfer
