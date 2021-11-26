@@ -16,6 +16,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
@@ -95,10 +96,8 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     else if (sideHandler.getSpace() < FluidAttributes.BUCKET_VOLUME)
       return;
 
-    final BlockState targetState = world.getBlockState(target);
-    final FluidState fluidState = world.getFluidState(target);
-
     //handle waterlogged blocks
+    final BlockState targetState = world.getBlockState(target);
     if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
             && targetState.get(BlockStateProperties.WATERLOGGED)
             && world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
@@ -114,19 +113,22 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     }
 
     //handle source blocks
-    if (fluidState.isSource()
-            && world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-      //the fluid source block contained a bucket amount of that fluid
-      final FluidStack bucketAmountOfFluid = new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME);
-      final int filledAmount = sideHandler.fill(bucketAmountOfFluid, FluidAction.EXECUTE);
-
-      //sanity check
-      if (filledAmount != bucketAmountOfFluid.getAmount())
-        ModCyclic.LOGGER.error("Incorrect amount of fluid extracted from fluid source, filled " + filledAmount + " expected " + bucketAmountOfFluid);
-
-      //noinspection UnnecessaryReturnStatement
+    final FluidState fluidState = world.getFluidState(target);
+    if (!fluidState.isSource())
       return;
-    }
+
+    //get the type of fluid before trying to change the block to air
+    final Fluid fluid = fluidState.getFluid();
+    if (!world.setBlockState(target, Blocks.AIR.getDefaultState()))
+      return;
+
+    //the fluid source block contained a bucket amount of that fluid
+    final FluidStack bucketAmountOfFluid = new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME);
+    final int filledAmount = sideHandler.fill(bucketAmountOfFluid, FluidAction.EXECUTE);
+
+    //sanity check
+    if (filledAmount != bucketAmountOfFluid.getAmount())
+      ModCyclic.LOGGER.error("Incorrect amount of fluid extracted from fluid source, filled " + filledAmount + " expected " + bucketAmountOfFluid);
   }
 
   private void normalFlow() {
