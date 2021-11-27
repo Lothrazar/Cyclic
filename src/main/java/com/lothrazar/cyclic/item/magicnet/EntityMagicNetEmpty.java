@@ -56,6 +56,9 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       if (target instanceof Player || !target.isAlive()) {
         return;
       }
+      if (target.getFirstPassenger() instanceof Player) {
+        return;
+      }
       //Wake up the mob in case they're sleeping in a bed see Issue #1599
       if (target instanceof LivingEntity) {
         ((LivingEntity) target).stopSleeping();
