@@ -22,8 +22,6 @@ public class PacketItemGui extends PacketBaseCyclic {
       if ((player.containerMenu instanceof ContainerStorageBag) == false) {
         NetworkHooks.openGui(player, new StorageBagContainerProvider(), player.blockPosition());
       }
-      //
-      //
     });
     message.done(ctx);
   }

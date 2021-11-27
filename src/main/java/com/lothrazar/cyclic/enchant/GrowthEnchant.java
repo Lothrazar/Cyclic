@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.util.HarvestUtil;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
@@ -102,15 +102,14 @@ public class GrowthEnchant extends EnchantmentCyclic {
         //do one
         BlockPos pos = shape.get(i);
         BlockState target = entity.level.getBlockState(pos);
-        IntegerProperty propAge = TileHarvester.getAgeProp(target);
+        IntegerProperty propAge = HarvestUtil.getAgeProp(target);
         if (propAge == null) {
           continue;
         }
         int maxAge = Collections.max(propAge.getPossibleValues());
         Integer currentAge = target.getValue(propAge);
         if (currentAge < maxAge) {
-          if (entity.level.setBlockAndUpdate(pos,
-              target.setValue(propAge, currentAge + 1))) {
+          if (entity.level.setBlockAndUpdate(pos, target.setValue(propAge, currentAge + 1))) {
             grown++;
           }
         }

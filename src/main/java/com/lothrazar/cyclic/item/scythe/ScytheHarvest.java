@@ -1,8 +1,9 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.net.PacketHarvesting;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
@@ -33,9 +34,8 @@ public class ScytheHarvest extends ItemBaseCyclic {
     }
     Player player = context.getPlayer();
     int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
-    for (BlockPos p : getShape(pos, radius)) {
-      TileHarvester.tryHarvestSingle(context.getLevel(), p);
-    }
+    PacketRegistry.INSTANCE.sendToServer(new PacketHarvesting(pos, radius));
+    //    HarvestUtil.harvestShape(context.getLevel(), pos, radius);
     context.getPlayer().swing(context.getHand());
     UtilItemStack.damageItem(context.getPlayer(), context.getItemInHand());
     return super.useOn(context);
