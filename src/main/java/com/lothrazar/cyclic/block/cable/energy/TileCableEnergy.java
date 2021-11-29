@@ -1,13 +1,19 @@
 package com.lothrazar.cyclic.block.cable.energy;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.net.PacketEnergySync;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,6 +33,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
+  private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
 
   public TileCableEnergy() {
     super(TileRegistry.energy_pipeTile);
@@ -64,8 +71,12 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     if (itemHandlerFrom == null) {
       return;
     }
+    final int capacity = energy.getMaxEnergyStored() - energy.getEnergyStored();
+    if (capacity <= 0) {
+      return;
+    }
     //first we simulate
-    final int energyToExtract = itemHandlerFrom.extractEnergy(MAX, true);
+    final int energyToExtract = itemHandlerFrom.extractEnergy(capacity, true);
     if (energyToExtract <= 0) {
       return;
     }
@@ -81,7 +92,14 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   private void tickCableFlow() {
-    for (final Direction outgoingSide : UtilDirection.DIRECTIONS_DIFFERENT_ORDER.next()) {
+    Iterator<List<Direction>> inDifferingOrder = Iterables
+        .cycle(UtilDirection.permutateDirections(Arrays.asList(Direction.values()), 0))
+        .iterator();
+    if (!inDifferingOrder.hasNext()) {
+      return; // might not occur in energy, error only replicated in TileCableItem
+    }
+    List<Direction> list = inDifferingOrder.next();
+    for (final Direction outgoingSide : list) {
       final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
       final EnumConnectType connection = this.getBlockState().get(outgoingFace);
       if (connection.isExtraction() || connection.isBlocked()) {
@@ -146,5 +164,19 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   @Override
   public int getField(int field) {
     return 0;
+  }
+
+  @Override
+  protected void syncEnergy() {
+    //skip if clientside
+    if (world.isRemote || world.getGameTime() % 20 != 0) {
+      return;
+    }
+    final int currentEnergy = energy.getEnergyStored();
+    if (currentEnergy != energyLastSynced) {
+      final PacketEnergySync packetEnergySync = new PacketEnergySync(this.getPos(), currentEnergy);
+      PacketRegistry.sendToAllClients(world, packetEnergySync);
+      energyLastSynced = currentEnergy;
+    }
   }
 }
