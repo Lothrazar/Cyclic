@@ -393,37 +393,46 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return moveEnergy(myFacingDir, pos.offset(myFacingDir), quantity);
   }
 
-  protected boolean moveEnergy(Direction myFacingDir, BlockPos posTarget, int quantity) {
+  protected boolean moveEnergy(final Direction myFacingDir, final BlockPos posTarget, final int quantity) {
     if (quantity <= 0)
       return false;
 
     if (this.world.isRemote)
       return false; //important to not desync cables
 
-    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
+    final IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
     if (handlerHere == null)
       return false;
 
-    Direction themFacingMe = myFacingDir.getOpposite();
-    TileEntity tileTarget = world.getTileEntity(posTarget);
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    final TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null)
       return false;
-    IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe).orElse(null);
+
+    final IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe).orElse(null);
     if (handlerOutput == null)
       return false;
 
+    final int capacity = handlerOutput.getMaxEnergyStored() - handlerOutput.getEnergyStored();
+    if (capacity <= 0)
+      return false;
+
     //first simulate
-    int drain = handlerHere.extractEnergy(quantity, true);
+    final int drain = handlerHere.extractEnergy(Math.min(quantity, capacity), true);
     if (drain <= 0)
       return false;
 
     //now push it into output, but find out what was ACTUALLY taken
-    int filled = handlerOutput.receiveEnergy(drain, false);
+    final int filled = handlerOutput.receiveEnergy(drain, false);
     if (filled <= 0)
       return false;
 
     //now actually drain that much from here
-    handlerHere.extractEnergy(filled, false);
+    final int drained = handlerHere.extractEnergy(filled, false);
+
+    //sanity check
+    if (drained != filled)
+      ModCyclic.LOGGER.error("Imbalance moving energy, extracted " + drained + " received " + filled);
 
     if (tileTarget instanceof TileCableEnergy) {
       // not so compatible with other fluid systems. it will do i guess
