@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
@@ -12,8 +11,6 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.cyclic.util.UtilFluid;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.block.BlockState;
@@ -135,15 +132,9 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   }
 
   private void normalFlow() {
-    Iterator<List<Direction>> inDifferingOrder = Iterables
-        .cycle(UtilDirection.permutateDirections(Arrays.asList(Direction.values()), 0))
-        .iterator();
-    if (!inDifferingOrder.hasNext()) {
-      return; // might not occur in energy, error only replicated in TileCableItem
-    }
     for (Direction incomingSide : Direction.values()) {
       final IFluidHandler sideHandler = flow.get(incomingSide).orElse(null);
-      List<Direction> list = inDifferingOrder.next();
+      List<Direction> list = UtilDirection.getRandomSet(world.rand);
       for (final Direction outgoingSide : list) {
         if (outgoingSide == incomingSide) {
           continue;

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable.item;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
@@ -8,8 +7,6 @@ import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.block.BlockState;
@@ -69,24 +66,11 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   }
 
   private void normalFlow() {
-    //iterator .next() without checking hasNext caused a 
-    //Caused by: java.util.NoSuchElementException
-    //  at java.util.ArrayList$Itr.next(Unknown Source) ~[?:1.8.0_251] {}
-    //  at com.google.common.collect.Iterators$4.next(Iterators.java:424) ~[guava-21.0.jar:?] {}
-    //  at com.lothrazar.cyclic.block.cable.item.TileCableItem.normalFlow(TileCableItem.java:72) ~[?:?] {re:classloading}
-    //so remake instead of using static stream that will run to the end and run out
-    Iterator<List<Direction>> inDifferingOrder = Iterables
-        .cycle(UtilDirection.permutateDirections(Arrays.asList(Direction.values()), 0))
-        .iterator();
     // Label for loop for shortcutting, used to continue after items have been moved
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
       final IItemHandler sideHandler = flow.get(incomingSide).orElse(null);
-      //      UtilDirection.DIRECTIONS_DIFFERENT_ORDER.hasNext()
-      if (!inDifferingOrder.hasNext()) {
-        continue;
-      }
-      List<Direction> list = inDifferingOrder.next();
+      List<Direction> list = UtilDirection.getRandomSet(world.rand);
       //we checked hasNext, so iterator wont hit a NoSuchElementException
       for (final Direction outgoingSide : list) {
         if (outgoingSide == incomingSide) {

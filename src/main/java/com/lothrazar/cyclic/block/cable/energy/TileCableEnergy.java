@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable.energy;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
@@ -11,8 +10,6 @@ import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.block.BlockState;
@@ -92,13 +89,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   private void tickCableFlow() {
-    Iterator<List<Direction>> inDifferingOrder = Iterables
-        .cycle(UtilDirection.permutateDirections(Arrays.asList(Direction.values()), 0))
-        .iterator();
-    if (!inDifferingOrder.hasNext()) {
-      return; // might not occur in energy, error only replicated in TileCableItem
-    }
-    List<Direction> list = inDifferingOrder.next();
+    List<Direction> list = UtilDirection.getRandomSet(world.rand);
     for (final Direction outgoingSide : list) {
       final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
       final EnumConnectType connection = this.getBlockState().get(outgoingFace);
