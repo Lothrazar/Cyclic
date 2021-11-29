@@ -6,8 +6,8 @@ import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.Map;
 import com.lothrazar.cyclic.util.UtilDirection;
+import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -30,7 +30,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileCableItem extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   private static final int FLOW_QTY = 64; // fixed, for non-extract motion
-  private int extractQty = 64; // default
+  private int extractQty = FLOW_QTY; // default
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -65,23 +65,23 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
   }
 
   private void normalFlow() {
+    // Label for loop for shortcutting, used to continue after items have been moved
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
       final IItemHandler sideHandler = flow.get(incomingSide).orElse(null);
-
-      for (final Direction outgoingSide : UtilDirection.inDifferingOrder.next()) {
-        if (outgoingSide == incomingSide)
+      for (final Direction outgoingSide : UtilDirection.DIRECTIONS_DIFFERENT_ORDER.next()) {
+        if (outgoingSide == incomingSide) {
           continue;
-
+        }
         final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
         final EnumConnectType outgoingConnection = this.getBlockState().get(outgoingFace);
-        if (outgoingConnection.isExtraction() || outgoingConnection.isBlocked())
+        if (outgoingConnection.isExtraction() || outgoingConnection.isBlocked()) {
           continue;
-
-        if (this.moveItems(outgoingSide, FLOW_QTY, sideHandler))
+        }
+        if (this.moveItems(outgoingSide, FLOW_QTY, sideHandler)) {
           continue incomingSideLoop; //if items have been moved then change side
+        }
       }
-
       //if no items have been moved then move items in from adjacent
       this.moveItems(incomingSide, FLOW_QTY, sideHandler);
     }

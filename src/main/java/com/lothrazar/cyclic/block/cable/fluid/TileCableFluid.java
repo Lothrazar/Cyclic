@@ -65,85 +65,83 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     for (final Direction extractSide : Direction.values()) {
       final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
       final EnumConnectType connection = this.getBlockState().get(extractFace);
-      if (connection.isExtraction())
+      if (connection.isExtraction()) {
         tryExtract(extractSide);
+      }
     }
     normalFlow();
   }
 
   private void tryExtract(Direction extractSide) {
-    if (extractSide == null)
+    if (extractSide == null) {
       return;
-
+    }
     final BlockPos target = this.pos.offset(extractSide);
     final Direction incomingSide = extractSide.getOpposite();
-
     //when draining from a tank (instead of a source/waterlogged block) check the filter
     final IFluidHandler tank = UtilFluid.getTank(world, target, incomingSide);
     if (tank != null
-            && tank.getTanks() > 0
-            && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tank.getFluidInTank(0)))
+        && tank.getTanks() > 0
+        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tank.getFluidInTank(0))) {
       return;
-
+    }
     //first try standard fluid transfer
-    if (UtilFluid.tryFillPositionFromTank(world, pos, extractSide, tank, EXTRACT_RATE))
+    if (UtilFluid.tryFillPositionFromTank(world, pos, extractSide, tank, EXTRACT_RATE)) {
       return;
-
+    }
     //handle special cases
     final FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
-    if (sideHandler == null)
+    if (sideHandler == null) {
       return;
-    else if (sideHandler.getSpace() < FluidAttributes.BUCKET_VOLUME)
+    }
+    else if (sideHandler.getSpace() < FluidAttributes.BUCKET_VOLUME) {
       return;
-
+    }
     //handle waterlogged blocks
     final BlockState targetState = world.getBlockState(target);
     if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
-            && targetState.get(BlockStateProperties.WATERLOGGED)
-            && world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
+        && targetState.get(BlockStateProperties.WATERLOGGED)
+        && world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
       //the waterlogged block contained a bucket amount of water
       final FluidStack bucketAmountOfWater = new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME);
       final int filledAmount = sideHandler.fill(bucketAmountOfWater, FluidAction.EXECUTE);
-
       //sanity check
-      if (filledAmount != bucketAmountOfWater.getAmount())
+      if (filledAmount != bucketAmountOfWater.getAmount()) {
         ModCyclic.LOGGER.error("Imbalance filling water extracted from waterlogged block, filled " + filledAmount + " expected " + bucketAmountOfWater);
-
+      }
       return;
     }
-
     //handle source blocks
     final FluidState fluidState = world.getFluidState(target);
     final Fluid fluid = fluidState.getFluid();
-    if (!fluid.isSource(fluidState))
+    if (!fluid.isSource(fluidState)) {
       return;
-
+    }
     //remove the fluid source block
-    if (!world.setBlockState(target, Blocks.AIR.getDefaultState()))
+    if (!world.setBlockState(target, Blocks.AIR.getDefaultState())) {
       return;
-
+    }
     //the fluid source block contained a bucket amount of that fluid
     final FluidStack bucketAmountOfFluid = new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME);
     final int filledAmount = sideHandler.fill(bucketAmountOfFluid, FluidAction.EXECUTE);
-
     //sanity check
-    if (filledAmount != bucketAmountOfFluid.getAmount())
+    if (filledAmount != bucketAmountOfFluid.getAmount()) {
       ModCyclic.LOGGER.error("Incorrect amount of fluid extracted from fluid source, filled " + filledAmount + " expected " + bucketAmountOfFluid);
+    }
   }
 
   private void normalFlow() {
     for (Direction incomingSide : Direction.values()) {
       final IFluidHandler sideHandler = flow.get(incomingSide).orElse(null);
-
-      for (final Direction outgoingSide : UtilDirection.inDifferingOrder.next()) {
-        if (outgoingSide == incomingSide)
+      for (final Direction outgoingSide : UtilDirection.DIRECTIONS_DIFFERENT_ORDER.next()) {
+        if (outgoingSide == incomingSide) {
           continue;
-
+        }
         final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
         final EnumConnectType connection = this.getBlockState().get(outgoingFace);
-        if (connection.isExtraction() || connection.isBlocked())
+        if (connection.isExtraction() || connection.isBlocked()) {
           continue;
-
+        }
         this.moveFluids(outgoingSide, pos.offset(outgoingSide), FLOW_RATE, sideHandler);
       }
     }

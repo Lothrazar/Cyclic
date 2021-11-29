@@ -38,8 +38,8 @@ public class UtilFluid {
   public static TextureAtlasSprite getBaseFluidTexture(Fluid fluid, FluidType type) {
     final FluidAttributes fluidAttributes = fluid.getAttributes();
     final ResourceLocation spriteLocation = (type == FluidType.STILL)
-            ? fluidAttributes.getStillTexture()
-            : fluidAttributes.getFlowingTexture();
+        ? fluidAttributes.getStillTexture()
+        : fluidAttributes.getFlowingTexture();
     return getSprite(spriteLocation);
   }
 
@@ -49,11 +49,11 @@ public class UtilFluid {
 
   public static Model3D getFluidModel(FluidStack fluid, int stage) {
     final Int2ObjectMap<Model3D> fluidCache = CACHED_FLUIDS
-            .computeIfAbsent(fluid, fluidStack -> new Int2ObjectOpenHashMap<>());
+        .computeIfAbsent(fluid, fluidStack -> new Int2ObjectOpenHashMap<>());
     Model3D model = fluidCache.get(stage);
-    if (model != null)
+    if (model != null) {
       return model;
-
+    }
     model = new Model3D();
     model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidType.STILL));
     if (fluid.getFluid().getAttributes().getStillTexture(fluid) != null) {
@@ -80,38 +80,38 @@ public class UtilFluid {
 
   public static IFluidHandler getTank(World world, BlockPos pos, Direction side) {
     final TileEntity tile = world.getTileEntity(pos);
-    if (tile == null)
+    if (tile == null) {
       return null;
+    }
     return tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
   }
 
   public static boolean tryFillPositionFromTank(World world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, int amount) {
-    if (amount <= 0)
+    if (amount <= 0) {
       return false;
-
-    if (tankFrom == null)
+    }
+    if (tankFrom == null) {
       return false;
-
+    }
     final IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp).orElse(null);
-    if (fluidTo == null)
+    if (fluidTo == null) {
       return false;
-
+    }
     //first we simulate
     final FluidStack toBeDrained = tankFrom.drain(amount, FluidAction.SIMULATE);
-    if (toBeDrained.isEmpty())
+    if (toBeDrained.isEmpty()) {
       return false;
-
+    }
     final int filledAmount = fluidTo.fill(toBeDrained, FluidAction.EXECUTE);
-    if (filledAmount <= 0)
+    if (filledAmount <= 0) {
       return false;
-
+    }
     final FluidStack drained = tankFrom.drain(filledAmount, FluidAction.EXECUTE);
     final int drainedAmount = drained.getAmount();
-
     //sanity check
-    if (filledAmount != drainedAmount)
+    if (filledAmount != drainedAmount) {
       ModCyclic.LOGGER.error("Imbalance filling fluids, filled " + filledAmount + " drained " + drainedAmount);
-
+    }
     return true;
   }
 }

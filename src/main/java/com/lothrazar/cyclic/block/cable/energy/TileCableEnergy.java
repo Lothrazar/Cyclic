@@ -43,60 +43,62 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     for (final Direction extractSide : Direction.values()) {
       final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
       final EnumConnectType connection = this.getBlockState().get(extractFace);
-      if (connection.isExtraction())
+      if (connection.isExtraction()) {
         tryExtract(extractSide);
+      }
     }
   }
 
-  @SuppressWarnings("unused")
   private void tryExtract(Direction extractSide) {
-    if (extractSide == null)
+    if (extractSide == null) {
       return;
-
+    }
     final BlockPos posTarget = this.pos.offset(extractSide);
     final TileEntity tile = world.getTileEntity(posTarget);
-    if (tile == null)
+    if (tile == null) {
       return;
-
+    }
     final IEnergyStorage itemHandlerFrom = tile
-            .getCapability(CapabilityEnergy.ENERGY, extractSide.getOpposite())
-            .orElse(null);
-    if (itemHandlerFrom == null)
+        .getCapability(CapabilityEnergy.ENERGY, extractSide.getOpposite())
+        .orElse(null);
+    if (itemHandlerFrom == null) {
       return;
-
+    }
     //first we simulate
     final int energyToExtract = itemHandlerFrom.extractEnergy(MAX, true);
-    if (energyToExtract <= 0)
+    if (energyToExtract <= 0) {
       return;
-
+    }
     final int energyReceived = energy.receiveEnergy(energyToExtract, false);
-    if (energyReceived <= 0)
+    if (energyReceived <= 0) {
       return;
-
+    }
     final int energyExtracted = itemHandlerFrom.extractEnergy(energyReceived, false);
-
     //sanity check
-    if (energyExtracted != energyReceived)
+    if (energyExtracted != energyReceived) {
       ModCyclic.LOGGER.error("Imbalance extracting energy, extracted " + energyExtracted + " received " + energyReceived);
+    }
   }
 
   private void tickCableFlow() {
-    for (final Direction outgoingSide : UtilDirection.inDifferingOrder.next()) {
+    for (final Direction outgoingSide : UtilDirection.DIRECTIONS_DIFFERENT_ORDER.next()) {
       final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
       final EnumConnectType connection = this.getBlockState().get(outgoingFace);
-      if (connection.isExtraction() || connection.isBlocked())
+      if (connection.isExtraction() || connection.isBlocked()) {
         continue;
-
-      if (!this.isEnergyIncomingFromFace(outgoingSide))
+      }
+      if (!this.isEnergyIncomingFromFace(outgoingSide)) {
         moveEnergy(outgoingSide, MAX);
+      }
     }
   }
 
   public void tickDownIncomingPowerFaces() {
     for (final Direction incomingDirection : Direction.values()) {
       mapIncomingEnergy.computeIfPresent(incomingDirection, (direction, amount) -> {
-        if (amount > 0)
+        if (amount > 0) {
           amount -= 1;
+        }
         return amount;
       });
     }
@@ -104,9 +106,9 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY
-            && !CableBase.isCableBlocked(this.getBlockState(), side))
+    if (cap == CapabilityEnergy.ENERGY && !CableBase.isCableBlocked(this.getBlockState(), side)) {
       return energyCap.cast();
+    }
     return super.getCapability(cap, side);
   }
 
