@@ -176,6 +176,7 @@ public class ClientRegistryCyclic {
     event.registerEntityRenderer(EntityRegistry.eye, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.fire_bolt, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.stone_bolt, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.laser_bolt, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.lightningbolt, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.conveyor_item, ConveyorItemRenderer::new);
   }

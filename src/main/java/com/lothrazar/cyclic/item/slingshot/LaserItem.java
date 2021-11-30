@@ -17,14 +17,14 @@ public class LaserItem extends ItemBaseCyclic {
 
   @Override
   public UseAnim getUseAnimation(ItemStack stack) {
-    return UseAnim.SPEAR;
+    return UseAnim.NONE;
   }
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     //    playerIn.startUsingItem(handIn);
-    shootMe(world, player, new StoneEntity(player, world), 0, ItemBaseCyclic.VELOCITY_MAX * 2);
+    shootMe(world, player, new LaserEntity(player, world), 0, ItemBaseCyclic.VELOCITY_MAX * 1.4F);
     return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
   }
 }
