@@ -147,6 +147,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
   @Override
   @OnlyIn(Dist.CLIENT)
   public boolean isFoil(ItemStack stack) {
-    return true;
+    return stack.hasTag();
   }
 }

@@ -43,11 +43,6 @@ public class ItemCakeInventory extends ItemBaseCyclic {
   }
 
   @Override
-  public boolean isFoil(ItemStack stack) {
-    return true;
-  }
-
-  @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
     if (entityLiving instanceof Player == false) {
       return super.finishUsingItem(stack, worldIn, entityLiving);
