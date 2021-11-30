@@ -26,12 +26,12 @@ public class UtilDirection {
   }
 
   public static final List<List<Direction>> DIRECTIONS_DIFFERENT_ORDER = permutateDirections(Arrays.asList(Direction.values()), 0);
-  public static final int DIRECTIONS_DIFFERENT_ORDER_SIZE = DIRECTIONS_DIFFERENT_ORDER.size();
-  public static int directionsDifferentOrderIndex = -1;
+  public static int differentOrderIndex = -1;
 
   public static List<Direction> getDirectionsInDifferentOrder() {
-    directionsDifferentOrderIndex = directionsDifferentOrderIndex + 1 % DIRECTIONS_DIFFERENT_ORDER_SIZE;
-    return DIRECTIONS_DIFFERENT_ORDER.get(directionsDifferentOrderIndex);
+    differentOrderIndex++;
+    differentOrderIndex %= DIRECTIONS_DIFFERENT_ORDER.size();
+    return DIRECTIONS_DIFFERENT_ORDER.get(differentOrderIndex);
   }
 
   public static Direction getRandom(final Random rand) {
