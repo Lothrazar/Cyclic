@@ -3,7 +3,7 @@
   "pattern": [
     "ccc",
     "cac",
-    "csc"
+    "ccc"
   ],
   "key": {
     "a": {
@@ -11,9 +11,6 @@
     },
     "c": {
       "item": "minecraft:cocoa_beans"
-    },
-    "s": {
-      "item": "minecraft:sugar"
     }
   },
   "result": {

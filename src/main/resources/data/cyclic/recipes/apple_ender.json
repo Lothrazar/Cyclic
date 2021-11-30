@@ -1,23 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "scs",
+    "ccc",
     "cac",
-    "scs"
+    "ccc"
   ],
   "key": {
-    "s": {
+    "a": {
       "item": "cyclic:apple_honey"
     },
     "c": {
       "item": "minecraft:ender_pearl"
-    },
-    "a": {
-      "item": "minecraft:cocoa_beans"
     }
   },
   "result": {
     "item": "cyclic:apple_ender",
-    "count": 4
+    "count": 1
   }
 }

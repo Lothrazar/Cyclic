@@ -16,7 +16,7 @@
       "item": "minecraft:gunpowder"
     },
     "a": {
-      "item": "cyclic:apple_ender"
+      "tag": "forge:storage_blocks/ender_pearl"
     },
     "b": {
       "item": "cyclic:gem_amber"

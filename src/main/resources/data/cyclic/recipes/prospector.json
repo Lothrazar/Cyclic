@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  g",
-    " i ",
-    "b  "
+    " gd",
+    " ig",
+    "i  "
   ],
   "key": {
-    "b": {
-      "tag": "forge:nuggets/copper"
-    },
     "i": {
-      "item": "cyclic:gem_amber"
+      "tag": "forge:storage_blocks/cobblestone"
+    },
+    "d": {
+      "item": "minecraft:diamond"
     },
     "g": {
       "item": "minecraft:light_blue_stained_glass"

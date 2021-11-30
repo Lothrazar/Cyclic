@@ -2,11 +2,11 @@
 	"type": "minecraft:crafting_shapeless",
 	"ingredients": [
 		{
-			"item": "cyclic:compressed_cobblestone"
+			"item": "minecraft:melon"
 		}
 	],
 	"result": {
-		"item": "minecraft:cobblestone",
+		"item": "minecraft:melon_slice",
 		"count": 9
 	}
 }

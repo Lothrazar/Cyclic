@@ -10,5 +10,6 @@
     ,"1.6.2":"Fixed recipe parsing JSON errors on server join.  Fix a bugged interaction with Settings data card and Filter data card #1970 . Torch Charm now tries to avoid placing on non-solid blocks such as top side of a bottom Slab where the torch breaks right away. "
     ,"1.6.3":"Added Hunger II Potion effect with brewing stand recipe. Rebalanced a bunch of recipes and added a few new ones.  Rebalanced Launch enchant to an elytra only remake. Updated worldgen configs for the four flowers.  Fireplace block can trigger campfires"
     ,"1.6.4":"Garden Scythe fix visual desync when harvesting.  Monster ball now cannot capture any entity if a player is its immediate passenger (ie: saddle or using stirrups).  "  
+  	,"1.6.5":""
   }
 }

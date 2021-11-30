@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " c ",
+    "ccc",
     "cac",
-    " c "
+    "ccc"
   ],
   "key": {
     "a": {
       "item": "cyclic:apple_honey"
     },
     "c": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:iron_ingot"
     }
   },
   "result": {

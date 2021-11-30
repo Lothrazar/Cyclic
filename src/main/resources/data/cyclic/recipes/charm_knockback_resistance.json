@@ -10,10 +10,10 @@
       "item": "minecraft:diamond"
     },
     "f": {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:amethyst_shard"
     },
     "a": {
-      "item": "cyclic:gem_amber"
+      "item": "cyclic:gem_obsidian"
     }
   },
   "result": {

@@ -3,17 +3,14 @@
   "pattern": [
     "ccc",
     "cac",
-    "csc"
+    "ccc"
   ],
   "key": {
     "a": {
       "item": "cyclic:apple_honey"
     },
     "c": {
-      "item": "minecraft:bone"
-    },
-    "s": {
-      "item": "minecraft:sugar"
+      "item": "minecraft:bone_block"
     }
   },
   "result": {
