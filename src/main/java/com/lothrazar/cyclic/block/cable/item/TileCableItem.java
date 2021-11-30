@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import java.util.List;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -70,9 +69,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
       final IItemHandler sideHandler = flow.get(incomingSide).orElse(null);
-      List<Direction> list = UtilDirection.getRandomSet(world.rand);
-      //we checked hasNext, so iterator wont hit a NoSuchElementException
-      for (final Direction outgoingSide : list) {
+      for (final Direction outgoingSide : UtilDirection.getDirectionsInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
         }

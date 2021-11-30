@@ -7,17 +7,15 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -547,10 +545,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public void exportEnergyAllSides() {
-    List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
-    Collections.shuffle(rawList);
-    for (Integer i : rawList) {
-      Direction exportToSide = Direction.values()[i];
+    for (final Direction exportToSide : UtilDirection.getDirectionsInDifferentOrder()) {
       moveEnergy(exportToSide, MENERGY / 2);
     }
   }

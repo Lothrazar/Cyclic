@@ -11,7 +11,6 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.cyclic.util.UtilFluid;
-import java.util.List;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -134,8 +133,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   private void normalFlow() {
     for (Direction incomingSide : Direction.values()) {
       final IFluidHandler sideHandler = flow.get(incomingSide).orElse(null);
-      List<Direction> list = UtilDirection.getRandomSet(world.rand);
-      for (final Direction outgoingSide : list) {
+      for (final Direction outgoingSide : UtilDirection.getDirectionsInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
         }

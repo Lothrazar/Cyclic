@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.dice;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -50,7 +51,7 @@ public class TileDice extends TileEntityBase implements ITickableTileEntity {
       //toggle block state
       if (this.timer % TICKS_PER_CHANGE == 0) {
         this.spinningIfZero = 0;
-        Direction fac = BlockDice.getRandom(world.rand);
+        Direction fac = UtilDirection.getRandom(world.rand);
         BlockState stateold = world.getBlockState(pos);
         BlockState newstate = stateold.with(BlockStateProperties.FACING, fac);
         world.setBlockState(pos, newstate);
@@ -70,7 +71,7 @@ public class TileDice extends TileEntityBase implements ITickableTileEntity {
     //        //toggle block state
     //        if (this.timer % TICKS_PER_CHANGE == 0) {
     //          this.spinningIfZero = 0;
-    //          EnumFacing fac = BlockDice.getRandom(world.rand);
+    //          EnumFacing fac = UtilDirection.getRandom(world.rand);
     //          IBlockState stateold = world.getBlockState(pos);
     //          IBlockState newstate = stateold.withProperty(BlockDice.PROPERTYFACING, fac);
     //          world.setBlockState(pos, newstate);
