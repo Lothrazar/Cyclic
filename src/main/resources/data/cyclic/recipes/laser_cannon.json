@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	  " ct",    
+    "bbc",
+    "qb "
+  ],
+  "key": {
+  	"t": {
+  		"item":"cyclic:gem_obsidian"
+  	},
+  	"b": {
+  		"item":"minecraft:diamond_block"
+  	},
+  	"q": {
+  		"item":"minecraft:dark_prismarine"
+  	},
+  	"c": {
+  		"item":"minecraft:amethyst_shard"
+  	}
+  },
+  "result": {
+    "item": "cyclic:laser_cannon",
+    "count": 1
+  },
+  
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:laser_cannon",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}
