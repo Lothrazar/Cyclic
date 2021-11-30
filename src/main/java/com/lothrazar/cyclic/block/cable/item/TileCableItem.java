@@ -69,7 +69,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
       final IItemHandler sideHandler = flow.get(incomingSide).orElse(null);
-      for (final Direction outgoingSide : UtilDirection.getDirectionsInDifferentOrder()) {
+      for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
         }

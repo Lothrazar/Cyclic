@@ -133,7 +133,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   private void normalFlow() {
     for (Direction incomingSide : Direction.values()) {
       final IFluidHandler sideHandler = flow.get(incomingSide).orElse(null);
-      for (final Direction outgoingSide : UtilDirection.getDirectionsInDifferentOrder()) {
+      for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
         }

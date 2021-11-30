@@ -545,7 +545,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public void exportEnergyAllSides() {
-    for (final Direction exportToSide : UtilDirection.getDirectionsInDifferentOrder()) {
+    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
       moveEnergy(exportToSide, MENERGY / 2);
     }
   }

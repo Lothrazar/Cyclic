@@ -172,7 +172,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   }
 
   private void tickCableFlow() {
-    for (final Direction exportToSide : UtilDirection.getDirectionsInDifferentOrder()) {
+    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
         moveEnergy(exportToSide, MAX / 4);
       }

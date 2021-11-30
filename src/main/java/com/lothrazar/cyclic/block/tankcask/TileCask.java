@@ -147,7 +147,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   }
 
   private void tickCableFlow() {
-    for (final Direction exportToSide : UtilDirection.getDirectionsInDifferentOrder()) {
+    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
         this.moveFluids(exportToSide, pos.offset(exportToSide), TRANSFER_FLUID_PER_TICK / 4, tank);
       }

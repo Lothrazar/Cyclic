@@ -25,13 +25,13 @@ public class UtilDirection {
     return results;
   }
 
-  public static final List<List<Direction>> DIRECTIONS_DIFFERENT_ORDER = permutateDirections(Arrays.asList(Direction.values()), 0);
+  public static final List<List<Direction>> DIFFERENT_ORDER = permutateDirections(Arrays.asList(Direction.values()), 0);
   public static int differentOrderIndex = -1;
 
-  public static List<Direction> getDirectionsInDifferentOrder() {
+  public static List<Direction> getAllInDifferentOrder() {
     differentOrderIndex++;
-    differentOrderIndex %= DIRECTIONS_DIFFERENT_ORDER.size();
-    return DIRECTIONS_DIFFERENT_ORDER.get(differentOrderIndex);
+    differentOrderIndex %= DIFFERENT_ORDER.size();
+    return DIFFERENT_ORDER.get(differentOrderIndex);
   }
 
   public static Direction getRandom(final Random rand) {

@@ -88,7 +88,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   private void tickCableFlow() {
-    for (final Direction outgoingSide : UtilDirection.getDirectionsInDifferentOrder()) {
+    for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
       final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
       final EnumConnectType connection = this.getBlockState().get(outgoingFace);
       if (connection.isExtraction() || connection.isBlocked()) {
