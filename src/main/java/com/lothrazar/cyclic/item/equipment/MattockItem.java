@@ -78,6 +78,7 @@ public class MattockItem extends DiggerItem {
           Block blockCurrent = bsCurrent.getBlock();
           if (world.isClientSide) {
             world.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
+
             if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
               blockCurrent.destroy(world, posCurrent, bsCurrent);
             }

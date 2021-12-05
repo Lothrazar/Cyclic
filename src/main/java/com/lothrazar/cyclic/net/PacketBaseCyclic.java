@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 public class PacketBaseCyclic {
 

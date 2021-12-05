@@ -30,10 +30,10 @@ public class SoundmufflerBlock extends BlockCyclic {
   @SubscribeEvent
   public void onPlaySound(PlaySoundEvent event) {
     ClientLevel clientWorld = Minecraft.getInstance().level;
-    if (event.getResultSound() == null || event.getResultSound() instanceof TickableSoundInstance || clientWorld == null) {
+    if (event.getSound() == null || event.getSound() instanceof TickableSoundInstance || clientWorld == null) {
       return;
     } //long term/repeating/music
-    SoundInstance sound = event.getResultSound();
+    SoundInstance sound = event.getSound();
     List<BlockPos> blocks = UtilBlockstates.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this, RADIUS);
     if (blocks == null || blocks.size() == 0) {
       return;
@@ -46,7 +46,7 @@ public class SoundmufflerBlock extends BlockCyclic {
       float pct = (VOL_REDUCE_PER_BLOCK) / 6F;
       //at 6 blocks, it caps off the reduction
       newSound.setVolume((float) (Math.min(pct, 1.0) / blocks.size()));
-      event.setResultSound(newSound);
+      event.setSound(newSound);
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Error trying to detect volume of sound " + sound, e);

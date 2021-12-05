@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.net;
 import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Used by: Fan block; Launch enchant; Air charm; Climbing Glove; Scaffolding Block

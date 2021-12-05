@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 public class PacketItemScroll extends PacketBaseCyclic {
 

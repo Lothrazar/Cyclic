@@ -56,7 +56,7 @@ import com.lothrazar.cyclic.item.enderbook.ContainerEnderBook;
 import com.lothrazar.cyclic.item.inventorycake.ContainerCake;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -72,159 +72,159 @@ public class ContainerScreenRegistry {
     //
     // Blocks with containers
     //
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerItemCollector(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("collector"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerPeatFarm(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("peat_farm"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerBattery(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("battery"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerHarvester(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("harvester"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerAnvil(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("anvil"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerPlacer(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("placer"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerStructure(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("structure"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerMelter(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("melter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerSolidifier(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("solidifier"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerBreaker(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("breaker"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerExpPylon(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("experience_pylon"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerUser(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("user"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerDetector(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("detector_entity"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerDetectorItem(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("detector_item"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerDisenchant(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("disenchanter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerTransmit(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("wireless_transmitter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerClock(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("clock"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerCrate(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("crate"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerPlacerFluid(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("placer_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerFluidCollect(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("collector_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerFan(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fan"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerPotion(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("beacon"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerDropper(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("dropper"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerForester(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("forester"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerMiner(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("miner"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerScreentext(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("screen"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerAnvilMagma(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("anvil_magma"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerUncraft(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("uncrafter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerCrafter(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("crafter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerShapedata(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("computer_shape"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerWorkbench(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("workbench"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerFisher(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fisher"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerLaser(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("laser"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerCableItem(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("item_pipe"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerCableFluid(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("fluid_pipe"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerAnvilVoid(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("anvil_void"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerWirelessEnergy(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("wireless_energy"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerWirelessItem(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("wireless_item"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerWirelessFluid(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("wireless_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerGeneratorFuel(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("generator_fuel"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerGeneratorFood(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("generator_food"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerGeneratorDrops(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("generator_item"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerGeneratorFluid(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("generator_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerPackager(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("packager"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerSoundRecorder(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("sound_recorder"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerSoundPlayer(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("sound_player"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerCrusher(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("crusher"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
+    r.register(IForgeMenuType.create((windowId, inv, data) -> {
       return new ContainerTeleport(windowId, inv.player.level, data.readBlockPos(), inv, inv.player);
     }).setRegistryName("teleport"));
     //
     //  Items with containers
     //
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerEnderBook(windowId, inv, inv.player))).setRegistryName("ender_book"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player))).setRegistryName("storage_bag"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
+    r.register(IForgeMenuType.create(((windowId, inv, data) -> new ContainerEnderBook(windowId, inv, inv.player))).setRegistryName("ender_book"));
+    r.register(IForgeMenuType.create(((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player))).setRegistryName("storage_bag"));
+    r.register(IForgeMenuType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
+    r.register(IForgeMenuType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
+    r.register(IForgeMenuType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
+    r.register(IForgeMenuType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
   }
 
   @ObjectHolder(ModCyclic.MODID + ":teleport")

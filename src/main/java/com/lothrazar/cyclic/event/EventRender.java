@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EventRender {
@@ -98,7 +98,7 @@ public class EventRender {
   }
 
   @SubscribeEvent
-  public void onRenderWorldLast(RenderWorldLastEvent event) {
+  public void onRenderWorldLast(RenderLevelLastEvent event) {
     Player player = Minecraft.getInstance().player;
     if (player == null) {
       return;
@@ -144,7 +144,7 @@ public class EventRender {
         if (loc != null) {
           if (loc.getDimension() == null ||
               loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
-            UtilRender.createBox(event.getMatrixStack(), loc.getPos());
+            UtilRender.createBox(event.getPoseStack(), loc.getPos());
           }
         }
       }

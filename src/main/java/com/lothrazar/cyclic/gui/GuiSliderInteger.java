@@ -51,7 +51,7 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-    int i = (this.isHovered() ? 2 : 1) * 20;
+    int i = (this.isHovered ? 2 : 1) * 20;
     if (this.height != 20) {
       this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i + 20 - this.height, 4, this.height);
       this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i + 20 - this.height, 4, this.height);

@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -47,11 +47,11 @@ public class ClientInputEvents {
   }
 
   @SubscribeEvent(priority = EventPriority.HIGH)
-  public void onMouseEvent(GuiScreenEvent.MouseClickedEvent.Pre event) {
-    if (event.getGui() == null || !(event.getGui() instanceof AbstractContainerScreen<?>)) {
+  public void onMouseEvent(ScreenEvent.MouseClickedEvent.Pre event) {
+    if (event.getScreen() == null || !(event.getScreen() instanceof AbstractContainerScreen<?>)) {
       return;
     }
-    AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) event.getGui();
+    AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) event.getScreen();
     boolean rightClickDown = event.getButton() == 1;
     try {
       if (rightClickDown && gui.getSlotUnderMouse() != null) {

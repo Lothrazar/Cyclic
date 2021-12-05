@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraftforge.fmlclient.gui.widget.ExtendedButton;
+import net.minecraftforge.client.gui.widget.ExtendedButton;
 
 /**
  * not bound to a tile entity unlike ButtonMachine. Textures bound to TextureEnum

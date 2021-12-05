@@ -24,7 +24,7 @@ public class ItemBlockTank extends BlockItem {
   }
 
   @Override
-  public boolean showDurabilityBar(ItemStack stack) {
+  public boolean isBarVisible(ItemStack stack) {
     FluidStack fstack = copyFluidFromStack(stack);
     return fstack != null && fstack.getAmount() > 0; //  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
   }
@@ -36,7 +36,7 @@ public class ItemBlockTank extends BlockItem {
    * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
    */
   @Override
-  public double getDurabilityForDisplay(ItemStack stack) {
+  public double getBarWidth(ItemStack stack) {
     try {
       //this is always null 
       FluidStack fstack = copyFluidFromStack(stack);

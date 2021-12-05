@@ -25,12 +25,12 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
-  public boolean showDurabilityBar(ItemStack stack) {
+  public boolean isBarVisible(ItemStack stack) {
     return stack.hasTag() && stack.getTag().contains(ENERGYTT);
   }
 
   @Override
-  public int getRGBDurabilityForDisplay(ItemStack stack) {
+  public int getBarColor(ItemStack stack) {
     return 0xBC000C;
   }
 

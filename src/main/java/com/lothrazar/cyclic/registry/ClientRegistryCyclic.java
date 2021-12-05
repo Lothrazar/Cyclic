@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
@@ -43,6 +42,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyConflictContext;
@@ -50,8 +50,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
@@ -183,5 +183,6 @@ public class ClientRegistryCyclic {
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public static void registerModels(FMLClientSetupEvent event) {}
+  public static void registerModels(FMLClientSetupEvent event) {
+  }
 }

@@ -20,9 +20,9 @@ public class WorldGenRegistry {
    */
   public static void setup() {
     Registry<ConfiguredFeature<?, ?>> r = BuiltinRegistries.CONFIGURED_FEATURE;
-    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_cyan"), WorldGenEvents.FLOWER_CYAN_FEATURE);
-    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_purple_tulip"), WorldGenEvents.FLOWER_PURPLE_TULIP_FEATURE);
-    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_lime_carnation"), WorldGenEvents.FLOWER_LIME_CARNATION_FEATURE);
-    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_absalon_tulip"), WorldGenEvents.FLOWER_ABSALON_TULIP_FEATURE);
+//    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_cyan"), WorldGenEvents.FLOWER_CYAN_FEATURE);
+//    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_purple_tulip"), WorldGenEvents.FLOWER_PURPLE_TULIP_FEATURE);
+//    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_lime_carnation"), WorldGenEvents.FLOWER_LIME_CARNATION_FEATURE);
+//    Registry.register(r, new ResourceLocation(ModCyclic.MODID, "flower_absalon_tulip"), WorldGenEvents.FLOWER_ABSALON_TULIP_FEATURE);
   }
 }

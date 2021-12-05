@@ -45,7 +45,7 @@ public class BlockSoundRecorder extends BlockCyclic {
   @SubscribeEvent
   public void onPlaySound(PlaySoundEvent event) {
     ClientLevel clientWorld = Minecraft.getInstance().level;
-    if (event.getSound() == null || event.getSound().getLocation() == null || event.getResultSound() instanceof TickableSoundInstance || clientWorld == null) {
+    if (event.getSound() == null || event.getSound().getLocation() == null || event.getSound() instanceof TickableSoundInstance || clientWorld == null) {
       return;
     } //long term/repeating/music
     List<BlockPos> blocks = UtilBlockstates.findBlocks(clientWorld,

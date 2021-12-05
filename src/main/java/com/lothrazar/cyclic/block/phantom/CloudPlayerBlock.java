@@ -43,7 +43,7 @@ public class CloudPlayerBlock extends BlockCyclic {
     }
     if (context instanceof EntityCollisionContext) {
       EntityCollisionContext real = (EntityCollisionContext) context;
-      if (real.getEntity().orElse(null) instanceof Player) {
+      if (real.getEntity() instanceof Player) {
         return Shapes.empty();
       }
     }

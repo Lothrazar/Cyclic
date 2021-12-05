@@ -40,7 +40,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -361,7 +361,7 @@ public class UtilRender {
    * @param coords
    * @param alpha
    */
-  public static void renderColourCubes(RenderWorldLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
+  public static void renderColourCubes(RenderLevelLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
     LocalPlayer player = Minecraft.getInstance().player;
     if (player == null) {
       return;
@@ -370,7 +370,7 @@ public class UtilRender {
     final Minecraft mc = Minecraft.getInstance();
     MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
     Vec3 view = mc.gameRenderer.getMainCamera().getPosition();
-    PoseStack matrix = evt.getMatrixStack();
+    PoseStack matrix = evt.getPoseStack();
     matrix.pushPose();
     matrix.translate(-view.x(), -view.y(), -view.z());
     VertexConsumer builder = buffer.getBuffer(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
