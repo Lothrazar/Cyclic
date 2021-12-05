@@ -90,10 +90,10 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public void tick() {
@@ -138,7 +138,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
       case TIMER:
         return this.timer;
       default:
-      break;
+        break;
     }
     return 0;
   }
@@ -148,10 +148,10 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
     }
   }
 

@@ -386,7 +386,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", render);
     tag.putInt("timer", timer);
-    //    return super.save(tag);
+
+    super.saveAdditional(tag);
   }
 
   public abstract void setField(int field, int value);

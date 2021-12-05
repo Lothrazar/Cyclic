@@ -16,7 +16,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -85,16 +84,16 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
       switch (this.type) {
         case CURSE:
           triggerCurse(worldIn, entity);
-        break;
+          break;
         case FIRE:
           entity.setSecondsOnFire(FIRE_TIME);
-        break;
+          break;
         case PLAIN:
           entity.hurt(DamageSource.CACTUS, 1);
-        break;
+          break;
         default:
         case NONE:
-        break;
+          break;
       }
     }
   }
@@ -107,30 +106,30 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
           if (!living.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
             living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CURSE_TIME, 2));
           }
-        break;
+          break;
         case 1:
           if (!living.hasEffect(MobEffects.WEAKNESS)) {
             living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, CURSE_TIME, 2));
           }
-        break;
+          break;
         case 2:
           if (!living.hasEffect(MobEffects.UNLUCK)) {
             living.addEffect(new MobEffectInstance(MobEffects.UNLUCK, CURSE_TIME, 1));
           }
-        break;
+          break;
         case 3:
           if (!living.hasEffect(MobEffects.DIG_SLOWDOWN)) {
             living.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, CURSE_TIME, 2));
           }
-        break;
+          break;
         case 4:
           entity.hurt(DamageSource.MAGIC, 1);
-        break;
+          break;
         case 5:
           if (!living.hasEffect(MobEffects.BLINDNESS)) {
             living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, CURSE_TIME, 1));
           }
-        break;
+          break;
       }
     }
   }
@@ -179,15 +178,6 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
   public FluidState getFluidState(BlockState state) {
     return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
   }
-
-//  @Override
-//  @SuppressWarnings("deprecation")
-//  public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-//    if (stateIn.getValue(WATERLOGGED)) {
-//      worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
-//    }
-//    return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-//  }
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

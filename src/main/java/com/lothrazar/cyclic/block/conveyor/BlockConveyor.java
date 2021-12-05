@@ -364,7 +364,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
   public FluidState getFluidState(BlockState state) {
     return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
   }
- 
+
   public static SimpleImmutableEntry<ConveyorType, Direction> nextState(ConveyorType t, Direction d) {
     SimpleImmutableEntry<ConveyorType, Direction> pair = new SimpleImmutableEntry<>(t, d);
     if (STATE_PAIRS.contains(pair)) {

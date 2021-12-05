@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic.block.tank;
 
-import com.lothrazar.cyclic.block.tankcask.TileCask;
-import java.util.List;
 import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -43,7 +42,7 @@ public class ItemBlockTank extends BlockItem {
       FluidStack fstack = copyFluidFromStack(stack);
       float qty = fstack.getAmount();
       float ratio = qty / (TileTank.CAPACITY);
-      return Math.round(13.0F - (float)qty * 13.0F / (float)(TileTank.CAPACITY));
+      return Math.round(13.0F - (float) qty * 13.0F / (float) (TileTank.CAPACITY));
     }
     catch (Throwable e) {
       //lazy 
