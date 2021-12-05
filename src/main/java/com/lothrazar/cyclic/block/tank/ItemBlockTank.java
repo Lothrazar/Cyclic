@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.tank;
 
+import com.lothrazar.cyclic.block.tankcask.TileCask;
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
 import net.minecraft.ChatFormatting;
@@ -36,13 +37,13 @@ public class ItemBlockTank extends BlockItem {
    * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
    */
   @Override
-  public double getBarWidth(ItemStack stack) {
+  public int getBarWidth(ItemStack stack) {
     try {
       //this is always null 
       FluidStack fstack = copyFluidFromStack(stack);
       float qty = fstack.getAmount();
       float ratio = qty / (TileTank.CAPACITY);
-      return 1 - ratio;
+      return Math.round(13.0F - (float)qty * 13.0F / (float)(TileTank.CAPACITY));
     }
     catch (Throwable e) {
       //lazy 
@@ -63,7 +64,7 @@ public class ItemBlockTank extends BlockItem {
   }
 
   @Override
-  public int getRGBDurabilityForDisplay(ItemStack stack) {
+  public int getBarColor(ItemStack stack) {
     return 0xADD8E6;
   }
 

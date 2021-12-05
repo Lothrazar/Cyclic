@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.bauble;
 
+import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -32,8 +34,6 @@ import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;

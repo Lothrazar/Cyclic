@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.storagebag.DepositMode;
 import com.lothrazar.cyclic.item.storagebag.PickupMode;
 import com.lothrazar.cyclic.item.storagebag.RefillMode;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import java.util.function.Supplier;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;

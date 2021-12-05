@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import java.util.LinkedList;
-import java.util.List;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketStorageBagScreen;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.LinkedList;
+import java.util.List;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;

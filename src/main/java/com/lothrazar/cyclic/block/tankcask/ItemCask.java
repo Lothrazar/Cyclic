@@ -24,7 +24,7 @@ public class ItemCask extends BlockItem {
   }
 
   @Override
-  public boolean showDurabilityBar(ItemStack stack) {
+  public boolean isBarVisible(ItemStack stack) {
     FluidStack fstack = copyFluidFromStack(stack);
     return fstack != null && fstack.getAmount() > 0;
     //  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
@@ -37,14 +37,16 @@ public class ItemCask extends BlockItem {
    * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
    */
   @Override
-  public double getDurabilityForDisplay(ItemStack stack) {
+  public int getBarWidth(ItemStack stack) {
     try {
       //this is always null
       //   IFluidHandler storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
       FluidStack fstack = copyFluidFromStack(stack);
       float qty = fstack.getAmount();
       float ratio = qty / (TileCask.CAPACITY);
-      return 1 - ratio;
+//      return 1 - ratio;
+      return Math.round(13.0F - (float)qty * 13.0F / (float)(TileCask.CAPACITY));
+//      return Math.round(13.0F - (float)p_150900_.getDamageValue() * 13.0F / (float)this.maxDamage);
     }
     catch (Throwable e) {
       //lazy
@@ -65,7 +67,7 @@ public class ItemCask extends BlockItem {
   }
 
   @Override
-  public int getRGBDurabilityForDisplay(ItemStack stack) {
+  public int getBarColor(ItemStack stack) {
     return 0xADD8E6;
   }
 

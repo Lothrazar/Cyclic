@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainerProvider;
+import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;

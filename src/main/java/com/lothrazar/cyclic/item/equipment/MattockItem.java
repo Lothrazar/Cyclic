@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import java.util.List;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilShape;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -79,7 +79,8 @@ public class MattockItem extends DiggerItem {
           if (world.isClientSide) {
             world.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
 
-            if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
+            //removedByPlayer
+            if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
               blockCurrent.destroy(world, posCurrent, bsCurrent);
             }
             //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
@@ -88,7 +89,7 @@ public class MattockItem extends DiggerItem {
             ServerPlayer mp = (ServerPlayer) player;
             int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
             if (xpGivenOnDrop >= 0) {
-              if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())
+              if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())
                   && world instanceof ServerLevel) {
                 BlockEntity tile = world.getBlockEntity(posCurrent);
                 blockCurrent.destroy(world, posCurrent, bsCurrent);

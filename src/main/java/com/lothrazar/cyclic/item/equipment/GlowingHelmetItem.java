@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import java.util.List;
 import com.lothrazar.cyclic.api.IHasClickToggle;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -8,6 +7,7 @@ import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilPlayer;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

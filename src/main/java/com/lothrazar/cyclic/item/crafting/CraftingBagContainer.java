@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.crafting;
 
-import java.util.Optional;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import java.util.Optional;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
