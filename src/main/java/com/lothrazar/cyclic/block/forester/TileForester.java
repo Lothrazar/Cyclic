@@ -169,12 +169,12 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("shapeIndex", shapeIndex);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.putInt("radius", radius);
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   /**

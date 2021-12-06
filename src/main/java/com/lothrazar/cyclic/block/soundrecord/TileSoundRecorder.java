@@ -79,7 +79,7 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
     for (int i = 0; i < MAX_SOUNDS; i++) {
       tag.putString(SOUNDAT + i, sounds.get(i));
@@ -87,7 +87,7 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
     for (int i = 0; i < ignored.size(); i++) {
       tag.putString(IGNORED + i, ignored.get(i));
     }
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

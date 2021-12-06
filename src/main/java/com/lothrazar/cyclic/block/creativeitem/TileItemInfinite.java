@@ -52,9 +52,9 @@ public class TileItemInfinite extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   //  @Override

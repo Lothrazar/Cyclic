@@ -101,12 +101,12 @@ public class TileSprinkler extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("shapeIndex", shapeIndex);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

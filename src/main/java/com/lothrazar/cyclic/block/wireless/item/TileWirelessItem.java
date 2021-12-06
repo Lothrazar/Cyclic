@@ -87,11 +87,11 @@ public class TileWirelessItem extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("transferRate", transferRate);
     tag.put(NBTINV, inventory.serializeNBT());
     tag.put(NBTINV + "gps", gpsSlots.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   //  @Override

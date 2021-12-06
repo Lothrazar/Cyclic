@@ -196,10 +196,10 @@ public class TileFanSlab extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("speed", speed);
     tag.putInt("range", range);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

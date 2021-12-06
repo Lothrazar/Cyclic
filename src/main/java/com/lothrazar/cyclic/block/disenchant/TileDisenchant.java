@@ -219,13 +219,13 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

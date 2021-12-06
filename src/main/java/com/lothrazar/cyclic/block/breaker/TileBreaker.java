@@ -35,7 +35,6 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     e.tick();
   }
 
-  //  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -50,21 +49,10 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     if (state.getBlock() != Blocks.AIR &&
         state.getDestroySpeed(level, target) >= 0) {
       this.level.destroyBlock(target, true);
-      //      int cost = POWERCONF.get();
-      //      ModCyclic.LOGGER.info("cost" + cost + " have " + energy.getEnergyStored());
-      //      if (cost > 0) {
-      //        energy.extractEnergy(cost, false);
-      //      }
+
     }
     //else unbreakable
   }
-  //  @Override
-  //  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-  //    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-  //      return energyCap.cast();
-  //    }
-  //    return super.getCapability(cap, side);
-  //  }
 
   @Override
   public Component getDisplayName() {

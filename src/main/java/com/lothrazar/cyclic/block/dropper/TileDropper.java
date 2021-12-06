@@ -138,13 +138,13 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     tag.put(NBTINV + "gps", gpsSlots.serializeNBT());
     tag.putInt("delay", delay);
     tag.putInt("dropCount", dropCount);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   private BlockPos getTargetPos() {

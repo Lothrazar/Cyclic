@@ -72,12 +72,12 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   //  @Override

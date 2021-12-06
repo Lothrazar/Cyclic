@@ -73,20 +73,20 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public CompoundTag save(CompoundTag tags) {
+  public void saveAdditional(CompoundTag tag) {
     for (int i = 0; i < STRINGS; i++) {
       if (text[i] != null) {
-        tags.putString("text" + i, text[i]);
+        tag.putString("text" + i, text[i]);
       }
     }
-    tags.putInt("red", red);
-    tags.putInt("green", green);
-    tags.putInt("blue", blue);
-    tags.putInt("padding", padding);
-    tags.putInt("font", fontSize);
-    tags.putInt("offset", offset);
-    tags.putBoolean("dropShadow", dropShadow);
-    return super.save(tags);
+    tag.putInt("red", red);
+    tag.putInt("green", green);
+    tag.putInt("blue", blue);
+    tag.putInt("padding", padding);
+    tag.putInt("font", fontSize);
+    tag.putInt("offset", offset);
+    tag.putBoolean("dropShadow", dropShadow);
+    super.saveAdditional(tag);
   }
 
   @Override

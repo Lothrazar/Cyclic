@@ -163,7 +163,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put("filter", filter.serializeNBT());
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
@@ -174,7 +174,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
       }
       tag.put("fluid" + dir.toString(), fluidtag);
     }
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

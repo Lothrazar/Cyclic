@@ -158,14 +158,14 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("stashToggle", hasStashIfOne);
     if (this.copiedShape != null) {
       CompoundTag copiedShapeTags = this.copiedShape.write(new CompoundTag());
       tag.put("copiedShape", copiedShapeTags);
     }
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   //  @Override

@@ -30,11 +30,11 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     if (uuid != null) {
       tag.putUUID("uuid", uuid);
     }
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

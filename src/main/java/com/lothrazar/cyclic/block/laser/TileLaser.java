@@ -171,14 +171,14 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("red", red);
     tag.putInt("green", green);
     tag.putInt("blue", blue);
     tag.putInt("alpha", alpha);
     tag.putInt("thick", thick);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public float getRed() {

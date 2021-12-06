@@ -200,7 +200,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   public CompoundTag getUpdateTag() {
     //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
     CompoundTag syncData = new CompoundTag();
-    this.saveAdditional(syncData); //this calls writeInternal
+    this.saveAdditional(syncData);
     return syncData;
   }
 
@@ -374,11 +374,11 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     super.load(tag);
   }
 
-  @Override
-  public CompoundTag save(CompoundTag tag) {
-    this.saveAdditional(tag);
-    return super.save(tag);
-  }
+//  @Override
+//  public CompoundTag save(CompoundTag tag) {
+//    this.saveAdditional(tag);
+//    return super.save(tag);
+//  }
 
   @Override
   public void saveAdditional(CompoundTag tag) {
@@ -386,7 +386,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", render);
     tag.putInt("timer", timer);
-
     super.saveAdditional(tag);
   }
 

@@ -209,13 +209,13 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("ox", rangeX);
     tag.putInt("oy", rangeY);
     tag.putInt("oz", rangeZ);
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public List<BlockPos> getShape() {

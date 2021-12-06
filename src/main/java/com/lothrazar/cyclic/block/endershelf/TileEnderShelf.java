@@ -52,10 +52,10 @@ public class TileEnderShelf extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public void toggleShowText() {

@@ -123,12 +123,12 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     for (Direction f : Direction.values()) {
       tag.putInt(f.getSerializedName() + "_incenergy", mapIncomingEnergy.get(f));
     }
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   private static final int TIMER_SIDE_INPUT = 15;

@@ -66,7 +66,7 @@ public class TileCask extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
@@ -74,7 +74,7 @@ public class TileCask extends TileBlockEntityCyclic {
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

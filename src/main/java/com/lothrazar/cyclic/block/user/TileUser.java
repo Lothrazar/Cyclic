@@ -176,14 +176,14 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("delay", timerDelay);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     if (uuid != null) {
       tag.putUUID("uuid", uuid);
     }
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

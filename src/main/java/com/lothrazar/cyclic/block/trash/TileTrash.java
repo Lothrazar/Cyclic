@@ -56,9 +56,9 @@ public class TileTrash extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTrash e) {

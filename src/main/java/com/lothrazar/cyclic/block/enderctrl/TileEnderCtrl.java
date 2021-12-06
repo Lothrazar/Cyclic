@@ -87,14 +87,14 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
     ListTag shelves = new ListTag();
     for (BlockPos pos : this.connectedShelves) {
       shelves.add(NbtUtils.writeBlockPos(pos));
     }
     tag.put(NBT_SHELVES, shelves);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public void toggleShowText() {

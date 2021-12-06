@@ -87,12 +87,12 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("burnTime", burnTime);
     tag.putInt("burnTimeMax", burnTimeMax);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public void tick() {

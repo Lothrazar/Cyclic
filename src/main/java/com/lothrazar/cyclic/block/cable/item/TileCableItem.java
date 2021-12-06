@@ -132,7 +132,7 @@ public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider
 
   @SuppressWarnings("unchecked")
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put("filter", filter.serializeNBT());
     tag.putInt("extractCount", extractQty);
     LazyOptional<IItemHandler> item;
@@ -143,7 +143,7 @@ public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider
         tag.put("item" + f.toString(), compound);
       });
     }
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

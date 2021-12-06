@@ -95,12 +95,12 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("storedXp", getStoredXp());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   private void collectPlayerExperience() {

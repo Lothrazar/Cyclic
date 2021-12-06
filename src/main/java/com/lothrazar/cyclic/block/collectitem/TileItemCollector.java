@@ -125,13 +125,13 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put("filter", filter.serializeNBT());
     tag.putInt("radius", radius);
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   private BlockPos getTargetCenter() {

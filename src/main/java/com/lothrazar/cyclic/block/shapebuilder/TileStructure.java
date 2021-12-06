@@ -106,14 +106,14 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("buildType", buildType.ordinal());
     tag.putInt("buildSize", buildSize);
     tag.putInt("height", height);
     tag.putInt("shapeIndex", shapeIndex);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

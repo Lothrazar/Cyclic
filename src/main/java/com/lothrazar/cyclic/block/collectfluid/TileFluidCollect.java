@@ -190,14 +190,14 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("shapeIndex", shapeIndex);
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   private void incrementShapePtr(List<BlockPos> shape) {

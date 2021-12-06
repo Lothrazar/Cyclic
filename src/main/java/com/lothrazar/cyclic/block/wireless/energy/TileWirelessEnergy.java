@@ -81,11 +81,11 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("transferRate", transferRate);
     tag.put(NBTINV, gpsSlots.serializeNBT());
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessEnergy e) {

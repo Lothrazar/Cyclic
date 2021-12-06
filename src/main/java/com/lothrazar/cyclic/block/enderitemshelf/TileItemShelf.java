@@ -31,7 +31,8 @@ public class TileItemShelf extends TileBlockEntityCyclic {
   //    e.tick();
   //  }
   @Override
-  public void setField(int field, int value) {}
+  public void setField(int field, int value) {
+  }
 
   @Override
   public int getField(int field) {
@@ -57,10 +58,10 @@ public class TileItemShelf extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public void toggleShowText() {

@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.harvester;
 
-import java.util.List;
-import java.util.Set;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.api.IHarvesterOverride;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
@@ -9,6 +7,8 @@ import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.HarvestUtil;
 import com.lothrazar.cyclic.util.UtilShape;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -142,19 +142,19 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     switch (Fields.values()[id]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);
-      break;
+        break;
       case DIRECTION:
         this.directionIsUp = value == 1;
-      break;
+        break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);
-      break;
+        break;
     }
   }
 
@@ -177,13 +177,13 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("radius", radius);
     tag.putInt("shapeIndex", shapeIndex);
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

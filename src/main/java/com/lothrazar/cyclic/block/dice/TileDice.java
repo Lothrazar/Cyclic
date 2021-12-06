@@ -40,9 +40,9 @@ public class TileDice extends TileBlockEntityCyclic {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     spinningIfZero = tag.getInt("spinningIfZero");
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public void startSpinning() {

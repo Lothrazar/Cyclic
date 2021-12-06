@@ -82,21 +82,12 @@ public class TileTeleport extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, gpsSlots.serializeNBT());
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
-  //
-  //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTeleport e) {
-  //    e.tick();
-  //  }
-  //
-  //  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTeleport e) {
-  //    e.tick();
-  //  }
-  //
-  //  public void tick() {}
+
 
   BlockPosDim getTargetInSlot(int s) {
     return LocationGpsCard.getPosition(gpsSlots.getStackInSlot(s));

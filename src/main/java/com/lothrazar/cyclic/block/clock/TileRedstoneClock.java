@@ -120,14 +120,14 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("redstone_delay", delay);
     tag.putInt("redstone_duration", duration);
     tag.putInt("redstone_power", power);
     for (Direction f : Direction.values()) {
       tag.putBoolean(f.getName(), poweredSides.get(f));
     }
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   private void updateMyState() throws IllegalArgumentException {

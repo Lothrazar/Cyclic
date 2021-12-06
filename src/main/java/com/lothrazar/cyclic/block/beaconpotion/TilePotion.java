@@ -150,7 +150,7 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     tag.putInt("radius", radius);
     tag.putInt("entityFilter", entityFilter.ordinal());
     tag.put(NBTENERGY, energy.serializeNBT());
@@ -163,7 +163,7 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
       }
       tag.put("Effects", listnbt);
     }
-    return super.save(tag);
+      super.saveAdditional(tag);
   }
 
   private void pullFromItem(List<MobEffectInstance> newEffects) {

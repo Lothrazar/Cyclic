@@ -158,14 +158,14 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
     tag.put(NBTINV + "batt", batterySlots.serializeNBT());
     tag.putInt("flowing", getFlowing());
     tag.put(NBTENERGY, energy.serializeNBT());
-    return super.save(tag);
+      super.saveAdditional(tag);
   }
 
   @Override
