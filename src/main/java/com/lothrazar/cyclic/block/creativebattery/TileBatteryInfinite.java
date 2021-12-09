@@ -3,12 +3,9 @@ package com.lothrazar.cyclic.block.creativebattery;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.Collections;
+import com.lothrazar.cyclic.util.UtilDirection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -90,13 +87,8 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     this.tickCableFlow();
   }
 
-  private List<Integer> rawList = IntStream.rangeClosed(
-      0, 5).boxed().collect(Collectors.toList());
-
   private void tickCableFlow() {
-    Collections.shuffle(rawList);
-    for (Integer i : rawList) {
-      Direction exportToSide = Direction.values()[i];
+    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
         moveEnergy(exportToSide, MAX / 4);
       }

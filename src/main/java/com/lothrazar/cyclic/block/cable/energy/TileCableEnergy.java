@@ -10,7 +10,6 @@ import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import java.util.List;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -89,8 +88,7 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   }
 
   private void tickCableFlow() {
-    List<Direction> list = UtilDirection.getRandomSet(world.rand);
-    for (final Direction outgoingSide : list) {
+    for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
       final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
       final EnumConnectType connection = this.getBlockState().get(outgoingFace);
       if (connection.isExtraction() || connection.isBlocked()) {

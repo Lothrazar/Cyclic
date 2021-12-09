@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.MathHelper;
 
 public class UtilDirection {
 
@@ -24,10 +25,17 @@ public class UtilDirection {
     return results;
   }
 
-  public static List<Direction> getRandomSet(Random rand) {
-    int idx = rand.nextInt(DIRECTIONS_DIFFERENT_ORDER.size() - 1);
-    return DIRECTIONS_DIFFERENT_ORDER.get(idx);
+  public static final List<List<Direction>> ALL_DIFFERENT_ORDER = permutateDirections(Arrays.asList(Direction.values()), 0);
+  public static int allDifferentOrderIndex = -1;
+
+  public static List<Direction> getAllInDifferentOrder() {
+    allDifferentOrderIndex++;
+    allDifferentOrderIndex %= ALL_DIFFERENT_ORDER.size();
+    return ALL_DIFFERENT_ORDER.get(allDifferentOrderIndex);
   }
 
-  public static final List<List<Direction>> DIRECTIONS_DIFFERENT_ORDER = permutateDirections(Arrays.asList(Direction.values()), 0);
+  public static Direction getRandom(final Random rand) {
+    int index = MathHelper.nextInt(rand, 0, Direction.values().length - 1);
+    return Direction.values()[index];
+  }
 }
