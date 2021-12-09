@@ -3,11 +3,10 @@ package com.lothrazar.cyclic.block.tankcask;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilDirection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
-
-import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;

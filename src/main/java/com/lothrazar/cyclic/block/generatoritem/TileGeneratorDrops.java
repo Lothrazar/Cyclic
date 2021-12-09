@@ -49,6 +49,7 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
   private RecipeGeneratorItem<?> currentRecipe;
+  private int burnPerTick;
 
   public TileGeneratorDrops() {
     super(TileRegistry.GENERATOR_ITEM.get());
@@ -72,23 +73,22 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
       currentRecipe = null;
       this.burnTimeMax = 0;
       this.burnTime = 0;
+      //try to find a recipe now that its empty 
+      this.findMatchingRecipe();
     }
     //    if (currentRecipe != null && burnTime > 0) { // && energy.getEnergyStored() + currentRecipe.getRfpertick() <= this.energy.getMaxEnergyStored()
     tryConsumeFuel();
   }
 
   private void tryConsumeFuel() {
-    //    this.burnTimeMax = 0;
-    //to consume fuel we first need recipe
-    this.findMatchingRecipe();
-    if (currentRecipe == null) {
+    if (burnPerTick == 0 || this.burnTime == 0) {
       return;
     }
     setLitProperty(true); // has recipe so lit
-    int onSim = energy.receiveEnergy(currentRecipe.getRfpertick(), true);
-    if (onSim >= currentRecipe.getRfpertick()) {
+    int onSim = energy.receiveEnergy(burnPerTick, true);
+    if (onSim >= burnPerTick) {
       //gen up. we burned away a tick of this fuel 
-      energy.receiveEnergy(currentRecipe.getRfpertick(), false);
+      energy.receiveEnergy(burnPerTick, false);
       this.burnTime--;
     }
   }
@@ -104,6 +104,7 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
+        this.burnPerTick = this.currentRecipe.getRfpertick();
         this.inputSlots.extractItem(0, 1, false);
         ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
         return;
@@ -136,6 +137,9 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
   public void read(BlockState bs, CompoundNBT tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    burnTime = tag.getInt("burnTime");
+    burnTimeMax = tag.getInt("burnTimeMax");
+    burnPerTick = tag.getInt("burnPerTick");
     super.read(bs, tag);
   }
 
@@ -143,6 +147,9 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
   public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
+    tag.putInt("burnTime", this.burnTime);
+    tag.putInt("burnTimeMax", this.burnTimeMax);
+    tag.putInt("burnPerTick", this.burnPerTick);
     return super.write(tag);
   }
 

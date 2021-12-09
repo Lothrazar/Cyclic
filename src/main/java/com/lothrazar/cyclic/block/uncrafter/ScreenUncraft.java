@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
-import java.util.Arrays;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.data.Const;
@@ -9,6 +8,7 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import java.util.Arrays;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
