@@ -2,6 +2,10 @@
 	"_comments": "Transtated by Bytegm",
 
 	"curios.identifier.feet":"Ноги",
+	"curios.identifier.charm":"Амулет",
+	  
+	"cyclic.fake_player.spikes_diamond":"Алмазные шипы",
+	"cyclic.fake_player.user":"Item User",
 
     "itemGroup.cyclic": "Cyclic: Блоки",
     "itemGroup.cyclicitems": "Cyclic: Предметы",
@@ -9,17 +13,16 @@
     "block.cyclic.trash.tooltip": "Уничтожает любой помещённый в себя предмет",
     "block.cyclic.trash.guide": "Уничтожает любой помещённый в себя предмет.",
     "block.cyclic.trash.guide0": "Внимание! Там нет кнопки отмены. Как только предмет исчезнет, то его больше не вернуть.",
-    "block.cyclic.experience_pylon": "Пилон опыта",
+    "block.cyclic.experience_pylon": "Пилон для опыта",
     "block.cyclic.experience_pylon.tooltip": "Собирает сферы опыта неподалёку от игрока",
-    "block.cyclic.experience_pylon.guide": "Пилон опыта автоматически собирает ближайщше сферы опыта и сохраняет их как жидкий опыт во внутреннем буфере. $(l:misc/fluid_experience)Жидкий опыт$(/l) можно как извлекать так и помещать в пилон.$(br2)Кроме того, игрок может щёлкнуть ПКМ по заполненному пилону кусочком сахара, чтобы обогатить его опытом, создав $(l:misc/experience_food)Засахаренный Опыт$(/l).",
-	"item.cyclic.experience_food": "Засахаренный опыт",
-	"item.cyclic.experience_food.tooltip": "Используйте сахар на пилоне опыта ",
-    "item.cyclic.experience_food.guide": "Создается с помощью кусочка сахара на заполненном пилоне опыта. Съешьте его, чтобы получить опыт, хранящийся в нем, или используйте его на пилоне опыта, чтобы вернуть опыт обратно в пилон.",
-    "item.cyclic.experience_food.guide0": "Его также можно создать, смешав жидкий опыт и сахар в $(l:machines/solidifier)камере затвердевания$(/l), а снова превратить в жидкий опыт в $(l:machines/melter)плавильной камере$(/l).",
+    "block.cyclic.experience_pylon.guide": "Пилон для опыта автоматически собирает ближайшие сферы опыта и сохраняет их как жидкий опыт во внутреннем буфере. Жидкий опыт можно как извлекать так и помещать в пилон.",
+	"item.cyclic.experience_food": "Засахарившийся опыт",
+	"item.cyclic.experience_food.tooltip": "Съешь, чтобы получить опыт ",
+    "item.cyclic.experience_food.guide": "Создаётся с помощью пилона для опыта или в камере затвердевания.  Съешьте его, чтобы получить содержащийся в нём опыт, или используйте его на пилоне опыта, чтобы вернуть опыт обратно в пилон.",
 
         "item.cyclic.charm_stone": "Эфирное кольцо",
 		"item.cyclic.charm_stone.tooltip": "Иммунитет к удушью и урону при столкновениях в Элитрах",
-		"item.cyclic.charm_stone.guide": "Предотвращает урон при столкновении со стенами в элитрах.  А также удушье под действием неосязаемости или телепортировались в стену из твёрдых блоков.",
+		"item.cyclic.charm_stone.guide": "Предотвращает урон при столкновении со стенами в элитрах.  А также удушья под действием неосязаемости, или если Вы телепортировались в стену из твёрдых блоков.",
 
 		"item.cyclic.charm_attack_speed": "Перчатки силы ветра",
 		"item.cyclic.charm_attack_speed.tooltip": "Увеличивает скорость атаки",
@@ -120,7 +123,7 @@
 
 		"block.cyclic.eye_teleport":"Якорь Энда",
 		"block.cyclic.eye_teleport.tooltip":"Посмотрите и присядьте, чтобы телепортироваться на него.",
-		"block.cyclic.eye_teleport.guide":"Каждый раз, когда игрок смотрит на него, в положении сидя, то телепортируется наверх этого блока. Если над ним находятся целевые блоки, то вы окажетесь сверху этих блоков.  Ту же логику имеет и $(l:items/teleport_wand)Эндер-Скипетр$(/l).  Может стоить голода и опыта в зависимости от значений конфигурации. ",
+		"block.cyclic.eye_teleport.guide":"Каждый раз, когда игрок смотрит на него, в положении сидя, то телепортируется наверх этого блока. Если над ним находятся блоки, то вы окажетесь сверху этих блоков.  Ту же логику имеет и Эндер-Скипетр.  Может стоить голода и опыта в зависимости от значений конфигурации. ",
 
 		"block.cyclic.ghost":"Призрачный блок",
 		"block.cyclic.ghost.tooltip":"Активируется при подаче сигнала редстоуна",
@@ -152,7 +155,7 @@
     "block.cyclic.collector.guide": "Сборщик собирает близлежащие предметы и сохраняет их в своем внутреннем буфере. Предметы могут быть взяты непосредственно из буфера или отправлены по трубам.",
     "block.cyclic.cask": "Бочка",
     "block.cyclic.cask.tooltip": "Небольшой резервуар для жидкости",
-    "block.cyclic.cask.guide": "Бочка - это небольшой резервуар для хранения жидкостей.$(br2)Жидкости можно помещать и извлекать как по трубам, так и с помощью вёдер и других переносных контейнеров для жидкости.",
+    "block.cyclic.cask.guide": "Бочка - это небольшой резервуар для хранения жидкостей.  Жидкости можно помещать и извлекать как по трубам, так и с помощью вёдер и других переносных контейнеров для жидкости.",
     "block.cyclic.flower_cyan": "Бирюзовая роза",
     "block.cyclic.flower_cyan.tooltip": "Забытое наследие",
     "block.cyclic.flower_cyan.guide": "Забытое наследие из утерянной версии Майнкрафта. Спаунится одиночно, в биомах: лес, равнины, тайга, высокие холмы. ",
@@ -176,36 +179,24 @@
     
     "item.cyclic.scythe_harvest":"Садовая коса",
     "item.cyclic.scythe_harvest.tooltip":"Убирает урожай по области",
-    "item.cyclic.scythe_harvest.guide":"Используйте для сбора урожая по области.  Тот же принцип работы имеет $(l:machines/harvester)Комбайн$(/l). ",
+    "item.cyclic.scythe_harvest.guide":"Используйте для сбора урожая по области.  Тот же принцип работы имеет Комбайн. ",
     
-    "item.cyclic.location": "Карта данных: GPS",
+    "item.cyclic.location": "Карта данных с GPS",
     "item.cyclic.location.tooltip": "Сохраняет местоположение блока",
-    "item.cyclic.location.guide": "Щёлкните ПКМ по блоку с картой данных GPS в руке, чтобы сохранить его местоположение в карте данных.$(br2)Карты данных с сохраненными местоположениями можно использовать в некоторых машинах из этого мода, например, в $(l:machines/structure)Строителе Конструкций$(/l).",
+    "item.cyclic.location.guide": "Щёлкните ПКМ по блоку с картой данных с GPS в руке, чтобы сохранить его местоположение в карте данных.  Карты данных с сохранёнными местоположениями можно использовать в некоторых машинах из этого мода, например, в Строителе Конструкций, и в таких предметах как Эндер-книга.",
     "item.location.saved": "Сохранено ",
 	
-	"item.cyclic.blockstate_data":"Карта данных: Состояние блока",
+	"item.cyclic.blockstate_data":"Карта данных с Состоянием Блока",
     "item.cyclic.blockstate_data.tooltip":"Читает и сохраняет состояние блока для использования в фильтрах шахтёров",
-    "item.cyclic.blockstate_data.guide":"Используйте на блоке, чтобы прочитать его состояние. Поместив в сетку крафта, можно стереть данные. Он может различать идентичные блоки в разных состояниях, такие как повёрнутые лестницы, двойные плиты и т.д.  ",
-    
-    "block.cyclic.computer_shape":"Shape Computer",
-    "block.cyclic.computer_shape.tooltip":"Read buildings into a Shape Card",
-    "block.cyclic.computer_shape.guide":"Place two  $(l:misc/location)GPS Card$(/l) cards and one  $(l:misc/shape_data)Shape Card$(/l), then you can read, copy, paste, and merge shapes together. ",
+    "item.cyclic.blockstate_data.guide":"Используйте на блоке, чтобы прочитать и сохранить его состояние.  Может хранить список из 18 состояний блоков.  Поместив в сетку крафта, можно стереть данные. Он может различать идентичные блоки в разных состояниях, такие как повёрнутые лестницы, двойные плиты и т.д.  Используйте её в фильтрах машин, например, в фильтре Шахтёра. ",
 	
-	"item.cyclic.filter_data":"Карта данных: фильтр",
+	"item.cyclic.filter_data":"Карта данных с фильтром",
     "item.cyclic.filter_data.tooltip":"Содержит предметы и настройки, используемые для фильтрации",
     "item.cyclic.filter_data.guide":"Заполните предметами и примените на машине или трубе, чтобы применить фильтрацию",
     
-    "item.cyclic.shape_data":"Shape Data Card",
-    "item.cyclic.shape_data.tooltip":"Builds in-world after setup in a Shape Computer",
-    "item.cyclic.shape_data.guide":"Place in a $(l:machines/computer_shape)Shape Computer$(/l) or a $(l:machines/structure)Shape Builder$(/l) to load with data, then click on a block to load its block",
-    
-    "item.cyclic.shape_data.state":"Empty block, select one with a click first",
-    "item.cyclic.shape_data.empty":"Out of materials",
-    "item.cyclic.shape_data.nothing":"Card requires a shape and a selected block",
-    
-    "item.cyclic.settings_data":"Карта данных: Настройки",
-    "item.cyclic.settings_data.tooltip":"Переносите настройки между машинами в cyclic",
-    "item.cyclic.settings_data.guide":"Переносите настройки между машинами в cyclic. Кликните по бедроку, чтобы полностью стереть данные. После копирования данных, их можно поместить только в блоки с тем же id.",
+    "item.cyclic.settings_data":"Карта данных с Настройками",
+    "item.cyclic.settings_data.tooltip":"Переносите настройки между машинами в Сyclic",
+    "item.cyclic.settings_data.guide":"Переносите настройки между машинами в Сyclic. Кликните по бедроку, чтобы полностью стереть данные. После копирования данных, их можно поместить только в блоки с тем же id.",
 		"item.cyclic.settings_data.savednew": "Данные машины сохранены",
 		"item.cyclic.settings_data.written": "Данные машины применены",
 				
@@ -216,7 +207,7 @@
     "block.cyclic.crate": "Ящик",
     "block.cyclic.crate.tooltip": "Укреплённое хранилище предметов",
     "block.cyclic.crate.guide": "Ящик - это контейнер, похожий на сундук, который укреплён, чтобы выдерживать взрывы.",
-    "block.cyclic.dark_glass": "Закаленное стекло",
+    "block.cyclic.dark_glass": "Закалённое стекло",
     "block.cyclic.dark_glass.tooltip": "Не пропускает свет, взрывы, взрывы визера",
     "block.cyclic.dark_glass.guide": "В отличие от обычного, не пропускает свет.$(br2)А также устойчиво к взрывам, в том числе и от Визера.",
     "block.cyclic.light_camo": "Проекция светокамня",
@@ -251,18 +242,18 @@
 
     "block.cyclic.conveyor": "Конвейерная лента",
     "block.cyclic.conveyor.tooltip": "Конвейер с множеством настроек для перемещения существ",
-    "block.cyclic.conveyor.guide": "Перемещает всех стоящих на себе существ.   Многие свойства этого блока хранятся в состоянии блока, такие как тип, скорость и цвет.  Имеет различные вариации типов: вертикальный, повёрнутый влево/вправо, наклонённый вверх/вниз.  Чтобы изменить тип, поставьте конвейер в мир и воспользуйтесь $(l:items/wrench)Деревянным Гаечным Ключом$(/l), чтобы переключить тип.",
+    "block.cyclic.conveyor.guide": "Перемещает всех стоящих на себе существ.   Многие свойства этого блока хранятся в состоянии блока, такие как тип, скорость и цвет.  Имеет различные вариации типов: вертикальный, повёрнутый влево/вправо, наклонённый вверх/вниз.  Чтобы изменить тип, поставьте конвейер в мир и воспользуйтесь Деревянным Гаечным Ключом, чтобы переключить тип.",
     "block.cyclic.conveyor.guide0": "Чтобы изменить скорость, используйте редстоуновый факел.   Чтобы изменить цвет, используйте краситель.  Эти изменения распространяются на близрасположенные подключенные конвейеры.  (нажмите F3, чтобы просмотреть эти свойства подробно) ",
 
 
     "block.cyclic.ender_shelf":"Книжная полка Эндера",
     "block.cyclic.ender_shelf.tooltip": "Многоблочное хранилище зачарований",
-    "block.cyclic.ender_shelf.guide": "Можно использовать отдельно или как часть многоблочной структуры, которая должна иметь хотя бы один $(l:blocks/ender_controller)Контроллер книжных полок Эндера$(/l). Каждая полка имеет 5 слотов, по которым вы можете щёлкнуть ПКМ, чтобы вставить чародейскую книгу для хранения.",
-    "block.cyclic.ender_shelf.guide0": "Чтобы чародейские книги можно было вставить, они должны содержать только одно зачарование. Используйте $(l:machines/disenchanter)Расчарователь$(/l), чтобы убрать с книги ненужные зачарования.",
+    "block.cyclic.ender_shelf.guide": "Можно использовать отдельно или как часть многоблочной структуры, которая должна иметь хотя бы один Контроллер книжных полок Эндера. Каждая полка имеет 5 слотов, по которым вы можете щёлкнуть ПКМ, чтобы вставить чародейскую книгу для хранения.",
+    "block.cyclic.ender_shelf.guide0": "Чтобы чародейские книги можно было вставить, они должны содержать только одно зачарование. Используйте Расчарователь, чтобы убрать с книги ненужные зачарования.",
 
     "block.cyclic.ender_controller":"Контроллер книжных полок Эндера",
     "block.cyclic.ender_controller.tooltip": "Контроллер многоблочного хранилища зачарований",
-    "block.cyclic.ender_controller.guide": "В сочетании хотя бы с одной $(l:blocks/ender_shelf)Книжной полкой Эндера$(/l), позволяет автоматический помещать/извлекать чародейские книги.",
+    "block.cyclic.ender_controller.guide": "В сочетании хотя бы с одной Книжной полкой Эндера, позволяет автоматический помещать/извлекать чародейские книги.",
 
     "block.cyclic.workbench": "Верстак",
     "block.cyclic.workbench.tooltip": "Верстак, который сохраняет свой инвентарь",
@@ -281,12 +272,12 @@
     "block.cyclic.breaker": "Разрушитель блоков",
     "block.cyclic.breaker.tooltip": "Разрушает блоки, поставленные перед ним",
     "block.cyclic.breaker.guide": "Разрушители можно использовать для того, чтобы добыть блок, расположенный прямо перед ним, как это сделал бы игрок.$(br2)У разрушителей нет внутреннего хранилища для предметов, поэтому разрушенный блок (или то что с него выпало) выпадет в мир, чтобы его можно было подобрать.",
-	"item.cyclic.rotation_wand":"Деревянный гаечный ключ",
-	"item.cyclic.rotation_wand.tooltip":"Вращает простые блоки",   
-	"item.cyclic.rotation_wand.guide":"Гаечный ключ можно использовать для вращения простых блоков, таких как ступеньки, плиты и лестницы. Не вращает машины.",
+	"item.cyclic.wrench":"Деревянный гаечный ключ",
+	"item.cyclic.wrench.tooltip":"Вращает простые блоки",   
+	"item.cyclic.wrench.guide":"Гаечный ключ можно использовать для вращения простых блоков, таких как ступеньки, плиты и лестницы. Не вращает машины.",
 	"item.cyclic.cable_wrench":"Трубный ключ",
 	"item.cyclic.cable_wrench.tooltip":"Изменяет настройки труб в Cyclic",  
-	"item.cyclic.cable_wrench.guide":"Нажатием ПКМ, держа трубный ключ, вы можете изменить настройки $(l:machines/pipe)труб$(/l) из Cyclic. Щёлкните ЛКМ по любому блоку гаечным ключом, чтобы сменить его режим.",
+	"item.cyclic.cable_wrench.guide":"Нажатием ПКМ, держа трубный ключ, вы можете изменить настройки труб из Cyclic. Щёлкните ЛКМ по любому блоку гаечным ключом, чтобы сменить его режим.",
 	"tool.cable_wrench.extract":"Режим извлечения",
 	"tool.cable_wrench.disable":"Режим отключения",
 	"gui.cyclic.flowing0":"Хранить энергию",  
@@ -303,7 +294,7 @@
     "item.cyclic.build_scepter":"Строительный скипетр (заполнение)",
     "item.cyclic.offset_scepter":"Строительный скипетр (размещение)",
     "item.cyclic.replace_scepter":"Строительный скипетр (замена)",
-    "item.cyclic.build_scepter.guide":"Строительный скипетр - это мощный инструмент, который бывает трёх видов: заполняющий, размещающий и замещающий.$(br2)Чтобы изменить размер области работы, нажмите ЛКМ скипетром по любому блоку. Нажатием Shift+ЛКМ, можно выбрать блок, который будет использоваться скипетром. Нажмимайте ПКМ скипетром, чтобы размешать или заменять блоки из вашего инвентаря.",
+    "item.cyclic.build_scepter.guide":"Строительный скипетр - это мощный инструмент, который бывает трёх видов: заполняющий, размещающий и замещающий.$(br2)Чтобы изменить размер области работы, нажмите ЛКМ скипетром по любому блоку. Нажатием Shift+ЛКМ, можно выбрать блок, который будет использоваться скипетром. Нажмимайте ПКМ скипетром, чтобы размешать или заменять блоками из вашего инвентаря.",
     "item.cyclic.build_scepter.guide0":"$(li)Заполняющий скипетр ставит блоки в заданную форму вокруг блока, по которому вы нажали ПКМ.$(li)Замещающий скипетр, по нажатию ПКМ, меняет местами все выделенные блоки на блоки из инвентаря.$(li)Размещающий скипетр похож на заполняющий скипетр, за исключением того, что блоки ставятся выше блока, по которому вы нажали ПКМ.",
     "scepter.cyclic.nothing":"Shift+ЛКМ, чтобы выбрать блок",
     "scepter.cyclic.empty":"Отсутствуют материалы",
@@ -410,17 +401,20 @@
     "cyclic.item.empty": "Пусто",
     "debug.horsejump": "Высота прыжка лошади:",
     "debug.horsespeed": "Скорость лошади:",
-    "debug.spawn.chunks": "Внутри спаун-чанков",
-    "debug.spawn.distance": "From Spawn:",
+    "debug.spawn.chunks": "В пределах спаун-чанков",
+    "debug.spawn.distance": "До спауна:",
     "enchantment.cyclic.excavate": "Выкапывание",
-    "enchantment.cyclic.excavate.desc": "Добывает всю жилу из последовательно соединённых блоков, не включая диагонали",
+    "enchantment.cyclic.excavate.desc": "Добывайте всю жилу из последовательно соединённых блоков, не включая диагонали",
+	 "enchantment.cyclic.excavate.guide": "Распространяется во все стороны и выкапываются все блоки, совпадающие с исходной целью.  Чем выше уровень, тем больше блоков [ maximum_blocks = 26 + 8 * ENCHANT_LEVEL]",
     "enchantment.cyclic.multishot": "Мульти-выстрел",
-    "enchantment.cyclic.multishot.desc": "При стрельбе ваш лук выпускает дополнительные стрелы",
+	"enchantment.cyclic.multishot.desc": "Выстреливайте дополнительные стрелы из лука по горизонтали",
+    "enchantment.cyclic.multishot.guide": "Зачарование для лука, которое добавляет дополнительные стрелы во время выстрела слева и справа от вашего лука.  Они появляются слева и справа относительно основной стрелы.  ",
     "enchantment.cyclic.beheading.guide": "Увеличит шанс выбить голову монстра или игрока. При необходимости, существа из других модов могут быть добавлены в файл конфигурации.",
     "enchantment.cyclic.beheading": "Обезглавливание",
     "enchantment.cyclic.beheading.desc": "Увеличит шанс выбить голову монстра или игрока. При необходимости, существа из других модов могут быть добавлены в файл конфигурации.",
     "enchantment.cyclic.experience_boost": "Увеличение опыта",
     "enchantment.cyclic.experience_boost.desc": "Увеличивает количество выпавшего опыта c убитых существ и добытой руды",
+	"enchantment.cyclic.experience_boost.guide": "При добыче блока, из которого выпадают сферы опыта, их количество увеличивается на случайное число, в зависимости от уровня зачарования.  Когда живое существо умирает и выпадает опыт, и если оно было убито игроком, то случайным образом выпадет больше опыта в зависимости от уровня зачарования.",
     "enchantment.cyclic.growth": "Взращивание",
     "enchantment.cyclic.growth.desc": "Выращивайте ближайшие посевы во время удерживания инструмента в руке",
     "enchantment.cyclic.growth.guide": "Выращивайте ближайшие посевы во время удерживания инструмента в руке.  Может применяться только к Мотыгам.",
@@ -436,9 +430,9 @@
     "enchantment.cyclic.quickshot": "Оттяжка",
     "enchantment.cyclic.quickshot.desc": "Утраивает скорость, с которой ваш лук натягивается в полную силу",
     "enchantment.cyclic.quickshot.guide": "Утраивает скорость, с которой ваш лук натягивается в полную силу.  Более высокие уровни зачарования ещё больше увеличат скорость натяжения. Применяется к обычным лукам, а не к арбалетам.",
-    "enchantment.cyclic.reach": "Блочный захват",
-    "enchantment.cyclic.reach.desc": "Увеличивает дальность до захвата блоков при копании и строительстве",
-    "enchantment.cyclic.reach.guide": "Увеличивает дальность до захвата блоков при копании и строительстве.  Может применяться к нагрудникам и Элитрам",
+    "enchantment.cyclic.reach": "Досягаемость",
+    "enchantment.cyclic.reach.desc": "Увеличивает досягаемость до блоков при копании и строительстве",
+    "enchantment.cyclic.reach.guide": "Увеличивает досягаемость до блоков при копании и строительстве.  Может применяться к нагрудникам и Элитрам",
     "enchantment.cyclic.step": "Высокий шаг",
     "enchantment.cyclic.step.desc": "Увеличивает высоту вашего шага до полного блока, как у лошадей",
     "enchantment.cyclic.step.guide": "Увеличивает высоту вашего шага до полного блока, как у лошадей.  Может применяться только к поножам",
@@ -466,15 +460,15 @@
     "enchantment.cyclic.beekeeper.guide": "Защищает от колючек и насекомых.  Первый уровень защищает от пчёл, летучих мышей и плевков ламы.  Уровень II или выше полглощает урон от фантомов. ",
 
     "fluid.cyclic.biomass": "Жидкая биомасса",
-    "fluid.cyclic.biomass.guide": "Объедините твёрдую $(l:misc/biomass)Биомассу$(/l) с различными органическими материалами в $(l:machines/metler)Плавильной Камере$(/l) для создания жидкой биомассы.",
+    "fluid.cyclic.biomass.guide": "Объедините твёрдую Биомассу с различными органическими материалами в Плавильной Камере для создания жидкой биомассы.",
     "fluid.cyclic.honey": "Мёд",
-    "fluid.cyclic.honey.guide": "Жидкий мёд может быть извлечён из продуктов пчеловодства в $(l:machines/melter)Плавильной Камере$(/l) и использоваться в $(l:machines/solidifier)Камере Затвердевания$(/l).",
+    "fluid.cyclic.honey.guide": "Жидкий мёд может быть извлечён из продуктов пчеловодства в Плавильной Камере и использоваться в Камере Затвердевания.",
     "fluid.cyclic.magma": "Магма",
-    "fluid.cyclic.magma.guide": "Жидкая магма может быть извлечена из блоков магмы или из сгустков магмы в $(l:machines/melter)Плавильной Камере$(/l) и использоваться в $(l:machines/solidifier)Камере Затвердевания$(/l).",
+    "fluid.cyclic.magma.guide": "Жидкая магма может быть извлечена из блоков магмы или из сгустков магмы в Плавильной Камере и использоваться в Камере Затвердевания$.",
     "fluid.cyclic.slime": "Слизь",
-    "fluid.cyclic.slime.guide": "Жидкая слизь может быть получена из блоков слизи или из сгустков слизи в $(l:machines/melter)Плавильной Камере$(/l) и использоваться в $(l:machines/solidifier)Камере Затвердевания$(/l).",
+    "fluid.cyclic.slime.guide": "Жидкая слизь может быть получена из блоков слизи или из сгустков слизи в Плавильной Камере и использоваться в Камере Затвердевания.",
     "fluid.cyclic.xpjuice": "Опыт",
-    "fluid.cyclic.xpjuice.guide": "Жидкий опыт можно получить и использовать в $(l:machines/experience_pylon)Пилоне Опыта$(/l).",
+    "fluid.cyclic.xpjuice.guide": "Жидкий опыт можно получить и использовать в Пилоне для Опыта.",
     "item.cyclic.amber_bucket": "Ведро янтаря",
     "item.cyclic.biomass_bucket": "Ведро биомассы",
     "item.cyclic.honey_bucket": "Ведро мёда",
@@ -494,7 +488,7 @@
     "guide.category.consume":"Пища",
     "guide.category.consume.desc":"Это одноразовые предметы; могут употребляться либо игроком, либо определёнными существами.",
     "guide.category.machines": "Машины",
-    "guide.category.machines.desc": "Машины - это активные блок-сущности (Block entity). У них обычно есть окно инвентаря, и они потребляют энергию или жидкости.  ",
+    "guide.category.machines.desc": "Машины - это активные блок-сущности (Block entity). У них обычно есть интерфейс, и они потребляют энергию или жидкости.  ",
     "guide.category.enchantments": "Зачарования",
     "guide.category.enchantments.desc": "Все зачарования можно наложить обычным образом через наковальни или чародейские столы.  ",
     "guide.category.gear": "Снаряжение",
@@ -508,10 +502,6 @@
     "guide.category.world": "World Generation",
     "guide.title": "Руководство по Cyclic",
     "guide.landing_text": "Узнайте обо всём, что добавляет Cyclic!",
-
-    "item.book_ender.guide": "A magical book that stores your current location as a waypoint.  Teleport to the waypoint at a later at the cost of experience, based on distance (configurable).  Cannot cross dimensions, but it can store locations in any dimension.",
-    "item.book_ender": "Ender Book",
-    "item.book_ender.tooltip": "Saved Waypoints:",
     "item.cantoggle.tooltip.info": "ПКМ, чтобы переключить:",
     "item.cantoggle.tooltip.off": "Выкл",
     "item.cantoggle.tooltip.on": "Вкл",
@@ -534,8 +524,8 @@
     "item.cyclic.charm_wither.tooltip": "Защищает от иссушения",
     "item.cyclic.charm_wither.guide": "Когда он находится в вашем инвентаре или надет как аксессуар, защищает вас от иссушения за счет прочности",
     "item.cyclic.charm_ultimate": "Талисман-оберег",
-    "item.cyclic.charm_ultimate.tooltip": "Защищает от отравления, иссушения, огня, пустоты",
-    "item.cyclic.charm_ultimate.guide": "Когда он находится в вашем инвентаре или надет как аксессуар, он сочетает в себе защитные эффекты от $(l:accessories/charm_antidote)Амулета Противоядия$(/l), $(l:accessories/charm_wither)Амулета Иссушения$(/l), $(l:accessories/charm_fire)Амулета Огня$(/l), и $(l:accessories/charm_void)Амулета Пустоты$(/l).",
+    "item.cyclic.charm_ultimate.tooltip": "Защищает от отравления, иссушения, огня, падения в пустоту",
+    "item.cyclic.charm_ultimate.guide": "Когда он находится в вашем инвентаре или надет как аксессуар, он сочетает в себе защитные эффекты от Амулета Противоядия, Амулета Иссушения, Амулета Огня, и Амулета Пустоты.",
     "item.charm_boat.guide": "Увеличивает скорость передвижения на лодке.  Щёлкните ПКМ, держа амулет в руке, чтобы выключить его.  Совместим с API Сurios.",
     "item.charm_boat": "Амулет мореплавателя",
     "item.charm_boat.tooltip": "Увеличивает скорость передвижения лодки",
@@ -614,7 +604,7 @@
     "item.cyclic.ender_pearl_reuse.guide": "Эндер-жемчуг, который можно бросить, поднять и снова бросить.",
  	"item.cyclic.ice_scepter": "Замораживатель",
     "item.cyclic.ice_scepter.tooltip": "Стреляйте льдом, который оглушит врагов",
-    "item.cyclic.ice_scepter.guide": "Выпускает три замороженных снаряда, которые накладывают эффект  $(l:potions/stun)зелья паралича$(/l) на всех врагов.",
+    "item.cyclic.ice_scepter.guide": "Выпускает три замороженных снаряда, которые накладывают эффект  зелья паралича на всех врагов.",
     "item.cyclic.ender_tnt_1.guide": "Бросьте, чтобы создать взрыв.  Существует 6 различных уровней мощности.  Стандартные обычные взрывы без особых свойств.",
     "item.cyclic.ender_tnt_1": "Динамит I",
     "item.cyclic.ender_tnt_1.tooltip": "1/3 силы взрыва крипера",
@@ -649,9 +639,6 @@
     "item.cyclic.fire_killer.guide": "Потушите все ближайшие пожары.",
     "item.cyclic.fire_killer": "Огнетушитель",
     "item.cyclic.fire_killer.tooltip": "Тушит ближайший огонь",
-    "item.cyclic.food_step.guide": "Съев его, Вы увеличите высоту своего шага до полного блока, как у лошади (для отмены съешьте его снова)",
-    "item.cyclic.food_step": "Яблоко высокого роста",
-    "item.cyclic.food_step.tooltip": "Съев его, Вы увеличите высоту своего шага до полного блока, как у лошади (для отмены съешьте его снова)",
     "item.cyclic.chorus_flight.guide": "Балансный способ получить силу полёта. При употреблении дает вам несколько (складываемых) минут творческого полета. Чтобы убрать эффект используйте молоко.",
     "item.cyclic.chorus_flight": "Светящийся плод хоруса",
     "item.cyclic.chorus_flight.tooltip": "Взлетите в воздух",
@@ -696,8 +683,11 @@
  		"potion.potency.8": "IX",
  		"potion.potency.9": "X",
  		"item.cyclic.apple_bone": "Костяное яблоко",
+		"item.cyclic.apple_bone.guide": "Накладывает эффекты зелий при употреблении",
  		"item.cyclic.apple_chorus": "Хорусовое яблоко",
+		"item.cyclic.apple_chorus.guide": "Накладывает эффекты зелий при употреблении",
  		"item.cyclic.apple_prismarine": "Призмариновое яблоко",
+		"item.cyclic.apple_prismarine.guide": "Накладывает эффекты зелий при употреблении",
  
     "item.cyclic.apple_diamond": "Алмазное яблоко",
     "item.cyclic.apple_diamond.tooltip": "Максимальные эффекты для защиты",
@@ -719,8 +709,9 @@
     
     
     "item.cyclic.carrot_ender": "Эндер-морковь",
-    "item.cyclic.carrot_ender.tooltip": "Stackable hidden shields",
-    "item.cyclic.carrot_ender.guide": "Give your horse some magic shields.  These trigger when the mount is drowning, falling, burning, or low on health.  When triggered, it will consume one tick of the count and buff the mount accordingly. ",
+    "item.cyclic.carrot_ender.tooltip": "Стакающиеся невидимые щиты",
+    "item.cyclic.carrot_ender.guide": "Наделите свою лошадь магическими щитами.  Они срабатывают, когда лошадь тонет, падает, горит или у неё мало здоровья.  Когда они срабатывают, расходуется один щит и накладывается соответствующий эффект. ",
+	"item.cyclic.carrot_ender.count":"Эндер-щитов применено: ",
 
     "item.cyclic.toxic_carrot": "Ядовитая морковь",
     "item.cyclic.toxic_carrot.tooltip": "Преврати свою лошадь в зомби",
@@ -869,9 +860,9 @@
     "item.cyclic.stirrups": "Стремя",
     "item.cyclic.stirrups.tooltip": "Оседлайте любое существо (но без седла Вы не сможете управлять им)",
     "item.cyclic.stirrups.guide": "Оседлайте любое существо (но без седла Вы не сможете управлять им))",
-    "item.cyclic.mount_inverse": "Перевёрнутое стремя",
-    "item.cyclic.mount_inverse.tooltip": "Подберите живое существо и закрепите его на своей голове.",
-    "item.cyclic.mount_inverse.guide": "Подберите живое существо и закрепите его на своей голове.",
+    "item.cyclic.stirrups_reverse": "Перевёрнутое стремя",
+    "item.cyclic.stirrups_reverse.tooltip": "Поднимайте мобов и существ",
+    "item.cyclic.stirrups_reverse.guide": "Поднимите существ над собой. Чтобы отпустить, используйте снова.",
     "item.cyclic.prospector.guide": "Обнаруживает руды за блоком, по которому Вы кликните. Работает во всех направлениях, точно отображая все то, что найдет. Если нажать по верхней стороне блока, он будет искать под ним, а если по боковой стороне - за ним. Работает всегда по прямой линии. Также имеет черный список, позволяющий игнорировать некоторые распространенные блоки..",
     "item.cyclic.prospector": "Рудоискатель",
     "item.cyclic.prospector.tooltip": "Обнаруживает руды по прямой линии от Вас",
@@ -932,14 +923,12 @@
     "item.cyclic.antimatter_wand.mode.generic": "Общий",
     "item.cyclic.antimatter_wand.guide": "Нажимайте ЛКМ, чтобы переключаться между режимами Вода, Лава и Общий. Нажмите ПКМ, чтобы удалить из мира область 9x9 выбранного типа жидкости.",
 
-    "key.categories.inventorycontrol": "Cyclic: Назначение клавиш",
-    "key.columnbardown": "Row Shift Down",
-    "key.columnbarup": "Row Shift Up",
-    "key.columnshiftdown": "Item Shift Down",
-    "key.columnshiftup": "Item Shift Up",
-    "key.keyExtraCraftin": "Верстак в инвентаре (если доступен)",
-    "key.keyExtraInvo": "Расширенный инвентарь (если доступен)",
-    "key.keyWheel": "Extended Inventory Tool Belt (if unlocked)",
+    "key.cyclic.category": "Cyclic: назначение клавиш",
+    "key.cyclic.cake": "Расширенный инвентарь (Если разблокирован)",
+
+    "cyclic.unlocks.extended": "Разблокированный расширенный инвентарь - смотрите назначенную клавишу для открытия",
+    "cyclic.unlocks.extended.locked": "Расширенный инвентарь всё ещё заблокирован - съешьте торт",
+	
     "minecart.fuel": "Топливо:",
     "screentext.flying.seconds": "Полёт:",
     "screentext.noclip.seconds": "Неосязаемость:",
@@ -949,7 +938,7 @@
     "button.trash.items.tooltip": "Принимать и удалять предметы",
     "block.cyclic.trash.warning": "Предупреждение! УДАЛЯТСЯ все предметы",
     "block.cyclic.crafter": "Механический верстак",
-    "block.cyclic.crafter.tooltip": "Автоматическое создание с полем 3x3",
+    "block.cyclic.crafter.tooltip": "Автоматическое создание в сетке 3x3",
     "block.cyclic.crafter.guide": "Установите рецепт, который Вы хотите автоматически создавать столько, сколько это возможно.  Входные слоты находятся слева, выходы - справа. Также работает с трубами/проводами/воронками для ввода и вывода  ",
     "block.cyclic.beacon": "Маяк Фароса",
     "block.cyclic.beacon.tooltip": "Используйте зелья, чтобы вызывать эффект у маяка",
@@ -1052,18 +1041,12 @@
     "button.screen.item": "Предметы",
     "button.screen.fluid": "Жидкость",
     "button.screen.energy": "Энергия",
-    
-    "block.cyclic.library_ctrl": "Ender Library",
-    "block.cyclic.library_ctrl.tooltip": "Surround this with Ender Bookshelves to deposit",
-    "block.cyclic.library_ctrl.guide": "The controller block for Ender Bookshelves.  Surround it with Ender Bookshelves so it can connect and it will distribute enchantments.  Can be automated by piping in enchanted books and pulling out empty books.",
-    "block.cyclic.library": "Ender Bookshelf",
-    "block.cyclic.library.tooltip": "Four drawers of deep enchantment storage",
-    "block.cyclic.library.guide": "Use enchanted books on any corner.  Each corner stores many copies of that same enchantment.  Use a book on it to withdraw.  Hold a Redstone Torch in your hand and hit it to toggle display modes.",
  
     "block.cyclic.structure": "Строитель конструкций",
     "block.cyclic.structure.tooltip": "Автоматическая постройка несложных конструкций",
     "block.builder_pattern.flip": "Отобразить области (фиолетовый цвет — источник, белый - цель)",
     "block.builder_pattern.guide": "Эта передавая машина может скопировать почти всё. Выберите две близкие друг к другу области одинаковой формы и размера, положите материал, после чего машина скопирует структуру из одной области в другую.",
+	"block.cyclic.structure.guide": "Эта передавая строительная машина имеет ограниченный набор конструкций, таких как пирамида, сфера, цилиндр и т.д.  Используя энергию и блоки, вы можете построить любую форму.  Также можно использовать карты данных с конструкциями для создания пользовательских построек.  ",
     "block.builder_pattern.rotation": "Поворот",
     "block.builder_pattern.flipaxis": "Включить отражение по координате",
     "block.builder_pattern.heightdown": "Высота вниз",
@@ -1115,7 +1098,7 @@
     "cyclic.entitytype.water": "Водные",
     "cyclic.entitytype.ambient": "Ambient",
     
-    "cyclic.beacon.entitytype.tooltip": "Определяет разновидность существа и выдает сигнал редстоуна.",
+    "cyclic.beacon.entitytype.tooltip": "Определяет разновидность существа и выдаёт сигнал редстоуна.",
   
     
     
@@ -1323,7 +1306,7 @@
 
     "block.cyclic.pipe.guide.title": "Трубы",
     "block.cyclic.pipe.guide": "Различные типы труб могут использовать для перемещения жидкостей, предметов и энергии между машинами. Их можно настроить с помощью $(l:items/cable_wrench)Трубного Ключа$(/l).",
-    "block.cyclic.fluid_pipe": "Жидкостная труда",
+    "block.cyclic.fluid_pipe": "Жидкостная труба",
     "block.cyclic.fluid_pipe.tooltip": "Перемещает жидкости между блоками; используйте трубный ключ для настройки",
     "block.cyclic.fluid_pipe.guide": "Перемещает жидкости между блоками; используйте трубный ключ для настройки",
     "block.cyclic.bundled_pipe": "Универсальная труба",
@@ -1344,30 +1327,30 @@
     
     "item.cyclic.biomass.tooltip": "Для биоэнергетики",
     "item.cyclic.biomass": "Биомасса",
-    "item.cyclic.biomass.guide": "Комбинируйте различные органические материалы в $(l:machines/melter)Плавильной Камере$(/l) для создания $(l:misc/fluid_biomass)Жидкой Биомассы$(/l)",
+    "item.cyclic.biomass.guide": "Комбинируйте различные органические материалы в Плавильной Камере для создания Жидкой Биомассы",
     "item.cyclic.peat_fuel": "Торф",
     "item.cyclic.peat_fuel.tooltip": "Подогретый торф.  Используется в генераторе.",
-    "item.cyclic.peat_fuel.guide": "Торф выплавляется из $(l:blocks/saturated_peat_bog)Обогащённой Торфяной Почвы$(/l) и используется в $(l:machines/peat_generator)Торфяном Генераторе$(/l) для выработки энергии.$(br2)Его также можно объединить с $(l:misc/fluid_biomass)Жидкой Биомассой$(/l) в $(l:machines/solidifier)Камере Затвердевания$(/l) для создания $(l:misc/peat_fuel_enriched)Обогащённого Торфа$(/l).",
+    "item.cyclic.peat_fuel.guide": "Торф выплавляется из Обогащённой Торфяной Почвы и используется в Торфяном Генераторе для выработки энергии.  Его также можно объединить с Жидкой Биомассой в Камере Затвердевания для создания Обогащённого Торфа.",
 
     "item.cyclic.peat_fuel_enriched": "Обогащённый торф",
     "item.cyclic.peat_fuel_enriched.tooltip": "Вырабатывает энергию в торфяном генераторе",
-    "item.cyclic.peat_fuel_enriched.guide": "Создаётся путём объединения $(l:misc/peat_fuel)Торфа$(/l) с $(l:misc/fluid_biomass)Жидкой Биомассой$(/l) в $(l:machines/solidifier)Камере Затвердевания$(/l) и используется для увеличения выработки энергии в $(l:machines/peat_generator)Торфяном Генераторе$(/l).",
+    "item.cyclic.peat_fuel_enriched.guide": "Создаётся путём объединения Торфа с Жидкой Биомассой в Камере Затвердевания и используется для увеличения выработки энергии в Торфяном Генераторе.",
 
     "block.cyclic.peat_unbaked": "Сухая торфяная почва",
     "block.cyclic.peat_unbaked.tooltip": "Медленно превращается в обогащённую торфяную почву, находясь около воды",
-    "block.cyclic.peat_unbaked.guide": "Если поместить сухую торфяную почву рядом с водой, то она медленно превратится в $(l:blocks/saturated_peat_bog)Обогащённую Торфяную почву$(/l), которую можно переплавить, чтобы получить топливо для $(l:machines/peat_generator)Торфяного Генератора$(/l).",
+    "block.cyclic.peat_unbaked.guide": "Если поместить сухую торфяную почву рядом с водой, то она медленно превратится в Обогащённую Торфяную почву, которую можно переплавить, чтобы получить топливо для Торфяного Генератора.",
 
     "block.cyclic.peat_baked": "Обогащённая торфяная почва",
     "block.cyclic.peat_baked.tooltip": "Влажный торф, готовый к сбору и переплавке",
-    "block.cyclic.peat_baked.guide": "Обогащённая торфяная почва образуется из $(l:blocks/dry_peat_bog)Сухой Торфяной Почвы$(/l), в течении некоторого времени, и если она расположена около воды. После сбора, её можно переплавить в топливо, которое можно использовать в $(l:machines/peat_generator)Торфяном Генераторе$(/l).",
+    "block.cyclic.peat_baked.guide": "Обогащённая торфяная почва образуется из Сухой Торфяной Почвы, в течении некоторого времени, и если она расположена около воды. После сбора, её можно переплавить в топливо, которое можно использовать в Торфяном Генераторе.",
 
     "block.cyclic.peat_generator": "Торфяной генератор",
     "block.cyclic.peat_generator.tooltip": "Вырабатывает энергию",
-    "block.cyclic.peat_generator.guide": "Торфяной генератор может пережигать либо $(l:misc/peat_fuel)Торф$(/l), либо $(l:misc/peat_fuel_enriched)Обогащённый Торф$(/l) для выработки энергии.",
+    "block.cyclic.peat_generator.guide": "Торфяной генератор может пережигать либо Торф, либо Обогащённый Торф для выработки энергии.",
 
     "block.cyclic.peat_farm": "Торфяная ферма",
     "block.cyclic.peat_farm.tooltip": "Собирает обогащённую торфяную почву",
-    "block.cyclic.peat_farm.guide": "Торфяная ферма использует воду и $(l:blocks/dry_peat_bog)Сухую Торфяную Почву$(/l) в качестве входных ресурсов и автоматически строит торфяную ферму в области 15x15.$(br2)Когда сухая торфяная почва обогатится, торфяная ферма автоматически соберёт её и посадит на её месте следующий блок сухой торфяной почвы.",
+    "block.cyclic.peat_farm.guide": "Торфяная ферма использует воду и Сухую Торфяную Почву в качестве входных ресурсов и автоматически строит торфяную ферму в области 15x15.  Когда сухая торфяная почва обогатится, торфяная ферма автоматически соберёт её и посадит на её месте следующий блок сухой торфяной почвы.",
 
     "block.cyclic.miner": "Шахтёр",
     "block.cyclic.miner.tooltip": "Выкопает заданную область перед собой",
@@ -1399,10 +1382,6 @@
 
     "block.cyclic.battery_infinite": "Бесконечная батарея",
     "block.cyclic.battery_infinite.tooltip": "Творческий источник энергии",
-
-    "block.cyclic.item_infinite": "Infinite Item-ator",
-    "block.cyclic.item_infinite.tooltip": "Duplicate items for pack testing",
-
 
     "block.fire_dark.guide": "Does not destroy blocks or harm players.  Spawned by Duskflame Hex",
 
@@ -1475,14 +1454,9 @@
     "imbue.type.slowness": "Slowness",
     "imbue.type.glowing": "Glowing",
 
-    "item.stone_pebble": "Pebble",
-    "item.stone_pebble.tooltip": "Tiny stone for a slingshot",
-    "item.stone_pebble.guide": "Tiny stone for a slingshot",
-    "slingshot.ammoempty": "No pebbles left",
-
-    "item.slingshot_weapon": "Slingshot",
-    "item.slingshot_weapon.tooltip": "Fires pebbles",
-    "item.slingshot_weapon.guide": "Charge like a bow.  Shoot with pebbles in your inventory.  Ammo is any item with ore dict matching 'rock'.",
+    "item.cyclic.slingshot": "Рогатка",
+    "item.cyclic.slingshot.tooltip": "Слабое оружие дальнего боя",
+    "item.cyclic.slingshot.guide": "Натягивается как лук.  Боеприпасы встроены, поэтому они просто расходуют прочность.",
 
 
     "block.builder_pattern.name.preview0": "Нет",
@@ -1586,15 +1560,16 @@
 
     "extended.toolbelt": "key to open in tool-belt mode",
 
-    "item.cyclic.gem.guide.title": "Gems",
-    "item.cyclic.gem_obsidian.guide": "Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l). They are used as a crafting material in many things",
-    "item.cyclic.gem_amber.guide": "Amber Gems are created in the $(l:machines/solidifier)Solidification Chamber$(/l).  They are used as a crafting material in many things",
+     "item.cyclic.gem.guide.title": "Самоцветы",
+    "item.cyclic.gem.guide": "Самоцветы создаются в Камере затвердевания .  Они используются в качестве материала для создания многих вещей",
 
     "item.cyclic.gem_obsidian": "Кристаллизованный обсидин",
     "item.cyclic.gem_obsidian.tooltip": "Материал для крафтов", 
+	"item.cyclic.gem_obsidian.guide": "Кристаллизованный обсидиан создаётся в Камере затвердевания .  Он используются в качестве материала для создания многих вещей",
 
     "item.cyclic.gem_amber": "Кристаллизованный янтарь",
-    "item.cyclic.gem_amber.tooltip": "Материал для крафтов", 
+    "item.cyclic.gem_amber.tooltip": "Материал для крафтов",
+    "item.cyclic.gem_amber.guide": "Кристаллизованный янтарь создаётся в Камере затвердевания .  Он используются в качестве материала для создания многих вещей",	
     
     "item.cyclic.crystal_sword": "Кристальный меч",
     "item.cyclic.crystal_pickaxe": "Кристальная кирка",
@@ -1624,5 +1599,132 @@
     
     "block.cyclic.solidifier": "Камера затвердевания",
     "block.cyclic.solidifier.tooltip": "Преобразует жидкости в предметы",
-    "block.cyclic.solidifier.guide": "Камера затвердевания объединяет различные жидкости и ингредиенты, чтобы превратить их во что-то другое, обычно для получения новых ингредиентов для крафта."
+    "block.cyclic.solidifier.guide": "Камера затвердевания объединяет различные жидкости и ингредиенты, чтобы превратить их во что-то другое, обычно для получения новых ингредиентов для крафта.",
+	
+	"block.cyclic.cloud":"Облачный блок",
+    "block.cyclic.cloud.tooltip":"Замедляет падение и передвижение",
+    "block.cyclic.cloud.guide":"При прохождении накладывает эффект медлительности и полностью поглощает весь урон от падения",
+	
+    "block.cyclic.cloud_membrane":"Фантомный облачный блок",
+    "block.cyclic.cloud_membrane.tooltip":"Твёрдый для всего, но не для игрока",
+    "block.cyclic.cloud_membrane.guide":"Твёрд для большинства мобов, но игроки могут проходить сквозь него как сквозь воздух",
+	
+	"block.cyclic.soil":"Плодородная почва",
+    "block.cyclic.soil.tooltip":"Увлажняет ближайшие Пашни без использования воды",
+    "block.cyclic.soil.guide":"Близлежащие Пашни воспринимают это как воду и увлажняются.",
+	
+	"block.cyclic.sound_player":"Воспроизводитель звуков",
+    "block.cyclic.sound_player.tooltip":"Воспроизводит звуки, записанные на картах данных для звуков",
+    "block.cyclic.sound_player.guide":"Воспроизводит любой звук, записанный на карту данных для звуков",
+	
+	"block.cyclic.sound_recorder":"Звукозаписывающее устройство",
+    "block.cyclic.sound_recorder.tooltip":"Записывает звуки и сохраняет их в картах данных для звуков",
+    "block.cyclic.sound_recorder.guide":"Записывайте любые звуки на расстоянии до 8 блоков.  Составляйте список игнорирования, который Вы можете создать.  Сохраняйте на карту данных для звуков для использования в Воспроизводителе Звуков. ",
+    "block.cyclic.sound_recorder.save":"Сохранить звук",
+    
+    "block.cyclic.sound_recorder.ignore":"Игнорировать звук",
+    "block.cyclic.sound_recorder.clear":"Очистить все звуки",
+	
+	"block.cyclic.lamp":"Вощёная лампа",
+    "block.cyclic.lamp.tooltip":"Уровень освещения зависит от силы подающегося редстоуна",
+    "block.cyclic.lamp.guide":"Уровень освещения зависит от того, какой силы подаётся сигнал редстоуна.  Максимальная сила - максимальный свет, слабый сигнал редстоуна - почти не даёт никакого света.",
+	
+	"block.cyclic.membrane":"Мембранный блок",
+    "block.cyclic.membrane.tooltip":"Ходите по нему пока он мокрый",
+    "block.cyclic.membrane.guide":"При соприкосновении с водой становится мокрым, как пашня.  Ходьба по мокрой поверхности даёт кратковременное увеличение скорости и прыжка.",
+	
+	"block.cyclic.packager": "Упаковшик",
+    "block.cyclic.packager.tooltip": "Автоматизирует рецепты из одинаковых предметов",
+    "block.cyclic.packager.guide": "Упаковывает вместе одинаковые предметы.  Совместим со всеми рецетами 2x2, 3x3, в частности объединяет вместе все индентичные предметы, такие как железные блоки и кирпичи. ",
+	
+	"block.cyclic.generator_item": "Материальный генератор",
+    "block.cyclic.generator_item.tooltip": "Расщепляет материю для получения энергии",
+    "block.cyclic.generator_item.guide": "Вырабатывает энергию из определённых предметов, выпадающих из мобов.  Все рецепты для получения энергии задаются в датапаке JSON; например, в одном из рецептов по умолчанию, вырабатывается 100 RF/t из Эндер-жемчуга",
+	
+	"block.cyclic.generator_fluid": "Испаряющий генератор",
+    "block.cyclic.generator_fluid.tooltip": "Вырабатывает энергию из определённых жидкостей",
+    "block.cyclic.generator_fluid.guide": "Испаряет жидкости для получения энергии.  Все рецепты заданы в датапаке JSON; например, в одном из рецептов по умолчанию, вырабатывается 80 RF/t из лавы.",
+	
+	"block.cyclic.generator_food": "Пожирающий генератор",
+    "block.cyclic.generator_food.tooltip": "Вырабатывает энергию из всего, что можно съесть",
+    "block.cyclic.generator_food.guide": "Вырабатывает энергию из еды.  Время горения и энергия за тик настраиваются в конфигурационном файле.  Используются значения голода и насыщения, умноженные на коэффициент.  Скорость выработки по умолчанию равна 80 RF/t",
+	
+	"block.cyclic.generator_fuel": "Сжигающий генератор",
+    "block.cyclic.generator_fuel.tooltip": "Вырабатывает энергию из всего что используется в качестве топлива",
+    "block.cyclic.generator_fuel.guide": "Вырабатывает энергию из всего, что сгорает в качестве топлива в печах.  Время горения равно количеству тиков в печи, например, 1 уголь = 1600 тиков.  Энергия за тики настраивается в конфигурационном файле, по умолчанию 80 RF/t",
+      
+	"block.cyclic.wireless_item": "Узел передачи предметов",
+    "block.cyclic.wireless_item.tooltip": "Беспроводная передача предметов",
+    "block.cyclic.wireless_item.guide": "Беспроводная передача предметов",
+
+    "block.cyclic.wireless_fluid": "Узел передачи жидкостей",
+    "block.cyclic.wireless_fluid.tooltip": "Беспроводная передача жидкостей",
+    "block.cyclic.wireless_fluid.guide": "Беспроводная передача жидкостей",
+
+    "block.cyclic.wireless_energy": "Узел передачи энергии",
+    "block.cyclic.wireless_energy.tooltip": "Беспроводная передача энергии",
+    "block.cyclic.wireless_energy.guide": "Беспроводная передача энергии",
+	
+	"block.cyclic.doorbell":"Дверной звонок",
+    "block.cyclic.doorbell.tooltip":"Дверной звонок",
+    "block.cyclic.doorbell.guide":"Уровень освещения 4, а сила редстоуна при нажатии равна 4. Издаёт звук: cyclic:doorbell_mikekoenig",
+	
+	"block.cyclic.spikes_diamond": "Алмазные шипы",
+    "block.cyclic.spikes_diamond.tooltip": "Пока запитаны редстоуном, наносят урон при соприкосновении",
+    "block.cyclic.spikes_diamond.guide": "Наносят урон существам при соприкосновении.  Атаки имитируются ненастоящим игроком, для того чтобы работали таблицы с лутом",
+	
+	"block.cyclic.ender_item_shelf":"Полка для предметов",
+    "block.cyclic.ender_item_shelf.tooltip": "Небольшое хранилище предметов",
+    "block.cyclic.ender_item_shelf.guide": "Хранит предметы в 5 слотах.  Используйте любой Гаечный Ключ для переключения режима отображения, а лицевая часть может быть повёрнута в любом направлении.",
+	
+	"block.cyclic.dark_glass_connected": "Тёмное самосоединяющееся стекло",
+    "block.cyclic.dark_glass_connected.tooltip": "Не пропускает свет, взрывы и взрывы от Визера",
+    "block.cyclic.dark_glass_connected.guide": "Имеет самосоединяющиеся текстуры.  Как и обычное стекло, не пропускает свет. Кроме того, оно невосприимчиво к взрывам, включая те, что вызваны Визером.",
+	
+	"item.cyclic.ender_book.guide": "Волшебная книга, которая сохранит ваше текущее местоположение в качестве точки для телепортации.   Присядьте, чтобы выбрать точку (и сломайте блок, иначе после ТП, Вы окажетесь внутри его).  Присядьте, чтобы телепортироваться.  Для отмены телепортации - подпрыгните.  Чинится с помощью энергии или Эндер-жемчуга",
+    "item.cyclic.ender_book": "Эндер-книга",
+    "item.cyclic.ender_book.countdown": "Телепортация на ",
+    "item.cyclic.ender_book.start": "Телепортация... (прыгните для отмены)  ",
+    "item.cyclic.ender_book.tooltip": "Присядьте, чтобы телепортироваться или сменить точки",
+	
+	"item.cyclic.spawn_inspector.empty": "Здесь никто не может заспауниться",
+    "item.cyclic.spawn_inspector.guide": "Сообщает вам, какие точно существа могут заспауниться на выбранном блоке. Работает только с самостоятельно появляющимися существами (игнорируя спаунеры). Полезно для создания ферм слизней, ведьм и визер-скелетов.",
+    "item.cyclic.spawn_inspector": "Детектор Спауна",
+    "item.cyclic.spawn_inspector.tooltip": "Обнаруживает спаун мобов (включая существ из модов, слизней и визер-скелетов)",
+    "item.cyclic.spawn_inspector.up": "Нажмите по верхней стороне блока",
+	
+	"item.cyclic.charm_wing.guide": "Защищает от падения с большой высоты.  Когда Вы падаете более 6 блоков вниз, то накладывается короткий эффект зелья Плавного Падения, которое действует как парашют.  Чтобы отключить, щёлкните по нему ПКМ в инвентаре.",
+    "item.cyclic.charm_wing": "Наплечники с Парашютом",
+    "item.cyclic.charm_wing.tooltip": "Замедляет падение с большой высоты",
+	
+	 "item.cyclic.inventory_cake.guide": "Съев его, Вы откроете вкладку с дополнительным инвентарём.  ",
+    "item.cyclic.inventory_cake": "Торт эндер-инвентаря",
+    "item.cyclic.inventory_cake.tooltip": "Съешь, чтобы навсегда получить магический рюкзак",
+	
+	"item.cyclic.sound_data":"Карта данных со звуками",
+    "item.cyclic.sound_data.tooltip":"Используйте для воспроизведения записанного звука",
+    "item.cyclic.sound_data.guide":"Записывайте ближайшие звуки и воспроизводите их позже.  Подробности см. в разделе c Машинами. ",
+	
+	"item.cyclic.apple_lofty_stature.guide": "Съев его, Вы увеличите высоту своего шага до полного блока, как у лошади (для отмены съешьте его снова)",
+    "item.cyclic.apple_lofty_stature": "Яблоко высокого роста",
+    "item.cyclic.apple_lofty_stature.tooltip": "Съев его, Вы увеличите высоту своего шага до полного блока, как у лошади (для отмены съешьте его снова)",
+	
+	"block.cyclic.computer_shape":"Проектировщик конструкций",
+    "block.cyclic.computer_shape.tooltip":"Читайте постройки из карты для конструкций",
+    "block.cyclic.computer_shape.guide":"Положите две карты для GPS и одну карту с конструкцией, после чего Вы сможете читать, копировать, вставлять и соединять конструкции вместе. ",
+	
+	"item.cyclic.shape_data":"Карта данных с Конструкцией",
+    "item.cyclic.shape_data.tooltip":"Устанавливайте постройки в мире, после того как настроили её в Проектировщике Конструкций",
+    "item.cyclic.shape_data.guide":"Положите её в Строитель Конструкций или Проектировщик Конструкций для загрузки в неё данных, а затем нажмите по блоку, чтобы загрузить его",
+	
+	"item.cyclic.shape_data.state":"Блок не выбран, выберите его нажав ЛКМ",
+    "item.cyclic.shape_data.empty":"Материалы закончились",
+    "item.cyclic.shape_data.nothing":"Для карты требуется конструкция и выбранный блок",
+    "item.cyclic.shape_data.count":"Размер конструкции: ",
+	
+	 "block.cyclic.item_infinite": "Дубликатор предметов",
+    "block.cyclic.item_infinite.tooltip": "Дублирует предметы для тестирования сборки",
+    "block.cyclic.item_infinite.guide": "Duplicate items for pack testing.  Add an item with your hand or a hopper, then pull it out with another and it repeats itself including NBT and damage."
+
 }
+
