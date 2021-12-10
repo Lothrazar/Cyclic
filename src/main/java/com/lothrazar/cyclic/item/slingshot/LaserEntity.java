@@ -22,7 +22,7 @@ public class LaserEntity extends ThrowableItemProjectile {
   }
 
   public LaserEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.laser_bolt, livingEntityIn, worldIn);
+    super(EntityRegistry.LASER_BOLT, livingEntityIn, worldIn);
   }
 
   @Override

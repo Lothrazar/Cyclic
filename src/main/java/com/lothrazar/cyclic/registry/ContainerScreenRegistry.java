@@ -238,51 +238,51 @@ public class ContainerScreenRegistry {
   @ObjectHolder(ModCyclic.MODID + ":generator_food")
   public static MenuType<ContainerGeneratorFood> GENERATOR_FOOD;
   @ObjectHolder(ModCyclic.MODID + ":generator_fuel")
-  public static MenuType<ContainerGeneratorFuel> generator_fuel;
+  public static MenuType<ContainerGeneratorFuel> GENERATOR_FUEL;
   @ObjectHolder(ModCyclic.MODID + ":inventory_cake")
-  public static MenuType<ContainerCake> inventory_cake;
+  public static MenuType<ContainerCake> INVENTORY_CAKE;
   @ObjectHolder(ModCyclic.MODID + ":wireless_fluid")
-  public static MenuType<ContainerWirelessFluid> wireless_fluid;
+  public static MenuType<ContainerWirelessFluid> WIRELESS_FLUID;
   @ObjectHolder(ModCyclic.MODID + ":wireless_item")
-  public static MenuType<ContainerWirelessItem> wireless_item;
+  public static MenuType<ContainerWirelessItem> WIRELESS_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":wireless_energy")
-  public static MenuType<ContainerWirelessEnergy> wireless_energy;
+  public static MenuType<ContainerWirelessEnergy> WIRELESS_ENERGY;
   @ObjectHolder(ModCyclic.MODID + ":ender_book")
-  public static MenuType<ContainerEnderBook> ender_book;
+  public static MenuType<ContainerEnderBook> ENDER_BOOK;
   @ObjectHolder(ModCyclic.MODID + ":filter_data")
-  public static MenuType<ContainerFilterCard> filter_data;
+  public static MenuType<ContainerFilterCard> FILTER_DATA;
   @ObjectHolder(ModCyclic.MODID + ":fluid_pipe")
-  public static MenuType<ContainerCableFluid> fluid_pipe;
+  public static MenuType<ContainerCableFluid> FLUID_PIPE;
   @ObjectHolder(ModCyclic.MODID + ":item_pipe")
-  public static MenuType<ContainerCableItem> item_pipe;
+  public static MenuType<ContainerCableItem> ITEM_PIPE;
   @ObjectHolder(ModCyclic.MODID + ":laser")
-  public static MenuType<ContainerLaser> laser;
+  public static MenuType<ContainerLaser> LASER;
   @ObjectHolder(ModCyclic.MODID + ":fisher")
-  public static MenuType<ContainerFisher> fisher;
+  public static MenuType<ContainerFisher> FISHER;
   @ObjectHolder(ModCyclic.MODID + ":computer_shape")
-  public static MenuType<ContainerShapedata> computer_shape;
+  public static MenuType<ContainerShapedata> COMPUTER_SHAPE;
   @ObjectHolder(ModCyclic.MODID + ":breaker")
-  public static MenuType<ContainerBreaker> breaker;
+  public static MenuType<ContainerBreaker> BREAKER;
   @ObjectHolder(ModCyclic.MODID + ":solidifier")
-  public static MenuType<ContainerSolidifier> solidifier;
+  public static MenuType<ContainerSolidifier> SOLIDIFIER;
   @ObjectHolder(ModCyclic.MODID + ":melter")
-  public static MenuType<ContainerMelter> melter;
+  public static MenuType<ContainerMelter> MELTER;
   @ObjectHolder(ModCyclic.MODID + ":structure")
-  public static MenuType<ContainerStructure> structure;
+  public static MenuType<ContainerStructure> STRUCTURE;
   @ObjectHolder(ModCyclic.MODID + ":placer")
-  public static MenuType<ContainerPlacer> placer;
+  public static MenuType<ContainerPlacer> PLACER;
   @ObjectHolder(ModCyclic.MODID + ":anvil")
-  public static MenuType<ContainerAnvil> anvil;
+  public static MenuType<ContainerAnvil> ANVIL;
   @ObjectHolder(ModCyclic.MODID + ":anvil_void")
-  public static MenuType<ContainerAnvilVoid> anvil_void;
+  public static MenuType<ContainerAnvilVoid> ANVIL_VOID;
   @ObjectHolder(ModCyclic.MODID + ":battery")
-  public static MenuType<ContainerBattery> batteryCont;
+  public static MenuType<ContainerBattery> BATTERY;
   @ObjectHolder(ModCyclic.MODID + ":collector")
-  public static MenuType<ContainerItemCollector> collector;
+  public static MenuType<ContainerItemCollector> COLLECTOR;
   @ObjectHolder(ModCyclic.MODID + ":peat_farm")
-  public static MenuType<ContainerPeatFarm> peat_farm;
+  public static MenuType<ContainerPeatFarm> PEAT_FARM;
   @ObjectHolder(ModCyclic.MODID + ":harvester")
-  public static MenuType<ContainerHarvester> harvester;
+  public static MenuType<ContainerHarvester> HARVESTER;
   @ObjectHolder(ModCyclic.MODID + ":experience_pylon")
   public static MenuType<ContainerExpPylon> EXPERIENCE_PYLON;
   @ObjectHolder(ModCyclic.MODID + ":user")

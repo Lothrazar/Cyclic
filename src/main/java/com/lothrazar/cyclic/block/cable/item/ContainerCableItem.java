@@ -15,7 +15,7 @@ public class ContainerCableItem extends ContainerBase {
   protected TileCableItem tile;
 
   public ContainerCableItem(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.item_pipe, windowId);
+    super(ContainerScreenRegistry.ITEM_PIPE, windowId);
     tile = (TileCableItem) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

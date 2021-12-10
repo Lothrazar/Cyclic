@@ -49,7 +49,7 @@ public class BlockWirelessItem extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.wireless_item, ScreenWirelessItem::new);
+    MenuScreens.register(ContainerScreenRegistry.WIRELESS_ITEM, ScreenWirelessItem::new);
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     //    ClientRegistry.bindTileEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
   }

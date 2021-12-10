@@ -32,7 +32,7 @@ public class BlockGeneratorFuel extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.generator_fuel, ScreenGeneratorFuel::new);
+    MenuScreens.register(ContainerScreenRegistry.GENERATOR_FUEL, ScreenGeneratorFuel::new);
   }
 
   @Override

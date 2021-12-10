@@ -26,7 +26,7 @@ public class ItemBaseCyclic extends Item {
 
   public ItemBaseCyclic(Properties properties) {
     super(properties);
-    ItemRegistry.items.add(this);
+    ItemRegistry.ITEMSFIXME.add(this);
   }
 
   protected void shootMe(Level world, Player shooter, ThrowableItemProjectile ball, float pitch, float velocityFactor) {

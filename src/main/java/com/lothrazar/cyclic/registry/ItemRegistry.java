@@ -119,7 +119,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
-  public static List<ItemBaseCyclic> items = new ArrayList<>(); // TODO: refactor legacy registerClient loop
+  public static List<ItemBaseCyclic> ITEMSFIXME = new ArrayList<>(); // TODO: refactor legacy registerClient loop
   public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModCyclic.MODID);
   static final int SMALLPOTIONDUR = 20 * 90; // 1:30
   static final int LARGEPOTIONDUR = 3 * 20 * 60; // 3:00 

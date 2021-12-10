@@ -47,7 +47,7 @@ public class BlockCyclic extends BaseEntityBlock {
 
   public BlockCyclic(Properties properties) {
     super(properties);
-    BlockRegistry.blocksClientRegistry.add(this);
+    BlockRegistry.BLOCKSCLIENTREGISTRY.add(this);
   }
 
   @Override

@@ -94,10 +94,10 @@ public class ClientRegistryCyclic {
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
-    for (BlockCyclic b : BlockRegistry.blocksClientRegistry) {
+    for (BlockCyclic b : BlockRegistry.BLOCKSCLIENTREGISTRY) {
       b.registerClient();
     }
-    for (ItemBaseCyclic i : ItemRegistry.items) {
+    for (ItemBaseCyclic i : ItemRegistry.ITEMSFIXME) {
       i.registerClient();
     }
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_LIME_CARNATION.get(), RenderType.cutoutMipped());
@@ -166,19 +166,19 @@ public class ClientRegistryCyclic {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerEntityRenderer(EntityRegistry.snowbolt, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.boomerang_stun, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.boomerang_carry, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.boomerang_damage, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.SNOWBOLT, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_STUN, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_CARRY, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_DAMAGE, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.NETBALL, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.torchbolt, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.TORCHBOLT, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.DUNGEON, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.eye, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.fire_bolt, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.stone_bolt, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.laser_bolt, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.lightningbolt, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.conveyor_item, ConveyorItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.EYE, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.FIRE_BOLT, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.STONE_BOLT, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.LASER_BOLT, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.LIGHTNINGBOLT, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.CONVEYOR_ITEM, ConveyorItemRenderer::new);
   }
 
   @OnlyIn(Dist.CLIENT)

@@ -15,7 +15,7 @@ public class ContainerAnvilVoid extends ContainerBase {
   TileAnvilVoid tile;
 
   public ContainerAnvilVoid(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.anvil_void, windowId);
+    super(ContainerScreenRegistry.ANVIL_VOID, windowId);
     tile = (TileAnvilVoid) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

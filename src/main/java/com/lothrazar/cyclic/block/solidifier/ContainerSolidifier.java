@@ -20,7 +20,7 @@ public class ContainerSolidifier extends ContainerBase {
   TileSolidifier tile;
 
   public ContainerSolidifier(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.solidifier, windowId);
+    super(ContainerScreenRegistry.SOLIDIFIER, windowId);
     tile = (TileSolidifier) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

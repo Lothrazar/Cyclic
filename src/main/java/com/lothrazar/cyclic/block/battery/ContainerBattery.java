@@ -17,7 +17,7 @@ public class ContainerBattery extends ContainerBase {
   TileBattery tile;
 
   public ContainerBattery(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.batteryCont, windowId);
+    super(ContainerScreenRegistry.BATTERY, windowId);
     tile = (TileBattery) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

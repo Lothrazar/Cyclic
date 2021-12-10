@@ -21,7 +21,7 @@ public class BlockLaser extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.laser, ScreenLaser::new);
+    MenuScreens.register(ContainerScreenRegistry.LASER, ScreenLaser::new);
   }
 
   @Override

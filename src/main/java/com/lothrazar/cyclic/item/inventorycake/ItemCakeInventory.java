@@ -34,7 +34,7 @@ public class ItemCakeInventory extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.inventory_cake, ScreenCake::new);
+    MenuScreens.register(ContainerScreenRegistry.INVENTORY_CAKE, ScreenCake::new);
   }
 
   @Override

@@ -27,7 +27,7 @@ public class FireEntity extends ThrowableItemProjectile {
   }
 
   public FireEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.fire_bolt, livingEntityIn, worldIn);
+    super(EntityRegistry.FIRE_BOLT, livingEntityIn, worldIn);
   }
 
   @Override
@@ -49,7 +49,7 @@ public class FireEntity extends ThrowableItemProjectile {
             && target instanceof LivingEntity) {
           target.hurt(DamageSource.IN_FIRE, Mth.nextInt(level.random, 3, 5));
           LivingEntity living = (LivingEntity) target;
-          living.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 4, 1));
+          living.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.STUN, Const.TICKS_PER_SEC * 4, 1));
           living.setSecondsOnFire(Mth.nextInt(level.random, 1, 5));
         }
       }

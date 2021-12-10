@@ -36,7 +36,7 @@ public class BlockBattery extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.batteryCont, ScreenBattery::new);
+    MenuScreens.register(ContainerScreenRegistry.BATTERY, ScreenBattery::new);
   }
 
   @Override

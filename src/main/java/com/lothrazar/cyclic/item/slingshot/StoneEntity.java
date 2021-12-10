@@ -27,7 +27,7 @@ public class StoneEntity extends ThrowableItemProjectile {
   }
 
   public StoneEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.stone_bolt, livingEntityIn, worldIn);
+    super(EntityRegistry.STONE_BOLT, livingEntityIn, worldIn);
   }
 
   @Override
@@ -48,7 +48,7 @@ public class StoneEntity extends ThrowableItemProjectile {
         target.hurt(DamageSource.thrown(this, owner), Mth.nextInt(level.random, 2, 6));
         if (target.level.random.nextDouble() < CHANCE_STUN && !target.level.isClientSide && target instanceof LivingEntity) {
           LivingEntity living = (LivingEntity) target;
-          MobEffectInstance effect = new MobEffectInstance(PotionRegistry.PotionEffects.stun, Const.TICKS_PER_SEC * 2, 1);
+          MobEffectInstance effect = new MobEffectInstance(PotionRegistry.PotionEffects.STUN, Const.TICKS_PER_SEC * 2, 1);
           effect.visible = false;
           living.addEffect(effect);
         }

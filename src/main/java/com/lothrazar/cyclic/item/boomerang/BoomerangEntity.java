@@ -286,8 +286,8 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         if (entityHit != owner && entityHit instanceof LivingEntity
             && !(entityHit instanceof Player)) {
           LivingEntity live = (LivingEntity) entityHit;
-          if (live.hasEffect(PotionRegistry.PotionEffects.stun) == false) {
-            live.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
+          if (live.hasEffect(PotionRegistry.PotionEffects.STUN) == false) {
+            live.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.STUN, STUN_SECONDS * 20, 1));
             UtilSound.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }

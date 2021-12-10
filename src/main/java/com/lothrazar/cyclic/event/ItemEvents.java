@@ -339,7 +339,7 @@ public class ItemEvents {
           && liv.getAirSupply() < liv.getMaxAirSupply()
           && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
         liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60, 4));
-        liv.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.swimspeed, 20 * 60, 1));
+        liv.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.SWIMSPEED, 20 * 60, 1));
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.isOnFire()

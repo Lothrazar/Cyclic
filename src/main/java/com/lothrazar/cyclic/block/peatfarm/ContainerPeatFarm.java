@@ -46,7 +46,7 @@ public class ContainerPeatFarm extends ContainerBase {
   protected TilePeatFarm tile;
 
   public ContainerPeatFarm(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.peat_farm, windowId);
+    super(ContainerScreenRegistry.PEAT_FARM, windowId);
     tile = (TilePeatFarm) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

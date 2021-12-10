@@ -15,7 +15,7 @@ public class ContainerWirelessFluid extends ContainerBase {
   protected TileWirelessFluid tile;
 
   public ContainerWirelessFluid(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.wireless_fluid, windowId);
+    super(ContainerScreenRegistry.WIRELESS_FLUID, windowId);
     tile = (TileWirelessFluid) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

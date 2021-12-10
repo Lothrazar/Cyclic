@@ -132,7 +132,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
 
-  public static List<BlockCyclic> blocksClientRegistry = new ArrayList<>(); // TODO: refactor this
+  public static List<BlockCyclic> BLOCKSCLIENTREGISTRY = new ArrayList<>(); // TODO: refactor this
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
   public static final RegistryObject<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockSimple(Block.Properties.of(Material.STONE, DyeColor.GRAY).strength(1.0F, 7.0F)) {
 

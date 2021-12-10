@@ -16,7 +16,7 @@ public class ContainerFisher extends ContainerBase {
   protected TileFisher tile;
 
   public ContainerFisher(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.fisher, windowId);
+    super(ContainerScreenRegistry.FISHER, windowId);
     tile = (TileFisher) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

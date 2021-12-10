@@ -30,7 +30,7 @@ public class BlockFisher extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.fisher, ScreenFisher::new);
+    MenuScreens.register(ContainerScreenRegistry.FISHER, ScreenFisher::new);
   }
 
   @Override

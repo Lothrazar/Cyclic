@@ -33,8 +33,8 @@ public class PotionRegistry {
   @SubscribeEvent
   public static void onPotEffectRegistry(RegistryEvent.Register<MobEffect> event) {
     IForgeRegistry<MobEffect> r = event.getRegistry();
-    PotionEffects.stun = register(r, new StunEffect(MobEffectCategory.HARMFUL, 0xcccc00), "stun");
-    PotionEffects.swimspeed = register(r, new SwimEffect(MobEffectCategory.BENEFICIAL, 0x663300), "swimspeed");
+    PotionEffects.STUN = register(r, new StunEffect(MobEffectCategory.HARMFUL, 0xcccc00), "stun");
+    PotionEffects.SWIMSPEED = register(r, new SwimEffect(MobEffectCategory.BENEFICIAL, 0x663300), "swimspeed");
     //from 1.12.2 
     //slowfall NIX in vanilla
     //ender aura - pearl + awkward - no pearl/tp dmg
@@ -62,8 +62,8 @@ public class PotionRegistry {
     int smal = 1800;
     r.register(new Potion(ModCyclic.MODID + "_haste", new MobEffectInstance(MobEffects.DIG_SPEED, normal)).setRegistryName(ModCyclic.MODID + ":haste"));
     r.register(new Potion(ModCyclic.MODID + "_strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, smal, 1)).setRegistryName(ModCyclic.MODID + ":strong_haste")); // strong 1 level instead of default 0
-    r.register(new Potion(ModCyclic.MODID + "_stun", new MobEffectInstance(PotionEffects.stun, smal)).setRegistryName(ModCyclic.MODID + ":stun"));
-    r.register(new Potion(ModCyclic.MODID + "_swimspeed", new MobEffectInstance(PotionEffects.swimspeed, normal)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
+    r.register(new Potion(ModCyclic.MODID + "_stun", new MobEffectInstance(PotionEffects.STUN, smal)).setRegistryName(ModCyclic.MODID + ":stun"));
+    r.register(new Potion(ModCyclic.MODID + "_swimspeed", new MobEffectInstance(PotionEffects.SWIMSPEED, normal)).setRegistryName(ModCyclic.MODID + ":swimspeed"));
     r.register(new Potion(ModCyclic.MODID + "_blind", new MobEffectInstance(MobEffects.BLINDNESS, normal)).setRegistryName(ModCyclic.MODID + ":blind"));
     r.register(new Potion(ModCyclic.MODID + "_levitation", new MobEffectInstance(MobEffects.LEVITATION, smal)).setRegistryName(ModCyclic.MODID + ":levitation"));
     r.register(new Potion(ModCyclic.MODID + "_hunger", new MobEffectInstance(MobEffects.HUNGER, normal)).setRegistryName(ModCyclic.MODID + ":hunger"));
@@ -77,9 +77,9 @@ public class PotionRegistry {
     //for events
     public static final List<TickableEffect> EFFECTS = new ArrayList<TickableEffect>();
     @ObjectHolder(ModCyclic.MODID + ":stun")
-    public static TickableEffect stun;
+    public static TickableEffect STUN;
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
-    public static TickableEffect swimspeed;
+    public static TickableEffect SWIMSPEED;
   }
 
   public static class PotionItem {

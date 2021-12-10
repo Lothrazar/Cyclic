@@ -60,7 +60,7 @@ public class BlockMelter extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
-    MenuScreens.register(ContainerScreenRegistry.melter, ScreenMelter::new);
+    MenuScreens.register(ContainerScreenRegistry.MELTER, ScreenMelter::new);
   }
 
   @Override

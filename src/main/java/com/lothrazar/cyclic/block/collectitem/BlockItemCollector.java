@@ -49,6 +49,6 @@ public class BlockItemCollector extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.collector, ScreenItemCollector::new);
+    MenuScreens.register(ContainerScreenRegistry.COLLECTOR, ScreenItemCollector::new);
   }
 }

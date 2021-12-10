@@ -16,7 +16,7 @@ public class ContainerShapedata extends ContainerBase {
   protected TileShapedata tile;
 
   public ContainerShapedata(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.computer_shape, windowId);
+    super(ContainerScreenRegistry.COMPUTER_SHAPE, windowId);
     tile = (TileShapedata) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

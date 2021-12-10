@@ -82,7 +82,7 @@ public class FilterCardItem extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.filter_data, ScreenFilterCard::new);
+    MenuScreens.register(ContainerScreenRegistry.FILTER_DATA, ScreenFilterCard::new);
   }
 
   public static void toggleFilterType(ItemStack filter) {

@@ -31,27 +31,27 @@ public class EntityRegistry {
   @ObjectHolder(ModCyclic.MODID + ":magic_net")
   public static EntityType<EntityMagicNetEmpty> NETBALL;
   @ObjectHolder(ModCyclic.MODID + ":torch_bolt")
-  public static EntityType<EntityTorchBolt> torchbolt;
+  public static EntityType<EntityTorchBolt> TORCHBOLT;
   @ObjectHolder(ModCyclic.MODID + ":lightning_bolt")
-  public static EntityType<LightningEntity> lightningbolt;
+  public static EntityType<LightningEntity> LIGHTNINGBOLT;
   @ObjectHolder(ModCyclic.MODID + ":snow_bolt")
-  public static EntityType<SnowEntity> snowbolt;
+  public static EntityType<SnowEntity> SNOWBOLT;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_stun")
-  public static EntityType<BoomerangEntity> boomerang_stun;
+  public static EntityType<BoomerangEntity> BOOMERANG_STUN;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_carry")
-  public static EntityType<BoomerangEntity> boomerang_carry;
+  public static EntityType<BoomerangEntity> BOOMERANG_CARRY;
   @ObjectHolder(ModCyclic.MODID + ":boomerang_damage")
-  public static EntityType<BoomerangEntity> boomerang_damage;
+  public static EntityType<BoomerangEntity> BOOMERANG_DAMAGE;
   @ObjectHolder(ModCyclic.MODID + ":eye")
-  public static EntityType<EyeOfEnderEntityNodrop> eye;
+  public static EntityType<EyeOfEnderEntityNodrop> EYE;
   @ObjectHolder(ModCyclic.MODID + ":fire_bolt")
-  public static EntityType<FireEntity> fire_bolt;
+  public static EntityType<FireEntity> FIRE_BOLT;
   @ObjectHolder(ModCyclic.MODID + ":stone_bolt")
-  public static EntityType<StoneEntity> stone_bolt;
+  public static EntityType<StoneEntity> STONE_BOLT;
   @ObjectHolder(ModCyclic.MODID + ":conveyor_item")
-  public static EntityType<ConveyorItemEntity> conveyor_item;
+  public static EntityType<ConveyorItemEntity> CONVEYOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":laser_bolt")
-  public static EntityType<LaserEntity> laser_bolt;
+  public static EntityType<LaserEntity> LASER_BOLT;
 
   @SubscribeEvent
   public static void registerEntity(RegistryEvent.Register<EntityType<?>> e) {

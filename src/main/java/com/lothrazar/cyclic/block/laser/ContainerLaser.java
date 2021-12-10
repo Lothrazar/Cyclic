@@ -16,7 +16,7 @@ public class ContainerLaser extends ContainerBase {
   protected TileLaser tile;
 
   public ContainerLaser(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.laser, windowId);
+    super(ContainerScreenRegistry.LASER, windowId);
     tile = (TileLaser) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

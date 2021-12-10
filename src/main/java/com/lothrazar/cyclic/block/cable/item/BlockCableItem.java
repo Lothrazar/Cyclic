@@ -39,7 +39,7 @@ public class BlockCableItem extends CableBase {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.item_pipe, ScreenCableItem::new);
+    MenuScreens.register(ContainerScreenRegistry.ITEM_PIPE, ScreenCableItem::new);
   }
 
   @Override

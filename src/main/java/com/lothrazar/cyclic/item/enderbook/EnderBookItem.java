@@ -154,7 +154,7 @@ public class EnderBookItem extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.ender_book, ScreenEnderBook::new);
+    MenuScreens.register(ContainerScreenRegistry.ENDER_BOOK, ScreenEnderBook::new);
   }
 
   // ShareTag for server->client capability data sync

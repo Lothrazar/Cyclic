@@ -43,7 +43,7 @@ public class BlockAnvilVoid extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.anvil_void, ScreenAnvilVoid::new);
+    MenuScreens.register(ContainerScreenRegistry.ANVIL_VOID, ScreenAnvilVoid::new);
   }
 
   @Override

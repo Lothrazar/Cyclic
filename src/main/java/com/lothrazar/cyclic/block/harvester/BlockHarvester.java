@@ -26,7 +26,7 @@ public class BlockHarvester extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.harvester, ScreenHarvester::new);
+    MenuScreens.register(ContainerScreenRegistry.HARVESTER, ScreenHarvester::new);
   }
 
   @Override

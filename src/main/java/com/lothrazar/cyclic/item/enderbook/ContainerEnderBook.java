@@ -21,7 +21,7 @@ public class ContainerEnderBook extends ContainerBase {
   public CompoundTag nbt;
 
   public ContainerEnderBook(int id, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.ender_book, id);
+    super(ContainerScreenRegistry.ENDER_BOOK, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = CapabilityProviderEnderBook.SLOTS;

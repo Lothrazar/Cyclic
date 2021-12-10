@@ -56,7 +56,7 @@ public class BlockCableFluid extends CableBase {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.fluid_pipe, ScreenCableFluid::new);
+    MenuScreens.register(ContainerScreenRegistry.FLUID_PIPE, ScreenCableFluid::new);
   }
 
   @Override

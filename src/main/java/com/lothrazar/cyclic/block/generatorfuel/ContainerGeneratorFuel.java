@@ -15,7 +15,7 @@ public class ContainerGeneratorFuel extends ContainerBase {
   TileGeneratorFuel tile;
 
   public ContainerGeneratorFuel(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.generator_fuel, windowId);
+    super(ContainerScreenRegistry.GENERATOR_FUEL, windowId);
     tile = (TileGeneratorFuel) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

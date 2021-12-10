@@ -15,7 +15,7 @@ public class ContainerWirelessEnergy extends ContainerBase {
   protected TileWirelessEnergy tile;
 
   public ContainerWirelessEnergy(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.wireless_energy, windowId);
+    super(ContainerScreenRegistry.WIRELESS_ENERGY, windowId);
     tile = (TileWirelessEnergy) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

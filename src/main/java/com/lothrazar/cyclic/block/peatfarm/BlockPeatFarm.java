@@ -45,7 +45,7 @@ public class BlockPeatFarm extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.peat_farm, ScreenPeatFarm::new);
+    MenuScreens.register(ContainerScreenRegistry.PEAT_FARM, ScreenPeatFarm::new);
   }
 
   @Override

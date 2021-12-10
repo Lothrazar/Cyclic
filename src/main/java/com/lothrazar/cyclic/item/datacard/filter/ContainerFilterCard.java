@@ -21,7 +21,7 @@ public class ContainerFilterCard extends ContainerBase {
   public CompoundTag nbt;
 
   public ContainerFilterCard(int id, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.filter_data, id);
+    super(ContainerScreenRegistry.FILTER_DATA, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = CapabilityProviderFilterCard.SLOTS;

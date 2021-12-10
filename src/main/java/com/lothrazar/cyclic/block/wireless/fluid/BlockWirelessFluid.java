@@ -49,7 +49,7 @@ public class BlockWirelessFluid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.wireless_fluid, ScreenWirelessFluid::new);
+    MenuScreens.register(ContainerScreenRegistry.WIRELESS_FLUID, ScreenWirelessFluid::new);
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 

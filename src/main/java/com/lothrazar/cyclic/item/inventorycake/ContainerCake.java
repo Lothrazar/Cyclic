@@ -16,7 +16,7 @@ public class ContainerCake extends ContainerBase {
   private ItemStackHandler mirror;
 
   public ContainerCake(int id, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.inventory_cake, id);
+    super(ContainerScreenRegistry.INVENTORY_CAKE, id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.datFile = PlayerDataEvents.getOrCreate(player);

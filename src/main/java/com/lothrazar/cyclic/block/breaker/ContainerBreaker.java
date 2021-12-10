@@ -14,7 +14,7 @@ public class ContainerBreaker extends ContainerBase {
   protected TileBreaker tile;
 
   public ContainerBreaker(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.breaker, windowId);
+    super(ContainerScreenRegistry.BREAKER, windowId);
     tile = (TileBreaker) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

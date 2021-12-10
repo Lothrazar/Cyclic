@@ -15,7 +15,7 @@ public class ContainerCableFluid extends ContainerBase {
   protected TileCableFluid tile;
 
   public ContainerCableFluid(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.fluid_pipe, windowId);
+    super(ContainerScreenRegistry.FLUID_PIPE, windowId);
     tile = (TileCableFluid) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

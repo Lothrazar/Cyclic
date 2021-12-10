@@ -60,42 +60,11 @@
 	<!--</module> -->
 
 
-	<module name="SuppressionSingleFilter">
-		<property name="checks" value="StaticVariableName" />
-		<property name="files" value="TileRegistry.java" />
-		<property name="lines" value="1-300" />
-	</module>
-	<module name="SuppressionSingleFilter">
-		<property name="checks" value="StaticVariableName" />
-		<property name="files" value="ItemRegistry.java" />
-		<property name="lines" value="50-400" />
-	</module>
-	<module name="SuppressionSingleFilter">
-		<property name="checks" value="StaticVariableName" />
-		<property name="files" value="BlockRegistry.java" />
-		<property name="lines" value="75-300" />
-	</module>
-	<module name="SuppressionSingleFilter">
-		<property name="checks" value="StaticVariableName" />
-		<property name="files" value="ContainerScreenRegistry.java" />
-		<property name="lines" value="150-300" />
-	</module>
-	<module name="SuppressionSingleFilter">
-		<property name="checks" value="StaticVariableName" />
-		<property name="files" value="PotionRegistry.java" />
-		<property name="lines" value="60-120" />
-	</module>
-	<module name="SuppressionSingleFilter">
-		<property name="checks" value="StaticVariableName" />
-		<property name="files" value="EntityRegistry.java" />
-		<property name="lines" value="30-60" />
-	</module>
-	<module name="SuppressionSingleFilter">
-		<property name="checks" value="StaticVariableName" />
-		<property name="files" value="FluidRegistry.java" />
-		<property name="lines" value="10-20" />
-	</module>
-
+<!--	<module name="SuppressionSingleFilter">-->
+<!--		<property name="checks" value="StaticVariableName" />-->
+<!--		<property name="files" value="TileRegistry.java" />-->
+<!--		<property name="lines" value="1-300" />-->
+<!--	</module>-->
 
 
 	<!-- All Java AST specific tests live under TreeWalker module. -->

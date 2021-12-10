@@ -66,6 +66,6 @@ public class BlockSolidifier extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
-    MenuScreens.register(ContainerScreenRegistry.solidifier, ScreenSolidifier::new);
+    MenuScreens.register(ContainerScreenRegistry.SOLIDIFIER, ScreenSolidifier::new);
   }
 }
