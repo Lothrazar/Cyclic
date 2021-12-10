@@ -11,6 +11,6 @@
     "1.6.4": "Garden Scythe fix visual desync when harvesting.  Monster ball now cannot capture any entity if a player is its immediate passenger (ie: saddle or using stirrups).  ",
     "1.6.5": "Updated some textures and recipes.  ",
     "1.6.6": "Fix errors in all block data saving.  Fix flowers worldgen",
-    "1.6.7": ""
+    "1.6.7": "Update ru_ru.json #1986 by Bytegm. Fix doorbell button crash.  Fixed 'Material Generator Consumes Single ItemStacks with Zero FE Generation'."
   }
 }

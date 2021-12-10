@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -49,6 +49,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
+  private int burnPerTick;
   private RecipeGeneratorItem<?> currentRecipe;
 
   public TileGeneratorDrops(BlockPos pos, BlockState state) {
@@ -87,14 +88,14 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   private void tryConsumeFuel() {
     //to consume fuel we first need recipe
     this.findMatchingRecipe();
-    if (currentRecipe == null) {
+    if (burnPerTick == 0 || this.burnTime == 0) {
       return;
     }
     setLitProperty(true); // has recipe so lit
-    int onSim = energy.receiveEnergy(currentRecipe.getRfpertick(), true);
-    if (onSim >= currentRecipe.getRfpertick()) {
+    int onSim = energy.receiveEnergy(this.burnPerTick, true);
+    if (onSim >= burnPerTick) {
       //gen up. we burned away a tick of this fuel 
-      energy.receiveEnergy(currentRecipe.getRfpertick(), false);
+      energy.receiveEnergy(this.burnPerTick, false);
       this.burnTime--;
     }
   }
@@ -107,10 +108,11 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     List<RecipeGeneratorItem<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM);
     for (RecipeGeneratorItem<?> rec : recipes) {
       if (rec.matches(this, level)) {
-        this.currentRecipe = rec;
-        this.burnTimeMax = this.currentRecipe.getTicks();
+        this.burnTimeMax = rec.getTicks();
         this.burnTime = this.burnTimeMax;
+        this.burnPerTick = rec.getRfpertick();
         this.inputSlots.extractItem(0, 1, false); // always slot 0 and amount 1
+        this.currentRecipe = rec;
         return;
       }
     }
@@ -141,6 +143,9 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   public void load(CompoundTag tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    burnTime = tag.getInt("burnTime");
+    burnTimeMax = tag.getInt("burnTimeMax");
+    burnPerTick = tag.getInt("burnPerTick");
     super.load(tag);
   }
 
@@ -148,6 +153,9 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   public void saveAdditional(CompoundTag tag) {
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
+    tag.putInt("burnTime", this.burnTime);
+    tag.putInt("burnTimeMax", this.burnTimeMax);
+    tag.putInt("burnPerTick", this.burnPerTick);
     super.saveAdditional(tag);
   }
 
@@ -171,16 +179,16 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.burnTime = value;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case FLOWING:
         this.flowing = value;
-      break;
+        break;
     }
   }
 

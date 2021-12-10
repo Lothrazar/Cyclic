@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.ModCyclic;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import com.lothrazar.cyclic.api.IHasClickToggle;
@@ -58,14 +59,14 @@ public class CharmUtil {
           if (found.getItem() instanceof IHasClickToggle) {
             IHasClickToggle testMe = (IHasClickToggle) found.getItem();
             if (testMe.isOn(found)) {
-              return Triple.of("curios", equipped.middle, equipped.right);
+              return Triple.of(CompatConstants.CURIOS, equipped.middle, equipped.right);
             }
             //else its found but turned off , keep looking
           }
         }
       }
       catch (Exception e) {
-        // if API not installed or fails 
+        // if API not installed or fails
       }
     }
     //is "baubles" in 1.16? 

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.compat.curios;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.compat.CompatConstants;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -14,22 +15,21 @@ import top.theillusivec4.curios.api.SlotTypeMessage;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CuriosRegistry {
 
-  private static final ResourceLocation FEET_ICON = new ResourceLocation(ModCyclic.MODID, "curios/feet");
+  private static final ResourceLocation FEET_ICON = new ResourceLocation(ModCyclic.MODID, CompatConstants.CURIOS + "/feet");
 
   /**
-   * https://github.com/TheIllusiveC4/Curios/wiki/How-to-Use:-Developers
+   * https://github.com/TheIllusiveC4/Curios/wiki/Frequently-Used-Slots
    **/
   public static void setup(FMLCommonSetupEvent event) {
-    //https://github.com/TheIllusiveC4/Curios/blob/fc77c876b630dc6e4a325cb9ac627b551749a19b/src/main/java/top/theillusivec4/curios/api/CurioTags.java
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("back").size(1).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("belt").size(2).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bracelet").size(2).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("charm").size(8).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("feet").size(1).icon(FEET_ICON).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("hands").size(2).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("head").size(2).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("necklace").size(2).build());
-    InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("ring").size(8).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("back").size(1).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("belt").size(2).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("bracelet").size(2).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("charm").size(8).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("feet").size(1).icon(FEET_ICON).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("hands").size(2).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("head").size(2).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("necklace").size(2).build());
+    InterModComms.sendTo(CompatConstants.CURIOS, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("ring").size(8).build());
   }
 
   @OnlyIn(Dist.CLIENT)

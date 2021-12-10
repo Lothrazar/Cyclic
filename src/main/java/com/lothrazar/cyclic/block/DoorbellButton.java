@@ -35,10 +35,15 @@ public class DoorbellButton extends ButtonBlock {
 
   @Override
   public BlockState getStateForPlacement(BlockPlaceContext context) {
-    return super.getStateForPlacement(context)
-        .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+    BlockState stateForPlacement = super.getStateForPlacement(context);
+    if (stateForPlacement == null) {
+      return null;
+    }
+    return stateForPlacement.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
   }
 
+  //  java.lang.NullPointerException: Cannot invoke "net.minecraft.world.level.block.state.BlockState.setValue(net.minecraft.world.level.block.state.properties.Property, java.lang.Comparable)" because the return value of "net.minecraft.world.level.block.ButtonBlock.getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext)" is null
+  //  at com.lothrazar.cyclic.block.DoorbellButton.getStateForPlacement(DoorbellButton.java:39) ~[%2381!:?] {re:classloading}
   @Override
   @SuppressWarnings("deprecation")
   public FluidState getFluidState(BlockState state) {
