@@ -22,9 +22,11 @@ public class TileTerraPreta extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     //sprinkler to ONLY whats directly above/below
-    timer--;
-    if (timer > 0) {
+    if (timer-- > 0) {
       return;
     }
     timer = TIMER_FULL;

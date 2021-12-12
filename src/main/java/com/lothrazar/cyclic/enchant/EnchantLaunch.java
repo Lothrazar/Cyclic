@@ -71,11 +71,10 @@ public class EnchantLaunch extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    //anything that goes on your feet 
-    boolean yes = stack.getItem() instanceof ElytraItem ||
+    //anything that goes on your feet
+    return stack.getItem() instanceof ElytraItem ||
         (stack.getItem() instanceof ArmorItem)
             && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.FEET;
-    return yes;
   }
 
   @Override
@@ -92,7 +91,7 @@ public class EnchantLaunch extends EnchantBase {
         return;
       }
       //if you are on the ground (or not airborne, should be same thing
-      if ((p.isAirBorne == false || p.isOnGround()) && //onGround
+      if ((!p.isAirBorne || p.isOnGround()) && //onGround
           armorStack.getOrCreateTag().getInt(NBT_USES) > 0) {
         //you have landed on the ground, dont count previous jumps
         UtilNBT.setItemStackNBTVal(armorStack, NBT_USES, 0);
@@ -108,14 +107,14 @@ public class EnchantLaunch extends EnchantBase {
     if (feet.isEmpty() || player.isCrouching()) {
       return;
     } //sneak to not double jump
-    if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) {
+    if (!EnchantmentHelper.getEnchantments(feet).containsKey(this)) {
       return;
     }
     if (player.getCooldownTracker().hasCooldown(feet.getItem())) {
       return;
     }
     if (Minecraft.getInstance().gameSettings.keyBindJump.isKeyDown()
-        && player.getPosY() < player.lastTickPosY && player.isAirBorne && player.isInWater() == false) {
+        && player.getPosY() < player.lastTickPosY && player.isAirBorne && !player.isInWater()) {
       //JUMP IS pressed and you are moving down
       int level = EnchantmentHelper.getEnchantments(feet).get(this);
       int uses = feet.getOrCreateTag().getInt(NBT_USES);

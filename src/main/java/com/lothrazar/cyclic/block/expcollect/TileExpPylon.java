@@ -27,6 +27,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileExpPylon extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
@@ -41,19 +42,23 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public static final int EXP_PER_BOTTLE = 11;
   private static final int RADIUS = 16;
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  private LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> tank);
 
   public TileExpPylon() {
     super(TileRegistry.experience_pylontile);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
 
   @Override
   public void tick() {
+    if (world == null) {
+      return;
+    }
     if (!world.isRemote) {
       //ignore on/off state, for player standing on top collecting exp
       collectPlayerExperience();
+      return;
     }
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
@@ -69,9 +74,15 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidHandlerLazyOptional.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidHandlerLazyOptional.invalidate();
+    super.invalidateCaps();
   }
 
   @Override
@@ -174,18 +185,15 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
 
   @Override
   public void setField(int field, int value) {
-    switch (Fields.values()[field]) {
-      case REDSTONE:
-        this.needsRedstone = value % 2;
-      break;
+    if (Fields.values()[field] == Fields.REDSTONE) {
+      this.needsRedstone = value % 2;
     }
   }
 
   @Override
   public int getField(int field) {
-    switch (Fields.values()[field]) {
-      case REDSTONE:
-        return this.needsRedstone;
+    if (Fields.values()[field] == Fields.REDSTONE) {
+      return this.needsRedstone;
     }
     return 0;
   }

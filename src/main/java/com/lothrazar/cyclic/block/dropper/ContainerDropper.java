@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerDropper extends ContainerBase {
@@ -22,10 +21,11 @@ public class ContainerDropper extends ContainerBase {
     tile = (TileDropper) world.getTileEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 10, 51));
-    });
+    if (tile instanceof TileDropper) {
+      final TileDropper tileDropper = (TileDropper) tile;
+      this.endInv = tileDropper.inventory.getSlots();
+      addSlot(new SlotItemHandler(tileDropper.inventory, 0, 10, 51));
+    }
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileDropper.Fields.values().length);
     trackEnergy(tile);

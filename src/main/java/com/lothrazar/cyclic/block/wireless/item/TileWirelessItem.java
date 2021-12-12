@@ -64,6 +64,12 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     gpsSlots.deserializeNBT(tag.getCompound(NBTINV + "gps"));
@@ -81,6 +87,9 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -93,7 +102,7 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot();
     if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-      moved = moveItems(Direction.UP, loc.getPos(), this.transferRate, this.inventory, 0);
+      moved = moveItemsToBlockPos(Direction.UP, loc.getPos(), this.transferRate, this.inventory, 0) > 0;
     }
     this.setLitProperty(moved);
   }

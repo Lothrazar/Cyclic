@@ -49,6 +49,13 @@ public class TileTrash extends TileEntityBase implements ITickableTileEntity {
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    tankWrapper.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -62,6 +69,9 @@ public class TileTrash extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     inventory.extractItem(0, 64, false);
     tank.drain(CAPACITY, FluidAction.EXECUTE);
   }

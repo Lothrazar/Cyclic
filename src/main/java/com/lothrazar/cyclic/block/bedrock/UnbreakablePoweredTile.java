@@ -14,6 +14,9 @@ public class UnbreakablePoweredTile extends TileEntityBase implements ITickableT
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     boolean isBreakable = !this.isPowered();
     UnbreakablePoweredBlock.setBreakable(world, pos, isBreakable);
   }

@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.battery;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -44,32 +44,33 @@ public class BlockBattery extends BlockBase {
 
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
-    //because harvestBlock manually forces a drop  
-    return new ArrayList<>();
+    //because harvestBlock manually forces a drop
+    return Collections.emptyList();
   }
 
   @Override
   public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
-    super.harvestBlock(world, player, pos, state, ent, stack);
-    ItemStack newStackBattery = new ItemStack(this);
-    if (ent != null) {
-      IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    final ItemStack newStackBattery = new ItemStack(state.getBlock());
+    if (ent instanceof TileBattery) {
+      final TileBattery tileBattery = (TileBattery) ent;
+      final IEnergyStorage energyStorage = tileBattery.getEnergyStorage();
+      IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).resolve().orElse(null);
       if (newStackCap instanceof CustomEnergyStorage) {
-        ((CustomEnergyStorage) newStackCap).setEnergy(handlerHere.getEnergyStored());
+        ((CustomEnergyStorage) newStackCap).setEnergy(energyStorage.getEnergyStored());
       }
-      else {
-        newStackCap.receiveEnergy(handlerHere.getEnergyStored(), false);
+      else if (newStackCap != null) {
+        newStackCap.receiveEnergy(energyStorage.getEnergyStored(), false);
       }
-      if (handlerHere.getEnergyStored() > 0) {
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, handlerHere.getEnergyStored());
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, handlerHere.getMaxEnergyStored());
+      if (energyStorage.getEnergyStored() > 0) {
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, energyStorage.getEnergyStored());
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, energyStorage.getMaxEnergyStored());
       }
     }
-    //even if energy fails 
-    if (world.isRemote == false) {
-      world.addEntity(new ItemEntity(world, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, newStackBattery));
+    //Hack as getDrops returns an empty list
+    if (!world.isRemote) {
+      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), newStackBattery));
     }
+    super.harvestBlock(world, player, pos, state, ent, newStackBattery);
   }
 
   @Override
@@ -97,6 +98,7 @@ public class BlockBattery extends BlockBase {
     if (storageTile != null) {
       storageTile.setEnergy(current);
     }
+    super.onBlockPlacedBy(world, pos, state, placer, stack);
   }
 
   @Override

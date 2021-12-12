@@ -20,9 +20,7 @@ public class MembraneLamp extends BlockBase {
   public static final IntegerProperty POWER = BlockStateProperties.POWER_0_15;
 
   public MembraneLamp(Properties properties) {
-    super(properties.hardnessAndResistance(1.0F, 1.0F).setLightLevel(state -> {
-      return state.get(POWER);
-    }).notSolid());
+    super(properties.hardnessAndResistance(1.0F, 1.0F).setLightLevel(state -> state.get(POWER)).notSolid());
   }
 
   @Override

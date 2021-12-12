@@ -25,7 +25,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   private int delay; //dont let these times be zero !!!
   private int duration;
   private int power;
-  private Map<Direction, Boolean> poweredSides = new HashMap<Direction, Boolean>();
+  private Map<Direction, Boolean> poweredSides = new HashMap<>();
 
   public TileRedstoneClock() {
     super(TileRegistry.clock);
@@ -39,6 +39,9 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     try {
       updateMyState();
     }
@@ -123,7 +126,7 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
 
   private void updateMyState() throws IllegalArgumentException {
     BlockState blockState = world.getBlockState(pos);
-    if (blockState.hasProperty(BlockRedstoneClock.LIT) == false) {
+    if (!blockState.hasProperty(BlockRedstoneClock.LIT)) {
       return;
     }
     if (this.power == 0) {

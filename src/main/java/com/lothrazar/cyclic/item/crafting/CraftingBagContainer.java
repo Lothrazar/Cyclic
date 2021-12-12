@@ -80,7 +80,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     super.onContainerClosed(playerIn);
     this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     //this is not the saving version 
-    if (playerIn.world.isRemote == false) {
+    if (!playerIn.world.isRemote) {
       if (this.handler == null) {
         this.handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         if (this.handler == null) {

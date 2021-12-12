@@ -81,6 +81,12 @@ public class TileSoundPlayer extends TileEntityBase implements INamedContainerPr
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void setField(int field, int value) {}
 
   @Override

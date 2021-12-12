@@ -17,7 +17,7 @@ public abstract class EnchantBase extends Enchantment {
   public abstract boolean isEnabled();
 
   public int getCurrentLevelTool(ItemStack stack) {
-    if (stack.isEmpty() == false && EnchantmentHelper.getEnchantments(stack).containsKey(this)
+    if (!stack.isEmpty() && EnchantmentHelper.getEnchantments(stack).containsKey(this)
         && stack.getItem() != Items.ENCHANTED_BOOK) {
       return EnchantmentHelper.getEnchantments(stack).get(this);
     }
@@ -27,7 +27,7 @@ public abstract class EnchantBase extends Enchantment {
   protected int getCurrentArmorLevelSlot(LivingEntity player, EquipmentSlotType type) {
     ItemStack armor = player.getItemStackFromSlot(type);
     int level = 0;
-    if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
+    if (!armor.isEmpty() && EnchantmentHelper.getEnchantments(armor) != null
         && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
       level = EnchantmentHelper.getEnchantments(armor).get(this);
     }
@@ -41,7 +41,7 @@ public abstract class EnchantBase extends Enchantment {
     int level = 0;
     for (EquipmentSlotType slot : armors) {
       ItemStack armor = player.getItemStackFromSlot(slot);
-      if (armor.isEmpty() == false
+      if (!armor.isEmpty()
           && EnchantmentHelper.getEnchantments(armor) != null
           && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
         int newlevel = EnchantmentHelper.getEnchantments(armor).get(this);
@@ -62,7 +62,7 @@ public abstract class EnchantBase extends Enchantment {
       return ItemStack.EMPTY;
     }
     for (ItemStack main : player.getArmorInventoryList()) {
-      if ((main.isEmpty() == false) && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
+      if (!main.isEmpty() && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
         return main;
       }
     }

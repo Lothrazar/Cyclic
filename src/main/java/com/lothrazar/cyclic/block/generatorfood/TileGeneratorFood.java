@@ -56,15 +56,15 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.flowing == 1) {
       this.exportEnergyAllSides();
     }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
-      return;
-    }
-    if (world.isRemote) {
       return;
     }
     //
@@ -86,10 +86,9 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
     ItemStack stack = inputSlots.getStackInSlot(0);
     if (stack.isFood()) {
       float foodVal = stack.getItem().getFood().getHealing() + stack.getItem().getFood().getSaturation();
-      int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
       //      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
       // BURN IT
-      this.burnTimeMax = burnTimeTicks;
+      this.burnTimeMax = (int) (TICKS_PER_FOOD.get() * foodVal);
       this.burnTime = this.burnTimeMax;
       stack.shrink(1);
       //nether items, mob drops
@@ -117,6 +116,13 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

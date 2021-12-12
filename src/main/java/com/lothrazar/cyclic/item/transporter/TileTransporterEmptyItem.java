@@ -101,7 +101,7 @@ public class TileTransporterEmptyItem extends ItemBase {
     itemData.put(TileTransporterItem.KEY_BLOCKSTATE, NBTUtil.writeBlockState(state));
     Hand hand = Hand.MAIN_HAND;
     ItemStack held = player.getHeldItem(hand);
-    if (held == null || held.getItem() instanceof TileTransporterEmptyItem == false) {
+    if (held == null || !(held.getItem() instanceof TileTransporterEmptyItem)) {
       hand = Hand.OFF_HAND;
       held = player.getHeldItem(hand);
     }
@@ -117,7 +117,7 @@ public class TileTransporterEmptyItem extends ItemBase {
         ItemStack drop = new ItemStack(ItemRegistry.tile_transporter);
         drop.setTag(itemData);
         UtilItemStack.drop(world, player.getPosition(), drop);
-        if (player.isCreative() == false && held.getCount() > 0) {
+        if (!player.isCreative() && held.getCount() > 0) {
           held.shrink(1);
           if (held.getCount() == 0) {
             held = ItemStack.EMPTY;

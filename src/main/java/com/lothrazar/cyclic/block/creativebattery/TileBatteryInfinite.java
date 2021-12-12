@@ -25,13 +25,23 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
     N, E, S, W, U, D;
   }
 
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX) {
+    @Override
+    public boolean canReceive() {
+      return false;
+    }
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate) {
+      return 0;
+    }
+  };
   private Map<Direction, Boolean> poweredSides;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileBatteryInfinite() {
     super(TileRegistry.battery_infinite);
-    poweredSides = new HashMap<Direction, Boolean>();
+    poweredSides = new HashMap<>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, true);
     }
@@ -55,6 +65,12 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
       return energyCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override
@@ -82,7 +98,10 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
 
   @Override
   public void tick() {
-    energy.receiveEnergy(MAX, false);
+    if (world == null || world.isRemote) {
+      return;
+    }
+    energy.setEnergy(MAX);
     //now go
     this.tickCableFlow();
   }
@@ -90,7 +109,7 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
   private void tickCableFlow() {
     for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
-        moveEnergy(exportToSide, MAX / 4);
+        moveEnergyToAdjacent(energy, exportToSide, MAX / 4);
       }
     }
   }

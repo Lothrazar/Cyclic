@@ -62,7 +62,7 @@ public class EnchantVenom extends EnchantBase {
 
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
-    if (event.getTarget() instanceof LivingEntity == false) {
+    if (!(event.getTarget() instanceof LivingEntity)) {
       return;
     }
     LivingEntity target = (LivingEntity) event.getTarget();

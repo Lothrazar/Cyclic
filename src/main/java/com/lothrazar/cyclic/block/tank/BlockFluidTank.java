@@ -75,6 +75,14 @@ public class BlockFluidTank extends BlockBase {
   public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
     boolean tileAbove = world.getTileEntity(pos.up()) instanceof TileTank;
     boolean tileBelow = world.getTileEntity(pos.down()) instanceof TileTank;
+
+    final TileEntity tileEntity = world.getTileEntity(pos);
+    if (tileEntity instanceof TileTank) {
+      final TileTank tileTank = (TileTank) tileEntity;
+      tileTank.isTankAbove = tileAbove;
+      tileTank.isTankBelow = tileBelow;
+    }
+
     return state
         .with(TANK_ABOVE, tileAbove)
         .with(TANK_BELOW, tileBelow);
@@ -115,13 +123,11 @@ public class BlockFluidTank extends BlockBase {
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     try {
-      IFluidHandlerItem storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
+      IFluidHandlerItem storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).resolve().orElse(null);
       TileEntity container = world.getTileEntity(pos);
       if (storage != null && container != null) {
-        IFluidHandler storageTile = container.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
-        if (storageTile != null) {
-          storageTile.fill(storage.getFluidInTank(0), FluidAction.EXECUTE);
-        }
+        container.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).resolve().ifPresent(storageTile ->
+                storageTile.fill(storage.getFluidInTank(0), FluidAction.EXECUTE));
       }
     }
     catch (Exception e) {
@@ -146,7 +152,7 @@ public class BlockFluidTank extends BlockBase {
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
-    if (world.isRemote == false) {
+    if (!world.isRemote) {
       world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
     }
   }

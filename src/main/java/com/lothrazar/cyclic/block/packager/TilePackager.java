@@ -56,6 +56,9 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -170,6 +173,13 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

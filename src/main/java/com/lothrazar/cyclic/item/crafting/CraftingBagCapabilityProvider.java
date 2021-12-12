@@ -34,10 +34,7 @@ public class CraftingBagCapabilityProvider implements ICapabilitySerializable<Co
 
   @Override
   public CompoundNBT serializeNBT() {
-    if (inventory.isPresent()) {
-      return inventory.resolve().get().serializeNBT();
-    }
-    return new CompoundNBT();
+    return inventory.map(ItemStackHandler::serializeNBT).orElse(new CompoundNBT());
   }
 
   @Override

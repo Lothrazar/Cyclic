@@ -99,7 +99,7 @@ public class FlowerSimpleBlock extends BlockBase implements IPlantable {
   @SuppressWarnings("deprecation")
   @Override
   public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
-    return type == PathType.AIR ? true : super.allowsMovement(state, worldIn, pos, type);
+    return type == PathType.AIR || super.allowsMovement(state, worldIn, pos, type);
   }
 
   @Override

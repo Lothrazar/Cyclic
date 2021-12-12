@@ -63,7 +63,7 @@ public class BlockFanSlab extends BlockBase implements IWaterLoggable {
 
   public BlockFanSlab(Properties properties) {
     super(properties.hardnessAndResistance(0.8F).notSolid());
-    this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false).with(HORIZONTAL_FACING, Direction.NORTH).with(POWERED, Boolean.valueOf(false)).with(FACE, AttachFace.WALL));
+    this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false).with(HORIZONTAL_FACING, Direction.NORTH).with(POWERED, Boolean.FALSE).with(FACE, AttachFace.WALL));
   }
 
   @Override

@@ -18,6 +18,9 @@ public class TileRotator extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     boolean powered = this.isPowered();
     boolean lit = this.getBlockState().get(BlockBase.LIT);
     //if we are going from unpowered to powered, meaning state isnt set but power is

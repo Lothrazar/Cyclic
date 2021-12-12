@@ -46,6 +46,12 @@ public class SoundmuffTile extends TileEntityBase {
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public AxisAlignedBB getRenderBoundingBox() {
     return TileEntity.INFINITE_EXTENT_AABB;
   }
@@ -59,7 +65,7 @@ public class SoundmuffTile extends TileEntityBase {
   }
 
   public List<BlockPos> getShape() {
-    List<BlockPos> lis = new ArrayList<BlockPos>();
+    List<BlockPos> lis = new ArrayList<>();
     lis.add(pos);
     return lis;
   }

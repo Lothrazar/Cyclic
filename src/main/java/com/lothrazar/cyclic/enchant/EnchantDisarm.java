@@ -49,7 +49,7 @@ public class EnchantDisarm extends EnchantBase {
 
   @Override
   public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-    if (target instanceof LivingEntity == false) {
+    if (!(target instanceof LivingEntity)) {
       return;
     }
     LivingEntity livingTarget = (LivingEntity) target;

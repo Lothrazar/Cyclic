@@ -10,7 +10,7 @@ public enum ScytheType {
   BRUSH, FORAGE, LEAVES;
 
   public static List<BlockPos> getShape(BlockPos center, int radius) {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
+    List<BlockPos> shape = new ArrayList<>();
     shape.addAll(UtilShape.squareHorizontalFull(center.down().down(), radius));
     shape.addAll(UtilShape.squareHorizontalFull(center.down(), radius));
     shape.addAll(UtilShape.squareHorizontalFull(center, radius));

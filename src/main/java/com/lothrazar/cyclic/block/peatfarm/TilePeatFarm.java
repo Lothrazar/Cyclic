@@ -31,7 +31,6 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
-import java.util.function.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -69,9 +68,9 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   public static IntValue POWERCONF;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   static final int MAX = 64000;
-  public static final int TIMER_FULL = 1 * 10;
+  public static final int TIMER_FULL = 10;
   private static final int PER_TICK = 1;
-  FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, fluidStack -> true);
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(6) {
@@ -111,6 +110,9 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     this.init();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -174,16 +176,11 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
 
   public TilePeatFarm() {
     super(TileRegistry.PEAT_FARM);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
   Block baked = null;
   Block unbaked = null;
   List<BlockPos> outer = null;
-
-  public Predicate<FluidStack> isFluidValid() {
-    return p -> true;
-  }
 
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -254,6 +251,14 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
       return energyCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    tankWrapper.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

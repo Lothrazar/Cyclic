@@ -56,7 +56,7 @@ public class LaunchBlock extends BlockBase {
   }
 
   private float getPower(World world, BlockPos pos) {
-    if (this.doRedstone == false) {
+    if (!this.doRedstone) {
       return 1.6F;
     }
     int power = 0;

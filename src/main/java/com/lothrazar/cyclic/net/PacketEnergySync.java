@@ -46,9 +46,7 @@ public class PacketEnergySync extends PacketBase {
   }
 
   public static void handle(PacketEnergySync message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      doWork(message);
-    });
+    ctx.get().enqueueWork(() -> doWork(message));
     message.done(ctx);
   }
 
@@ -60,9 +58,8 @@ public class PacketEnergySync extends PacketBase {
   }
 
   public static PacketEnergySync decode(PacketBuffer buf) {
-    PacketEnergySync msg = new PacketEnergySync(buf.readBlockPos(),
+    return new PacketEnergySync(buf.readBlockPos(),
         buf.readInt());
-    return msg;
   }
 
   public static void encode(PacketEnergySync msg, PacketBuffer buf) {

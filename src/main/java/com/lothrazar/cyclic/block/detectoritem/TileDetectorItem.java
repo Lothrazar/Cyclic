@@ -42,8 +42,10 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
 
   @Override
   public void tick() {
-    timer--;
-    if (world.isRemote || timer > 0) {
+    if (world == null || world.isRemote) {
+      return;
+    }
+    if (timer-- > 0) {
       return;
     }
     timer = PER_TICK;
@@ -116,10 +118,9 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
     double x = pos.getX();
     double y = pos.getY();
     double z = pos.getZ();
-    AxisAlignedBB entityRange = new AxisAlignedBB(
+    return new AxisAlignedBB(
         x - this.rangeX, y - this.rangeY, z - this.rangeZ,
         x + this.rangeX + 1, y + this.rangeY, z + this.rangeZ + 1);
-    return entityRange;
   }
 
   @Override

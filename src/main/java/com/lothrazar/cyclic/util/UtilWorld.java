@@ -63,7 +63,7 @@ public class UtilWorld {
       return null;
     }
     ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
-    if (world.isRemote == false) {
+    if (!world.isRemote) {
       world.addEntity(entityItem);
     }
     return entityItem;
@@ -82,7 +82,7 @@ public class UtilWorld {
   //  }
 
   public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, final int radius) {
-    ArrayList<BlockPos> found = new ArrayList<BlockPos>();
+    ArrayList<BlockPos> found = new ArrayList<>();
     int xMin = start.getX() - radius;
     int xMax = start.getX() + radius;
     int yMin = start.getY() - radius;
@@ -104,7 +104,7 @@ public class UtilWorld {
   }
 
   public static void toggleLeverPowerState(World worldIn, BlockPos blockPos, BlockState blockState) {
-    boolean hasPowerHere = blockState.get(LeverBlock.POWERED).booleanValue();
+    boolean hasPowerHere = blockState.get(LeverBlock.POWERED);
     BlockState stateNew = blockState.with(LeverBlock.POWERED, !hasPowerHere);
     boolean success = worldIn.setBlockState(blockPos, stateNew);
     if (success) {
@@ -141,7 +141,7 @@ public class UtilWorld {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
         for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
           posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-          if (world.isAreaLoaded(posCurrent, 1) == false) {
+          if (!world.isAreaLoaded(posCurrent, 1)) {
             continue;
           }
           if (world.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
@@ -164,7 +164,7 @@ public class UtilWorld {
   }
 
   public static List<BlockPos> getPositionsInRange(BlockPos pos, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
-    List<BlockPos> found = new ArrayList<BlockPos>();
+    List<BlockPos> found = new ArrayList<>();
     for (int x = xMin; x <= xMax; x++) {
       for (int y = yMin; y <= yMax; y++) {
         for (int z = zMin; z <= zMax; z++) {

@@ -61,8 +61,8 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     }
   };
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileFluidCollect() {
     super(TileRegistry.COLLECTOR_FLUID);
@@ -71,6 +71,9 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       this.setLitProperty(false);
@@ -171,6 +174,14 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       return energyCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    tankWrapper.invalidate();
+    energyCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

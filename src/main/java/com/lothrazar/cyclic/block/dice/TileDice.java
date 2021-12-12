@@ -42,6 +42,9 @@ public class TileDice extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     if (this.timer == 0) {
       this.spinningIfZero = 1;
       world.updateComparatorOutputLevel(pos, this.getBlockState().getBlock());

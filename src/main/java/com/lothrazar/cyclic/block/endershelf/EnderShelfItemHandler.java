@@ -147,8 +147,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     //
     if (this.enchantmentIdCache[slot] != null || !this.enchantmentIdCache[slot].isEmpty()) {
       //      ModCyclic.LOGGER.info("match on id cache");
-      boolean match = this.enchantmentIdCache[slot].equals(((CompoundNBT) chantsIn.get(0)).getString("id"));
-      return match;
+      return this.enchantmentIdCache[slot].equals(((CompoundNBT) chantsIn.get(0)).getString("id"));
     }
     //else no cache, old way
     return UtilEnchant.doBookEnchantmentsMatch(stackIn, stackHere);

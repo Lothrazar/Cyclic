@@ -24,7 +24,7 @@ public class WorldGenEvents {
    */
   @SubscribeEvent
   public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
-    if (ConfigRegistry.CYAN_GENERATES.get() == false) {
+    if (!ConfigRegistry.CYAN_GENERATES.get()) {
       return;
     }
     //spawn depend on biome type

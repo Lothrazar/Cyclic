@@ -96,21 +96,20 @@ public class EnchantGrowth extends EnchantBase {
       List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level + 2);
       shape = UtilShape.repeatShapeByHeight(shape, 2);
       Collections.shuffle(shape);
-      for (int i = 0; i < shape.size(); i++) {
+      for (BlockPos blockPos : shape) {
         if (grown >= growthLimit) {
           break;
         }
         //do one
-        BlockPos pos = shape.get(i);
-        BlockState target = entity.world.getBlockState(pos);
+        BlockState target = entity.world.getBlockState(blockPos);
         IntegerProperty propAge = TileHarvester.getAgeProp(target);
         if (propAge == null) {
           continue;
         }
         int maxAge = Collections.max(propAge.getAllowedValues());
-        Integer currentAge = target.get(propAge);
+        int currentAge = target.get(propAge);
         if (currentAge < maxAge) {
-          if (entity.world.setBlockState(pos,
+          if (entity.world.setBlockState(blockPos,
               target.with(propAge, currentAge + 1))) {
             grown++;
           }

@@ -25,7 +25,7 @@ public class FluidTankBase extends FluidTank {
       return;
     }
     FluidStack f = handler.getFluidInTank(0);
-    if (tile.getWorld().isRemote == false) { //if serverside then 
+    if (!tile.getWorld().isRemote) { //if serverside then
       PacketRegistry.sendToAllClients(tile.getWorld(), new PacketFluidSync(tile.getPos(), f));
     }
   }

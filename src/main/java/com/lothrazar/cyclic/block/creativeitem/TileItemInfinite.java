@@ -24,7 +24,7 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
 
   ItemStackHandler inputSlots = new ItemStackHandler(1);
   ItemStackHandler outputSlot = new ItemStackHandler(1);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
+  private final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlot);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   @Override
@@ -42,6 +42,12 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTINV, inventory.serializeNBT());
     return super.write(tag);
@@ -54,6 +60,9 @@ public class TileItemInfinite extends TileEntityBase implements ITickableTileEnt
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     ItemStack stackHere = inputSlots.getStackInSlot(0);
     if (!stackHere.isEmpty()) {
       outputSlot.insertItem(0, stackHere.copy(), false);

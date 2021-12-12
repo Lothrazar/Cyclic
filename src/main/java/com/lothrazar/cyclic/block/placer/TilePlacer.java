@@ -40,6 +40,9 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
@@ -78,6 +81,12 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

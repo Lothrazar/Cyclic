@@ -20,12 +20,11 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void tick() {
-    //sprinkler to ONLY whats directly above/below
-    if (world.isRemote) {
+    if (world == null || world.isRemote) {
       return;
     }
-    timer--;
-    if (timer > 0) {
+    //sprinkler to ONLY whats directly above/below
+    if (timer-- > 0) {
       return;
     }
     timer = TIMER_FULL;

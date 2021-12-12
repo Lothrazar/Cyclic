@@ -31,8 +31,8 @@ public class AppleChocolate extends ItemBase {
       if (MinecraftForge.EVENT_BUS.post(new PotionEvent.PotionRemoveEvent(entityLiving, effect))) {
         continue;
       }
-      if (effect.getPotion().isBeneficial() == false) {
         //dont remove beneficial potions though such as speed, fire prot, night vision 
+      if (!effect.getPotion().isBeneficial()) {
         effect.getPotion().removeAttributesModifiersFromEntity(entityLiving, entityLiving.getAttributeManager(), effect.getAmplifier());
         itr.remove();
         ret = true;

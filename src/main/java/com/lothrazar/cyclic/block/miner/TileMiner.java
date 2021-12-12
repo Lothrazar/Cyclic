@@ -46,15 +46,13 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   public static IntValue POWERCONF;
-  private int shapeIndex = 0;
   static final int SLOT_TOOL = 0;
   static final int SLOT_FILTER = 1;
   static final int MAX_HEIGHT = 64;
   public static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
-  private int height = MAX_HEIGHT / 2;
-  private int radius = 5;
   static final int MAX = 64000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inventory = new ItemStackHandler(2) {
 
     @Override
@@ -72,14 +70,13 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      if (slot == SLOT_FILTER && stack.getItem() != ItemRegistry.STATECARD.get()) {
-        return false;
-      }
-      return true;
+      return slot != SLOT_FILTER || stack.getItem() == ItemRegistry.STATECARD.get();
     }
   };
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private int shapeIndex = 0;
+  private int height = MAX_HEIGHT / 2;
+  private int radius = 5;
   private WeakReference<FakePlayer> fakePlayer;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -117,6 +114,13 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     radius = tag.getInt("size");
     height = tag.getInt("height");
@@ -140,6 +144,9 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -221,7 +228,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     for (BlockStateMatcher m : BlockstateCard.getSavedStates(filter)) {
       BlockState st = m.getState();
       if (targetState.getBlock() == st.getBlock()) {
-        if (m.isExactProperties() == false) {
+        if (!m.isExactProperties()) {
           // the blocks DO match, isExact is flagged as no, so we are good
           return true;
         }
@@ -256,13 +263,14 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     }
     //is this valid
     BlockState blockSt = world.getBlockState(targetPos);
+    //TODO: gain access to blockstate hardness
     if (blockSt.hardness < 0) {
       return false; //unbreakable 
     }
     //water logged is 
-    if (blockSt.getFluidState() != null && blockSt.getFluidState().isEmpty() == false) {
+    if (blockSt.getFluidState() != null && !blockSt.getFluidState().isEmpty()) {
       //am i PURE liquid? or just a WATERLOGGED block
-      if (blockSt.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
+      if (!blockSt.hasProperty(BlockStateProperties.WATERLOGGED)) {
         //    ModCyclic.LOGGER.info(targetPos + " Mining FLUID is not valid  " + blockSt);
         //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
         return false;
@@ -306,7 +314,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
+    List<BlockPos> shape = new ArrayList<>();
     shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
     int diff = directionIsUp ? 1 : -1;
     if (height > 0) {

@@ -446,6 +446,11 @@ page at http://checkstyle.sourceforge.net/config.html -->
         </module>
     </module>
 
+    <module name="SuppressWarningsFilter" />
+    <module name="TreeWalker">
+        <module name="SuppressWarningsHolder" />
+    </module>
+
     <!--
 
     <module name="SuppressionCommentFilter">

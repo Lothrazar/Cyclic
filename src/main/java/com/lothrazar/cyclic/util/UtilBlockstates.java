@@ -26,7 +26,7 @@ public class UtilBlockstates {
   }
 
   public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, final int radiusIn) {
-    ArrayList<BlockPos> found = new ArrayList<BlockPos>();
+    ArrayList<BlockPos> found = new ArrayList<>();
     int xMin = start.getX() - radiusIn;
     int xMax = start.getX() + radiusIn;
     int yMin = start.getY() - radiusIn;

@@ -31,6 +31,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 @SuppressWarnings("rawtypes")
@@ -45,7 +46,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
   FluidTankBase tank;
   ItemStackHandler inputSlots = new ItemStackHandler(3);
   ItemStackHandler outputSlots = new ItemStackHandler(1);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
+  private final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
@@ -62,6 +63,9 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     this.findMatchingRecipe();
     if (currentRecipe == null) {
@@ -154,6 +158,14 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     return super.getCapability(cap, side);
   }
 
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    tankWrapper.invalidate();
+    super.invalidateCaps();
+  }
+
   public float getCapacity() {
     return CAPACITY;
   }
@@ -173,12 +185,47 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       return;
     }
     currentRecipe = null;
+    if (!inputSlots.getStackInSlot(0).isEmpty()) {
+      if (inputSlots.getStackInSlot(1).isEmpty()) {
+        inputSlots.insertItem(1, inputSlots.extractItem(0, 1, false), false);
+      }
+      if (inputSlots.getStackInSlot(2).isEmpty()) {
+        inputSlots.insertItem(2, inputSlots.extractItem(0, 1, false), false);
+      }
+    }
+    if (!inputSlots.getStackInSlot(1).isEmpty()) {
+      if (inputSlots.getStackInSlot(0).isEmpty()) {
+        inputSlots.insertItem(0, inputSlots.extractItem(1, 1, false), false);
+      }
+      if (inputSlots.getStackInSlot(2).isEmpty()) {
+        inputSlots.insertItem(2, inputSlots.extractItem(1, 1, false), false);
+      }
+    }
+    if (!inputSlots.getStackInSlot(2).isEmpty()) {
+      if (inputSlots.getStackInSlot(0).isEmpty()) {
+        inputSlots.insertItem(0, inputSlots.extractItem(2, 1, false), false);
+      }
+      if (inputSlots.getStackInSlot(1).isEmpty()) {
+        inputSlots.insertItem(1, inputSlots.extractItem(2, 1, false), false);
+      }
+    }
+
+    if (inputSlots.getStackInSlot(1).isEmpty() && inputSlots.getStackInSlot(2).isEmpty()) {
+      final int identicalItems = inputSlots.getStackInSlot(0).getCount();
+      if (identicalItems >= 3) {
+        inputSlots.insertItem(1, inputSlots.extractItem(0, identicalItems / 3, false), false);
+        inputSlots.insertItem(2, inputSlots.extractItem(0, identicalItems / 3, false), false);
+      }
+    }
     List<RecipeSolidifier<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.SOLID);
     for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, world)) {
         currentRecipe = rec;
         break;
       }
+    }
+    if (currentRecipe != null) {
+      return;
     }
   }
 

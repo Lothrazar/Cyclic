@@ -50,9 +50,7 @@ public class UtilItemStack {
       stack.setDamage(stack.getDamage() + 1);
     }
     else {
-      stack.damageItem(1, player, (p) -> {
-        p.sendBreakAnimation(Hand.MAIN_HAND);
-      });
+      stack.damageItem(1, player, (p) -> p.sendBreakAnimation(Hand.MAIN_HAND));
     }
     if (stack.getDamage() >= stack.getMaxDamage()) {
       stack.shrink(1);
@@ -100,7 +98,7 @@ public class UtilItemStack {
     if (stack.isEmpty()) {
       return;
     }
-    if (world.isRemote == false) {
+    if (!world.isRemote) {
       ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
       // do not spawn a second 'ghost' one onclient side
       world.addEntity(entityItem);

@@ -28,11 +28,10 @@ public class TileEye extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
-    if (world.isRemote) {
+    if (world == null || world.isRemote) {
       return;
     }
-    timer--;
-    if (timer > 0) {
+    if (timer-- > 0) {
       return;
     }
     timer = FREQUENCY.get();

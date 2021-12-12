@@ -45,8 +45,10 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void tick() {
-    if (timer > 0) {
-      timer--;
+    if (world == null || world.isRemote) {
+      return;
+    }
+    if (timer-- > 0) {
       return;
     }
     timer = world.rand.nextInt(24) + 12;

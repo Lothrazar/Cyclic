@@ -50,9 +50,7 @@ public class UtilEnchant {
       if (ench1 == null || ench2 == null) {
         return false;
       }
-      if (ench1.equals(ench2)) {
-        return true;
-      }
+      return ench1.equals(ench2);
     }
     return false;
   }

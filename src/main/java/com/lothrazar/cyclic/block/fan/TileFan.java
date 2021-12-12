@@ -39,6 +39,9 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
@@ -71,7 +74,7 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
     for (int i = MIN_RANGE; i <= this.getRange(); i++) {
       //if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
-      if (canBlowThrough(tester) == false) {
+      if (!canBlowThrough(tester)) {
         return i; //cant pass thru
       }
     }

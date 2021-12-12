@@ -62,6 +62,12 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -92,10 +98,13 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     for (int s = 0; s < inventory.getSlots(); s++) {
       BlockPosDim targetPos = getTargetInSlot(s);
       if (targetPos == null ||
-          UtilWorld.dimensionIsEqual(targetPos, world) == false) {
+          !UtilWorld.dimensionIsEqual(targetPos, world)) {
         continue;
       }
       toggleTarget(targetPos.getPos());
@@ -109,18 +118,15 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
 
   @Override
   public void setField(int field, int value) {
-    switch (Fields.values()[field]) {
-      case RENDER:
-        this.render = value % 2;
-      break;
+    if (Fields.values()[field] == Fields.RENDER) {
+      this.render = value % 2;
     }
   }
 
   @Override
   public int getField(int field) {
-    switch (Fields.values()[field]) {
-      case RENDER:
-        return render;
+    if (Fields.values()[field] == Fields.RENDER) {
+      return render;
     }
     return 0;
   }

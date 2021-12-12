@@ -35,6 +35,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -49,7 +50,8 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   static final int MAX = 640000;
   private static final int SLOT_INPUT = 0;
   private static final int SLOT_BOOK = 1;
-  ItemStackHandler inputSlots = new ItemStackHandler(2) {
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, fluidStack -> fluidStack.getFluid().isIn(DataTags.EXPERIENCE));
+  public final ItemStackHandler inputSlots = new ItemStackHandler(2) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
@@ -64,24 +66,24 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     }
   };
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
-  ItemStackHandler outputSlots = new ItemStackHandler(2);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
+  public final ItemStackHandler outputSlots = new ItemStackHandler(2);
+  public final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  public final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static IntValue POWERCONF;
   public static IntValue FLUIDCOST;
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  public FluidTankBase tank;
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   public TileDisenchant() {
     super(TileRegistry.disenchanter);
-    tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().isIn(DataTags.EXPERIENCE);
-    });
   }
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
@@ -99,8 +101,8 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
     }
     ItemStack book = inputSlots.getStackInSlot(SLOT_BOOK);
     if (book.getItem() != Items.BOOK
-        || outputSlots.getStackInSlot(0).isEmpty() == false
-        || outputSlots.getStackInSlot(1).isEmpty() == false
+        || !outputSlots.getStackInSlot(0).isEmpty()
+        || !outputSlots.getStackInSlot(1).isEmpty()
         || input.getCount() != 1) {
       return;
     }
@@ -200,9 +202,17 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return energyCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    energyCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

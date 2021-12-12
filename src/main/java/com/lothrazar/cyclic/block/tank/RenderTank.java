@@ -21,8 +21,8 @@ public class RenderTank extends TileEntityRenderer<TileTank> {
   @Override
   public void render(TileTank tankHere, float v, MatrixStack matrix,
       IRenderTypeBuffer renderer, int light, int overlayLight) {
-    IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
-    if (handler == null || handler.getFluidInTank(0) == null) {
+    IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).resolve().orElse(null);
+    if (handler == null) {
       return;
     }
     FluidStack fluid = handler.getFluidInTank(0);

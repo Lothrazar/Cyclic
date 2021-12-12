@@ -80,7 +80,7 @@ public class ItemScaffolding extends BlockItem {
         //        facing = Direction.NORTH;
       }
     }
-    if (worldIn.isRemote == false && worldIn.isAirBlock(pos)) {
+    if (!worldIn.isRemote && worldIn.isAirBlock(pos)) {
       ItemStack stac = player.getHeldItem(hand);
       if (worldIn.setBlockState(pos, Block.getBlockFromItem(this).getDefaultState())) {
         UtilItemStack.shrink(player, stac);

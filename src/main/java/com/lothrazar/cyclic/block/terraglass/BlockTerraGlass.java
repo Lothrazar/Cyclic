@@ -17,9 +17,8 @@ public class BlockTerraGlass extends BlockBase {
 
   public BlockTerraGlass(Properties properties) {
     //https://en.wikipedia.org/wiki/Terra_preta
-    super(properties.hardnessAndResistance(1.8F).notSolid().setLightLevel(state -> {
-      return state.get(LIT) ? 6 : 0;
-    }));
+    super(properties.hardnessAndResistance(1.8F).notSolid().setLightLevel(state
+            -> state.get(LIT) ? 6 : 0));
   }
 
   @Override

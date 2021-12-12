@@ -197,6 +197,9 @@ public class BoomerangEntity extends ProjectileItemEntity {
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     super.tick();
     if (this.ticksExisted > TICKS_UNTIL_DEATH) {
       dropAsItem();
@@ -211,7 +214,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
       dropAsItem();
       return;
     }
-    if (hasTriggeredRedstoneAlready() == false && world.isAirBlock(pos) == false) {
+    if (!hasTriggeredRedstoneAlready() && !world.isAirBlock(pos)) {
       tryToggleRedstone(pos);
     }
     tryPickupNearby();
@@ -273,10 +276,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
           float damage = MathHelper.nextFloat(world.rand, DAMAGE_MIN, DAMAGE_MAX);
-          boolean attackSucc = live.attackEntityFrom(DamageSource.causeThrownDamage(this, owner), damage);
-          if (attackSucc && live.isAlive() == false) {
-            //           ("killed one");
-          }
+          live.attackEntityFrom(DamageSource.causeThrownDamage(this, owner), damage);
         }
       break;
       case STUN:
@@ -284,7 +284,7 @@ public class BoomerangEntity extends ProjectileItemEntity {
         if (entityHit != owner && entityHit instanceof LivingEntity
             && !(entityHit instanceof PlayerEntity)) {
           LivingEntity live = (LivingEntity) entityHit;
-          if (live.isPotionActive(PotionRegistry.PotionEffects.stun) == false) {
+          if (!live.isPotionActive(PotionRegistry.PotionEffects.stun)) {
             live.addPotionEffect(new EffectInstance(PotionRegistry.PotionEffects.stun, STUN_SECONDS * 20, 1));
             UtilSound.playSound(live, SoundEvents.ENTITY_IRON_GOLEM_ATTACK);
           }

@@ -136,6 +136,13 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case TIMER:
@@ -186,6 +193,9 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
@@ -219,7 +229,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
       if (!World.isOutsideBuildHeight(nextPos)
           && world.isAirBlock(nextPos)) { // check if this spot is even valid
         BlockState placeState = stuff.getDefaultState();
-        if (world.isRemote == false && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+        if (!world.isRemote && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
           //build success
           this.incrementPosition(shape);
           stack.shrink(1);
@@ -281,7 +291,7 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
         }
       }
     }
-    List<BlockPos> shape = new ArrayList<BlockPos>();
+    List<BlockPos> shape = new ArrayList<>();
     // ITEMSTACK / CARD storing what shape and settings to use
     // only rebuild shapes if they are different
     switch (buildType) {

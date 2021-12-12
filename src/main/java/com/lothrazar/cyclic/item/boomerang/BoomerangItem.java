@@ -53,7 +53,7 @@ public class BoomerangItem extends ItemBase {
     }
     //    float amountCharged = percentageCharged * MAX_CHARGE;
     //    float velocityFactor = percentageCharged * 1.5F;
-    if (entity instanceof PlayerEntity == false) {
+    if (!(entity instanceof PlayerEntity)) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entity;

@@ -120,7 +120,7 @@ public class UtilPlaceBlocks {
     //    if (player != null && PermissionRegistry.hasPermissionHere(player, placePos) == false) {
     //      return false;
     //    }
-    if (world.isAirBlock(placePos) == false) {
+    if (!world.isAirBlock(placePos)) {
       // if there is a block here, we might have to stop
       stateHere = world.getBlockState(placePos);
       if (stateHere != null) {
@@ -134,9 +134,9 @@ public class UtilPlaceBlocks {
         // ok its a soft (isReplaceable == true) block so try to break it first try to destroy it
         // unless it is liquid, don't try to destroy liquid
         //blockHere.getMaterial(stateHere)
-        if (stateHere.getMaterial().isLiquid() == false) {
+        if (!stateHere.getMaterial().isLiquid()) {
           boolean dropBlock = true;
-          if (world.isRemote == false) {
+          if (!world.isRemote) {
             world.destroyBlock(placePos, dropBlock);
           }
         }
@@ -149,7 +149,7 @@ public class UtilPlaceBlocks {
     try {
       // flags specifies what to update, '3' means notify client & neighbors
       // isRemote to make sure we are in a server thread
-      if (world.isRemote == false) {
+      if (!world.isRemote) {
         success = world.setBlockState(placePos, placeState, 3); // returns false when placement failed
       }
     }

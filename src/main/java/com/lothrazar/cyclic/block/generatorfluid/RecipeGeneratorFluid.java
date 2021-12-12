@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generatorfluid;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.recipe.FluidTagIngredient;
@@ -17,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 @SuppressWarnings("rawtypes")
-public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
+public class RecipeGeneratorFluid<T extends TileEntityBase> extends CyclicRecipe {
 
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private final int ticks;
@@ -105,7 +106,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public RecipeGeneratorFluid<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
+    public RecipeGeneratorFluid<? extends TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
       RecipeGeneratorFluid r = null;
       try {
         //        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));
@@ -123,12 +124,11 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeGeneratorFluid read(ResourceLocation recipeId, PacketBuffer buffer) {
-      RecipeGeneratorFluid r = new RecipeGeneratorFluid(recipeId,
+    public RecipeGeneratorFluid<TileEntityBase> read(ResourceLocation recipeId, PacketBuffer buffer) {
+      //server reading recipe from client or vice/versa
+      return new RecipeGeneratorFluid<TileEntityBase>(recipeId,
           FluidTagIngredient.readFromPacket(buffer),
           buffer.readInt(), buffer.readInt());
-      //server reading recipe from client or vice/versa 
-      return r;
     }
 
     @Override

@@ -45,9 +45,7 @@ public class PacketFluidSync extends PacketBase {
   }
 
   public static void handle(PacketFluidSync message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      doWork(message);
-    });
+    ctx.get().enqueueWork(() -> doWork(message));
     message.done(ctx);
   }
 
@@ -59,9 +57,8 @@ public class PacketFluidSync extends PacketBase {
   }
 
   public static PacketFluidSync decode(PacketBuffer buf) {
-    PacketFluidSync msg = new PacketFluidSync(buf.readBlockPos(),
+    return new PacketFluidSync(buf.readBlockPos(),
         FluidStack.loadFluidStackFromNBT(buf.readCompoundTag()));
-    return msg;
   }
 
   public static void encode(PacketFluidSync msg, PacketBuffer buf) {

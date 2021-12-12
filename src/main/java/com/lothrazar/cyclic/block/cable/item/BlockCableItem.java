@@ -42,9 +42,9 @@ public class BlockCableItem extends CableBase {
   @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (world.isRemote) {
-      TileEntity ent = world.getTileEntity(pos);
+      final TileEntity ent = world.getTileEntity(pos);
       for (Direction d : Direction.values()) {
-        IItemHandler handlerHere = ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
+        final IItemHandler handlerHere = ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).resolve().orElse(null);
         //show current
         if (handlerHere != null) {
           ItemStack current = handlerHere.getStackInSlot(0);
@@ -70,16 +70,18 @@ public class BlockCableItem extends CableBase {
   @Override
   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      TileCableItem tileentity = (TileCableItem) worldIn.getTileEntity(pos);
+      final TileCableItem tileentity = (TileCableItem) worldIn.getTileEntity(pos);
       if (tileentity != null && tileentity.filter != null) {
         InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
       }
       for (Direction dir : Direction.values()) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir).orElse(null);
-        if (items != null) {
-          for (int i = 0; i < items.getSlots(); ++i) {
-            InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
-          }
+        final IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir).orElse(null);
+        if (items == null) {
+          continue;
+        }
+
+        for (int i = 0; i < items.getSlots(); ++i) {
+          InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
         }
       }
       worldIn.updateComparatorOutputLevel(pos, this);
@@ -106,6 +108,7 @@ public class BlockCableItem extends CableBase {
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockState(pos, stateIn);
+        updateConnection(worldIn, pos, d, EnumConnectType.INVENTORY);
       }
     }
     super.onBlockPlacedBy(worldIn, pos, stateIn, placer, stack);
@@ -116,17 +119,21 @@ public class BlockCableItem extends CableBase {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.get(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
+      updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
     if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
       BlockState with = stateIn.with(property, EnumConnectType.INVENTORY);
       if (world instanceof World && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
-        ((World) world).setBlockState(currentPos, with);
+        if (((World) world).setBlockState(currentPos, with)) {
+          updateConnection(world, currentPos, facing, EnumConnectType.INVENTORY);
+        }
       }
       return with;
     }
     else {
+      updateConnection(world, currentPos, facing, EnumConnectType.NONE);
       return stateIn.with(property, EnumConnectType.NONE);
     }
   }

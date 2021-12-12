@@ -62,7 +62,7 @@ public class GhostBlock extends BlockBase {
 
   private boolean isPassable(IBlockReader worldIn, BlockPos pos) {
     boolean powered = false;
-    if ((worldIn instanceof World) == false) {
+    if (!(worldIn instanceof World)) {
       return powered;
     }
     World world = (World) worldIn;

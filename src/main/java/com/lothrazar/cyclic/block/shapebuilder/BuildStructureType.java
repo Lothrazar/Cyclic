@@ -13,10 +13,7 @@ public enum BuildStructureType {
   }
 
   public boolean hasHeight() {
-    if (this == SPHERE || this == DIAGONAL || this == DOME || this == CUP) {
-      return false;
-    }
-    return true;
+    return this != SPHERE && this != DIAGONAL && this != DOME && this != CUP;
   }
 
   public String shortcode() {

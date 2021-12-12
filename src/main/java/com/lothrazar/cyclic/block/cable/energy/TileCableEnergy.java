@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.cable.energy;
 
-import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
@@ -10,14 +8,14 @@ import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -26,125 +24,160 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileCableEnergy extends TileEntityBase implements ITickableTileEntity {
 
   private static final int MAX = 32000;
-  final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private static final int TIMER_SIDE_INPUT = 15;
+  public final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private final Map<Direction, EnumConnectType> connectTypeMap = new HashMap<>();
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
-  private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
+  private final Map<Direction, LazyOptional<IEnergyStorage>> energyCapSides = new HashMap<>();
+  private final Map<Direction, IEnergyStorage> energyCache = new HashMap<>();
+  private final Map<Direction, TileEntityBase> adjacentTileEntityBases = new HashMap<>();
+  private final Map<Direction, Integer> receivedFrom = new HashMap<>();
 
   public TileCableEnergy() {
     super(TileRegistry.energy_pipeTile);
-    for (Direction f : Direction.values()) {
-      mapIncomingEnergy.put(f, 0);
+  }
+
+  @Override
+  public IEnergyStorage getEnergyStorage() {
+    return energy;
+  }
+
+  @Override
+  protected IEnergyStorage getAdjacentEnergyStorage(final Direction side) {
+    return energyCache.computeIfAbsent(side, k -> {
+      adjacentTileEntityBases.remove(k);
+      if (world == null) {
+        return null;
+      }
+      final TileEntity tileEntity = world.getTileEntity(pos.offset(k));
+      if (tileEntity == null) {
+        return null;
+      }
+      else if (tileEntity instanceof TileEntityBase) {
+        adjacentTileEntityBases.put(k, (TileEntityBase) tileEntity);
+      }
+      final LazyOptional<IEnergyStorage> optCap = tileEntity.getCapability(CapabilityEnergy.ENERGY, k.getOpposite());
+      final IEnergyStorage storage = optCap.resolve().orElse(null);
+      if (storage != null) {
+        optCap.addListener((o) -> {
+          adjacentTileEntityBases.remove(k);
+          energyCache.remove(k);
+          receivedFrom.remove(k);
+        });
+      }
+      return storage;
+    });
+  }
+
+  private EnumConnectType getConnectionType(final Direction side) {
+    return connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
+  }
+
+  @Override
+  public void setReceivedFrom(final  Direction side) {
+    receivedFrom.put(side, TIMER_SIDE_INPUT);
+  }
+
+  @Override
+  public void updateConnection(final Direction side, final EnumConnectType connectType) {
+    final EnumConnectType oldConnectType = getConnectionType(side);
+    if (connectType == EnumConnectType.BLOCKED && oldConnectType != EnumConnectType.BLOCKED) {
+      final LazyOptional<IEnergyStorage> sidedCap = energyCapSides.get(side);
+      if (sidedCap != null) {
+        sidedCap.invalidate();
+        energyCapSides.remove(side);
+      }
     }
+    else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
+      energyCapSides.put(side, LazyOptional.of(() -> energy));
+    }
+    connectTypeMap.put(side, connectType);
   }
 
   @Override
   public void tick() {
-    this.syncEnergy();
-    this.tickDownIncomingPowerFaces();
-    this.tickCableFlow();
-    for (final Direction extractSide : Direction.values()) {
-      final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
-      final EnumConnectType connection = this.getBlockState().get(extractFace);
-      if (connection.isExtraction()) {
-        tryExtract(extractSide);
+    if (world == null || world.isRemote) {
+      return;
+    }
+    for (final Iterator<Map.Entry<Direction, Integer>> it = receivedFrom.entrySet().iterator(); it.hasNext(); ) {
+      final Map.Entry<Direction, Integer> entry = it.next();
+      entry.setValue(entry.getValue() - 1);
+      if (entry.getValue() <= 0) {
+        it.remove();
       }
     }
-  }
-
-  private void tryExtract(Direction extractSide) {
-    if (extractSide == null) {
-      return;
-    }
-    final BlockPos posTarget = this.pos.offset(extractSide);
-    final TileEntity tile = world.getTileEntity(posTarget);
-    if (tile == null) {
-      return;
-    }
-    final IEnergyStorage itemHandlerFrom = tile
-        .getCapability(CapabilityEnergy.ENERGY, extractSide.getOpposite())
-        .orElse(null);
-    if (itemHandlerFrom == null) {
-      return;
-    }
-    final int capacity = energy.getMaxEnergyStored() - energy.getEnergyStored();
-    if (capacity <= 0) {
-      return;
-    }
-    //first we simulate
-    final int energyToExtract = itemHandlerFrom.extractEnergy(capacity, true);
-    if (energyToExtract <= 0) {
-      return;
-    }
-    final int energyReceived = energy.receiveEnergy(energyToExtract, false);
-    if (energyReceived <= 0) {
-      return;
-    }
-    final int energyExtracted = itemHandlerFrom.extractEnergy(energyReceived, false);
-    //sanity check
-    if (energyExtracted != energyReceived) {
-      ModCyclic.LOGGER.error("Imbalance extracting energy, extracted " + energyExtracted + " received " + energyReceived);
-    }
-  }
-
-  private void tickCableFlow() {
-    for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
-      final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
-      final EnumConnectType connection = this.getBlockState().get(outgoingFace);
-      if (connection.isExtraction() || connection.isBlocked()) {
-        continue;
+    int remainingAmount = MAX;
+    for (final Direction side : UtilDirection.getAllInDifferentOrder()) {
+      final EnumConnectType connectType = getConnectionType(side);
+      if (connectType == EnumConnectType.CABLE) {
+        remainingAmount -= getEnergyFromAdjacent(energy, side, remainingAmount);
       }
-      if (!this.isEnergyIncomingFromFace(outgoingSide)) {
-        moveEnergy(outgoingSide, MAX);
-      }
-    }
-  }
-
-  public void tickDownIncomingPowerFaces() {
-    for (final Direction incomingDirection : Direction.values()) {
-      mapIncomingEnergy.computeIfPresent(incomingDirection, (direction, amount) -> {
-        if (amount > 0) {
-          amount -= 1;
+      else if (connectType == EnumConnectType.INVENTORY && !receivedFrom.containsKey(side)) {
+        final int moved = moveEnergyToAdjacent(energy, side, remainingAmount);
+        if (moved <= 0) {
+          continue;
         }
-        return amount;
-      });
+        remainingAmount -= moved;
+        final TileEntityBase adjacentTileEntityBase = adjacentTileEntityBases.get(side);
+        if (adjacentTileEntityBase != null) {
+          adjacentTileEntityBase.setReceivedFrom(side.getOpposite());
+        }
+      }
+    }
+
+    if (world.getGameTime() % 20 != 0) {
+      return;
+    }
+
+    final int currentEnergy = energy.getEnergyStored();
+    if (currentEnergy != energy.energyLastSynced) {
+      final PacketEnergySync packetEnergySync = new PacketEnergySync(this.getPos(), currentEnergy);
+      PacketRegistry.sendToAllClients(world, packetEnergySync);
+      energy.energyLastSynced = currentEnergy;
     }
   }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY && !CableBase.isCableBlocked(this.getBlockState(), side)) {
-      return energyCap.cast();
+    if (cap == CapabilityEnergy.ENERGY) {
+      if (side == null) {
+        return energyCap.cast();
+      }
+      LazyOptional<IEnergyStorage> sidedCap = energyCapSides.get(side);
+      if (sidedCap == null) {
+        if (getConnectionType(side) != EnumConnectType.BLOCKED) {
+          sidedCap = LazyOptional.of(() -> energy);
+          energyCapSides.put(side, sidedCap);
+          return sidedCap.cast();
+        }
+      }
+      else {
+        return sidedCap.cast();
+      }
     }
     return super.getCapability(cap, side);
   }
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
-    for (Direction f : Direction.values()) {
-      mapIncomingEnergy.put(f, tag.getInt(f.getString() + "_incenergy"));
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    for (final LazyOptional<IEnergyStorage> sidedCap : energyCapSides.values()) {
+      sidedCap.invalidate();
     }
+    super.invalidateCaps();
+  }
+
+  @Override
+  public void read(BlockState bs, CompoundNBT tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    energy.energyLastSynced = energy.getEnergyStored();
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
-    for (Direction f : Direction.values()) {
-      tag.putInt(f.getString() + "_incenergy", mapIncomingEnergy.get(f));
-    }
     tag.put(NBTENERGY, energy.serializeNBT());
     return super.write(tag);
-  }
-
-  private static final int TIMER_SIDE_INPUT = 15;
-
-  private boolean isEnergyIncomingFromFace(Direction face) {
-    return mapIncomingEnergy.get(face) > 0;
-  }
-
-  public void updateIncomingEnergyFace(Direction inputFrom) {
-    mapIncomingEnergy.put(inputFrom, TIMER_SIDE_INPUT);
   }
 
   @Override
@@ -153,19 +186,5 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
   @Override
   public int getField(int field) {
     return 0;
-  }
-
-  @Override
-  protected void syncEnergy() {
-    //skip if clientside
-    if (world.isRemote || world.getGameTime() % 20 != 0) {
-      return;
-    }
-    final int currentEnergy = energy.getEnergyStored();
-    if (currentEnergy != energyLastSynced) {
-      final PacketEnergySync packetEnergySync = new PacketEnergySync(this.getPos(), currentEnergy);
-      PacketRegistry.sendToAllClients(world, packetEnergySync);
-      energyLastSynced = currentEnergy;
-    }
   }
 }

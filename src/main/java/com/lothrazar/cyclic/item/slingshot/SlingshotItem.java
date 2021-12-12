@@ -44,7 +44,7 @@ public class SlingshotItem extends ItemBase {
     if (percentageCharged < 0.1) {
       return; //not enough force to go with any realistic path 
     }
-    if (entity instanceof PlayerEntity == false) {
+    if (!(entity instanceof PlayerEntity)) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entity;

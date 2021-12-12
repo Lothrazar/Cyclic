@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.solidifier;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.recipe.FluidTagIngredient;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
+public class RecipeSolidifier<T> extends CyclicRecipe {
 
   private final ItemStack result;
   public final FluidTagIngredient fluidIngredient;
@@ -57,7 +58,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
+  public boolean matches(TileEntityBase inv, World worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
       return matchItems(tile) && CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIngredient);
@@ -123,7 +124,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public static final SerializeSolidifier SERIALIZER = new SerializeSolidifier();
 
   @SuppressWarnings("rawtypes")
-  public static class SerializeSolidifier extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase>> {
+  public static class SerializeSolidifier extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeSolidifier<? extends TileEntityBase>> {
 
     SerializeSolidifier() {
       // This registry name is what people will specify in their json files.
@@ -132,7 +133,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
     @SuppressWarnings("unchecked")
     @Override
-    public RecipeSolidifier<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
+    public RecipeSolidifier<? extends TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
         //TODO: in 1.17 make array
@@ -161,15 +162,14 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeSolidifier read(ResourceLocation recipeId, PacketBuffer buffer) {
-      RecipeSolidifier r = new RecipeSolidifier(recipeId,
+    public RecipeSolidifier<? extends TileEntityBase> read(final ResourceLocation recipeId, final PacketBuffer buffer) {
+      return new RecipeSolidifier<>(recipeId,
           Ingredient.read(buffer), Ingredient.read(buffer), Ingredient.read(buffer), FluidTagIngredient.readFromPacket(buffer),
           buffer.readItemStack());
-      return r;
     }
 
     @Override
-    public void write(PacketBuffer buffer, RecipeSolidifier recipe) {
+    public void write(final PacketBuffer buffer, final RecipeSolidifier recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       Ingredient one = (Ingredient) recipe.ingredients.get(1);
       Ingredient two = (Ingredient) recipe.ingredients.get(2);

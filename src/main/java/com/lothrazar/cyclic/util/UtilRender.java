@@ -159,9 +159,9 @@ public class UtilRender {
       float g;
       float b;
       if (bakedquad.hasTintIndex()) {
-        r = red * 1f;
-        g = green * 1f;
-        b = blue * 1f;
+        r = red;
+        g = green;
+        b = blue;
       }
       else {
         r = 1f;

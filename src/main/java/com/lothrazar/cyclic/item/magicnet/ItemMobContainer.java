@@ -44,7 +44,7 @@ public class ItemMobContainer extends ItemBase {
   public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
     ItemStack stack = player.getHeldItem(context.getHand());
-    if (stack.hasTag() == false) {
+    if (!stack.hasTag()) {
       return ActionResultType.PASS;
     }
     BlockPos pos = context.getPos();

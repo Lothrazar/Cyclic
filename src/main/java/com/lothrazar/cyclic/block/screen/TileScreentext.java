@@ -38,7 +38,7 @@ public class TileScreentext extends TileEntityBase implements INamedContainerPro
   public int getColor() {
     return ((red & 0xFF) << 16) | //red
         ((green & 0xFF) << 8) | //green
-        ((blue & 0xFF) << 0);
+        ((blue & 0xFF));
   }
 
   @Override

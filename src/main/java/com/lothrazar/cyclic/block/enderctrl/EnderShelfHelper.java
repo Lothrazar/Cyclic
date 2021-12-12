@@ -21,7 +21,7 @@ public class EnderShelfHelper {
   public static final int MAX_ITERATIONS = 6400; // TODO config entry
 
   public static BlockPos findConnectedController(World world, BlockPos shelfPos) {
-    return recursivelyFindConnectedController(world, shelfPos, new HashMap<BlockPos, Integer>(), 0);
+    return recursivelyFindConnectedController(world, shelfPos, new HashMap<>(), 0);
   }
 
   private static BlockPos recursivelyFindConnectedController(World world, BlockPos pos, Map<BlockPos, Integer> visitedLocations, int iterations) {

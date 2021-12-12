@@ -21,7 +21,7 @@ public class BlockWirelessTransmit extends BlockBase {
 
   public BlockWirelessTransmit(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
-    this.setDefaultState(this.stateContainer.getBaseState().with(POWERED, Boolean.valueOf(false)));
+    this.setDefaultState(this.stateContainer.getBaseState().with(POWERED, Boolean.FALSE));
     this.setHasGui();
   }
 

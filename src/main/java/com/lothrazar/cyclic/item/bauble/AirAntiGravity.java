@@ -26,13 +26,13 @@ public class AirAntiGravity extends ItemBaseToggle {
     if (!this.isOn(stack)) {
       return;
     }
-    if (entity instanceof PlayerEntity == false) {
+    if (!(entity instanceof PlayerEntity)) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entity;
     BlockPos belowMe = player.getPosition().down();
     //sneak on air, or a nonsolid block like a flower
-    boolean isAirBorne = (world.isAirBlock(belowMe) || world.isTopSolid(belowMe, player) == false);
+    boolean isAirBorne = (world.isAirBlock(belowMe) || !world.isTopSolid(belowMe, player));
     //
     if (isAirBorne && player.getMotion().y < 0) { //player.isSneaking() &&
       double y = (player.isCrouching()) ? DOWNWARD_SPEED_SNEAKING : 0;

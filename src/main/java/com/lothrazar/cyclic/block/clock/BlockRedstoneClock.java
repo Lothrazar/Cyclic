@@ -15,7 +15,7 @@ public class BlockRedstoneClock extends BlockBase {
 
   public BlockRedstoneClock(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
-    this.setDefaultState(this.stateContainer.getBaseState().with(LIT, Boolean.valueOf(false)));
+    this.setDefaultState(this.stateContainer.getBaseState().with(LIT, Boolean.FALSE));
     this.setHasGui();
   }
 

@@ -48,9 +48,8 @@ public class BlockCrafter extends BlockBase {
       TileEntity tileentity = worldIn.getTileEntity(pos);
       if (tileentity != null) {
         TileCrafter tileCrafter = (TileCrafter) tileentity;
-        tileCrafter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
-          h.extractItem(0, 64, false);
-        });
+        tileCrafter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h
+          -> h.extractItem(0, 64, false));
         tileCrafter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
           for (int i = 0; i < h.getSlots(); i++) {
             h.extractItem(i, 64, false);

@@ -69,9 +69,8 @@ public class EnchantTraveller extends EnchantBase {
 
   @Override
   public boolean canApply(ItemStack stack) {
-    boolean yes = (stack.getItem() instanceof ArmorItem)
+    return (stack.getItem() instanceof ArmorItem)
         && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
-    return yes;
   }
 
   @Override

@@ -44,8 +44,7 @@ public class PacketItemToggle extends PacketBase {
   }
 
   public static PacketItemToggle decode(PacketBuffer buf) {
-    PacketItemToggle p = new PacketItemToggle(buf.readInt());
-    return p;
+    return new PacketItemToggle(buf.readInt());
   }
 
   public static void encode(PacketItemToggle msg, PacketBuffer buf) {

@@ -66,6 +66,12 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
@@ -83,21 +89,21 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
     }
-    if (world.isRemote) {
-      return;
-    }
-    boolean moved = false;
+    int moved = 0;
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot(0);
     if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-      moved = moveEnergy(Direction.UP, loc.getPos(), transferRate);
+      moved = moveEnergyToBlockPos(energy, loc.getPos(), Direction.UP, transferRate);
     }
-    this.setLitProperty(moved);
+    this.setLitProperty(moved > 0);
   }
 
   BlockPosDim getTargetInSlot(int s) {

@@ -16,6 +16,7 @@ public class FluidRegistry {
   public static FluidHoneyHolder honey;
   public static FluidMagmaHolder magma;
 
+  @SuppressWarnings("InstantiationOfUtilityClass")
   public static void setup() {
     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     xpjuice = new FluidXpJuiceHolder(modEventBus);

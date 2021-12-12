@@ -98,9 +98,11 @@ public class BlockEnderCtrl extends BlockBase {
       return ActionResultType.PASS;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-        insertIntoController(player, hand, heldItem, h);
-      });
+      final TileEntity tileEntity = world.getTileEntity(pos);
+      if (tileEntity != null) {
+        tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(itemHandler ->
+                insertIntoController(player, hand, heldItem, itemHandler));
+      }
     }
     return ActionResultType.CONSUME;
   }

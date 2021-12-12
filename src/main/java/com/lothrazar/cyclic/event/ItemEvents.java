@@ -110,7 +110,7 @@ public class ItemEvents {
     ItemStack stackBow = event.getBow();
     PlayerEntity player = event.getPlayer();
     World worldIn = player.world;
-    if (worldIn.isRemote == false) {
+    if (!worldIn.isRemote) {
       int level = EnchantRegistry.MULTIBOW.getCurrentLevelTool(stackBow);
       if (level <= 0) {
         return;
@@ -323,7 +323,7 @@ public class ItemEvents {
         && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
       // 
       if (liv.isInWater()
-          && liv.canBreatheUnderwater() == false
+          && !liv.canBreatheUnderwater()
           && liv.getAir() < liv.getMaxAir()
           && !liv.isPotionActive(Effects.WATER_BREATHING)) {
         liv.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 20 * 60, 4));

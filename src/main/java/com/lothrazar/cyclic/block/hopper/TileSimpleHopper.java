@@ -42,15 +42,24 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     //block if redstone powered
     if (this.isPowered()) {
       return;
     }
     this.tryPullFromWorld(pos.offset(Direction.UP));
-    this.tryExtract(inventory, Direction.UP, getFlow(), null);
+    this.getItemsFromAdjacent(inventory, Direction.UP, getFlow());
     Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
-    this.moveItems(exportToSide, getFlow(), inventory);
+    this.moveItemsToAdjacent(inventory, exportToSide, getFlow());
   }
 
   public int getFlow() {

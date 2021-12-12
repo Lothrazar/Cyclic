@@ -45,20 +45,20 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   private static final int MAX_RADIUS = 64;
   private int radius = MAX_RADIUS;
   public static IntValue POWERCONF;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   /** Primary potion effect given by this beacon. */
-  private List<EffectInstance> effects = new ArrayList<>();
+  private final List<EffectInstance> effects = new ArrayList<>();
   EntityFilterType entityFilter = EntityFilterType.PLAYERS;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
+    public boolean isItemValid(final int slot, final ItemStack stack) {
       List<EffectInstance> newEffects = PotionUtils.getEffectsFromStack(stack);
       return newEffects.size() > 0;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TilePotion() {
     super(TileRegistry.beacon);
@@ -67,6 +67,9 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -116,6 +119,13 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

@@ -90,11 +90,8 @@ public class ContainerCrafter extends ContainerBase {
         indexx++;
       }
     }
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
-      addSlot(new CrafterGridSlot(h, 0,
-          PREVIEW_START_X,
-          PREVIEW_START_Y));
-    });
+    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h ->
+      addSlot(new CrafterGridSlot(h, 0, PREVIEW_START_X, PREVIEW_START_Y)));
     this.endInv = inventorySlots.size();
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileCrafter.Fields.values().length);

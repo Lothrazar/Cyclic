@@ -67,12 +67,12 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.flowing == 1) {
       this.exportEnergyAllSides();
-    }
-    if (world.isRemote) {
-      return;
     }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -143,6 +143,14 @@ public class TileGeneratorFluid extends TileEntityBase implements INamedContaine
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    tankWrapper.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

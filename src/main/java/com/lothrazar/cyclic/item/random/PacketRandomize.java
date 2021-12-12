@@ -29,10 +29,9 @@ public class PacketRandomize extends PacketBase {
   }
 
   public static PacketRandomize decode(PacketBuffer buf) {
-    PacketRandomize p = new PacketRandomize(buf.readBlockPos(),
+    return new PacketRandomize(buf.readBlockPos(),
         Direction.values()[buf.readInt()],
         Hand.values()[buf.readInt()]);
-    return p;
   }
 
   public static void encode(PacketRandomize msg, PacketBuffer buf) {
@@ -46,8 +45,8 @@ public class PacketRandomize extends PacketBase {
       ServerPlayerEntity player = ctx.get().getSender();
       World world = player.getEntityWorld();
       List<BlockPos> places = RandomizerItem.getPlaces(message.pos, message.side);
-      List<BlockPos> rpos = new ArrayList<BlockPos>();
-      List<BlockState> rstates = new ArrayList<BlockState>();
+      List<BlockPos> rpos = new ArrayList<>();
+      List<BlockState> rstates = new ArrayList<>();
       //
       BlockState stateHere = null;
       boolean atLeastOne = false;

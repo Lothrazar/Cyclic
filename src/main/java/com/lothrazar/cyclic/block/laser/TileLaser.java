@@ -61,6 +61,12 @@ public class TileLaser extends TileEntityBase implements INamedContainerProvider
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public ITextComponent getDisplayName() {
     return new StringTextComponent(getType().getRegistryName().getPath());
   }

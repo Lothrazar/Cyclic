@@ -52,7 +52,7 @@ public class RandomizerItem extends ItemBase {
   }
 
   public static List<BlockPos> getPlaces(final BlockPos pos, final Direction side) {
-    List<BlockPos> places = new ArrayList<BlockPos>();
+    List<BlockPos> places = new ArrayList<>();
     int xMin = pos.getX();
     int yMin = pos.getY();
     int zMin = pos.getZ();
@@ -95,11 +95,8 @@ public class RandomizerItem extends ItemBase {
     if (stateHere.getBlockHardness(world, p) < 0) {
       return false; //unbreakable
     }
-    if (world.getTileEntity(p) == null
-        && world.isAirBlock(p) == false
-        && stateHere.getMaterial().isLiquid() == false) {
-      return true;
-    }
-    return false;
+    return world.getTileEntity(p) == null
+        && !world.isAirBlock(p)
+        && !stateHere.getMaterial().isLiquid();
   }
 }

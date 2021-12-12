@@ -20,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileCrate extends TileEntityBase implements INamedContainerProvider {
 
   ItemStackHandler inventory = new ItemStackHandler(9 * 9);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileCrate() {
     super(TileRegistry.crate);
@@ -42,6 +42,12 @@ public class TileCrate extends TileEntityBase implements INamedContainerProvider
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

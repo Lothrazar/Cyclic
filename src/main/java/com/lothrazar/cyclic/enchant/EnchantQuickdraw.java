@@ -68,7 +68,7 @@ public class EnchantQuickdraw extends EnchantBase {
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) event.getEntity();
-      if (player.isHandActive() == false) {
+      if (!player.isHandActive()) {
         return;
       }
       Hand hand = player.getActiveHand();
@@ -76,7 +76,7 @@ public class EnchantQuickdraw extends EnchantBase {
         return;
       }
       ItemStack heldItem = player.getHeldItem(hand);
-      if (heldItem.getItem() instanceof BowItem == false) {
+      if (!(heldItem.getItem() instanceof BowItem)) {
         return;
       }
       int level = getCurrentLevelTool(heldItem);

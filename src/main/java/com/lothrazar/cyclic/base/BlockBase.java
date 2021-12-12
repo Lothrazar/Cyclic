@@ -77,8 +77,7 @@ public class BlockBase extends Block {
       return state.with(BlockStateProperties.FACING, newDir);
     }
     // default doesnt do much
-    BlockState newState = state.rotate(direction);
-    return newState;
+    return state.rotate(direction);
   }
 
   @SuppressWarnings("deprecation")
@@ -179,10 +178,7 @@ public class BlockBase extends Block {
       return false;
     }
     TileEntity neighbor = world.getTileEntity(facingPos);
-    if (neighbor != null
-        && neighbor.getCapability(cap, facing.getOpposite()).orElse(null) != null) {
-      return true;
-    }
-    return false;
+    return neighbor != null
+            && neighbor.getCapability(cap, facing.getOpposite()).resolve().orElse(null) != null;
   }
 }

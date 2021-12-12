@@ -62,9 +62,8 @@ public class EnchantStep extends EnchantBase {
   @Override
   public boolean canApply(ItemStack stack) {
     //anything that goes on your feet
-    boolean yes = (stack.getItem() instanceof ArmorItem)
+    return (stack.getItem() instanceof ArmorItem)
         && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
-    return yes;
   }
 
   @Override
@@ -75,14 +74,14 @@ public class EnchantStep extends EnchantBase {
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
     //check if NOT holding this harm
-    if (event.getEntityLiving() instanceof PlayerEntity == false) {
+    if (!(event.getEntityLiving() instanceof PlayerEntity)) {
       return;
     }
     PlayerEntity player = (PlayerEntity) event.getEntityLiving();
     //Ticking
     ItemStack armor = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
     int level = 0;
-    if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
+    if (!armor.isEmpty() && EnchantmentHelper.getEnchantments(armor) != null
         && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
       //todo: maybe any armor?
       level = EnchantmentHelper.getEnchantments(armor).get(this);

@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -55,18 +56,17 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
     }
     setLitProperty(true);
-    if (world.isRemote) {
-      return;
-    }
     AxisAlignedBB aabb = getRange();
-    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
-      return entity.isAlive(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
-    });
+    //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
+    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, Entity::isAlive);
     if (list.size() > 0) {
       ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();
@@ -103,6 +103,12 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override
@@ -149,10 +155,9 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
       // when aiming down, we dont have the offset to get [current block] without this
       yMin++;
     }
-    AxisAlignedBB aabb = new AxisAlignedBB(
+    return new AxisAlignedBB(
         center.getX() - radius, yMin, center.getZ() - radius,
         center.getX() + radius + 1, yMax, center.getZ() + radius + 1);
-    return aabb;
   }
 
   @Override

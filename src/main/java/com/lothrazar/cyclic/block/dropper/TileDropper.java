@@ -37,10 +37,10 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
 
   static final int MAX = 64000;
   public static IntValue POWERCONF;
-  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private ItemStackHandler inventory = new ItemStackHandler(1);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  public final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  public final ItemStackHandler inventory = new ItemStackHandler(1);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int dropCount = 1;
   private int delay = 10;
   private int hOffset = 0;
@@ -51,6 +51,9 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -107,6 +110,13 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
@@ -127,8 +137,7 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   }
 
   private BlockPos getTargetPos() {
-    BlockPos target = this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
-    return target;
+    return this.getCurrentFacingPos().offset(this.getCurrentFacing(), hOffset);
   }
 
   @Override

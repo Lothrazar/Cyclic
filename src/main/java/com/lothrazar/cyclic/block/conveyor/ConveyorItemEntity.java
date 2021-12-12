@@ -42,7 +42,7 @@ public class ConveyorItemEntity extends ItemEntity {
 
   @Override
   public void tick() {
-    if (this.world == null) {
+    if (world == null || world.isRemote) {
       return;
     }
     if (!(this.world.getBlockState(this.getPosition()).getBlock() instanceof BlockConveyor)) {

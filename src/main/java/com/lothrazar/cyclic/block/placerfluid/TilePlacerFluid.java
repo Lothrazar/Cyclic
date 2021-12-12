@@ -13,20 +13,22 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TilePlacerFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
-  FluidTankBase tank;
+  protected final FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> tank);
 
   static enum Fields {
     REDSTONE, RENDER;
@@ -34,31 +36,27 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
 
   public TilePlacerFluid() {
     super(TileRegistry.placer_fluid);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
   }
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
     }
     setLitProperty(true);
-    FluidStack test = tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.SIMULATE);
-    if (test.getAmount() == FluidAttributes.BUCKET_VOLUME
-        && test.getFluid().getDefaultState() != null &&
-        test.getFluid().getDefaultState().getBlockState() != null) {
-      //we got enough
-      Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
-      BlockPos offset = pos.offset(dir);
-      BlockState state = test.getFluid().getDefaultState().getBlockState();
-      if (world.isAirBlock(offset) &&
-          world.setBlockState(offset, state)) {
-        //pay
-        tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.EXECUTE);
-      }
+
+    final int fluidAmount = tank.getFluidAmount();
+    if (fluidAmount <= FluidAttributes.BUCKET_VOLUME) {
+      return;
     }
+    final FluidStack fluidStack = new FluidStack(tank.getFluid(), FluidAttributes.BUCKET_VOLUME);
+    final Direction side = this.getBlockState().get(BlockStateProperties.FACING);
+    FluidUtil.tryPlaceFluid(null, world, Hand.MAIN_HAND, pos.offset(side), tank, fluidStack);
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -72,7 +70,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
 
   @Override
   public FluidStack getFluid() {
-    return tank == null ? FluidStack.EMPTY : tank.getFluid();
+    return tank.getFluid();
   }
 
   @Override
@@ -89,9 +87,15 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       //      return tankWrapper.cast();
-      return LazyOptional.of(() -> tank).cast();
+      return fluidHandlerLazyOptional.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidHandlerLazyOptional.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

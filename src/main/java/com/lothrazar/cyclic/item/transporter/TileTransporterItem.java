@@ -76,13 +76,13 @@ public class TileTransporterItem extends ItemBase {
     Direction side = context.getFace();
     World world = context.getWorld();
     BlockPos offset = pos.offset(side);
-    if (world.isAirBlock(offset) == false) {
+    if (!world.isAirBlock(offset)) {
       return ActionResultType.FAIL;
     }
     if (placeStoredTileEntity(player, stack, offset)) {
       player.setHeldItem(context.getHand(), ItemStack.EMPTY);
       UtilSound.playSound(player, SoundRegistry.THUNK);
-      if (player.isCreative() == false) {
+      if (!player.isCreative()) {
         UtilItemStack.drop(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
       }
     }

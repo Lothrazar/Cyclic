@@ -1,27 +1,23 @@
 package com.lothrazar.cyclic.util;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 public class UtilFluid {
 
@@ -78,40 +74,12 @@ public class UtilFluid {
     return (float) stored / capacity;
   }
 
-  public static IFluidHandler getTank(World world, BlockPos pos, Direction side) {
-    final TileEntity tile = world.getTileEntity(pos);
-    if (tile == null) {
-      return null;
+  public static IFluidBlock getFluidBlock(final World world, final BlockPos blockPos) {
+    final BlockState blockState = world.getBlockState(blockPos);
+    final Block block = blockState.getBlock();
+    if (block instanceof IFluidBlock) {
+      return (IFluidBlock) block;
     }
-    return tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
-  }
-
-  public static boolean tryFillPositionFromTank(World world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, int amount) {
-    if (amount <= 0) {
-      return false;
-    }
-    if (tankFrom == null) {
-      return false;
-    }
-    final IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp).orElse(null);
-    if (fluidTo == null) {
-      return false;
-    }
-    //first we simulate
-    final FluidStack toBeDrained = tankFrom.drain(amount, FluidAction.SIMULATE);
-    if (toBeDrained.isEmpty()) {
-      return false;
-    }
-    final int filledAmount = fluidTo.fill(toBeDrained, FluidAction.EXECUTE);
-    if (filledAmount <= 0) {
-      return false;
-    }
-    final FluidStack drained = tankFrom.drain(filledAmount, FluidAction.EXECUTE);
-    final int drainedAmount = drained.getAmount();
-    //sanity check
-    if (filledAmount != drainedAmount) {
-      ModCyclic.LOGGER.error("Imbalance filling fluids, filled " + filledAmount + " drained " + drainedAmount);
-    }
-    return true;
+    return null;
   }
 }

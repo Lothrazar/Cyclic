@@ -78,6 +78,12 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -91,6 +97,9 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
@@ -145,18 +154,15 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
 
   @Override
   public void setField(int field, int value) {
-    switch (Fields.values()[field]) {
-      case REDSTONE:
-        this.needsRedstone = value % 2;
-      break;
+    if (Fields.values()[field] == Fields.REDSTONE) {
+      this.needsRedstone = value % 2;
     }
   }
 
   @Override
   public int getField(int field) {
-    switch (Fields.values()[field]) {
-      case REDSTONE:
-        return this.needsRedstone;
+    if (Fields.values()[field] == Fields.REDSTONE) {
+      return this.needsRedstone;
     }
     return 0;
   }

@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.block.cable;
 
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -214,6 +216,7 @@ public abstract class CableBase extends BlockBase implements IWaterLoggable {
         break;
       }
       if (world.getBlockState(pos).getBlock() == this && world.setBlockState(pos, newState)) {
+        updateConnection(world, pos, sideToToggle, newState.get(prop));
         if (updatePost) {
           newState.updatePostPlacement(sideToToggle, world.getBlockState(pos.offset(sideToToggle)), world, pos, pos.offset(sideToToggle));
         }
@@ -233,13 +236,20 @@ public abstract class CableBase extends BlockBase implements IWaterLoggable {
    * @param side
    * @return
    */
-  public static boolean isCableBlocked(BlockState blockState, Direction side) {
+  public static boolean isCableBlocked(final BlockState blockState, final Direction side) {
     if (side == null) {
       return false;
     }
-    EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(side);
+    final EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(side);
     return blockState.getBlock() instanceof CableBase
         && blockState.hasProperty(property)
-        && blockState.get(property).isUnBlocked() == false;
+        && !blockState.get(property).isUnBlocked();
+  }
+
+  protected void updateConnection(final IWorld world, final BlockPos blockPos, final Direction side, final EnumConnectType connectType) {
+    final TileEntity tileEntity = world.getTileEntity(blockPos);
+    if (tileEntity instanceof TileEntityBase) {
+      ((TileEntityBase) tileEntity).updateConnection(side, connectType);
+    }
   }
 }

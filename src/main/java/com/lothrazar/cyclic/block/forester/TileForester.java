@@ -73,15 +73,15 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
       return;
     }
     setLitProperty(true);
-    if (this.world.isRemote) {
-      return;
-    }
     final int cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost) {
       if (cost > 0) {
@@ -153,6 +153,13 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
@@ -205,7 +212,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   //for harvest
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
+    List<BlockPos> shape = new ArrayList<>();
     shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, height);
     return shape;
   }

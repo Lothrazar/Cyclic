@@ -418,7 +418,7 @@ public class ConfigRegistry {
   }
 
   public static Map<String, String> getMappedBeheading() {
-    Map<String, String> mappedBeheading = new HashMap<String, String>();
+    Map<String, String> mappedBeheading = new HashMap<>();
     for (String s : BEHEADING_SKINS.get()) {
       try {
         String[] stuff = s.split(":");

@@ -78,7 +78,7 @@ public abstract class ScreenBase<T extends Container> extends ContainerScreen<T>
   protected void drawName(MatrixStack ms, String name) {
     name = UtilChat.lang("block." + ModCyclic.MODID + "." + name);
     drawString(ms, name,
-        (this.getXSize() - this.font.getStringWidth(name)) / 2,
+        (float) (this.getXSize() - this.font.getStringWidth(name)) / 2,
         6.0F);
   }
 

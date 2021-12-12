@@ -75,7 +75,7 @@ public class UtilEntity {
     }
     EnderTeleportEvent event = new EnderTeleportEvent(player, x, y, z, 0);
     boolean wasCancelled = MinecraftForge.EVENT_BUS.post(event);
-    if (wasCancelled == false) {
+    if (!wasCancelled) {
       //new target? maybe, maybe not. https://github.com/PrinceOfAmber/Cyclic/issues/438
       UtilEntity.teleportWallSafe(player, world, event.getTargetX(), event.getTargetY(), event.getTargetZ());
     }
@@ -102,7 +102,7 @@ public class UtilEntity {
   public static void moveEntityWallSafe(Entity entity, World world) {
     //    world.checkBlockCollision(bb)
     //    world.hasNoCollisions(p_226669_1_)
-    while (world.hasNoCollisions(entity) == false) {
+    while (!world.hasNoCollisions(entity)) {
       entity.setPositionAndUpdate(entity.prevPosX, entity.prevPosY + 1.0D, entity.prevPosZ);
     }
   }
@@ -229,7 +229,7 @@ public class UtilEntity {
   }
 
   public static List<Entity> getItemExp(World world, AxisAlignedBB range) {
-    List<Entity> all = new ArrayList<Entity>();
+    List<Entity> all = new ArrayList<>();
     all.addAll(world.getEntitiesWithinAABB(ItemEntity.class, range));
     all.addAll(world.getEntitiesWithinAABB(ExperienceOrbEntity.class, range));
     return all;
@@ -263,9 +263,9 @@ public class UtilEntity {
 
   public static List<LivingEntity> getLivingHostile(World world, AxisAlignedBB range) {
     List<LivingEntity> all = world.getEntitiesWithinAABB(LivingEntity.class, range);
-    List<LivingEntity> nonPlayer = new ArrayList<LivingEntity>();
+    List<LivingEntity> nonPlayer = new ArrayList<>();
     for (LivingEntity ent : all) {
-      if (ent instanceof PlayerEntity == false) {
+      if (!(ent instanceof PlayerEntity)) {
         //&& ent.isCreatureType(EnumCreatureType.MONSTER, false)) {//players are not monsters so, redundant?
         nonPlayer.add(ent);
       }
@@ -384,8 +384,7 @@ public class UtilEntity {
   //  }
 
   public static float yawDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2) {
-    float f = (float) ((180.0f * Math.atan2(posX2 - posX, posZ2 - posZ)) / (float) Math.PI);
-    return f;
+    return (float) ((180.0f * Math.atan2(posX2 - posX, posZ2 - posZ)) / (float) Math.PI);
   }
 
   public static float pitchDegreesBetweenPoints(double posX, double posY, double posZ, double posX2, double posY2, double posZ2) {

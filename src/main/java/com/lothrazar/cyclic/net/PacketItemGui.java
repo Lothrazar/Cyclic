@@ -20,7 +20,7 @@ public class PacketItemGui extends PacketBase {
   public static void handle(PacketItemGui message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayerEntity player = ctx.get().getSender();
-      if ((player.openContainer instanceof ContainerStorageBag) == false) {
+      if (!(player.openContainer instanceof ContainerStorageBag)) {
         NetworkHooks.openGui(player, new StorageBagContainerProvider(), player.getPosition());
       }
       //
@@ -30,8 +30,7 @@ public class PacketItemGui extends PacketBase {
   }
 
   public static PacketItemGui decode(PacketBuffer buf) {
-    PacketItemGui p = new PacketItemGui(buf.readInt());
-    return p;
+    return new PacketItemGui(buf.readInt());
   }
 
   public static void encode(PacketItemGui msg, PacketBuffer buf) {

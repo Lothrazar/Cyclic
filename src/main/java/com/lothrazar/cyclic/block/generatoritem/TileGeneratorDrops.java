@@ -44,8 +44,8 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
   private RecipeGeneratorItem<?> currentRecipe;
@@ -58,15 +58,15 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.flowing == 1) {
       this.exportEnergyAllSides();
     }
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
-      return;
-    }
-    if (world.isRemote) {
       return;
     }
     if (this.burnTime <= 0) {
@@ -81,7 +81,10 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
   }
 
   private void tryConsumeFuel() {
-    if (burnPerTick == 0 || this.burnTime == 0) {
+    //    this.burnTimeMax = 0;
+    //to consume fuel we first need recipe
+    this.findMatchingRecipe();
+    if (burnPerTick == 0 || burnTime == 0) {
       return;
     }
     setLitProperty(true); // has recipe so lit
@@ -101,11 +104,11 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
     List<RecipeGeneratorItem<TileEntityBase>> recipes = world.getRecipeManager().getRecipesForType(CyclicRecipeType.GENERATOR_ITEM);
     for (RecipeGeneratorItem<?> rec : recipes) {
       if (rec.matches(this, world)) {
-        this.currentRecipe = rec;
-        this.burnTimeMax = this.currentRecipe.getTicks();
-        this.burnTime = this.burnTimeMax;
-        this.burnPerTick = this.currentRecipe.getRfpertick();
-        this.inputSlots.extractItem(0, 1, false);
+        currentRecipe = rec;
+        burnTimeMax = currentRecipe.getTicks();
+        burnTime = burnTimeMax;
+        burnPerTick = currentRecipe.getRfpertick();
+        inputSlots.extractItem(0, 1, false);
         ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
         return;
       }
@@ -131,6 +134,13 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

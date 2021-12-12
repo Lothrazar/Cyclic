@@ -47,7 +47,7 @@ public class AutoTorchItem extends ItemBaseToggle {
     if (!this.isOn(stack)) {
       return;
     }
-    if (entityIn instanceof PlayerEntity == false) {
+    if (!(entityIn instanceof PlayerEntity)) {
       return;
     }
     PlayerEntity player = (PlayerEntity) entityIn;

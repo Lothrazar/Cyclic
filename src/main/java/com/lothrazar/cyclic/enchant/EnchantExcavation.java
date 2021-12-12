@@ -127,7 +127,7 @@ public class EnchantExcavation extends EnchantBase {
     if (totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
       return totalBroken;
     }
-    Set<BlockPos> wasHarvested = new HashSet<BlockPos>();
+    Set<BlockPos> wasHarvested = new HashSet<>();
     Set<BlockPos> theFuture = this.getMatchingSurrounding(world, posIn, block);
     for (BlockPos targetPos : theFuture) {
       BlockState targetState = world.getBlockState(targetPos);
@@ -172,7 +172,7 @@ public class EnchantExcavation extends EnchantBase {
   private static final Direction[] VALUES = Direction.values();
 
   private Set<BlockPos> getMatchingSurrounding(World world, BlockPos start, Block blockIn) {
-    Set<BlockPos> list = new HashSet<BlockPos>();
+    Set<BlockPos> list = new HashSet<>();
     List<Direction> targetFaces = Arrays.asList(VALUES);
     try {
       // cannot replicate this error at all at max level (5 = V)

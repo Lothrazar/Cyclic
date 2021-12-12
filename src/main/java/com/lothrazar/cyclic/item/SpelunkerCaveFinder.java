@@ -78,7 +78,7 @@ public class SpelunkerCaveFinder extends ItemBase {
         break;
       }
     }
-    if (found == false) {
+    if (!found) {
       UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.none") + RANGE);
     }
     UtilItemStack.damageItem(player, stack);

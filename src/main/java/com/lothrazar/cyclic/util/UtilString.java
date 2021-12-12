@@ -61,7 +61,7 @@ public class UtilString {
         String blockIdFromList = blockIdArray[1]; //has the *
         String modIdToMatch = toMatch.getNamespace();
         String blockIdToMatch = toMatch.getPath();
-        if (modIdFromList.equals(modIdToMatch) == false) {
+        if (!modIdFromList.equals(modIdToMatch)) {
           continue;
         }
         String blockIdListWC = blockIdFromList.replace("*", "");

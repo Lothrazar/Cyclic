@@ -97,7 +97,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     List<ItemStack> input = null;
     for (int i = 0; i <= 2; i++) {
       input = inputs.get(i);
-      if (input != null && input.isEmpty() == false) {
+      if (input != null && !input.isEmpty()) {
         guiItemStacks.set(i, input);
       }
     } //getname is the same   

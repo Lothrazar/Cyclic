@@ -62,166 +62,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
+@SuppressWarnings("checkstyle:StaticVariableName")
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ContainerScreenRegistry {
-
-  @SubscribeEvent
-  public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
-    IForgeRegistry<ContainerType<?>> r = event.getRegistry();
-    //
-    // Blocks with containers
-    //
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerItemCollector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("collector"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerGeneratorPeat(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("peat_generator"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPeatFarm(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("peat_farm"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerBattery(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("battery"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerHarvester(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("harvester"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerAnvil(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("anvil"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPlacer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("placer"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerStructure(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("structure"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerMelter(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("melter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerSolidifier(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("solidifier"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerBreaker(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("breaker"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerExpPylon(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("experience_pylon"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerUser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("user"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDetector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("detector_entity"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDetectorItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("detector_item"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDisenchant(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("disenchanter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerTransmit(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("wireless_transmitter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerClock(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("clock"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerCrate(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("crate"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPlacerFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("placer_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerFluidCollect(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("collector_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerFan(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("fan"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPotion(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("beacon"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerDropper(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("dropper"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerForester(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("forester"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerMiner(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("miner"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerScreentext(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("screen"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerAnvilMagma(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("anvil_magma"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerUncraft(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("uncrafter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerCrafter(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("crafter"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerShapedata(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("computer_shape"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerWorkbench(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("workbench"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerFisher(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("fisher"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerLaser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("laser"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerCableItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("item_pipe"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerCableFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("fluid_pipe"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerAnvilVoid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("anvil_void"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerWirelessEnergy(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("wireless_energy"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerWirelessItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("wireless_item"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerWirelessFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("wireless_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerGeneratorFuel(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("generator_fuel"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerGeneratorFood(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("generator_food"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerGeneratorDrops(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("generator_item"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerGeneratorFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("generator_fluid"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerPackager(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("packager"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerSoundRecorder(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("sound_recorder"));
-    r.register(IForgeContainerType.create((windowId, inv, data) -> {
-      return new ContainerSoundPlayer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player);
-    }).setRegistryName("sound_player"));
-    //
-    //  Items with containers
-    //
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerEnderBook(windowId, inv, inv.player))).setRegistryName("ender_book"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player))).setRegistryName("storage_bag"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player))).setRegistryName("crafting_bag"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null))).setRegistryName("crafting_stick"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player))).setRegistryName("filter_data"));
-    r.register(IForgeContainerType.create(((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player))).setRegistryName("inventory_cake"));
-  }
 
   @ObjectHolder(ModCyclic.MODID + ":sound_player")
   public static ContainerType<ContainerSoundPlayer> SOUND_PLAYER;
@@ -329,4 +172,174 @@ public class ContainerScreenRegistry {
   public static ContainerType<ContainerGeneratorFluid> GENERATOR_FLUID;
   @ObjectHolder(ModCyclic.MODID + ":generator_item")
   public static ContainerType<ContainerGeneratorDrops> GENERATOR_ITEM;
+
+  @SubscribeEvent
+  public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
+    IForgeRegistry<ContainerType<?>> r = event.getRegistry();
+    //
+    // Blocks with containers
+    //
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerItemCollector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("collector"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerGeneratorPeat(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("peat_generator"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerPeatFarm(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("peat_farm"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerBattery(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("battery"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerHarvester(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("harvester"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerAnvil(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("anvil"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerPlacer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("placer"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerStructure(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("structure"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerMelter(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("melter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerSolidifier(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("solidifier"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerBreaker(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("breaker"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerExpPylon(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("experience_pylon"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerUser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("user"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerDetector(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("detector_entity"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerDetectorItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("detector_item"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerDisenchant(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("disenchanter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerTransmit(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("wireless_transmitter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerClock(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("clock"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerCrate(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("crate"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerPlacerFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("placer_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerFluidCollect(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("collector_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerFan(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("fan"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerPotion(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("beacon"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerDropper(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("dropper"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerForester(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("forester"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerMiner(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("miner"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerScreentext(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("screen"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerAnvilMagma(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("anvil_magma"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerUncraft(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("uncrafter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerCrafter(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("crafter"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerShapedata(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("computer_shape"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerWorkbench(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("workbench"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerFisher(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("fisher"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerLaser(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("laser"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerCableItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("item_pipe"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerCableFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("fluid_pipe"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerAnvilVoid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("anvil_void"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerWirelessEnergy(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("wireless_energy"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerWirelessItem(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("wireless_item"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerWirelessFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("wireless_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerGeneratorFuel(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("generator_fuel"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerGeneratorFood(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("generator_food"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerGeneratorDrops(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("generator_item"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerGeneratorFluid(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("generator_fluid"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerPackager(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("packager"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerSoundRecorder(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("sound_recorder"));
+    r.register(IForgeContainerType.create((windowId, inv, data) ->
+            new ContainerSoundPlayer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)
+    ).setRegistryName("sound_player"));
+    //
+    //  Items with containers
+    //
+    r.register(IForgeContainerType.create(((windowId, inv, data) ->
+            new ContainerEnderBook(windowId, inv, inv.player))
+    ).setRegistryName("ender_book"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) ->
+            new ContainerStorageBag(windowId, inv, inv.player))
+    ).setRegistryName("storage_bag"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) ->
+            new CraftingBagContainer(windowId, inv, inv.player))
+    ).setRegistryName("crafting_bag"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) ->
+            new CraftingStickContainer(windowId, inv, inv.player, null))
+    ).setRegistryName("crafting_stick"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) ->
+            new ContainerFilterCard(windowId, inv, inv.player))
+    ).setRegistryName("filter_data"));
+    r.register(IForgeContainerType.create(((windowId, inv, data) ->
+            new ContainerCake(windowId, inv, inv.player))
+    ).setRegistryName("inventory_cake"));
+  }
 }

@@ -33,11 +33,10 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
-    if (world.isRemote) {
+    if (world == null || world.isRemote) {
       return;
     }
-    timer--;
-    if (timer > 0) {
+    if (timer-- > 0) {
       return;
     }
     timer = FREQUENCY.get();
@@ -57,11 +56,8 @@ public class TileEyeTp extends TileEntityBase implements ITickableTileEntity {
     if (player.isCreative()) {
       return true;
     }
-    if (EXP.get() > 0 && UtilPlayer.getExpTotal(player) < EXP.get()) {
-      return false;
-    }
+    return EXP.get() <= 0 || !(UtilPlayer.getExpTotal(player) < EXP.get());
     //ignore hunger. if its zero ya dyin anyway
-    return true;
   }
 
   private void payCost(PlayerEntity player) {

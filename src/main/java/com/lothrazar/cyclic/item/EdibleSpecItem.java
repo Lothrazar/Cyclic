@@ -27,7 +27,7 @@ public class EdibleSpecItem extends ItemBase {
 
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-    if (entityLiving instanceof PlayerEntity == false) {
+    if (!(entityLiving instanceof PlayerEntity)) {
       return super.onItemUseFinish(stack, worldIn, entityLiving);
     }
     PlayerEntity player = (PlayerEntity) entityLiving;

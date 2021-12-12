@@ -34,6 +34,9 @@ public class TileFanSlab extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     boolean powered = this.isPowered();
     boolean previous = this.getBlockState().get(BlockFanSlab.POWERED);
     if (previous != powered) {
@@ -58,7 +61,7 @@ public class TileFanSlab extends TileEntityBase implements ITickableTileEntity {
     for (int i = MIN_RANGE; i <= this.getRange(); i++) {
       //if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
-      if (canBlowThrough(tester) == false) {
+      if (!canBlowThrough(tester)) {
         return i; //cant pass thru
       }
     }

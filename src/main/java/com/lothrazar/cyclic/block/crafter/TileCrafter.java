@@ -74,7 +74,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
   private final LazyOptional<IItemHandler> output = LazyOptional.of(() -> outHandler);
   private final LazyOptional<IItemHandler> gridCap = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
   private final LazyOptional<IItemHandler> preview = LazyOptional.of(() -> new ItemStackHandler(1));
-  private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
+  private final ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
   //
   public static final int IO_NUM_ROWS = 5;
@@ -117,13 +117,10 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
-    if (world == null || world.getServer() == null) {
-      return;
-    }
-    if (world.isRemote) {
-      return;
-    }
     IItemHandler previewHandler = this.preview.orElse(null);
     ArrayList<ItemStack> itemStacksInGrid = getItemsInCraftingGrid();
     if (lastRecipeGrid == null) {
@@ -190,7 +187,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
           for (int i = 0; i < this.craftMatrix.getSizeInventory(); i++) {
             ItemStack recipeLeftover = this.craftMatrix.getStackInSlot(i);
             if (!recipeLeftover.isEmpty()) {
-              if (recipeLeftover.getContainerItem().isEmpty() == false) {
+              if (!recipeLeftover.getContainerItem().isEmpty()) {
                 // TODO: shared code refactor
                 ModCyclic.LOGGER.info(i + " recipe leftovers " + recipeLeftover + " ||| itemStacksInGridBackup " + itemStacksInGridBackup.get(i));
                 boolean leftoverEqual = (recipeLeftover.getItem() == recipeLeftover.getContainerItem().getItem());
@@ -398,9 +395,8 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
         }
       }
     }
-    boolean matched = recipe.matches(craftMatrix, world);
     //    ModCyclic.LOGGER.info(recipe.getRecipeOutput() + " -0 matched recipe and getRemainingItems " + matched);
-    return matched;
+    return recipe.matches(craftMatrix, world);
   }
 
   public void reset() {
@@ -476,6 +472,17 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
       }
     }
     return null;
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    input.invalidate();
+    output.invalidate();
+    gridCap.invalidate();
+    preview.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

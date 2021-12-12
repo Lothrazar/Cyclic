@@ -67,6 +67,9 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -78,9 +81,6 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return;
     }
     setLitProperty(true);
-    if (this.world.isRemote) {
-      return;
-    }
     //get and update target
     BlockPos targetPos = getShapeTarget();
     shapeIndex++;
@@ -193,9 +193,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   private static boolean simpleBreakDrop(BlockState blockState) {
-    boolean breakit = blockState.isIn(DataTags.VINES) || blockState.isIn(DataTags.CROP_BLOCKS);
     // the list tells all
-    return breakit;
+    return blockState.isIn(DataTags.VINES) || blockState.isIn(DataTags.CROP_BLOCKS);
   }
 
   public static IntegerProperty getAgeProp(BlockState blockState) {
@@ -267,6 +266,12 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return energyCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

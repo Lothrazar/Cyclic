@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
+import java.util.Arrays;
 import java.util.List;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
@@ -34,12 +35,7 @@ public class CarbonPaperItem extends ItemBase {
       SignTileEntity fakeSign = new SignTileEntity();
       fakeSign.read(Blocks.OAK_SIGN.getDefaultState(), stack.getTag());
       tooltip.add(new TranslationTextComponent("[" + fakeSign.getTextColor().getString() + "]"));
-      for (int i = 0; i <= 3; i++) {
-        //        fakeSign.setText(line, p_212365_2_);
-        ITextComponent t = fakeSign.signText[i];
-        //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
-        tooltip.add(t);
-      }
+      tooltip.addAll(Arrays.asList(fakeSign.signText).subList(0, 4));
     }
     super.addInformation(stack, worldIn, tooltip, flagIn);
   }

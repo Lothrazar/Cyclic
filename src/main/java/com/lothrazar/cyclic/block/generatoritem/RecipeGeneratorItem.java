@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generatoritem;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import net.minecraft.item.ItemStack;
@@ -16,13 +17,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 @SuppressWarnings("rawtypes")
-public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
+public class RecipeGeneratorItem<T extends TileEntityBase> extends CyclicRecipe {
 
-  private NonNullList<Ingredient> ingredients = NonNullList.create();
+  private final NonNullList<Ingredient> ingredients = NonNullList.create();
   private int ticks;
   private int rfpertick;
 
-  public RecipeGeneratorItem(ResourceLocation id, Ingredient in, int ticks, int rfpertick) {
+  public RecipeGeneratorItem(final ResourceLocation id, final Ingredient in, int ticks, int rfpertick) {
     super(id);
     ingredients.add(in);
     this.setTicks(Math.max(1, ticks));
@@ -30,7 +31,7 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.base.TileEntityBase inv, World worldIn) {
+  public boolean matches(final TileEntityBase inv, final World worldIn) {
     try {
       TileGeneratorDrops tile = (TileGeneratorDrops) inv;
       return matches(tile.inputSlots.getStackInSlot(0), ingredients.get(0));
@@ -110,7 +111,7 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public RecipeGeneratorItem<? extends com.lothrazar.cyclic.base.TileEntityBase> read(ResourceLocation recipeId, JsonObject json) {
+    public RecipeGeneratorItem<? extends TileEntityBase> read(final ResourceLocation recipeId, final JsonObject json) {
       RecipeGeneratorItem r = null;
       try {
         Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));
@@ -125,15 +126,16 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe" + recipeId, e);
       }
-      ModCyclic.LOGGER.info("Recipe loaded " + r.getId().toString());
+      if (r != null) {
+        ModCyclic.LOGGER.info("Recipe loaded " + r.getId().toString());
+      }
       return r;
     }
 
     @Override
-    public RecipeGeneratorItem read(ResourceLocation recipeId, PacketBuffer buffer) {
-      RecipeGeneratorItem r = new RecipeGeneratorItem(recipeId, Ingredient.read(buffer), buffer.readInt(), buffer.readInt());
-      //server reading recipe from client or vice/versa 
-      return r;
+    public RecipeGeneratorItem<TileEntityBase> read(final ResourceLocation recipeId, final PacketBuffer buffer) {
+      //server reading recipe from client or vice/versa
+      return new RecipeGeneratorItem<>(recipeId, Ingredient.read(buffer), buffer.readInt(), buffer.readInt());
     }
 
     @Override

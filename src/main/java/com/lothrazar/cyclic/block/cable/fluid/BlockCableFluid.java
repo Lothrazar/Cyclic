@@ -60,9 +60,9 @@ public class BlockCableFluid extends CableBase {
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!world.isRemote) {
       TileEntity ent = world.getTileEntity(pos);
-      IFluidHandler handlerHere = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
+      IFluidHandler handlerHere = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).resolve().orElse(null);
       //show current 
-      if (handlerHere != null && handlerHere.getFluidInTank(0) != null) {
+      if (handlerHere != null) {
         FluidStack fluid = handlerHere.getFluidInTank(0);
         int st = fluid.getAmount();
         if (st > 0) {
@@ -98,10 +98,12 @@ public class BlockCableFluid extends CableBase {
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       TileEntity facingTile = worldIn.getTileEntity(pos.offset(d));
-      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
+      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).resolve().orElse(null);
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
-        worldIn.setBlockState(pos, stateIn);
+        if (worldIn.setBlockState(pos, stateIn)) {
+          updateConnection(worldIn, pos, d, EnumConnectType.INVENTORY);
+        }
       }
     }
     super.onBlockPlacedBy(worldIn, pos, stateIn, placer, stack);
@@ -124,17 +126,21 @@ public class BlockCableFluid extends CableBase {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.get(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
+      updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
     if (isFluid(stateIn, facing, facingState, world, currentPos, facingPos)) {
       BlockState with = stateIn.with(property, EnumConnectType.INVENTORY);
       if (world instanceof World && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
-        ((World) world).setBlockState(currentPos, with);
+        if (((World) world).setBlockState(currentPos, with)) {
+          updateConnection(world, currentPos, facing, EnumConnectType.INVENTORY);
+        }
       }
       return with;
     }
     else {
+      updateConnection(world, currentPos, facing, EnumConnectType.NONE);
       return stateIn.with(property, EnumConnectType.NONE);
     }
   }

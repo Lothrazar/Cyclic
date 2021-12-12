@@ -1,9 +1,14 @@
 package com.lothrazar.cyclic.block.battery;
 
+import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.net.PacketEnergySync;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
+import com.lothrazar.cyclic.util.UtilEnergyStorage;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.block.BlockState;
@@ -25,16 +30,23 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  private static final int SLOT_CHARGING_RATE = 8000;
-  private Map<Direction, Boolean> poweredSides;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   public static final int MAX = 6400000;
-  ItemStackHandler batterySlots = new ItemStackHandler(1) {
+  private static final int SLOT_CHARGING_RATE = 8000;
+  private final Map<Direction, Boolean> poweredSides = new HashMap<>();
+  private final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private IEnergyStorage batterySlotItemHandler = null;
+  private Boolean isLit = null;
+  private EnumBatteryPercent lastPercentFilled = null;
+  protected final ItemStackHandler batterySlots = new ItemStackHandler(1) {
+    @Override
+    protected void onContentsChanged(int slot) {
+      batterySlotItemHandler = getStackInSlot(slot).getCapability(CapabilityEnergy.ENERGY, null).resolve().orElse(null);
+    }
 
     @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
-      return true; // TODO: is energy stack
+    public boolean isItemValid(int slot, final ItemStack stack) {
+      return stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
     }
 
     @Override
@@ -50,49 +62,60 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   public TileBattery() {
     super(TileRegistry.batterytile);
     flowing = 0;
-    poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);
     }
   }
 
   @Override
-  public void tick() {
-    this.syncEnergy();
-    setPercentFilled();
-    boolean isFlowing = this.getFlowing() == 1;
-    setLitProperty(isFlowing);
-    if (isFlowing) {
-      this.tickCableFlow();
-    }
-    this.chargeSlot();
+  public IEnergyStorage getEnergyStorage() {
+    return energy;
   }
 
-  private void chargeSlot() {
-    if (world.isRemote) {
+  @Override
+  public void tick() {
+    if (world == null || world.isRemote) {
       return;
     }
-    ItemStack targ = this.batterySlots.getStackInSlot(0);
-    IEnergyStorage storage = targ.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    if (storage != null) {
-      //
-      int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE, true);
-      if (extracted > 0 && storage.getEnergyStored() + extracted <= storage.getMaxEnergyStored()) {
-        // no sim, fo real
-        energy.extractEnergy(extracted, false);
-        storage.receiveEnergy(extracted, false);
+
+    //Actively export energy if enabled
+    boolean isFlowing = this.getFlowing() == 1;
+    if (isFlowing) {
+      for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
+        if (poweredSides.get(exportToSide)) {
+          moveEnergyToAdjacent(energy, exportToSide, MAX / 4);
+        }
       }
     }
-  }
 
-  public void setPercentFilled() {
-    BlockState st = this.getBlockState();
-    if (st.hasProperty(BlockBattery.PERCENT)) {
-      EnumBatteryPercent previousPercent = st.get(BlockBattery.PERCENT);
-      EnumBatteryPercent percent = calculateRoundedPercentFilled();
-      if (percent != previousPercent) {
-        this.world.setBlockState(pos, st.with(BlockBattery.PERCENT, percent));
+    //Charge the battery slot
+    if (batterySlotItemHandler != null) {
+      UtilEnergyStorage.moveEnergy(energy, batterySlotItemHandler, SLOT_CHARGING_RATE);
+    }
+
+    if (world.getGameTime() % 20 != 0) {
+      return;
+    }
+
+    setLitProperty(isFlowing);
+
+    //Update clients with new energy level
+    final int currentEnergy = energy.getEnergyStored();
+    if (currentEnergy != energy.energyLastSynced) {
+      final PacketEnergySync packetEnergySync = new PacketEnergySync(this.getPos(), currentEnergy);
+      PacketRegistry.sendToAllClients(world, packetEnergySync);
+      energy.energyLastSynced = currentEnergy;
+    }
+
+    //Update the percent filled bar
+    final EnumBatteryPercent percentFilled = calculateRoundedPercentFilled();
+    if (percentFilled != lastPercentFilled) {
+      final BlockState blockState = getBlockState();
+      if (blockState.hasProperty(BlockBattery.PERCENT)) {
+        //2 will send the change to clients.
+        world.setBlockState(pos, blockState.with(BlockBattery.PERCENT, percentFilled), 2);
       }
+      lastPercentFilled = percentFilled;
     }
   }
 
@@ -129,7 +152,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
   }
 
   public void setSideField(Direction side, int pow) {
-    this.poweredSides.put(side, (pow == 1));
+    poweredSides.put(side, pow == 1);
   }
 
   @Override
@@ -138,6 +161,12 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
       return energyCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override
@@ -171,20 +200,33 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     return new ContainerBattery(i, world, pos, playerInventory, playerEntity);
   }
 
-  private void tickCableFlow() {
-    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
-      if (this.poweredSides.get(exportToSide)) {
-        moveEnergy(exportToSide, MAX / 4);
-      }
-    }
-  }
-
   public int getFlowing() {
     return flowing;
   }
 
   public void setFlowing(int flowing) {
     this.flowing = flowing;
+  }
+
+  @Override
+  public void setLitProperty(final boolean lit) {
+    if (isLit != null && isLit == lit) {
+      return;
+    }
+    if (world == null) {
+      return;
+    }
+    final BlockState blockState = getBlockState();
+    if (!blockState.hasProperty(BlockBase.LIT)) {
+      return;
+    }
+    final boolean previous = blockState.get(BlockBreaker.LIT);
+    if (previous != lit) {
+      // 1 will cause a block update.
+      // 2 will send the change to clients.
+      world.setBlockState(pos, blockState.with(BlockBreaker.LIT, lit), 1 | 2);
+    }
+    isLit = lit;
   }
 
   @Override

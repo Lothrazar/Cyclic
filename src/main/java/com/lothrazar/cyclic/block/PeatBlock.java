@@ -48,7 +48,7 @@ public class PeatBlock extends BlockBase {
    * 
    */
   private void tryBake(World world, BlockPos pos, int waters) {
-    if (world.rand.nextDouble() < ConfigRegistry.PEATCHANCE.get().doubleValue() * waters) {
+    if (world.rand.nextDouble() < ConfigRegistry.PEATCHANCE.get() * waters) {
       world.setBlockState(pos, BlockRegistry.peat_baked.getDefaultState());
     }
   }

@@ -79,11 +79,11 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     guiItemStacks.init(3, true, 3, 120);
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     List<ItemStack> input = inputs.get(0);
-    if (input != null && input.isEmpty() == false) {
+    if (input != null && !input.isEmpty()) {
       guiItemStacks.set(0, input);
     }
     input = inputs.get(1);
-    if (input != null && input.isEmpty() == false) {
+    if (input != null && !input.isEmpty()) {
       guiItemStacks.set(1, input);
     }
     ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());

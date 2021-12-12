@@ -74,6 +74,9 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     ItemStack dropMe = inputSlots.getStackInSlot(0).copy();
     if (dropMe.isEmpty()) {
@@ -143,6 +146,13 @@ public class TileUncraft extends TileEntityBase implements ITickableTileEntity, 
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

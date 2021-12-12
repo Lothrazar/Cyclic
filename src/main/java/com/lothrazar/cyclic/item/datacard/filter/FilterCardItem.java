@@ -92,7 +92,7 @@ public class FilterCardItem extends ItemBase {
   }
 
   public static FluidStack getFluidStack(ItemStack filterStack) {
-    if (filterStack.getItem() instanceof FilterCardItem == false) {
+    if (!(filterStack.getItem() instanceof FilterCardItem)) {
       return FluidStack.EMPTY; //filter is air, everything allowed
     }
     IItemHandler myFilter = filterStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
@@ -107,7 +107,7 @@ public class FilterCardItem extends ItemBase {
   }
 
   public static boolean filterAllowsExtract(ItemStack filterStack, ItemStack itemTarget) {
-    if (filterStack.getItem() instanceof FilterCardItem == false) {
+    if (!(filterStack.getItem() instanceof FilterCardItem)) {
       return true; //filter is air, everything allowed
     }
     //does my filter allow extract
@@ -144,7 +144,7 @@ public class FilterCardItem extends ItemBase {
   }
 
   public static boolean filterAllowsExtract(ItemStack filterStack, FluidStack fluidInTank) {
-    if (filterStack.getItem() instanceof FilterCardItem == false) {
+    if (!(filterStack.getItem() instanceof FilterCardItem)) {
       return true; //filter is air, everything allowed
     }
     FluidStack fluidFilter = getFluidStack(filterStack);
@@ -167,7 +167,7 @@ public class FilterCardItem extends ItemBase {
     if (!fluidStack.isEmpty()) {
       nbt.putString("fluidTooltip", fluidStack.getDisplayName().getString());
     }
-    IItemHandler cap = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler cap = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().orElse(null);
     //on server  this runs . also has correct values.
     //set data for sync to client
     if (cap != null) {

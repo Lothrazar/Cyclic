@@ -35,8 +35,17 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   static final int MAX = 64000;
   public static IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
+    @Override
+    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+      if (!stack.isEmpty() && stack.isRepairable() && stack.getDamage() == 0) {
+        return outputSlots.insertItem(slot, stack, simulate);
+      }
+      else {
+        return super.insertItem(slot, stack, simulate);
+      }
+    }
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
@@ -44,8 +53,8 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileAnvilAuto() {
     super(TileRegistry.anvil);
@@ -73,6 +82,13 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
@@ -88,6 +104,9 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);

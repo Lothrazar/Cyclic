@@ -78,7 +78,7 @@ public class AppleCropBlock extends BlockBase implements IGrowable {
   public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
     int age = state.get(AGE);
     if (age < MAX_AGE && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.rand.nextInt(5) == 0)) {
-      worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(age + 1)), 2);
+      worldIn.setBlockState(pos, state.with(AGE, age + 1), 2);
       ForgeHooks.onCropsGrowPost(worldIn, pos, state);
     }
   }
@@ -95,6 +95,6 @@ public class AppleCropBlock extends BlockBase implements IGrowable {
 
   @Override
   public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-    worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(state.get(AGE) + 1)), 2);
+    worldIn.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), 2);
   }
 }

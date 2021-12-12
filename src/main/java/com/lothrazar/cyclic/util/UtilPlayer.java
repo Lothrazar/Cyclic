@@ -77,7 +77,7 @@ public class UtilPlayer {
   }
 
   public static void decrStackSize(PlayerEntity player, int slot) {
-    if (player.isCreative() == false && slot >= 0) {
+    if (!player.isCreative() && slot >= 0) {
       player.inventory.decrStackSize(slot, 1);
     }
   }
@@ -85,7 +85,6 @@ public class UtilPlayer {
   public static Item getItemArmorSlot(PlayerEntity player, EquipmentSlotType slot) {
     ItemStack inslot = player.inventory.armorInventory.get(slot.getIndex());
     //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
-    Item item = (inslot.isEmpty()) ? null : inslot.getItem();
-    return item;
+    return (inslot.isEmpty()) ? null : inslot.getItem();
   }
 }

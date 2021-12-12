@@ -64,7 +64,7 @@ public class ItemStorageBag extends ItemBase {
 
   public static int getColour(ItemStack stack) {
     CompoundNBT tags = stack.getOrCreateTag();
-    if (tags.contains(NBT_COLOUR) == false) {
+    if (!tags.contains(NBT_COLOUR)) {
       return DyeColor.BROWN.getColorValue(); //BROWN as default for normal look
     }
     return tags.getInt(NBT_COLOUR);
@@ -222,7 +222,7 @@ public class ItemStorageBag extends ItemBase {
     return hasItem.get();
   }
 
-  //unused but possibly useful
+  @SuppressWarnings("unused")
   public static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
@@ -287,7 +287,7 @@ public class ItemStorageBag extends ItemBase {
     return slots;
   }
 
-  //unused but possibly useful
+  @SuppressWarnings("unused")
   public static int getFirstBagSlot(PlayerEntity player) {
     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
       if (isBag(player.inventory.getStackInSlot(i))) {

@@ -17,7 +17,7 @@ public class BlockWirelessRec extends BlockBase {
 
   public BlockWirelessRec(Properties properties) {
     super(properties.hardnessAndResistance(1.8F));
-    this.setDefaultState(this.stateContainer.getBaseState().with(POWERED, Boolean.valueOf(false)));
+    this.setDefaultState(this.stateContainer.getBaseState().with(POWERED, Boolean.FALSE));
   }
 
   @Override

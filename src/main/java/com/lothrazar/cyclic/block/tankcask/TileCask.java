@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -16,13 +15,15 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileCask extends TileEntityBase implements ITickableTileEntity {
 
-  private Map<Direction, Boolean> poweredSides;
+  private final Map<Direction, Boolean> poweredSides = new HashMap<>();
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = CAPACITY / 2;
-  public FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, fluidStack -> true);
+  private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> tank);
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;
@@ -31,15 +32,9 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   public TileCask() {
     super(TileRegistry.cask);
     flowing = 0;
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-    poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);
     }
-  }
-
-  public Predicate<FluidStack> isFluidValid() {
-    return p -> true;
   }
 
   @Override
@@ -67,9 +62,15 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidHandlerLazyOptional.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidHandlerLazyOptional.invalidate();
+    super.invalidateCaps();
   }
 
   @Override
@@ -139,6 +140,9 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     //drain below but only to one of myself
     if (this.flowing > 0) {
       tickCableFlow();
@@ -148,7 +152,7 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   private void tickCableFlow() {
     for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
-        this.moveFluids(exportToSide, pos.offset(exportToSide), TRANSFER_FLUID_PER_TICK / 4, tank);
+        moveFluidsToAdjacent(tank, exportToSide, TRANSFER_FLUID_PER_TICK / 4);
       }
     }
   }

@@ -46,7 +46,7 @@ public class UtilFakePlayer {
     GameProfile breakerProfile = new GameProfile(uname, ModCyclic.MODID + ".fake_player." + blockName);
     WeakReference<FakePlayer> fakePlayer;
     try {
-      fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
+      fakePlayer = new WeakReference<>(FakePlayerFactory.get(ws, breakerProfile));
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Exception thrown trying to create fake player : ", e);

@@ -44,7 +44,7 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
     int xp = container.tile.getStoredXp();
     if (xp >= 0) {
       this.font.drawString(ms, xp + " XP", // TODO: lang tag
-          (this.getXSize()) / 2 + 4, 40.0F, 4209792);
+          (float) this.getXSize() / 2 + 4, 40.0F, 4209792);
     }
     btnRedstone.onValueUpdate(container.tile);
   }

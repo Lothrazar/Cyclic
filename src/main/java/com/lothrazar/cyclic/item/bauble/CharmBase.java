@@ -56,7 +56,7 @@ public abstract class CharmBase extends ItemBaseToggle {
       return;
     }
     tryVoidTick(stack, worldIn, entityIn);
-    if (entityIn instanceof LivingEntity == false) {
+    if (!(entityIn instanceof LivingEntity)) {
       return;
     }
     LivingEntity living = (LivingEntity) entityIn;

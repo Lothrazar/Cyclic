@@ -52,8 +52,7 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
       return 6;
     }
   }
-
-  VoxelShape shapes[] = new VoxelShape[16];
+  VoxelShape[] shapes = new VoxelShape[16];
 
   public SlimeFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
     super(supplier, props);
@@ -67,13 +66,13 @@ public class SlimeFluidBlock extends FlowingFluidBlock {
   @Override
   @Deprecated
   public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-    return shapes[state.get(LEVEL).intValue()];
+    return shapes[state.get(LEVEL)];
   }
 
   @Override
   @Deprecated
   public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-    return shapes[state.get(LEVEL).intValue()];
+    return shapes[state.get(LEVEL)];
   }
 
   @Override

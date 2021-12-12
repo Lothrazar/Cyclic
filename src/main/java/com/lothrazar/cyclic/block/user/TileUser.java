@@ -40,8 +40,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
 
   ItemStackHandler inventory = new ItemStackHandler(1);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timerDelay = 20;
@@ -54,11 +54,14 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    if (world.isRemote || !(world instanceof ServerWorld)) {
+    if (!(world instanceof ServerWorld)) {
       return;
     }
     if (timer > 0) {
@@ -96,7 +99,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
         //hack around mysttical ag id throttling   fail system 
         //when they fill water, id is set. uses id and gametime 
         //to reject actions to 'throttle'. but fakeplayer confuses this
-        fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag().putString("ID", UUID.randomUUID().toString());
+        //TODO: Submit patch to Mystical Agriculture to fix this memory leak as throttled IDs are not removed
+        fakePlayer.get().getHeldItem(Hand.MAIN_HAND).getTag().remove("ID");
         //after this hack. they still return type FAIL
         //but the plants grow and the watering DOES happen
         //        https://github.com/BlakeBr0/MysticalAgriculture/blob/f60de3510c694082acf5ff63299f119ab4a9d9a9/src/main/java/com/blakebr0/mysticalagriculture/item/WateringCanItem.java#L144
@@ -156,6 +160,13 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       return energyCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

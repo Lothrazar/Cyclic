@@ -17,7 +17,7 @@ public class CharmUtil {
     ItemStack stack = found == null ? ItemStack.EMPTY : found.getRight();
     if (stack.getItem() instanceof IHasClickToggle) {
       IHasClickToggle testMe = (IHasClickToggle) stack.getItem();
-      if (testMe.isOn(stack) == false) {
+      if (!testMe.isOn(stack)) {
         return ItemStack.EMPTY; // found but player turned it off so dont use it
       }
     }

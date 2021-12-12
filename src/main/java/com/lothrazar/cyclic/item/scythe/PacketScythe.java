@@ -60,8 +60,7 @@ public class PacketScythe extends PacketBase {
   }
 
   public static PacketScythe decode(PacketBuffer buf) {
-    PacketScythe p = new PacketScythe(buf.readBlockPos(), ScytheType.values()[buf.readInt()], buf.readInt());
-    return p;
+    return new PacketScythe(buf.readBlockPos(), ScytheType.values()[buf.readInt()], buf.readInt());
   }
 
   public static void encode(PacketScythe msg, PacketBuffer buf) {

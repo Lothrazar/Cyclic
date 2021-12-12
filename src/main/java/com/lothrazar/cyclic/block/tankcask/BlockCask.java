@@ -79,7 +79,7 @@ public class BlockCask extends BlockBase {
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
-    if (world.isRemote == false) {
+    if (!world.isRemote) {
       world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
     }
   }

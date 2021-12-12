@@ -53,6 +53,13 @@ public class TileGeneratorPeat extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     setFlowing(tag.getInt("flowing"));
     fuelRate = tag.getInt("fuelRate");
@@ -76,6 +83,9 @@ public class TileGeneratorPeat extends TileEntityBase implements ITickableTileEn
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       return;

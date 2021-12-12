@@ -2,15 +2,16 @@ package com.lothrazar.cyclic.base;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
-import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
-import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
+import com.lothrazar.cyclic.util.UtilEnergyStorage;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
-import com.lothrazar.cyclic.util.UtilFluid;
+import com.lothrazar.cyclic.util.UtilFluidHandler;
+import com.lothrazar.cyclic.util.UtilItemHandler;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -40,17 +41,18 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static final String NBTINV = "inv";
   public static final String NBTFLUID = "fluid";
   public static final String NBTENERGY = "energy";
+  public static final String NBTFILTER = "filter";
   public static final int MENERGY = 64 * 1000;
   protected int flowing = 1;
   protected int needsRedstone = 1;
@@ -61,13 +63,86 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     super(tileEntityTypeIn);
   }
 
+  public static void tryEquipItem(final ItemStack item, final WeakReference<FakePlayer> fakePlayerWeakReference, final Hand hand) {
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return;
+    }
+    fakePlayer.setHeldItem(hand, item);
+  }
+
+  public static void syncEquippedItem(final LazyOptional<IItemHandler> i, final WeakReference<FakePlayer> fakePlayerWeakReference, final int slot, final Hand hand) {
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return;
+    }
+
+    
+    final IItemHandler itemHandler = i.orElse(null);
+    
+    if (itemHandler == null) {
+      return;
+    }
+
+    itemHandler.extractItem(slot, itemHandler.getStackInSlot(slot).getMaxStackSize(), false);
+    itemHandler.insertItem(slot, fakePlayer.getHeldItem(hand), false);
+  }
+
+  @SuppressWarnings("UnusedParameters")
+  public static void tryEquipItem(final LazyOptional<IItemHandler> i, final WeakReference<FakePlayer> fakePlayerWeakReference, final int slot, final Hand hand) {
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return;
+    }
+
+    
+    final IItemHandler itemHandler = i.resolve().orElse(null);
+    
+    if (itemHandler == null) {
+      return;
+    }
+
+    ItemStack maybeTool = itemHandler.getStackInSlot(0);
+    if (maybeTool.getCount() <= 0) {
+      maybeTool = ItemStack.EMPTY;
+    }
+
+    if (!maybeTool.equals(fakePlayer.getHeldItem(hand))) {
+      fakePlayer.setHeldItem(hand, maybeTool);
+    }
+  }
+
+  public static ActionResultType rightClickBlock(final WeakReference<FakePlayer> fakePlayerWeakReference,
+                                   final World world, final BlockPos targetPos, final Hand hand, final Direction facing) {
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return ActionResultType.FAIL;
+    }
+    final Direction placementOn = (facing == null) ? fakePlayer.getAdjustedHorizontalFacing() : facing;
+    final BlockRayTraceResult blockRayTraceResult = new BlockRayTraceResult(fakePlayer.getLookVec(), placementOn, targetPos, true);
+    //processRightClick
+    //it becomes CONSUME result 1 bucket. then later i guess it doesnt save, and then its water_bucket again
+    return fakePlayer.interactionManager.func_219441_a(fakePlayer, world, fakePlayer.getHeldItem(hand), hand, blockRayTraceResult);
+  }
+
+  @SuppressWarnings("UnusedParameters")
+  public static boolean tryHarvestBlock(final WeakReference<FakePlayer> fakePlayerWeakReference, final World world, final BlockPos targetPos) {
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return false;
+    }
+    return fakePlayer.interactionManager.tryHarvestBlock(targetPos);
+  }
+
   public int getTimer() {
     return timer;
   }
 
-  protected PlayerEntity getLookingPlayer(int maxRange, boolean mustCrouch) {
-    List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(
-        this.pos.getX() - maxRange, this.pos.getY() - maxRange, this.pos.getZ() - maxRange, this.pos.getX() + maxRange, this.pos.getY() + maxRange, this.pos.getZ() + maxRange));
+  protected PlayerEntity getLookingPlayer(final int maxRange, final boolean mustCrouch) {
+    final AxisAlignedBB boundingBox = new AxisAlignedBB(pos.getX() - maxRange, pos.getY() - maxRange, pos.getZ() - maxRange,
+        pos.getX() + maxRange, pos.getY() + maxRange, pos.getZ() + maxRange);
+
+    final List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, boundingBox);
     for (PlayerEntity player : players) {
       if (mustCrouch && !player.isCrouching()) {
         continue; //check the next one
@@ -88,109 +163,68 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return null;
   }
 
-  public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
-    int start = (includeMainHand) ? 0 : 1;
-    ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (int i = start; i < fp.get().inventory.mainInventory.size(); i++) {
-      ItemStack s = fp.get().inventory.mainInventory.get(i);
-      if (s.isEmpty() == false) {
-        toDrop.add(s.copy());
-        fp.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
-      }
-    }
-    UtilItemStack.drop(this.world, this.pos.up(), toDrop);
-  }
-
-  public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, Hand hand) {
-    if (fp == null) {
+  public void tryDumpFakePlayerInvo(final WeakReference<FakePlayer> fakePlayerWeakReference, final boolean includeMainHand) {
+    final int start = (includeMainHand) ? 0 : 1;
+    final List<ItemStack> toDrop = new ArrayList<>();
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
       return;
     }
-    fp.get().setHeldItem(hand, item);
-  }
-
-  public static void syncEquippedItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, Hand hand) {
-    if (fp == null) {
-      return;
-    }
-    i.ifPresent(inv -> {
-      inv.extractItem(slot, 64, false); //delete and overwrite
-      inv.insertItem(slot, fp.get().getHeldItem(hand), false);
-    });
-  }
-
-  public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, Hand hand) {
-    if (fp == null) {
-      return;
-    }
-    i.ifPresent(inv -> {
-      ItemStack maybeTool = inv.getStackInSlot(0);
-      if (!maybeTool.isEmpty()) {
-        if (maybeTool.getCount() <= 0) {
-          maybeTool = ItemStack.EMPTY;
-        }
+    final List<ItemStack> inventory = fakePlayer.inventory.mainInventory;
+    for (int i = start; i < inventory.size(); i++) {
+      final ItemStack s = inventory.get(i);
+      if (s.isEmpty()) {
+        continue;
       }
-      if (!maybeTool.equals(fp.get().getHeldItem(hand))) {
-        fp.get().setHeldItem(hand, maybeTool);
-      }
-    });
-  }
-
-  public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,
-      World world, BlockPos targetPos, Hand hand, Direction facing) throws Exception {
-    if (fakePlayer == null) {
-      return ActionResultType.FAIL;
+      toDrop.add(s.copy());
+      inventory.set(i, ItemStack.EMPTY);
     }
-    Direction placementOn = (facing == null) ? fakePlayer.get().getAdjustedHorizontalFacing() : facing;
-    BlockRayTraceResult blockraytraceresult = new BlockRayTraceResult(
-        fakePlayer.get().getLookVec(), placementOn,
-        targetPos, true);
-    //processRightClick
-    ActionResultType result = fakePlayer.get().interactionManager.func_219441_a(fakePlayer.get(), world,
-        fakePlayer.get().getHeldItem(hand), hand, blockraytraceresult);
-    //it becomes CONSUME result 1 bucket. then later i guess it doesnt save, and then its water_bucket again
-    return result;
+    UtilItemStack.drop(world, pos.up(), toDrop);
   }
 
-  public static boolean tryHarvestBlock(WeakReference<FakePlayer> fakePlayer, World world, BlockPos targetPos) {
-    if (fakePlayer == null) {
-      return false;
-    }
-    return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-  }
-
-  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name, UUID uuid) {
-    WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, uuid, name);
-    if (fakePlayer == null) {
+  public WeakReference<FakePlayer> setupBeforeTrigger(final ServerWorld sw, final String name, final UUID uuid) {
+    final WeakReference<FakePlayer> fakePlayerWeakReference = UtilFakePlayer.initFakePlayer(sw, uuid, name);
+    if (fakePlayerWeakReference == null) {
       ModCyclic.LOGGER.error("Fake player failed to init " + name + " " + uuid);
       return null;
     }
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return null;
+    }
     //fake player facing the same direction as tile. for throwables
-    fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ()); //seems to help interact() mob drops like milk
-    fakePlayer.get().rotationYaw = UtilEntity.getYawFromFacing(this.getCurrentFacing());
-    return fakePlayer;
+    fakePlayer.setPosition(pos.getX(), pos.getY(), pos.getZ()); //seems to help interact() mob drops like milk
+    fakePlayer.rotationYaw = UtilEntity.getYawFromFacing(getCurrentFacing());
+    return fakePlayerWeakReference;
   }
 
-  public WeakReference<FakePlayer> setupBeforeTrigger(ServerWorld sw, String name) {
+  public WeakReference<FakePlayer> setupBeforeTrigger(final ServerWorld sw, final String name) {
     return setupBeforeTrigger(sw, name, UUID.randomUUID());
   }
 
-  public void setLitProperty(boolean lit) {
-    BlockState st = this.getBlockState();
-    if (!st.hasProperty(BlockBase.LIT)) {
+  public void setLitProperty(final boolean lit) {
+    if (world == null) {
       return;
     }
-    boolean previous = st.get(BlockBreaker.LIT);
+    final BlockState blockState = getBlockState();
+    if (!blockState.hasProperty(BlockBase.LIT)) {
+      return;
+    }
+    final boolean previous = blockState.get(BlockBreaker.LIT);
     if (previous != lit) {
-      this.world.setBlockState(pos, st.with(BlockBreaker.LIT, lit));
+      // 1 will cause a block update.
+      // 2 will send the change to clients.
+      world.setBlockState(pos, blockState.with(BlockBreaker.LIT, lit), 1 | 2);
     }
   }
 
   public Direction getCurrentFacing() {
-    if (this.getBlockState().hasProperty(BlockStateProperties.FACING)) {
-      return this.getBlockState().get(BlockStateProperties.FACING);
+    final BlockState blockState = getBlockState();
+    if (blockState.hasProperty(BlockStateProperties.FACING)) {
+      return blockState.get(BlockStateProperties.FACING);
     }
-    if (this.getBlockState().hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
-      return this.getBlockState().get(BlockStateProperties.HORIZONTAL_FACING);
+    if (blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+      return blockState.get(BlockStateProperties.HORIZONTAL_FACING);
     }
     return null;
   }
@@ -198,17 +232,17 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   @Override
   public CompoundNBT getUpdateTag() {
     //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
-    CompoundNBT syncData = new CompoundNBT();
+    final CompoundNBT syncData = new CompoundNBT();
     this.write(syncData); //this calls writeInternal
     return syncData;
   }
 
-  protected BlockPos getCurrentFacingPos(int distance) {
-    Direction f = this.getCurrentFacing();
-    if (f != null) {
-      return this.pos.offset(f, distance);
+  protected BlockPos getCurrentFacingPos(final int distance) {
+    final Direction facing = getCurrentFacing();
+    if (facing != null) {
+      return pos.offset(facing, distance);
     }
-    return this.pos;
+    return pos;
   }
 
   protected BlockPos getCurrentFacingPos() {
@@ -217,224 +251,197 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Override
   public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.SUpdateTileEntityPacket pkt) {
-    this.read(this.getBlockState(), pkt.getNbtCompound());
+    read(getBlockState(), pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
 
   @Override
   public SUpdateTileEntityPacket getUpdatePacket() {
-    return new SUpdateTileEntityPacket(this.pos, 1, getUpdateTag());
+    return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
   }
 
   public boolean isPowered() {
-    return this.getWorld().isBlockPowered(this.getPos());
+    if (world == null) {
+      return false;
+    }
+    return world.isBlockPowered(pos);
   }
 
   public int getRedstonePower() {
-    return this.getWorld().getRedstonePowerFromNeighbors(this.getPos());
+    if (world == null) {
+      return 0;
+    }
+    return world.getRedstonePowerFromNeighbors(pos);
   }
 
   public boolean requiresRedstone() {
     return this.needsRedstone == 1;
   }
 
-  public void moveFluids(Direction myFacingDir, BlockPos posTarget, int toFlow, IFluidHandler tank) {
-    if (tank == null || tank.getFluidInTank(0).isEmpty()) {
-      return;
-    }
-    final Direction themFacingMe = myFacingDir.getOpposite();
-    UtilFluid.tryFillPositionFromTank(world, posTarget, themFacingMe, tank, toFlow);
+  public IEnergyStorage getEnergyStorage() {
+    return getCapability(CapabilityEnergy.ENERGY, null).resolve().orElse(null);
   }
 
-  public void tryExtract(IItemHandler myself, Direction extractSide, int qty, ItemStackHandler nullableFilter) {
-    if (qty <= 0) {
-      return;
+  protected LazyOptional<IEnergyStorage> getAdjacentEnergyStorageOptCap(final Direction side) {
+    if (world == null) {
+      return LazyOptional.empty();
     }
-    final ItemStack stackInSlot = myself.getStackInSlot(0);
-    if (!stackInSlot.isEmpty()) {
-      return;
-    }
-    if (extractSide == null) {
-      return;
-    }
-    final BlockPos posTarget = pos.offset(extractSide);
-    final TileEntity tile = world.getTileEntity(posTarget);
-    if (tile == null) {
-      return;
-    }
-    final IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
-    if (itemHandlerFrom == null) {
-      return;
-    }
-    final int slotLimit = Math.min(myself.getSlotLimit(0), qty);
-    for (int slot = 0; slot < itemHandlerFrom.getSlots(); slot++) {
-      final ItemStack itemStackToExtract = itemHandlerFrom.getStackInSlot(slot);
-      if (itemStackToExtract.isEmpty()) {
-        continue;
-      }
-      if (nullableFilter != null &&
-          !FilterCardItem.filterAllowsExtract(nullableFilter.getStackInSlot(0), itemStackToExtract)) {
-        continue;
-      }
-      //find the theoretical maximum we can extract
-      int limit = Math.min(itemStackToExtract.getCount(), itemStackToExtract.getMaxStackSize());
-      limit = Math.min(limit, slotLimit);
-      //check there is anything to extract
-      if (limit <= 0) {
-        continue;
-      }
-      final ItemStack extractedItemStack = itemHandlerFrom.extractItem(slot, limit, false);
-      if (extractedItemStack.isEmpty()) {
-        continue;
-      }
-      ItemStack remainderItemStack = myself.insertItem(0, extractedItemStack, false);
-      //sanity check
-      if (!remainderItemStack.isEmpty()) {
-        ModCyclic.LOGGER.error("Incorrect number of items extracted, have to re-insert " + remainderItemStack);
-        remainderItemStack = itemHandlerFrom.insertItem(slot, remainderItemStack, false);
-        if (!remainderItemStack.isEmpty()) {
-          ModCyclic.LOGGER.error("Incorrect number of items extracted and now unable to re-insert, " + remainderItemStack + " have been lost");
-        }
-      }
-      return;
-    }
+    return UtilEnergyStorage.getOptCap(world, pos.offset(side), side.getOpposite());
   }
 
-  public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
-    return moveItems(myFacingDir, pos.offset(myFacingDir), max, handlerHere, 0);
+  protected IEnergyStorage getAdjacentEnergyStorage(final Direction side) {
+    if (world == null) {
+      return null;
+    }
+    return UtilEnergyStorage.get(world, pos.offset(side), side.getOpposite());
   }
 
-  public boolean moveItems(Direction myFacingDir, BlockPos posTarget, int max, IItemHandler handlerHere, int theslot) {
-    if (max <= 0) {
-      return false;
+  public IFluidHandler getFluidHandler() {
+    return getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).resolve().orElse(null);
+  }
+
+  protected LazyOptional<IFluidHandler> getAdjacentFluidHandlerOptCap(final Direction side) {
+    if (world == null) {
+      return LazyOptional.empty();
     }
-    if (this.world.isRemote()) {
-      return false;
+    return UtilFluidHandler.getOptCap(world, pos.offset(side), side.getOpposite());
+  }
+
+  protected IFluidHandler getAdjacentFluidHandler(final Direction side) {
+    if (world == null) {
+      return null;
     }
-    if (handlerHere == null) {
-      return false;
+    return UtilFluidHandler.get(world, pos.offset(side), side.getOpposite());
+  }
+
+  public IItemHandler getItemHandler() {
+    return getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).resolve().orElse(null);
+  }
+
+  protected LazyOptional<IItemHandler> getAdjacentItemHandlerOptCap(final Direction side) {
+    if (world == null) {
+      return LazyOptional.empty();
     }
-    //first get the original ItemStack as creating new ones is expensive
-    final ItemStack originalItemStack = handlerHere.getStackInSlot(theslot);
-    if (originalItemStack.isEmpty()) {
-      return false;
+    return UtilItemHandler.getOptCap(world, pos.offset(side), side.getOpposite());
+  }
+
+  protected IItemHandler getAdjacentItemHandler(final Direction side) {
+    if (world == null) {
+      return null;
     }
-    final Direction themFacingMe = myFacingDir.getOpposite();
-    final TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget == null) {
-      return false;
+    return UtilItemHandler.get(world, pos.offset(side), side.getOpposite());
+  }
+
+  @SuppressWarnings("UnusedReturnValue")
+  protected FluidStack getFluidsFromAdjacent(final IFluidHandler output, final Direction side, final int amount) {
+    final IFluidHandler input = getAdjacentFluidHandler(side);
+    if (input == null) {
+      return FluidStack.EMPTY;
     }
-    final IItemHandler handlerOutput = tileTarget
-        .getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe)
-        .orElse(null);
-    if (handlerOutput == null) {
-      return false;
+    return FluidUtil.tryFluidTransfer(output, input, amount, true);
+  }
+
+  @SuppressWarnings("UnusedReturnValue")
+  protected FluidStack moveFluidsToAdjacent(final IFluidHandler input, final Direction side, final int amount) {
+    final IFluidHandler output = getAdjacentFluidHandler(side);
+    if (output == null) {
+      return FluidStack.EMPTY;
     }
-    final int maxStackSize = originalItemStack.getMaxStackSize();
-    final int originalCount = originalItemStack.getCount();
-    int remainingItemCount = originalCount;
-    ItemStack itemStackToInsert = null;
-    //attempt to push into output
-    for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
-      //find the theoretical maximum we can insert
-      int limit = Math.min(handlerOutput.getSlotLimit(slot), maxStackSize);
-      int amountInOutputSlot = 0;
-      //reduce limit by amount already in the output slot
-      final ItemStack stackInOutputSlot = handlerOutput.getStackInSlot(slot);
-      if (!stackInOutputSlot.isEmpty()) {
-        //if the output slot is not compatible then skip this slot
-        if (!ItemHandlerHelper.canItemStacksStack(originalItemStack, stackInOutputSlot)) {
-          continue;
-        }
-        amountInOutputSlot = stackInOutputSlot.getCount();
-        limit -= amountInOutputSlot;
-      }
-      limit = Math.min(limit, remainingItemCount);
-      limit = Math.min(limit, max);
-      //skip this output slot if we cannot insert more
-      if (limit <= 0) {
-        continue;
-      }
-      //lazily create an ItemStack for inserting and re-use it for future inserts
-      if (itemStackToInsert == null) {
-        itemStackToInsert = originalItemStack.copy();
-      }
-      itemStackToInsert.setCount(limit);
-      //only perform an insert (even simulated) if required as it creates at least one new ItemStack in the process
-      final ItemStack remainderItemStack = handlerOutput.insertItem(slot, itemStackToInsert, false);
-      //check the remainder to calculate how much was actually inserted
-      remainingItemCount -= (limit - remainderItemStack.getCount());
+    return FluidUtil.tryFluidTransfer(output, input, amount, true);
+  }
+
+  @SuppressWarnings("UnusedReturnValue")
+  public FluidStack moveFluidsToBlockPos(final IFluidHandler input, final BlockPos blockPos, final Direction side, final int amount) {
+    if (world == null) {
+      return FluidStack.EMPTY;
+    }
+    final IFluidHandler output = UtilFluidHandler.get(world, blockPos, side.getOpposite());
+    if (output == null) {
+      return FluidStack.EMPTY;
+    }
+    return FluidUtil.tryFluidTransfer(output, input, amount, true);
+  }
+
+  public int getItemsFromAdjacent(final IItemHandler output, final Direction side, final int amount) {
+    if (world == null) {
+      return 0;
+    }
+    final IItemHandler input = getAdjacentItemHandler(side);
+    if (input == null) {
+      return 0;
+    }
+    int remainingItemCount = amount;
+    for (int slot = 0; slot < input.getSlots(); slot++) {
+      remainingItemCount -= UtilItemHandler.moveItems(input, slot, output, remainingItemCount);
       if (remainingItemCount <= 0) {
         break;
       }
     }
-    final int insertedItemCount = originalCount - remainingItemCount;
-    final boolean didInsertItems = insertedItemCount > 0;
-    if (didInsertItems) {
-      //only perform an extraction if required as it creates a new ItemStack in the process
-      final ItemStack extractedItemStack = handlerHere.extractItem(theslot, insertedItemCount, false);
-      //sanity check
-      if (extractedItemStack.getCount() != insertedItemCount) {
-        ModCyclic.LOGGER.error("Imbalance moving items, extracted " + extractedItemStack + " inserted " + insertedItemCount);
+    return amount - remainingItemCount;
+  }
+
+  public int moveItemsToAdjacent(final IItemHandler input, final Direction side, final int amount) {
+    final IItemHandler output = getAdjacentItemHandler(side);
+    if (output == null) {
+      return 0;
+    }
+    int remainingAmount = amount;
+    for (int slot = 0; slot < input.getSlots(); slot++) {
+      remainingAmount -= UtilItemHandler.moveItems(input, slot, output, remainingAmount);
+      if (remainingAmount <= 0) {
+        break;
       }
     }
-    return didInsertItems;
+    return amount - remainingAmount;
   }
 
-  protected boolean moveEnergy(Direction myFacingDir, int quantity) {
-    return moveEnergy(myFacingDir, pos.offset(myFacingDir), quantity);
+  public int moveItemsToBlockPos(final Direction side, final BlockPos blockPos, final int amount, final IItemHandler input, final int inputSlot) {
+    if (world == null) {
+      return 0;
+    }
+    final IItemHandler output = UtilItemHandler.get(world, blockPos, side.getOpposite());
+    if (output == null) {
+      return 0;
+    }
+    return UtilItemHandler.moveItems(input, inputSlot, output, amount);
   }
 
-  protected boolean moveEnergy(final Direction myFacingDir, final BlockPos posTarget, final int quantity) {
-    if (quantity <= 0) {
-      return false;
+  @SuppressWarnings({"SameParameterValue", "UnusedReturnValue"})
+  protected int getEnergyFromAdjacent(final IEnergyStorage output, final Direction side, final int amount) {
+    final IEnergyStorage input = getAdjacentEnergyStorage(side);
+    if (input == null) {
+      return 0;
     }
-    if (this.world.isRemote) {
-      return false; //important to not desync cables 
-    }
-    final IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
-    if (handlerHere == null) {
-      return false;
-    }
-    final Direction themFacingMe = myFacingDir.getOpposite();
-    final TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget == null) {
-      return false;
-    }
-    final IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe).orElse(null);
-    if (handlerOutput == null) {
-      return false;
-    }
-    final int capacity = handlerOutput.getMaxEnergyStored() - handlerOutput.getEnergyStored();
-    if (capacity <= 0) {
-      return false;
-    }
-    //first simulate
-    final int drain = handlerHere.extractEnergy(Math.min(quantity, capacity), true);
-    if (drain <= 0) {
-      return false;
-    }
-    //now push it into output, but find out what was ACTUALLY taken
-    final int filled = handlerOutput.receiveEnergy(drain, false);
-    if (filled <= 0) {
-      return false;
-    }
-    //now actually drain that much from here
-    final int drained = handlerHere.extractEnergy(filled, false);
-    //sanity check
-    if (drained != filled) {
-      ModCyclic.LOGGER.error("Imbalance moving energy, extracted " + drained + " received " + filled);
-    }
-    if (tileTarget instanceof TileCableEnergy) {
-      // not so compatible with other fluid systems. it will do i guess
-      TileCableEnergy cable = (TileCableEnergy) tileTarget;
-      cable.updateIncomingEnergyFace(themFacingMe);
-    }
-    return true;
+    return UtilEnergyStorage.moveEnergy(input, output, amount);
   }
+
+  @SuppressWarnings("UnusedReturnValue")
+  protected int moveEnergyToAdjacent(final IEnergyStorage input, final Direction side, final int amount) {
+    final IEnergyStorage output = getAdjacentEnergyStorage(side);
+    if (output == null) {
+      return 0;
+    }
+    return UtilEnergyStorage.moveEnergy(input, output, amount);
+  }
+
+  @SuppressWarnings("SameParameterValue")
+  protected int moveEnergyToBlockPos(final IEnergyStorage input, final BlockPos blockPos, final Direction side, final int amount) {
+    if (world == null) {
+      return 0;
+    }
+    final IEnergyStorage output = UtilEnergyStorage.get(world, blockPos, side);
+    if (output == null) {
+      return 0;
+    }
+    return UtilEnergyStorage.moveEnergy(input, output, amount);
+  }
+
+  public void setReceivedFrom(final Direction side) {}
+
+  public void updateConnection(final Direction side, final EnumConnectType connectType) {}
 
   @Override
-  public void read(BlockState bs, CompoundNBT tag) {
+  public void read(final BlockState bs, final CompoundNBT tag) {
     flowing = tag.getInt("flowing");
     needsRedstone = tag.getInt("needsRedstone");
     render = tag.getInt("renderParticles");
@@ -443,7 +450,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundNBT write(final CompoundNBT tag) {
     tag.putInt("flowing", flowing);
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", render);
@@ -451,11 +458,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return super.write(tag);
   }
 
-  public abstract void setField(int field, int value);
+  public abstract void setField(final int field, final int value);
 
-  public abstract int getField(int field);
+  public abstract int getField(final int field);
 
-  public void setNeedsRedstone(int value) {
+  public void setNeedsRedstone(final int value) {
     this.needsRedstone = value % 2;
   }
 
@@ -463,7 +470,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return FluidStack.EMPTY;
   }
 
-  public void setFluid(FluidStack fluid) {}
+  public void setFluid(FluidStack fluid) {
+  }
 
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
@@ -480,73 +488,99 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Deprecated
   @Override
-  public ItemStack getStackInSlot(int index) {
+  public ItemStack getStackInSlot(final int index) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public ItemStack decrStackSize(int index, int count) {
+  public ItemStack decrStackSize(final int index, final int count) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public ItemStack removeStackFromSlot(int index) {
+  public ItemStack removeStackFromSlot(final int index) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {}
+  public void setInventorySlotContents(final int index, final ItemStack stack) {
+  }
 
   @Deprecated
   @Override
-  public boolean isUsableByPlayer(PlayerEntity player) {
+  public boolean isUsableByPlayer(final PlayerEntity player) {
     return false;
   }
 
   @Deprecated
   @Override
-  public void clear() {}
-
-  public void setFieldString(int field, String value) {
-    //for string field  
+  public void clear() {
   }
 
-  public String getFieldString(int field) {
-    //for string field  
+  public void setFieldString(final int field, final String value) {
+    //for string field
+  }
+
+  public String getFieldString(final int field) {
+    //for string field
     return null;
   }
 
   public int getEnergy() {
-    return this.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    final IEnergyStorage energyStorage = getCapability(CapabilityEnergy.ENERGY, null).resolve().orElse(null);
+    if (energyStorage == null) {
+      return 0;
+    }
+    return energyStorage.getEnergyStored();
   }
 
-  public void setEnergy(int value) {
-    IEnergyStorage energy = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-    if (energy != null && energy instanceof CustomEnergyStorage) {
-      ((CustomEnergyStorage) energy).setEnergy(value);
+  public void setEnergy(final int value) {
+    final IEnergyStorage energyStorage = getCapability(CapabilityEnergy.ENERGY, null).resolve().orElse(null);
+    if (energyStorage == null) {
+      return;
+    }
+
+    if (energyStorage instanceof CustomEnergyStorage) {
+      ((CustomEnergyStorage) energyStorage).setEnergy(value);
+    }
+    else {
+      int current = energyStorage.getEnergyStored();
+      while (current != value) {
+        if (current > value) {
+          energyStorage.extractEnergy(current - value, false);
+        }
+        else {
+          energyStorage.receiveEnergy(value - current, false);
+        }
+        current = energyStorage.getEnergyStored();
+      }
     }
   }
 
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
-    //skip if clientside
-    if (world.isRemote || world.getGameTime() % 20 != 0) {
+    if (world == null || world.isRemote) {
       return;
     }
-    final IEnergyStorage energy = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
-    if (energy == null) {
+
+    final IEnergyStorage energyStorage = getCapability(CapabilityEnergy.ENERGY, null).resolve().orElse(null);
+    if (energyStorage == null) {
       return;
     }
-    final PacketEnergySync packetEnergySync = new PacketEnergySync(this.getPos(), energy.getEnergyStored());
+
+    final PacketEnergySync packetEnergySync = new PacketEnergySync(pos, energyStorage.getEnergyStored());
     PacketRegistry.sendToAllClients(world, packetEnergySync);
   }
 
   public void exportEnergyAllSides() {
     for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
-      moveEnergy(exportToSide, MENERGY / 2);
+      final IEnergyStorage input = getCapability(CapabilityEnergy.ENERGY, exportToSide).resolve().orElse(null);
+      if (input != null) {
+        moveEnergyToAdjacent(input, exportToSide, MENERGY / 2);
+      }
     }
   }
 }
