@@ -180,7 +180,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
 
   @SuppressWarnings("unchecked")
   @Override
-  public void read(final BlockState bs, final CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     filter.deserializeNBT(tag.getCompound(NBTFILTER));
     ((INBTSerializable<CompoundNBT>) itemHandler).deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);
@@ -188,7 +188,7 @@ public class TileCableItem extends TileEntityBase implements ITickableTileEntity
 
   @SuppressWarnings("unchecked")
   @Override
-  public CompoundNBT write(final CompoundNBT tag) {
+  public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTFILTER, filter.serializeNBT());
     tag.put(NBTINV, ((INBTSerializable<CompoundNBT>) itemHandler).serializeNBT());
     return super.write(tag);

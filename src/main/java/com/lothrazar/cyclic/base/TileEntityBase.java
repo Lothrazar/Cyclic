@@ -441,7 +441,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public void updateConnection(final Direction side, final EnumConnectType connectType) {}
 
   @Override
-  public void read(final BlockState bs, final CompoundNBT tag) {
+  public void read(BlockState bs, CompoundNBT tag) {
     flowing = tag.getInt("flowing");
     needsRedstone = tag.getInt("needsRedstone");
     render = tag.getInt("renderParticles");
@@ -450,7 +450,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   @Override
-  public CompoundNBT write(final CompoundNBT tag) {
+  public CompoundNBT write(CompoundNBT tag) {
     tag.putInt("flowing", flowing);
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", render);
@@ -505,8 +505,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Deprecated
   @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-  }
+  public void setInventorySlotContents(int index, ItemStack stack) {}
 
   @Deprecated
   @Override
@@ -519,11 +518,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   public void clear() {}
 
   public void setFieldString(int field, String value) {
-    //for string field
+    //for string field  
   }
 
   public String getFieldString(int field) {
-    //for string field
+    //for string field  
     return null;
   }
 
