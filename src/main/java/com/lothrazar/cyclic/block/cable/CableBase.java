@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.cable;
 
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.DataTags;

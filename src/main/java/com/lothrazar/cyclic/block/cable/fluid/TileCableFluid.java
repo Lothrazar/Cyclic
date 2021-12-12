@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
