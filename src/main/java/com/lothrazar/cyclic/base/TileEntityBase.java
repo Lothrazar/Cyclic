@@ -458,11 +458,11 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return super.write(tag);
   }
 
-  public abstract void setField(final int field, final int value);
+  public abstract void setField(int field, int value);
 
-  public abstract int getField(final int field);
+  public abstract int getField(int field);
 
-  public void setNeedsRedstone(final int value) {
+  public void setNeedsRedstone(int value) {
     this.needsRedstone = value % 2;
   }
 
@@ -470,8 +470,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return FluidStack.EMPTY;
   }
 
-  public void setFluid(FluidStack fluid) {
-  }
+  public void setFluid(FluidStack fluid) {}
 
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
@@ -488,43 +487,42 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   @Deprecated
   @Override
-  public ItemStack getStackInSlot(final int index) {
+  public ItemStack getStackInSlot(int index) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public ItemStack decrStackSize(final int index, final int count) {
+  public ItemStack decrStackSize(int index, int count) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public ItemStack removeStackFromSlot(final int index) {
+  public ItemStack removeStackFromSlot(int index) {
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
-  public void setInventorySlotContents(final int index, final ItemStack stack) {
+  public void setInventorySlotContents(int index, ItemStack stack) {
   }
 
   @Deprecated
   @Override
-  public boolean isUsableByPlayer(final PlayerEntity player) {
+  public boolean isUsableByPlayer(PlayerEntity player) {
     return false;
   }
 
   @Deprecated
   @Override
-  public void clear() {
-  }
+  public void clear() {}
 
-  public void setFieldString(final int field, final String value) {
+  public void setFieldString(int field, String value) {
     //for string field
   }
 
-  public String getFieldString(final int field) {
+  public String getFieldString(int field) {
     //for string field
     return null;
   }
