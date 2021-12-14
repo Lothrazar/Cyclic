@@ -29,7 +29,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class UtilString {
 
-  public static boolean isInList(final List<String> list, ResourceLocation toMatch) {
+  public static boolean isInList(final List<? extends String> list, ResourceLocation toMatch) {
     return isInList(list, toMatch, true);
   }
 
@@ -39,7 +39,7 @@ public class UtilString {
    * If the list has "hc:*_sapling" and input is "hc:whatever_sapling" then match is true
    * 
    */
-  public static boolean isInList(final List<String> list, ResourceLocation toMatch, boolean matchWildcard) {
+  public static boolean isInList(final List<? extends String> list, ResourceLocation toMatch, boolean matchWildcard) {
     if (toMatch == null || list == null) {
       return false;
     }

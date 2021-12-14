@@ -25,7 +25,15 @@ public class ContainerUncraft extends ContainerBase {
     ItemStackHandler outputSlots = tile.outputSlots;
     this.endInv = inputSlots.getSlots() + outputSlots.getSlots();
     //the main slot
-    addSlot(new SlotItemHandler(inputSlots, 0, 39, 19));
+    addSlot(new SlotItemHandler(inputSlots, 0, 39, 19) {
+
+      @Override
+      public void onSlotChanged() {
+        super.onSlotChanged();
+        //force a refresh when adding more to an existing stack
+        inputSlots.setStackInSlot(0, inputSlots.getStackInSlot(0));
+      }
+    });
     //the rows
     int index = 0;
     for (int j = 0; j < 2; ++j) {
