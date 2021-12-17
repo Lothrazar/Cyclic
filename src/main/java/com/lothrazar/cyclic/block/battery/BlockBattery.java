@@ -68,7 +68,7 @@ public class BlockBattery extends BlockBase {
     }
     //Hack as getDrops returns an empty list
     if (!world.isRemote) {
-      world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), newStackBattery));
+      world.addEntity(new ItemEntity(world, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, newStackBattery));
     }
     super.harvestBlock(world, player, pos, state, ent, newStackBattery);
   }
