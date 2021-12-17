@@ -10,7 +10,6 @@ import net.minecraft.client.gui.widget.button.CheckboxButton;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.client.event.GuiContainerEvent;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
 

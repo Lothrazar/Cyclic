@@ -21,6 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.client.CPlayerDiggingPacket.Action;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -45,8 +46,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
-
-import static net.minecraft.network.play.client.CPlayerDiggingPacket.Action.START_DESTROY_BLOCK;
 
 public abstract class TileEntityBase extends TileEntity implements IInventory {
 
@@ -146,7 +145,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     final Direction placementOn = (facing == null) ? fakePlayer.getAdjustedHorizontalFacing() : facing;
     final BlockRayTraceResult blockRayTraceResult = new BlockRayTraceResult(fakePlayer.getLookVec(), placementOn, targetPos, true);
     try {
-      fakePlayer.interactionManager.func_225416_a(blockRayTraceResult.getPos(), START_DESTROY_BLOCK, facing, 0);
+      fakePlayer.interactionManager.func_225416_a(blockRayTraceResult.getPos(), Action.START_DESTROY_BLOCK, facing, 0);
       return ActionResultType.SUCCESS;
     }
     catch (Exception e) {
