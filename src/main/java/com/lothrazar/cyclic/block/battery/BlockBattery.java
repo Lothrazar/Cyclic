@@ -44,7 +44,7 @@ public class BlockBattery extends BlockBase {
 
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
-    //because harvestBlock manually forces a drop
+    //because harvestBlock manually forces a drop  
     return Collections.emptyList();
   }
 
