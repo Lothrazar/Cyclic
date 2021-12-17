@@ -592,6 +592,7 @@
   "block.cyclic.user.action1": "攻击",
   "block.cyclic.user.action": "更改动作类型",
   "block.cyclic.user.guide": "有两个模式：自动使用（右击）任何物品；或者使用武器攻击。它会尝试在实体上使用，并在机器前方的方块的上方或下方使用。 默认为1x1区域，但范围可以增加。",
+  "block.cyclic.user.hand": "使用左手",
   "block.cyclic.user.input": "输入",
   "block.cyclic.user": "自动玩家模拟器",
   "block.cyclic.user.output": "输出",

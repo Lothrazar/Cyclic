@@ -46,6 +46,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
+import static net.minecraft.network.play.client.CPlayerDiggingPacket.Action.START_DESTROY_BLOCK;
+
 public abstract class TileEntityBase extends TileEntity implements IInventory {
 
   public static final String NBTINV = "inv";
@@ -133,6 +135,23 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
         fp.get().setHeldItem(hand, maybeTool);
       }
     });
+  }
+
+  public static ActionResultType leftClickBlock(final WeakReference<FakePlayer> fakePlayerWeakReference,
+                                                final BlockPos targetPos, final Direction facing) {
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return ActionResultType.FAIL;
+    }
+    final Direction placementOn = (facing == null) ? fakePlayer.getAdjustedHorizontalFacing() : facing;
+    final BlockRayTraceResult blockRayTraceResult = new BlockRayTraceResult(fakePlayer.getLookVec(), placementOn, targetPos, true);
+    try {
+      fakePlayer.interactionManager.func_225416_a(blockRayTraceResult.getPos(), START_DESTROY_BLOCK, facing, 0);
+      return ActionResultType.SUCCESS;
+    }
+    catch (Exception e) {
+      return ActionResultType.FAIL;
+    }
   }
 
   public static ActionResultType rightClickBlock(WeakReference<FakePlayer> fakePlayer,

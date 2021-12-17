@@ -6,8 +6,11 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.gui.widget.button.CheckboxButton;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.client.event.GuiContainerEvent;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
@@ -38,6 +41,15 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     GuiSliderInteger slider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
         1, 64, container.tile.getField(f)));
     slider.setTooltip("block.cyclic.user.delay");
+    //
+    x = guiLeft + 6;
+    y = guiTop + 59;
+    addButton(new CheckboxButton(x, y, h, h, new TranslationTextComponent("block.cyclic.user.hand"), container.tile.isUsingLeftHand()) {
+      @Override public void onPress() {
+        super.onPress();
+        container.tile.setUseLeftHand(isChecked());
+      }
+    });
   }
 
   @Override
