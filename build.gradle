@@ -151,6 +151,8 @@ dependencies {
     // To use any mod in /libs/ folder, place it in and set the mod and version to match jar filename
    // runtimeOnly fg.deobf("libs:SimpleStorageNetwork:1.16.4-1.3.1")
    // runtimeOnly fg.deobf("libs:refinedstorage:1.16.4-1.9.11")
+    // runtimeOnly fg.deobf("libs:silent-lib:1.16.5-4.10.0")
+    // runtimeOnly fg.deobf("libs:silent-gear:1.16.5-2.6.35")
     
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
