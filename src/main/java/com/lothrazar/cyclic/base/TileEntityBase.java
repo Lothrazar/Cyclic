@@ -311,12 +311,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (world == null) {
       return null;
     }
-    final BlockPos adjacentPos = pos.offset(side);
-    final IFluidHandler adjacentFluidHandler = UtilFluidHandler.get(world, adjacentPos, side.getOpposite());
-    if (adjacentFluidHandler != null) {
-      return adjacentFluidHandler;
-    }
-    return UtilFluidHandler.getFromBlock(world, adjacentPos);
+    return UtilFluidHandler.get(world, pos.offset(side), side.getOpposite());
   }
 
   public IItemHandler getItemHandler() {

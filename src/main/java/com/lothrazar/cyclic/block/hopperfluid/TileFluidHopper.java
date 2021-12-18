@@ -3,9 +3,11 @@ package com.lothrazar.cyclic.block.hopperfluid;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilFluidHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -19,10 +21,34 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
   private static final int FLOW = FluidAttributes.BUCKET_VOLUME;
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
-  private LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> tank);
+  private final LazyOptional<IFluidHandler> fluidHandlerLazyOptional = LazyOptional.of(() -> tank);
+  private IFluidHandler fluidHandlerAbove = null;
 
   public TileFluidHopper() {
     super(TileRegistry.FLUIDHOPPER.get());
+  }
+
+  @Override
+  protected IFluidHandler getAdjacentFluidHandler(final Direction side) {
+    if (side != Direction.UP) {
+      return super.getAdjacentFluidHandler(side);
+    }
+    if (fluidHandlerAbove != null) {
+      return fluidHandlerAbove;
+    }
+    if (world == null) {
+      return null;
+    }
+    final TileEntity tileEntity = world.getTileEntity(pos.offset(side));
+    if (tileEntity != null) {
+      final LazyOptional<IFluidHandler> optCap = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite());
+      final IFluidHandler handler = optCap.resolve().orElse(null);
+      if (handler != null) {
+        optCap.addListener((o) -> fluidHandlerAbove = null);
+        return handler;
+      }
+    }
+    return UtilFluidHandler.getFromBlock(world, pos.offset(side));
   }
 
   @Override
