@@ -46,6 +46,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   private UUID uuid;
   private int timerDelay = 20;
   static final int MAX = 640000;
+  private boolean useLeftHand = false;
 
   public TileUser() {
     super(TileRegistry.user);
@@ -104,7 +105,12 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       }
       //end of SUPERHACK
       BlockPos target = this.pos.offset(this.getCurrentFacing());
-      TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND, null);
+      if (useLeftHand) {
+        TileEntityBase.leftClickBlock(fakePlayer, target, null);
+      }
+      else  {
+        TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND, null);
+      }
       // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
       TileEntityBase.syncEquippedItem(inventoryCap, fakePlayer, 0, Hand.MAIN_HAND);
     }
@@ -112,6 +118,14 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       ModCyclic.LOGGER.error("User action item error", e);
     }
     tryDumpFakePlayerInvo(fakePlayer, false);
+  }
+
+  public boolean isUsingLeftHand() {
+    return useLeftHand;
+  }
+
+  public void setUseLeftHand(final boolean useLeftHand) {
+    this.useLeftHand = useLeftHand;
   }
 
   @Override
@@ -166,6 +180,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     if (tag.contains("uuid")) {
       uuid = tag.getUniqueId("uuid");
     }
+    useLeftHand = tag.getBoolean("uselefthand");
     super.read(bs, tag);
   }
 
@@ -177,6 +192,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     if (uuid != null) {
       tag.putUniqueId("uuid", uuid);
     }
+    tag.putBoolean("uselefthand", useLeftHand);
     return super.write(tag);
   }
 

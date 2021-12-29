@@ -1027,6 +1027,7 @@
 	"block.cyclic.user.tooltip": "自主模拟玩家操作，可以使用物品",
 	"block.cyclic.user.guide": "自动玩家模拟器可以以一定延迟使用给他的物品右击其前方的方块。",
 	"block.cyclic.user.delay": "Tick 延迟",
+	"block.cyclic.user.hand": "使用左手",
 
 	"enchantment_stack.empty": "当前为空；使用一本附魔书来储存附魔",
 	"block.cyclic.screen": "数码打字机",
