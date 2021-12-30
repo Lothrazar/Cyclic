@@ -40,7 +40,7 @@ minecraft {
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
     
-	mappings channel: 'official', version: '1.18'
+	mappings channel: 'official', version: '1.18.1'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 

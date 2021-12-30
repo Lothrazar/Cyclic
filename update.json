@@ -12,6 +12,6 @@
     "1.6.5": "Updated some textures and recipes.  ",
     "1.6.6": "Fix errors in all block data saving.  Fix flowers worldgen",
     "1.6.7": "Update ru_ru.json #1986 by Bytegm. Fix doorbell button crash.  Fixed 'Material Generator Consumes Single ItemStacks with Zero FE Generation'.",
-    "1.7.0": ""
+    "1.6.8": "fix wireless redstone #2001"
   }
 }
