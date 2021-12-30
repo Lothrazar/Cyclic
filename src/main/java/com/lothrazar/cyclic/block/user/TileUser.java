@@ -35,7 +35,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   public static IntValue POWERCONF;
 
   static enum Fields {
-    REDSTONE, TIMER, TIMERDEL, RENDER;
+    REDSTONE, TIMER, TIMERDEL, RENDER, LEFTHAND;
   }
 
   ItemStackHandler inventory = new ItemStackHandler(1);
@@ -108,7 +108,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       if (useLeftHand) {
         TileEntityBase.leftClickBlock(fakePlayer, target, null);
       }
-      else  {
+      else {
         TileEntityBase.rightClickBlock(fakePlayer, world, target, Hand.MAIN_HAND, null);
       }
       // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
@@ -143,6 +143,9 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
       case RENDER:
         this.render = value % 2;
       break;
+      case LEFTHAND:
+        this.useLeftHand = value == 1;
+      break;
     }
   }
 
@@ -157,6 +160,8 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
         return this.timerDelay;
       case RENDER:
         return render;
+      case LEFTHAND:
+        return this.isUsingLeftHand() ? 1 : 0;
     }
     return 0;
   }

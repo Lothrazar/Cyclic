@@ -4,6 +4,8 @@ import com.lothrazar.cyclic.base.ScreenBase;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
+import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.widget.button.CheckboxButton;
@@ -44,9 +46,12 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     x = guiLeft + 6;
     y = guiTop + 59;
     addButton(new CheckboxButton(x, y, h, h, new TranslationTextComponent("block.cyclic.user.hand"), container.tile.isUsingLeftHand()) {
-      @Override public void onPress() {
+
+      @Override
+      public void onPress() {
         super.onPress();
         container.tile.setUseLeftHand(isChecked());
+        PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileUser.Fields.LEFTHAND.ordinal(), isChecked(), container.tile.getPos()));
       }
     });
   }
