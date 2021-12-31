@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerCrate extends ContainerBase {
@@ -20,17 +20,22 @@ public class ContainerCrate extends ContainerBase {
     tile = (TileCrate) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots();
-      for (int j = 0; j < 9; ++j) {
-        for (int k = 0; k < 9; ++k) {
-          this.addSlot(new SlotItemHandler(h,
-              k + j * 9,
-              8 + k * 18,
-              8 + j * 18));
-        }
+    ItemStackHandler h = tile.inventory;
+    this.endInv = h.getSlots();
+    for (int j = 0; j < 9; ++j) {
+      for (int k = 0; k < 9; ++k) {
+        this.addSlot(new SlotItemHandler(h,
+            k + j * 9,
+            8 + k * 18,
+            8 + j * 18) {
+
+          @Override
+          public void setChanged() {
+            tile.setChanged();
+          }
+        });
       }
-    });
+    }
     layoutPlayerInventorySlots(8, 174);
   }
 

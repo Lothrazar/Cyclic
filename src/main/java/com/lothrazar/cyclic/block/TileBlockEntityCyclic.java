@@ -196,13 +196,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return null;
   }
 
-  @Override
-  public CompoundTag getUpdateTag() {
-    CompoundTag syncData = super.getUpdateTag();
-    this.saveAdditional(syncData); 
-    return syncData;
-  }
-
   protected BlockPos getCurrentFacingPos(int distance) {
     Direction f = this.getCurrentFacing();
     if (f != null) {
@@ -214,17 +207,22 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   protected BlockPos getCurrentFacingPos() {
     return getCurrentFacingPos(1);
   }
-
-  @Override
-  public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-    this.load(pkt.getTag());
-    super.onDataPacket(net, pkt);
-  }
-
-  @Override
-  public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    return ClientboundBlockEntityDataPacket.create(this); 
-  }
+  //@Override
+  //public CompoundTag getUpdateTag() {
+  //  CompoundTag syncData = super.getUpdateTag();
+  //  this.saveAdditional(syncData); 
+  //  return syncData;
+  //}
+  //  @Override
+  //  public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
+  //    this.load(pkt.getTag());
+  //    super.onDataPacket(net, pkt);
+  //  }
+  //
+  //  @Override
+  //  public ClientboundBlockEntityDataPacket getUpdatePacket() {
+  //    return ClientboundBlockEntityDataPacket.create(this); 
+  //  }
 
   public boolean isPowered() {
     return this.getLevel().hasNeighborSignal(this.getBlockPos());
@@ -394,8 +392,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return FluidStack.EMPTY;
   }
 
-  public void setFluid(FluidStack fluid) {
-  }
+  public void setFluid(FluidStack fluid) {}
 
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
@@ -430,8 +427,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Deprecated
   @Override
-  public void setItem(int index, ItemStack stack) {
-  }
+  public void setItem(int index, ItemStack stack) {}
 
   @Deprecated
   @Override
@@ -441,8 +437,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Deprecated
   @Override
-  public void clearContent() {
-  }
+  public void clearContent() {}
 
   public void setFieldString(int field, String value) {
     //for string field  

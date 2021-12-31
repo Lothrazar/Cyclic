@@ -47,37 +47,38 @@ public class TileCrate extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void load(CompoundTag tag) { // YES BP
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     System.out.println("fff LOAD " + tag);
     super.load(tag);
   }
 
   @Override
-  public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-    this.load(pkt.getTag());
-    super.onDataPacket(net, pkt);
-  }
-
-  @Override
-  public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    return ClientboundBlockEntityDataPacket.create(this);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag) { // YES BP
     super.saveAdditional(tag);
-    System.out.println("fff gsaveAdditional" + tag);
+    tag.put(NBTINV, inventory.serializeNBT());
+    System.out.println("fff SAVE !!!!  " + inventory.serializeNBT());
+    System.out.println("fff SAVE !!!!  " + tag);
   }
 
-  @Override
-  public CompoundTag getUpdateTag() {
-    CompoundTag syncData = super.getUpdateTag();
-    this.saveAdditional(syncData);
-    System.out.println("fff getUpdateTag base tile entity " + syncData);
-    return syncData;
-  }
+//  @Override
+//  public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
+//    this.load(pkt.getTag());
+//    super.onDataPacket(net, pkt);
+//  }
+//
+//  @Override
+//  public ClientboundBlockEntityDataPacket getUpdatePacket() {
+//    return ClientboundBlockEntityDataPacket.create(this);
+//  }
+//
+//  @Override
+//  public CompoundTag getUpdateTag() { // YES BP
+//    CompoundTag syncData = super.getUpdateTag();
+//    this.saveAdditional(syncData);
+//    System.out.println("fff getUpdateTag base tile entity " + syncData);
+//    return syncData;
+//  }
 
   @Override
   public void setField(int field, int value) {}
