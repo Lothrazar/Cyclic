@@ -23,12 +23,23 @@ public class ContainerStructure extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      addSlot(new SlotItemHandler(h, TileStructure.SLOT_BUILD, 61, 21));
+      addSlot(new SlotItemHandler(h, TileStructure.SLOT_BUILD, 61, 21) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
       addSlot(new SlotItemHandler(h, TileStructure.SLOT_SHAPE, 8, 132) {
 
         @Override
         public int getMaxStackSize() {
           return 1;
+        }
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
         }
       });
       addSlot(new SlotItemHandler(h, TileStructure.SLOT_GPS, 152, 132) {
@@ -36,6 +47,11 @@ public class ContainerStructure extends ContainerBase {
         @Override
         public int getMaxStackSize() {
           return 1;
+        }
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
         }
       });
       this.endInv = h.getSlots();

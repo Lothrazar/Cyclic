@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.item.apple;
 
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilWorld;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;

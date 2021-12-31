@@ -19,7 +19,13 @@ public class ContainerSoundPlayer extends ContainerBase {
     tile = (TileSoundPlayer) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    addSlot(new SlotItemHandler(tile.inventory, 0, 60, 60));
+    addSlot(new SlotItemHandler(tile.inventory, 0, 60, 60) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     this.endInv = 1;
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);

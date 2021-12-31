@@ -27,7 +27,13 @@ public class ContainerItemCollector extends ContainerBase {
         this.addSlot(new SlotItemHandler(tile.inventory,
             k + j * 9,
             8 + k * Const.SQ,
-            82 + j * Const.SQ));
+            82 + j * Const.SQ) {
+
+          @Override
+          public void setChanged() {
+            tile.setChanged();
+          }
+        });
       }
     }
     addSlot(new SlotItemHandler(tile.filter, 0, 152, 9));

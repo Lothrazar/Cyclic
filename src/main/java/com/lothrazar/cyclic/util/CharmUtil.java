@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.util;
 
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 import com.lothrazar.cyclic.api.IHasClickToggle;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.apache.commons.lang3.tuple.Triple;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class CharmUtil {

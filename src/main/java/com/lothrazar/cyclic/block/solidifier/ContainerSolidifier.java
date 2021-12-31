@@ -25,14 +25,37 @@ public class ContainerSolidifier extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     ItemStackHandler h = tile.inputSlots;
-    addSlot(new SlotItemHandler(h, 0, 37, 17));
-    addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ));
-    addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ));
+    addSlot(new SlotItemHandler(h, 0, 37, 17) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(h, 1, 37, 17 + Const.SQ) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(h, 2, 37, 17 + 2 * Const.SQ) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     addSlot(new SlotItemHandler(tile.outputSlots, 0, 121, 37) {
 
       @Override
       public boolean mayPlace(ItemStack stack) {
         return false;
+      }
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
       }
     });
     this.endInv = h.getSlots() + 1; //for shiftclick out of the out slot

@@ -22,8 +22,20 @@ public class ContainerMelter extends ContainerBase {
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 17, 31));
-      addSlot(new SlotItemHandler(h, 1, 35, 31));
+      addSlot(new SlotItemHandler(h, 0, 17, 31) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
+      addSlot(new SlotItemHandler(h, 1, 35, 31) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileMelter.Fields.values().length);

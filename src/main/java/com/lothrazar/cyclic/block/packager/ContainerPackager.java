@@ -19,8 +19,20 @@ public class ContainerPackager extends ContainerBase {
     tile = (TilePackager) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    addSlot(new SlotItemHandler(tile.inputSlots, 0, 51, 41));
-    addSlot(new SlotItemHandler(tile.outputSlots, 0, 91 + 4, 37 + 4));
+    addSlot(new SlotItemHandler(tile.inputSlots, 0, 51, 41) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(tile.outputSlots, 0, 91 + 4, 37 + 4) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     this.endInv = tile.inputSlots.getSlots();
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePackager.Fields.values().length);

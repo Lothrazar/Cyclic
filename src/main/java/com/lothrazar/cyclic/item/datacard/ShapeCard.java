@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.item.datacard;
 
+import java.util.List;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilPlayer;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

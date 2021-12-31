@@ -23,15 +23,15 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.crafter;
 
-import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
-import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -97,9 +97,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
 
   public enum ItemHandlers {
     INPUT, OUTPUT, GRID, PREVIEW
-  }
-
-  ;
+  };
 
   public enum Fields {
     TIMER, REDSTONE, RENDER;
@@ -266,7 +264,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     for (int slotId = 0; slotId < IO_SIZE; slotId++) {
       if (inv.getStackInSlot(slotId) == ItemStack.EMPTY
           || (inv.getStackInSlot(slotId).sameItem(output)
-          && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize())) {
+              && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize())) {
         return true;
       }
       if (output == ItemStack.EMPTY || output.getCount() == 0) {
@@ -535,13 +533,13 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     switch (TileCrafter.Fields.values()[id]) {
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 }

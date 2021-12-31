@@ -1,5 +1,12 @@
 package com.lothrazar.cyclic.block;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
@@ -11,16 +18,10 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
@@ -207,22 +208,24 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   protected BlockPos getCurrentFacingPos() {
     return getCurrentFacingPos(1);
   }
-  //@Override
-  //public CompoundTag getUpdateTag() {
-  //  CompoundTag syncData = super.getUpdateTag();
-  //  this.saveAdditional(syncData); 
-  //  return syncData;
-  //}
-  //  @Override
-  //  public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-  //    this.load(pkt.getTag());
-  //    super.onDataPacket(net, pkt);
-  //  }
-  //
-  //  @Override
-  //  public ClientboundBlockEntityDataPacket getUpdatePacket() {
-  //    return ClientboundBlockEntityDataPacket.create(this); 
-  //  }
+
+  @Override
+  public CompoundTag getUpdateTag() {
+    CompoundTag syncData = super.getUpdateTag();
+    this.saveAdditional(syncData);
+    return syncData;
+  }
+
+  @Override
+  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    this.load(pkt.getTag());
+    super.onDataPacket(net, pkt);
+  }
+
+  @Override
+  public ClientboundBlockEntityDataPacket getUpdatePacket() {
+    return ClientboundBlockEntityDataPacket.create(this);
+  }
 
   public boolean isPowered() {
     return this.getLevel().hasNeighborSignal(this.getBlockPos());

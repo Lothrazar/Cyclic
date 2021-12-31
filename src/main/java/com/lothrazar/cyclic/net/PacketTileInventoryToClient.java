@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.net;
 
+import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
-import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

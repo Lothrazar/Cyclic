@@ -23,7 +23,13 @@ public class ContainerTransmit extends ContainerBase {
     ItemStackHandler h = tile.inventory;
     this.endInv = h.getSlots();
     for (int s = 0; s < h.getSlots(); s++) {
-      addSlot(new SlotItemHandler(h, s, 8 + 18 * s, 49));
+      addSlot(new SlotItemHandler(h, s, 8 + 18 * s, 49) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
     }
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileWirelessTransmit.Fields.values().length);

@@ -22,7 +22,13 @@ public class ContainerPotion extends ContainerBase {
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 9, 35));
+      addSlot(new SlotItemHandler(h, 0, 9, 35) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePotion.Fields.values().length);

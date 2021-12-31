@@ -23,10 +23,34 @@ public class ContainerDisenchant extends ContainerBase {
     ItemStackHandler inputSlots = tile.inputSlots;
     ItemStackHandler outputSlots = tile.outputSlots;
     this.endInv = inputSlots.getSlots() + outputSlots.getSlots();
-    addSlot(new SlotItemHandler(inputSlots, 0, 24, 40));
-    addSlot(new SlotItemHandler(inputSlots, 1, 48, 40));
-    addSlot(new DisenchantOutputSlot(outputSlots, 0, 108, 24));
-    addSlot(new DisenchantOutputSlot(outputSlots, 1, 108, 56));
+    addSlot(new SlotItemHandler(inputSlots, 0, 24, 40) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(inputSlots, 1, 48, 40) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new DisenchantOutputSlot(outputSlots, 0, 108, 24) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new DisenchantOutputSlot(outputSlots, 1, 108, 56) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);
     this.trackAllIntFields(tile, TileDisenchant.Fields.values().length);

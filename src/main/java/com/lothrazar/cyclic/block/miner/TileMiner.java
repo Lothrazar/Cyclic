@@ -146,7 +146,6 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     super.saveAdditional(tag);
   }
 
-
   public void tick() {
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -310,7 +309,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     if (height > 0) {
       int diff = directionIsUp ? 1 : -1;
       shape = UtilShape.repeatShapeByHeight(shape, diff * height);
-    } 
+    }
     return shape;
   }
 
@@ -323,7 +322,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     }
     if (targetPos != null) {
       shape.add(targetPos);
-    } 
+    }
     return shape;
   }
 

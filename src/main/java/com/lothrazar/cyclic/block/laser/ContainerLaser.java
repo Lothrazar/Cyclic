@@ -22,7 +22,13 @@ public class ContainerLaser extends ContainerBase {
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 152, 8));
+      addSlot(new SlotItemHandler(h, 0, 152, 8) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
     });
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileLaser.Fields.values().length);

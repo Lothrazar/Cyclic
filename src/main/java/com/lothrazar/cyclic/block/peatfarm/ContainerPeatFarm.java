@@ -54,7 +54,13 @@ public class ContainerPeatFarm extends ContainerBase {
       this.endInv = h.getSlots();
       int rowSize = 6;
       for (int i = 0; i < rowSize; i++) {
-        addSlot(new SlotItemHandler(h, i, SLOTX_START + i * Const.SQ, SLOTY));
+        addSlot(new SlotItemHandler(h, i, SLOTX_START + i * Const.SQ, SLOTY) {
+
+          @Override
+          public void setChanged() {
+            tile.setChanged();
+          }
+        });
       }
     });
     layoutPlayerInventorySlots(8, 84);

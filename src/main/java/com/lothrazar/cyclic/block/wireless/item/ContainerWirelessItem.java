@@ -23,6 +23,11 @@ public class ContainerWirelessItem extends ContainerBase {
     addSlot(new SlotItemHandler(tile.gpsSlots, 0, 80, 36) {
 
       @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+
+      @Override
       public int getMaxStackSize() {
         return 1;
       }

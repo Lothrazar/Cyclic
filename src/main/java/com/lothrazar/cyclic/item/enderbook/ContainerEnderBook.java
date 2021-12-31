@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item.enderbook;
 
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import javax.annotation.Nonnull;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -43,6 +43,11 @@ public class ContainerEnderBook extends ContainerBase {
         int xPos = 8 + col * Const.SQ;
         int yPos = 32 + row * Const.SQ;
         this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
+          //
+          //            @Override
+          //            public void setChanged() {
+          //              tile.setChanged();
+          //            }
 
           @Override
           public int getMaxStackSize() {

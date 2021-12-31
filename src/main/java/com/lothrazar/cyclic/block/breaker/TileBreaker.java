@@ -49,7 +49,6 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     if (state.getBlock() != Blocks.AIR &&
         state.getDestroySpeed(level, target) >= 0) {
       this.level.destroyBlock(target, true);
-
     }
     //else unbreakable
   }

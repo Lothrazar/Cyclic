@@ -165,7 +165,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     tag.put(NBTINV + "batt", batterySlots.serializeNBT());
     tag.putInt("flowing", getFlowing());
     tag.put(NBTENERGY, energy.serializeNBT());
-      super.saveAdditional(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.api;
 
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import java.util.function.Consumer;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;

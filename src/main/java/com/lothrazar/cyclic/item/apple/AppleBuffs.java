@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.apple;
 
+import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.datafixers.util.Pair;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;

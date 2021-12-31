@@ -19,7 +19,13 @@ public class ContainerGeneratorFuel extends ContainerBase {
     tile = (TileGeneratorFuel) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    addSlot(new SlotItemHandler(tile.inputSlots, 0, 75, 35));
+    addSlot(new SlotItemHandler(tile.inputSlots, 0, 75, 35) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     //    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35));
     this.endInv = tile.inputSlots.getSlots();
     layoutPlayerInventorySlots(8, 84);

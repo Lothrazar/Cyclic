@@ -27,6 +27,11 @@ public class ContainerBattery extends ContainerBase {
       public int getMaxStackSize() {
         return 1;
       }
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
     });
     this.endInv = 1;
     layoutPlayerInventorySlots(8, 84);

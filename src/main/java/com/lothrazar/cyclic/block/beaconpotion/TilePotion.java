@@ -163,7 +163,7 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
       }
       tag.put("Effects", listnbt);
     }
-      super.saveAdditional(tag);
+    super.saveAdditional(tag);
   }
 
   private void pullFromItem(List<MobEffectInstance> newEffects) {

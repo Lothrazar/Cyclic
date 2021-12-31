@@ -88,7 +88,6 @@ public class TileTeleport extends TileBlockEntityCyclic implements MenuProvider 
     super.saveAdditional(tag);
   }
 
-
   BlockPosDim getTargetInSlot(int s) {
     return LocationGpsCard.getPosition(gpsSlots.getStackInSlot(s));
   }

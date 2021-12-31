@@ -22,7 +22,13 @@ public class ContainerFluidCollect extends ContainerBase {
     this.playerInventory = playerInventory;
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 10, 51));
+      addSlot(new SlotItemHandler(h, 0, 10, 51) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
     });
     layoutPlayerInventorySlots(8, 84);
     this.trackEnergy(tile);

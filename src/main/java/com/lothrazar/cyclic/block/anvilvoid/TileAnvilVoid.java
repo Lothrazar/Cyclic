@@ -105,7 +105,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
-      super.saveAdditional(tag);
+    super.saveAdditional(tag);
   }
 
   //  @Override

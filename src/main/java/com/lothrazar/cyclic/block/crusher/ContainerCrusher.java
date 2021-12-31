@@ -19,9 +19,27 @@ public class ContainerCrusher extends ContainerBase {
     tile = (TileCrusher) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    addSlot(new SlotItemHandler(tile.inputSlots, 0, 53, 35));
-    addSlot(new SlotItemHandler(tile.outputSlots, 0, 105 + 4, 21 + 4));
-    addSlot(new SlotItemHandler(tile.outputSlots, 1, 109, 55));
+    addSlot(new SlotItemHandler(tile.inputSlots, 0, 53, 35) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(tile.outputSlots, 0, 105 + 4, 21 + 4) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(tile.outputSlots, 1, 109, 55) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     this.endInv = 3;
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileCrusher.Fields.values().length);

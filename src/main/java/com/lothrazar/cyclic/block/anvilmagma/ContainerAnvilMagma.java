@@ -21,8 +21,20 @@ public class ContainerAnvilMagma extends ContainerBase {
     tile = (TileAnvilMagma) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    addSlot(new SlotItemHandler(tile.inputSlots, 0, 55, 35));
-    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35));
+    addSlot(new SlotItemHandler(tile.inputSlots, 0, 55, 35) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     this.endInv = 2;
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileAnvilMagma.Fields.values().length);

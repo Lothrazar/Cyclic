@@ -63,7 +63,13 @@ public class ContainerCrafter extends ContainerBase {
       for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
         this.addSlot(new SlotItemHandler(tile.inputHandler, indexx,
             INPUT_START_X + colPos * Const.SQ,
-            INPUT_START_Y + rowPos * Const.SQ));
+            INPUT_START_Y + rowPos * Const.SQ) {
+
+          @Override
+          public void setChanged() {
+            tile.setChanged();
+          }
+        });
         indexx++;
       }
     }
@@ -74,7 +80,13 @@ public class ContainerCrafter extends ContainerBase {
         for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
           this.addSlot(new CrafterGridSlot(h, index,
               GRID_START_X + colPos * Const.SQ,
-              GRID_START_Y + rowPos * Const.SQ));
+              GRID_START_Y + rowPos * Const.SQ) {
+
+            @Override
+            public void setChanged() {
+              tile.setChanged();
+            }
+          });
           index++;
         }
       }
@@ -85,14 +97,26 @@ public class ContainerCrafter extends ContainerBase {
       for (int colPos = 0; colPos < TileCrafter.IO_NUM_COLS; colPos++) {
         this.addSlot(new CrafterOutputSlot(tile.outHandler, indexx,
             OUTPUT_START_X + colPos * Const.SQ,
-            OUTPUT_START_Y + rowPos * Const.SQ));
+            OUTPUT_START_Y + rowPos * Const.SQ) {
+
+          @Override
+          public void setChanged() {
+            tile.setChanged();
+          }
+        });
         indexx++;
       }
     }
     tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
       addSlot(new CrafterGridSlot(h, 0,
           PREVIEW_START_X,
-          PREVIEW_START_Y));
+          PREVIEW_START_Y) {
+
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
+      });
     });
     this.endInv = slots.size();
     layoutPlayerInventorySlots(8, 153);

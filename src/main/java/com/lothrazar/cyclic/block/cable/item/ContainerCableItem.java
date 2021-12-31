@@ -22,7 +22,13 @@ public class ContainerCableItem extends ContainerBase {
     //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
     this.endInv = tile.filter.getSlots();
     //dont show 0 thats the actual thing in the slot
-    addSlot(new SlotItemHandler(tile.filter, 0, 80, 29));
+    addSlot(new SlotItemHandler(tile.filter, 0, 80, 29) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     //    });
     layoutPlayerInventorySlots(8, 84);
     this.trackEnergy(tile);

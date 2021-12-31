@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.world;
 
-import com.lothrazar.cyclic.registry.BlockRegistry;
 import java.util.List;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -9,6 +9,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConf
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.NoiseThresholdProvider;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
+
 public class WorldGenFeatures {
 
   public static final ConfiguredFeature<?, ?> FEAT_FLOWER_CYAN = Feature.FLOWER.configured(new RandomPatchConfiguration(64, 4, 2, () -> {

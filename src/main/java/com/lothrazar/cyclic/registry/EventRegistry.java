@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.compat.curios.CuriosRegistry;
+import com.lothrazar.cyclic.event.BiomeEvents;
 import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PlayerAbilityEvents;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
-import com.lothrazar.cyclic.event.BiomeEvents;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 

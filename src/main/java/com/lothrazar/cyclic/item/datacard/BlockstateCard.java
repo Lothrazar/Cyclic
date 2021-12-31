@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;

@@ -147,7 +147,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
     tank.writeToNBT(fluid);
     tag.put(NBTFLUID, fluid);
     tag.put(NBTINV, inventory.serializeNBT());
-     super.saveAdditional(tag);
+    super.saveAdditional(tag);
   }
 
   @Override

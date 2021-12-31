@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.equipment;
 
+import java.util.List;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -78,7 +78,6 @@ public class MattockItem extends DiggerItem {
           Block blockCurrent = bsCurrent.getBlock();
           if (world.isClientSide) {
             world.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
-
             //removedByPlayer
             if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
               blockCurrent.destroy(world, posCurrent, bsCurrent);

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.apple;
 
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import java.util.Iterator;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
