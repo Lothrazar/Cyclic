@@ -198,9 +198,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Override
   public CompoundTag getUpdateTag() {
-    //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
-    CompoundTag syncData = new CompoundTag();
-    this.saveAdditional(syncData);
+    CompoundTag syncData = super.getUpdateTag();
+    this.saveAdditional(syncData); 
     return syncData;
   }
 
@@ -224,7 +223,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Override
   public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    return ClientboundBlockEntityDataPacket.create(this);
+    return ClientboundBlockEntityDataPacket.create(this); 
   }
 
   public boolean isPowered() {
@@ -373,12 +372,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     timer = tag.getInt("timer");
     super.load(tag);
   }
-
-//  @Override
-//  public CompoundTag save(CompoundTag tag) {
-//    this.saveAdditional(tag);
-//    return super.save(tag);
-//  }
 
   @Override
   public void saveAdditional(CompoundTag tag) {

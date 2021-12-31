@@ -42,6 +42,7 @@ public class DoorbellButton extends ButtonBlock {
     return stateForPlacement.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public FluidState getFluidState(BlockState state) {
     return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

@@ -15,7 +15,7 @@ public class RenderHarvester implements BlockEntityRenderer<TileHarvester> {
   public void render(TileHarvester te, float v, PoseStack matrix,
       MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
     if (1 == te.getField(TileHarvester.Fields.RENDER.ordinal())) {
-      UtilRender.renderOutline(te.getBlockPos(), te.getShapeHollow(), matrix, 0.7F, ClientConfigCyclic.getColor(te));
+      UtilRender.renderOutline(te.getBlockPos(), te.getShapeHollow(), matrix, 0.5F, ClientConfigCyclic.getColor(te));
     }
   }
 }

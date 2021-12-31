@@ -15,7 +15,7 @@ public class RenderForester implements BlockEntityRenderer<TileForester> {
   public void render(TileForester te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {
     // ok
     if (te.getField(TileForester.Fields.RENDER.ordinal()) == 1) {
-      UtilRender.renderOutline(te.getBlockPos(), te.getShapeHollow(), matrixStack, 0.7F, ClientConfigCyclic.getColor(te));
+      UtilRender.renderOutline(te.getBlockPos(), te.getShapeHollow(), matrixStack, 0.5F, ClientConfigCyclic.getColor(te));
     }
   }
 }

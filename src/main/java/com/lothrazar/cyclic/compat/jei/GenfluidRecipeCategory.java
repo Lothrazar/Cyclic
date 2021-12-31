@@ -31,7 +31,7 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   public GenfluidRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_fluid.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.GENERATOR_FLUID.get()));
+    icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(BlockRegistry.GENERATOR_FLUID.get()));
   }
 
   @Override

@@ -33,7 +33,8 @@ public class PacketTileData extends PacketBaseCyclic {
     this.pos = pos;
   }
 
-  public PacketTileData() {}
+  public PacketTileData() {
+  }
 
   public static void handle(PacketTileData message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
@@ -50,6 +51,7 @@ public class PacketTileData extends PacketBaseCyclic {
         else {
           base.setField(message.field, message.value);
         }
+        base.setChanged();
       }
     });
     message.done(ctx);

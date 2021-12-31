@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.solidifier;
 
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
@@ -63,7 +64,8 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     e.tick();
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileSolidifier e) {
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState,
+      TileSolidifier e) {
     e.tick();
   }
 
@@ -142,6 +144,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inputSlots.serializeNBT());
+    ModCyclic.LOGGER.info("saveAd: " + inputSlots.serializeNBT().toString());
     tag.put("invoutput", outputSlots.serializeNBT());
     super.saveAdditional(tag);
   }
@@ -179,7 +182,8 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     currentRecipe = null;
-    List<RecipeSolidifier<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID);
+    List<RecipeSolidifier<TileBlockEntityCyclic>> recipes = level.getRecipeManager()
+        .getAllRecipesFor(CyclicRecipeType.SOLID);
     for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, level)) {
         currentRecipe = rec;
@@ -191,12 +195,12 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   private boolean tryProcessRecipe() {
     FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid().getAmount(), FluidAction.SIMULATE);
     if (test.getAmount() >= this.currentRecipe.getRecipeFluid().getAmount()) {
-      //wait is output slot compatible
+      // wait is output slot compatible
       if (!outputSlots.insertItem(0, currentRecipe.getResultItem(), true).isEmpty()) {
         return false;
-        //there was non-empty left after this, so no room for all
+        // there was non-empty left after this, so no room for all
       }
-      //ok it has room for all the fluid none will be wasted 
+      // ok it has room for all the fluid none will be wasted
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);

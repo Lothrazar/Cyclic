@@ -28,7 +28,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   public PackagerRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/packager.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.PACKAGER.get()));
+    icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(BlockRegistry.PACKAGER.get()));
   }
 
   @Override

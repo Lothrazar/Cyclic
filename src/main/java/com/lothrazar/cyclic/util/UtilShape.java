@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import com.lothrazar.cyclic.data.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
@@ -222,9 +221,9 @@ public class UtilShape {
           newOffset = p.below(i);
         }
         // TODO: 1.18 world min and max height not zero here 
-        if (newOffset.getY() >= 0 && newOffset.getY() <= Const.WORLDHEIGHT) {
-          newShape.add(newOffset);
-        }
+        //if (newOffset.getY() >= 0 && newOffset.getY() <= Const.WORLDHEIGHT) {
+        newShape.add(newOffset);
+        // }
       }
     }
     return newShape;

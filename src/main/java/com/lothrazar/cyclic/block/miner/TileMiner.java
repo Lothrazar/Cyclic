@@ -307,23 +307,23 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
 
   public List<BlockPos> getShape() {
     List<BlockPos> shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(radius + 1), radius);
-    int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
+      int diff = directionIsUp ? 1 : -1;
       shape = UtilShape.repeatShapeByHeight(shape, diff * height);
-    }
+    } 
     return shape;
   }
 
   public List<BlockPos> getShapeHollow() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
-    int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
+      int diff = directionIsUp ? 1 : -1;
       shape = UtilShape.repeatShapeByHeight(shape, diff * height);
     }
     if (targetPos != null) {
       shape.add(targetPos);
-    }
+    } 
     return shape;
   }
 

@@ -32,7 +32,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
 
   public CrusherRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.CRUSHER.get()));
+    icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(BlockRegistry.CRUSHER.get()));
   }
 
   @Override

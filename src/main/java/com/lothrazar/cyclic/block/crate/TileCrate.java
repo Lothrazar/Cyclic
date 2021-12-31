@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -48,13 +49,34 @@ public class TileCrate extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void load(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    System.out.println("fff LOAD " + tag);
     super.load(tag);
+  }
+
+  @Override
+  public void onDataPacket(net.minecraft.network.Connection net, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
+    this.load(pkt.getTag());
+    super.onDataPacket(net, pkt);
+  }
+
+  @Override
+  public ClientboundBlockEntityDataPacket getUpdatePacket() {
+    return ClientboundBlockEntityDataPacket.create(this);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag) {
     tag.put(NBTINV, inventory.serializeNBT());
     super.saveAdditional(tag);
+    System.out.println("fff gsaveAdditional" + tag);
+  }
+
+  @Override
+  public CompoundTag getUpdateTag() {
+    CompoundTag syncData = super.getUpdateTag();
+    this.saveAdditional(syncData);
+    System.out.println("fff getUpdateTag base tile entity " + syncData);
+    return syncData;
   }
 
   @Override

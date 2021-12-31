@@ -31,7 +31,7 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
 
   public GenitemRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_item.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.createDrawableIngredient(new ItemStack(BlockRegistry.GENERATOR_ITEM.get()));
+    icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(BlockRegistry.GENERATOR_ITEM.get()));
   }
 
   @Override

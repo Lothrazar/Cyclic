@@ -41,7 +41,7 @@ public class ItemBlockTank extends BlockItem {
       //this is always null 
       FluidStack fstack = copyFluidFromStack(stack);
       float qty = fstack.getAmount();
-      float ratio = qty / (TileTank.CAPACITY);
+//      float ratio = qty / (TileTank.CAPACITY);
       return Math.round(13.0F - (float) qty * 13.0F / (float) (TileTank.CAPACITY));
     }
     catch (Throwable e) {
