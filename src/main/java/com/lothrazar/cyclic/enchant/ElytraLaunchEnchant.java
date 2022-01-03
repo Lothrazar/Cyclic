@@ -65,12 +65,12 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
 
   @Override
   public int getMaxLevel() {
-    return 1;
+    return 3;
   }
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    return stack.getItem() instanceof ElytraItem;
+    return stack.getItem() instanceof ElytraItem || stack.getEquipmentSlot() == EquipmentSlot.FEET;
   }
 
   @Override
