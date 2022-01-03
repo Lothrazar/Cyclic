@@ -66,7 +66,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
       return;
     }
     //first pull down from above
-    tryExtract(Direction.UP);
+    tryExtract();
     //then pull from hopper facey side
     Direction exportToSide = this.getBlockState().getValue(BlockFluidHopper.FACING);
     if (exportToSide != null && exportToSide != Direction.UP) {
@@ -74,19 +74,15 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
     }
   }
 
-  private void tryExtract(Direction extractSide) {
-    if (extractSide == null || tank == null) {
+  private void tryExtract() {
+    if (tank == null) {
       return;
     }
-    BlockPos target = this.worldPosition.relative(extractSide);
-    Direction incomingSide = extractSide.getOpposite();
-    IFluidHandler sideHandler = UtilFluid.getTank(level, target, incomingSide);
-    boolean success = false;
-    if (sideHandler != null) {
-      success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, sideHandler, FLOW);
-      if (success) {
-        return;
-      }
+    BlockPos target = this.worldPosition.relative(Direction.UP);
+    IFluidHandler tankAbove = UtilFluid.getTank(level, target, Direction.DOWN);
+    boolean success = UtilFluid.tryFillPositionFromTank(level, worldPosition, Direction.UP, tankAbove, FLOW);
+    if (success) {
+      return;
     }
     if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       //test if its a source block, or a waterlogged block. 
@@ -97,13 +93,13 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
         targetState = targetState.setValue(BlockStateProperties.WATERLOGGED, false);
         //for waterlogged it is hardcoded to water
         if (level.setBlockAndUpdate(target, targetState)) {
-          sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
       else if (fluidState != null && fluidState.isSource()) {
         //not just water. any fluid source block
         if (level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState())) {
-          sideHandler.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
         }
       }
     }
