@@ -119,6 +119,13 @@ public class TilePotion extends TileEntityBase implements INamedContainerProvide
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];

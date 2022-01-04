@@ -107,6 +107,13 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));

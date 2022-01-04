@@ -99,6 +99,12 @@ public class TileSoundRecorder extends TileEntityBase implements INamedContainer
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case CLEARALL:

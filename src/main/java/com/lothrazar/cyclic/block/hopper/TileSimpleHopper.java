@@ -42,6 +42,12 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void tick() {
     //block if redstone powered
     if (this.isPowered()) {

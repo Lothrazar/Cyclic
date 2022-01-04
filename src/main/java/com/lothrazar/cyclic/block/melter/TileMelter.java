@@ -27,6 +27,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -44,16 +45,16 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 3;
   public static IntValue POWERCONF;
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
   private RecipeMelter currentRecipe;
 
   public TileMelter() {
     super(TileRegistry.melter);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
   @Override
@@ -143,7 +144,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
@@ -152,6 +153,14 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    fluidCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   public float getCapacity() {

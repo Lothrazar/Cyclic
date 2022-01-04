@@ -53,6 +53,13 @@ public class TileGeneratorPeat extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     setFlowing(tag.getInt("flowing"));
     fuelRate = tag.getInt("fuelRate");

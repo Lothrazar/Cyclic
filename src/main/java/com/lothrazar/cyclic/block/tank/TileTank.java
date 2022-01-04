@@ -14,16 +14,17 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileTank extends TileEntityBase implements ITickableTileEntity {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
-  public FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   public TileTank() {
     super(TileRegistry.tank);
-    tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
   @Override
@@ -43,9 +44,14 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

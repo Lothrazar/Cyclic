@@ -136,6 +136,13 @@ public class TileStructure extends TileEntityBase implements INamedContainerProv
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case TIMER:

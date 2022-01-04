@@ -2,14 +2,15 @@ package com.lothrazar.cyclic.block.cable.energy;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
+import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
+import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,11 +24,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableEnergy extends TileEntityBase implements ITickableTileEntity {
+public class TileCableEnergy extends TileCableBase implements ITickableTileEntity {
 
   private static final int MAX = 32000;
   final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private final Map<Direction, EnumConnectType> connectTypeMap = new HashMap<>();
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final Map<Direction, LazyOptional<IEnergyStorage>> energyCapSides = new HashMap<>();
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
   private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
 
@@ -36,6 +39,27 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }
+  }
+
+  @Override
+  public EnumConnectType getConnectionType(final Direction side) {
+    return connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
+  }
+
+  @Override
+  public void updateConnection(final Direction side, final EnumConnectType connectType) {
+    final EnumConnectType oldConnectType = getConnectionType(side);
+    if (connectType == EnumConnectType.BLOCKED && oldConnectType != EnumConnectType.BLOCKED) {
+      final LazyOptional<IEnergyStorage> sidedCap = energyCapSides.get(side);
+      if (sidedCap != null) {
+        sidedCap.invalidate();
+        energyCapSides.remove(side);
+      }
+    }
+    else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
+      energyCapSides.put(side, LazyOptional.of(() -> energy));
+    }
+    connectTypeMap.put(side, connectType);
   }
 
   @Override
@@ -113,10 +137,31 @@ public class TileCableEnergy extends TileEntityBase implements ITickableTileEnti
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY && !CableBase.isCableBlocked(this.getBlockState(), side)) {
-      return energyCap.cast();
+    if (cap == CapabilityEnergy.ENERGY) {
+      if (side == null) {
+        return energyCap.cast();
+      }
+      LazyOptional<IEnergyStorage> sidedCap = energyCapSides.get(side);
+      if (sidedCap == null) {
+        if (getConnectionType(side) != EnumConnectType.BLOCKED) {
+          sidedCap = LazyOptional.of(() -> energy);
+          energyCapSides.put(side, sidedCap);
+          return sidedCap.cast();
+        }
+      }
+      else {
+        return sidedCap.cast();
+      }
     }
     return super.getCapability(cap, side);
+  }
+
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    for (final LazyOptional<IEnergyStorage> sidedCap : energyCapSides.values()) {
+      sidedCap.invalidate();
+    }
+    super.invalidateCaps();
   }
 
   @Override

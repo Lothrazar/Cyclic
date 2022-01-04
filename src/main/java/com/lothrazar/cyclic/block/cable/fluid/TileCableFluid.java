@@ -1,16 +1,16 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
-import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
-import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
+import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.cyclic.util.UtilFluid;
+import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -37,9 +37,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableFluid extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
+public class TileCableFluid extends TileCableBase implements ITickableTileEntity, INamedContainerProvider {
 
   final ItemStackHandler filter = new ItemStackHandler(1) {
 
@@ -51,13 +52,34 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
   public static final int FLOW_RATE = CAPACITY; //normal non-extract flow
   public static final int EXTRACT_RATE = CAPACITY;
-  private final Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
+  private final FluidTank fluidTank = new FluidTankBase(this, CAPACITY, fluidStack ->
+    FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
+  private final Map<Direction, EnumConnectType> connectTypeMap = new HashMap<>();
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> fluidTank);
+  private final Map<Direction, LazyOptional<IFluidHandler>> fluidCapSides = new HashMap<>();
 
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
-    for (Direction f : Direction.values()) {
-      flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, CAPACITY, p -> true)));
+  }
+
+  @Override
+  public EnumConnectType getConnectionType(final Direction side) {
+    return connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
+  }
+
+  @Override
+  public void updateConnection(final Direction side, final EnumConnectType connectType) {
+    final EnumConnectType oldConnectType = connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
+    if (connectType == EnumConnectType.BLOCKED && oldConnectType != EnumConnectType.BLOCKED) {
+      fluidCapSides.computeIfPresent(side, (k, v) -> {
+        v.invalidate();
+        return null;
+      });
     }
+    else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
+      fluidCapSides.put(side, LazyOptional.of(() -> fluidTank));
+    }
+    connectTypeMap.put(side, connectType);
   }
 
   @Override
@@ -90,11 +112,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
       return;
     }
     //handle special cases
-    final FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
-    if (sideHandler == null) {
-      return;
-    }
-    else if (sideHandler.getSpace() < FluidAttributes.BUCKET_VOLUME) {
+    if (fluidTank.getSpace() < FluidAttributes.BUCKET_VOLUME) {
       return;
     }
     //handle waterlogged blocks
@@ -104,7 +122,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
         && world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
       //the waterlogged block contained a bucket amount of water
       final FluidStack bucketAmountOfWater = new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME);
-      final int filledAmount = sideHandler.fill(bucketAmountOfWater, FluidAction.EXECUTE);
+      final int filledAmount = fluidTank.fill(bucketAmountOfWater, FluidAction.EXECUTE);
       //sanity check
       if (filledAmount != bucketAmountOfWater.getAmount()) {
         ModCyclic.LOGGER.error("Imbalance filling water extracted from waterlogged block, filled " + filledAmount + " expected " + bucketAmountOfWater);
@@ -123,7 +141,7 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
     }
     //the fluid source block contained a bucket amount of that fluid
     final FluidStack bucketAmountOfFluid = new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME);
-    final int filledAmount = sideHandler.fill(bucketAmountOfFluid, FluidAction.EXECUTE);
+    final int filledAmount = fluidTank.fill(bucketAmountOfFluid, FluidAction.EXECUTE);
     //sanity check
     if (filledAmount != bucketAmountOfFluid.getAmount()) {
       ModCyclic.LOGGER.error("Incorrect amount of fluid extracted from fluid source, filled " + filledAmount + " expected " + bucketAmountOfFluid);
@@ -131,57 +149,56 @@ public class TileCableFluid extends TileEntityBase implements ITickableTileEntit
   }
 
   private void normalFlow() {
-    for (Direction incomingSide : Direction.values()) {
-      final IFluidHandler sideHandler = flow.get(incomingSide).orElse(null);
-      for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
-        if (outgoingSide == incomingSide) {
-          continue;
-        }
-        final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
-        final EnumConnectType connection = this.getBlockState().get(outgoingFace);
-        if (connection.isExtraction() || connection.isBlocked()) {
-          continue;
-        }
-        this.moveFluids(outgoingSide, pos.offset(outgoingSide), FLOW_RATE, sideHandler);
+    for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
+      final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
+      final EnumConnectType connection = this.getBlockState().get(outgoingFace);
+      if (connection.isExtraction() || connection.isBlocked()) {
+        continue;
       }
+      this.moveFluids(outgoingSide, pos.offset(outgoingSide), FLOW_RATE, fluidTank);
     }
   }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (side != null && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
-        return flow.get(side).cast();
+    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+      if (side == null) {
+        return fluidCap.cast();
+      }
+      final LazyOptional<IFluidHandler> fluidCapSide = fluidCapSides.computeIfAbsent(side, k -> {
+        if (getConnectionType(k) != EnumConnectType.BLOCKED) {
+          final LazyOptional<IFluidHandler> v = LazyOptional.of(() -> fluidTank);
+          fluidCapSides.put(k, v);
+          return v;
+        }
+        return null;
+      });
+      if (fluidCapSide != null) {
+        return fluidCapSide.cast();
       }
     }
     return super.getCapability(cap, side);
   }
 
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    for (final LazyOptional<IFluidHandler> sidedCap : fluidCapSides.values()) {
+      sidedCap.invalidate();
+    }
+    super.invalidateCaps();
+  }
+
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
-    FluidTankBase fluidh;
-    for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir).orElse(null);
-      if (tag.contains("fluid" + dir.toString())) {
-        fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
-      }
-    }
+    fluidTank.readFromNBT(tag.getCompound(NBTFLUID));
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put("filter", filter.serializeNBT());
-    FluidTankBase fluidh;
-    for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir).orElse(null);
-      CompoundNBT fluidtag = new CompoundNBT();
-      if (fluidh != null) {
-        fluidh.writeToNBT(fluidtag);
-      }
-      tag.put("fluid" + dir.toString(), fluidtag);
-    }
+    tag.put(NBTFLUID, fluidTank.writeToNBT(new CompoundNBT()));
     return super.write(tag);
   }
 

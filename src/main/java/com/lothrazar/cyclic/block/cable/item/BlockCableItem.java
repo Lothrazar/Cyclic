@@ -106,6 +106,7 @@ public class BlockCableItem extends CableBase {
       if (cap != null) {
         stateIn = stateIn.with(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockState(pos, stateIn);
+        updateConnection(worldIn, pos, d, EnumConnectType.INVENTORY);
       }
     }
     super.onBlockPlacedBy(worldIn, pos, stateIn, placer, stack);
@@ -116,17 +117,21 @@ public class BlockCableItem extends CableBase {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.get(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
+      updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
     if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
       BlockState with = stateIn.with(property, EnumConnectType.INVENTORY);
       if (world instanceof World && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
-        ((World) world).setBlockState(currentPos, with);
+        if (((World) world).setBlockState(currentPos, with)) {
+          updateConnection(world, currentPos, facing, EnumConnectType.INVENTORY);
+        }
       }
       return with;
     }
     else {
+      updateConnection(world, currentPos, facing, EnumConnectType.NONE);
       return stateIn.with(property, EnumConnectType.NONE);
     }
   }

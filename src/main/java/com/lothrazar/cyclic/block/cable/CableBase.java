@@ -214,6 +214,7 @@ public abstract class CableBase extends BlockBase implements IWaterLoggable {
         break;
       }
       if (world.getBlockState(pos).getBlock() == this && world.setBlockState(pos, newState)) {
+        updateConnection(world, pos, sideToToggle, newState.get(prop));
         if (updatePost) {
           newState.updatePostPlacement(sideToToggle, world.getBlockState(pos.offset(sideToToggle)), world, pos, pos.offset(sideToToggle));
         }
@@ -241,5 +242,12 @@ public abstract class CableBase extends BlockBase implements IWaterLoggable {
     return blockState.getBlock() instanceof CableBase
         && blockState.hasProperty(property)
         && blockState.get(property).isUnBlocked() == false;
+  }
+
+  protected void updateConnection(final IWorld world, final BlockPos blockPos, final Direction side, final EnumConnectType connectType) {
+    final TileEntity tileEntity = world.getTileEntity(blockPos);
+    if (tileEntity instanceof TileCableBase) {
+      ((TileCableBase) tileEntity).updateConnection(side, connectType);
+    }
   }
 }

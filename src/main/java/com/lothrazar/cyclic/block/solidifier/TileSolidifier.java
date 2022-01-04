@@ -154,6 +154,14 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
     return super.getCapability(cap, side);
   }
 
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    tankWrapper.invalidate();
+    super.invalidateCaps();
+  }
+
   public float getCapacity() {
     return CAPACITY;
   }
