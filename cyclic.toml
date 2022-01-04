@@ -154,7 +154,6 @@
 			#Range: 0 ~ 64000
 			energy_cost_xdim = 8000
 
-		#Settings
 		[cyclic.blocks.sound]
 			#Sound Recorder - how far out does it listen to record sounds
 			#Range: 1 ~ 64
@@ -214,7 +213,6 @@
 			#Range: 0.0010000000474974513 ~ 1.0
 			conversion_chance = 0.07999999821186066
 
-		#Sprinkler settings
 		[cyclic.blocks.sprinkler]
 			#Tick rate.  20 will fire one block per second
 			#Range: 1 ~ 20
@@ -222,6 +220,24 @@
 			#Water consumption
 			#Range: 0 ~ 1000
 			water = 5
+
+		[cyclic.blocks.cables]
+
+			[cyclic.blocks.cables.fluid]
+				#How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)
+				#Range: 1 ~ 32
+				buffer = 16
+				#How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode
+				#Range: 100 ~ 32000
+				flow = 1000
+
+			[cyclic.blocks.cables.energy]
+				#How much buffer the energy cables hold (must not be smaller than flow)
+				#Range: 1 ~ 128000
+				buffer = 32000
+				#How fast energy flows in these cables (must not be greater than buffer)
+				#Range: 100 ~ 32000
+				flow = 1000
 
 		[cyclic.blocks.generator_food]
 			#RF energy per tick generated while burning food in this machine

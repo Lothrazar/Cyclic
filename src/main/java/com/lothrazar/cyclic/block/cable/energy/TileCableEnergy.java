@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -24,9 +25,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergy extends TileBlockEntityCyclic {
 
-  private static final int MAX = 32000;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  public static IntValue BUFFERSIZE;
+  public static IntValue TRANSFER_RATE;
+  CustomEnergyStorage energy;
+  private LazyOptional<IEnergyStorage> energyCap;
   private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
 
   public TileCableEnergy(BlockPos pos, BlockState state) {
@@ -34,6 +36,8 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }
+    energy = new CustomEnergyStorage(BUFFERSIZE.get(), BUFFERSIZE.get());
+    energyCap = LazyOptional.of(() -> energy);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
@@ -70,11 +74,10 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
       if (itemHandlerFrom != null) {
         //ok go
         //
-        int extractSim = itemHandlerFrom.extractEnergy(MAX, true);
+        int extractSim = itemHandlerFrom.extractEnergy(TRANSFER_RATE.get(), true);
         if (extractSim > 0 && energy.receiveEnergy(extractSim, true) > 0) {
           //actually extract energy for real, whatever it accepted 
-          int actuallyEx = itemHandlerFrom.extractEnergy(energy.receiveEnergy(extractSim, false), false);
-          //          ModCyclic.LOGGER.info("TEX from to me" + actuallyEx);
+          int actuallyEx = itemHandlerFrom.extractEnergy(energy.receiveEnergy(extractSim, false), false); 
         }
       }
     }
@@ -90,7 +93,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
         continue;
       }
       if (this.isEnergyIncomingFromFace(outgoingSide) == false) {
-        moveEnergy(outgoingSide, MAX);
+        moveEnergy(outgoingSide, TRANSFER_RATE.get());
       }
     }
   }

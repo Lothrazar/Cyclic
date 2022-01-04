@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -42,23 +43,21 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvider {
 
+  public static IntValue BUFFERSIZE;
+  public static IntValue TRANSFER_RATE;
   final ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
-  };
-  public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
-  public static final int FLOW_RATE = CAPACITY; //normal non-extract flow
-  public static final int EXTRACT_RATE = CAPACITY;
-  public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 2;
+  };   
   private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
   public TileCableFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.FLUID_PIPE.get(), pos, state);
     for (Direction f : Direction.values()) {
-      flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, CAPACITY, p -> true)));
+      flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, BUFFERSIZE.get() * FluidAttributes.BUCKET_VOLUME, p -> true)));
     }
   }
 
@@ -95,7 +94,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
         && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
       return;
     }
-    boolean success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, EXTRACT_RATE);
+    boolean success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, TRANSFER_RATE.get());
     FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
     if (!success && sideHandler != null
         && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
@@ -134,7 +133,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
         if (connection.isExtraction() || connection.isBlocked()) {
           continue;
         }
-        this.moveFluids(outgoingSide, worldPosition.relative(outgoingSide), FLOW_RATE, sideHandler);
+        this.moveFluids(outgoingSide, worldPosition.relative(outgoingSide), TRANSFER_RATE.get(), sideHandler);
       }
     }
   }

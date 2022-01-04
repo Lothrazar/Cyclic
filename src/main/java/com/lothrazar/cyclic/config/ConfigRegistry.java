@@ -17,6 +17,8 @@ import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
@@ -237,6 +239,16 @@ public class ConfigRegistry {
     CFG.pop(); //heart
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
+    //buffer size for cables 
+    TileCableFluid.BUFFERSIZE = CFG.comment("How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
+        .defineInRange("cables.fluid.buffer", 16, 1, 32);
+    TileCableFluid.TRANSFER_RATE = CFG.comment("How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode")
+        .defineInRange("cables.fluid.flow", 1000, 100, 32 * 1000);
+    TileCableEnergy.BUFFERSIZE = CFG.comment("How much buffer the energy cables hold (must not be smaller than flow)")
+        .defineInRange("cables.energy.buffer", 32000, 1, 32000 * 4);
+    TileCableEnergy.TRANSFER_RATE = CFG.comment("How fast energy flows in these cables (must not be greater than buffer)")
+        .defineInRange("cables.energy.flow", 1000, 100, 32 * 1000);
+    //
     TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
         .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
     TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
@@ -276,14 +288,14 @@ public class ConfigRegistry {
     CFG.push("anvil_void");
     TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, 16000);
     CFG.pop();
-    CFG.comment("Settings").push("sound");
+    CFG.push("sound");
     BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
     CFG.push("ender_shelf");
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
-    CFG.comment("Sprinkler settings").push("sprinkler");
+    CFG.push("sprinkler");
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
     TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);
     CFG.pop(); // sprinkler
