@@ -22,6 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.client.CPlayerDiggingPacket.Action;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -109,6 +110,23 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
 
     if (!maybeTool.equals(fakePlayer.getHeldItem(hand))) {
       fakePlayer.setHeldItem(hand, maybeTool);
+    }
+  }
+
+  public static ActionResultType leftClickBlock(final WeakReference<FakePlayer> fakePlayerWeakReference,
+                                                final BlockPos targetPos, final Direction facing) {
+    final FakePlayer fakePlayer = fakePlayerWeakReference.get();
+    if (fakePlayer == null) {
+      return ActionResultType.FAIL;
+    }
+    final Direction placementOn = (facing == null) ? fakePlayer.getAdjustedHorizontalFacing() : facing;
+    final BlockRayTraceResult blockRayTraceResult = new BlockRayTraceResult(fakePlayer.getLookVec(), placementOn, targetPos, true);
+    try {
+      fakePlayer.interactionManager.func_225416_a(blockRayTraceResult.getPos(), Action.START_DESTROY_BLOCK, facing, 0);
+      return ActionResultType.SUCCESS;
+    }
+    catch (Exception e) {
+      return ActionResultType.FAIL;
     }
   }
 
