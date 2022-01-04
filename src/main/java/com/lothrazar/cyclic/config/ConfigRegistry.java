@@ -63,6 +63,7 @@ import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
+import com.lothrazar.cyclic.item.findspawner.ItemProjectileDungeon;
 import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.heart.HeartToxicItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
@@ -205,8 +206,8 @@ public class ConfigRegistry {
     CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
     CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
-    OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 99);
-    // 
+    OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
+    ItemProjectileDungeon.RANGE = CFG.comment("Range in all directions to search for spawner").defineInRange("spawner_seeker.range", 64, 1, 256);
     AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
     CharmBase.CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
     CharmBase.CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);

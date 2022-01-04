@@ -13,6 +13,6 @@
 		"1.6.6": "Fix errors in all block data saving.  Fix flowers worldgen",
 		"1.6.7": "Update ru_ru.json #1986 by Bytegm. Fix doorbell button crash.  Fixed 'Material Generator Consumes Single ItemStacks with Zero FE Generation'.",
 		"1.6.8": "fix wireless redstone #2001.  Fix height and settings of other machines not being set/used correctly (ex: height on Miner). ",
-		"1.6.9": "Updated to forge 39.0.10.  Fix sack of holding #1999. Fix patchouli guidebook recipe (patchouli_version=1.18.1-63+). Fix #2009 excavate enchant . Revert cyclic:launch enchantment changes.  Fix fluid hopper bug. Void charm now uses dimension min-y and logical-height for relative values.   "
+		"1.6.9": "Updated to forge 39.0.10.  Fix sack of holding #1999.  Add range config for spawner_seeker. Fix patchouli guidebook recipe (patchouli_version=1.18.1-63+). Fix #2009 excavate enchant . Revert cyclic:launch enchantment changes.  Fix fluid hopper bug. Void charm now uses dimension min-y and logical-height for relative values.   "
 	}
 }

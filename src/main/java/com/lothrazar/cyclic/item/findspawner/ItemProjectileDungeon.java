@@ -13,10 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ItemProjectileDungeon extends ItemBaseCyclic {
 
-  private static final int DUNGEONRADIUS = 64*2;
+  public static IntValue RANGE;
 
   public ItemProjectileDungeon(Properties properties) {
     super(properties);
@@ -37,9 +38,9 @@ public class ItemProjectileDungeon extends ItemBaseCyclic {
     if (entityendereye == null || !entityendereye.isAlive()) {
       return; //something happened! but this never happens
     }
-    BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.SPAWNER, DUNGEONRADIUS);
+    BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.SPAWNER, RANGE.get());
     if (blockpos == null) {
-      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.spawner_seeker.notfound") + " " + DUNGEONRADIUS);
+      UtilChat.sendStatusMessage(player, UtilChat.lang("item.cyclic.spawner_seeker.notfound") + " " + RANGE.get());
       entityendereye.remove(Entity.RemovalReason.DISCARDED);
     }
     else {
