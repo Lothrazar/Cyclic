@@ -1,8 +1,7 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.5.11",
-		"1.16.5-recommended": "1.5.11"
+		"1.16.5-latest": "1.5.13"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -70,5 +69,6 @@
 		,"1.5.10":"Machines that use fluid ingredients now accept fluid tags such as 'forge:experience' in place of fluid ID; updated some existing recipes on Solidifier and Evap Generator to match (old recipe JSONs still all compatible/valid).  Fixed battery energy item stack capability provider.  Refreshed texture of Air charm. Vision helmet compat with curios head slot.  Revert GPS card fixes to v1.5.6.  One recipe added to cyclic:generator_fluid for tag forge:biomass.  Default config value updated for disable_pickup on the Sack of Holding.  Add compat for Beheading enchant with the 7 Tinkers Construct mob heads (config heads are still checked last.  no changes if tinkers not installed).  "
 		,"1.5.11":"Fix a bugged interaction with Settings data card and Filter data card #1970 . Torch Charm now tries to avoid placing on non-solid blocks such as top side of a bottom Slab where the torch breaks right away. "
 		,"1.5.12":"fixed 'Material Generator Consumes Single ItemStacks with Zero FE Generation'.  Update ru_ru.json #1986 by Bytegm.  PR #1976 by metalshark :Item, Energy, and Fluid Cables now have Increased performance (compile time optimisations, reduction in cyclomatic complexity and removal of redundant checks) "
+		,"1.15.3":"Added support for using the left hand on Item User. #1994 by 'metalshark' Fixes issue #1992.  "
 	}
  }

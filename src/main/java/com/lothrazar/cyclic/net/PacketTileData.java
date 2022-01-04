@@ -34,6 +34,14 @@ public class PacketTileData extends PacketBase {
     this.pos = pos;
   }
 
+  public PacketTileData(int field, boolean value, BlockPos pos) {
+    super();
+    this.field = field;
+    this.value = value ? 1 : 0;
+    this.autoIncrement = false;
+    this.pos = pos;
+  }
+
   public PacketTileData() {}
 
   public static void handle(PacketTileData message, Supplier<NetworkEvent.Context> ctx) {
