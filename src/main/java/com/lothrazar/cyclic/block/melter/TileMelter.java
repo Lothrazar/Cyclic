@@ -45,7 +45,7 @@ public class TileMelter extends TileEntityBase implements ITickableTileEntity, I
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 3;
   public static IntValue POWERCONF;
-  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);

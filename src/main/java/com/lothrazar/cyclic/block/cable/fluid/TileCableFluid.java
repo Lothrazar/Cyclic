@@ -54,17 +54,11 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
   public static final int EXTRACT_RATE = CAPACITY;
   private final FluidTank fluidTank = new FluidTankBase(this, CAPACITY, fluidStack ->
     FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
-  private final Map<Direction, EnumConnectType> connectTypeMap = new HashMap<>();
   private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> fluidTank);
   private final Map<Direction, LazyOptional<IFluidHandler>> fluidCapSides = new HashMap<>();
 
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
-  }
-
-  @Override
-  public EnumConnectType getConnectionType(final Direction side) {
-    return connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
   }
 
   @Override
@@ -79,7 +73,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
     else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
       fluidCapSides.put(side, LazyOptional.of(() -> fluidTank));
     }
-    connectTypeMap.put(side, connectType);
+    super.updateConnection(side, connectType);
   }
 
   @Override

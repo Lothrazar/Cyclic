@@ -45,7 +45,6 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
       return FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stack);
     }
   };
-  private final Map<Direction, EnumConnectType> connectTypeMap = new HashMap<>();
   private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> itemHandler);
   private final Map<Direction, LazyOptional<IItemHandler>> itemCapSides = new HashMap<>();
 
@@ -55,11 +54,6 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
 
   private static ItemStackHandler createHandler() {
     return new ItemStackHandler(1);
-  }
-
-  @Override
-  public EnumConnectType getConnectionType(final Direction side) {
-    return connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
   }
 
   @Override
@@ -74,7 +68,7 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
     else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
       itemCapSides.put(side, LazyOptional.of(() -> itemHandler));
     }
-    connectTypeMap.put(side, connectType);
+    super.updateConnection(side, connectType);
   }
 
   @Override

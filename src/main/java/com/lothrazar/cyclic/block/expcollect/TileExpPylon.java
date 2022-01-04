@@ -43,7 +43,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   private static final int RADIUS = 16;
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-  private LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   public TileExpPylon() {
     super(TileRegistry.experience_pylontile);

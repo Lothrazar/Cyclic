@@ -28,7 +28,6 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
 
   private static final int MAX = 32000;
   final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private final Map<Direction, EnumConnectType> connectTypeMap = new HashMap<>();
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private final Map<Direction, LazyOptional<IEnergyStorage>> energyCapSides = new HashMap<>();
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
@@ -39,11 +38,6 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }
-  }
-
-  @Override
-  public EnumConnectType getConnectionType(final Direction side) {
-    return connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
   }
 
   @Override
@@ -59,7 +53,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
     else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
       energyCapSides.put(side, LazyOptional.of(() -> energy));
     }
-    connectTypeMap.put(side, connectType);
+    super.updateConnection(side, connectType);
   }
 
   @Override
