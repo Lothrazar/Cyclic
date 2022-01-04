@@ -32,7 +32,6 @@ public abstract class CharmBase extends ItemBaseToggle {
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
   public static DoubleValue CHARM_ATTACKSPEED;
-  private static final int YLOWEST = -30;
   private static final int FIREPROTSECONDS = 10;
   private static final int FALLDISTANCESECONDS = 5;
   private static final int FALLDISTANCELIMIT = 5; // was 6 in 1.12.2
@@ -111,7 +110,7 @@ public abstract class CharmBase extends ItemBaseToggle {
   private void tryVoidTick(ItemStack stack, Level worldIn, Entity entityIn) {
     int minY = worldIn.dimensionType().minY();
     int maxY = worldIn.dimensionType().logicalHeight();
-    if (this.voidProt && entityIn.blockPosition().getY() < (minY - YLOWEST) && entityIn instanceof LivingEntity) {
+    if (this.voidProt && entityIn.blockPosition().getY() < (minY - 40) && entityIn instanceof LivingEntity) {
       LivingEntity entity = (LivingEntity) entityIn;
       UtilEntity.enderTeleportEvent(entity, worldIn, new BlockPos(entityIn.blockPosition().getX(), maxY, entityIn.blockPosition().getZ()));
       UtilItemStack.damageItem(entity, stack);

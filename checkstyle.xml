@@ -60,13 +60,6 @@
 	<!--</module> -->
 
 
-<!--	<module name="SuppressionSingleFilter">-->
-<!--		<property name="checks" value="StaticVariableName" />-->
-<!--		<property name="files" value="TileRegistry.java" />-->
-<!--		<property name="lines" value="1-300" />-->
-<!--	</module>-->
-
-
 	<!-- All Java AST specific tests live under TreeWalker module. -->
 	<module name="TreeWalker">
 
