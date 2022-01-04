@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 
 public class ItemProjectileDungeon extends ItemBaseCyclic {
 
-  private static final int DUNGEONRADIUS = 64;
+  private static final int DUNGEONRADIUS = 64*2;
 
   public ItemProjectileDungeon(Properties properties) {
     super(properties);

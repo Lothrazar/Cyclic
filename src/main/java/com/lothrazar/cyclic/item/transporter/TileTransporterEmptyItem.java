@@ -85,16 +85,16 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
     if (tile == null) {
       return;
     } //was block destroyed before this packet and/or thread resolved? server desync? who knows https://github.com/PrinceOfAmber/Cyclic/issues/487
-    BlockState state = world.getBlockState(pos);
+    final BlockState state = world.getBlockState(pos);
     //bedrock returns ZERO for this hardness 
     if (state.getDestroyProgress(player, world, pos) <= 0) {
       return;
     }
-    CompoundTag tileData = new CompoundTag();
+    final CompoundTag tileData = tile.saveWithoutMetadata(); // calls saveAdditional for u
     //thanks for the tip on setting tile entity data from nbt tag:
     //https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
-    tile.save(tileData);
-    CompoundTag itemData = new CompoundTag();
+    //    tile.save(tileData);
+    final CompoundTag itemData = new CompoundTag();
     itemData.putString(TileTransporterItem.KEY_BLOCKNAME, state.getBlock().getDescriptionId());
     itemData.put(TileTransporterItem.KEY_BLOCKTILE, tileData);
     itemData.putString(TileTransporterItem.KEY_BLOCKID, state.getBlock().getRegistryName().toString());

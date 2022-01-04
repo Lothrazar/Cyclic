@@ -181,6 +181,7 @@ public class UtilWorld {
     //        worldIn.scheduleUpdate(blockPos, stateNew.getBlock(), 3);
   }
 
+  @SuppressWarnings("deprecation")
   public static BlockPos findClosestBlock(final Player player, final Block blockHunt, final int radiusIn) {
     BlockPos found = null;
     int xMin = (int) player.getX() - radiusIn;

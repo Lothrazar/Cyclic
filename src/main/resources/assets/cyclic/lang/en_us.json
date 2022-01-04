@@ -662,7 +662,7 @@
   "item.cyclic.spawner_seeker": "Spawner Seeker",
   "item.cyclic.spawner_seeker.notfound": "No spawners in range",
   "item.cyclic.spawner_seeker.found": "Spawner found, preparing to launch...",
-  "item.cyclic.spawner_seeker.tooltip": "Searches out the nearest spawner",
+  "item.cyclic.spawner_seeker.tooltip": "Searches out the nearest (dungeon) spawner",
   "item.cyclic.spawner_seeker.guide": "The Spawner Seeker can be used to find the nearest spawner to your current location.",
   "item.cyclic.ender_fishing": "Fishing Cannon",
   "item.cyclic.lightning_scepter": "Engraved Thunder",
