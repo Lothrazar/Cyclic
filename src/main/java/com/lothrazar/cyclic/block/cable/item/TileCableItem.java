@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable.item;
 
-import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
@@ -16,7 +15,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -52,10 +50,6 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
     super(TileRegistry.item_pipeTile);
   }
 
-  private static ItemStackHandler createHandler() {
-    return new ItemStackHandler(1);
-  }
-
   @Override
   public void updateConnection(final Direction side, final EnumConnectType connectType) {
     final EnumConnectType oldConnectType = getConnectionType(side);
@@ -74,8 +68,7 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
   @Override
   public void tick() {
     for (final Direction extractSide : Direction.values()) {
-      final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
-      final EnumConnectType connection = this.getBlockState().get(extractFace);
+      final EnumConnectType connection = getConnectionType(extractSide);
       if (connection.isExtraction()) {
         tryExtract(itemHandler, extractSide, extractQty, filter);
       }
@@ -91,11 +84,7 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
         if (outgoingSide == incomingSide) {
           continue;
         }
-        if (getConnectionType(outgoingSide) == EnumConnectType.BLOCKED) {
-          continue;
-        }
-        final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
-        final EnumConnectType outgoingConnection = this.getBlockState().get(outgoingFace);
+        final EnumConnectType outgoingConnection = getConnectionType(outgoingSide);
         if (outgoingConnection.isExtraction() || outgoingConnection.isBlocked()) {
           continue;
         }

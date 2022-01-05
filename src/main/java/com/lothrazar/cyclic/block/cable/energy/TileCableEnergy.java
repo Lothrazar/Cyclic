@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.cable.energy;
 
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -62,8 +60,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
     this.tickDownIncomingPowerFaces();
     this.tickCableFlow();
     for (final Direction extractSide : Direction.values()) {
-      final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
-      final EnumConnectType connection = this.getBlockState().get(extractFace);
+      final EnumConnectType connection = getConnectionType(extractSide);
       if (connection.isExtraction()) {
         tryExtract(extractSide);
       }
@@ -107,8 +104,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
 
   private void tickCableFlow() {
     for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
-      final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
-      final EnumConnectType connection = this.getBlockState().get(outgoingFace);
+      final EnumConnectType connection = getConnectionType(outgoingSide);
       if (connection.isExtraction() || connection.isBlocked()) {
         continue;
       }

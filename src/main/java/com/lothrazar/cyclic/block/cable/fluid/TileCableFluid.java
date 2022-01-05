@@ -23,7 +23,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.EnumProperty;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
@@ -79,8 +78,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
   @Override
   public void tick() {
     for (final Direction extractSide : Direction.values()) {
-      final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
-      final EnumConnectType connection = this.getBlockState().get(extractFace);
+      final EnumConnectType connection = getConnectionType(extractSide);
       if (connection.isExtraction()) {
         tryExtract(extractSide);
       }
@@ -144,8 +142,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
 
   private void normalFlow() {
     for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
-      final EnumProperty<EnumConnectType> outgoingFace = CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide);
-      final EnumConnectType connection = this.getBlockState().get(outgoingFace);
+      final EnumConnectType connection = getConnectionType(outgoingSide);
       if (connection.isExtraction() || connection.isBlocked()) {
         continue;
       }
