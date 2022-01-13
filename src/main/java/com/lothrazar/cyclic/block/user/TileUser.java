@@ -93,22 +93,16 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       energy.extractEnergy(repair, false);
     }
     try {
-      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
-      //start of SUPERHACK
-      ResourceLocation registryItem = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem().getRegistryName();
-      if (registryItem.getNamespace().equalsIgnoreCase("mysticalagriculture")
-          && registryItem.getPath().contains("watering_can") &&
-          fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getTag() != null) {
-        //hack around mysttical ag id throttling   fail system 
-        //when they fill water, id is set. uses id and gametime 
-        //to reject actions to 'throttle'. but fakeplayer confuses this
-        fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getTag().putString("ID", UUID.randomUUID().toString());
-        //after this hack. they still return type FAIL
-        //but the plants grow and the watering DOES happen
-        //        https://github.com/BlakeBr0/MysticalAgriculture/blob/f60de3510c694082acf5ff63299f119ab4a9d9a9/src/main/java/com/blakebr0/mysticalagriculture/item/WateringCanItem.java#L144
-        //so successful hack
+      // Added to address the broken server side FakePlayer cooldowns we they
+      // are not getting decremented causing any item with one to not function correctly.
+      var cooldowns = fakePlayer.get().getCooldowns();
+      var item = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem();
+      
+      if (cooldowns.isOnCooldown(item)) {
+        cooldowns.removeCooldown(item);
       }
-      //end of SUPERHACK
+
+      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
       TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
       // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
