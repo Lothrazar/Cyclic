@@ -128,6 +128,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
       this.findMatchingRecipe();
     }
     if (currentRecipe == null) {
+      this.findMatchingRecipe();
       return;
     }
     if (this.burnTimeMax > 0) {
