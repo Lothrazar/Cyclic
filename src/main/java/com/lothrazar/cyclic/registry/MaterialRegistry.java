@@ -206,7 +206,7 @@ public class MaterialRegistry {
             BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_obsidian_tool")),
             () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get())),
         new ResourceLocation(ModCyclic.MODID, "gem_obsidian"),
-        List.of(), List.of(Tiers.NETHERITE));
+        List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
     //
     public static final Tier AMETHYST = TierSortingRegistry.registerTier(
         //harvestLevel, uses, toolSpeed, damage, enchantability

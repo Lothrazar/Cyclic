@@ -100,8 +100,8 @@ dependencies {
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
   
-    implementation fg.deobf("curse.maven:simple-storage-network-268495:3550601")
-    implementation fg.deobf("curse.maven:gardening-tools-351990:3544787")
+  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3550601")
+  //  implementation fg.deobf("curse.maven:gardening-tools-351990:3544787")
   //  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
 
 }
