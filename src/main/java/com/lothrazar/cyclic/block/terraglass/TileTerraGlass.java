@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class TileTerraGlass extends TileBlockEntityCyclic {
 
-  private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL / 2;
+  private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL.get() / 2;
   private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
 
   public TileTerraGlass(BlockPos pos, BlockState state) {
