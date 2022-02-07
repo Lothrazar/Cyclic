@@ -68,7 +68,7 @@ public class SettingsCard extends ItemBase {
         CompoundNBT tiledata = new CompoundNBT();
         //generic style
         tile.write(tiledata);
-        String[] wipers = new String[] { "x", "y", "z", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
+        String[] wipers = new String[] { "x", "y", "z", "input", "output", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
         for (String wipe : wipers) {
           tiledata.remove(wipe);
         }
