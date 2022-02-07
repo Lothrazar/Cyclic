@@ -66,6 +66,12 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));

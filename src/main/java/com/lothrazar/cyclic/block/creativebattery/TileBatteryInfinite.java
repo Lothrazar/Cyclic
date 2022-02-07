@@ -58,6 +58,12 @@ public class TileBatteryInfinite extends TileEntityBase implements ITickableTile
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName2()));

@@ -16,13 +16,15 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileCask extends TileEntityBase implements ITickableTileEntity {
 
   private Map<Direction, Boolean> poweredSides;
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = CAPACITY / 2;
-  public FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;
@@ -31,7 +33,6 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
   public TileCask() {
     super(TileRegistry.cask);
     flowing = 0;
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);
@@ -70,6 +71,12 @@ public class TileCask extends TileEntityBase implements ITickableTileEntity {
       return LazyOptional.of(() -> tank).cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

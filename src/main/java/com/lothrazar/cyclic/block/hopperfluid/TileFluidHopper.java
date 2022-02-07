@@ -26,6 +26,7 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
   private static final int FLOW = FluidAttributes.BUCKET_VOLUME;
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   public TileFluidHopper() {
     super(TileRegistry.FLUIDHOPPER.get());
@@ -34,9 +35,15 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

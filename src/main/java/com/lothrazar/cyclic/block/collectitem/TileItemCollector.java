@@ -106,6 +106,12 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     filter.deserializeNBT(tag.getCompound("filter"));
     radius = tag.getInt("radius");

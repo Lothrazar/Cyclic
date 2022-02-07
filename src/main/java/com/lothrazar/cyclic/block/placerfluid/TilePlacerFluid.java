@@ -21,12 +21,14 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TilePlacerFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
-  FluidTankBase tank;
+  private final FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   static enum Fields {
     REDSTONE, RENDER;
@@ -34,7 +36,6 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
 
   public TilePlacerFluid() {
     super(TileRegistry.placer_fluid);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
   }
 
@@ -89,9 +90,15 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       //      return tankWrapper.cast();
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

@@ -270,6 +270,12 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     radius = tag.getInt("radius");
     height = tag.getInt("height");
