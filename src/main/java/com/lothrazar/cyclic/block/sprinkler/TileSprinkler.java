@@ -23,6 +23,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileSprinkler extends TileEntityBase implements ITickableTileEntity {
@@ -31,12 +32,12 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
   public static IntValue TIMER_FULL;
   public static IntValue WATERCOST;
   private static final int RAD = 4;
-  public FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
   private int shapeIndex = 0;
 
   public TileSprinkler() {
     super(TileRegistry.SPRINKLER.get());
-    tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
   }
 
   @Override
@@ -105,9 +106,15 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

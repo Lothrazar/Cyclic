@@ -22,6 +22,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessFluid extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
@@ -34,7 +35,8 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   static final int MAX = 64000;
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidAttributes.BUCKET_VOLUME;
-  public FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, f -> true);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
   ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
@@ -46,7 +48,6 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   public TileWirelessFluid() {
     super(TileRegistry.WIRELESS_FLUID.get());
     this.needsRedstone = 0;
-    tank = new FluidTankBase(this, CAPACITY, f -> true);
   }
 
   @Override
@@ -62,9 +63,15 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

@@ -51,6 +51,12 @@ public class TileLightCamo extends TileEntityBase {
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void setField(int field, int value) {}
 
   @Override

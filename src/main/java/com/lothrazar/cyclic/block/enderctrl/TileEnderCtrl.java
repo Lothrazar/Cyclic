@@ -66,6 +66,12 @@ public class TileEnderCtrl extends TileEntityBase {
   }
 
   @Override
+  public void invalidateCaps() {
+    controllerInventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");

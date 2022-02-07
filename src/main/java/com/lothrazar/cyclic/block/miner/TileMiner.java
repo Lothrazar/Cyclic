@@ -117,6 +117,13 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     radius = tag.getInt("size");
     height = tag.getInt("height");

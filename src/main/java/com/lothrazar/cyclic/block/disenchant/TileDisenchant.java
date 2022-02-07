@@ -35,6 +35,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -71,13 +72,11 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
   public static IntValue POWERCONF;
   public static IntValue FLUIDCOST;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  public FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid().isIn(DataTags.EXPERIENCE));
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   public TileDisenchant() {
     super(TileRegistry.disenchanter);
-    tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().isIn(DataTags.EXPERIENCE);
-    });
   }
 
   @Override
@@ -200,9 +199,17 @@ public class TileDisenchant extends TileEntityBase implements INamedContainerPro
       return energyCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    energyCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

@@ -26,6 +26,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -49,11 +50,11 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  public FluidTankBase tank;
+  public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
 
   public TileAnvilMagma() {
     super(TileRegistry.anvil_magma);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
 
@@ -119,9 +120,16 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
       return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

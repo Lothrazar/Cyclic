@@ -45,6 +45,12 @@ public class TileCrate extends TileEntityBase implements INamedContainerProvider
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.read(bs, tag);

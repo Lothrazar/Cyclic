@@ -64,6 +64,12 @@ public class TileWirelessItem extends TileEntityBase implements INamedContainerP
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     gpsSlots.deserializeNBT(tag.getCompound(NBTINV + "gps"));

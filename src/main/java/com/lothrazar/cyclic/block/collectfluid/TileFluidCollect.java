@@ -174,6 +174,14 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    tankWrapper.invalidate();
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     shapeIndex = tag.getInt("shapeIndex");
     tank.readFromNBT(tag.getCompound(NBTFLUID));

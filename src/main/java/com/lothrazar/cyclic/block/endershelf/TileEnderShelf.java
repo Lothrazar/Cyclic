@@ -40,6 +40,12 @@ public class TileEnderShelf extends TileEntityBase {
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("RenderTextType")) {

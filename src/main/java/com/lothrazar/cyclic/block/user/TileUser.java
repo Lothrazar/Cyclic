@@ -178,6 +178,13 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     timerDelay = tag.getInt("delay");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));

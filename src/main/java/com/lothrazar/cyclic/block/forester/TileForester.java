@@ -153,6 +153,13 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public void read(BlockState bs, CompoundNBT tag) {
     shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
