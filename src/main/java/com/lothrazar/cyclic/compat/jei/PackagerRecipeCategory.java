@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.packager.TilePackager;
+import com.lothrazar.cyclic.block.packager.UtilPackager;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import java.util.ArrayList;
@@ -57,12 +57,12 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   @Override
   public boolean isHandled(ICraftingRecipe recipe) {
-    return TilePackager.isRecipeValid(recipe);
+    return UtilPackager.isRecipeValid(recipe);
   }
 
   @Override
   public void setIngredients(ICraftingRecipe recipe, IIngredients ingredients) {
-    if (!TilePackager.isRecipeValid(recipe)) {
+    if (!UtilPackager.isRecipeValid(recipe)) {
       return;
     }
     //    ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
@@ -79,7 +79,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<ICraftingRecipe> 
 
   @Override
   public void setRecipe(IRecipeLayout recipeLayout, ICraftingRecipe recipe, IIngredients ingredients) {
-    if (!TilePackager.isRecipeValid(recipe)) {
+    if (!UtilPackager.isRecipeValid(recipe)) {
       return;
     }
     List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
