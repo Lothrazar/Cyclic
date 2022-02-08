@@ -16,5 +16,6 @@
 		"1.6.9": "Updated to forge 39.0.10.  Fix sack of holding #1999.  Add range config for spawner_seeker. Added configs for cable buffer and flow rates.  Fix patchouli guidebook recipe (patchouli_version=1.18.1-63+). Fix #2009 excavate enchant . Revert cyclic:launch enchantment changes.  Fix fluid hopper bug. Void charm now uses dimension min-y and logical-height for relative values.   "
 		,"1.6.10":"Fix obsidian tool harvest level. Fix wireless transfer node loot table. Fix Crushing Macerator issue when initially loading the world (Merge pull request #2022 by jack-flash.)  Merge from jack-flash/Watering-can for #2004.    Merge pull request #2015 from Bytegm  Update ru_ru.json [1.18].  "
 		,"1.6.11":"Updated to forge 39.0.66.  Merge pull request #2035 from Seniorendi:  Add config values for terra preta. Fix Crash when trying to push Cyclic item cables with create piston.  Fix red color in Battery itemstack energy bar when charged. "
+		,"1.6.12":"Call 'invalidate capabilities' in block-entity machines.  Added support for using the left hand on Item User. #1994 by 'metalshark' Fixes issue #1992."
 	}
 }

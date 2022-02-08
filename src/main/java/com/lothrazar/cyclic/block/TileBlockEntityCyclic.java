@@ -23,6 +23,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -151,6 +152,24 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
         fakePlayer.get().getItemInHand(hand), hand, blockraytraceresult);
     //it becomes CONSUME result 1 bucket. then later i guess it doesnt save, and then its water_bucket again
     return result;
+  }
+
+  /**
+   * SOURCE https://github.com/Lothrazar/Cyclic/pull/1994 @metalshark
+   */
+  public static InteractionResult leftClickBlock(WeakReference<FakePlayer> fakePlayer,
+      Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
+    if (fakePlayer == null) {
+      return InteractionResult.FAIL;
+    }
+    try {
+      fakePlayer.get().gameMode.handleBlockBreakAction(targetPos, ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,
+          facing, world.getMaxBuildHeight());
+      return InteractionResult.SUCCESS;
+    }
+    catch (Exception e) {
+      return InteractionResult.FAIL;
+    }
   }
 
   public static boolean tryHarvestBlock(WeakReference<FakePlayer> fakePlayer, Level world, BlockPos targetPos) {

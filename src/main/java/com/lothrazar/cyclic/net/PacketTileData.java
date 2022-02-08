@@ -33,6 +33,10 @@ public class PacketTileData extends PacketBaseCyclic {
     this.pos = pos;
   }
 
+  public PacketTileData(int field, boolean value, BlockPos pos) {
+    this(field, value ? 1 : 0, pos);
+  }
+
   public PacketTileData() {}
 
   public static void handle(PacketTileData message, Supplier<NetworkEvent.Context> ctx) {

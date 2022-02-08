@@ -1020,6 +1020,7 @@
   "block.cyclic.user.tooltip": "Autonomous right-click activation using any item",
   "block.cyclic.user.guide": "The Item User is a powerful machine that uses the item given to it to right click the block in front of it with a configurable delay.",
   "block.cyclic.user.delay": "Tick Delay",
+  "block.cyclic.user.hand": "Use Left Hand",
   "enchantment_stack.empty": "Empty; use an enchanted book to store",
   "block.cyclic.screen": "Text Projector",
   "block.cyclic.screen.tooltip": "Projects text",

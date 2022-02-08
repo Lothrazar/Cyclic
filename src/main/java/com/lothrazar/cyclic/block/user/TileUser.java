@@ -33,9 +33,10 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
 
   public static IntValue POWERCONF;
+  static final int MAX = 640000;
 
   static enum Fields {
-    REDSTONE, TIMER, TIMERDEL, RENDER;
+    REDSTONE, TIMER, TIMERDEL, RENDER, LEFTHAND;
   }
 
   ItemStackHandler inventory = new ItemStackHandler(1);
@@ -45,7 +46,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timerDelay = 20;
-  static final int MAX = 640000;
+  private boolean useLeftHand = false;
 
   public TileUser(BlockPos pos, BlockState state) {
     super(TileRegistry.USER.get(), pos, state);
@@ -101,7 +102,12 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       }
       TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
-      TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
+      if (useLeftHand) {
+        TileBlockEntityCyclic.leftClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, this.getCurrentFacing());
+      }
+      else {
+        TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
+      }
       // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
       TileBlockEntityCyclic.syncEquippedItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
     }
@@ -109,6 +115,14 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       ModCyclic.LOGGER.error("User action item error", e);
     }
     tryDumpFakePlayerInvo(fakePlayer, false);
+  }
+
+  public boolean isUsingLeftHand() {
+    return useLeftHand;
+  }
+
+  public void setUseLeftHand(final boolean useLeftHand) {
+    this.useLeftHand = useLeftHand;
   }
 
   @Override
@@ -126,6 +140,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       case RENDER:
         this.render = value % 2;
       break;
+      case LEFTHAND:
+        this.useLeftHand = value == 1;
+      break;
     }
   }
 
@@ -140,6 +157,8 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
         return this.timerDelay;
       case RENDER:
         return render;
+      case LEFTHAND:
+        return this.isUsingLeftHand() ? 1 : 0;
     }
     return 0;
   }
@@ -167,6 +186,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     timerDelay = tag.getInt("delay");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    useLeftHand = tag.getBoolean("uselefthand");
     if (tag.contains("uuid")) {
       uuid = tag.getUUID("uuid");
     }
@@ -181,6 +201,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     if (uuid != null) {
       tag.putUUID("uuid", uuid);
     }
+    tag.putBoolean("uselefthand", useLeftHand);
     super.saveAdditional(tag);
   }
 

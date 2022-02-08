@@ -4,9 +4,13 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
+import com.lothrazar.cyclic.net.PacketTileData;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
@@ -37,6 +41,18 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
     slider.setTooltip("block.cyclic.user.delay");
+    //
+    x = leftPos + 6;
+    y = topPos + 59;
+    addRenderableWidget(new Checkbox(x, y, h, h, new TranslatableComponent("block.cyclic.user.hand"), menu.tile.isUsingLeftHand()) {
+
+      @Override
+      public void onPress() {
+        super.onPress();
+        menu.tile.setUseLeftHand(selected());
+        PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileUser.Fields.LEFTHAND.ordinal(), selected(), menu.tile.getBlockPos()));
+      }
+    });
   }
 
   @Override
