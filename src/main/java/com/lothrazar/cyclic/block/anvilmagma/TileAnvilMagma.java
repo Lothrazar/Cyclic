@@ -44,6 +44,16 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
+    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+      if (!stack.isEmpty() && stack.isRepairable() && stack.getDamageValue() == 0) {
+        return outputSlots.insertItem(slot, stack, simulate);
+      }
+      else {
+        return super.insertItem(slot, stack, simulate);
+      }
+    }
+
+    @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.isRepairable() && stack.getDamageValue() > 0;
     }

@@ -38,6 +38,11 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
+    }
+
+    @Override
     public int getSlotLimit(int slot) {
       return 1;
     }
@@ -61,7 +66,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileBattery e) {
-    e.tick();
+    e.tick(); 
   }
 
   public void tick() {

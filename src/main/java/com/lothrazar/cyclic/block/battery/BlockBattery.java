@@ -106,6 +106,7 @@ public class BlockBattery extends BlockCyclic {
     if (storageTile != null) {
       storageTile.setEnergy(current);
     }
+    super.setPlacedBy(world, pos, state, placer, stack);
   }
 
   @Override

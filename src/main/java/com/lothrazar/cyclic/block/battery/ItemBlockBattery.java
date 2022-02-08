@@ -30,8 +30,18 @@ public class ItemBlockBattery extends BlockItem {
   }
 
   @Override
+  public int getBarWidth(ItemStack stack) {
+    if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
+      float current = stack.getTag().getInt(ENERGYTT);
+      float max = stack.getTag().getInt(ENERGYTTMAX);
+      return Math.round(13.0F * current / max);
+    }
+    return 0;
+  }
+
+  @Override
   public int getBarColor(ItemStack stack) {
-    return 0xBC000C;
+    return 0xBA0909; //super.getBarColor(stack);
   }
 
   @Override
