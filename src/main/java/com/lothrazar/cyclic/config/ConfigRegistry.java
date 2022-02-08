@@ -37,6 +37,7 @@ import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
+import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
@@ -284,6 +285,10 @@ public class ConfigRegistry {
     CFG.push("disenchanter");
     TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("fluid_cost", 100, -1000, 16000);
     TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("energy_cost", 2500, 0, 64000);
+    CFG.pop();
+    CFG.push("terra_preta");
+    TileTerraPreta.TIMER_FULL = CFG.comment("Growth interval in ticks (100 would be every 5 seconds). Also affects terra glass").defineInRange("growth_interval", 100, 1, 64000);
+    TileTerraPreta.CHANCE = CFG.comment("Chance that the crop will grow after the interval").defineInRange("growth_chance", 0.5, 0, 1);
     CFG.pop();
     CFG.push("anvil_void");
     TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, 16000);
