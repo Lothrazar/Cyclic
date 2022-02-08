@@ -285,6 +285,14 @@
 			#Range: 1 ~ 64000
 			fluid_cost = 100
 
+		[cyclic.blocks.terra_preta]
+			#Growth interval in ticks (100 would be every 5 seconds). Also affects terra glass
+			#Range: 1 ~ 64000
+			growth_interval = 100
+			#Chance that the crop will grow after the interval
+			#Range: 0.0 ~ 1.0
+			growth_chance = 0.5
+
 		[cyclic.blocks.uncrafter]
 			#When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items
 			nbt_ignored = false
