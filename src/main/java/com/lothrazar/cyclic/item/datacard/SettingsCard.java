@@ -66,9 +66,9 @@ public class SettingsCard extends ItemBaseCyclic {
       if (tile instanceof TileBlockEntityCyclic) {
         //for now, only do cyclic tile entities
         //in future / intheory could be any TE from any mod / vanilla . but thats broken
-        CompoundTag tiledata =tile.serializeNBT();
+        CompoundTag tiledata = tile.serializeNBT();
         //cleanup
-        String[] wipers = new String[] { "x", "y", "z", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
+        String[] wipers = new String[] { "x", "y", "z", "input", "output", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
         for (String wipe : wipers) {
           tiledata.remove(wipe);
         }

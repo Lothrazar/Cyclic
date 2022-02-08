@@ -69,14 +69,16 @@ public class BlockCableItem extends CableBase {
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileCableItem tileentity = (TileCableItem) worldIn.getBlockEntity(pos);
-      if (tileentity != null && tileentity.filter != null) {
-        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
-      }
-      for (Direction dir : Direction.values()) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir).orElse(null);
-        if (items != null) {
-          for (int i = 0; i < items.getSlots(); ++i) {
-            Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
+      if (tileentity != null) {
+        if (tileentity.filter != null) {
+          Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
+        }
+        for (Direction dir : Direction.values()) {
+          IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir).orElse(null);
+          if (items != null) {
+            for (int i = 0; i < items.getSlots(); ++i) {
+              Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
+            }
           }
         }
       }
