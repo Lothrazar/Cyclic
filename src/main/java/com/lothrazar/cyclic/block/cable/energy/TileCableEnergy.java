@@ -77,7 +77,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
         int extractSim = itemHandlerFrom.extractEnergy(TRANSFER_RATE.get(), true);
         if (extractSim > 0 && energy.receiveEnergy(extractSim, true) > 0) {
           //actually extract energy for real, whatever it accepted 
-          int actuallyEx = itemHandlerFrom.extractEnergy(energy.receiveEnergy(extractSim, false), false); 
+          int actuallyEx = itemHandlerFrom.extractEnergy(energy.receiveEnergy(extractSim, false), false);
         }
       }
     }
@@ -104,6 +104,12 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
         mapIncomingEnergy.put(f, mapIncomingEnergy.get(f) - 1);
       }
     }
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

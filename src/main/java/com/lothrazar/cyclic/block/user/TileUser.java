@@ -96,11 +96,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       // are not getting decremented causing any item with one to not function correctly.
       var cooldowns = fakePlayer.get().getCooldowns();
       var item = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem();
-      
       if (cooldowns.isOnCooldown(item)) {
         cooldowns.removeCooldown(item);
       }
-
       TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
       TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
@@ -144,6 +142,13 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
         return render;
     }
     return 0;
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    energyCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

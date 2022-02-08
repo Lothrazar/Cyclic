@@ -31,11 +31,18 @@ public class TileTrash extends TileBlockEntityCyclic {
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
+  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileTrash(BlockPos pos, BlockState state) {
     super(TileRegistry.TRASH.get(), pos, state);
     tank = new FluidTankBase(this, CAPACITY, p -> true);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override
@@ -44,7 +51,7 @@ public class TileTrash extends TileBlockEntityCyclic {
       return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return tankWrapper.cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

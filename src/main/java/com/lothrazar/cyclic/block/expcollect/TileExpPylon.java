@@ -44,11 +44,11 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   public static final int EXP_PER_BOTTLE = 11;
   private static final int RADIUS = 16;
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileExpPylon(BlockPos pos, BlockState state) {
     super(TileRegistry.EXPERIENCE_PYLON.get(), pos, state);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
 
@@ -77,9 +77,15 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

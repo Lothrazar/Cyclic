@@ -48,7 +48,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
+  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   static enum Fields {
@@ -150,9 +150,17 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return tankWrapper.cast();
+      return fluidCap.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();

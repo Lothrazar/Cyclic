@@ -36,7 +36,8 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   static final int MAX = 64000;
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidAttributes.BUCKET_VOLUME;
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, f -> true);
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   public ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
@@ -53,7 +54,6 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   public TileWirelessFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.WIRELESS_FLUID.get(), pos, state);
     this.needsRedstone = 0;
-    tank = new FluidTankBase(this, CAPACITY, f -> true);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessFluid e) {
@@ -75,9 +75,15 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

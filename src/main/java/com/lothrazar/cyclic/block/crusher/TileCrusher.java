@@ -67,6 +67,13 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();

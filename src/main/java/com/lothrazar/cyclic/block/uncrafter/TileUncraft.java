@@ -143,6 +143,13 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
+  public void invalidateCaps() {
+    inventoryCap.invalidate();
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();

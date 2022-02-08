@@ -51,7 +51,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
-  };   
+  };
   private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
 
   public TileCableFluid(BlockPos pos, BlockState state) {

@@ -75,7 +75,7 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   public static final int TIMER_FULL = 1 * 10;
   private static final int PER_TICK = 1;
   FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
+  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(6) {
 
@@ -240,12 +240,20 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return tankWrapper.cast();
+      return fluidCap.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();

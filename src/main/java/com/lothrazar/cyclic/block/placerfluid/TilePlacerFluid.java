@@ -27,7 +27,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvider {
 
   public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
-  FluidTankBase tank;
+  FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());;
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   static enum Fields {
     REDSTONE, RENDER;
@@ -35,7 +36,6 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
 
   public TilePlacerFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.PLACER_FLUID.get(), pos, state);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 1;
   }
 
@@ -94,10 +94,15 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      //      return tankWrapper.cast();
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

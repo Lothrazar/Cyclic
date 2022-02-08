@@ -44,7 +44,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(0);
   protected final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
-  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
+  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
@@ -142,12 +142,20 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return tankWrapper.cast();
+      return fluidCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();

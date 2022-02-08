@@ -72,13 +72,13 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   public static IntValue POWERCONF;
   public static IntValue FLUIDCOST;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
+    return p.getFluid().is(DataTags.EXPERIENCE);
+  });
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileDisenchant(BlockPos pos, BlockState state) {
     super(TileRegistry.DISENCHANTER.get(), pos, state);
-    tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().is(DataTags.EXPERIENCE);
-    });
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDisenchant e) {
@@ -197,6 +197,14 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    fluidCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
@@ -205,7 +213,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
       return energyCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

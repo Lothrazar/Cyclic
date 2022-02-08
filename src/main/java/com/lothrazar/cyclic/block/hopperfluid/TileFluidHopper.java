@@ -27,6 +27,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
   private static final int FLOW = FluidAttributes.BUCKET_VOLUME;
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileFluidHopper(BlockPos pos, BlockState state) {
     super(TileRegistry.FLUIDHOPPER.get(), pos, state);
@@ -43,9 +44,15 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

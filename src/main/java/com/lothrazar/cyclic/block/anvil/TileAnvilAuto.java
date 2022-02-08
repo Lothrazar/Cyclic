@@ -50,6 +50,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
         return super.insertItem(slot, stack, simulate);
       }
     }
+
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.isRepairable() && stack.getDamageValue() > 0;
@@ -79,6 +80,13 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerAnvil(i, level, worldPosition, playerInventory, playerEntity);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

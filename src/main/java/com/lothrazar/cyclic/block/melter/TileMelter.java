@@ -44,7 +44,8 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 3;
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
@@ -53,7 +54,6 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileMelter(BlockPos pos, BlockState state) {
     super(TileRegistry.MELTER.get(), pos, state);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMelter e) {
@@ -159,9 +159,17 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();

@@ -61,11 +61,11 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileAnvilMagma(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVIL_MAGMA.get(), pos, state);
-    tank = new FluidTankBase(this, CAPACITY, isFluidValid());
     this.needsRedstone = 0;
   }
 
@@ -134,12 +134,19 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

@@ -55,6 +55,12 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();

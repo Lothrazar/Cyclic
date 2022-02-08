@@ -53,14 +53,14 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
+    return p.getFluid().is(DataTags.EXPERIENCE);
+  });
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileAnvilVoid(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVILVOID.get(), pos, state);
     this.needsRedstone = 1;
-    tank = new FluidTankBase(this, CAPACITY, p -> {
-      return p.getFluid().is(DataTags.EXPERIENCE);
-    });
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilVoid e) {
@@ -82,12 +82,19 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

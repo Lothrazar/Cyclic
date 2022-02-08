@@ -31,7 +31,8 @@ public class TileSprinkler extends TileBlockEntityCyclic {
   public static IntValue TIMER_FULL;
   public static IntValue WATERCOST;
   private static final int RAD = 4;
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   private int shapeIndex = 0;
 
   public TileSprinkler(BlockPos pos, BlockState state) {
@@ -110,9 +111,15 @@ public class TileSprinkler extends TileBlockEntityCyclic {
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

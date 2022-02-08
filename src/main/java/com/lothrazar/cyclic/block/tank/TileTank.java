@@ -20,11 +20,11 @@ public class TileTank extends TileBlockEntityCyclic {
 
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
-  public FluidTankBase tank;
+  public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
+  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileTank(BlockPos pos, BlockState state) {
     super(TileRegistry.TANK.get(), pos, state);
-    tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTank e) {
@@ -51,9 +51,15 @@ public class TileTank extends TileBlockEntityCyclic {
   }
 
   @Override
+  public void invalidateCaps() {
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return LazyOptional.of(() -> tank).cast();
+      return fluidCap.cast();
     }
     return super.getCapability(cap, side);
   }

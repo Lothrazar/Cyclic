@@ -117,6 +117,13 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();

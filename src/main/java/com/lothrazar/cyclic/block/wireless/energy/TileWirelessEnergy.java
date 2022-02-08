@@ -65,6 +65,12 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();

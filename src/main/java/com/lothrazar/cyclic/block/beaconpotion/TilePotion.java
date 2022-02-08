@@ -43,7 +43,6 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
   //so if a potion has a duration of 1 second, use this many ticks
   static final int TICKS_PER_DURATION = 160000;
   private static final int POTION_TICKS = 20 * 20; //cant be too low BC night vision flicker
- 
   private static final int MAX_RADIUS = 64;
   private int radius = MAX_RADIUS;
   public static IntValue POWERCONF;
@@ -117,6 +116,13 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerPotion(i, level, worldPosition, playerInventory, playerEntity);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

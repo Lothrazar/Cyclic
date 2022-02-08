@@ -66,7 +66,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileBattery e) {
-    e.tick(); 
+    e.tick();
   }
 
   public void tick() {
@@ -142,6 +142,12 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   public void setSideField(Direction side, int pow) {
     this.poweredSides.put(side, (pow == 1));
+  }
+
+  @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    super.invalidateCaps();
   }
 
   @Override

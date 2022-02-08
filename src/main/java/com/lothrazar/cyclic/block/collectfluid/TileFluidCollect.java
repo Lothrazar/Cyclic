@@ -47,7 +47,7 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static IntValue POWERCONF;
   FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
+  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   private int shapeIndex = 0; // current index of shape array
   private int size = 4 * 2;
   private int height = 4;
@@ -167,12 +167,20 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
+  public void invalidateCaps() {
+    energyCap.invalidate();
+    inventoryCap.invalidate();
+    fluidCap.invalidate();
+    super.invalidateCaps();
+  }
+
+  @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-      return tankWrapper.cast();
+      return fluidCap.cast();
     }
     if (cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();
