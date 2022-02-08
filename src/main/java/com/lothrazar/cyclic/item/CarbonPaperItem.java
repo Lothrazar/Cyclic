@@ -78,8 +78,7 @@ public class CarbonPaperItem extends ItemBaseCyclic {
       else {
         //so it has NO tag right now at all
         //read
-        CompoundTag data = new CompoundTag();
-        sign.save(data);
+        CompoundTag data = sign.serializeNBT();
         held.setTag(data);
         UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.copied");
       }
