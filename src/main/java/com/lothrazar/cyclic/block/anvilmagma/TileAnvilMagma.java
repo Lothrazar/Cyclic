@@ -176,6 +176,7 @@ public class TileAnvilMagma extends TileEntityBase implements INamedContainerPro
     tank.setFluid(fluid);
   }
 
+  @Override
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }

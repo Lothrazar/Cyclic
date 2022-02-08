@@ -34,7 +34,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return true; // TODO: is energy stack
+      return stack.isEmpty() || stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
     }
 
     @Override
@@ -58,6 +58,9 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
 
   @Override
   public void tick() {
+    if (world == null || world.isRemote) {
+      return;
+    }
     this.syncEnergy();
     setPercentFilled();
     boolean isFlowing = this.getFlowing() == 1;

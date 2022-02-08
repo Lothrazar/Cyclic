@@ -54,16 +54,18 @@ public class BlockBattery extends BlockBase {
     ItemStack newStackBattery = new ItemStack(this);
     if (ent != null) {
       IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (newStackCap instanceof CustomEnergyStorage) {
-        ((CustomEnergyStorage) newStackCap).setEnergy(handlerHere.getEnergyStored());
-      }
-      else {
-        newStackCap.receiveEnergy(handlerHere.getEnergyStored(), false);
-      }
-      if (handlerHere.getEnergyStored() > 0) {
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, handlerHere.getEnergyStored());
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, handlerHere.getMaxEnergyStored());
+      if (handlerHere != null) {
+        IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        if (newStackCap instanceof CustomEnergyStorage) {
+          ((CustomEnergyStorage) newStackCap).setEnergy(handlerHere.getEnergyStored());
+        }
+        else {
+          newStackCap.receiveEnergy(handlerHere.getEnergyStored(), false);
+        }
+        if (handlerHere.getEnergyStored() > 0) {
+          newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, handlerHere.getEnergyStored());
+          newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, handlerHere.getMaxEnergyStored());
+        }
       }
     }
     //even if energy fails 
@@ -97,6 +99,7 @@ public class BlockBattery extends BlockBase {
     if (storageTile != null) {
       storageTile.setEnergy(current);
     }
+    super.onBlockPlacedBy(world, pos, state, placer, stack);
   }
 
   @Override

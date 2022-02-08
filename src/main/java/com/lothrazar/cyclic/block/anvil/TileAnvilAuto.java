@@ -38,6 +38,17 @@ public class TileAnvilAuto extends TileEntityBase implements INamedContainerProv
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
+    /* https://github.com/Lothrazar/Cyclic/pull/1990/files#diff-4eb95a3d9ac136172375b3e7be5bc26c576f9fa6efcabee458c4c80797205b73R40 */
+    @Override
+    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+      if (!stack.isEmpty() && stack.isRepairable() && stack.getDamage() == 0) {
+        return outputSlots.insertItem(slot, stack, simulate);
+      }
+      else {
+        return super.insertItem(slot, stack, simulate);
+      }
+    }
+
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
       return stack.isRepairable() && stack.getDamage() > 0;
