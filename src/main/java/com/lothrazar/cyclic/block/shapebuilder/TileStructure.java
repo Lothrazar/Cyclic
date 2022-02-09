@@ -330,6 +330,9 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
       case PYRAMID:
         shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
       break;
+      case TUNNEL:
+        shape = UtilShape.circleVertical(this.getPosTarget(), this.getSize(), getHeight(), this.getCurrentFacing());
+      break;
     }
     return shape;
   }
