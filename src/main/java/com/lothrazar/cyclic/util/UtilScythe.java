@@ -53,11 +53,17 @@ public class UtilScythe {
       break;
     }
     if (doBreak) {
-      //harvest block with player context: better mod compatibility
-      blockState.getBlock().playerDestroy(world, player, posCurrent, blockState, world.getBlockEntity(posCurrent), player.getMainHandItem());
-      //sometimes this doesnt work and/or doesnt sync ot client, so force it
-      world.destroyBlock(posCurrent, false);
-      //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
+      if (blockState.is(DataTags.CROP_BLOCKS)) {
+        world.destroyBlock(posCurrent, false, player);
+        UtilItemStack.drop(world, posCurrent, blockState.getBlock()); //like shears
+      }
+      else {
+        //harvest block with player context: better mod compatibility
+        blockState.getBlock().playerDestroy(world, player, posCurrent, blockState, world.getBlockEntity(posCurrent), player.getMainHandItem());
+        //sometimes this doesnt work and/or doesnt sync ot client, so force it
+        world.destroyBlock(posCurrent, false, player);
+        //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
+      }
       return true;
     }
     return false;
