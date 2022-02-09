@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class UtilScythe {
 
+  // hardcoded as MAIN hand
   public static boolean harvestSingle(Level world, Player player, BlockPos posCurrent, ScytheType type) {
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
