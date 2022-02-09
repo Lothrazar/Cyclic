@@ -55,13 +55,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ExcavationEnchant extends EnchantmentCyclic {
 
+  public static final String ID = "excavate";
+  public static BooleanValue CFG;
+
   public ExcavationEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "excavate";
 
   @Override
   public boolean isEnabled() {

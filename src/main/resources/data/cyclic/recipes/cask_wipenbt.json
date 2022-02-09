@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cyclic:cask"
+    }
+  ],
+  "result": {
+    "item": "cyclic:cask",
+    "count": 1
+  }
+}

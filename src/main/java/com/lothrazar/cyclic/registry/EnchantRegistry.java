@@ -34,7 +34,7 @@ public class EnchantRegistry {
   public static final EnchantmentCyclic MULTIBOW = (EnchantmentCyclic) new Multishot(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND).setRegistryName(Multishot.ID);
   public static final EnchantmentCyclic EXCAVATE = (EnchantmentCyclic) new ExcavationEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(ExcavationEnchant.ID);
   public static final EnchantmentCyclic EXPERIENCE_BOOST = (EnchantmentCyclic) new XpEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(XpEnchant.ID);
-  public static final ElytraLaunchEnchant LAUNCH = (ElytraLaunchEnchant) new ElytraLaunchEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_CHEST, EquipmentSlot.CHEST).setRegistryName(ElytraLaunchEnchant.ID);
+  public static final ElytraLaunchEnchant LAUNCH = (ElytraLaunchEnchant) new ElytraLaunchEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_FEET, EquipmentSlot.FEET).setRegistryName(ElytraLaunchEnchant.ID);
 
   @SubscribeEvent
   public static void onEnchantRegister(final RegistryEvent.Register<Enchantment> event) {

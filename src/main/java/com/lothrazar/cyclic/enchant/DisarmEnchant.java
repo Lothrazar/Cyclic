@@ -17,7 +17,8 @@ public class DisarmEnchant extends EnchantmentCyclic {
 
   //halves the desired base chance to activate because onEntityDamage gets called twice and it's currently a 
   // "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
-  private static final double BASE_CHANCE = 0.08 / 2;
+  //TODO: config?
+  public static final double BASE_CHANCE = 0.04;
 
   public DisarmEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);

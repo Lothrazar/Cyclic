@@ -39,12 +39,12 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
 public class Multishot extends EnchantmentCyclic {
 
+  public static final String ID = "multishot";
+  public static BooleanValue CFG;
+
   public Multishot(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "multishot";
 
   @Override
   public boolean isEnabled() {

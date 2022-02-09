@@ -17,17 +17,16 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class ItemCask extends BlockItem {
+public class ItemBlockCask extends BlockItem {
 
-  public ItemCask(Block blockIn, Properties builder) {
+  public ItemBlockCask(Block blockIn, Properties builder) {
     super(blockIn, builder);
   }
 
   @Override
   public boolean isBarVisible(ItemStack stack) {
     FluidStack fstack = copyFluidFromStack(stack);
-    return fstack != null && fstack.getAmount() > 0;
-    //  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+    return fstack != null && fstack.getAmount() > 0; //  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
   }
 
   /**
@@ -39,17 +38,14 @@ public class ItemCask extends BlockItem {
   @Override
   public int getBarWidth(ItemStack stack) {
     try {
-      //this is always null
-      //   IFluidHandler storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+      //this is always null 
       FluidStack fstack = copyFluidFromStack(stack);
-      float qty = fstack.getAmount();
-      //      float ratio = qty / (TileCask.CAPACITY);
-      //      return 1 - ratio;
-      return Math.round(13.0F - (float) qty * 13.0F / (float) (TileCask.CAPACITY));
-      //      return Math.round(13.0F - (float)p_150900_.getDamageValue() * 13.0F / (float)this.maxDamage);
+      float current = fstack.getAmount();
+      float max = TileCask.CAPACITY;
+      return Math.round(13.0F * current / max);
     }
     catch (Throwable e) {
-      //lazy
+      //lazy 
     }
     return 1;
   }
@@ -68,7 +64,13 @@ public class ItemCask extends BlockItem {
 
   @Override
   public int getBarColor(ItemStack stack) {
-    return 0xADD8E6;
+    try {
+      FluidStack fstack = copyFluidFromStack(stack);
+      return fstack.getFluid().getAttributes().getColor();
+    }
+    catch (Exception e) {
+      return 0xADD8E6;
+    }
   }
 
   @Override

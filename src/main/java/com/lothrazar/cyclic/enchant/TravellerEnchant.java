@@ -47,14 +47,13 @@ public class TravellerEnchant extends EnchantmentCyclic {
       DamageSource.CACTUS.msgId,
       DamageSource.SWEET_BERRY_BUSH.msgId
   });
+  public static final String ID = "traveler";
+  public static BooleanValue CFG;
 
   public TravellerEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "traveler";
 
   @Override
   public boolean isEnabled() {

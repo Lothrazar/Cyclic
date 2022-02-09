@@ -103,6 +103,8 @@ dependencies {
     implementation fg.deobf("curse.maven:gardening-tools-351990:3544787")
     implementation fg.deobf("curse.maven:cucumber-272335:3623830")
     implementation fg.deobf("curse.maven:mystical-agriculture-246640:3623835")
+    implementation fg.deobf("curse.maven:supplementaries-412082:3622554")
+    implementation fg.deobf("curse.maven:selene-499980:3604965")
   //  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
 
 }

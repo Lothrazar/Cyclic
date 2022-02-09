@@ -40,14 +40,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class VenomEnchant extends EnchantmentCyclic {
 
+  public static final int TICKSPERLEVEL = 3 * Const.TICKS_PER_SEC;
+  public static final String ID = "venom";
+  public static BooleanValue CFG;
+
   public VenomEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;
-  public static BooleanValue CFG;
-  public static final String ID = "venom";
 
   @Override
   public boolean isEnabled() {
@@ -79,7 +79,7 @@ public class VenomEnchant extends EnchantmentCyclic {
     if (level > 0) {
       // we -1  since potion level 1 is Poison II
       //so that means enchantment I giving poison I means this
-      UtilEntity.addOrMergePotionEffect(target, new MobEffectInstance(MobEffects.POISON, durationTicksPerLevel * level, level - 1));
+      UtilEntity.addOrMergePotionEffect(target, new MobEffectInstance(MobEffects.POISON, TICKSPERLEVEL * level, level - 1));
     }
   }
 }

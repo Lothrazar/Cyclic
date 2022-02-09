@@ -46,15 +46,16 @@ import net.minecraftforge.fml.ModList;
 
 public class BeheadingEnchant extends EnchantmentCyclic {
 
+  // TODO: config
+  public static final int PERCDROP = 20;
+  public static final int PERCPERLEVEL = 25;
+  public static final String ID = "beheading";
+  public static BooleanValue CFG;
+
   public BeheadingEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  private static final int percentDrop = 20;
-  private static final int percentPerLevel = 25;
-  public static final String ID = "beheading";
-  public static BooleanValue CFG;
 
   @Override
   public boolean isEnabled() {
@@ -67,7 +68,7 @@ public class BeheadingEnchant extends EnchantmentCyclic {
   }
 
   private int percentForLevel(int level) {
-    return percentDrop + (level - 1) * percentPerLevel;
+    return PERCDROP + (level - 1) * PERCPERLEVEL;
   }
 
   @SubscribeEvent

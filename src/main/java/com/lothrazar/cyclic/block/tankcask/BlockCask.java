@@ -31,10 +31,6 @@ public class BlockCask extends BlockCyclic {
     return new TileCask(pos, state);
   }
 
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.cask, world.isClientSide ? TileCask::clientTick : TileCask::serverTick);
-  //  }
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
     //because harvestBlock manually forces a drop 
@@ -65,12 +61,11 @@ public class BlockCask extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {
-      IFluidHandler fluidInTile = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
-      // note a DIFFERENT cap here for the item
       IFluidHandler fluidInStack = tankStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
-      if (fluidInStack != null) {
-        //now give 
-        FluidStack fs = fluidInTile.getFluidInTank(0);
+      if (fluidInStack != null && ent instanceof TileCask) {
+        // push fluid from dying tank to itemstack
+        TileCask ttank = (TileCask) ent;
+        FluidStack fs = ttank.tank.getFluid();
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }

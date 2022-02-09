@@ -15,13 +15,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class XpEnchant extends EnchantmentCyclic {
 
+  public static final String ID = "experience_boost";
+  public static BooleanValue CFG;
+
   public XpEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... mainhand) {
     super(rarityIn, typeIn, mainhand);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "experience_boost";
 
   @Override
   public boolean isEnabled() {

@@ -41,7 +41,7 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public int getBarColor(ItemStack stack) {
-    return 0xBA0909; //super.getBarColor(stack);
+    return 0xBA0909;
   }
 
   @Override
@@ -54,22 +54,6 @@ public class ItemBlockBattery extends BlockItem {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
-  /**
-   * Queries the percentage of the 'Durability' bar that should be drawn.
-   *
-   * @param stack
-   *          The current ItemStack
-   * @return 0.0 for 100% (no damage / full bar), 1.0 for 0% (fully damaged / empty bar)
-   */
-  //  @Override
-  //  public double getDurabilityForDisplay(ItemStack stack) {
-  //    double current = 0;
-  //    if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
-  //      current = stack.getTag().getInt(ENERGYTT);
-  //    }
-  //    double max = Math.max(1D, stack.getTag().getInt(ENERGYTTMAX));
-  //    return 1D - current / max;
-  //  }
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new CapabilityProviderEnergyStack(TileBattery.MAX);

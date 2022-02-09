@@ -36,22 +36,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class MagnetEnchant extends EnchantmentCyclic {
 
+  private static final int ITEM_HRADIUS = 4;
+  private static final int HRADIUS_PER_LEVEL = 4;
+  private static final int ITEM_VRADIUS = 4;
+  public static final String ID = "magnet";
+  public static BooleanValue CFG;
+
   public MagnetEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  public static BooleanValue CFG;
-  public static final String ID = "magnet";
-
   @Override
   public boolean isEnabled() {
     return CFG.get();
   }
-
-  private static final int ITEM_HRADIUS = 4;
-  private static final int HRADIUS_PER_LEVEL = 4;
-  private static final int ITEM_VRADIUS = 4;
 
   @Override
   public int getMaxLevel() {

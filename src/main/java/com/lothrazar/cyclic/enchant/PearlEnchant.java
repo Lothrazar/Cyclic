@@ -20,16 +20,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PearlEnchant extends EnchantmentCyclic {
 
+  public static final int COOLDOWN = 6 * 20;
+  private static final float VELOCITY = 1.5F; //Same as EnderPearlItem
+  private static final float INNACCURACY = 1F; //Same as EnderPearlItem
+  public static final String ID = "ender";
+  public static BooleanValue CFG;
+
   public PearlEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  private static final int COOLDOWN = 6 * 20;
-  private static final float VELOCITY = 1.5F; //Same as EnderPearlItem
-  private static final float INNACCURACY = 1F; //Same as EnderPearlItem
-  public static BooleanValue CFG;
-  public static final String ID = "ender";
 
   @Override
   public boolean isEnabled() {

@@ -45,23 +45,22 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ElytraLaunchEnchant extends EnchantmentCyclic {
 
+  public static final String ID = "launch";
+  public static final int COOLDOWN = 7 * Const.TPS;
+  public static final float POWER = 1.07F;
+  public static final int ROTATIONPITCH = 68;
+  private static final String NBT_USES = "launchuses";
+  public static BooleanValue CFG;
+
   public ElytraLaunchEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  public static BooleanValue CFG;
-  public static final String ID = "launch";
-
   @Override
   public boolean isEnabled() {
     return CFG.get();
   }
-
-  public static final int COOLDOWN = 7 * Const.TPS;
-  private static final float POWER = 1.07F;
-  private static final int ROTATIONPITCH = 68;
-  private static final String NBT_USES = "launchuses";
 
   @Override
   public int getMaxLevel() {
@@ -70,7 +69,7 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    return stack.getItem() instanceof ElytraItem || stack.getEquipmentSlot() == EquipmentSlot.FEET;
+    return stack.getEquipmentSlot() == EquipmentSlot.FEET || stack.getItem() instanceof ElytraItem; // elytra or boots
   }
 
   @Override

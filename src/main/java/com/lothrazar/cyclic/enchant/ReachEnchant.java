@@ -36,16 +36,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ReachEnchant extends EnchantmentCyclic {
 
+  private static final String NBT_REACH_ON = "reachon";
+  private static final int REACH_VANILLA = 5;
+  private static final int REACH_BOOST = 16;
+  public static final String ID = "reach";
+  public static BooleanValue CFG;
+
   public ReachEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  private static final String NBT_REACH_ON = "reachon";
-  private static final int REACH_VANILLA = 5;
-  private static final int REACH_BOOST = 16;
-  public static BooleanValue CFG;
-  public static final String ID = "reach";
 
   @Override
   public boolean isEnabled() {

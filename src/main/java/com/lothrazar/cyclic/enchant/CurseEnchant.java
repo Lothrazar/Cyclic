@@ -17,11 +17,12 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class CurseEnchant extends EnchantmentCyclic {
 
-  private static final double BASE_ACTIVATION_CHANCE = 0.1;
-  private static final double BASE_APPLY_CHANCE = 0.3;
-  private static final double MIN_EFFECTS = 1;
-  private static final double MAX_EFFECTS = 3;
-  private static final int EFFECT_DURATION = 20 * 5;
+  //TODO: config
+  public static final double BASE_ACTIVATION_CHANCE = 0.1;
+  public static final double BASE_APPLY_CHANCE = 0.3;
+  public static final double MIN_EFFECTS = 1;
+  public static final double MAX_EFFECTS = 3;
+  public static final int EFFECT_DURATION = 20 * 5;
 
   public CurseEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);

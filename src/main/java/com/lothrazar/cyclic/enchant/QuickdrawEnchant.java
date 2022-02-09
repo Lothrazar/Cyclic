@@ -36,13 +36,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class QuickdrawEnchant extends EnchantmentCyclic {
 
+  public static final String ID = "quickshot";
+  public static BooleanValue CFG;
+
   public QuickdrawEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "quickshot";
 
   @Override
   public boolean isEnabled() {

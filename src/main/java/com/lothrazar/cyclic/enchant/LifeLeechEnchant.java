@@ -35,13 +35,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class LifeLeechEnchant extends EnchantmentCyclic {
 
+  public static final String ID = "life_leech";
+  public static BooleanValue CFG;
+
   public LifeLeechEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "life_leech";
 
   @Override
   public boolean isEnabled() {

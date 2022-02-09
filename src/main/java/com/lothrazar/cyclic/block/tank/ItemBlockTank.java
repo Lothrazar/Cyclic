@@ -40,9 +40,9 @@ public class ItemBlockTank extends BlockItem {
     try {
       //this is always null 
       FluidStack fstack = copyFluidFromStack(stack);
-      float qty = fstack.getAmount();
-      //      float ratio = qty / (TileTank.CAPACITY);
-      return Math.round(13.0F - (float) qty * 13.0F / (float) (TileTank.CAPACITY));
+      float current = fstack.getAmount();
+      float max = TileTank.CAPACITY;
+      return Math.round(13.0F * current / max);
     }
     catch (Throwable e) {
       //lazy 
@@ -64,7 +64,13 @@ public class ItemBlockTank extends BlockItem {
 
   @Override
   public int getBarColor(ItemStack stack) {
-    return 0xADD8E6;
+    try {
+      FluidStack fstack = copyFluidFromStack(stack);
+      return fstack.getFluid().getAttributes().getColor();
+    }
+    catch (Exception e) {
+      return 0xADD8E6;
+    }
   }
 
   @Override

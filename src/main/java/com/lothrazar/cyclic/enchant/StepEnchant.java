@@ -39,14 +39,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class StepEnchant extends EnchantmentCyclic {
 
   private static final String NBT_ON = ModCyclic.MODID + "_stepenchant";
+  public static final String ID = "step";
+  public static BooleanValue CFG;
 
   public StepEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "step";
 
   @Override
   public boolean isEnabled() {

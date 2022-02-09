@@ -45,15 +45,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class GrowthEnchant extends EnchantmentCyclic {
 
-  private static final double ODDS_ROTATE = 0.04;
+  //TODO config
+  public static final double ODDS_ROTATE = 0.04;
+  public static final String ID = "growth";
+  public static BooleanValue CFG;
 
   public GrowthEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
-
-  public static BooleanValue CFG;
-  public static final String ID = "growth";
 
   @Override
   public boolean isEnabled() {
