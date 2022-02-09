@@ -29,7 +29,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 public class UtilScythe {
 
@@ -37,6 +39,11 @@ public class UtilScythe {
   public static boolean harvestSingle(Level world, Player player, BlockPos posCurrent, ScytheType type) {
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
+    if (blockState.hasProperty(DoublePlantBlock.HALF) && blockState.getValue(DoublePlantBlock.HALF).equals(DoubleBlockHalf.LOWER)) {
+      //the upper half has the drops, so only do that. avoid glitches and item loss
+      // ie: rose, lilac, sunflower
+      return false;
+    }
     switch (type) {
       case LEAVES:
         doBreak = blockState.is(BlockTags.LEAVES);
