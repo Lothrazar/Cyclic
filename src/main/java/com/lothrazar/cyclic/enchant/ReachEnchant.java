@@ -85,7 +85,7 @@ public class ReachEnchant extends EnchantmentCyclic {
     }
     Player player = (Player) event.getEntityLiving();
     //Ticking
-    ItemStack armor = player.getItemBySlot(EquipmentSlot.CHEST);
+    ItemStack armor = this.getFirstArmorStackWithEnchant(player);
     int level = 0;
     if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
         && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
