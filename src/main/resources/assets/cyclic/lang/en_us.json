@@ -467,7 +467,7 @@
   
   "enchantment.cyclic.laststand": "Last Stand",
   "enchantment.cyclic.laststand.desc": "Prevents killing blows at the cost of experience",
-  "enchantment.cyclic.laststand.guide": "Leg armor by design. If you take lethal damage, and have enough EXP points to spare (30 default at level 1) then the damage is mostly prevented leaving you at 1/2 heart and the experience points are spent.",
+  "enchantment.cyclic.laststand.guide": "Leg armor by design. If you take lethal damage, and have enough EXP points to spare (30 default at level 1) then the damage is mostly prevented leaving you at 1/2 heart and the experience points are spent. Not compatible with mending, xp boost, launch, thorns",
   "enchantment.cyclic.laststand.activated":"Last Stand activated",
   
   "enchantment.cyclic.excavate": "Excavate",

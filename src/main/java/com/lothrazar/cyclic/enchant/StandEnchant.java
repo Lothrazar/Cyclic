@@ -45,6 +45,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class StandEnchant extends EnchantmentCyclic {
 
+  private static final int ABS_TICKS = 600;
+  private static final int XP_COST_MAX = 30; // reduced by level
   public static final String ID = "laststand";
   public static BooleanValue CFG;
 
@@ -56,7 +58,7 @@ public class StandEnchant extends EnchantmentCyclic {
   @Override
   public boolean checkCompatibility(Enchantment ench) {
     return super.checkCompatibility(ench) && ench != EnchantRegistry.LAUNCH && ench != EnchantRegistry.EXPERIENCE_BOOST
-        && ench != EnchantRegistry.TRAVELLER && ench != Enchantments.MENDING && ench != Enchantments.THORNS;
+        && ench != Enchantments.MENDING && ench != Enchantments.THORNS;
   }
 
   @Override
@@ -66,7 +68,7 @@ public class StandEnchant extends EnchantmentCyclic {
 
   @Override
   public int getMaxLevel() {
-    return 1;
+    return 2;
   }
 
   @Override
@@ -83,13 +85,13 @@ public class StandEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent event) {
-    int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
+    final int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
     if (level <= 0) {
       return;
     }
     //prevent lethal damage only 
     if (event.getEntityLiving().getHealth() - event.getAmount() <= 0 && event.getEntityLiving() instanceof ServerPlayer player) {
-      final int xpCost = 30 / level; // higher level gives a lower cost. level 1 is 30xp, lvl 3 is 10xp etc
+      final int xpCost = XP_COST_MAX / level; // higher level gives a lower cost. level 1 is 30xp, lvl 3 is 10xp etc
       if (UtilPlayer.getExpTotal(player) < xpCost) {
         return;
       }
@@ -101,7 +103,7 @@ public class StandEnchant extends EnchantmentCyclic {
       UtilSound.playSoundFromServer(player, SoundRegistry.CHAOS_REAPER, 1F, 0.4F);
       player.giveExperiencePoints(-1 * xpCost);
       UtilChat.sendStatusMessage(player, "enchantment." + ModCyclic.MODID + "." + ID + ".activated");
-      player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 600, 1));
+      player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ABS_TICKS, level));
     }
   }
 }
