@@ -33,7 +33,7 @@ public class ContainerPackager extends ContainerBase {
         tile.setChanged();
       }
     });
-    this.endInv = tile.inputSlots.getSlots();
+    this.endInv = tile.inputSlots.getSlots() + 1;
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePackager.Fields.values().length);
     trackEnergy(tile);
