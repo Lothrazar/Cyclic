@@ -55,6 +55,7 @@ import com.lothrazar.cyclic.enchant.Multishot;
 import com.lothrazar.cyclic.enchant.PearlEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
+import com.lothrazar.cyclic.enchant.StandEnchant;
 import com.lothrazar.cyclic.enchant.StepEnchant;
 import com.lothrazar.cyclic.enchant.TravellerEnchant;
 import com.lothrazar.cyclic.enchant.VenomEnchant;
@@ -183,6 +184,7 @@ public class ConfigRegistry {
     QuickdrawEnchant.CFG = CFG.comment("Set false to disable enchantment").define(QuickdrawEnchant.ID + ".enabled", true);
     ReachEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ReachEnchant.ID + ".enabled", true);
     StepEnchant.CFG = CFG.comment("Set false to disable enchantment").define(StepEnchant.ID + ".enabled", true);
+    StandEnchant.CFG = CFG.comment("Set false to disable enchantment").define(StandEnchant.ID + ".enabled", true);
     TravellerEnchant.CFG = CFG.comment("Set false to disable enchantment").define(TravellerEnchant.ID + ".enabled", true);
     VenomEnchant.CFG = CFG.comment("Set false to disable enchantment").define(VenomEnchant.ID + ".enabled", true);
     XpEnchant.CFG = CFG.comment("Set false to disable enchantment").define(XpEnchant.ID + ".enabled", true);

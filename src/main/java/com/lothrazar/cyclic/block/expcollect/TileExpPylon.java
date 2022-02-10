@@ -40,7 +40,6 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
 
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
   public static final int FLUID_PER_EXP = 20;
-  public static final int DRAIN_PLAYER_EXP = 20;
   public static final int EXP_PER_BOTTLE = 11;
   private static final int RADIUS = 16;
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;

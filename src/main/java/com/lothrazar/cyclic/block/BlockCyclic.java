@@ -108,7 +108,7 @@ public class BlockCyclic extends BaseEntityBlock {
               }
               //and also play the fluid sound
               if (player instanceof ServerPlayer) {
-                UtilSound.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL);
+                UtilSound.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL, 1F, 1F);
               }
             }
             else {

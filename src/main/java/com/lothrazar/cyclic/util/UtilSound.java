@@ -36,7 +36,7 @@ public class UtilSound {
     }
   }
 
-  public static void playSoundFromServer(ServerPlayer entityIn, BlockPos pos, SoundEvent soundIn) {
+  public static void playSoundFromServer(ServerPlayer entityIn, BlockPos pos, SoundEvent soundIn, float p, float v) {
     if (soundIn == null || entityIn == null) {
       return;
     }
@@ -44,10 +44,10 @@ public class UtilSound {
         soundIn,
         SoundSource.BLOCKS,
         pos.getX(), pos.getY(), pos.getZ(),
-        1.0f, 1.0f));
+        p, v));
   }
 
-  public static void playSoundFromServer(ServerPlayer entityIn, SoundEvent soundIn) {
+  public static void playSoundFromServer(ServerPlayer entityIn, SoundEvent soundIn, float p, float v) {
     if (soundIn == null || entityIn == null) {
       return;
     }
@@ -55,12 +55,12 @@ public class UtilSound {
         soundIn,
         SoundSource.BLOCKS,
         entityIn.xOld, entityIn.yOld, entityIn.zOld,
-        1.0f, 1.0f));
+        p, v));
   }
 
   public static void playSoundFromServer(ServerLevel world, BlockPos pos, SoundEvent soundIn) {
     for (ServerPlayer sp : world.players()) {
-      playSoundFromServer(sp, pos, soundIn);
+      playSoundFromServer(sp, pos, soundIn, 1F, 1F);
     }
   }
 
@@ -68,7 +68,7 @@ public class UtilSound {
     SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(sid));
     if (sound != null) {
       for (ServerPlayer sp : world.players()) {
-        playSoundFromServer(sp, pos, sound);
+        playSoundFromServer(sp, pos, sound, 1F, 1F);
       }
     }
   }

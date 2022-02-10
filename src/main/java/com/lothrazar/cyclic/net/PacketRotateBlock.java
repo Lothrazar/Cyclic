@@ -70,7 +70,7 @@ public class PacketRotateBlock extends PacketBaseCyclic {
         ItemStack itemStackHeld = player.getItemInHand(message.hand);
         UtilItemStack.damageItem(player, itemStackHeld);
         if (world.getBlockState(message.pos).getSoundType() != null) {
-          UtilSound.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound());
+          UtilSound.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound(), 1F, 1F);
         }
       }
     });

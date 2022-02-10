@@ -464,6 +464,12 @@
   "debug.horsespeed": "Horse Speed:",
   "debug.spawn.chunks": "Within Spawn Chunk",
   "debug.spawn.distance": "From Spawn:",
+  
+  "enchantment.cyclic.laststand": "Last Stand",
+  "enchantment.cyclic.laststand.desc": "Prevents killing blows at the cost of experience",
+  "enchantment.cyclic.laststand.guide": "Leg armor by design. If you take lethal damage, and have enough EXP points to spare (30 default at level 1) then the damage is mostly prevented leaving you at 1/2 heart and the experience points are spent.",
+  "enchantment.cyclic.laststand.activated":"Last Stand activated",
+  
   "enchantment.cyclic.excavate": "Excavate",
   "enchantment.cyclic.excavate.desc": "Harvests the whole vein of connected matching blocks, not including diagonals",
   "enchantment.cyclic.excavate.guide": "Randomly reaches out in all direction and mines blocks matching the original target.  Higher levels have more [ maximum_blocks = 26 + 8 * ENCHANT_LEVEL]",
