@@ -103,25 +103,28 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
   public static boolean isRecipeValid(CraftingRecipe recipe) {
     int total = 0, matched = 0;
     Ingredient first = null;
+    ItemStack[] firstItems = null;
     for (Ingredient ingr : recipe.getIngredients()) {
-      if (ingr == Ingredient.EMPTY || ingr.getItems().length == 0) {
+      ItemStack[] ingrItemList = ingr.getItems();
+      if (ingr == Ingredient.EMPTY || ingrItemList.length == 0) {
         continue;
       }
       total++;
       if (first == null) {
         first = ingr;
+        firstItems = ingrItemList;
         matched = 1;
         continue;
       }
-      if (first.test(ingr.getItems()[0])) {
+      if (first.test(ingrItemList[0])) {
         matched++;
       }
     }
-    if (first == null || first.getItems() == null || first.getItems().length == 0) {
+    if (first == null || firstItems == null || firstItems.length == 0) {
       return false; //nothing here
     }
     boolean outIsStorage = recipe.getResultItem().is(Tags.Items.STORAGE_BLOCKS);
-    boolean inIsIngot = first.getItems()[0].is(Tags.Items.INGOTS);
+    boolean inIsIngot = firstItems[0].is(Tags.Items.INGOTS);
     if (!outIsStorage && inIsIngot) {
       //ingots can only go to storage blocks, nothing else
       //avoids armor/ iron trap doors. kinda hacky
