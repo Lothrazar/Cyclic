@@ -61,6 +61,9 @@ public class VenomEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getTarget() instanceof LivingEntity == false) {
       return;
     }

@@ -25,11 +25,14 @@ public class XpEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean isEnabled() {
-    return CFG == null || CFG.get();
+    return CFG.get();
   }
 
   @SubscribeEvent
   public void handleBlockBreakEvent(BlockEvent.BreakEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     int level = getCurrentLevelTool(event.getPlayer().getMainHandItem());
     if (level <= 0) {
       return;
@@ -39,6 +42,9 @@ public class XpEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void handleEntityDropEvent(LivingExperienceDropEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getAttackingPlayer() == null) {
       return;
     }

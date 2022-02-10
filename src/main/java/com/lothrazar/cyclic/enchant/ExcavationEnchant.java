@@ -89,6 +89,9 @@ public class ExcavationEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onBreakEvent(BreakEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     LevelAccessor world = event.getWorld();
     Player player = event.getPlayer();
     if (player.swingingArm == null || world.isClientSide()) {

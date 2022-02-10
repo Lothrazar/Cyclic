@@ -185,6 +185,9 @@ public class ConfigRegistry {
     ReachEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ReachEnchant.ID + ".enabled", true);
     StepEnchant.CFG = CFG.comment("Set false to disable enchantment").define(StepEnchant.ID + ".enabled", true);
     StandEnchant.CFG = CFG.comment("Set false to disable enchantment").define(StandEnchant.ID + ".enabled", true);
+    StandEnchant.COST = CFG.comment("Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(StandEnchant.ID + ".xp_cost", 50, 1, 9999);
+    StandEnchant.ABS = CFG.comment("How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(StandEnchant.ID + ".potion_ticks", 600, 0, 9999);
+    StandEnchant.COOLDOWN = CFG.comment("How many ticks of cooldown, 0 to disable").defineInRange(StandEnchant.ID + ".cooldown", 20, 0, 99999);
     TravellerEnchant.CFG = CFG.comment("Set false to disable enchantment").define(TravellerEnchant.ID + ".enabled", true);
     VenomEnchant.CFG = CFG.comment("Set false to disable enchantment").define(VenomEnchant.ID + ".enabled", true);
     XpEnchant.CFG = CFG.comment("Set false to disable enchantment").define(XpEnchant.ID + ".enabled", true);

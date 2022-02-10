@@ -59,6 +59,9 @@ public class BeekeeperEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onLivingSetAttackTargetEvent(LivingSetAttackTargetEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getTarget() instanceof Player && event.getEntityLiving().getType() == EntityType.BEE) {
       int level = this.getCurrentArmorLevel(event.getTarget());
       if (level > 0) {

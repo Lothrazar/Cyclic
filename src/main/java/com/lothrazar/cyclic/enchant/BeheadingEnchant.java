@@ -73,6 +73,9 @@ public class BeheadingEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getSource().getEntity() instanceof Player) {
       Player attacker = (Player) event.getSource().getEntity();
       int level = getCurrentLevelTool(attacker);

@@ -77,6 +77,9 @@ public class GrowthEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     LivingEntity entity = event.getEntityLiving();
     if (entity instanceof Player) {
       Player p = (Player) entity;

@@ -55,6 +55,9 @@ public class LifeLeechEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getSource().getEntity() instanceof Player && event.getEntity() instanceof LivingEntity) {
       Player attacker = (Player) event.getSource().getEntity();
       LivingEntity target = (LivingEntity) event.getEntity();

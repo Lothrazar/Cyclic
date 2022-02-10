@@ -79,6 +79,9 @@ public class TravellerEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEnderTeleportEvent(EntityTeleportEvent.EnderPearl event) {
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getEntity() instanceof LivingEntity) {
       int level = getCurrentArmorLevelSlot((LivingEntity) event.getEntity(), EquipmentSlot.LEGS);
       if (level > 0) {
@@ -89,6 +92,9 @@ public class TravellerEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
     if (level > 0 && PROTS.contains(event.getSource().msgId)) {
       event.setAmount(0.1F);

@@ -39,16 +39,18 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class StandEnchant extends EnchantmentCyclic {
 
-  private static final int ABS_TICKS = 600;
-  private static final int XP_COST_MAX = 30; // reduced by level
   public static final String ID = "laststand";
   public static BooleanValue CFG;
+  public static IntValue COST;
+  public static IntValue ABS;
+  public static IntValue COOLDOWN;
 
   public StandEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
@@ -73,9 +75,8 @@ public class StandEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    boolean yes = (stack.getItem() instanceof ArmorItem)
+    return (stack.getItem() instanceof ArmorItem)
         && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.LEGS;
-    return yes;
   }
 
   @Override
@@ -85,25 +86,33 @@ public class StandEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent event) {
-    final int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
-    if (level <= 0) {
+    if (!isEnabled()) {
       return;
     }
-    //prevent lethal damage only 
-    if (event.getEntityLiving().getHealth() - event.getAmount() <= 0 && event.getEntityLiving() instanceof ServerPlayer player) {
-      final int xpCost = XP_COST_MAX / level; // higher level gives a lower cost. level 1 is 30xp, lvl 3 is 10xp etc
-      if (UtilPlayer.getExpTotal(player) < xpCost) {
-        return;
+    final int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
+    if (level > 0 && event.getEntityLiving().getHealth() - event.getAmount() <= 0 && event.getEntityLiving() instanceof ServerPlayer player) {
+      //if enchanted and it would cause death, then we go on
+      if (COOLDOWN.get() > 0 &&
+          player.getCooldowns().isOnCooldown(player.getItemBySlot(EquipmentSlot.LEGS).getItem())) {
+        return; //if equippped enchanted item is on cooldown for any reason, done
       }
-      //if would cause death, then 
+      final int xpCost = Math.max(1, COST.get() / level); // min 1.  higher level gives a lower cost. level 1 is 30xp, lvl 3 is 10xp etc
+      if (UtilPlayer.getExpTotal(player) < xpCost) {
+        return; // POOR
+      }
+      //survive
       float toSurvive = event.getEntityLiving().getHealth() - 1;
-      //      float diff = event.getAmount() - toSurvive;
-      event.setAmount(toSurvive);//reduce damage so i survive
-      //never fires on client side
-      UtilSound.playSoundFromServer(player, SoundRegistry.CHAOS_REAPER, 1F, 0.4F);
+      event.setAmount(toSurvive);
       player.giveExperiencePoints(-1 * xpCost);
+      //now the fluff
+      UtilSound.playSoundFromServer(player, SoundRegistry.CHAOS_REAPER, 1F, 0.4F);
       UtilChat.sendStatusMessage(player, "enchantment." + ModCyclic.MODID + "." + ID + ".activated");
-      player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ABS_TICKS, level));
+      if (ABS.get() > 0) {
+        player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ABS.get(), level - 1));
+      }
+      if (COOLDOWN.get() > 0) {
+        player.getCooldowns().addCooldown(player.getItemBySlot(EquipmentSlot.LEGS).getItem(), COOLDOWN.get());
+      }
     }
   }
 }

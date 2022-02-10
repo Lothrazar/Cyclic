@@ -53,6 +53,9 @@ public class PearlEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+    if (!isEnabled()) {
+      return;
+    }
     Level world = event.getWorld();
     if (!world.isClientSide && event.getResult() != Result.DENY) {
       int level = EnchantmentHelper.getItemEnchantmentLevel(this, event.getItemStack());

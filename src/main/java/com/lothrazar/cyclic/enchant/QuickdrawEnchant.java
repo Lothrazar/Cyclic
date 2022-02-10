@@ -61,6 +61,9 @@ public class QuickdrawEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onPlayerUpdate(LivingUpdateEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     if (event.getEntity() instanceof Player) {
       Player player = (Player) event.getEntity();
       if (player.isUsingItem() == false) {

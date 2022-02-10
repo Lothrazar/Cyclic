@@ -72,6 +72,9 @@ public class StepEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     //check if NOT holding this harm
     if (event.getEntityLiving() instanceof Player == false) {
       return;

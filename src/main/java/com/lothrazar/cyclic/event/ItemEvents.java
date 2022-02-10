@@ -122,6 +122,10 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onArrowLooseEvent(ArrowLooseEvent event) {
+    //this event is only used for multishot enchantment 
+    if (!Multishot.CFG.get()) {
+      return;
+    }
     ItemStack stackBow = event.getBow();
     Player player = event.getPlayer();
     Level worldIn = player.level;
