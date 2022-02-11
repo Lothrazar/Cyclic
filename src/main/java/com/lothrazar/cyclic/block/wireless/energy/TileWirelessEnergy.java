@@ -140,9 +140,9 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
       case RENDER:
         this.render = value % 2;
       break;
-      //      case TRANSFER_RATE:
-      //        transferRate = value;
-      //      break;
+      case TRANSFER_RATE:
+        //        transferRate = value;
+        //      break;
     }
   }
 
@@ -153,8 +153,8 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
         return this.needsRedstone;
       case RENDER:
         return render;
-      //      case TRANSFER_RATE:
-      //        return this.transferRate;
+      case TRANSFER_RATE:
+        //        return this.transferRate;
     }
     return 0;
   }

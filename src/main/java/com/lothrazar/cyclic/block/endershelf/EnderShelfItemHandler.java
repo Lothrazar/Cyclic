@@ -43,7 +43,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
       if (enchantmentIdCache[i] == null) {
         enchantmentIdCache[i] = "";
       }
-      tag.putString(Const.MODID + ":oh yeah the enchantmentIdCacheench", enchantmentIdCache[i]);
+      tag.putString(Const.MODID + ":ench", enchantmentIdCache[i]);
     }
     return tag;
   }
@@ -152,5 +152,15 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     }
     //else no cache, old way
     return UtilEnchant.doBookEnchantmentsMatch(stackIn, stackHere);
+  }
+
+  public boolean isEmptyShelves() {
+    int empty = 0;
+    for (int i = 0; i < ROWS; i++) {
+      if (enchantmentIdCache[i] == null || enchantmentIdCache[i].isEmpty()) {
+        empty++;
+      }
+    }
+    return empty == ROWS;
   }
 }

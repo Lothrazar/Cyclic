@@ -41,9 +41,6 @@ public class BlockEnderShelf extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {}
-
-  @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(BlockStateProperties.HORIZONTAL_FACING);
   }
@@ -154,9 +151,11 @@ public class BlockEnderShelf extends BlockCyclic {
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
-      CompoundTag tileData = shelf.inventory.serializeNBT();
-      //read from tile, write to itemstack 
-      newStack.setTag(tileData);
+      if (!shelf.inventory.isEmptyShelves()) {
+        //read from tile, write to itemstack  
+        CompoundTag tileData = shelf.inventory.serializeNBT();
+        newStack.setTag(tileData);
+      }
     }
     UtilItemStack.drop(world, pos, newStack);
   }
