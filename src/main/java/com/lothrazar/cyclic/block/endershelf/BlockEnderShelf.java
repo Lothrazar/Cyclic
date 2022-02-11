@@ -93,6 +93,7 @@ public class BlockEnderShelf extends BlockCyclic {
             ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
             player.setItemInHand(hand, remaining);
             player.swing(hand);
+            return InteractionResult.SUCCESS;
           }
         }
       }
@@ -100,6 +101,7 @@ public class BlockEnderShelf extends BlockCyclic {
         ItemStack retrievedBook = shelf.inventory.extractItem(slot, 1, false);
         player.setItemInHand(hand, retrievedBook);
         player.swing(hand);
+        return InteractionResult.SUCCESS;
       }
     }
     return InteractionResult.PASS;
