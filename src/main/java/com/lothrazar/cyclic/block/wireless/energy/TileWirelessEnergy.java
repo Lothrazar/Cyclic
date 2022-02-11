@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
+import java.util.HashSet;
+import java.util.Set;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
@@ -37,11 +39,10 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   }
 
   static final int MAX = 64000;
-  public static final int MAX_TRANSFER = MAX;
-  private int transferRate = MAX_TRANSFER / 4;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  private int transferRate = MAX / 8;
+  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler gpsSlots = new ItemStackHandler(1) {
+  ItemStackHandler gpsSlots = new ItemStackHandler(8) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
@@ -82,13 +83,13 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   public void load(CompoundTag tag) {
     gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    this.transferRate = tag.getInt("transferRate");
+    //    this.transferRate = tag.getInt("transferRate");
     super.load(tag);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag) {
-    tag.putInt("transferRate", transferRate);
+    //    tag.putInt("transferRate", transferRate);
     tag.put(NBTINV, gpsSlots.serializeNBT());
     tag.put(NBTENERGY, energy.serializeNBT());
     super.saveAdditional(tag);
@@ -99,7 +100,7 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessEnergy e) {
-    e.tick();
+    //   e.tick();
   }
 
   public void tick() {
@@ -108,14 +109,20 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
       setLitProperty(false);
       return;
     }
-    if (level.isClientSide) {
-      return;
-    }
     boolean moved = false;
     //run the transfer. one slot only
-    BlockPosDim loc = getTargetInSlot(0);
-    if (loc != null && UtilWorld.dimensionIsEqual(loc, level)) {
-      moved = moveEnergy(Direction.UP, loc.getPos(), transferRate);
+    Set<BlockPosDim> used = new HashSet<>();
+    for (int slot = 0; slot < gpsSlots.getSlots(); slot++) {
+      BlockPosDim loc = getTargetInSlot(slot);
+      if (used.contains(loc)) {
+        continue;
+      }
+      if (loc != null && UtilWorld.dimensionIsEqual(loc, level)) {
+        if (moveEnergy(loc.getSide(), loc.getPos(), transferRate)) {
+          used.add(loc);
+          moved = true;
+        }
+      }
     }
     this.setLitProperty(moved);
   }
@@ -133,9 +140,9 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
       case RENDER:
         this.render = value % 2;
       break;
-      case TRANSFER_RATE:
-        transferRate = value;
-      break;
+      //      case TRANSFER_RATE:
+      //        transferRate = value;
+      //      break;
     }
   }
 
@@ -146,8 +153,8 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
         return this.needsRedstone;
       case RENDER:
         return render;
-      case TRANSFER_RATE:
-        return this.transferRate;
+      //      case TRANSFER_RATE:
+      //        return this.transferRate;
     }
     return 0;
   }

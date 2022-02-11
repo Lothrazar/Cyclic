@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.wireless.fluid.TileWirelessFluid;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -67,9 +66,11 @@ public class BlockWirelessEnergy extends BlockCyclic {
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      TileWirelessFluid tileentity = (TileWirelessFluid) worldIn.getBlockEntity(pos);
+      TileWirelessEnergy tileentity = (TileWirelessEnergy) worldIn.getBlockEntity(pos);
       if (tileentity != null && tileentity.gpsSlots != null) {
-        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.gpsSlots.getStackInSlot(0));
+        for (int s = 0; s < tileentity.gpsSlots.getSlots(); s++) {
+          Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.gpsSlots.getStackInSlot(s));
+        }
       }
       worldIn.updateNeighbourForOutputSignal(pos, this);
     }

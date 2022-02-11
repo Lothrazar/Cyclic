@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
@@ -20,18 +21,24 @@ public class ContainerWirelessEnergy extends ContainerBase {
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = tile.gpsSlots.getSlots();
-    addSlot(new SlotItemHandler(tile.gpsSlots, 0, 80, 36) {
+    for (int j = 0; j < tile.gpsSlots.getSlots(); j++) {
+      int row = j / 9;
+      int col = j % 9;
+      int xPos = 8 + col * Const.SQ;
+      int yPos = 36 + row * Const.SQ;
+      addSlot(new SlotItemHandler(tile.gpsSlots, j, xPos, yPos) {
 
-      @Override
-      public void setChanged() {
-        tile.setChanged();
-      }
+        @Override
+        public void setChanged() {
+          tile.setChanged();
+        }
 
-      @Override
-      public int getMaxStackSize() {
-        return 1;
-      }
-    });
+        @Override
+        public int getMaxStackSize() {
+          return 1;
+        }
+      });
+    }
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileWirelessEnergy.Fields.values().length);
   }

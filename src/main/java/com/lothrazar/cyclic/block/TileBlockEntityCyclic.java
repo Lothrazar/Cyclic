@@ -355,6 +355,9 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
       return false;
     }
+    if (myFacingDir == null) {
+      myFacingDir = Direction.UP;
+    }
     Direction themFacingMe = myFacingDir.getOpposite();
     BlockEntity tileTarget = level.getBlockEntity(posTarget);
     if (tileTarget == null) {

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.energy;
 
+import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.ScreenBase;
@@ -47,7 +48,11 @@ public class ScreenWirelessEnergy extends ScreenBase<ContainerWirelessEnergy> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 79, 35, TextureRegistry.SLOT_GPS);
+    //    this.drawSlot(ms, 79, 35, TextureRegistry.SLOT_GPS);
+    int y = 35;
+    for (int i = 0; i < 8; i++) {
+      this.drawSlot(ms, 7 + i * Const.SQ, y, TextureRegistry.SLOT_GPS, 18);
+    }
     energy.draw(ms, menu.tile.getEnergy());
   }
 }

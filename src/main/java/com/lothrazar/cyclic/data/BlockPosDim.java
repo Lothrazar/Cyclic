@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.data;
 
+import java.util.Objects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,6 +34,20 @@ public class BlockPosDim {
         this.name = namec.getString();
       }
     }
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(dimension, pos, x, y, z);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    BlockPosDim other = (BlockPosDim) obj;
+    return Objects.equals(dimension, other.dimension) && Objects.equals(pos, other.pos) && Double.doubleToLongBits(x) == Double.doubleToLongBits(other.x) && Double.doubleToLongBits(y) == Double.doubleToLongBits(other.y) && Double.doubleToLongBits(z) == Double.doubleToLongBits(other.z);
   }
 
   @Override
