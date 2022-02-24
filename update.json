@@ -1,7 +1,7 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.18.1-latest": "1.6.10"
+		"1.18.1-latest": "1.6.12"
 	},
 	"1.18.1": {
 		"1.6.0": "Ported Cyclic[1.16.5]-1.5.8 to Minecraft [1.17.1] & forge-37.0.85+.  Altered a few crafting recipes to use new items.  Removed Peat Generator (Use Peat items in Material Generator).  Removed 5 Mason blocks, replaced with Compressed Cobblestone, Flint Block.  Added Peace Candle, Translocation Platform, Stone Mattock, Crushing Macerator, and Lava Sponge.  Added Copper Tools and Amethyst Tools, Copper Lantern, Copper Chain, Copper Bars, Gold Chain, Gold Bars, Gold Lantern (Art by @shynieke).  Added Copper Nuggets and Netherite Nuggets.  Added Netherite Lanterns, chains, and bars.  Added 3 Pressure Plates: Copper Netherite and Obsidian. ",
@@ -17,5 +17,6 @@
 		,"1.6.10":"Fix obsidian tool harvest level. Fix wireless transfer node loot table. Fix Crushing Macerator issue when initially loading the world (Merge pull request #2022 by jack-flash.)  Merge from jack-flash/Watering-can for #2004.    Merge pull request #2015 from Bytegm  Update ru_ru.json [1.18].  "
 		,"1.6.11":"Updated to forge 39.0.66.  Merge pull request #2035 from Seniorendi:  Add config values for terra preta. Fix Crash when trying to push Cyclic item cables with create piston.  Fix red color in Battery itemstack energy bar when charged. "
 		,"1.6.12":"Fix ender shelf event conflict with supplementaries:book_pile.  Empty Ender Shelf now drops item stack with no datatag.  Energy Transfer Node increased locations and capacity.  Enchantment added 'Last Stand': can prevent some lethal damage at cost of exp points, cannot combine with mending and some other leg enchants.  Cask and Tank have default recipes added to clear out fluid contents (all NBT data).  Cask now keeps fluid when harvested and placed.  Fixed scythes not harvesting tall blocks.  Tree Scythe and Brush Scythe can now be enchanted with silk touch (allows mass collection of leaf blocks and more).  Block minecraft:flowering_azalea_leaves added to data tag forge:crop_blocks.  Small fixes applied to all scythes.  Scythe of Foraging now harvests Melons and Flowering Azalea with full drops (as if it had shears or silk touch).  Fixed Reach enchant not functioning on non-chest armor slots.  Tunnel added to Shape Builder #1911.  Call 'invalidate capabilities' in block-entity machines.  Added support for using the left hand on Item User. #1994 by 'metalshark' Fixes issue #1992."
+		,"1.6.13": ""
 	}
 }

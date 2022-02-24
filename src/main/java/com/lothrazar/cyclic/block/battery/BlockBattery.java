@@ -53,26 +53,18 @@ public class BlockBattery extends BlockCyclic {
   @Override
   public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity ent, ItemStack stack) {
     super.playerDestroy(world, player, pos, state, ent, stack);
-    //    worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());//is this needed???
     ItemStack newStackBattery = new ItemStack(this);
-    //=======
-    //
-    //  public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
-    //    super.harvestBlock(world, player, pos, state, ent, stack);
-    //    ItemStack newStackBattery = new ItemStack(this);
-    //>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
-    if (ent != null) {
-      IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (ent instanceof TileBattery battery) {
       IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
       if (newStackCap instanceof CustomEnergyStorage) {
-        ((CustomEnergyStorage) newStackCap).setEnergy(handlerHere.getEnergyStored());
+        ((CustomEnergyStorage) newStackCap).setEnergy(battery.energy.getEnergyStored());
       }
       else {
-        newStackCap.receiveEnergy(handlerHere.getEnergyStored(), false);
+        newStackCap.receiveEnergy(battery.energy.getEnergyStored(), false);
       }
-      if (handlerHere.getEnergyStored() > 0) {
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, handlerHere.getEnergyStored());
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, handlerHere.getMaxEnergyStored());
+      if (battery.energy.getEnergyStored() > 0) {
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, battery.energy.getEnergyStored());
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, battery.energy.getMaxEnergyStored());
       }
     }
     //even if energy fails 
