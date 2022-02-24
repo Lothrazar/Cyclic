@@ -73,8 +73,10 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
       boolean isPowered = level.hasNeighborSignal(worldPosition);
       if (targetPowered != isPowered) {
         level.setBlockAndUpdate(targetPos, target.setValue(BlockStateProperties.POWERED, isPowered));
-        //and update myself too   
-        level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
+        //and update myself too
+        if (level.isLoaded(worldPosition) && level.getBlockState(worldPosition).getBlock() == this.getBlockState().getBlock()) {
+          level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
+        }
       }
     }
   }
@@ -108,7 +110,7 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     switch (Fields.values()[field]) {
       case RENDER:
         this.render = value % 2;
-      break;
+        break;
     }
   }
 
