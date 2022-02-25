@@ -1,10 +1,5 @@
 package com.lothrazar.cyclic.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.CyclicLogger;
@@ -74,6 +69,11 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.WorldGenRegistry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -93,6 +93,7 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
+
   static {
     buildDefaults();
     initConfig();
@@ -196,8 +197,8 @@ public class ConfigRegistry {
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     WorldGenRegistry.GENERATES = CFG.comment("Do the four generate in the world. "
-        + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "
-        + "but the mod will not use the features to generate/place flowers in world-generation")
+            + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "
+            + "but the mod will not use the features to generate/place flowers in world-generation")
         .define("flowers.enabled", true);
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
@@ -323,7 +324,7 @@ public class ConfigRegistry {
     CFG.pop();
     CFG.push("uncrafter");
     TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
-        + "For example, if false it will not uncraft damaged or enchanted items")
+            + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", false);
     TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT_IGNORE_ITEMS, it -> it instanceof String);
     TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
@@ -352,6 +353,9 @@ public class ConfigRegistry {
     ClientConfigCyclic.FORESTER = CFGC.comment("Specify hex color of preview mode.  default #11BB00").define("forester", "#11BB00");
     ClientConfigCyclic.HARVESTER = CFGC.comment("Specify hex color of preview mode.  default #00EE00").define("harvester", "#00EE00");
     ClientConfigCyclic.STRUCTURE = CFGC.comment("Specify hex color of preview mode.  default #FF0000").define("structure", "#FF0000");
+    CFGC.pop();
+    CFGC.push("text");
+    ClientConfigCyclic.FLUID_BLOCK_STATUS = CFGC.comment("True means this will hide the fluid contents chat message (right click) on relevant blocks (pylon, fluid generator, fluid hopper, solidifier, sprinkler, tank, cask)").define("FluidContents", true);
     CFGC.pop();
     CFGC.pop(); //end of blocks
     CFGC.comment(WALL, "Item Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)

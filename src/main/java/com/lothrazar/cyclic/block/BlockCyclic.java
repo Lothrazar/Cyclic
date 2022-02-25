@@ -1,8 +1,9 @@
 package com.lothrazar.cyclic.block;
 
-import java.util.List;
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -104,7 +105,7 @@ public class BlockCyclic extends BaseEntityBlock {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               //success so display new amount
               if (handler.getFluidInTank(0) != null) {
-                player.displayClientMessage(new TranslatableComponent(getFluidRatioName(handler)), true);
+                displayClientFluidMessage(player, handler);
               }
               //and also play the fluid sound
               if (player instanceof ServerPlayer) {
@@ -112,7 +113,7 @@ public class BlockCyclic extends BaseEntityBlock {
               }
             }
             else {
-              player.displayClientMessage(new TranslatableComponent(getFluidRatioName(handler)), true);
+              displayClientFluidMessage(player, handler);
             }
           }
         }
@@ -134,6 +135,12 @@ public class BlockCyclic extends BaseEntityBlock {
       return InteractionResult.SUCCESS;
     }
     return super.use(state, world, pos, player, hand, hit);
+  }
+
+  private void displayClientFluidMessage(Player player, IFluidHandler handler) {
+    if (ClientConfigCyclic.FLUID_BLOCK_STATUS.get()) {
+      player.displayClientMessage(new TranslatableComponent(getFluidRatioName(handler)), true);
+    }
   }
 
   public static String getFluidRatioName(IFluidHandler handler) {
@@ -171,7 +178,8 @@ public class BlockCyclic extends BaseEntityBlock {
   /**
    * Override per block for render-ers/screens/etc
    */
-  public void registerClient() {}
+  public void registerClient() {
+  }
 
   public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
     return hasCapabilityDir(facing, world, facingPos, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);

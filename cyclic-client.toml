@@ -9,6 +9,10 @@
 	#####################################################################################
 	[cyclic.blocks]
 
+		[cyclic.blocks.text]
+			#True means this will hide the fluid contents chat message (right click) on relevant blocks (pylon, fluid generator, fluid hopper, solidifier, sprinkler, tank, cask)
+			FluidContents = false
+
 		[cyclic.blocks.colors]
 			#Specify hex color of preview mode.  default #00EE00
 			harvester = "#00EE00"
