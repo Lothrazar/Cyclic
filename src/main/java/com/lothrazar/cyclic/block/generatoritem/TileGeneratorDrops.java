@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -82,11 +82,6 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
       this.burnTimeMax = 0;
       this.burnTime = 0;
     }
-    tryConsumeFuel();
-  }
-
-  private void tryConsumeFuel() {
-    //to consume fuel we first need recipe
     this.findMatchingRecipe();
     if (burnPerTick == 0 || this.burnTime == 0) {
       return;
@@ -94,8 +89,13 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     setLitProperty(true); // has recipe so lit
     int onSim = energy.receiveEnergy(this.burnPerTick, true);
     if (onSim >= burnPerTick) {
-      //gen up. we burned away a tick of this fuel 
+      //gen up. we burned away a tick of this fuel
       energy.receiveEnergy(this.burnPerTick, false);
+      if (burnTime == burnTimeMax) {
+        //first tick burning? eat the item NOW
+        System.out.println("extract 1 item because matching recipe found");
+        this.inputSlots.extractItem(0, 1, false); // always slot 0 and amount 1
+      }
       this.burnTime--;
     }
   }
@@ -111,7 +111,6 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
         this.burnTimeMax = rec.getTicks();
         this.burnTime = this.burnTimeMax;
         this.burnPerTick = rec.getRfpertick();
-        this.inputSlots.extractItem(0, 1, false); // always slot 0 and amount 1
         this.currentRecipe = rec;
         return;
       }
@@ -186,16 +185,16 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.burnTime = value;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case FLOWING:
         this.flowing = value;
-      break;
+        break;
     }
   }
 

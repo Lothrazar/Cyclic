@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "cyclic:biomass",
+    "cyclic:biomass_flowing",
+    "cyclic:honey",
+    "cyclic:honey_flowing",
+    "cyclic:xpjuice",
+    "cyclic:xpjuice_flowing"
+  ]
+}
