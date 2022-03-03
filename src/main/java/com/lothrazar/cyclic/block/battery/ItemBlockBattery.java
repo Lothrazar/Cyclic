@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.battery;
 
-import java.util.List;
 import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -26,30 +26,47 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public boolean isBarVisible(ItemStack stack) {
-    return stack.hasTag() && stack.getTag().contains(ENERGYTT);
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    return storage != null && storage.getEnergyStored() > 0;
   }
 
   @Override
   public int getBarWidth(ItemStack stack) {
-    if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
-      float current = stack.getTag().getInt(ENERGYTT);
-      float max = stack.getTag().getInt(ENERGYTTMAX);
-      return Math.round(13.0F * current / max);
+    float current = 0;
+    float max = 0;
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (storage != null) {
+      current = storage.getEnergyStored();
+      max = storage.getMaxEnergyStored();
     }
-    return 0;
+    else if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
+      //TODO delete this branch
+      current = stack.getTag().getInt(ENERGYTT);
+      max = stack.getTag().getInt(ENERGYTTMAX);
+    }
+    return (max == 0) ? 0 : Math.round(13.0F * current / max);
   }
 
   @Override
   public int getBarColor(ItemStack stack) {
-    return 0xBA0909;
+    return 0xBA0909; // TODO: cyclic-client.toml ?
   }
 
   @Override
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
-      int current = stack.getTag().getInt(ENERGYTT);
-      int energyttmax = stack.getTag().getInt(ENERGYTTMAX);
+    int current = 0;
+    int energyttmax = 0;
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (storage != null) {
+      current = storage.getEnergyStored();
+      energyttmax = storage.getMaxEnergyStored();
       tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
+    }
+    else if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
+      //TODO delete this branch
+      current = stack.getTag().getInt(ENERGYTT);
+      energyttmax = stack.getTag().getInt(ENERGYTTMAX);
+      tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.BLUE));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }

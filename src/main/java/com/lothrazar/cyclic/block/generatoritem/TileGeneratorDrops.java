@@ -93,7 +93,6 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
       energy.receiveEnergy(this.burnPerTick, false);
       if (burnTime == burnTimeMax) {
         //first tick burning? eat the item NOW
-        System.out.println("extract 1 item because matching recipe found");
         this.inputSlots.extractItem(0, 1, false); // always slot 0 and amount 1
       }
       this.burnTime--;

@@ -84,15 +84,16 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     if (level.isClientSide) {
       return;
     }
-    ItemStack targ = this.batterySlots.getStackInSlot(0);
-    IEnergyStorage storage = targ.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-    if (storage != null) {
-      //
+    ItemStack slotItem = this.batterySlots.getStackInSlot(0);
+    IEnergyStorage itemStackStorage = slotItem.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (itemStackStorage != null) {
+
       int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE, true);
-      if (extracted > 0 && storage.getEnergyStored() + extracted <= storage.getMaxEnergyStored()) {
+      int accepted = itemStackStorage.receiveEnergy(extracted, true);
+      if (accepted > 0) {
         // no sim, fo real
-        energy.extractEnergy(extracted, false);
-        storage.receiveEnergy(extracted, false);
+        energy.extractEnergy(accepted, false);
+        itemStackStorage.receiveEnergy(accepted, false);
       }
     }
   }
