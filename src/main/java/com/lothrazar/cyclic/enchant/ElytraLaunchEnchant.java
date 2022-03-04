@@ -49,8 +49,8 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
   public static final int COOLDOWN = 7 * Const.TPS;
   public static final float POWER = 1.07F;
   public static final int ROTATIONPITCH = 68;
-  private static final String NBT_USES = "launchuses";
   public static BooleanValue CFG;
+  private static final String NBT_USES = "launchuses";
 
   public ElytraLaunchEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
@@ -65,16 +65,6 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
   @Override
   public int getMaxLevel() {
     return 3;
-  }
-
-  @Override
-  public boolean canEnchant(ItemStack stack) {
-    return stack.getEquipmentSlot() == EquipmentSlot.FEET || stack.getItem() instanceof ElytraItem; // elytra or boots
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canEnchant(stack);
   }
 
   @SubscribeEvent
