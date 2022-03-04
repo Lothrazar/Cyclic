@@ -33,7 +33,8 @@ public class FluidBiomassHolder {
         FLOWING,
         FluidAttributes.builder(
             new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_still"),
-            new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow")))
+            new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow"))
+                .color(0x725D3C))
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

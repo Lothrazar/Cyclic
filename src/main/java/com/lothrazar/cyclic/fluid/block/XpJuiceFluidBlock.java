@@ -8,6 +8,7 @@ public class XpJuiceFluidBlock extends LiquidBlock {
 
   public XpJuiceFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
     super(supplier, props);
+
   }
   //
   //  @SuppressWarnings("deprecation")

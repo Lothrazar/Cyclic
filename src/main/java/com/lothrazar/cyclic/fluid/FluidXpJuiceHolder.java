@@ -33,7 +33,8 @@ public class FluidXpJuiceHolder {
         FLOWING,
         FluidAttributes.builder(
             new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_still"),
-            new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow")))
+            new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow"))
+            .color(0x22FF43))
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

@@ -1,7 +1,7 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.18.1-latest": "1.6.13"
+		"1.18.1-latest": "1.6.14"
 	},
 	"1.18.1": {
 		"1.6.0": "Ported Cyclic[1.16.5]-1.5.8 to Minecraft [1.17.1] & forge-37.0.85+.  Altered a few crafting recipes to use new items.  Removed Peat Generator (Use Peat items in Material Generator).  Removed 5 Mason blocks, replaced with Compressed Cobblestone, Flint Block.  Added Peace Candle, Translocation Platform, Stone Mattock, Crushing Macerator, and Lava Sponge.  Added Copper Tools and Amethyst Tools, Copper Lantern, Copper Chain, Copper Bars, Gold Chain, Gold Bars, Gold Lantern (Art by @shynieke).  Added Copper Nuggets and Netherite Nuggets.  Added Netherite Lanterns, chains, and bars.  Added 3 Pressure Plates: Copper Netherite and Obsidian. ",
@@ -19,5 +19,6 @@
 		,"1.6.12":"Fix ender shelf event conflict with supplementaries:book_pile.  Empty Ender Shelf now drops item stack with no datatag.  Energy Transfer Node increased locations and capacity.  Enchantment added 'Last Stand': can prevent some lethal damage at cost of exp points, cannot combine with mending and some other leg enchants.  Cask and Tank have default recipes added to clear out fluid contents (all NBT data).  Cask now keeps fluid when harvested and placed.  Fixed scythes not harvesting tall blocks.  Tree Scythe and Brush Scythe can now be enchanted with silk touch (allows mass collection of leaf blocks and more).  Block minecraft:flowering_azalea_leaves added to data tag forge:crop_blocks.  Small fixes applied to all scythes.  Scythe of Foraging now harvests Melons and Flowering Azalea with full drops (as if it had shears or silk touch).  Fixed Reach enchant not functioning on non-chest armor slots.  Tunnel added to Shape Builder #1911.  Call 'invalidate capabilities' in block-entity machines.  Added support for using the left hand on Item User. #1994 by 'metalshark' Fixes issue #1992."
 		,"1.6.13": "Fluids cyclic:honey, xpjuice, and biomass are now swim-able (uses minecraft fluid/water data tag fix. recipes continue to use fluid tags such as forge:biomass with no changes).  Fix 25x25 size label on machines.  Fix Smooth Glass not passing all light through.  Fix Gold Soul Lantern name and light level.  Fix battery error on harvesting the block.  "
 		,"1.6.14": "Fixed logspam in material generator from v.13.  Fixed Battery tooltips not accurate & not charging when inside another battery thats being charged. "
+		,	"1.6.15": "Fix #2052 Fluid Tank Fill Level Colour; so Lava and Fluid Experience and other fluids can have a custom durability color bar on fluid Tanks while carrying"
 	}
 }

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.tank;
 
-import java.util.List;
 import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -53,10 +54,6 @@ public class ItemBlockTank extends BlockItem {
   public static FluidStack copyFluidFromStack(ItemStack stack) {
     if (stack.getTag() != null) {
       FluidHandlerCapabilityStack handler = new FluidHandlerCapabilityStack(stack, TileTank.CAPACITY);
-      FluidStack fstack = handler.getFluid();
-      if (fstack == null) {
-        return null;
-      }
       return handler.getFluid();
     }
     return null;
@@ -66,6 +63,9 @@ public class ItemBlockTank extends BlockItem {
   public int getBarColor(ItemStack stack) {
     try {
       FluidStack fstack = copyFluidFromStack(stack);
+      if (fstack.getFluid() == Fluids.LAVA) {
+        return 0xff8c00; // TODO: client-config or share with ItemBlockCask.java
+      }
       return fstack.getFluid().getAttributes().getColor();
     }
     catch (Exception e) {

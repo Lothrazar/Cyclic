@@ -96,14 +96,16 @@ dependencies {
 	
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
-  
+
+    implementation fg.deobf("curse.maven:botania-225643:3664223")
     implementation fg.deobf("curse.maven:simple-storage-network-268495:3633741")
     implementation fg.deobf("curse.maven:gardening-tools-351990:3544787")
     implementation fg.deobf("curse.maven:cucumber-272335:3623830")
     implementation fg.deobf("curse.maven:mystical-agriculture-246640:3623835")
     implementation fg.deobf("curse.maven:supplementaries-412082:3622554")
     implementation fg.deobf("curse.maven:selene-499980:3604965")
-  //  implementation fg.deobf("curse.maven:construction-wand-399558:3499316")
+    implementation fg.deobf("curse.maven:construction-wand-399558:3562331")
+    implementation fg.deobf("curse.maven:ato-405593:3638255")
 
 }
 

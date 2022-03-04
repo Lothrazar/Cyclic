@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -66,6 +67,9 @@ public class ItemBlockCask extends BlockItem {
   public int getBarColor(ItemStack stack) {
     try {
       FluidStack fstack = copyFluidFromStack(stack);
+      if(fstack.getFluid() == Fluids.LAVA) {
+        return 0xff8c00;
+      }
       return fstack.getFluid().getAttributes().getColor();
     }
     catch (Exception e) {

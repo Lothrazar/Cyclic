@@ -32,7 +32,8 @@ public class FluidHoneyHolder {
         FLOWING,
         FluidAttributes.builder(
             new ResourceLocation("minecraft:block/" + id + "_block_top"),
-            new ResourceLocation("minecraft:block/" + id + "_block_side")))
+            new ResourceLocation("minecraft:block/" + id + "_block_side"))
+            .color(0xFFCE5D))
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

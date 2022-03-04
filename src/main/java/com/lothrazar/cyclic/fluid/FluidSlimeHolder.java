@@ -32,7 +32,8 @@ public class FluidSlimeHolder {
         FLOWING,
         FluidAttributes.builder(
             new ResourceLocation("minecraft:block/" + id + "_block"),
-            new ResourceLocation("minecraft:block/" + id + "_block")))
+            new ResourceLocation("minecraft:block/" + id + "_block"))
+            .color(0x51A03E))
                 .bucket(BUCKET)
                 .block(BLOCK);
   }
