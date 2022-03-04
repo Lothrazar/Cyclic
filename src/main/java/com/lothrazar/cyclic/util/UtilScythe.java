@@ -28,6 +28,8 @@ import com.lothrazar.cyclic.item.scythe.ScytheType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,10 +49,10 @@ public class UtilScythe {
     switch (type) {
       case LEAVES:
         doBreak = blockState.is(BlockTags.LEAVES);
-      break;
+        break;
       case BRUSH:
         doBreak = blockState.is(DataTags.PLANTS);
-      break;
+        break;
       case FORAGE:
         doBreak = blockState.is(BlockTags.FLOWERS)
             || blockState.is(BlockTags.CORALS) || blockState.is(BlockTags.WALL_CORALS)
@@ -58,7 +60,7 @@ public class UtilScythe {
             || blockState.is(DataTags.VINES)
             || blockState.is(DataTags.CACTUS)
             || blockState.is(DataTags.CROP_BLOCKS);
-      break;
+        break;
     }
     if (doBreak) {
       if (blockState.is(DataTags.CROP_BLOCKS)) {
@@ -67,7 +69,13 @@ public class UtilScythe {
       }
       else {
         //harvest block with player context: better mod compatibility
-        blockState.getBlock().playerDestroy(world, player, posCurrent, blockState, world.getBlockEntity(posCurrent), player.getMainHandItem());
+        if (type == ScytheType.BRUSH && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player) > 0) {
+          //only brush needed silk override, tree leaves worked regardless
+          UtilItemStack.drop(world, posCurrent, blockState.getBlock());
+        }
+        else {
+          blockState.getBlock().playerDestroy(world, player, posCurrent, blockState, world.getBlockEntity(posCurrent), player.getMainHandItem());
+        }
         //sometimes this doesnt work and/or doesnt sync ot client, so force it
         world.destroyBlock(posCurrent, false, player);
         //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
