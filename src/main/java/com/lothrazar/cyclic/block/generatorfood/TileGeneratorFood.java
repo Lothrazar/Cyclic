@@ -73,6 +73,9 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
       setLitProperty(false);
       return;
     }
+    if (this.burnTime == 0) {
+      setLitProperty(false);
+    }
     if (level.isClientSide) {
       return;
     }

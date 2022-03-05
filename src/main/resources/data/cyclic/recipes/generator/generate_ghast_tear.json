@@ -1,0 +1,25 @@
+{
+	"type": "cyclic:generator_item",
+	"fuel": {
+		"item": "minecraft:ghast_tear"
+	},
+	"energy": {
+		"ticks": 2400,
+		"rfpertick": 100
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:generator_item",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

@@ -1,0 +1,25 @@
+{
+	"type": "cyclic:generator_item",
+	"fuel": {
+		"item": "minecraft:magma_cream"
+	},
+	"energy": {
+		"ticks": 1000,
+		"rfpertick": 60
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:generator_item",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

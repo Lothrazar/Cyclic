@@ -1,0 +1,25 @@
+{
+	"type": "cyclic:generator_item",
+	"fuel": {
+		"item": "minecraft:shulker_shell"
+	},
+	"energy": {
+		"ticks": 800,
+		"rfpertick": 1250
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:generator_item",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

@@ -75,6 +75,9 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
       setLitProperty(false);
       return;
     }
+    if (this.burnTime == 0) {
+      setLitProperty(false);
+    }
     if (level.isClientSide) {
       return;
     }
@@ -83,10 +86,10 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
       tryConsumeFuel();
     }
     if (this.burnTime > 0 && this.energy.getEnergyStored() + RF_PER_TICK.get() <= this.energy.getMaxEnergyStored()) {
-      setLitProperty(true);
       this.burnTime--;
       //we have room in the tank, burn one tck and fill up
-      energy.receiveEnergy(RF_PER_TICK.get(), false);
+      boolean burnt = energy.receiveEnergy(RF_PER_TICK.get(), false) > 0;
+      setLitProperty(burnt);
     }
   }
 
@@ -158,7 +161,7 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
       case FLOWING:
         return this.flowing;
       default:
-      break;
+        break;
     }
     return 0;
   }
@@ -168,16 +171,16 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.burnTime = value;
-      break;
+        break;
       case BURNMAX:
         this.burnTimeMax = value;
-      break;
+        break;
       case FLOWING:
         this.flowing = value;
-      break;
+        break;
     }
   }
 

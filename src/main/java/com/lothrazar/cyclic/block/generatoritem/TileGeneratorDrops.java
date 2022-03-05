@@ -74,6 +74,9 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
       setLitProperty(false);
       return;
     }
+    if (this.burnTime == 0) {
+      setLitProperty(false);
+    }
     if (level.isClientSide) {
       return;
     }

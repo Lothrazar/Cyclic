@@ -1,0 +1,42 @@
+{
+  "type": "cyclic:crusher",
+  "input": {
+    "tag": "forge:ores/prosperity"
+  },
+  "energy": {
+    "ticks": 120,
+    "rfpertick": 20
+  },
+  "result": {
+    "item": "mysticalagriculture:prosperity_shard",
+    "count": 1
+  },
+  "percent": 50,
+  "bonus": {
+    "item": "mysticalagriculture:inferium_essence",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "forge:mod_loaded"
+        },
+        {
+          "item": "cyclic:crusher",
+          "type": "forge:item_exists"
+        },
+        {
+          "modid": "mysticalagriculture",
+          "type": "forge:mod_loaded"
+        },
+        {
+          "item": "mysticalagriculture:prosperity_shard",
+          "type": "forge:item_exists"
+        }
+      ],
+      "type": "forge:and"
+    }
+  ]
+}
