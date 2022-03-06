@@ -1,5 +1,12 @@
 package com.lothrazar.cyclic.block;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
@@ -11,13 +18,6 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilItemStack;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -92,19 +92,27 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, ItemStackHandler out, boolean onGround) {
-    int start = 0;
+    int start = 1;
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
     for (int i = start; i < fp.get().getInventory().items.size(); i++) {
       ItemStack s = fp.get().getInventory().items.get(i);
-      if (s.isEmpty() == false) {
-        if (out != null) {
-          for (int j = 0; j < out.getSlots(); j++) {
-            s = out.insertItem(j, s, false);
-          }
-        }
-        toDrop.add(s.copy());
-        fp.get().getInventory().items.set(i, ItemStack.EMPTY);
+      if (s.isEmpty()) {
+        continue;
       }
+      if (s == fp.get().getMainHandItem()) {
+        ModCyclic.LOGGER.info("aha continue main hand item dont doump it");
+        continue;
+      }
+      if (out != null) {
+        for (int j = 0; j < out.getSlots(); j++) {
+          ModCyclic.LOGGER.info(s + "insert itit" + j);
+          s = out.insertItem(j, s, false);
+        }
+      }
+      if (onGround)
+        toDrop.add(s);
+      else
+        fp.get().getInventory().items.set(i, s);
     }
     if (onGround)
       UtilItemStack.drop(this.level, this.worldPosition.above(), toDrop);
@@ -117,14 +125,13 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     fp.get().setItemInHand(hand, item);
   }
 
-  public static void syncEquippedItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, InteractionHand hand) {
+  public static void syncEquippedItem(ItemStackHandler inv, WeakReference<FakePlayer> fp, int slot, InteractionHand hand) {
     if (fp == null) {
       return;
     }
-    i.ifPresent(inv -> {
-      inv.extractItem(slot, 64, false); //delete and overwrite
-      inv.insertItem(slot, fp.get().getItemInHand(hand), false);
-    });
+    inv.setStackInSlot(slot, ItemStack.EMPTY);
+    //    inv.extractItem(slot, 64, false); //delete and overwrite
+    inv.insertItem(slot, fp.get().getItemInHand(hand), false);
   }
 
   public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, InteractionHand hand) {
@@ -426,8 +433,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return FluidStack.EMPTY;
   }
 
-  public void setFluid(FluidStack fluid) {
-  }
+  public void setFluid(FluidStack fluid) {}
 
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
@@ -462,8 +468,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Deprecated
   @Override
-  public void setItem(int index, ItemStack stack) {
-  }
+  public void setItem(int index, ItemStack stack) {}
 
   @Deprecated
   @Override
@@ -473,8 +478,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Deprecated
   @Override
-  public void clearContent() {
-  }
+  public void clearContent() {}
 
   public void setFieldString(int field, String value) {
     //for string field  

@@ -36,16 +36,16 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, f, menu.tile.getBlockPos())).setSize(h);
     x = leftPos + 32;
     y = topPos + 26;
-      f = TileUser.Fields.TIMERDEL.ordinal();
+    f = TileUser.Fields.TIMERDEL.ordinal();
     GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, 120, h, f, menu.tile.getBlockPos(), 1, 64, menu.tile.getField(f)));
     slider.setTooltip("block.cyclic.user.delay");
     h = 14;
-    x = btnRedstone.x + 2;
-    y = btnRedstone.y + h;
+    x = btnRedstone.x + 4;
+    y = btnRedstone.y + h + 16;
     f = TileUser.Fields.INTERACTTYPE.ordinal();
     btnType = addRenderableWidget(new ButtonMachineField(x, y, f,
-        menu.tile.getBlockPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "block.cyclic.user.type")).setSize(h);
-    y = btnType.y + h;
+        menu.tile.getBlockPos(), TextureEnum.SQUARE_ENDER, TextureEnum.SQUARE_RED, "block.cyclic.user.type")).setSize(h);
+    y = btnType.y + h + 4;
     f = TileUser.Fields.ENTITIES.ordinal();
     btnEntities = addRenderableWidget(new ButtonMachineField(x, y, f,
         menu.tile.getBlockPos(), TextureEnum.CRAFT_EMPTY, TextureEnum.CRAFT_MATCH, "block.cyclic.user.entities")).setSize(h);

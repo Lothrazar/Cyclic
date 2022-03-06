@@ -27,7 +27,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

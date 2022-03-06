@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.user;
 
+import java.lang.ref.WeakReference;
+import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.lang.ref.WeakReference;
-import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -47,7 +47,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   ItemStackHandler outputSlots = new ItemStackHandler(4);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-//  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> userSlots);
+  //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> userSlots);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(userSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
@@ -124,12 +124,12 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
           TileBlockEntityCyclic.interactUseOnBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
         }
       }
-      TileBlockEntityCyclic.syncEquippedItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
+      TileBlockEntityCyclic.syncEquippedItem(this.userSlots, fakePlayer, 0, InteractionHand.MAIN_HAND);
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
     }
-    tryDumpFakePlayerInvo(fakePlayer, this.outputSlots,true);
+    tryDumpFakePlayerInvo(fakePlayer, this.outputSlots, true);
   }
 
   private void interactEntities(BlockPos target) {
@@ -154,22 +154,22 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.timer = value;
-        break;
+      break;
       case TIMERDEL:
         this.timerDelay = value;
-        break;
+      break;
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
       case INTERACTTYPE:
         this.doHitBreak = value == 1;
-        break;
+      break;
       case ENTITIES:
         this.entities = value == 1;
-        break;
+      break;
     }
   }
 
