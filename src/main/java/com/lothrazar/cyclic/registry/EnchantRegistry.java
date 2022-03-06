@@ -16,6 +16,7 @@ import com.lothrazar.cyclic.enchant.PearlEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
 import com.lothrazar.cyclic.enchant.StandEnchant;
+import com.lothrazar.cyclic.enchant.SteadyEnchant;
 import com.lothrazar.cyclic.enchant.StepEnchant;
 import com.lothrazar.cyclic.enchant.TravellerEnchant;
 import com.lothrazar.cyclic.enchant.VenomEnchant;
@@ -37,6 +38,7 @@ public class EnchantRegistry {
   public static final EnchantmentCyclic EXCAVATE = (EnchantmentCyclic) new ExcavationEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(ExcavationEnchant.ID);
   public static final EnchantmentCyclic EXPERIENCE_BOOST = (EnchantmentCyclic) new XpEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(XpEnchant.ID);
   public static final ElytraLaunchEnchant LAUNCH = (ElytraLaunchEnchant) new ElytraLaunchEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.FEET }).setRegistryName(ElytraLaunchEnchant.ID);
+  public static final SteadyEnchant STEADY = (SteadyEnchant) new SteadyEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS }).setRegistryName(SteadyEnchant.ID);
 
   @SubscribeEvent
   public static void onEnchantRegister(final RegistryEvent.Register<Enchantment> event) {
@@ -60,6 +62,7 @@ public class EnchantRegistry {
     register(r, new PearlEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(PearlEnchant.ID));
     register(r, new BeekeeperEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR_HEAD, EquipmentSlot.HEAD).setRegistryName(BeekeeperEnchant.ID));
     register(r, new StandEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS).setRegistryName(StandEnchant.ID));
+    register(r, STEADY);
   }
 
   private static void register(IForgeRegistry<Enchantment> r, Enchantment e) {

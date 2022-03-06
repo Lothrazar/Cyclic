@@ -33,8 +33,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -71,17 +69,6 @@ public class StandEnchant extends EnchantmentCyclic {
   @Override
   public int getMaxLevel() {
     return 2;
-  }
-
-  @Override
-  public boolean canEnchant(ItemStack stack) {
-    return (stack.getItem() instanceof ArmorItem)
-        && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.LEGS;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canEnchant(stack);
   }
 
   @SubscribeEvent

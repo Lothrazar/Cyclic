@@ -4,19 +4,18 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
-import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenUser extends ScreenBase<ContainerUser> {
 
   private EnergyBar energy;
   private ButtonMachineField btnRedstone;
+  private ButtonMachineField btnType;
+  private ButtonMachineField btnEntities;
 
   public ScreenUser(ContainerUser screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
@@ -30,29 +29,26 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     int x, y;
+    int h = 20;
     x = leftPos + 6;
     y = topPos + 6;
-    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileUser.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    int f = TileUser.Fields.REDSTONE.ordinal();
+    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, f, menu.tile.getBlockPos())).setSize(h);
     x = leftPos + 32;
     y = topPos + 26;
-    int w = 120;
-    int h = 20;
-    int f = TileUser.Fields.TIMERDEL.ordinal();
-    GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
-        1, 64, menu.tile.getField(f)));
+      f = TileUser.Fields.TIMERDEL.ordinal();
+    GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, 120, h, f, menu.tile.getBlockPos(), 1, 64, menu.tile.getField(f)));
     slider.setTooltip("block.cyclic.user.delay");
-    //
-    x = leftPos + 6;
-    y = topPos + 59;
-    addRenderableWidget(new Checkbox(x, y, h, h, new TranslatableComponent("block.cyclic.user.hand"), menu.tile.isUsingLeftHand()) {
-
-      @Override
-      public void onPress() {
-        super.onPress();
-        menu.tile.setUseLeftHand(selected());
-        PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileUser.Fields.LEFTHAND.ordinal(), selected(), menu.tile.getBlockPos()));
-      }
-    });
+    h = 14;
+    x = btnRedstone.x + 2;
+    y = btnRedstone.y + h;
+    f = TileUser.Fields.INTERACTTYPE.ordinal();
+    btnType = addRenderableWidget(new ButtonMachineField(x, y, f,
+        menu.tile.getBlockPos(), TextureEnum.RENDER_SHOW, TextureEnum.RENDER_HIDE, "block.cyclic.user.type")).setSize(h);
+    y = btnType.y + h;
+    f = TileUser.Fields.ENTITIES.ordinal();
+    btnEntities = addRenderableWidget(new ButtonMachineField(x, y, f,
+        menu.tile.getBlockPos(), TextureEnum.CRAFT_EMPTY, TextureEnum.CRAFT_MATCH, "block.cyclic.user.entities")).setSize(h);
   }
 
   @Override
@@ -66,6 +62,10 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   @Override
   protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(menu.tile);
+    btnType.onValueUpdate(menu.tile);
+    btnType.setTooltip("block.cyclic.user.type." + menu.tile.doHitBreak);
+    btnEntities.onValueUpdate(menu.tile);
+    btnEntities.setTooltip("block.cyclic.user.entities." + menu.tile.entities);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
@@ -73,7 +73,7 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 9, 34);
+    this.drawSlot(ms, 150, 52);
     energy.draw(ms, menu.tile.getEnergy());
   }
 }

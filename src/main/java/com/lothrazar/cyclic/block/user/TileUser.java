@@ -1,11 +1,12 @@
 package com.lothrazar.cyclic.block.user;
 
-import java.lang.ref.WeakReference;
-import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import java.lang.ref.WeakReference;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,13 +14,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -36,17 +40,21 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   static final int MAX = 640000;
 
   static enum Fields {
-    REDSTONE, TIMER, TIMERDEL, RENDER, LEFTHAND;
+    REDSTONE, TIMER, TIMERDEL, RENDER, INTERACTTYPE, ENTITIES;
   }
 
-  ItemStackHandler inventory = new ItemStackHandler(1);
+  ItemStackHandler userSlots = new ItemStackHandler(1);
+  ItemStackHandler outputSlots = new ItemStackHandler(4);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+//  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> userSlots);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(userSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timerDelay = 20;
-  private boolean useLeftHand = false;
+  boolean doHitBreak = false;
+  boolean entities = true;
 
   public TileUser(BlockPos pos, BlockState state) {
     super(TileRegistry.USER.get(), pos, state);
@@ -66,7 +74,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
-    if (level.isClientSide || !(level instanceof ServerLevel)) {
+    if (level.isClientSide) { //  || !(level instanceof ServerLevel)
       return;
     }
     if (timer > 0) {
@@ -96,33 +104,49 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       // Added to address the broken server side FakePlayer cooldowns we they
       // are not getting decremented causing any item with one to not function correctly.
       var cooldowns = fakePlayer.get().getCooldowns();
+      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       var item = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem();
       if (cooldowns.isOnCooldown(item)) {
         cooldowns.removeCooldown(item);
       }
-      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
-      if (useLeftHand) {
-        TileBlockEntityCyclic.leftClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, this.getCurrentFacing());
+      if (entities) {
+        //do entities
+        ModCyclic.LOGGER.info(this.worldPosition + "entities ");
+        this.interactEntities(target);
       }
       else {
-        TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
+        //not entities so blocks
+        if (doHitBreak) {
+          TileBlockEntityCyclic.playerAttackBreakBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, this.getCurrentFacing());
+        }
+        else {
+          TileBlockEntityCyclic.interactUseOnBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
+        }
       }
-      // ModCyclic.LOGGER.info(result + " user resut " + target + "; held = " + fakePlayer.get().getHeldItem(Hand.MAIN_HAND));
       TileBlockEntityCyclic.syncEquippedItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
     }
-    tryDumpFakePlayerInvo(fakePlayer, false);
+    tryDumpFakePlayerInvo(fakePlayer, this.outputSlots,true);
   }
 
-  public boolean isUsingLeftHand() {
-    return useLeftHand;
-  }
-
-  public void setUseLeftHand(final boolean useLeftHand) {
-    this.useLeftHand = useLeftHand;
+  private void interactEntities(BlockPos target) {
+    int r = 1; // TODO radius
+    AABB ab = new AABB(target.getX() + r, target.getY(), target.getZ() + r,
+        target.getX() - r, target.getY() + 1, target.getZ() - r);
+    this.level.getEntities(fakePlayer.get(), ab, EntitySelector.NO_SPECTATORS).forEach((e) -> {
+      ModCyclic.LOGGER.info(worldPosition + "| ??   " + fakePlayer.get().getMainHandItem());
+      if (doHitBreak) {
+        fakePlayer.get().attack(e);
+        ModCyclic.LOGGER.info(worldPosition + "| interactEntities ATTACK  " + e);
+      }
+      else { // interact
+        InteractionResult res = fakePlayer.get().interactOn(e, InteractionHand.MAIN_HAND);
+        ModCyclic.LOGGER.info(worldPosition + "| interactEntities result " + res);
+      }
+    });
   }
 
   @Override
@@ -130,19 +154,22 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-      break;
+        break;
       case TIMER:
         this.timer = value;
-      break;
+        break;
       case TIMERDEL:
         this.timerDelay = value;
-      break;
+        break;
       case RENDER:
         this.render = value % 2;
-      break;
-      case LEFTHAND:
-        this.useLeftHand = value == 1;
-      break;
+        break;
+      case INTERACTTYPE:
+        this.doHitBreak = value == 1;
+        break;
+      case ENTITIES:
+        this.entities = value == 1;
+        break;
     }
   }
 
@@ -154,11 +181,13 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       case TIMER:
         return timer;
       case TIMERDEL:
-        return this.timerDelay;
+        return timerDelay;
       case RENDER:
         return render;
-      case LEFTHAND:
-        return this.isUsingLeftHand() ? 1 : 0;
+      case INTERACTTYPE:
+        return doHitBreak ? 1 : 0;
+      case ENTITIES:
+        return entities ? 1 : 0;
     }
     return 0;
   }
@@ -185,8 +214,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   public void load(CompoundTag tag) {
     timerDelay = tag.getInt("delay");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    useLeftHand = tag.getBoolean("uselefthand");
+    userSlots.deserializeNBT(tag.getCompound(NBTINV));
+    doHitBreak = tag.getBoolean("doBreakBlock");
+    entities = tag.getBoolean("entities");
     if (tag.contains("uuid")) {
       uuid = tag.getUUID("uuid");
     }
@@ -197,11 +227,12 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   public void saveAdditional(CompoundTag tag) {
     tag.putInt("delay", timerDelay);
     tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, userSlots.serializeNBT());
     if (uuid != null) {
       tag.putUUID("uuid", uuid);
     }
-    tag.putBoolean("uselefthand", useLeftHand);
+    tag.putBoolean("doBreakBlock", doHitBreak);
+    tag.putBoolean("entities", entities);
     super.saveAdditional(tag);
   }
 

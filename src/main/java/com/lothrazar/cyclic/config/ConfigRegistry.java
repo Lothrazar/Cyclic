@@ -51,6 +51,7 @@ import com.lothrazar.cyclic.enchant.PearlEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
 import com.lothrazar.cyclic.enchant.StandEnchant;
+import com.lothrazar.cyclic.enchant.SteadyEnchant;
 import com.lothrazar.cyclic.enchant.StepEnchant;
 import com.lothrazar.cyclic.enchant.TravellerEnchant;
 import com.lothrazar.cyclic.enchant.VenomEnchant;
@@ -185,6 +186,7 @@ public class ConfigRegistry {
     QuickdrawEnchant.CFG = CFG.comment("Set false to disable enchantment").define(QuickdrawEnchant.ID + ".enabled", true);
     ReachEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ReachEnchant.ID + ".enabled", true);
     StepEnchant.CFG = CFG.comment("Set false to disable enchantment").define(StepEnchant.ID + ".enabled", true);
+    SteadyEnchant.CFG = CFG.comment("Set false to disable enchantment").define(SteadyEnchant.ID + ".enabled", true);
     StandEnchant.CFG = CFG.comment("Set false to disable enchantment").define(StandEnchant.ID + ".enabled", true);
     StandEnchant.COST = CFG.comment("Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(StandEnchant.ID + ".xp_cost", 50, 1, 9999);
     StandEnchant.ABS = CFG.comment("How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(StandEnchant.ID + ".potion_ticks", 600, 0, 9999);

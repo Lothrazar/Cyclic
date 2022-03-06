@@ -120,7 +120,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
       else if (this.isSapling(dropMe)) {
         //plant me  . if im on the lowest level 
         if (targetPos.getY() == this.worldPosition.getY()) {
-          InteractionResult result = TileBlockEntityCyclic.rightClickBlock(fakePlayer, level, targetPos, InteractionHand.OFF_HAND, Direction.DOWN);
+          InteractionResult result = TileBlockEntityCyclic.interactUseOnBlock(fakePlayer, level, targetPos, InteractionHand.OFF_HAND, Direction.DOWN);
           if (result == InteractionResult.CONSUME) {
             //ok then DRAIN POWER
             energy.extractEnergy(cost, false);

@@ -106,6 +106,7 @@ dependencies {
     implementation fg.deobf("curse.maven:selene-499980:3604965")
     implementation fg.deobf("curse.maven:construction-wand-399558:3562331")
     implementation fg.deobf("curse.maven:ato-405593:3638255")
+    implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
 
 }
 

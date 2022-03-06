@@ -1,12 +1,5 @@
 package com.lothrazar.cyclic.block;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
@@ -18,6 +11,13 @@ import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -91,17 +91,23 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return null;
   }
 
-  public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
-    int start = (includeMainHand) ? 0 : 1;
+  public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, ItemStackHandler out, boolean onGround) {
+    int start = 0;
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
     for (int i = start; i < fp.get().getInventory().items.size(); i++) {
       ItemStack s = fp.get().getInventory().items.get(i);
       if (s.isEmpty() == false) {
+        if (out != null) {
+          for (int j = 0; j < out.getSlots(); j++) {
+            s = out.insertItem(j, s, false);
+          }
+        }
         toDrop.add(s.copy());
         fp.get().getInventory().items.set(i, ItemStack.EMPTY);
       }
     }
-    UtilItemStack.drop(this.level, this.worldPosition.above(), toDrop);
+    if (onGround)
+      UtilItemStack.drop(this.level, this.worldPosition.above(), toDrop);
   }
 
   public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, InteractionHand hand) {
@@ -138,7 +144,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     });
   }
 
-  public static InteractionResult rightClickBlock(WeakReference<FakePlayer> fakePlayer,
+  public static InteractionResult interactUseOnBlock(WeakReference<FakePlayer> fakePlayer,
       Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
     if (fakePlayer == null) {
       return InteractionResult.FAIL;
@@ -148,8 +154,10 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
         fakePlayer.get().getLookAngle(), placementOn,
         targetPos, true);
     //processRightClick
+    ItemStack itemInHand = fakePlayer.get().getItemInHand(hand);
     InteractionResult result = fakePlayer.get().gameMode.useItemOn(fakePlayer.get(), world,
-        fakePlayer.get().getItemInHand(hand), hand, blockraytraceresult);
+        itemInHand, hand, blockraytraceresult);
+    ModCyclic.LOGGER.info(targetPos + " gameMode.useItemOn() result = " + result + "  itemInHand = " + itemInHand);
     //it becomes CONSUME result 1 bucket. then later i guess it doesnt save, and then its water_bucket again
     return result;
   }
@@ -157,7 +165,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   /**
    * SOURCE https://github.com/Lothrazar/Cyclic/pull/1994 @metalshark
    */
-  public static InteractionResult leftClickBlock(WeakReference<FakePlayer> fakePlayer,
+  public static InteractionResult playerAttackBreakBlock(WeakReference<FakePlayer> fakePlayer,
       Level world, BlockPos targetPos, InteractionHand hand, Direction facing) throws Exception {
     if (fakePlayer == null) {
       return InteractionResult.FAIL;
@@ -165,6 +173,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     try {
       fakePlayer.get().gameMode.handleBlockBreakAction(targetPos, ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,
           facing, world.getMaxBuildHeight());
+      ModCyclic.LOGGER.info("handle handleBlockBreakAction rightclick i guess");
       return InteractionResult.SUCCESS;
     }
     catch (Exception e) {
@@ -417,7 +426,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return FluidStack.EMPTY;
   }
 
-  public void setFluid(FluidStack fluid) {}
+  public void setFluid(FluidStack fluid) {
+  }
 
   /************************** IInventory needed for IRecipe **********************************/
   @Deprecated
@@ -452,7 +462,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Deprecated
   @Override
-  public void setItem(int index, ItemStack stack) {}
+  public void setItem(int index, ItemStack stack) {
+  }
 
   @Deprecated
   @Override
@@ -462,7 +473,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Deprecated
   @Override
-  public void clearContent() {}
+  public void clearContent() {
+  }
 
   public void setFieldString(int field, String value) {
     //for string field  

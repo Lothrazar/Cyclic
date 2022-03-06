@@ -74,7 +74,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
         fakePlayer.get().setItemInHand(InteractionHand.MAIN_HAND, sword);
       }
       if (level.random.nextDouble() < 0.001F) {
-        tryDumpFakePlayerInvo(fakePlayer, false);
+        tryDumpFakePlayerInvo(fakePlayer, null,true);
       }
     }
   }
