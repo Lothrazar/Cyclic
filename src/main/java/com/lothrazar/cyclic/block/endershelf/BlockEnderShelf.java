@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.endershelf;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.enderctrl.TileEnderCtrl;
@@ -133,12 +134,10 @@ public class BlockEnderShelf extends BlockCyclic {
     TileEnderShelf shelf = (TileEnderShelf) tileentity;
     BlockPos controllerPos = EnderShelfHelper.findConnectedController(world, pos);
     if (controllerPos != null) {
-      //      shelf.setControllerLocation(controllerPos);
       TileEnderCtrl controller = (TileEnderCtrl) world.getBlockEntity(controllerPos);
       if (controllerPos != null && controller != null) {
+        ModCyclic.LOGGER.info("ctrl add new shelf " + pos);
         controller.getShelves().add(pos);
-        //                Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos, controller.getCurrentFacing());
-        //        controller.setShelves(shelves);
       }
     }
     if (stack.getTag() != null) {

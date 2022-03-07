@@ -31,13 +31,6 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
     super(TileRegistry.ENDER_CONTROLLER.get(), pos, state);
   }
 
-  //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
-  //    e.tick();
-  //  }
-  //
-  //  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileEnderCtrl e) {
-  //    e.tick();
-  //  }
   @Override
   public void setField(int field, int value) {}
 

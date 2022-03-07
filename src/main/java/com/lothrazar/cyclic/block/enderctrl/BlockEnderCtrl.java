@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.enderctrl;
 
 import java.util.Map;
+import java.util.Set;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
@@ -43,10 +44,6 @@ public class BlockEnderCtrl extends BlockCyclic {
     return new TileEnderCtrl(pos, state);
   }
 
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.ender_controller, world.isClientSide ? TileEnderCtrl::clientTick : TileEnderCtrl::serverTick);
-  //  }
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
@@ -54,7 +51,8 @@ public class BlockEnderCtrl extends BlockCyclic {
       TileEnderCtrl ctrl = (TileEnderCtrl) world.getBlockEntity(pos);
       //i placed a shelf? find nearby
       if (ctrl != null) {
-        ctrl.setAndSort(EnderShelfHelper.findConnectedShelves(world, pos, ctrl.getCurrentFacing()));
+        Set<BlockPos> shlf = EnderShelfHelper.findConnectedShelves(world, pos, ctrl.getCurrentFacing());
+        ctrl.setAndSort(shlf);
       }
     }
   }
@@ -103,13 +101,13 @@ public class BlockEnderCtrl extends BlockCyclic {
     return InteractionResult.CONSUME;
   }
 
-  private void insertIntoController(Player player, InteractionHand hand, ItemStack heldItem, IItemHandler h) {
+  private void insertIntoController(Player player, InteractionHand hand, ItemStack heldItem, IItemHandler controller) {
     Map<Enchantment, Integer> allofthem = EnchantmentHelper.getEnchantments(heldItem);
     if (allofthem == null || allofthem.size() == 0) {
       return;
     }
-    else if (allofthem.size() == 1) {
-      ItemStack insertResult = h.insertItem(0, heldItem, false);
+    if (allofthem.size() == 1) {
+      ItemStack insertResult = controller.insertItem(0, heldItem, false);
       player.setItemInHand(hand, insertResult);
     }
     else {
@@ -119,7 +117,7 @@ public class BlockEnderCtrl extends BlockCyclic {
         // try it
         ItemStack fake = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantedBookItem.addEnchantment(fake, new EnchantmentInstance(entry, allofthem.get(entry)));
-        ItemStack insertResult = h.insertItem(0, fake, false);
+        ItemStack insertResult = controller.insertItem(0, fake, false);
         if (insertResult.isEmpty()) {
           //ok it worked, so REMOVE that from the og set
           allofthem.remove(entry);

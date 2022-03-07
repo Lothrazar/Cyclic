@@ -45,7 +45,9 @@ public class EnderControllerItemHandler extends ItemStackHandler {
       if (te != null && EnderShelfHelper.isShelf(te.getBlockState())) {
         TileEnderShelf shelf = (TileEnderShelf) te;
         try {
+          ModCyclic.LOGGER.info(stack + " try to push into shelf at " + shelfPos);
           stack = insertItemActual(shelf, stack, insertWhenEmpty, simulate);
+          ModCyclic.LOGGER.info(stack + "FROM result " + shelfPos);
         }
         catch (Exception e) {
           ModCyclic.LOGGER.error("Insert item shelf error", e);
@@ -60,11 +62,15 @@ public class EnderControllerItemHandler extends ItemStackHandler {
     final int slots = shelf.inventory.getSlots();
     for (int i = 0; i < slots; i++) {
       ItemStack slotStack = shelf.inventory.getStackInSlot(i);
+      ModCyclic.LOGGER.info("       " + i + "  tsSHELF " + slotStack);
       if (slotStack.isEmpty()) {
         emptySlots.add(i);
       }
       else if (slotStack.getCount() < shelf.inventory.getStackLimit(i, stack) && UtilEnchant.doBookEnchantmentsMatch(stack, slotStack)) {
-        return shelf.inventory.insertItem(i, stack, simulate);
+        ItemStack inserted = shelf.inventory.insertItem(i, stack, simulate);
+        if (inserted.isEmpty()) {
+          return inserted;
+        }
       }
     }
     if (emptySlots.size() > 0 && insertWhenEmpty) {
