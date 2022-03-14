@@ -1,4 +1,4 @@
-{ 
+{
   "_comments": "Thanks to https://tterrag.com/lang2json/",
   "curios.identifier.feet": "Feet",
   "curios.identifier.charm": "Charm",
@@ -43,25 +43,18 @@
   "cyclic.fake_player.user": "Item User",
   "itemGroup.cyclic": "Cyclic Blocks",
   "itemGroup.cyclicitems": "Cyclic Items",
-
-
   "block.cyclic.glass_connected": "Smooth Glass",
   "block.cyclic.glass_connected.tooltip": "Polished connected clear glass",
   "block.cyclic.glass_connected.guide": "Connected textures, similar to compressed glass",
   "block.cyclic.sponge_lava": "Lava Sponge",
   "block.cyclic.sponge_lava.tooltip": "Eats up nearby lava source blocks",
   "block.cyclic.sponge_lava.guide": "Place and wait for some time to let it soak up nearby lava.  Source lava is not recoverable, it is deleted by the sponge",
- 
   "block.cyclic.teleport": "Translocation Platform",
   "block.cyclic.teleport.tooltip": "Teleport player using energy",
   "block.cyclic.teleport.guide": "Place and feed with energy.  Use a GPS Location device to track a target destination for the teleport.  Crouch to use",
-
-
   "block.cyclic.crusher": "Crushing Macerator",
   "block.cyclic.crusher.tooltip": "Grind up materials or break down components",
   "block.cyclic.crusher.guide": "Grinding recipes sometimes have a chance for a bonus extra product",
-
-
   "block.cyclic.doorbell": "Doorbell",
   "block.cyclic.doorbell.tooltip": "Doorbell",
   "block.cyclic.doorbell.guide": "Light level 4 and redstone power of 1 while pressed.  Plays sound cyclic:doorbell_mikekoenig",
@@ -289,7 +282,6 @@
   "block.cyclic.peace_candle": "Peace Candle",
   "block.cyclic.peace_candle.tooltip": "Prevents nearby hostile mob spawns",
   "block.cyclic.peace_candle.guide": "Prevents natural hostile mob spawns in a large radius, and about 8 blocks above. ",
-
   "block.cyclic.water_candle": "Water Candle",
   "block.cyclic.water_candle.tooltip": "Increases mob spawns while lit",
   "block.cyclic.water_candle.guide": "The Water Candle can be lit by a player to increase the rate at which mobs naturally spawn nearby.For the candle to work, mobs must be able to spawn naturally in its vicinity.In most cases, this means it must be dark enough to spawn mobs!",
@@ -413,7 +405,7 @@
   "cyclic.screen.filter.item.count": "Count: ",
   "cyclic.screen.filter.item.empty": "Items Empty",
   "cyclic.screen.filter.fluid.empty": "Fluid Empty",
-  "cyclic.screen.xp":"XP",
+  "cyclic.screen.xp": "XP",
   "button.height.down": "Decrease height",
   "button.height.up": "Increase height",
   "button.inventory.hotbarswap": "Swap row with hotbar",
@@ -464,12 +456,10 @@
   "debug.horsespeed": "Horse Speed:",
   "debug.spawn.chunks": "Within Spawn Chunk",
   "debug.spawn.distance": "From Spawn:",
-  
   "enchantment.cyclic.laststand": "Last Stand",
   "enchantment.cyclic.laststand.desc": "Prevents killing blows at the cost of experience",
   "enchantment.cyclic.laststand.guide": "Leg armor by design. If you take lethal damage, and have enough EXP points to spare (30 default at level 1) then the damage is mostly prevented leaving you at 1/2 heart and the experience points are spent. Not compatible with mending, xp boost, launch, thorns",
-  "enchantment.cyclic.laststand.activated":"Last Stand activated",
-  
+  "enchantment.cyclic.laststand.activated": "Last Stand activated",
   "enchantment.cyclic.excavate": "Excavate",
   "enchantment.cyclic.excavate.desc": "Harvests the whole vein of connected matching blocks, not including diagonals",
   "enchantment.cyclic.excavate.guide": "Randomly reaches out in all direction and mines blocks matching the original target.  Higher levels have more [ maximum_blocks = 26 + 8 * ENCHANT_LEVEL]",
@@ -486,9 +476,9 @@
   "enchantment.cyclic.growth.desc": "Grow nearby crops while held",
   "enchantment.cyclic.growth.guide": "Grow nearby crops while held.  Radius is level + 2.  Passive aura type buff, no need to use the tool.  Can be applied to Hoe tools only.",
   "enchantment.cyclic.launch": "Multi-Jump",
-    "enchantment.cyclic.launch.desc": "Gives you the power of multi jump (double jump) when enchanted on boots or elytra.  One extra jump per level, after that cooldown kicks in; sneak to jump normally.",
-    "enchantment.cyclic.launch.guide": "Gives you the power of multi jump (double jump) when enchanted on boots or elytra.  One extra jump per level, after that cooldown kicks in; sneak to jump normally.",
-   "enchantment.cyclic.life_leech": "Life Leech",
+  "enchantment.cyclic.launch.desc": "Gives you the power of multi jump (double jump) when enchanted on boots or elytra.  One extra jump per level, after that cooldown kicks in; sneak to jump normally.",
+  "enchantment.cyclic.launch.guide": "Gives you the power of multi jump (double jump) when enchanted on boots or elytra.  One extra jump per level, after that cooldown kicks in; sneak to jump normally.",
+  "enchantment.cyclic.life_leech": "Life Leech",
   "enchantment.cyclic.life_leech.desc": "Leeches life points from your target on attack, and even more on kill.",
   "enchantment.cyclic.life_leech.guide": "Leeches life points from your target on attack, and even more on kill.  Can only apply to weapons only (swords). ",
   "enchantment.cyclic.magnet": "Magnet",
@@ -805,7 +795,7 @@
   "item.cyclic.mob_container": "Monster Capsule",
   "item.cyclic.mob_container.tooltip": "Spawn captured mob from a Monster Ball",
   "item.cyclic.mattock_stone": "Stone Mattock",
-  "item.cyclic.mattock_stone.tooltip":"3x3 mining; equal parts shovel and pickaxe",
+  "item.cyclic.mattock_stone.tooltip": "3x3 mining; equal parts shovel and pickaxe",
   "item.cyclic.mattock_stone.guide": "The Mattock combines the mining capability of a pickaxe with a shovel in a 3x3 pattern that treats dirt and stone type blocks equally.",
   "item.cyclic.mattock": "Obsidian Mattock",
   "item.cyclic.mattock.tooltip": "3x3 mining; equal parts shovel and pickaxe",
@@ -1433,19 +1423,16 @@
   "item.cyclic.biomass.guide": "Combine with various organic material in a Melter to create Fluid Biomass",
   "item.cyclic.peat_fuel": "Peat",
   "item.cyclic.peat_fuel.tooltip": "Smelted peat.  Use in a generator.",
-  "item.cyclic.peat_fuel.guide": "Peat Fuel is smelted from Saturated Peat Deposits and used in the Peat Generator to generate energy.It can also be combined with  Fluid Biomass in a Solidification Chamber to create Enriched Peat.",
+  "item.cyclic.peat_fuel.guide": "Peat Fuel is smelted from Saturated Peat Deposits and used in a Generator to generate energy.It can also be combined with  Fluid Biomass in a Solidification Chamber to create Enriched Peat.",
   "item.cyclic.peat_fuel_enriched": "Enriched Peat",
-  "item.cyclic.peat_fuel_enriched.tooltip": "Create energy in a Peat Generator",
-  "item.cyclic.peat_fuel_enriched.guide": "Created by combining Peat with Fluid Biomass in a Solidification Chamber and used to provide even more power in a Peat Generator.",
+  "item.cyclic.peat_fuel_enriched.tooltip": "Create energy in a Generator",
+  "item.cyclic.peat_fuel_enriched.guide": "Created by combining Peat with Fluid Biomass in a Solidification Chamber and used to provide even more power in a Generator.",
   "block.cyclic.peat_unbaked": "Dry Peat Bog",
   "block.cyclic.peat_unbaked.tooltip": "Slowly turns into a Peat Deposit when sitting in water",
-  "block.cyclic.peat_unbaked.guide": "Dry Peat Bog, when placed next to water, will slowly turn into a Saturated Peat Deposit, which can be smelted to create fuel for the Peat Generator.",
+  "block.cyclic.peat_unbaked.guide": "Dry Peat Bog, when placed next to water, will slowly turn into a Saturated Peat Deposit, which can be smelted to create fuel for the Generator.",
   "block.cyclic.peat_baked": "Saturated Peat Deposit",
   "block.cyclic.peat_baked.tooltip": "Wet peat ready to be harvested and smelted",
-  "block.cyclic.peat_baked.guide": "Saturated Peat Deposits form over time when Dry Peat Bog is placed next to water. Once harvested, it can be smelted to create fuel for the Peat Generator.",
- 
-
-
+  "block.cyclic.peat_baked.guide": "Saturated Peat Deposits form over time when Dry Peat Bog is placed next to water. Once harvested, it can be smelted to create fuel for the Generator.",
   "block.cyclic.generator_fuel": "Combustion Generator",
   "block.cyclic.generator_fuel.tooltip": "Generate power from anything that burns as fuel in Furnaces",
   "block.cyclic.generator_fuel.guide": "Generate power from anything that burns as fuel in Furnaces.  Burn time is the same number of ticks as the furnace time, for example 1 coal = 1600 ticks.  Energy per ticks is in the config file, defaults to 80 RF/t",
