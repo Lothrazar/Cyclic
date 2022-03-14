@@ -3,10 +3,12 @@ package com.lothrazar.cyclic.recipe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -42,12 +44,19 @@ public class FluidTagIngredient {
     if (!hasTag()) {
       return null;
     }
-    for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
-      if (fluidTag.getKey().toString().equalsIgnoreCase(tag)) {
-        //add all fluids for tag? 
-        return fluidTag.getValue().getValues();
-      }
+
+
+    TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(tag));
+    if(ft != null) {
+//      ft. todo : how to get all fluids for this tag
+//      Registry.FLUID_REGISTRY.get
     }
+//    for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
+//      if (fluidTag.getKey().toString().equalsIgnoreCase(tag)) {
+//        //add all fluids for tag?
+//        return fluidTag.getValue().getValues();
+//      }
+//    }
     return null;
   }
 

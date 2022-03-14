@@ -56,7 +56,7 @@ public class SpawnInspectorTool extends ItemBaseCyclic {
     //    EntityClassification classif = context.getPlayer().isCrouching() ? EntityClassification.CREATURE : EntityClassification.MONSTER;
     for (MobCategory classif : MobCategory.values()) {
       //      UtilChat.addChatMessage(context.getPlayer(), new StringTextComponent(classif.getName()).mergeStyle(TextFormatting.DARK_PURPLE));
-      WeightedRandomList<MobSpawnSettings.SpawnerData> list = context.getLevel().getBiome(pos).getMobSettings().getMobs(classif);
+      WeightedRandomList<MobSpawnSettings.SpawnerData> list = context.getLevel().getBiome(pos).value().getMobSettings().getMobs(classif);
       //lop on abobe 
       for (MobSpawnSettings.SpawnerData spawnerInfo : list.unwrap()) {
         //        int weight = mobspawninfo$spawners.itemWeight;

@@ -9,11 +9,15 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ConfiguredStructureTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 
 public class EnderApple extends ItemBaseCyclic {
@@ -54,17 +58,20 @@ public class EnderApple extends ItemBaseCyclic {
       //
       ServerLevel serverWorld = (ServerLevel) worldIn;
       Map<String, Integer> distanceStructNames = new HashMap<>();
-      for (StructureFeature<?> structureFeature : net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
+      Registry<ConfiguredStructureFeature<?, ?>> registry = worldIn.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
+      for (ConfiguredStructureFeature<?,?> structureFeature : registry){  //net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
         try {
-          String name = structureFeature.getRegistryName().toString();
+          String name = structureFeature.feature.getRegistryName().toString();
           if (!structIgnoreList.contains(name)) {
             //then we are allowed to look fori t, we are not in ignore list 
             BlockPos targetPos = entityLiving.blockPosition();
-            final BlockPos posOfStructure = serverWorld.findNearestMapFeature(structureFeature, targetPos, 100, false);
-            if (posOfStructure != null) {
-              double distance = UtilWorld.distanceBetweenHorizontal(posOfStructure, targetPos);
-              distanceStructNames.put(name, (int) distance);
-            }
+//            LocateCommand y;
+////            BlockPos blockpos = serverlevel.findNearestMapFeature(ConfiguredStructureTags.EYE_OF_ENDER_LOCATED, p_41185_.blockPosition(), 100, false);
+//            final BlockPos posOfStructure = serverWorld.findNearestMapFeature(structureFeature, targetPos, 100, false);
+//            if (posOfStructure != null) {
+//              double distance = UtilWorld.distanceBetweenHorizontal(posOfStructure, targetPos);
+//              distanceStructNames.put(name, (int) distance);
+//            }
           }
         }
         catch (Exception e) {

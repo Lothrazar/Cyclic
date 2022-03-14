@@ -3,9 +3,12 @@ package com.lothrazar.cyclic.command;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import java.util.stream.Collectors;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class CommandNbt {
@@ -25,7 +28,7 @@ public class CommandNbt {
   public static int executePrintTags(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     ItemStack held = player.getMainHandItem();
-    for (ResourceLocation tag : held.getItem().getTags()) {
+    for (TagKey<Item> tag : held.getTags().collect(Collectors.toList())) {
       UtilChat.sendFeedback(ctx, tag.toString());
     }
     return 0;

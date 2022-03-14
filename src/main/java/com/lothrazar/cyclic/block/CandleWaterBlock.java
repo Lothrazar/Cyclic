@@ -143,7 +143,8 @@ public class CandleWaterBlock extends BlockCyclic {
   }
 
   private Mob findMonsterToSpawn(Level world, BlockPos pos, Random rand) {
-    WeightedRandomList<MobSpawnSettings.SpawnerData> spawners = world.getBiome(pos).getMobSettings().getMobs(type);
+//    world.getBiome(pos)
+    WeightedRandomList<MobSpawnSettings.SpawnerData> spawners = world.getBiome(pos).value().getMobSettings().getMobs(type);
     if (spawners.isEmpty()) {
       return null;
     }

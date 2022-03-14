@@ -88,9 +88,11 @@ public class FireplaceBlock extends BlockCyclic {
   }
 
   private boolean hasInfiniburnTag(Level worldIn, BlockPos pos) {
-    return (BlockTags.INFINIBURN_END.contains(worldIn.getBlockState(pos).getBlock()) && worldIn.dimension() == Level.END)
-        || (BlockTags.INFINIBURN_NETHER.contains(worldIn.getBlockState(pos).getBlock()) && worldIn.dimension() == Level.NETHER)
-        || (BlockTags.INFINIBURN_OVERWORLD.contains(worldIn.getBlockState(pos).getBlock()) && worldIn.dimension() == Level.OVERWORLD);
+    Block b = worldIn.getBlockState(pos).getBlock();
+
+    return (b.builtInRegistryHolder().is(BlockTags.INFINIBURN_END) && worldIn.dimension() == Level.END)
+        || (b.builtInRegistryHolder().is(BlockTags.INFINIBURN_NETHER) && worldIn.dimension() == Level.NETHER)
+        || (b.builtInRegistryHolder().is(BlockTags.INFINIBURN_OVERWORLD) && worldIn.dimension() == Level.OVERWORLD);
   }
 
   @Override

@@ -203,7 +203,7 @@ public class MaterialRegistry {
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.NETHERITE.getLevel(),
             Tiers.DIAMOND.getUses() * 4, Tiers.DIAMOND.getSpeed() * 4, Tiers.DIAMOND.getAttackDamageBonus() + 1, (Tiers.DIAMOND.getEnchantmentValue() + Tiers.GOLD.getEnchantmentValue()) / 2,
-            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_obsidian_tool")),
+            BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_obsidian_tool")),
             () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get())),
         new ResourceLocation(ModCyclic.MODID, "gem_obsidian"),
         List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
@@ -212,7 +212,7 @@ public class MaterialRegistry {
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.IRON.getLevel(),
             Tiers.IRON.getUses() + 5, Tiers.IRON.getSpeed() + 0.2F, Tiers.IRON.getAttackDamageBonus() + 0.1F, Tiers.GOLD.getEnchantmentValue() * 2,
-            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_amethyst_tool")),
+            BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_amethyst_tool")),
             () -> Ingredient.of(Items.AMETHYST_SHARD)),
         new ResourceLocation(ModCyclic.MODID, "amethyst"),
         List.of(Tiers.STONE), List.of(Tiers.IRON));
@@ -220,7 +220,7 @@ public class MaterialRegistry {
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.IRON.getLevel(),
             (Tiers.STONE.getUses() + Tiers.IRON.getUses()) / 2, (Tiers.STONE.getSpeed() + Tiers.IRON.getSpeed()) / 2, (Tiers.STONE.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2, Tiers.DIAMOND.getEnchantmentValue() + 2,
-            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_copper_tool")),
+            BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_copper_tool")),
             () -> Ingredient.of(Items.COPPER_INGOT)),
         new ResourceLocation(ModCyclic.MODID, "copper"),
         List.of(Tiers.WOOD), List.of(Tiers.IRON));
@@ -230,7 +230,7 @@ public class MaterialRegistry {
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.NETHERITE.getLevel(),
             (Tiers.DIAMOND.getUses() + Tiers.NETHERITE.getUses()) / 2, (Tiers.DIAMOND.getSpeed() + Tiers.IRON.getSpeed()) / 2, (Tiers.DIAMOND.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2, Tiers.DIAMOND.getEnchantmentValue() + 2,
-            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_emerald_tool")),
+            BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_emerald_tool")),
             () -> Ingredient.of(Items.EMERALD)),
         new ResourceLocation(ModCyclic.MODID, "emerald"),
         List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE));
@@ -239,7 +239,7 @@ public class MaterialRegistry {
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.STONE.getLevel(),
             Tiers.STONE.getUses() + 20, Tiers.STONE.getSpeed(), (Tiers.WOOD.getAttackDamageBonus() + Tiers.STONE.getAttackDamageBonus()) / 2, Tiers.IRON.getEnchantmentValue() + 2,
-            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_sandstone_tool")),
+            BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_sandstone_tool")),
             () -> Ingredient.of(Items.SANDSTONE)),
         new ResourceLocation(ModCyclic.MODID, "sandstone"),
         List.of(Tiers.WOOD), List.of(Tiers.STONE));
@@ -248,7 +248,7 @@ public class MaterialRegistry {
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.IRON.getLevel(),
             (Tiers.IRON.getUses() + Tiers.GOLD.getUses()) / 2, (Tiers.IRON.getSpeed() + Tiers.GOLD.getSpeed()) / 2, (Tiers.IRON.getAttackDamageBonus() + Tiers.GOLD.getAttackDamageBonus()) / 2, Tiers.GOLD.getEnchantmentValue() + 2,
-            BlockTags.createOptional(new ResourceLocation(ModCyclic.MODID, "needs_nether_bricks_tool")),
+            BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_nether_bricks_tool")),
             () -> Ingredient.of(Items.NETHER_BRICKS)),
         new ResourceLocation(ModCyclic.MODID, "nether_bricks"),
         List.of(Tiers.STONE), List.of(Tiers.DIAMOND));

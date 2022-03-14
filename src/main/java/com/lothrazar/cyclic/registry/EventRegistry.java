@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PlayerAbilityEvents;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
@@ -22,5 +23,11 @@ public class EventRegistry {
     MinecraftForge.EVENT_BUS.register(new BiomeEvents());
     MinecraftForge.EVENT_BUS.register(new PlayerDataEvents());
     MinecraftForge.EVENT_BUS.register(new PlayerAbilityEvents());
+    event.enqueueWork(() -> {
+      ComposterBlock.COMPOSTABLES.put(ItemRegistry.FLOWER_CUAN.get(), 0.3F);
+      ComposterBlock.COMPOSTABLES.put(ItemRegistry.FLOWER_BROWN.get(), 0.3F);
+      ComposterBlock.COMPOSTABLES.put(ItemRegistry.FLOWER_LIME.get(), 0.3F);
+      ComposterBlock.COMPOSTABLES.put(ItemRegistry.FLOWER_PURPLE.get(), 0.3F);
+    });
   }
 }

@@ -26,9 +26,11 @@ package com.lothrazar.cyclic.recipe;
 import java.util.Map;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -90,13 +92,18 @@ public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
     //=======
     //either recipe has no fluid or didnt match, try for tag
     if (ing.hasTag()) {
-      //see /data/<id>/tags/fluids/     
-      for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
-        if (ing.getTag().equalsIgnoreCase(fluidTag.getKey().toString())) {
-          //this fluidTag is the one given in the recipe. now if its on the fluid ok
-          return tileFluid.getFluid().is(fluidTag.getValue());
-        }
+
+      //see /data/<id>/tags/fluids/
+      TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(ing.getTag()));
+      if(ft != null && tileFluid.getFluid().is(ft)){
+        return true ; // yes is matching the tag
       }
+//      for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
+//        if (ing.getTag().equalsIgnoreCase(fluidTag.getKey().toString())) {
+//          //this fluidTag is the one given in the recipe. now if its on the fluid ok
+//          return tileFluid.getFluid().is(fluidTag.getValue());
+//        }
+//      }
     }
     return false;
   }
