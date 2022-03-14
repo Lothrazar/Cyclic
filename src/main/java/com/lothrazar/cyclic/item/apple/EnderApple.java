@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.item.apple;
 
+import com.lothrazar.cyclic.ModCyclic;
+import com.mojang.datafixers.util.Pair;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,6 +11,9 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.IdMap;
 import net.minecraft.core.Registry;
 import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.server.level.ServerLevel;
@@ -59,30 +64,35 @@ public class EnderApple extends ItemBaseCyclic {
       ServerLevel serverWorld = (ServerLevel) worldIn;
       Map<String, Integer> distanceStructNames = new HashMap<>();
       Registry<ConfiguredStructureFeature<?, ?>> registry = worldIn.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
-      for (ConfiguredStructureFeature<?,?> structureFeature : registry){  //net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
+//      registry.getho
+      IdMap<Holder<ConfiguredStructureFeature<?, ?>>> idmap = registry.asHolderIdMap();
+      idmap.forEach(structureFeature -> { // is of type  Holder<ConfiguredStructureFeature<?, ?>>
         try {
-          String name = structureFeature.feature.getRegistryName().toString();
+          String name = structureFeature.value().feature.getRegistryName().toString();
           if (!structIgnoreList.contains(name)) {
-            //then we are allowed to look fori t, we are not in ignore list 
+            //then we are allowed to look fori t, we are not in ignore list
             BlockPos targetPos = entityLiving.blockPosition();
 //            LocateCommand y;
-////            BlockPos blockpos = serverlevel.findNearestMapFeature(ConfiguredStructureTags.EYE_OF_ENDER_LOCATED, p_41185_.blockPosition(), 100, false);
-//            final BlockPos posOfStructure = serverWorld.findNearestMapFeature(structureFeature, targetPos, 100, false);
-//            if (posOfStructure != null) {
-//              double distance = UtilWorld.distanceBetweenHorizontal(posOfStructure, targetPos);
-//              distanceStructNames.put(name, (int) distance);
-//            }
+          HolderSet<ConfiguredStructureFeature<?,?>> holderSetOfFeature = HolderSet.direct(structureFeature);
+            Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> searchResult = serverWorld.getChunkSource().getGenerator().findNearestMapFeature(serverWorld,
+                holderSetOfFeature, targetPos, 100, false);
+            if (searchResult != null && searchResult.getFirst() != null) {
+              double distance = UtilWorld.distanceBetweenHorizontal(searchResult.getFirst(), targetPos);
+              distanceStructNames.put(name, (int) distance);
+            }
           }
         }
         catch (Exception e) {
-          //third party non vanilla mods can crash, or cause ServerWatchdog errors. example:
-          //          java.lang.Error: ServerHangWatchdog detected that a single server tick took 192.11 seconds (should be max 0.05)
-          // ...
-          //          at com.telepathicgrunt.repurposedstructures.world.structures.AbstractBaseStructure.locateStructureFast(AbstractBaseStructure.java:61) ~[repurposed_structures:2.7.5] {re:classloading}
-          //          at com.telepathicgrunt.repurposedstructures.world.structures.AbstractBaseStructure.getNearestGeneratedFeature(AbstractBaseStructure.java:41) ~[repurposed_structures:2.7.5] {re:classloading}
-          //          
+          ModCyclic.LOGGER.error("",e);
         }
-      }
+      });
+//      for(int i=0;i<registry.asHolderIdMap().size();i++){
+//        Holder<ConfiguredStructureFeature<?, ?>> thing = registry.asHolderIdMap().byId(i);
+//      }
+      
+//      for (ConfiguredStructureFeature<?,?> structureFeature : registry){  //net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
+//
+//      }
       //done loopiong on features
       //
       //SORT
