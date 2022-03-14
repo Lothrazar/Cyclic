@@ -1,6 +1,7 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
+		"1.18.1-latest": "1.6.15",
 		"1.18.2-latest": "1.6.16"
 	},
 	"1.18.2": {
@@ -20,6 +21,6 @@
 		,"1.6.13": "Fluids cyclic:honey, xpjuice, and biomass are now swim-able (uses minecraft fluid/water data tag fix. recipes continue to use fluid tags such as forge:biomass with no changes).  Fix 25x25 size label on machines.  Fix Smooth Glass not passing all light through.  Fix Gold Soul Lantern name and light level.  Fix battery error on harvesting the block.  "
 		,"1.6.14": "Fixed logspam in material generator from v.13.  Fixed Battery tooltips not accurate & not charging when inside another battery thats being charged. "
 		,"1.6.15": "[forge-1.18.1-39.1.2+] Fix #2038 Ender Shelves break stack connection on moving.  Fix #2055 Material generator item consumption & burn-timer sync.  Auto User bugfixes.  Auto User has two buttons for toggling left/right click and entity/block type interactions (example: empty buckets on cows with a hopper underneath).  Added Steady Body enchant.  Fix lit state on generators more consistently updating when empty (zero burn time). Added some default recipes to Material Generator.  Brush Scythe with Silk Touch enchantment fixed (vines/grass/etc).  Fix multijump not working in Anvils.  Fix Fluid Tank Fill Level Colour; so Lava and Fluid Experience and other fluids can have a custom durability color bar on fluid Tanks while carrying"
-		,"1.6.16":"Ported to 1.18.2.  Flowers can now be composted  "
+		,"1.6.16":"Ported to 1.18.2.  Flowers can now be composted.  Fixed renderlayer of Copper Soul Lantern and Gold Soul Lantern.  Developed on jei=9.5.0.132 and forge=40.0.12+  "
 	}
 }
