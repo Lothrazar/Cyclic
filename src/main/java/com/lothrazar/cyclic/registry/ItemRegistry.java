@@ -273,7 +273,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SETTINGS_DATA = ITEMS.register("settings_data", () -> new SettingsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SHAPE_DATA = ITEMS.register("shape_data", () -> new ShapeCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FILTER_DATA = ITEMS.register("filter_data", () -> new FilterCardItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> FLOWER_CUAN = ITEMS.register("flower_cyan", () -> new BlockItem(BlockRegistry.FLOWER_CYAN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FLOWER_CYAN = ITEMS.register("flower_cyan", () -> new BlockItem(BlockRegistry.FLOWER_CYAN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> FLOWER_PURPLE = ITEMS.register("flower_purple_tulip", () -> new BlockItem(BlockRegistry.FLOWER_PURPLE_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> FLOWER_BROWN = ITEMS.register("flower_absalon_tulip", () -> new BlockItem(BlockRegistry.FLOWER_ABSALON_TULIP.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> FLOWER_LIME = ITEMS.register("flower_lime_carnation", () -> new BlockItem(BlockRegistry.FLOWER_LIME_CARNATION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -414,9 +414,6 @@ public class ItemRegistry {
   public static final RegistryObject<Item> EMERALD_CARROT_JUMP = ITEMS.register("emerald_carrot_jump", () -> new ItemHorseEmeraldJump(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> LAPIS_CARROT_VARIANT = ITEMS.register("lapis_carrot_variant", () -> new ItemHorseLapisVariant(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> TOXIC_CARROT = ITEMS.register("toxic_carrot", () -> new ItemHorseToxic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> LASER_CANNON = ITEMS.register("laser_cannon", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> WAND_HYPNO = ITEMS.register("wand_hypno", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> WAND_MISSILE = ITEMS.register("wand_missile", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CRYSTAL_BOOTS = ITEMS.register("crystal_boots", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.FEET, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CRYSTAL_HELMET = ITEMS.register("crystal_helmet", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.HEAD, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CRYSTAL_CHESTPLATE = ITEMS.register("crystal_chestplate", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, EquipmentSlot.CHEST, new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
@@ -455,4 +452,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword", () -> new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SANDSTONE_SWORD = ITEMS.register("sandstone_sword", () -> new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> NETHERBRICK_SWORD = ITEMS.register("netherbrick_sword", () -> new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> LASER_CANNON = ITEMS.register("laser_cannon", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> WAND_HYPNO = ITEMS.register("wand_hypno", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> WAND_MISSILE = ITEMS.register("wand_missile", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
 }
