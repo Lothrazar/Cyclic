@@ -21,6 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class FluidHoneyHolder {
 
   private static final String id = "honey";
+  public static final int COLOR = 0xFFCE5D;
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));
   public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new HoneyFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops()));
@@ -33,7 +34,8 @@ public class FluidHoneyHolder {
         FluidAttributes.builder(
             new ResourceLocation("minecraft:block/" + id + "_block_top"),
             new ResourceLocation("minecraft:block/" + id + "_block_side"))
-            .color(0xFFCE5D))
+           // .color(COLOR)
+    )
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

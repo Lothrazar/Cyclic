@@ -2,6 +2,11 @@ package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Model3D;
+import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
+import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
+import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -15,6 +20,8 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -26,6 +33,36 @@ public class UtilFluid {
 
   public static final FluidRenderMap<Int2ObjectMap<Model3D>> CACHED_FLUIDS = new FluidRenderMap<>();
   public static final int STAGES = 1400;
+
+  public static int getColorFromFluid(FluidStack fstack) {
+    if (fstack != null && fstack.getFluid() != null) {
+      if (fstack.getFluid() == Fluids.LAVA) {
+        return 0xff8c00; // TODO: client-config or share with ItemBlockCask.java
+      }
+      else if (fstack.getFluid() == FluidBiomassHolder.STILL.get()) {
+        return FluidBiomassHolder.COLOR;
+      }
+      else if (fstack.getFluid() == FluidHoneyHolder.STILL.get()) {
+        return FluidHoneyHolder.COLOR;
+      }
+      else if (fstack.getFluid() == FluidMagmaHolder.STILL.get()) {
+        return FluidMagmaHolder.COLOR;
+      }
+      else if (fstack.getFluid() == FluidSlimeHolder.STILL.get()) {
+        return FluidSlimeHolder.COLOR;
+      }
+      else if (fstack.getFluid() == FluidXpJuiceHolder.STILL.get()) {
+        return FluidXpJuiceHolder.COLOR;
+      }
+      else if (fstack.getFluid() == ForgeMod.MILK.get()) {
+        return 0xF1F1F1;
+      }
+      else if (fstack.getFluid().getAttributes().getColor() > 0) {
+        return fstack.getFluid().getAttributes().getColor();
+      }
+    }
+    return 0xADD8E6; // TODO: client-config or share with ItemBlockCask.java
+  }
 
   /**
    * Thank you Mekanism which is MIT License https://github.com/mekanism/Mekanism

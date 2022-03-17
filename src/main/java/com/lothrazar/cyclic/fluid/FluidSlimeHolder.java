@@ -21,6 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class FluidSlimeHolder {
 
   private static final String id = "slime";
+  public static final int COLOR = 0x51A03E;
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new SlimeFluidBlock.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new SlimeFluidBlock.Flowing(makeProperties()));
   public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new SlimeFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops()));
@@ -33,7 +34,8 @@ public class FluidSlimeHolder {
         FluidAttributes.builder(
             new ResourceLocation("minecraft:block/" + id + "_block"),
             new ResourceLocation("minecraft:block/" + id + "_block"))
-            .color(0x51A03E))
+           // .color(COLOR)
+    )
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

@@ -21,6 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class FluidMagmaHolder {
 
   private static final String id = "magma";
+  public static final int COLOR = 0x4B261F;
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new MagmaFluidBlock.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new MagmaFluidBlock.Flowing(makeProperties()));
   public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new MagmaFluidBlock(STILL, Block.Properties.of(Material.WATER).strength(100.0F).lightLevel((p_235456_0_) -> {
@@ -34,7 +35,9 @@ public class FluidMagmaHolder {
         FLOWING,
         FluidAttributes.builder(
             new ResourceLocation("minecraft:block/" + id),
-            new ResourceLocation("minecraft:block/" + id)).color(0x4B261F))
+            new ResourceLocation("minecraft:block/" + id))
+           // .color(COLOR)
+    )
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

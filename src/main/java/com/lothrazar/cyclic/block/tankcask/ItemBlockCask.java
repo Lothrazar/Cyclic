@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.tankcask;
 
+import com.lothrazar.cyclic.block.tank.ItemBlockTank;
+import com.lothrazar.cyclic.util.UtilFluid;
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
 import net.minecraft.ChatFormatting;
@@ -26,7 +28,7 @@ public class ItemBlockCask extends BlockItem {
 
   @Override
   public boolean isBarVisible(ItemStack stack) {
-    FluidStack fstack = copyFluidFromStack(stack);
+    FluidStack fstack = ItemBlockTank.copyFluidFromStack(stack);
     return fstack != null && fstack.getAmount() > 0; //  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
   }
 
@@ -40,7 +42,7 @@ public class ItemBlockCask extends BlockItem {
   public int getBarWidth(ItemStack stack) {
     try {
       //this is always null 
-      FluidStack fstack = copyFluidFromStack(stack);
+      FluidStack fstack = ItemBlockTank.copyFluidFromStack(stack);
       float current = fstack.getAmount();
       float max = TileCask.CAPACITY;
       return Math.round(13.0F * current / max);
@@ -51,30 +53,10 @@ public class ItemBlockCask extends BlockItem {
     return 1;
   }
 
-  public static FluidStack copyFluidFromStack(ItemStack stack) {
-    if (stack.getTag() != null) {
-      FluidHandlerCapabilityStack handler = new FluidHandlerCapabilityStack(stack, TileCask.CAPACITY);
-      FluidStack fstack = handler.getFluid();
-      if (fstack == null) {
-        return null;
-      }
-      return handler.getFluid();
-    }
-    return null;
-  }
-
   @Override
   public int getBarColor(ItemStack stack) {
-    try {
-      FluidStack fstack = copyFluidFromStack(stack);
-      if(fstack.getFluid() == Fluids.LAVA) {
-        return 0xff8c00;
-      }
-      return fstack.getFluid().getAttributes().getColor();
-    }
-    catch (Exception e) {
-      return 0xADD8E6;
-    }
+    FluidStack fstack = ItemBlockTank.copyFluidFromStack(stack);
+    return UtilFluid.getColorFromFluid(fstack);
   }
 
   @Override

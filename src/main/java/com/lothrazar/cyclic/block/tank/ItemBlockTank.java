@@ -1,6 +1,11 @@
 package com.lothrazar.cyclic.block.tank;
 
 import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
+import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
+import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
+import com.lothrazar.cyclic.util.UtilFluid;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -61,16 +66,8 @@ public class ItemBlockTank extends BlockItem {
 
   @Override
   public int getBarColor(ItemStack stack) {
-    try {
-      FluidStack fstack = copyFluidFromStack(stack);
-      if (fstack.getFluid() == Fluids.LAVA) {
-        return 0xff8c00; // TODO: client-config or share with ItemBlockCask.java
-      }
-      return fstack.getFluid().getAttributes().getColor();
-    }
-    catch (Exception e) {
-      return 0xADD8E6;
-    }
+    FluidStack fstack = copyFluidFromStack(stack);
+    return UtilFluid.getColorFromFluid(fstack);
   }
 
   @Override

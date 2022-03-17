@@ -22,6 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class FluidXpJuiceHolder {
 
   private static final String id = "xpjuice";
+  public static final int COLOR = 0x22FF43;
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));
   public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new XpJuiceFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().lightLevel(s -> 8).strength(100.0F).noDrops()));
@@ -34,7 +35,8 @@ public class FluidXpJuiceHolder {
         FluidAttributes.builder(
             new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_still"),
             new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow"))
-            .color(0x22FF43))
+           // .color(COLOR)
+    )
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

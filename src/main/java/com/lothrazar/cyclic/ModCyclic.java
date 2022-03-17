@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic;
 
+import net.minecraftforge.common.ForgeMod;
 import org.apache.logging.log4j.LogManager;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
@@ -38,5 +39,6 @@ public class ModCyclic {
     ItemRegistry.ITEMS.register(bus);
     TileRegistry.TILES.register(bus);
     FluidRegistry.FLUIDS.register(bus);
+    ForgeMod.enableMilkFluid();
   }
 }

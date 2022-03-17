@@ -1,0 +1,17 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "mix": {
+    "fluid": "minecraft:milk",
+    "count": 1000
+  },
+  "energy": 10,
+  "result": {
+    "item": "minecraft:milk_bucket",
+    "count": 1
+  }
+}
