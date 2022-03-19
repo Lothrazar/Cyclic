@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/battery_clay" },
+        "lit=true": { "model": "cyclic:block/battery_clay_on" }
+    }
+}

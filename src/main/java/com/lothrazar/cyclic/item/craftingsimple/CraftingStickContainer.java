@@ -74,19 +74,10 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return hand != null && playerIn.getItemInHand(hand).getItem() instanceof CraftingStickItem;
+    return hand == null
+    || playerIn.getItemInHand(hand).getItem() instanceof CraftingStickItem;
   }
-  //  @Override
-  //  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-  //    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
-  //      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
-  //      if (myBag.getItem() instanceof CraftingStickItem) {
-  //        //lock the bag in place by returning empty
-  //        return ItemStack.EMPTY;
-  //      }
-  //    }
-  //    return super.slotClick(slotId, dragType, clickTypeIn, player);
-  //  }
+
 
   @Override
   public ItemStack transferStack(Player playerIn, int index) {

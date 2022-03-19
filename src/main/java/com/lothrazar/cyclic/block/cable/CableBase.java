@@ -121,15 +121,6 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-    //    if (stateIn.getValue(WATERLOGGED)) {
-    //      worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
-    //    }
-    return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-  }
-
-  @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     if (hit.getDirection() == null) {
       return super.use(state, world, pos, player, handIn, hit);

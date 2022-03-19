@@ -35,6 +35,7 @@ public class PotionRegistry {
     IForgeRegistry<MobEffect> r = event.getRegistry();
     PotionEffects.STUN = register(r, new StunEffect(MobEffectCategory.HARMFUL, 0xcccc00), "stun");
     PotionEffects.SWIMSPEED = register(r, new SwimEffect(MobEffectCategory.BENEFICIAL, 0x663300), "swimspeed");
+    PotionEffects.WATERWALK = register(r, new SwimEffect(MobEffectCategory.BENEFICIAL, 0x113399), "waterwalk");
     //from 1.12.2 
     //slowfall NIX in vanilla
     //ender aura - pearl + awkward - no pearl/tp dmg
@@ -70,6 +71,7 @@ public class PotionRegistry {
     r.register(new Potion(ModCyclic.MODID + "_strong_hunger", new MobEffectInstance(MobEffects.HUNGER, smal, 1)).setRegistryName(ModCyclic.MODID + ":strong_hunger")); // strong 1 level instead of default 0
     r.register(new Potion(ModCyclic.MODID + "_wither", new MobEffectInstance(MobEffects.WITHER, smal)).setRegistryName(ModCyclic.MODID + ":wither"));
     r.register(new Potion(ModCyclic.MODID + "_resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, smal)).setRegistryName(ModCyclic.MODID + ":resistance"));
+    r.register(new Potion(ModCyclic.MODID + "_waterwalk", new MobEffectInstance(PotionEffects.WATERWALK, normal)).setRegistryName(ModCyclic.MODID + ":waterwalk"));
   }
 
   public static class PotionEffects {
@@ -80,6 +82,7 @@ public class PotionRegistry {
     public static TickableEffect STUN;
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
     public static TickableEffect SWIMSPEED;
+    public static TickableEffect WATERWALK;
   }
 
   public static class PotionItem {
@@ -92,6 +95,8 @@ public class PotionRegistry {
     public static Potion STUN;
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
     public static Potion SWIMSPEED;
+    @ObjectHolder(ModCyclic.MODID + ":waterwalk")
+    public static Potion WATERWALK;
     @ObjectHolder(ModCyclic.MODID + ":blind")
     public static Potion BLIND;
     @ObjectHolder(ModCyclic.MODID + ":levitation")
@@ -120,6 +125,7 @@ public class PotionRegistry {
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.STUN, Items.CLAY);
     //swimspeed recipes
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.SWIMSPEED, Items.DRIED_KELP_BLOCK);
+    basicBrewing(awkwardPotion.copy(), PotionItem.WATERWALK, Items.AMETHYST_SHARD);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.NIGHT_VISION), PotionRegistry.PotionItem.BLIND, Items.BEETROOT);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), PotionItem.LEVITATION, Items.FERMENTED_SPIDER_EYE);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), PotionItem.RESISTANCE, Items.IRON_INGOT);

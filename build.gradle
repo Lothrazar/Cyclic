@@ -92,21 +92,26 @@ dependencies {
     
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
-    
 	
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
 
- //   implementation fg.deobf("curse.maven:botania-225643:3664223")
- //   implementation fg.deobf("curse.maven:simple-storage-network-268495:3633741")
- //   implementation fg.deobf("curse.maven:gardening-tools-351990:3544787")
- //   implementation fg.deobf("curse.maven:cucumber-272335:3623830")
- //   implementation fg.deobf("curse.maven:mystical-agriculture-246640:3623835")
- //   implementation fg.deobf("curse.maven:supplementaries-412082:3622554")
- //   implementation fg.deobf("curse.maven:selene-499980:3604965")
- //   implementation fg.deobf("curse.maven:construction-wand-399558:3562331")
- //   implementation fg.deobf("curse.maven:ato-405593:3638255")
- //   implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
+    implementation fg.deobf("curse.maven:simple-storage-network-268495:3693704")
+    implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
+    implementation fg.deobf("curse.maven:gardening-tools-351990:3694027")
+    implementation fg.deobf("curse.maven:cobblestoney-582368:3692841")
+//    implementation fg.deobf("curse.maven:cucumber-272335:3686400")
+//    implementation fg.deobf("curse.maven:pickle-tweaks-238761:3686404")
+//   implementation fg.deobf("curse.maven:mystical-agriculture-246640:3686412")
+//   implementation fg.deobf("curse.maven:absent-by-design-305840:3686851")
+//   implementation fg.deobf("curse.maven:mystical-agriculture-246640:3686412")
+//   implementation fg.deobf("curse.maven:selene-499980:3687411")
+//   implementation fg.deobf("curse.maven:supplementaries-412082:3687458")
+//   implementation fg.deobf("curse.maven:construction-wand-399558:3562331")
+//   implementation fg.deobf("curse.maven:ato-405593:3638255")
+//   implementation fg.deobf("curse.maven:botania-225643:3664223")
+//   implementation fg.deobf("curse.maven:autoreglib-250363:3642382")
+//   implementation fg.deobf("curse.maven:quark-243121:3687633")
 
 }
 
@@ -164,7 +169,9 @@ publishing {
 }
 
 task signJar(type: SignJar, dependsOn: jar) {
-
+    onlyIf {
+        project.hasProperty('keyStore')
+    }
     // findProperty allows us to reference the property without it existing. 
     // Using project.propName would cause the script to fail validation if 
     // the property did not exist. 

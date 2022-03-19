@@ -13,6 +13,7 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -57,6 +58,11 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
   @Override
   public ResourceLocation getUid() {
     return ID;
+  }
+
+  @Override
+  public RecipeType getRecipeType() {
+    return new RecipeType(getUid(), getRecipeClass());
   }
 
   @Override

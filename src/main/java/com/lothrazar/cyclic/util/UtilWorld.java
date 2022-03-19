@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -136,6 +137,27 @@ public class UtilWorld {
     return false;
   }
 
+  public static ArrayList<BlockPos> findBlocksByTag(Level world, BlockPos start, TagKey blockHunt, final int radius) {
+    ArrayList<BlockPos> found = new ArrayList<BlockPos>();
+    int xMin = start.getX() - radius;
+    int xMax = start.getX() + radius;
+    int yMin = start.getY() - radius;
+    int yMax = start.getY() + radius;
+    int zMin = start.getZ() - radius;
+    int zMax = start.getZ() + radius;
+    BlockPos posCurrent = null;
+    for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
+      for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
+        for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+          posCurrent = new BlockPos(xLoop, yLoop, zLoop);
+          if (world.getBlockState(posCurrent).is(blockHunt)) {
+            found.add(posCurrent);
+          }
+        }
+      }
+    }
+    return found;
+  }
   public static ArrayList<BlockPos> findBlocks(Level world, BlockPos start, Block blockHunt, final int radius) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
     int xMin = start.getX() - radius;

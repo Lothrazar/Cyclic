@@ -66,7 +66,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       CompoundTag compound = new CompoundTag();
       target.save(compound);
       //
-      if (target.getType() == EntityType.CHEST_MINECART
+      if (target.getType() == EntityType.CHEST_MINECART // TODO: CONFIG or tag
           || target.getType() == EntityType.COMMAND_BLOCK_MINECART
           || target.getType() == EntityType.FURNACE_MINECART
           || target.getType() == EntityType.HOPPER_MINECART) {

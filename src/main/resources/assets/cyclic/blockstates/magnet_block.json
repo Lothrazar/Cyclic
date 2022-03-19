@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/magnet_block_off" },
+        "lit=true": { "model": "cyclic:block/magnet_block" }
+    }
+}
