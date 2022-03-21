@@ -18,10 +18,9 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.RegistryObject;
 
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java
-public class FluidHoneyHolder {
+public class FluidWaxHolder {
 
-  private static final String id = "honey";
-  public static final int COLOR = 0xFFCE5D;
+  private static final String id = "wax";
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));
   public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new HoneyFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops()));
@@ -32,9 +31,9 @@ public class FluidHoneyHolder {
         STILL,
         FLOWING,
         FluidAttributes.builder(
-            new ResourceLocation("minecraft:block/" + id + "_block_top"),
-            new ResourceLocation("minecraft:block/" + id + "_block_side"))
-            .color(COLOR))
+            new ResourceLocation("minecraft:block/water_still"),
+            new ResourceLocation("minecraft:block/water_flow"))
+            .color(0xEEEEEEEE))
                 .bucket(BUCKET)
                 .block(BLOCK);
   }

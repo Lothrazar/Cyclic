@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.registry;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
@@ -33,7 +35,11 @@ public class MaterialRegistry {
       return new ItemStack(ItemRegistry.GEM_AMBER.get());
     }
   };
-
+  // ShieldMats
+  public static final Material BASE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
+      "entity/shield/wood_base"));
+  public static final Material NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
+      "entity/shield/wood_base_nopattern"));
   public static class ArmorMats {
 
     private static final String EMERALDID = ModCyclic.MODID + ":emerald";

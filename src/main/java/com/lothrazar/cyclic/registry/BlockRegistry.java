@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.BlockSimple;
@@ -14,6 +16,9 @@ import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.PressurePlateMetal;
+import com.lothrazar.cyclic.block.altar.BlockAltarCrystal;
+import com.lothrazar.cyclic.block.altar.BlockAltarExplos;
+import com.lothrazar.cyclic.block.altar.BlockAltarSol;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
@@ -110,8 +115,6 @@ import com.lothrazar.cyclic.block.wireless.item.BlockWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -141,14 +144,12 @@ public class BlockRegistry {
   public static final RegistryObject<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockSimple(Block.Properties.of(Material.STONE, DyeColor.GRAY).strength(1.0F, 7.0F)) {
 
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    }
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
   });
   public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> new BlockSimple(Block.Properties.of(Material.STONE, DyeColor.BLACK).strength(1.3F, 5.0F)) {
 
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    }
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
   });
   public static final RegistryObject<Block> SPIKES_IRON = BLOCKS.register("spikes_iron", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.PLAIN));
   public static final RegistryObject<Block> SPIKES_FIRE = BLOCKS.register("spikes_fire", () -> new SpikesBlock(Block.Properties.of(Material.STONE), EnumSpikeType.FIRE));
@@ -283,22 +284,22 @@ public class BlockRegistry {
   public static final RegistryObject<Block> UNBREAKABLE_REACTIVE = BLOCKS.register("unbreakable_reactive", () -> new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE))); //reactive and unstable, ignores players and reads redstone 
   public static final RegistryObject<Block> ENDER_SHELF = BLOCKS.register("ender_shelf", () -> new BlockEnderShelf(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ENDER_CONTROLLER = BLOCKS.register("ender_controller", () -> new BlockEnderCtrl(Block.Properties.of(Material.STONE)));
-
   public static final RegistryObject<Block> MAGNET_BLOCK = BLOCKS.register("magnet_block", () -> new BlockInsertingMagnet(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BUTTON_BASALT = BLOCKS.register("button_basalt", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 4));
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
   public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
-  //gold door
-  //gold trapdoor
+  public static final RegistryObject<Block> ALTAR_SOLICITING = BLOCKS.register("altar_soliciting", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ALTAR_GUNPOWDER = BLOCKS.register("altar_gunpowder", () -> new BlockAltarExplos(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ALTAR_CRYSTAL = BLOCKS.register("altar_crystal", () -> new BlockAltarCrystal(Block.Properties.of(Material.STONE))); // card target
+  //block  // peace from traders . and ? also kill?
+  //block  // peace from creeper types?
   //powered furnace
-  //?xp drain
-//  public static final RegistryObject<Block> GENERATOR_CAT = BLOCKS.register("generator_cat", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
-//  public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
-//  public static final RegistryObject<Block> DOOR_GOLD = BLOCKS.register("door_gold", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.GOLD).sound(SoundType.METAL)));
-//  public static final RegistryObject<Block> DOOR_NETHERITE = BLOCKS.register("door_netherite", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.TERRACOTTA_BLACK).sound(SoundType.METAL)));
-
+  public static final RegistryObject<Block> GENERATOR_CAT = BLOCKS.register("generator_cat", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
+  public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
+  public static final RegistryObject<Block> DOOR_GOLD = BLOCKS.register("door_gold", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.GOLD).sound(SoundType.METAL)));
+  public static final RegistryObject<Block> DOOR_NETHERITE = BLOCKS.register("door_netherite", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.TERRACOTTA_BLACK).sound(SoundType.METAL)));
   //drain use bottle on it to fill. and its a fluid cap
-//  public static final RegistryObject<Block> EXPERIENCE_DRAIN = BLOCKS.register("experience_drain", () -> new BlockExpPylon(Block.Properties.of(Material.STONE))); // NOGUI
+  //  public static final RegistryObject<Block> EXPERIENCE_DRAIN = BLOCKS.register("experience_drain", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
   //magnet_anti_block87
 }

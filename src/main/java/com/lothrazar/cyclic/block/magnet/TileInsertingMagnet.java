@@ -1,12 +1,11 @@
 package com.lothrazar.cyclic.block.magnet;
 
-import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.gardentools.ConfigManager;
-import com.lothrazar.gardentools.block.Vector3;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.Vector3;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
@@ -16,9 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.items.ItemStackHandler;
-import org.lwjgl.system.CallbackI;
 
 public class TileInsertingMagnet extends TileBlockEntityCyclic {
 
@@ -27,25 +24,25 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
   private static final float ITEMSPEEDFAR = 0.8F;
   private static final float ITEMSPEEDCLOSE = 0.08F;
   //TODO FILTER Card ITEM GUI
-  ItemStackHandler inventory = new ItemStackHandler(1) ;
-//  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  ItemStackHandler inventory = new ItemStackHandler(1);
+
+  //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public TileInsertingMagnet(BlockPos pos, BlockState state) {
     super(TileRegistry.MAGNET.get(), pos, state);
   }
-
-//  @Override
-//  public void invalidateCaps() {
-//    inventoryCap.invalidate();
-//    super.invalidateCaps();
-//  }
-//
-//  @Override
-//  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-//    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-//      return inventoryCap.cast();
-//    }
-//    return super.getCapability(cap, side);
-//  }
+  //  @Override
+  //  public void invalidateCaps() {
+  //    inventoryCap.invalidate();
+  //    super.invalidateCaps();
+  //  }
+  //
+  //  @Override
+  //  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+  //    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+  //      return inventoryCap.cast();
+  //    }
+  //    return super.getCapability(cap, side);
+  //  }
 
   @Override
   public void load(CompoundTag tag) {
@@ -60,14 +57,13 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileInsertingMagnet e) {
-
-    if(e.isPowered()) {
+    if (e.isPowered()) {
       e.setLitProperty(false);
       return;
     }
     e.setLitProperty(true);
     Set<Item> filter = new HashSet<>(); // TODO: filter from DATACARD if present
-    final int radius = ConfigManager.MAGNET_RANGE.get();
+    final int radius = 16; //  ConfigManager.MAGNET_RANGE.get();
     int vradius = 0;
     int x = blockPos.getX();
     int y = blockPos.getY();
@@ -107,6 +103,7 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
     }
     return moved;
   }
+
   public static void setEntityMotionFromVector(Entity entity, double x, double y, double z, float modifier) {
     Vector3 originalPosVector = new Vector3(x, y, z);
     Vector3 entityVector = new Vector3(entity);
@@ -120,11 +117,9 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
     entity.setDeltaMovement(motionX, motionY, motionZ);
   }
 
-
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileInsertingMagnet e) {
     //
   }
-
 
   @Override
   public void setField(int field, int value) {}

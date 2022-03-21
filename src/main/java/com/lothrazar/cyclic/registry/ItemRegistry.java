@@ -1,5 +1,8 @@
 package com.lothrazar.cyclic.registry;
 
+import com.lothrazar.cyclic.ShieldBlockEntityWithoutLevelRenderer;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
@@ -103,11 +106,14 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.item.wing.EnderWingItem;
 import com.lothrazar.cyclic.item.wing.EnderWingSp;
 import com.lothrazar.cyclic.registry.MaterialRegistry.ToolMats;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Consumer;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
@@ -115,12 +121,18 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -462,13 +474,11 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword", () -> new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SANDSTONE_SWORD = ITEMS.register("sandstone_sword", () -> new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> NETHERBRICK_SWORD = ITEMS.register("netherbrick_sword", () -> new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
-
   public static final RegistryObject<Item> LASER_CANNON = ITEMS.register("laser_cannon", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAND_HYPNO = ITEMS.register("wand_hypno", () -> new WandHypnoItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAND_MISSILE = ITEMS.register("wand_missile", () -> new WandMissileItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FIRE_KILLER = ITEMS.register("fire_killer", () -> new FireExtinguishItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-
-//  public static final RegistryObject<Item> CRAFTING_FOOD = ITEMS.register("crafting_food", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().build()).tab(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> CRAFTING_FOOD = ITEMS.register("crafting_food", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().build()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> MILK_BOTTLE = ITEMS.register("milk_bottle", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().build()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> MAGNET = ITEMS.register("magnet", () -> new MagnetChargeItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
@@ -476,12 +486,52 @@ public class ItemRegistry {
   public static final RegistryObject<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> ENCHANTER = ITEMS.register("enchanter", () -> new BlockItem(BlockRegistry.ENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ALTAR_SOLICITING = ITEMS.register("altar_soliciting", () -> new BlockItem(BlockRegistry.ALTAR_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ALTAR_CRYSTAL = ITEMS.register("altar_crystal", () -> new BlockItem(BlockRegistry.ALTAR_CRYSTAL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ALTAR_GUNPOWDER = ITEMS.register("altar_gunpowder", () -> new BlockItem(BlockRegistry.ALTAR_GUNPOWDER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new BlockItem(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> GENERATOR_CAT = ITEMS.register("generator_cat", () -> new BlockItem(BlockRegistry.GENERATOR_CAT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  ShieldItem y;
+  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new Item(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
 
+    @Override
+    public UseAnim getUseAnimation(ItemStack stack) {
+      return UseAnim.BLOCK;
+    }
 
-  //  public static final RegistryObject<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new BlockItem(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-//  public static final RegistryObject<Item> GENERATOR_CAT = ITEMS.register("generator_cat", () -> new BlockItem(BlockRegistry.GENERATOR_CAT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-//  public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-//  public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-//  public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-//   public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+      return toolAction.equals(ToolActions.SHIELD_BLOCK);
+    }
+
+    @Override
+    public int getUseDuration(ItemStack stack) {
+      return 72000;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+      ItemStack itemstack = player.getItemInHand(hand);
+      player.startUsingItem(hand);
+      return InteractionResultHolder.consume(itemstack);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+      consumer.accept(new IItemRenderProperties() {
+        @Override
+        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+          return ShieldBlockEntityWithoutLevelRenderer.instance;
+        }
+      });
+    }
+    @Override
+    public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
+      return stackIngredient.is(Items.STICK) || super.isValidRepairItem(stackShield, stackIngredient);
+    }
+  });
+  //  public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
 }

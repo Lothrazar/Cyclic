@@ -1,6 +1,9 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.altar.TileAltarCrystal;
+import com.lothrazar.cyclic.block.altar.TileAltarExplosions;
+import com.lothrazar.cyclic.block.altar.TileAltarSol;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -171,4 +174,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TileEnderShelf>> ENDER_SHELF = TILES.register("ender_shelf", () -> BlockEntityType.Builder.of(TileEnderShelf::new, BlockRegistry.ENDER_SHELF.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileEnderCtrl>> ENDER_CONTROLLER = TILES.register("ender_controller", () -> BlockEntityType.Builder.of(TileEnderCtrl::new, BlockRegistry.ENDER_CONTROLLER.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileWorkbench>> WORKBENCH = TILES.register("workbench", () -> BlockEntityType.Builder.of(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileAltarSol>> ALTAR_SOLICITING = TILES.register("altar_soliciting", () -> BlockEntityType.Builder.of(TileAltarSol::new, BlockRegistry.ALTAR_SOLICITING.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileAltarCrystal>> ALTAR_CRYSTAL = TILES.register("altar_crystal", () -> BlockEntityType.Builder.of(TileAltarCrystal::new, BlockRegistry.ALTAR_CRYSTAL.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileAltarExplosions>> ALTAR_GUNPOWDER = TILES.register("altar_gunpowder", () -> BlockEntityType.Builder.of(TileAltarExplosions::new, BlockRegistry.ALTAR_GUNPOWDER.get()).build(null));
 }

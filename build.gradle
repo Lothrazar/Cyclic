@@ -98,10 +98,12 @@ dependencies {
 
     implementation fg.deobf("curse.maven:simple-storage-network-268495:3693704")
     implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
-    implementation fg.deobf("curse.maven:gardening-tools-351990:3694027")
     implementation fg.deobf("curse.maven:cobblestoney-582368:3692841")
-//    implementation fg.deobf("curse.maven:cucumber-272335:3686400")
-//    implementation fg.deobf("curse.maven:pickle-tweaks-238761:3686404")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3671753")
+
+//    implementation fg.deobf("curse.maven:gardening-tools-351990:3694027")
+//   implementation fg.deobf("curse.maven:cucumber-272335:3686400")
+//   implementation fg.deobf("curse.maven:pickle-tweaks-238761:3686404")
 //   implementation fg.deobf("curse.maven:mystical-agriculture-246640:3686412")
 //   implementation fg.deobf("curse.maven:absent-by-design-305840:3686851")
 //   implementation fg.deobf("curse.maven:mystical-agriculture-246640:3686412")

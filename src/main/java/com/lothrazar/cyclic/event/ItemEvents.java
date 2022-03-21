@@ -88,6 +88,7 @@ public class ItemEvents {
         && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
             BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
             CandlePeaceBlock.RADIUS.get(), CandlePeaceBlock.HEIGHT.get())) {
+      //default range 32 and filtered
       event.setResult(Result.DENY);
     }
   }

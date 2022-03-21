@@ -26,8 +26,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BlockInsertingMagnet extends BlockCyclic {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-  private static final double BOUNDS = 1;
-  public static final VoxelShape AABB = Block.box(BOUNDS, BOUNDS, BOUNDS, 16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
+
+  protected static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
 
   public BlockInsertingMagnet(Properties properties) {
     super(properties.strength(1.8F).sound(SoundType.METAL).noOcclusion());
