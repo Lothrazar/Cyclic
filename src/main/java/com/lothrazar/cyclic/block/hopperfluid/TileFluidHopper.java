@@ -8,19 +8,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileFluidHopper extends TileBlockEntityCyclic {
 
@@ -91,24 +86,9 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
     if (success) {
       return;
     }
-    if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      //test if its a source block, or a waterlogged block. 
-      BlockState targetState = level.getBlockState(target);
-      FluidState fluidState = level.getFluidState(target); // targetState.getFluidState();
-      //new
-      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
-        targetState = targetState.setValue(BlockStateProperties.WATERLOGGED, false);
-        //for waterlogged it is hardcoded to water
-        if (level.setBlockAndUpdate(target, targetState)) {
-          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
-      else if (fluidState != null && fluidState.isSource()) {
-        //not just water. any fluid source block
-        if (level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState())) {
-          tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
+    //try from the world
+    if (tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
+      UtilFluid.extractSourceWaterloggedCauldron(level, target, tank);
     }
   }
 
