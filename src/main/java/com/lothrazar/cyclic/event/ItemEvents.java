@@ -34,6 +34,7 @@ import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -98,8 +99,16 @@ public class ItemEvents {
   @SubscribeEvent
   public void onShieldBlock(ShieldBlockEvent event) {
     ItemStack shield = event.getEntityLiving().getUseItem();
-    if (shield.getItem() instanceof ShieldCyclicItem) {
-      System.out.println("Blocked with my shield" + event.getBlockedDamage());
+    if (shield.getItem() instanceof ShieldCyclicItem shieldItem) {
+      if (event.getEntityLiving() instanceof Player playerIn) {
+        if (playerIn.getCooldowns().isOnCooldown(shield.getItem())) {
+          System.out.println("Cancel block, its in cooldown eh");
+          UtilSound.playSound(playerIn, SoundEvents.SHIELD_BREAK);
+          event.setCanceled(true);
+          return;
+        }
+      }
+      shieldItem.onShieldBlock(event);
     }
   }
 

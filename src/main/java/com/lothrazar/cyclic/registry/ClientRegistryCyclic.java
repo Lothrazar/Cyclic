@@ -29,6 +29,7 @@ import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.item.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -115,17 +116,26 @@ public class ClientRegistryCyclic {
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
-    //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
-    ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
-    ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), new ResourceLocation("minecraft:blocking"), blockFn);
-    ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), new ResourceLocation("minecraft:blocking"), blockFn);
-    //
     for (BlockCyclic b : BlockRegistry.BLOCKSCLIENTREGISTRY) {
       b.registerClient();
     }
     for (ItemBaseCyclic i : ItemRegistry.ITEMSFIXME) {
       i.registerClient();
     }
+    initRenderLayers();
+    initColours();
+    initKeybindings();
+    initShields();
+  }
+
+  private static void initShields() {
+    //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
+    ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
+    ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), ShieldCyclicItem.BLOCKING, blockFn);
+    ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(),  ShieldCyclicItem.BLOCKING, blockFn);
+  }
+
+  private static void initRenderLayers() {
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_LIME_CARNATION.get(), RenderType.cutoutMipped());
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_PURPLE_TULIP.get(), RenderType.cutoutMipped());
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_ABSALON_TULIP.get(), RenderType.cutoutMipped());
@@ -141,8 +151,6 @@ public class ClientRegistryCyclic {
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.NETHERITE_LANTERN.get(), RenderType.cutoutMipped());
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GOLD_SOUL_LANTERN.get(), RenderType.cutoutMipped());
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.COPPER_SOUL_LANTERN.get(), RenderType.cutoutMipped());
-    initColours();
-    initKeybindings();
   }
 
   private static void initKeybindings() {

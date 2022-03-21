@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WoW",
+    "WWW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:stick"
+    },
+    "o": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "cyclic:shield_wood"
+  }
+}

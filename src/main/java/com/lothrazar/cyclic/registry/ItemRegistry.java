@@ -116,6 +116,8 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.ShovelItem;
@@ -483,7 +485,19 @@ public class ItemRegistry {
   public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
 
-  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
+      return stackIngredient.is(Items.STICK) || super.isValidRepairItem(stackShield, stackIngredient);
+    }
+  });
+  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)){
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
+      return stackIngredient.is(Items.LEATHER) || super.isValidRepairItem(stackShield, stackIngredient);
+    }
+  });
   //  public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
 }
