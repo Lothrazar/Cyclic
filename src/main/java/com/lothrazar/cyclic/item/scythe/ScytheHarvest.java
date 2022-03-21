@@ -33,11 +33,12 @@ public class ScytheHarvest extends ItemBaseCyclic {
       pos = pos.relative(side);
     }
     Player player = context.getPlayer();
-    int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
-    PacketRegistry.INSTANCE.sendToServer(new PacketHarvesting(pos, radius));
-    //    HarvestUtil.harvestShape(context.getLevel(), pos, radius);
-    context.getPlayer().swing(context.getHand());
-    UtilItemStack.damageItem(context.getPlayer(), context.getItemInHand());
+    if (player.level.isClientSide) {
+      int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
+      PacketRegistry.INSTANCE.sendToServer(new PacketHarvesting(pos, radius));
+    }
+    player.swing(context.getHand());
+    UtilItemStack.damageItem(player, context.getItemInHand());
     return super.useOn(context);
   }
 }
