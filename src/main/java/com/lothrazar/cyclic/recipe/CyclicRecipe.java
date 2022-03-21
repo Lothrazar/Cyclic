@@ -44,6 +44,11 @@ public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
   }
 
   @Override
+  public boolean isSpecial() {
+    return true;
+  }
+
+  @Override
   public ItemStack assemble(TileBlockEntityCyclic inv) {
     return ItemStack.EMPTY;
   }
@@ -79,28 +84,14 @@ public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
     if (ing.hasFluid() && tileFluid.getFluid() == ing.getFluidStack().getFluid()) {
       return true;
     }
-    //<<<<<<< HEAD
-    //    // FluidTags.makeWrapperTag
-    //    //if the fluids are not identical, they might have a matching tag
-    //    //see /data/forge/tags/fluids/
-    //    for (Tag<Fluid> fluidTag : FluidTags.getAllTags().getAllTags().values()) { // FluidTags.getStaticTags()) {
-    //      if (getRecipeFluid().getFluid().is(fluidTag) && tileFluid.getFluid().is(fluidTag)) {
-    //        return true;
-    //=======
     //either recipe has no fluid or didnt match, try for tag
     if (ing.hasTag()) {
-      // 
       //see /data/<id>/tags/fluids/
       TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(ing.getTag()));
+      System.out.println("FT  " + ft);
       if (ft != null && tileFluid.getFluid().is(ft)) {
         return true; // yes is matching the tag
       }
-      //      for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
-      //        if (ing.getTag().equalsIgnoreCase(fluidTag.getKey().toString())) {
-      //          //this fluidTag is the one given in the recipe. now if its on the fluid ok
-      //          return tileFluid.getFluid().is(fluidTag.getValue());
-      //        }
-      //      }
     }
     return false;
   }

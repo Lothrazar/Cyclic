@@ -65,10 +65,8 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   @Override
   public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {
     if (recipe.getRecipeFluid().isEmpty()) {
-      List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
-      if (matchingFluids != null) {
-        ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIngredient.getMatchingFluids());
-      }
+      //then we use tags
+      ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIngredient.getMatchingFluids());
     }
     else {
       ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());

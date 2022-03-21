@@ -2,15 +2,13 @@ package com.lothrazar.cyclic.recipe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FluidTagIngredient {
 
@@ -44,19 +42,21 @@ public class FluidTagIngredient {
     if (!hasTag()) {
       return null;
     }
-
-
     TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(tag));
-    if(ft != null) {
-//      ft. todo : how to get all fluids for this tag
-//      Registry.FLUID_REGISTRY.get
+    if (ft != null) {
+      //      ft. todo : how to get all fluids for this tag
+      //      Registry.FLUID_REGISTRY.get
+      //      Codec<TagKey<Fluid>> wtf = TagKey.hashedCodec(Registry.FLUID_REGISTRY);
+      //      MapCodec<TagKey<Fluid>> whatisthis = wtf.fieldOf(tag);
+      TagKey<Fluid> key = ForgeRegistries.FLUIDS.tags().createTagKey(new ResourceLocation(tag));
+      return ForgeRegistries.FLUIDS.tags().getTag(key).stream().toList();
+      //      return key.
+      //      for (TagKey<Fluid> key : getAllTags) {
+      //        if (key.toString().equalsIgnoreCase(tag)) {
+      //          //add all fluids for tag?
+      //          return fluidTag.getValue().getValues();
+      //        }
     }
-//    for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
-//      if (fluidTag.getKey().toString().equalsIgnoreCase(tag)) {
-//        //add all fluids for tag?
-//        return fluidTag.getValue().getValues();
-//      }
-//    }
     return null;
   }
 
@@ -67,9 +67,6 @@ public class FluidTagIngredient {
    */
   public List<FluidStack> getMatchingFluids() {
     List<Fluid> fluids = list();
-    if (fluids == null) {
-      return null;
-    }
     List<FluidStack> me = new ArrayList<>();
     for (Fluid f : fluids) {
       me.add(new FluidStack(f, this.amount));
