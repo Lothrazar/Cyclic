@@ -92,6 +92,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       // do something custom like kill the projectile
     }
     if (event.getDamageSource().isExplosion()) {
+      System.out.println("Blocked explosion" );
       //projectile damage
       // do something custom like kill the projectile
     }

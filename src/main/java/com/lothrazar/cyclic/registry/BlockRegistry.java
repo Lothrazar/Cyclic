@@ -287,7 +287,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> MAGNET_BLOCK = BLOCKS.register("magnet_block", () -> new BlockInsertingMagnet(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BUTTON_BASALT = BLOCKS.register("button_basalt", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 4));
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
-  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
+//  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
   public static final RegistryObject<Block> ALTAR_SOLICITING = BLOCKS.register("altar_soliciting", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ALTAR_GUNPOWDER = BLOCKS.register("altar_gunpowder", () -> new BlockAltarExplos(Block.Properties.of(Material.STONE)));
