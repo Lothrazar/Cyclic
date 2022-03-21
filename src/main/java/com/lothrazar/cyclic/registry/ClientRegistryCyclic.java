@@ -37,6 +37,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
@@ -66,6 +68,7 @@ public class ClientRegistryCyclic {
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
   }
+
   public static final Material SHIELD_BASE_WOOD = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base"));
   public static final Material SHIELD_BASE_WOOD_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base_nopattern"));
 
@@ -112,6 +115,11 @@ public class ClientRegistryCyclic {
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
+    //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
+    ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
+    ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), new ResourceLocation("minecraft:blocking"), blockFn);
+    ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), new ResourceLocation("minecraft:blocking"), blockFn);
+    //
     for (BlockCyclic b : BlockRegistry.BLOCKSCLIENTREGISTRY) {
       b.registerClient();
     }

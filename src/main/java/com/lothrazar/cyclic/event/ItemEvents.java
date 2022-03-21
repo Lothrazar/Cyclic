@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.enchant.Multishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
+import com.lothrazar.cyclic.item.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.apple.LoftyStatureApple;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
@@ -65,6 +66,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionAddedEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -86,10 +88,18 @@ public class ItemEvents {
     MobSpawnType res = event.getSpawnReason();
     if (CandlePeaceBlock.isBad(mob, res)
         && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-            BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
-            CandlePeaceBlock.RADIUS.get(), CandlePeaceBlock.HEIGHT.get())) {
+        BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
+        CandlePeaceBlock.RADIUS.get(), CandlePeaceBlock.HEIGHT.get())) {
       //default range 32 and filtered
       event.setResult(Result.DENY);
+    }
+  }
+
+  @SubscribeEvent
+  public void onShieldBlock(ShieldBlockEvent event) {
+    ItemStack shield = event.getEntityLiving().getUseItem();
+    if (shield.getItem() instanceof ShieldCyclicItem) {
+      System.out.println("Blocked with my shield" + event.getBlockedDamage());
     }
   }
 
@@ -512,12 +522,12 @@ public class ItemEvents {
         switch (ItemStorageBag.getPickupMode(bag)) {
           case EVERYTHING:
             resultStack = ItemStorageBag.tryInsert(bag, resultStack);
-          break;
+            break;
           case FILTER:
             resultStack = ItemStorageBag.tryFilteredInsert(bag, resultStack);
-          break;
+            break;
           case NOTHING:
-          break;
+            break;
         }
         if (resultStack.isEmpty()) {
           break;

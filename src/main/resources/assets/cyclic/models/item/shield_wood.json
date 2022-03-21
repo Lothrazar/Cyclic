@@ -6,7 +6,7 @@
     "overrides": [
         {
             "predicate": {
-                "blocking": 1
+                "minecraft:blocking": 1
             },
             "model": "cyclic:item/shield_wood_blocking"
         }
