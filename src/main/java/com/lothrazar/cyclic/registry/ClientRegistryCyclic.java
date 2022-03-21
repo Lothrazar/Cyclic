@@ -1,9 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.Material;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
@@ -41,6 +37,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
@@ -48,6 +46,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,6 +54,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
@@ -65,21 +65,22 @@ public class ClientRegistryCyclic {
     //fired by mod constructor  DistExecutor.safeRunForDist
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
-  }  // ShieldMats
-  public static final Material BASE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
-      "entity/shield/wood_base"));
-  public static final Material NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
-      "entity/shield/wood_base_nopattern"));
+  }
+  public static final Material SHIELD_BASE_WOOD = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base"));
+  public static final Material SHIELD_BASE_WOOD_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base_nopattern"));
 
+  public static final Material SHIELD_BASE_LEATHER = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/leather_base"));
+  public static final Material SHIELD_BASE_LEATHER_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/leather_base_nopattern"));
 
   @SubscribeEvent
   public static void onStitch(TextureStitchEvent.Pre event) {
     if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
-      event.addSprite(BASE.texture());
-      event.addSprite(NOPATTERN.texture());
+      event.addSprite(SHIELD_BASE_WOOD.texture());
+      event.addSprite(SHIELD_BASE_WOOD_NOPATTERN.texture());
+      event.addSprite(SHIELD_BASE_LEATHER.texture());
+      event.addSprite(SHIELD_BASE_LEATHER_NOPATTERN.texture());
     }
   }
-
 
   @SubscribeEvent
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -202,5 +203,6 @@ public class ClientRegistryCyclic {
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public static void registerModels(FMLClientSetupEvent event) {}
+  public static void registerModels(FMLClientSetupEvent event) {
+  }
 }

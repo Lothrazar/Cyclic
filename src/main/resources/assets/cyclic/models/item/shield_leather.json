@@ -1,0 +1,6 @@
+{
+    "parent": "item/shield",
+    "textures": {
+        "particle": "block/emerald_block"
+    }
+}
