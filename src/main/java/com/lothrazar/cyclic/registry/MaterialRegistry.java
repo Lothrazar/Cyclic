@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import java.util.List;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +16,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.ForgeTier;
 import net.minecraftforge.common.TierSortingRegistry;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class MaterialRegistry {
 
@@ -35,11 +37,7 @@ public class MaterialRegistry {
       return new ItemStack(ItemRegistry.GEM_AMBER.get());
     }
   };
-  // ShieldMats
-  public static final Material BASE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
-      "entity/shield/wood_base"));
-  public static final Material NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
-      "entity/shield/wood_base_nopattern"));
+
   public static class ArmorMats {
 
     private static final String EMERALDID = ModCyclic.MODID + ":emerald";
@@ -66,7 +64,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-          break;
+            break;
         }
         return 0;
       }
@@ -122,7 +120,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-          break;
+            break;
         }
         return 0;
       }

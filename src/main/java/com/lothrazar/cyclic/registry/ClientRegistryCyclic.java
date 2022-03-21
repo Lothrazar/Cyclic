@@ -1,5 +1,8 @@
 package com.lothrazar.cyclic.registry;
 
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.Material;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
@@ -62,7 +65,21 @@ public class ClientRegistryCyclic {
     //fired by mod constructor  DistExecutor.safeRunForDist
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
+  }  // ShieldMats
+  public static final Material BASE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
+      "entity/shield/wood_base"));
+  public static final Material NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID,
+      "entity/shield/wood_base_nopattern"));
+
+
+  @SubscribeEvent
+  public static void onStitch(TextureStitchEvent.Pre event) {
+    if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
+      event.addSprite(BASE.texture());
+      event.addSprite(NOPATTERN.texture());
+    }
   }
+
 
   @SubscribeEvent
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {

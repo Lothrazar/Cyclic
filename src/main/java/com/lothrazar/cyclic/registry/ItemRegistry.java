@@ -1,8 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.ShieldBlockEntityWithoutLevelRenderer;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
@@ -24,6 +21,7 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MagnetChargeItem;
 import com.lothrazar.cyclic.item.OreProspector;
+import com.lothrazar.cyclic.item.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SpawnInspectorTool;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
@@ -106,14 +104,11 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.item.wing.EnderWingItem;
 import com.lothrazar.cyclic.item.wing.EnderWingSp;
 import com.lothrazar.cyclic.registry.MaterialRegistry.ToolMats;
-import java.util.function.Consumer;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
@@ -121,18 +116,11 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.client.IItemRenderProperties;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -495,43 +483,6 @@ public class ItemRegistry {
   public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   ShieldItem y;
-  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new Item(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
-
-    @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-      return UseAnim.BLOCK;
-    }
-
-    @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-      return toolAction.equals(ToolActions.SHIELD_BLOCK);
-    }
-
-    @Override
-    public int getUseDuration(ItemStack stack) {
-      return 72000;
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-      ItemStack itemstack = player.getItemInHand(hand);
-      player.startUsingItem(hand);
-      return InteractionResultHolder.consume(itemstack);
-    }
-
-    @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-      consumer.accept(new IItemRenderProperties() {
-        @Override
-        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-          return ShieldBlockEntityWithoutLevelRenderer.instance;
-        }
-      });
-    }
-    @Override
-    public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
-      return stackIngredient.is(Items.STICK) || super.isValidRepairItem(stackShield, stackIngredient);
-    }
-  });
+  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)));
   //  public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
 }

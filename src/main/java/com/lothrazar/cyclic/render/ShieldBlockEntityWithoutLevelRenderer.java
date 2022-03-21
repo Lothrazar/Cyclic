@@ -1,7 +1,8 @@
-package com.lothrazar.cyclic;
+package com.lothrazar.cyclic.render;
 
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
@@ -14,10 +15,8 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
@@ -32,12 +31,9 @@ import net.minecraftforge.fml.common.Mod;
 public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
 
   public static ShieldBlockEntityWithoutLevelRenderer instance;
-  //  private final EntityModelSet ems;
-  //  private ShieldModel shield; //if no AT
 
   public ShieldBlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher rd, EntityModelSet ems) {
     super(rd, ems);
-    //    this.ems = ems;
   }
 
   @SubscribeEvent
@@ -45,9 +41,8 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     instance = new ShieldBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     event.registerReloadListener(instance);
   }
-
   //  @Override
-  //  public void onResourceManagerReload(ResourceManager p_172555_) {
+  //  public void onResourceManagerReload(ResourceManager rm) {
   //    this.shield = new ShieldModel(this.ems.bakeLayer(ModelLayers.SHIELD));
   //  }
 
@@ -59,7 +54,7 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     boolean isBanner = (stackIn.getTagElement("BlockEntityTag") != null);
     Material rendermaterial = isBanner ? ModelBakery.SHIELD_BASE : ModelBakery.NO_PATTERN_SHIELD;
     if (stackIn.is(ItemRegistry.SHIELD_WOOD.get())) {
-      rendermaterial = isBanner ? MaterialRegistry.BASE : MaterialRegistry.NOPATTERN;
+      rendermaterial = isBanner ? ClientRegistryCyclic.BASE : ClientRegistryCyclic.NOPATTERN;
     }
     VertexConsumer vertex = rendermaterial.sprite().wrap(ItemRenderer.getFoilBufferDirect(buffer, shieldModel.renderType(rendermaterial.atlasLocation()), true, stackIn.hasFoil()));
     shieldModel.handle().render(ps, vertex, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);

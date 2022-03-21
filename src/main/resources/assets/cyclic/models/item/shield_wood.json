@@ -2,13 +2,5 @@
     "parent": "item/shield",
     "textures": {
         "particle": "block/emerald_block"
-    },
-    "overrides": [
-        {
-            "predicate": {
-                "blocking": 1
-            },
-            "model": "cyclic:item/shield_wood_blocking"
-        }
-    ]
+    }
 }
