@@ -18,7 +18,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -55,18 +54,17 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public FluidStack getRecipeFluid() {
     return this.fluidIngredient.getFluidStack();
   }
-
-  public List<FluidStack> getRecipeFluids() {
-    List<Fluid> fluids = fluidIngredient.list();
-    if (fluids == null) {
-      return null;
-    }
-    List<FluidStack> me = new ArrayList<>();
-    for (Fluid f : fluids) {
-      me.add(new FluidStack(f, fluidIngredient.getFluidStack().getAmount()));
-    }
-    return me;
-  }
+  //  public List<FluidStack> getRecipeFluids() {
+  //    List<Fluid> fluids = fluidIngredient.list();
+  //    if (fluids == null) {
+  //      return null;
+  //    }
+  //    List<FluidStack> me = new ArrayList<>();
+  //    for (Fluid f : fluids) {
+  //      me.add(new FluidStack(f, fluidIngredient.getFluidStack().getAmount()));
+  //    }
+  //    return me;
+  //  }
 
   @Override
   public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {

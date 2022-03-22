@@ -1,6 +1,9 @@
 package com.lothrazar.cyclic.util;
 
+import java.util.UUID;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -10,9 +13,19 @@ import net.minecraftforge.common.ForgeMod;
 
 public class UtilPlayer {
 
-  public static void setPlayerReach(Player player, int currentReach) {
-    //thank you ForgeMod for adding this when mojang removed
-    player.getAttribute(ForgeMod.REACH_DISTANCE.get()).setBaseValue(currentReach);
+  public static final UUID REACH_ID = UUID.fromString("1abcdef2-eff2-4a81-b92b-a1cb95f115c6");
+
+  public static void removePlayerReach(Player playerIn) {
+    AttributeInstance attr = playerIn.getAttribute(ForgeMod.REACH_DISTANCE.get());
+    attr.removeModifier(REACH_ID);
+  }
+
+  public static void addPlayerReach(Player playerIn, int reachBoost) {
+    removePlayerReach(playerIn);
+    AttributeInstance attr = playerIn.getAttribute(ForgeMod.REACH_DISTANCE.get());
+    //vanilla is 5, so +11 it becomes 16
+    AttributeModifier enchantment = new AttributeModifier(REACH_ID, "ReachEnchantmentCyclic", reachBoost, AttributeModifier.Operation.ADDITION);
+    attr.addPermanentModifier(enchantment);
   }
 
   public static double getExpTotal(Player player) {

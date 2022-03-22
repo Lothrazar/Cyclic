@@ -10,6 +10,10 @@
 			"required": false
 		},
 		{
+			"id": "cyclic:charm_torch_cave",
+			"required": false
+		},
+		{
 			"id": "cyclic:ender_book",
 			"required": false
 		}

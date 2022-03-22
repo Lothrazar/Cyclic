@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.BlockSimple;
 import com.lothrazar.cyclic.block.ButtonBlockMat;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
+import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
 import com.lothrazar.cyclic.block.FlowerSimpleBlock;
@@ -219,7 +220,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> PEACE_CANDLE = BLOCKS.register("peace_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 6 : 0)));
-  public static final RegistryObject<Block> WATER_CANDLE = BLOCKS.register("water_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
+  public static final RegistryObject<Block> WATER_CANDLE = BLOCKS.register("water_candle", () -> new CandleWaterBlock(Block.Properties.of(Material.STONE)
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 1 : 0)));
   public static final RegistryObject<Block> TELEPORT = BLOCKS.register("teleport", () -> new BlockTeleport(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> APPLE_SPROUT_EMERALD = BLOCKS.register("apple_sprout_emerald", () -> new AppleCropBlock(Block.Properties.of(Material.PLANT), false));

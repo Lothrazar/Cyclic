@@ -63,9 +63,12 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
     if (this.isPowered()) {
       return;
     }
+    //no cooldown unlike mojang hopper
     this.tryPullFromWorld(worldPosition.relative(Direction.UP));
     this.tryExtract(inventory, Direction.UP, getFlow(), null);
     Direction exportToSide = this.getBlockState().getValue(BlockFluidHopper.FACING);
+    //is it a composter
+    this.moveItemToCompost(exportToSide, inventory);
     this.moveItems(exportToSide, getFlow(), inventory);
   }
 

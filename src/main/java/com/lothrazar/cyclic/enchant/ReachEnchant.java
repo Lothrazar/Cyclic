@@ -37,8 +37,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ReachEnchant extends EnchantmentCyclic {
 
   private static final String NBT_REACH_ON = "reachon";
-  private static final int REACH_VANILLA = 5;
-  private static final int REACH_BOOST = 16;
+  public static final int REACH_BOOST = 11; // 16 = 11 + 5
   public static final String ID = "reach";
   public static BooleanValue CFG;
 
@@ -69,12 +68,12 @@ public class ReachEnchant extends EnchantmentCyclic {
 
   private void turnReachOff(Player player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, false);
-    UtilPlayer.setPlayerReach(player, REACH_VANILLA);
+    UtilPlayer.removePlayerReach(player);
   }
 
   private void turnReachOn(Player player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, true);
-    UtilPlayer.setPlayerReach(player, REACH_BOOST);
+    UtilPlayer.addPlayerReach(player, REACH_BOOST);
   }
 
   @SubscribeEvent

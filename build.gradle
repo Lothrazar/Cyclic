@@ -171,6 +171,7 @@ publishing {
 }
 
 task signJar(type: SignJar, dependsOn: jar) {
+
     onlyIf {
         project.hasProperty('keyStore')
     }

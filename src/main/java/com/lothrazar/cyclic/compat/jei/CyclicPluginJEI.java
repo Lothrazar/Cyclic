@@ -18,7 +18,6 @@ import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.util.UtilString;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
@@ -39,7 +38,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {
@@ -90,12 +89,13 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM), GenitemRecipeCategory.ID);
     registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID), GenfluidRecipeCategory.ID);
     registry.addRecipes(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER), CrusherRecipeCategory.ID);
-    for (Item item : ForgeRegistries.ITEMS.getValues()) {
-      ItemStack st = new ItemStack(item);
+    for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
+      ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty()
           && (st.getItem() instanceof BucketItem == false)
-          && UtilString.isCyclic(item.getRegistryName())) {
-        registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslatableComponent(item.getDescriptionId() + ".guide"));
+      //          && UtilString.isCyclic(item.getRegistryName())
+      ) {
+        registry.addIngredientInfo(st, VanillaTypes.ITEM, new TranslatableComponent(item.get().getDescriptionId() + ".guide"));
       }
     }
   }

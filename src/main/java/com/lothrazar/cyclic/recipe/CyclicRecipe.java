@@ -23,13 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.recipe;
 
-import java.util.Map;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -44,6 +41,11 @@ public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
 
   protected CyclicRecipe(ResourceLocation id) {
     this.id = id;
+  }
+
+  @Override
+  public boolean isSpecial() {
+    return true;
   }
 
   @Override
@@ -82,28 +84,13 @@ public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
     if (ing.hasFluid() && tileFluid.getFluid() == ing.getFluidStack().getFluid()) {
       return true;
     }
-    //<<<<<<< HEAD
-    //    // FluidTags.makeWrapperTag
-    //    //if the fluids are not identical, they might have a matching tag
-    //    //see /data/forge/tags/fluids/
-    //    for (Tag<Fluid> fluidTag : FluidTags.getAllTags().getAllTags().values()) { // FluidTags.getStaticTags()) {
-    //      if (getRecipeFluid().getFluid().is(fluidTag) && tileFluid.getFluid().is(fluidTag)) {
-    //        return true;
-    //=======
     //either recipe has no fluid or didnt match, try for tag
     if (ing.hasTag()) {
-
       //see /data/<id>/tags/fluids/
       TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(ing.getTag()));
-      if(ft != null && tileFluid.getFluid().is(ft)){
-        return true ; // yes is matching the tag
+      if (ft != null && tileFluid.getFluid().is(ft)) {
+        return true; // yes is matching the tag
       }
-//      for (Map.Entry<ResourceLocation, Tag<Fluid>> fluidTag : FluidTags.getAllTags().getAllTags().entrySet()) {
-//        if (ing.getTag().equalsIgnoreCase(fluidTag.getKey().toString())) {
-//          //this fluidTag is the one given in the recipe. now if its on the fluid ok
-//          return tileFluid.getFluid().is(fluidTag.getValue());
-//        }
-//      }
     }
     return false;
   }

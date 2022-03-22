@@ -25,20 +25,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvider {
@@ -89,31 +83,21 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
     BlockPos target = this.worldPosition.relative(extractSide);
     Direction incomingSide = extractSide.getOpposite();
     IFluidHandler stuff = UtilFluid.getTank(level, target, incomingSide);
+    //check filter
     if (stuff != null
         && stuff.getTanks() > 0
         && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
       return;
     }
+    //is it a tank? try pulling from a tank
     boolean success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, TRANSFER_RATE.get());
-    FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
-    if (!success && sideHandler != null
-        && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      //test if its a source block, or a waterlogged block
-      BlockState targetState = level.getBlockState(target);
-      FluidState fluidState = level.getFluidState(target);
-      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
-        targetState = targetState.setValue(BlockStateProperties.WATERLOGGED, false);
-        //for waterlogged it is hardcoded to water
-        if (level.setBlockAndUpdate(target, targetState)) {
-          sideHandler.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
-      else if (fluidState != null && fluidState.isSource()) {
-        //not just water. any fluid source block
-        if (level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState())) {
-          sideHandler.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
+    if (success) {
+      return;
+    }
+    //not a tank. try the world
+    FluidTankBase tank = flow.get(extractSide).orElse(null);
+    if (tank != null && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
+      UtilFluid.extractSourceWaterloggedCauldron(level, target, tank);
     }
   }
 
