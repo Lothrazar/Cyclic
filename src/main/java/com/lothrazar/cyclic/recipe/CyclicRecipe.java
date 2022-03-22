@@ -88,7 +88,6 @@ public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
     if (ing.hasTag()) {
       //see /data/<id>/tags/fluids/
       TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(ing.getTag()));
-      System.out.println("FT  " + ft);
       if (ft != null && tileFluid.getFluid().is(ft)) {
         return true; // yes is matching the tag
       }

@@ -28,10 +28,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.WorldlyContainerHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -315,6 +317,28 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
         }
       }
     }
+  }
+
+  public boolean moveItemToCompost(Direction exportToSide, ItemStackHandler inventorySelf) {
+    BlockState bsTarget = this.level.getBlockState(worldPosition.relative(exportToSide));
+    if (bsTarget.getBlock() instanceof ComposterBlock com
+        && bsTarget.getValue(ComposterBlock.LEVEL) < ComposterBlock.MAX_LEVEL) {
+      //its not a BlockEntity, its a Worldly
+      Container compostContainer = ((WorldlyContainerHolder) bsTarget.getBlock()).getContainer(bsTarget, level, worldPosition.relative(exportToSide));
+      for (int i = 0; i < compostContainer.getContainerSize(); i++) {
+        ItemStack fromHopper = inventorySelf.extractItem(0, 1, true);
+        if (!fromHopper.isEmpty()
+            && compostContainer.canPlaceItem(i, fromHopper)
+            && ComposterBlock.COMPOSTABLES.containsKey(fromHopper.getItem())) {
+          //yes isvalid and allowed
+          compostContainer.setItem(i, fromHopper);
+          compostContainer.setChanged();
+          inventorySelf.extractItem(0, 1, false);
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {

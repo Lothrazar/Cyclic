@@ -31,9 +31,6 @@ public class LavaSpongeBlock extends BlockCyclic {
   //  }
 
   public void tryAbsorbLava(Level world, BlockPos pos) {
-    //    super.randomTick(state, world, pos, random);
-    //    SpongeBlock y;
-    System.out.println("Lava ti");
     int r = RADIUS.get();
     List<BlockPos> around = UtilShape.cubeSquareBase(pos.below(r / 2), r, r);
     final int max = world.random.nextInt(10) + around.size() / 3;
