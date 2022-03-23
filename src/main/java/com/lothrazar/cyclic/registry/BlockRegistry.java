@@ -17,8 +17,6 @@ import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.PressurePlateMetal;
-import com.lothrazar.cyclic.block.altar.BlockAltarCrystal;
-import com.lothrazar.cyclic.block.altar.BlockAltarExplos;
 import com.lothrazar.cyclic.block.altar.BlockAltarSol;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
@@ -288,11 +286,9 @@ public class BlockRegistry {
   public static final RegistryObject<Block> MAGNET_BLOCK = BLOCKS.register("magnet_block", () -> new BlockInsertingMagnet(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BUTTON_BASALT = BLOCKS.register("button_basalt", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 4));
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
-//  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
+  //  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
-  public static final RegistryObject<Block> ALTAR_SOLICITING = BLOCKS.register("altar_soliciting", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
-  public static final RegistryObject<Block> ALTAR_GUNPOWDER = BLOCKS.register("altar_gunpowder", () -> new BlockAltarExplos(Block.Properties.of(Material.STONE)));
-  public static final RegistryObject<Block> ALTAR_CRYSTAL = BLOCKS.register("altar_crystal", () -> new BlockAltarCrystal(Block.Properties.of(Material.STONE))); // card target
+  public static final RegistryObject<Block> ALTAR_SOLICITING = BLOCKS.register("altar", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
   //block  // peace from traders . and ? also kill?
   //block  // peace from creeper types?
   //powered furnace

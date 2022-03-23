@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
@@ -20,7 +22,6 @@ import com.lothrazar.cyclic.item.FireExtinguishItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.LeverRemote;
-import com.lothrazar.cyclic.item.MagnetChargeItem;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.SleepingMatItem;
@@ -105,9 +106,6 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.item.wing.EnderWingItem;
 import com.lothrazar.cyclic.item.wing.EnderWingSp;
 import com.lothrazar.cyclic.registry.MaterialRegistry.ToolMats;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.util.datafix.fixes.ItemPotionFix;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -121,8 +119,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
@@ -473,22 +469,18 @@ public class ItemRegistry {
   public static final RegistryObject<Item> FIRE_KILLER = ITEMS.register("fire_killer", () -> new FireExtinguishItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //  public static final RegistryObject<Item> CRAFTING_FOOD = ITEMS.register("crafting_food", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().build()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> MILK_BOTTLE = ITEMS.register("milk_bottle", () -> new DrinkBottle(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().build()).tab(MaterialRegistry.ITEM_GROUP)));
-
   public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-//  public static final RegistryObject<Item> MAGNET = ITEMS.register("magnet", () -> new MagnetChargeItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> MAGNET = ITEMS.register("magnet", () -> new MagnetChargeItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> MAGNET_BLOCK = ITEMS.register("magnet_block", () -> new BlockItem(BlockRegistry.MAGNET_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-//  public static final RegistryObject<Item> ENCHANTER = ITEMS.register("enchanter", () -> new BlockItem(BlockRegistry.ENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> ALTAR_SOLICITING = ITEMS.register("altar_soliciting", () -> new BlockItem(BlockRegistry.ALTAR_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> ALTAR_CRYSTAL = ITEMS.register("altar_crystal", () -> new BlockItem(BlockRegistry.ALTAR_CRYSTAL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> ALTAR_GUNPOWDER = ITEMS.register("altar_gunpowder", () -> new BlockItem(BlockRegistry.ALTAR_GUNPOWDER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  //  public static final RegistryObject<Item> ENCHANTER = ITEMS.register("enchanter", () -> new BlockItem(BlockRegistry.ENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ALTAR_SOLICITING = ITEMS.register("altar", () -> new BlockItem(BlockRegistry.ALTAR_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new BlockItem(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GENERATOR_CAT = ITEMS.register("generator_cat", () -> new BlockItem(BlockRegistry.GENERATOR_CAT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-
   public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
 
     @Override
@@ -496,7 +488,7 @@ public class ItemRegistry {
       return stackIngredient.is(Items.STICK) || super.isValidRepairItem(stackShield, stackIngredient);
     }
   });
-  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)){
+  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
 
     @Override
     public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {

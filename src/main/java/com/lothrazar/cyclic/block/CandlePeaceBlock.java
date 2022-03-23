@@ -54,7 +54,7 @@ public class CandlePeaceBlock extends BlockCyclic {
   public static IntValue HEIGHT;
   public static IntValue RADIUS;
   private static final double BOUNDS = 3;
-  private static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
+  public static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
       16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
   private static final double CHANCE_SOUND = 0.3;
 
@@ -78,12 +78,9 @@ public class CandlePeaceBlock extends BlockCyclic {
    */
   public static boolean isBad(LivingEntity mob, MobSpawnType res) {
     MobCategory type = mob.getClassification(false);
-    if ((res == MobSpawnType.NATURAL ||
-        res == MobSpawnType.REINFORCEMENT ||
-        res == MobSpawnType.EVENT)
-        && (mob instanceof Enemy ||
-            !type.isFriendly() || // basically only MONSTER is friendly
-            mob instanceof WanderingTrader || mob instanceof TraderLlama)) {
+    if (mob instanceof Enemy ||
+        !type.isFriendly() || // basically only MONSTER is friendly
+        mob instanceof WanderingTrader || mob instanceof TraderLlama) {
       return true;
     }
     return false;

@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=empty": { "model": "cyclic:block/altar" },
+        "type=trader": { "model": "cyclic:block/altar_trader" },
+        "type=phantom": { "model": "cyclic:block/altar_phantom" }
+    }
+}

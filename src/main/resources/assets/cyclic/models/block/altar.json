@@ -1,0 +1,7 @@
+{
+  "parent": "cyclic:parent/altar",
+  "textures": {
+    "0": "cyclic:blocks/altar",
+    "particle": "cyclic:blocks/altar"
+  }
+}
