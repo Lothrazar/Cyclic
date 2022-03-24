@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.altar.TilePedestal;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -42,6 +43,7 @@ import com.lothrazar.cyclic.block.generatorfluid.TileGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.TileGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.TileGeneratorFuel;
 import com.lothrazar.cyclic.block.generatoritem.TileGeneratorDrops;
+import com.lothrazar.cyclic.block.generatorsolar.TileGeneratorSolar;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.hopper.TileSimpleHopper;
 import com.lothrazar.cyclic.block.hopperfluid.TileFluidHopper;
@@ -111,6 +113,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TileGeneratorFood>> GENERATOR_FOOD = TILES.register("generator_food", () -> BlockEntityType.Builder.of(TileGeneratorFood::new, BlockRegistry.GENERATOR_FOOD.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> BlockEntityType.Builder.of(TileGeneratorDrops::new, BlockRegistry.GENERATOR_ITEM.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileGeneratorFluid>> GENERATOR_FLUID = TILES.register("generator_fluid", () -> BlockEntityType.Builder.of(TileGeneratorFluid::new, BlockRegistry.GENERATOR_FLUID.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileGeneratorSolar>> GENERATOR_SOLAR = TILES.register("generator_solar", () -> BlockEntityType.Builder.of(TileGeneratorSolar::new, BlockRegistry.GENERATOR_SOLAR.get()).build(null));
   public static final RegistryObject<BlockEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> BlockEntityType.Builder.of(TilePackager::new, BlockRegistry.PACKAGER.get()).build(null));
   public static final RegistryObject<BlockEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> BlockEntityType.Builder.of(MembraneLampTile::new, BlockRegistry.LAMP.get()).build(null));
   public static final RegistryObject<BlockEntityType<SoilTile>> SOIL = TILES.register("soil", () -> BlockEntityType.Builder.of(SoilTile::new, BlockRegistry.SOIL.get()).build(null));
@@ -171,4 +174,5 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TileEnderShelf>> ENDER_SHELF = TILES.register("ender_shelf", () -> BlockEntityType.Builder.of(TileEnderShelf::new, BlockRegistry.ENDER_SHELF.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileEnderCtrl>> ENDER_CONTROLLER = TILES.register("ender_controller", () -> BlockEntityType.Builder.of(TileEnderCtrl::new, BlockRegistry.ENDER_CONTROLLER.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileWorkbench>> WORKBENCH = TILES.register("workbench", () -> BlockEntityType.Builder.of(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TilePedestal>> PEDESTAL = TILES.register("pedestal", () -> BlockEntityType.Builder.of(TilePedestal::new, BlockRegistry.PEDESTAL.get()).build(null));
 }

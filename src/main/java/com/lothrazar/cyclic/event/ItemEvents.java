@@ -104,14 +104,14 @@ public class ItemEvents {
       }
       if (BlockAltarSol.isTrader(mob, res)
           && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.ALTAR_SOLICITING.get().defaultBlockState().setValue(BlockAltarSol.TYPE, AltarType.TRADER),
+              BlockRegistry.ALTAR.get().defaultBlockState().setValue(BlockAltarSol.TYPE, AltarType.TRADER),
               16, 16)) {
         ModCyclic.LOGGER.info("Spawn cancelled by altar " + mob.getType());
         event.setResult(Result.DENY);
       }
       if (BlockAltarSol.isPhantom(mob, res)
           && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.ALTAR_SOLICITING.get().defaultBlockState().setValue(BlockAltarSol.TYPE, AltarType.PHANTOM),
+              BlockRegistry.ALTAR.get().defaultBlockState().setValue(BlockAltarSol.TYPE, AltarType.PHANTOM),
               16, 16)) {
         ModCyclic.LOGGER.info("Spawn cancelled by phantom altar " + mob.getType());
         event.setResult(Result.DENY);

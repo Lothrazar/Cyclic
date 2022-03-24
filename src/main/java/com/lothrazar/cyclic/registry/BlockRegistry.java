@@ -61,6 +61,7 @@ import com.lothrazar.cyclic.block.generatorfluid.BlockGeneratorFluid;
 import com.lothrazar.cyclic.block.generatorfood.BlockGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.BlockGeneratorFuel;
 import com.lothrazar.cyclic.block.generatoritem.BlockGeneratorDrops;
+import com.lothrazar.cyclic.block.generatorsolar.BlockGeneratorSolar;
 import com.lothrazar.cyclic.block.glass.DarkGlassBlock;
 import com.lothrazar.cyclic.block.glass.DarkGlassConnectedBlock;
 import com.lothrazar.cyclic.block.glass.GlassConnectedBlock;
@@ -288,12 +289,13 @@ public class BlockRegistry {
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
   //  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
-  public static final RegistryObject<Block> ALTAR_SOLICITING = BLOCKS.register("altar", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("pedestal", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
   //block  // peace from traders . and ? also kill?
   //block  // peace from creeper types?
   //powered furnace
-  public static final RegistryObject<Block> GENERATOR_CAT = BLOCKS.register("generator_cat", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
-  public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
+  //  public static final RegistryObject<Block> GENERATOR_CAT = BLOCKS.register("generator_cat", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
+  public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of(Material.STONE))); // NOGUI
   public static final RegistryObject<Block> DOOR_GOLD = BLOCKS.register("door_gold", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.GOLD).sound(SoundType.METAL)));
   public static final RegistryObject<Block> DOOR_NETHERITE = BLOCKS.register("door_netherite", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.TERRACOTTA_BLACK).sound(SoundType.METAL)));
   //drain use bottle on it to fill. and its a fluid cap
