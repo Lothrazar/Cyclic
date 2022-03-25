@@ -378,6 +378,7 @@
     "buildertype.sphere": "Sphere",
     "buildertype.square": "Square",
     "buildertype.stairway": "Stairway",
+    "buildertype.tunnel": "Tunnel",
     "buildertype.up": "Up",
     "button.filter.ignoredamage0.tooltip": "Normal item matching",
     "button.filter.ignoredamage1.tooltip": "Ignore damage and match only on item",

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.shapebuilder;
 public enum BuildStructureType {
 
-  FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID;
+  FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID, TUNNEL;
 
   public static BuildStructureType getNextType(BuildStructureType btype) {
     int type = btype.ordinal();
@@ -17,29 +17,5 @@ public enum BuildStructureType {
       return false;
     }
     return true;
-  }
-
-  public String shortcode() {
-    switch (this) {
-      case CIRCLE:
-        return "CI";
-      case DIAGONAL:
-        return "DI";
-      case FACING:
-        return "FA";
-      case SOLID:
-        return "SO";
-      case SPHERE:
-        return "SP";
-      case SQUARE:
-        return "SQ";
-      case DOME:
-        return "DO";
-      case CUP:
-        return "CU";
-      case PYRAMID:
-        return "PY";
-    }
-    return "";
   }
 }
