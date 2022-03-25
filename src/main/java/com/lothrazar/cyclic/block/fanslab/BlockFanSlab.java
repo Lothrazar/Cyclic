@@ -150,17 +150,6 @@ public class BlockFanSlab extends BlockBase implements IWaterLoggable {
     }
     return null;
   }
-  //  @Override
-  //  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
-  //    if (entity != null) {
-  //      world.setBlockState(pos, state.with(HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntity(pos, entity)), 2);
-  //    }
-  //  } 
-  //  @Override
-  //  public BlockState getStateForPlacement(BlockItemUseContext context) {
-  //    return super.getStateForPlacement(context)
-  //        .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
-  //  }
 
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {

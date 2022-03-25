@@ -71,5 +71,6 @@
 		,"1.5.12":"fixed 'Material Generator Consumes Single ItemStacks with Zero FE Generation'.  Update ru_ru.json #1986 by Bytegm.  PR #1976 by metalshark :Item, Energy, and Fluid Cables now have Increased performance (compile time optimisations, reduction in cyclomatic complexity and removal of redundant checks) "
 		,"1.5.13":"Added support for using the left hand on Item User. #1994 by 'metalshark' Fixes issue #1992.  "
 		,"1.5.14":"Fix #2016 regarding settings data card.  Fix Crash when trying to push Cyclic item cables with create piston.   Merge pull request #2013 from metalshark : Add caching of packager recipes and move static methods out of main class for scaling.   Merge pull request #2011 from metalshark : Invalidate capabilities when declaring them "
+		,"1.5.15":"Fix #2057 doorbell on leaf blocks "
 	}
  }

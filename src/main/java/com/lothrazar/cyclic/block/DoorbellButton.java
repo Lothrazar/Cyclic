@@ -36,8 +36,11 @@ public class DoorbellButton extends AbstractButtonBlock {
 
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {
-    return super.getStateForPlacement(context)
-        .with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
+    BlockState def = super.getStateForPlacement(context);
+    if (def == null) {
+      def = this.getDefaultState();
+    }
+    return def.with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
   }
 
   @Override
