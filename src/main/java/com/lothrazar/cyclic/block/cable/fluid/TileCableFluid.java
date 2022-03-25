@@ -51,8 +51,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
   public static final int FLOW_RATE = CAPACITY; //normal non-extract flow
   public static final int EXTRACT_RATE = CAPACITY;
-  private final FluidTank fluidTank = new FluidTankBase(this, CAPACITY, fluidStack ->
-    FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
+  private final FluidTank fluidTank = new FluidTankBase(this, CAPACITY, fluidStack -> FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
   private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> fluidTank);
   private final Map<Direction, LazyOptional<IFluidHandler>> fluidCapSides = new HashMap<>();
 
@@ -156,13 +155,17 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
       if (side == null) {
         return fluidCap.cast();
       }
+      if (fluidCapSides.containsKey(side)) {
+        LazyOptional<IFluidHandler> sidedCap = fluidCapSides.get(side);
+        return sidedCap.cast();
+      }
       final LazyOptional<IFluidHandler> fluidCapSide = fluidCapSides.computeIfAbsent(side, k -> {
         if (getConnectionType(k) != EnumConnectType.BLOCKED) {
           final LazyOptional<IFluidHandler> v = LazyOptional.of(() -> fluidTank);
           fluidCapSides.put(k, v);
           return v;
         }
-        return null;
+        return LazyOptional.empty();
       });
       if (fluidCapSide != null) {
         return fluidCapSide.cast();
@@ -171,6 +174,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
     return super.getCapability(cap, side);
   }
 
+  @Override
   public void invalidateCaps() {
     fluidCap.invalidate();
     for (final LazyOptional<IFluidHandler> sidedCap : fluidCapSides.values()) {

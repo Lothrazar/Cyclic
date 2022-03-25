@@ -13,6 +13,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -93,7 +94,8 @@ public class UtilFluid {
     if (tankFrom == null) {
       return false;
     }
-    final IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp).orElse(null);
+    LazyOptional<IFluidHandler> testNull = FluidUtil.getFluidHandler(world, posSide, sideOpp); //yes i got concurrent/NPE on this line
+    final IFluidHandler fluidTo = testNull == null ? null : testNull.orElse(null);
     if (fluidTo == null) {
       return false;
     }

@@ -14,11 +14,16 @@ public abstract class TileCableBase extends TileEntityBase {
     super(tileEntityTypeIn);
   }
 
+  @Override
   public abstract void setField(int field, int value);
 
+  @Override
   public abstract int getField(int field);
 
   public EnumConnectType getConnectionType(final Direction side) {
+    if (connectTypeMap.containsKey(side)) {
+      return connectTypeMap.get(side);
+    }
     return connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
   }
 
