@@ -32,7 +32,7 @@ import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
 import com.lothrazar.cyclic.enchant.EnchantBeekeeper;
 import com.lothrazar.cyclic.enchant.EnchantBeheading;
-import com.lothrazar.cyclic.enchant.EnchantCurse;
+import com.lothrazar.cyclic.enchant.EnchantGloom;
 import com.lothrazar.cyclic.enchant.EnchantDisarm;
 import com.lothrazar.cyclic.enchant.EnchantExcavation;
 import com.lothrazar.cyclic.enchant.EnchantGrowth;
@@ -179,7 +179,7 @@ public class ConfigRegistry {
     EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.ID, true);
     EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.ID, true);
     EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.ID, true);
-    EnchantCurse.CFG = CFG.comment("Set false to disable enchantment").define(EnchantCurse.ID, true);
+    EnchantGloom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGloom.ID, true);
     EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
     EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.ID, true);
     EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.ID, true);

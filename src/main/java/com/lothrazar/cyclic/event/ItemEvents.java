@@ -31,7 +31,6 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -357,12 +356,7 @@ public class ItemEvents {
   public void onBonemealEvent(BonemealEvent event) {
     World world = event.getWorld();
     BlockPos pos = event.getPos();
-    if (world.getBlockState(pos).getBlock() == Blocks.PODZOL
-        && world.isAirBlock(pos.up())) {
-      world.setBlockState(pos.up(), BlockRegistry.FLOWER_CYAN.get().getDefaultState());
-      event.setResult(Result.ALLOW);
-    }
-    else if (world.getBlockState(pos).getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
+    if (world.getBlockState(pos).getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setResult(Result.ALLOW);
       if (world.rand.nextDouble() < 0.5) {
         UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_CYAN.get()));

@@ -34,8 +34,6 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -64,16 +62,6 @@ public class EnchantGrowth extends EnchantBase {
   @Override
   public int getMaxLevel() {
     return 3;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return stack.getItem() instanceof HoeItem;
-  }
-
-  @Override
-  public boolean canApply(ItemStack stack) {
-    return canApplyAtEnchantingTable(stack);
   }
 
   @SubscribeEvent

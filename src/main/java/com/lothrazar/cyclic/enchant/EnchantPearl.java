@@ -8,8 +8,6 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -40,16 +38,6 @@ public class EnchantPearl extends EnchantBase {
   @Override
   public int getMaxLevel() {
     return 3;
-  }
-
-  @Override
-  public boolean canApply(ItemStack stack) {
-    return stack.getItem() instanceof SwordItem;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canApply(stack);
   }
 
   @SubscribeEvent

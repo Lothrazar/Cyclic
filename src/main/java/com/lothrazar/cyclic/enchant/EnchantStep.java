@@ -30,7 +30,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,19 +56,6 @@ public class EnchantStep extends EnchantBase {
   @Override
   public int getMaxLevel() {
     return 1;
-  }
-
-  @Override
-  public boolean canApply(ItemStack stack) {
-    //anything that goes on your feet
-    boolean yes = (stack.getItem() instanceof ArmorItem)
-        && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
-    return yes;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canApply(stack);
   }
 
   @SubscribeEvent

@@ -9,14 +9,12 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 
-public class EnchantCurse extends EnchantBase {
+public class EnchantGloom extends EnchantBase {
 
   private static final double BASE_ACTIVATION_CHANCE = 0.1;
   private static final double BASE_APPLY_CHANCE = 0.3;
@@ -24,7 +22,7 @@ public class EnchantCurse extends EnchantBase {
   private static final double MAX_EFFECTS = 3;
   private static final int EFFECT_DURATION = 20 * 5;
 
-  public EnchantCurse(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
+  public EnchantGloom(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }
@@ -40,11 +38,6 @@ public class EnchantCurse extends EnchantBase {
   @Override
   public int getMaxLevel() {
     return 1;
-  }
-
-  @Override
-  public boolean canApply(ItemStack stack) {
-    return stack.getItem() instanceof ArmorItem;
   }
 
   @Override

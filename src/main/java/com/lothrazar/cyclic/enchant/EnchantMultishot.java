@@ -53,11 +53,6 @@ public class EnchantMultishot extends EnchantBase {
   }
 
   @Override
-  public boolean canApply(ItemStack stack) {
-    return stack.getItem() instanceof BowItem;
-  }
-
-  @Override
   public int getMaxLevel() {
     return 1;
   }

@@ -9,7 +9,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,11 +39,6 @@ public class EnchantDisarm extends EnchantBase {
 
   public double getChanceToDisarm(int level) {
     return BASE_CHANCE + (BASE_CHANCE / 2 * (level - 1));
-  }
-
-  @Override
-  public boolean canApply(ItemStack stack) {
-    return stack.getItem() instanceof SwordItem;
   }
 
   @Override

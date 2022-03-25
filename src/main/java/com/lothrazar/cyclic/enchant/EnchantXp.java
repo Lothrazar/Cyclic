@@ -5,8 +5,6 @@ import com.lothrazar.cyclic.registry.EnchantRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
@@ -52,14 +50,6 @@ public class EnchantXp extends EnchantBase {
 
   private int getRandomExpAmount(int level, World world) {
     return world.rand.nextInt(getMaxLevel()) * (level + 1);
-  }
-
-  @Override
-  public boolean canApply(ItemStack stack) {
-    if (stack.getItem() instanceof SwordItem) {
-      return true; //override even though digger type 
-    }
-    return super.canApply(stack);
   }
 
   @Override

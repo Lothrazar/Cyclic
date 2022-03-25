@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.world.biome.Biome;
@@ -32,11 +33,8 @@ public class WorldGenEvents {
         || event.getCategory() == Biome.Category.PLAINS
         || event.getCategory() == Biome.Category.TAIGA
         || event.getCategory() == Biome.Category.EXTREME_HILLS) {
-      //      ModCyclic.LOGGER.info(String.format("cyan_flower in BIOME=%s; category=%s", event.getName(), event.getCategory().getName()));
-      //spawn 
-      event.getGeneration().withFeature(
-          GenerationStage.Decoration.VEGETAL_DECORATION,
-          CYAN_FLOWER_FEATURE);
+      event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CYAN_FLOWER_FEATURE);
+      ModCyclic.LOGGER.info(String.format("CYAN_GENERATES in BIOME=%s; category=%s", event.getName(), event.getCategory().getName()));
     }
   }
 }

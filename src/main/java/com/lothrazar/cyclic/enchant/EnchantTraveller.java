@@ -29,9 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ElytraItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -65,18 +63,6 @@ public class EnchantTraveller extends EnchantBase {
   @Override
   public int getMaxLevel() {
     return 1;
-  }
-
-  @Override
-  public boolean canApply(ItemStack stack) {
-    boolean yes = (stack.getItem() instanceof ArmorItem)
-        && ((ArmorItem) stack.getItem()).getEquipmentSlot() == EquipmentSlotType.LEGS;
-    return yes;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canApply(stack);
   }
 
   @SubscribeEvent
