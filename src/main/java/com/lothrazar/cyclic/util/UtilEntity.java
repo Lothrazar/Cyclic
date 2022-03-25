@@ -39,8 +39,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Villager;
@@ -58,6 +60,25 @@ public class UtilEntity {
   private static final float ITEMSPEEDFAR = 0.9F;
   private static final float ITEMSPEEDCLOSE = 0.2F;
   private static final int TICKS_FALLDIST_SYNC = 22; //tick every so often
+
+  public static boolean haveSameDimension(Entity tamed, Entity owner) {
+    return UtilWorld.dimensionToString(tamed.level).equalsIgnoreCase(
+        UtilWorld.dimensionToString(owner.level));
+  }
+
+  public static boolean isTamedByPlayer(Entity entity, Player player) {
+    //TODO: do we care haveSameDimension(tamed, player) 
+    if (entity instanceof OwnableEntity tamed) { //TamableAnimal impl ownable 
+      return tamed.getOwnerUUID() != null &&
+          tamed.getOwnerUUID().equals(player.getUUID());
+    }
+    else if (entity instanceof AbstractHorse) {
+      AbstractHorse horse = (AbstractHorse) entity;
+      return horse.getOwnerUUID() != null &&
+          horse.getOwnerUUID().equals(player.getUUID());
+    }
+    return false;
+  }
 
   /**
    * @return true if teleport was a success

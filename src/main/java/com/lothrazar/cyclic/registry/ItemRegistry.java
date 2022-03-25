@@ -21,6 +21,7 @@ import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.FireExtinguishItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.item.ItemHorseWhistle;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.ShieldCyclicItem;
@@ -467,23 +468,21 @@ public class ItemRegistry {
   public static final RegistryObject<Item> WAND_HYPNO = ITEMS.register("wand_hypno", () -> new WandHypnoItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAND_MISSILE = ITEMS.register("wand_missile", () -> new WandMissileItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FIRE_KILLER = ITEMS.register("fire_killer", () -> new FireExtinguishItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> WHISTLE_MOUNT = ITEMS.register("whistle_mount", () -> new FireExtinguishItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> WHISTLE_PET = ITEMS.register("whistle_pet", () -> new FireExtinguishItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> CRAFTING_FOOD = ITEMS.register("crafting_food", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().build()).tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> FLUTE = ITEMS.register("flute", () -> new ItemHorseWhistle(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  //  public static final RegistryObject<Item> WHISTLE = ITEMS.register("whistle", () -> new FireExtinguishItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> MILK_BOTTLE = ITEMS.register("milk_bottle", () -> new DrinkBottle(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().build()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> MAGNET = ITEMS.register("magnet", () -> new MagnetChargeItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> MAGNET_BLOCK = ITEMS.register("magnet_block", () -> new BlockItem(BlockRegistry.MAGNET_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> ENCHANTER = ITEMS.register("enchanter", () -> new BlockItem(BlockRegistry.ENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ENCHANTER = ITEMS.register("enchanter", () -> new BlockItem(BlockRegistry.ENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> ALTAR = ITEMS.register("altar", () -> new BlockItem(BlockRegistry.ALTAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> PEDESTAL = ITEMS.register("pedestal", () -> new BlockItem(BlockRegistry.PEDESTAL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new BlockItem(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> GENERATOR_CAT = ITEMS.register("generator_cat", () -> new BlockItem(BlockRegistry.GENERATOR_CAT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  //  public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  //  public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
 
     @Override
