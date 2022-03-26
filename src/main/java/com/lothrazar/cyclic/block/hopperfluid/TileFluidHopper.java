@@ -5,11 +5,7 @@ import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilFluid;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +15,6 @@ import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileFluidHopper extends TileEntityBase implements ITickableTileEntity {
 
@@ -88,23 +83,7 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
       }
     }
     if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      //test if its a source block, or a waterlogged block.
-      BlockState targetState = world.getBlockState(target);
-      FluidState fluidState = world.getFluidState(target); // targetState.getFluidState();
-      //new
-      if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
-        targetState = targetState.with(BlockStateProperties.WATERLOGGED, false);
-        //for waterlogged it is hardcoded to water
-        if (world.setBlockState(target, targetState)) {
-          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
-      else if (fluidState != null && fluidState.isSource()) {
-        //not just water. any fluid source block
-        if (world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-          tank.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
-        }
-      }
+      UtilFluid.extractSourceWaterloggedCauldron(world, target, tank);
     }
   }
 

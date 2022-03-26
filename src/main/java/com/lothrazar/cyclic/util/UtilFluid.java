@@ -4,10 +4,16 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.PlayerContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -69,6 +75,47 @@ public class UtilFluid {
     }
     fluidCache.put(stage, model);
     return model;
+  }
+
+  public static void extractSourceWaterloggedCauldron(World level, BlockPos posTarget, IFluidHandler tank) {
+    if (tank == null) {
+      return;
+    }
+    //fills always gonna be one bucket but we dont know what type yet
+    //test if its a source block, or a waterlogged block
+    BlockState targetState = level.getBlockState(posTarget);
+    FluidState fluidState = level.getFluidState(posTarget);
+    if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.get(BlockStateProperties.WATERLOGGED) == true) {
+      //for waterlogged it is hardcoded to water
+      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      if (simFill == FluidAttributes.BUCKET_VOLUME
+          && level.setBlockState(posTarget, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
+        tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      }
+    }
+    else if (targetState.getBlock() == Blocks.CAULDRON && targetState.get(CauldronBlock.LEVEL) >= 3) {
+      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      if (simFill == FluidAttributes.BUCKET_VOLUME
+          && level.setBlockState(posTarget, Blocks.CAULDRON.getDefaultState())) {
+        tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      }
+    }
+    //    else if (targetState.getBlock() == Blocks.LAVA_CAULDRON) {
+    //      //copypasta of water cauldron code
+    //      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+    //      if (simFill == FluidAttributes.BUCKET_VOLUME
+    //          && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.getDefaultState())) {
+    //        tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+    //      }
+    //    }
+    else if (fluidState != null && fluidState.isSource() && fluidState.getFluid() != null) { // from ze world
+      //not just water. any fluid source block
+      int simFill = tank.fill(new FluidStack(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      if (simFill == FluidAttributes.BUCKET_VOLUME
+          && level.setBlockState(posTarget, Blocks.AIR.getDefaultState())) {
+        tank.fill(new FluidStack(fluidState.getFluid(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      }
+    }
   }
 
   public static float getScale(FluidTank tank) {

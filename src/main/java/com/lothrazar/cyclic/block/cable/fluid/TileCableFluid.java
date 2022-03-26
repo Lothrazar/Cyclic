@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
@@ -13,17 +12,12 @@ import com.lothrazar.cyclic.util.UtilFluid;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -32,10 +26,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -92,50 +84,24 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
     final BlockPos target = this.pos.offset(extractSide);
     final Direction incomingSide = extractSide.getOpposite();
     //when draining from a tank (instead of a source/waterlogged block) check the filter
-    final IFluidHandler tank = UtilFluid.getTank(world, target, incomingSide);
-    if (tank != null
-        && tank.getTanks() > 0
-        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tank.getFluidInTank(0))) {
+    final IFluidHandler tankTarget = UtilFluid.getTank(world, target, incomingSide);
+    if (tankTarget != null
+        && tankTarget.getTanks() > 0
+        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tankTarget.getFluidInTank(0))) {
       return;
     }
     //first try standard fluid transfer
-    if (UtilFluid.tryFillPositionFromTank(world, pos, extractSide, tank, EXTRACT_RATE)) {
+    if (UtilFluid.tryFillPositionFromTank(world, pos, extractSide, tankTarget, EXTRACT_RATE)) {
       return;
     }
     //handle special cases
-    if (fluidTank.getSpace() < FluidAttributes.BUCKET_VOLUME) {
-      return;
+    if (!fluidCapSides.containsKey(extractSide)) {
+      final LazyOptional<IFluidHandler> hax = LazyOptional.of(() -> fluidTank);
+      fluidCapSides.put(extractSide, hax);
     }
-    //handle waterlogged blocks
-    final BlockState targetState = world.getBlockState(target);
-    if (targetState.hasProperty(BlockStateProperties.WATERLOGGED)
-        && targetState.get(BlockStateProperties.WATERLOGGED)
-        && world.setBlockState(target, targetState.with(BlockStateProperties.WATERLOGGED, false))) {
-      //the waterlogged block contained a bucket amount of water
-      final FluidStack bucketAmountOfWater = new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME);
-      final int filledAmount = fluidTank.fill(bucketAmountOfWater, FluidAction.EXECUTE);
-      //sanity check
-      if (filledAmount != bucketAmountOfWater.getAmount()) {
-        ModCyclic.LOGGER.error("Imbalance filling water extracted from waterlogged block, filled " + filledAmount + " expected " + bucketAmountOfWater);
-      }
-      return;
-    }
-    //handle source blocks
-    final FluidState fluidState = world.getFluidState(target);
-    final Fluid fluid = fluidState.getFluid();
-    if (!fluid.isSource(fluidState)) {
-      return;
-    }
-    //remove the fluid source block
-    if (!world.setBlockState(target, Blocks.AIR.getDefaultState())) {
-      return;
-    }
-    //the fluid source block contained a bucket amount of that fluid
-    final FluidStack bucketAmountOfFluid = new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME);
-    final int filledAmount = fluidTank.fill(bucketAmountOfFluid, FluidAction.EXECUTE);
-    //sanity check
-    if (filledAmount != bucketAmountOfFluid.getAmount()) {
-      ModCyclic.LOGGER.error("Incorrect amount of fluid extracted from fluid source, filled " + filledAmount + " expected " + bucketAmountOfFluid);
+    IFluidHandler tank = fluidCapSides.get(extractSide).orElse(null);
+    if (fluidTank.getSpace() > -FluidAttributes.BUCKET_VOLUME) {
+      UtilFluid.extractSourceWaterloggedCauldron(world, target, tank);
     }
   }
 
