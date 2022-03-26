@@ -347,7 +347,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       ItemStack fromHopper = inventorySelf.extractItem(0, 1, true);
       if (!fromHopper.isEmpty()) {
         BlockState blockstate = attemptCompost(bsTarget, world, getPos().offset(exportToSide), fromHopper);
-        System.out.println("1.16 composter logic aaa");
         this.world.playEvent(1500, posTarget, blockstate != bsTarget ? 1 : 0);
         inventorySelf.extractItem(0, 1, false);
         return true;
