@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.base.EnchantBase;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.util.HarvestUtil;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.Collections;
@@ -91,7 +91,7 @@ public class EnchantGrowth extends EnchantBase {
         //do one
         BlockPos pos = shape.get(i);
         BlockState target = entity.world.getBlockState(pos);
-        IntegerProperty propAge = TileHarvester.getAgeProp(target);
+        IntegerProperty propAge = HarvestUtil.getAgeProp(target);
         if (propAge == null) {
           continue;
         }

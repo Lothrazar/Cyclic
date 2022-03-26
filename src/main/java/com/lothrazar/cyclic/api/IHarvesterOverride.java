@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.api;
 
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
+import com.lothrazar.cyclic.util.HarvestUtil;
 import java.util.function.Consumer;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public interface IHarvesterOverride {
 
   public static void registerHarvestOverrider(IHarvesterOverride override) {
-    TileHarvester.HARVEST_OVERRIDES.add(override);
+    HarvestUtil.HARVEST_OVERRIDES.add(override);
   }
 
   /**
