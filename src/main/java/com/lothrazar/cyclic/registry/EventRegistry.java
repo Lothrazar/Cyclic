@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.event.PlayerAbilityEvents;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.event.PotionEvents;
 import com.lothrazar.cyclic.event.WorldGenEvents;
+import com.lothrazar.cyclic.util.CompostRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
@@ -26,5 +27,8 @@ public class EventRegistry {
     MinecraftForge.EVENT_BUS.register(new WorldGenEvents());
     MinecraftForge.EVENT_BUS.register(new PlayerDataEvents());
     MinecraftForge.EVENT_BUS.register(new PlayerAbilityEvents());
+    event.enqueueWork(() -> {
+      CompostRegistry.setup();
+    });
   }
 }
