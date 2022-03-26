@@ -68,22 +68,6 @@ public class BlockEnderShelf extends BlockBase {
     if (state.hasTileEntity() && (!state.isIn(newState.getBlock()) || !newState.hasTileEntity())) {
       worldIn.removeTileEntity(pos);
     }
-    //    if (state.getBlock() != newState.getBlock()) {
-    //      TileEntity tileentity = worldIn.getTileEntity(pos);
-    //      if (tileentity != null) {
-    //        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-    //        if (items != null) {
-    //          for (int i = 0; i < items.getSlots(); ++i) {
-    //            ItemStack is = items.getStackInSlot(i);
-    //            while (!is.isEmpty()) {
-    //              InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), is.split(1));
-    //            }
-    //          }
-    //          worldIn.updateComparatorOutputLevel(pos, this);
-    //          worldIn.removeTileEntity(pos);
-    //        }
-    //      }
-    //    }
   }
 
   @Override
@@ -115,6 +99,7 @@ public class BlockEnderShelf extends BlockBase {
             ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
             player.setHeldItem(hand, remaining);
             player.swingArm(hand);
+            return ActionResultType.SUCCESS;
           }
         }
       }
@@ -122,6 +107,7 @@ public class BlockEnderShelf extends BlockBase {
         ItemStack retrievedBook = shelf.inventory.extractItem(slot, 1, false);
         player.setHeldItem(hand, retrievedBook);
         player.swingArm(hand);
+        return ActionResultType.SUCCESS;
       }
     }
     return ActionResultType.PASS;
@@ -135,12 +121,6 @@ public class BlockEnderShelf extends BlockBase {
   public TileEnderShelf getTileEntity(World world, BlockPos pos) {
     return (TileEnderShelf) world.getTileEntity(pos);
   }
-  //
-  //
-  //
-  //
-  //
-  //
 
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.loot.LootContext.Builder builder) {
@@ -158,12 +138,9 @@ public class BlockEnderShelf extends BlockBase {
     TileEnderShelf shelf = (TileEnderShelf) tileentity;
     BlockPos controllerPos = EnderShelfHelper.findConnectedController(world, pos);
     if (controllerPos != null) {
-      //      shelf.setControllerLocation(controllerPos);
       TileEnderCtrl controller = (TileEnderCtrl) world.getTileEntity(controllerPos);
       if (controllerPos != null && controller != null) {
         controller.getShelves().add(pos);
-        //                Set<BlockPos> shelves = EnderShelfHelper.findConnectedShelves(world, controllerPos, controller.getCurrentFacing());
-        //        controller.setShelves(shelves);
       }
     }
     if (stack.getTag() != null) {
@@ -178,9 +155,11 @@ public class BlockEnderShelf extends BlockBase {
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
-      CompoundNBT tileData = shelf.inventory.serializeNBT();
-      //read from tile, write to itemstack 
-      newStack.setTag(tileData);
+      if (!shelf.inventory.isEmptyShelves()) {
+        CompoundNBT tileData = shelf.inventory.serializeNBT();
+        //read from tile, write to itemstack 
+        newStack.setTag(tileData);
+      }
     }
     UtilItemStack.drop(world, pos, newStack);
   }
