@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
@@ -137,7 +139,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public static ActionResultType leftClickBlock(final WeakReference<FakePlayer> fakePlayerWeakReference,
-                                                final BlockPos targetPos, final Direction facing) {
+      final BlockPos targetPos, final Direction facing) {
     final FakePlayer fakePlayer = fakePlayerWeakReference.get();
     if (fakePlayer == null) {
       return ActionResultType.FAIL;
@@ -316,6 +318,42 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       }
       return;
     }
+  }
+
+  public static BlockState attemptCompost(BlockState state, IWorld world, BlockPos pos, ItemStack stack) {
+    int stateLevel = state.get(ComposterBlock.LEVEL);
+    float compostChanceForItem = ComposterBlock.CHANCES.getFloat(stack.getItem());
+    if ((stateLevel != 0 || !(compostChanceForItem > 0.0F))
+        && !(world.getRandom().nextDouble() < compostChanceForItem)) {
+      return state;
+    }
+    else {
+      int levelNext = stateLevel + 1;
+      BlockState blockstate = state.with(ComposterBlock.LEVEL, Integer.valueOf(levelNext));
+      world.setBlockState(pos, blockstate, 3);
+      if (levelNext == (COMPOST_MAX - 1)) {
+        world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), 20);
+      }
+      return blockstate;
+    }
+  }
+
+  final static int COMPOST_MAX = 8; // BlockStateProperties.LEVEL_0_8 maximum value
+
+  public boolean moveItemToCompost(Direction exportToSide, ItemStackHandler inventorySelf) {
+    BlockPos posTarget = this.getPos().offset(exportToSide);
+    BlockState bsTarget = this.world.getBlockState(posTarget);
+    if (bsTarget.getBlock() instanceof ComposterBlock && bsTarget.get(BlockStateProperties.LEVEL_0_8) < COMPOST_MAX) {
+      ItemStack fromHopper = inventorySelf.extractItem(0, 1, true);
+      if (!fromHopper.isEmpty()) {
+        BlockState blockstate = attemptCompost(bsTarget, world, getPos().offset(exportToSide), fromHopper);
+        System.out.println("1.16 composter logic aaa");
+        this.world.playEvent(1500, posTarget, blockstate != bsTarget ? 1 : 0);
+        inventorySelf.extractItem(0, 1, false);
+        return true;
+      }
+    }
+    return false;
   }
 
   public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {

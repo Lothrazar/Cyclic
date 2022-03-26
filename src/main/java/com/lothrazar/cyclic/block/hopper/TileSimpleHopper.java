@@ -56,6 +56,7 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     this.tryPullFromWorld(pos.offset(Direction.UP));
     this.tryExtract(inventory, Direction.UP, getFlow(), null);
     Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
+    this.moveItemToCompost(exportToSide, inventory);
     this.moveItems(exportToSide, getFlow(), inventory);
   }
 
@@ -71,7 +72,7 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     int radius = getRadius();
     AxisAlignedBB aabb = new AxisAlignedBB(
         center.getX() - radius, center.getY(), center.getZ() - radius,
-        center.getX() + radius + 1, center.getY(), center.getZ() + radius + 1);
+        center.getX() + radius + 1, center.getY() + 1, center.getZ() + radius + 1);
     List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
       return entity.isAlive() && !entity.getItem().isEmpty(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
     });
