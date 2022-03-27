@@ -31,8 +31,10 @@ public class ItemEnderEyeReuse extends ItemBase {
   private static final String RS_MODID = "repurposed_structures";
   private static final String RS_STRONGHOLD_ID = "stronghold_stonebrick";
   private static final String RS_NETHER_STRONGHOLD_ID = "stronghold_nether";
+  private static final String YUSTRONG_MODID = "betterstrongholds"; // https://github.com/yungnickyoung/YUNGs-Better-Strongholds
   private static final ResourceLocation RS_RESOURCE_LOCATION = new ResourceLocation(RS_MODID, RS_STRONGHOLD_ID);
   private static final ResourceLocation RS_NETHER_RESOURCE_LOCATION = new ResourceLocation(RS_MODID, RS_NETHER_STRONGHOLD_ID);
+  private static final ResourceLocation YUNG_STRONGHOLD_LOCATION = new ResourceLocation(YUSTRONG_MODID, "stronghold");
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
@@ -55,6 +57,14 @@ public class ItemEnderEyeReuse extends ItemBase {
         if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_NETHER_RESOURCE_LOCATION)) {
           rsNetherStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_NETHER_RESOURCE_LOCATION);
           rsBlockPos = chunkGenerator.func_235956_a_(sw, rsNetherStronghold, new BlockPos(player.getPosition()), 100, false);
+          closestBlockPos = returnClosest(player.getPosition(), closestBlockPos, rsBlockPos);
+        }
+      }
+      //what if both YUNG and RS: ok not else if
+      if (closestBlockPos == null && ModList.get().isLoaded(YUSTRONG_MODID)) {
+        if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(YUNG_STRONGHOLD_LOCATION)) {
+          rsStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(YUNG_STRONGHOLD_LOCATION);
+          rsBlockPos = chunkGenerator.func_235956_a_(sw, rsStronghold, new BlockPos(player.getPosition()), 100, false);
           closestBlockPos = returnClosest(player.getPosition(), closestBlockPos, rsBlockPos);
         }
       }

@@ -338,7 +338,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     }
   }
 
-  final static int COMPOST_MAX = 8; // BlockStateProperties.LEVEL_0_8 maximum value
+  static final int COMPOST_MAX = 8; // BlockStateProperties.LEVEL_0_8 maximum value
 
   public boolean moveItemToCompost(Direction exportToSide, ItemStackHandler inventorySelf) {
     BlockPos posTarget = this.getPos().offset(exportToSide);

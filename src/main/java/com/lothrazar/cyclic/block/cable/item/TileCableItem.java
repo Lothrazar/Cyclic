@@ -38,6 +38,7 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
     }
   };
   private final IItemHandler itemHandler = new ItemStackHandler(1) {
+
     @Override
     public boolean isItemValid(final int slot, final ItemStack stack) {
       return FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stack);
