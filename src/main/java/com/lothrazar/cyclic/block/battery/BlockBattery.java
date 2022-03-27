@@ -52,21 +52,22 @@ public class BlockBattery extends BlockBase {
   public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
     super.harvestBlock(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
-    if (ent != null) {
-      IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (handlerHere != null) {
-        IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-        if (newStackCap instanceof CustomEnergyStorage) {
-          ((CustomEnergyStorage) newStackCap).setEnergy(handlerHere.getEnergyStored());
-        }
-        else {
-          newStackCap.receiveEnergy(handlerHere.getEnergyStored(), false);
-        }
-        if (handlerHere.getEnergyStored() > 0) {
-          newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, handlerHere.getEnergyStored());
-          newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, handlerHere.getMaxEnergyStored());
-        }
+    if (ent instanceof TileBattery) {
+      TileBattery tile = (TileBattery) ent;
+      //      IEnergyStorage handlerHere = ent.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      //      if (handlerHere != null) {
+      IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (newStackCap instanceof CustomEnergyStorage) {
+        ((CustomEnergyStorage) newStackCap).setEnergy(tile.energy.getEnergyStored());
       }
+      else {
+        newStackCap.receiveEnergy(tile.energy.getEnergyStored(), false);
+      }
+      if (tile.energy.getEnergyStored() > 0) {
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, tile.energy.getEnergyStored());
+        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, tile.energy.getMaxEnergyStored());
+      }
+      //      }
     }
     //even if energy fails 
     if (world.isRemote == false) {

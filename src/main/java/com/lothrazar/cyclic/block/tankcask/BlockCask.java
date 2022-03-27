@@ -69,13 +69,12 @@ public class BlockCask extends BlockBase {
   public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity ent, ItemStack stack) {
     super.harvestBlock(world, player, pos, state, ent, stack);
     ItemStack tankStack = new ItemStack(this);
-    if (ent != null) {
-      IFluidHandler fluidInTile = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
-      // note a DIFFERENT cap here for the item
+    if (ent instanceof TileCask) {
+      TileCask tile = (TileCask) ent;
       IFluidHandler fluidInStack = tankStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
       if (fluidInStack != null) {
         //now give 
-        FluidStack fs = fluidInTile.getFluidInTank(0);
+        FluidStack fs = tile.tank.getFluidInTank(0);
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
