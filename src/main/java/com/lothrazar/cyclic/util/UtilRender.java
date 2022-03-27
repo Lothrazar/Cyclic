@@ -391,7 +391,6 @@ public class UtilRender {
    * From https://github.com/Lothrazar/SimpleTomb/blob/trunk/1.16/src/main/java/com/lothrazar/simpletomb/event/ClientEvents.java
    * 
    */
-  @SuppressWarnings("deprecation")
   public static void createBox(MatrixStack matrixStack, BlockPos pos) {
     final double offset = 1;
     double x = pos.getX();
