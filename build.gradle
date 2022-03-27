@@ -7,6 +7,7 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
@@ -37,6 +38,9 @@ minecraft {
 }
 
 task signJar(type: SignJar, dependsOn: reobfJar) {
+    onlyIf {
+        project.hasProperty('keyStore')
+    }
 
     // findProperty allows us to reference the property without it existing. 
     // Using project.propName would cause the script to fail validation if 
@@ -49,45 +53,23 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
     outputFile = jar.archivePath
 }
 
-// Runs this task automatically when build is ran. 
-build.dependsOn signJar
-
 //Defines basic patterns for pulling various dependencies.
 repositories {
-  maven { url 'https://www.cursemaven.com'  }
-	maven {
-		url "https://maven.mcmoddev.com"
-	}
-    maven {
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-		url 'http://maven.blamejared.com'
-	}
-	maven {
-		url 'https://maven.mcmoddev.com/'
-	}
-	maven {
-        url = "http://minecraft.curseforge.com/api/maven/"
-    }
-    maven {
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-		url 'http://maven.blamejared.com'
-	}
-    maven {
-    	name = "Progwml6 maven"
-        url "http://dvs1.progwml6.com/files/maven"
-    }
+    maven { url 'https://www.cursemaven.com'  }
+    maven { url "https://dvs1.progwml6.com/files/maven"    }
+    maven { url "https://modmaven.k-4u.nl"  }
+    maven { url "https://maven.theillusivec4.top/"    }
+    maven { url "https://maven.blamejared.com" }
+    maven { url "https://maven.blamejared.com/vazkii" }
+    maven { url "http://minecraft.curseforge.com/api/maven/"    }
+    maven { url 'https://www.cursemaven.com'  }
+    maven { url "https://maven.thiakil.com/"    } 
+	maven {	url "https://maven.mcmoddev.com"	}
+
    // maven { //Guide API
 	//	url "http://tehnut.info/maven/"
 	//}
-	maven {
-	    // location of a maven mirror for JEI files, as a fallback
-	    name = "ModMaven"
-	    url = "modmaven.k-4u.nl"
-	}
+
 	maven { url "http://maven.amadornes.com/" }
 	ivy {
 		name 'asie dependency mirror'
@@ -102,7 +84,8 @@ dependencies {
   deobfCompile "baubles:Baubles:1.12:${baubles_version}"
   deobfCompile "fastworkbench:FastWorkbench:${mc_version}:${fb_version}"
   //TODO: fix guide api gradle, or else ./libs/Guide-API-1.12-2.1.8-63.jar 
-  //deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+  deobfCompile "info.amerifrance.guideapi:Guide-API:${guideapi_version}"
+  deobfCompile  "vazkii.patchouli:Patchouli:${patchouli_version}"
 
   // https://maven.mcmoddev.com/net/darkhax/enchdesc/EnchantmentDescriptions-1.12.2/1.1.9/
   // deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-${mc_version}-${ench_descr_version}:+"
@@ -140,5 +123,3 @@ build.finalizedBy copyJar
 cleanJar {
   delete 'build/libs'
 }
-
-
