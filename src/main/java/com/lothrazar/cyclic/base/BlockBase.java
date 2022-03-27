@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.base;
 
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import java.util.List;
@@ -93,7 +94,7 @@ public class BlockBase extends Block {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               //success so display new amount
               if (handler.getFluidInTank(0) != null) {
-                player.sendStatusMessage(new TranslationTextComponent(getFluidRatioName(handler)), true);
+                displayClientFluidMessage(player, handler);
               }
               //and also play the fluid sound
               if (player instanceof ServerPlayerEntity) {
@@ -101,7 +102,7 @@ public class BlockBase extends Block {
               }
             }
             else {
-              player.sendStatusMessage(new TranslationTextComponent(getFluidRatioName(handler)), true);
+              displayClientFluidMessage(player, handler);
             }
           }
         }
@@ -123,6 +124,12 @@ public class BlockBase extends Block {
       return ActionResultType.SUCCESS;
     }
     return super.onBlockActivated(state, world, pos, player, hand, hit);
+  }
+
+  private void displayClientFluidMessage(PlayerEntity player, IFluidHandler handler) {
+    if (ClientConfigCyclic.FLUID_BLOCK_STATUS.get()) {
+      player.sendStatusMessage(new TranslationTextComponent(getFluidRatioName(handler)), true);
+    }
   }
 
   public static String getFluidRatioName(IFluidHandler handler) {

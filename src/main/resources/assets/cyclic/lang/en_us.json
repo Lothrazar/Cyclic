@@ -416,7 +416,7 @@
     "cyclic.screen.size9": "19x19",
     "cyclic.screen.size10": "21x21",
     "cyclic.screen.size11": "23x23",
-    "cyclic.screen.size12": "23x23",
+    "cyclic.screen.size12": "25x25",
     "cyclic.screen.filter.true":"Ignore List",
     "cyclic.screen.filter.false":"Allow List",
     "cyclic.screen.filter.item.count":"Count: ",

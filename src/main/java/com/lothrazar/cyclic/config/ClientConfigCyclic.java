@@ -27,6 +27,7 @@ public class ClientConfigCyclic {
   public static ConfigValue<String> OFFSET_SCEPTER;
   public static ConfigValue<String> REPLACE_SCEPTER;
   public static ConfigValue<String> BUILD_SCEPTER;
+  public static ConfigValue<Boolean> FLUID_BLOCK_STATUS;
 
   public static Color getColor(TileEntity tile) {
     //passing in tile in case of data overrides in future
