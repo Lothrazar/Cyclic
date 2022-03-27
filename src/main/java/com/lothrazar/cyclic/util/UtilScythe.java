@@ -26,7 +26,9 @@ package com.lothrazar.cyclic.util;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.item.scythe.ScytheType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.DoublePlantBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,6 +38,11 @@ public class UtilScythe {
   public static boolean harvestSingle(World world, PlayerEntity player, BlockPos posCurrent, ScytheType type) {
     boolean doBreak = false;
     BlockState blockState = world.getBlockState(posCurrent);
+    if (blockState.hasProperty(DoublePlantBlock.HALF) && blockState.get(DoublePlantBlock.HALF).equals(DoubleBlockHalf.LOWER)) {
+      //the upper half has the drops, so only do that. avoid glitches and item loss
+      // ie: rose, lilac, sunflower
+      return false;
+    }
     switch (type) {
       case LEAVES:
         doBreak = blockState.isIn(BlockTags.LEAVES);
@@ -53,11 +60,17 @@ public class UtilScythe {
       break;
     }
     if (doBreak) {
-      //harvest block with player context: better mod compatibility
-      blockState.getBlock().harvestBlock(world, player, posCurrent, blockState, world.getTileEntity(posCurrent), player.getHeldItemMainhand());
-      //sometimes this doesnt work and/or doesnt sync ot client, so force it
-      world.destroyBlock(posCurrent, false);
-      //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
+      if (blockState.isIn(DataTags.CROP_BLOCKS)) {
+        world.destroyBlock(posCurrent, false, player);
+        UtilItemStack.drop(world, posCurrent, blockState.getBlock()); //like shears
+      }
+      else {
+        //harvest block with player context: better mod compatibility
+        blockState.getBlock().harvestBlock(world, player, posCurrent, blockState, world.getTileEntity(posCurrent), player.getHeldItemMainhand());
+        //sometimes this doesnt work and/or doesnt sync ot client, so force it
+        world.destroyBlock(posCurrent, false);
+        //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
+      }
       return true;
     }
     return false;

@@ -26,6 +26,9 @@ package com.lothrazar.cyclic.item.scythe;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -39,6 +42,11 @@ public class ScytheLeaves extends ItemBase {
 
   private static final int RADIUS = 6; //13x13
   private static final int RADIUS_SNEAKING = 2; //2x2
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    return enchantment == Enchantments.SILK_TOUCH || super.canApplyAtEnchantingTable(stack, enchantment);
+  }
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
