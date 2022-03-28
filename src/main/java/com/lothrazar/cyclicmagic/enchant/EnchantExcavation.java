@@ -34,8 +34,10 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -64,6 +66,11 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
   @Override
   public boolean enabled() {
     return enabled;
+  }
+
+  @Override
+  protected boolean canApplyTogether(Enchantment ench) {
+    return super.canApplyTogether(ench) && ench != Enchantments.EFFICIENCY;
   }
 
   @Override

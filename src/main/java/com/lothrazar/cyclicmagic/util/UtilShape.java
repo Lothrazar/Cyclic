@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.AxisDirection;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -55,35 +56,53 @@ public class UtilShape {
     return newShape;
   }
 
-  //TODO: SHARE MORE CODE BTW CIRCLE horiz and vert
-  public static List<BlockPos> circleVertical(BlockPos pos, int diameter) {
-    int centerX = pos.getX();
-    int centerZ = pos.getY();
-    int w = pos.getZ();
-    int radius = diameter / 2;
-    int y = radius;
-    int x = 0;
-    int d = 2 - (2 * radius);//dont use Diameter again, for integer roundoff
+  public static List<BlockPos> circleVertical(BlockPos pos, int diameter, int maxHeight, EnumFacing dir) {
+    int centerH;
+    int diroff = dir.getAxisDirection() == AxisDirection.NEGATIVE ? -1 : 1;
+    final int centerY = pos.getY();
+    final int radius = diameter / 2;
+    int radOffset = radius;
+    int otherOff = 0;
+    int d = 2 - (2 * radius); //dont use Diameter again, for integer roundoff
     List<BlockPos> circleList = new ArrayList<BlockPos>();
-    do {
-      circleList.add(new BlockPos(centerX + x, centerZ + y, w));
-      circleList.add(new BlockPos(centerX + x, centerZ - y, w));
-      circleList.add(new BlockPos(centerX - x, centerZ + y, w));
-      circleList.add(new BlockPos(centerX - x, centerZ - y, w));
-      circleList.add(new BlockPos(centerX + y, centerZ + x, w));
-      circleList.add(new BlockPos(centerX + y, centerZ - x, w));
-      circleList.add(new BlockPos(centerX - y, centerZ + x, w));
-      circleList.add(new BlockPos(centerX - y, centerZ - x, w));
-      if (d < 0) {
-        d = d + (4 * x) + 6;
+    for (int i = 0; i < maxHeight; i++) {
+      radOffset = radius;
+      otherOff = 0;
+      d = 2 - (2 * radius); //dont use Diameter again, for integer roundoff
+      do {
+        if (dir.getAxis() == EnumFacing.Axis.Z) {
+          centerH = pos.getX();
+          circleList.add(new BlockPos(centerH + otherOff, centerY + radOffset, pos.getZ() + diroff * i));
+          circleList.add(new BlockPos(centerH + otherOff, centerY - radOffset, pos.getZ() + diroff * i));
+          circleList.add(new BlockPos(centerH - otherOff, centerY + radOffset, pos.getZ() + diroff * i));
+          circleList.add(new BlockPos(centerH - otherOff, centerY - radOffset, pos.getZ() + diroff * i));
+          circleList.add(new BlockPos(centerH + radOffset, centerY + otherOff, pos.getZ() + diroff * i));
+          circleList.add(new BlockPos(centerH + radOffset, centerY - otherOff, pos.getZ() + diroff * i));
+          circleList.add(new BlockPos(centerH - radOffset, centerY + otherOff, pos.getZ() + diroff * i));
+          circleList.add(new BlockPos(centerH - radOffset, centerY - otherOff, pos.getZ() + diroff * i));
+        }
+        else { // lazy way
+          centerH = pos.getZ();
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY + radOffset, centerH + otherOff));
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY - radOffset, centerH + otherOff));
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY + radOffset, centerH - otherOff));
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY - radOffset, centerH - otherOff));
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY + otherOff, centerH + radOffset));
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY - otherOff, centerH + radOffset));
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY + otherOff, centerH - radOffset));
+          circleList.add(new BlockPos(pos.getX() + diroff * i, centerY - otherOff, centerH - radOffset));
+        }
+        if (d < 0) {
+          d = d + (4 * otherOff) + 6;
+        }
+        else {
+          d = d + 4 * (otherOff - radOffset) + 10;
+          radOffset--;
+        }
+        otherOff++;
       }
-      else {
-        d = d + 4 * (x - y) + 10;
-        y--;
-      }
-      x++;
-    }
-    while (x <= y);
+      while (otherOff <= radOffset);
+    } // height loop
     Collections.sort(circleList, new Comparator<BlockPos>() {
 
       @Override

@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.block.buildershape;
 public enum StructureBuilderType {
 
-  FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID, CIRCLEVERTICAL;
+  FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID, TUNNEL;
 
   public static final StructureBuilderType[] SORTED = new StructureBuilderType[] {
-      FACING, SQUARE, SOLID, DIAGONAL, PYRAMID, CIRCLE, CIRCLEVERTICAL, SPHERE, DOME, CUP
+      FACING, SQUARE, SOLID, DIAGONAL, PYRAMID, CIRCLE, TUNNEL, SPHERE, DOME, CUP
   };
 
   public static StructureBuilderType getNextType(StructureBuilderType btype) {
@@ -42,8 +42,8 @@ public enum StructureBuilderType {
         return "CU";
       case PYRAMID:
         return "PY";
-      case CIRCLEVERTICAL:
-        return "CV";
+      case TUNNEL:
+        return "TU";
     }
     return "";
   }

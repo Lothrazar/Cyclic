@@ -126,18 +126,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
       case PYRAMID:
         shape = UtilShape.squarePyramid(this.getPosTarget(), this.getSize(), getHeight());
       break;
-      case CIRCLEVERTICAL:
+      case TUNNEL:
         //rotate around axis which one is broken fix 
-        shape = UtilShape.circleVertical(this.getPosTarget(), this.getSize() * 2);
-        if (height > 1) {
-          //based on NS or EW https://github.com/Lothrazar/Cyclic/issues/1622
-          if (currFacing == EnumFacing.EAST || currFacing == EnumFacing.WEST) {
-            shape = UtilShape.repeatShapeByFacing(shape, height - 1, currFacing.rotateAround(EnumFacing.Axis.Y));
-          }
-          else {
-            shape = UtilShape.repeatShapeByFacing(shape, height - 1, currFacing.rotateAround(EnumFacing.Axis.Z));
-          }
-        }
+        shape = UtilShape.circleVertical(this.getPosTarget(), this.getSize(), this.getHeight(), currFacing);
       break;
     }
     return shape;
