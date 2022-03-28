@@ -47,7 +47,7 @@ public class FluidBar {
         width, height,
         width, height);
     //NOW the fluid part
-    if (fluid == null || this.getCapacity() == 0 || fluid.amount == 0) {
+    if (fluid == null || this.getCapacity() == 0 || fluid.amount <= 0) {
       return;
     }
     float capacity = this.getCapacity();

@@ -3,8 +3,9 @@ public enum StructureBuilderType {
 
   FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL, DOME, CUP, PYRAMID, TUNNEL;
 
-  public static final StructureBuilderType[] SORTED = new StructureBuilderType[] {
-      FACING, SQUARE, SOLID, DIAGONAL, PYRAMID, CIRCLE, TUNNEL, SPHERE, DOME, CUP
+  public static final StructureBuilderType[] SORTED = new StructureBuilderType[] { // NOW SAME AS 1.16+ 
+      FACING, SQUARE, CIRCLE, SOLID, SPHERE, DIAGONAL,
+      DOME, CUP, PYRAMID, TUNNEL
   };
 
   public static StructureBuilderType getNextType(StructureBuilderType btype) {
@@ -25,25 +26,25 @@ public enum StructureBuilderType {
   public String shortcode() {
     switch (this) {
       case CIRCLE:
-        return "CH";
+        return "Ci";
       case DIAGONAL:
-        return "DI";
+        return "Di";
       case FACING:
-        return "WA";
+        return "Fa";
       case SOLID:
-        return "SO";
+        return "So";
       case SPHERE:
-        return "SP";
+        return "Sp";
       case SQUARE:
-        return "SQ";
+        return "Sq";
       case DOME:
-        return "DO";
+        return "Do";
       case CUP:
-        return "CU";
+        return "Cu";
       case PYRAMID:
-        return "PY";
+        return "Py";
       case TUNNEL:
-        return "TU";
+        return "Tu";
     }
     return "";
   }

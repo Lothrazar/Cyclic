@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -85,12 +86,13 @@ public class GuiPylon extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    //moveQty
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
-    int fluidHas = this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());
-    //    this.drawString(fluidHas + " / " + TileEntityXpPylon.TANK_FULL, this.xSize / 2 - 8, 108);
-    int expHas = fluidHas / TileEntityXpPylon.FLUID_PER_EXP;
-    int expFull = TileEntityXpPylon.TANK_FULL / TileEntityXpPylon.FLUID_PER_EXP;
-    this.drawString("EXP: " + expHas + " / " + expFull, Const.PAD, 72);
+    //dont use EXP field
+    FluidStack tileFluid = tile.getCurrentFluidStack();
+    if (tileFluid != null && tileFluid.amount > TileEntityXpPylon.FLUID_PER_EXP) { //otherwise its less than 1 in the ratio 
+      int expHas = tileFluid.amount / TileEntityXpPylon.FLUID_PER_EXP;
+      int expFull = TileEntityXpPylon.TANK_FULL / TileEntityXpPylon.FLUID_PER_EXP;
+      this.drawString("EXP: " + expHas + " / " + expFull, Const.PAD, 72);
+    }
   }
 }
