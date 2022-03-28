@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.mobcapture;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.RenderBall;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -84,7 +85,12 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
       if (this.world.isRemote == false) {
         ItemStack captured = new ItemStack(renderSnowball);
         NBTTagCompound entityNBT = new NBTTagCompound();
-        mop.entityHit.writeToNBT(entityNBT);
+        try {
+          mop.entityHit.writeToNBT(entityNBT);
+        }
+        catch (Exception e) {
+          ModCyclic.logger.error("Invalid data in entity save caught ", e);
+        }
         //id is the special magic tag thats used by EntityList to respawn it. see EntityList.createEntityFromNBT
         entityNBT.setString(ItemProjectileMagicNet.NBT_ENTITYID, EntityList.getKey(mop.entityHit.getClass()).toString()); // was getEntityStringFromClass
         entityNBT.setString("tooltip", mop.entityHit.getName());

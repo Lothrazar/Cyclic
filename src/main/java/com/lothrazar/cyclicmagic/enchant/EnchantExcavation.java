@@ -106,10 +106,7 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
   }
 
   private int getHarvestMax(int level) {
-    if (level >= levelToMaxBreak.length) {
-      level = levelToMaxBreak.length - 1;
-    }
-    return levelToMaxBreak[level];
+    return 26 + 8 * level;
   }
 
   /**
@@ -118,8 +115,7 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
    * @param swingingHand
    */
   private int harvestSurrounding(final World world, final EntityPlayer player, final BlockPos posIn, final Block block, int totalBroken, final int level, EnumHand swingingHand) {
-    if (totalBroken >= this.getHarvestMax(level)
-        || player.getHeldItem(player.swingingHand).isEmpty()) {
+    if (totalBroken >= this.getHarvestMax(level) || player.getHeldItem(player.swingingHand).isEmpty()) {
       return totalBroken;
     }
     int fortuneXp = 0;//even if tool has fortune, ignore just to unbalance a bit
@@ -169,7 +165,12 @@ public class EnchantExcavation extends BaseEnchant implements IHasConfig {
     List<BlockPos> list = new ArrayList<BlockPos>();
     // TODO: DIAGONAL! 
     List<EnumFacing> targetFaces = Arrays.asList(EnumFacing.values());
-    Collections.shuffle(targetFaces);
+    try {
+      Collections.shuffle(targetFaces);
+    }
+    catch (Exception e) {
+      //java util errors according to other branch
+    }
     for (EnumFacing fac : targetFaces) {
       BlockPos current = start.offset(fac);
       IBlockState currentState = world.getBlockState(current);
