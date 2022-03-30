@@ -33,6 +33,7 @@ public class FluidWaxHolder {
         FluidAttributes.builder(
             new ResourceLocation("minecraft:block/water_still"),
             new ResourceLocation("minecraft:block/water_flow"))
+            .luminosity(3).density(3000).viscosity(4000).temperature(1300)
             .color(0xEEEEEEEE))
                 .bucket(BUCKET)
                 .block(BLOCK);

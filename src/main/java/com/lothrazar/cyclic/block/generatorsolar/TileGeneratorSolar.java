@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.generatorsolar;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -15,7 +14,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -26,8 +24,7 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic {
     REDSTONE, FLOWING;
   }
 
-  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
-  static final int MAX = TileBattery.MENERGY * 10;
+  static final int MAX = 64000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1);
@@ -37,8 +34,6 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic {
 
   public TileGeneratorSolar(BlockPos pos, BlockState state) {
     super(TileRegistry.GENERATOR_SOLAR.get(), pos, state);
-    this.needsRedstone = 0;
-    this.flowing = 1;
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGeneratorSolar e) {
@@ -52,33 +47,24 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic {
   //  @Override
   public void tick() {
     this.syncEnergy();
-    if (this.flowing == 1) {
-      this.exportEnergyAllSides();
-    }
-    //    if (this.burnTime == 0) {
-    //      setLitProperty(false);
-    //    }
+    moveEnergy(Direction.DOWN, MAX / 64);
     if (level.isClientSide) {
-      return;
-    }
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
       return;
     }
     tryConsumeFuel();
   }
 
-  final static int get = 8; // TODO config
+  final static int PER_TICK = 5; // TODO config
 
   private void tryConsumeFuel() {
+    setLitProperty(false);
     //pull in new fuel
-    //TODO: half if raining/not sunny
-    //
+    //TODO: half if raining/not sunny 
     if (this.level.isDay() && this.level.canSeeSky(this.getBlockPos().above())) {
-      if (energy.receiveEnergy(get, true) > 0) {
+      if (energy.receiveEnergy(PER_TICK, true) > 0) {
         setLitProperty(true);
         //we have room in the tank, burn one tck and fill up 
-        energy.receiveEnergy(get, false);
+        energy.receiveEnergy(PER_TICK, false);
       }
     }
   }
@@ -92,7 +78,7 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && side == Direction.DOWN) {
       return energyCap.cast();
     }
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {

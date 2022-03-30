@@ -11,27 +11,17 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class ClayBattery extends BlockCyclic {
-  //  public static final EnumProperty<EnumBatteryPercent> PERCENT = EnumProperty.create("percent", EnumBatteryPercent.class);
 
   public ClayBattery(Properties properties) {
     super(properties.strength(1.8F));
-    this.setHasGui();
-    //    this.registerDefaultState(defaultBlockState().setValue(PERCENT, EnumBatteryPercent.ZERO));
-  }
-
-  @Override
-  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-    //    builder.add(LIT).add(PERCENT);
   }
 
   @Override
@@ -70,7 +60,7 @@ public class ClayBattery extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.BATTERY.get(), world.isClientSide ? TileBattery::clientTick : TileBattery::serverTick);
+    return createTickerHelper(type, TileRegistry.BATTERY_CLAY.get(), world.isClientSide ? TileClayBattery::clientTick : TileClayBattery::serverTick);
   }
 
   @Override
@@ -90,16 +80,16 @@ public class ClayBattery extends BlockCyclic {
     }
     super.setPlacedBy(world, pos, state, placer, stack);
   }
-
-  @Override
-  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
-      TileClayBattery tileentity = (TileClayBattery) worldIn.getBlockEntity(pos);
-      //      if (tileentity != null && tileentity.batterySlots != null) {
-      //        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.batterySlots.getStackInSlot(0));
-      //      }
-      worldIn.updateNeighbourForOutputSignal(pos, this);
-    }
-    super.onRemove(state, worldIn, pos, newState, isMoving);
-  }
+  //
+  //  @Override
+  //  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+  //    if (state.getBlock() != newState.getBlock()) {
+  //      TileClayBattery tileentity = (TileClayBattery) worldIn.getBlockEntity(pos);
+  //      //      if (tileentity != null && tileentity.batterySlots != null) {
+  //      //        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.batterySlots.getStackInSlot(0));
+  //      //      }
+  //      worldIn.updateNeighbourForOutputSignal(pos, this);
+  //    }
+  //    super.onRemove(state, worldIn, pos, newState, isMoving);
+  //  }
 }

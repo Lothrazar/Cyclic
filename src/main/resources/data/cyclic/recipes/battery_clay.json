@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:brick"
+    },
+    "b": {
+      "item": "minecraft:glass_pane"
+    },
+    "a": {
+      "tag": "forge:nuggets/copper"
+    }
+  },
+  "result": {
+    "item": "cyclic:battery_clay",
+    "count": 1
+  }
+}

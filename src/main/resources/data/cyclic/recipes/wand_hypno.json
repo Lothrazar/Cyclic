@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dcd",
+    " x ",
+    "rbr"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:gold_ingot"
+    },
+    "c": {
+      "item": "minecraft:ghast_tear"
+    },
+    "r": {
+      "item": "minecraft:ender_pearl"
+    },
+    "b": {
+      "item": "minecraft:red_mushroom"
+    },
+    "x": {
+      "item": "minecraft:brown_mushroom"
+    }
+  },
+  "result": {
+    "item": "cyclic:wand_hypno",
+    "count": 1
+  }
+}

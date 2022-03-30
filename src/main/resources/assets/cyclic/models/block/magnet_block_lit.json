@@ -1,6 +1,6 @@
 {
     "parent": "cyclic:parent/plate_horizontal",
     "textures": {
-        "0": "cyclic:blocks/magnet/fam"
+        "0": "cyclic:blocks/magnet/face"
     }
 } 

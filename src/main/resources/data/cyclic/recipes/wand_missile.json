@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " c ",
+    " b ",
+    "rbr"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:ender_pearl"
+    },
+    "r": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "b": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "cyclic:wand_missile",
+    "count": 1
+  }
+}

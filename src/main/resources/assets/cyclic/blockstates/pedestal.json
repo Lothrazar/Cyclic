@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/battery_clay" }
+        "": { "model": "cyclic:block/pedestal" }
     }
 }

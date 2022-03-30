@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "minecraft:blackstone"
+		},{
+			"item": "minecraft:stone_button"
+		}
+	],
+	"result": {
+		"item": "cyclic:button_blackstone",
+		"count": 2
+	}
+}

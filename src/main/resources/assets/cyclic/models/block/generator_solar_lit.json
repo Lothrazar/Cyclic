@@ -1,6 +1,6 @@
 {
     "parent": "cyclic:parent/plate_horizontal",
     "textures": {
-        "0": "cyclic:blocks/generator_solar"
+        "0": "cyclic:blocks/machine/generator_solar_lit"
     }
 } 

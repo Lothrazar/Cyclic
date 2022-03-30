@@ -2,8 +2,8 @@
 	"parent": "minecraft:block/cube",
 	"textures": {
 		"particle": "cyclic:blocks/machine/crusher",
-		"down": "cyclic:blocks/machine/battery",
-		"up": "cyclic:blocks/machine/battery",
+		"down": "cyclic:blocks/machine/crusher_top",
+		"up": "cyclic:blocks/machine/crusher_top",
 		"north": "cyclic:blocks/machine/crusher",
 		"south": "cyclic:blocks/machine/crusher",
 		"west": "cyclic:blocks/machine/crusher",

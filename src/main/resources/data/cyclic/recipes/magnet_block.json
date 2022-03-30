@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sbs",
+    "bxb",
+    "sbs"
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:nuggets/copper"
+    },
+    "b": {
+      "tag": "minecraft:planks"
+    },
+    "x": {
+      "tag": "minecraft:dye_purple"
+    }
+  },
+  "result": {
+    "item": "cyclic:magnet_block"
+  }
+}

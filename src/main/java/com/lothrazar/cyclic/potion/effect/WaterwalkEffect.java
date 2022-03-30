@@ -9,8 +9,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class WaterwalkEffect extends TickableEffect {
 
-  private static final float speedfactor = 0.09F;
-
   public WaterwalkEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
   }
@@ -25,10 +23,9 @@ public class WaterwalkEffect extends TickableEffect {
           return;// let them slip down into it
         }
       }
-       entity.setOnGround(true); // act as if on solid ground
-      entity.setDeltaMovement(entity.getDeltaMovement().x,0,entity.getDeltaMovement().z);
-     System.out.println("waterwalk?");
+      entity.setOnGround(true); // act as if on solid ground
+      entity.setDeltaMovement(entity.getDeltaMovement().x, 0, entity.getDeltaMovement().z);
+      System.out.println("waterwalk?");
     }
   }
-
 }

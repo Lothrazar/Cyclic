@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc",
+    "cec",
+    "cpc"
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:ender_pearl"
+    },
+    "p": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "b": {
+      "tag": "forge:storage_blocks/lapis"
+    },
+    "c": {
+      "item": "cyclic:gold_chain"
+    }
+  },
+  "result": {
+    "item": "cyclic:generator_solar"
+  }
+}

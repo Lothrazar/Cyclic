@@ -25,6 +25,7 @@ public class WandHypnoItem extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     //    playerIn.startUsingItem(handIn);
+    System.out.println("TODO: consume RF and new hypno entity");
     shootMe(world, player, new LaserEntity(player, world), 0, ItemBaseCyclic.VELOCITY_MAX * 1.4F);
     // TODO: RF POWER NOT DURAB
     UtilItemStack.damageItem(player, itemstack);

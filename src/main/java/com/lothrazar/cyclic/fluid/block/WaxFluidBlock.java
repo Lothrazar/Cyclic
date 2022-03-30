@@ -22,9 +22,9 @@ public class WaxFluidBlock extends LiquidBlock {
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (entityIn instanceof LivingEntity) {
       LivingEntity ent = (LivingEntity) entityIn;
-      ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 4));
+      ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
       //      ent.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 5));
-      ent.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 1));
+      //      ent.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 1));
       if (worldIn.random.nextDouble() < 0.01) { // TODO config
         entityIn.setRemainingFireTicks(entityIn.getRemainingFireTicks() + 2 * Const.TICKS_PER_SEC);
       }

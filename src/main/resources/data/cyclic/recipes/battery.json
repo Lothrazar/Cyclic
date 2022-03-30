@@ -7,7 +7,7 @@
   ],
   "key": {
     "c": {
-      "item": "minecraft:clay_ball"
+      "tag": "forge:storage_blocks/cobblestone"
     },
     "b": {
       "item": "minecraft:iron_ingot"

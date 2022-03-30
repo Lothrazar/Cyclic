@@ -30,19 +30,6 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
   public TileInsertingMagnet(BlockPos pos, BlockState state) {
     super(TileRegistry.MAGNET.get(), pos, state);
   }
-  //  @Override
-  //  public void invalidateCaps() {
-  //    inventoryCap.invalidate();
-  //    super.invalidateCaps();
-  //  }
-  //
-  //  @Override
-  //  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-  //    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-  //      return inventoryCap.cast();
-  //    }
-  //    return super.getCapability(cap, side);
-  //  }
 
   @Override
   public void load(CompoundTag tag) {

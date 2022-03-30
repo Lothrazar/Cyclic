@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -15,27 +14,21 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 
-public class DrinkBottle extends ItemBaseCyclic {
+public class MilkBottle extends ItemBaseCyclic {
 
-  public DrinkBottle(Properties properties) {
+  public MilkBottle(Properties properties) {
     super(properties);
   }
 
   @Override
   public ItemStack finishUsingItem(ItemStack drink, Level world, LivingEntity entity) {
+    //    super.finishUsingItem(drink, world, entity);
     Player player = entity instanceof Player ? (Player) entity : null;
     if (player instanceof ServerPlayer) {
       CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, drink);
     }
-    if (!world.isClientSide && drink.getItem() == ItemRegistry.MILK_BOTTLE.get()) {
+    if (!world.isClientSide && drink.getItem() == this) {
       entity.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
-      //      for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(drink)) {
-      //        if (mobeffectinstance.getEffect().isInstantenous()) {
-      //          mobeffectinstance.getEffect().applyInstantenousEffect(player, player, entity, mobeffectinstance.getAmplifier(), 1.0D);
-      //        } else {
-      //          entity.addEffect(new MobEffectInstance(mobeffectinstance));
-      //        }
-      //      }
     }
     if (player != null) {
       player.awardStat(Stats.ITEM_USED.get(this));
@@ -44,6 +37,7 @@ public class DrinkBottle extends ItemBaseCyclic {
       }
     }
     if (player == null || !player.getAbilities().instabuild) {
+      //if non creative 
       if (drink.isEmpty()) {
         return new ItemStack(Items.GLASS_BOTTLE);
       }
@@ -56,17 +50,17 @@ public class DrinkBottle extends ItemBaseCyclic {
   }
 
   @Override
-  public int getUseDuration(ItemStack p_43001_) {
-    return 32;
+  public int getUseDuration(ItemStack st) {
+    return 34;
   }
 
   @Override
-  public UseAnim getUseAnimation(ItemStack p_42997_) {
+  public UseAnim getUseAnimation(ItemStack st) {
     return UseAnim.DRINK;
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level p_42993_, Player p_42994_, InteractionHand p_42995_) {
-    return ItemUtils.startUsingInstantly(p_42993_, p_42994_, p_42995_);
+  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    return ItemUtils.startUsingInstantly(world, player, hand);
   }
 }

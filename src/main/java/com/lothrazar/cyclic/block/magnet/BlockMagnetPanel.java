@@ -1,10 +1,15 @@
 package com.lothrazar.cyclic.block.magnet;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -20,18 +25,38 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockInsertingMagnet extends BlockCyclic {
+public class BlockMagnetPanel extends BlockCyclic {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-
   protected static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
 
-  public BlockInsertingMagnet(Properties properties) {
+  public BlockMagnetPanel(Properties properties) {
     super(properties.strength(1.8F).sound(SoundType.METAL).noOcclusion());
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+  }
+
+  @Override
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+    ItemStack held = player.getItemInHand(hand);
+    if (held.isEmpty()) {
+      TileInsertingMagnet tile = (TileInsertingMagnet) world.getBlockEntity(pos);
+      ItemStack dropMe = tile.inventory.extractItem(0, 64, false);
+      //extract from inventory
+      player.drop(dropMe, false);
+    }
+    else if (held.getItem() == ItemRegistry.FILTER_DATA.get()) {
+      TileInsertingMagnet tile = (TileInsertingMagnet) world.getBlockEntity(pos);
+      if (tile.inventory.getStackInSlot(0).isEmpty()) {
+        ItemStack res = tile.inventory.insertItem(0, held, false);
+        player.setItemInHand(hand, res);
+      }
+      //go insert'
+    }
+    return InteractionResult.SUCCESS;
   }
 
   @Override
@@ -53,17 +78,20 @@ public class BlockInsertingMagnet extends BlockCyclic {
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileInsertingMagnet(pos, state);
   }
+
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     super.createBlockStateDefinition(builder);
     builder.add(WATERLOGGED);
     builder.add(LIT);
   }
+
   @Override
   public BlockState getStateForPlacement(BlockPlaceContext context) {
     return super.getStateForPlacement(context)
         .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
   }
+
   @Override
   @SuppressWarnings("deprecation")
   public FluidState getFluidState(BlockState state) {

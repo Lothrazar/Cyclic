@@ -63,7 +63,7 @@ public class ButtonBlockMat extends ButtonBlock {
   }
 
   @Override
-  protected SoundEvent getSound(boolean p_57062_) {
-    return p_57062_ ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF;
+  protected SoundEvent getSound(boolean ison) {
+    return ison ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF;
   }
 }

@@ -5,7 +5,7 @@ import net.minecraft.util.StringRepresentable;
 
 public enum AltarType implements StringRepresentable {
 
-  EMPTY, TRADER, PHANTOM; // EXPLOSION //any more would be data entity card version
+  EMPTY, TRADER, PHANTOM, BAT; // EXPLOSION //any more would be data entity card version
 
   @Override
   public String getSerializedName() {

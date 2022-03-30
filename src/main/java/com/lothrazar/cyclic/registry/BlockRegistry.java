@@ -71,7 +71,7 @@ import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.block.hoppergold.BlockGoldHopper;
 import com.lothrazar.cyclic.block.laser.BlockLaser;
 import com.lothrazar.cyclic.block.lightcompr.BlockLightCamo;
-import com.lothrazar.cyclic.block.magnet.BlockInsertingMagnet;
+import com.lothrazar.cyclic.block.magnet.BlockMagnetPanel;
 import com.lothrazar.cyclic.block.melter.BlockMelter;
 import com.lothrazar.cyclic.block.miner.BlockMiner;
 import com.lothrazar.cyclic.block.packager.BlockPackager;
@@ -283,10 +283,11 @@ public class BlockRegistry {
   public static final RegistryObject<Block> UNBREAKABLE_REACTIVE = BLOCKS.register("unbreakable_reactive", () -> new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE))); //reactive and unstable, ignores players and reads redstone 
   public static final RegistryObject<Block> ENDER_SHELF = BLOCKS.register("ender_shelf", () -> new BlockEnderShelf(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ENDER_CONTROLLER = BLOCKS.register("ender_controller", () -> new BlockEnderCtrl(Block.Properties.of(Material.STONE)));
-  public static final RegistryObject<Block> MAGNET_BLOCK = BLOCKS.register("magnet_block", () -> new BlockInsertingMagnet(Block.Properties.of(Material.STONE)));
+  //
+  public static final RegistryObject<Block> MAGNET_BLOCK = BLOCKS.register("magnet_block", () -> new BlockMagnetPanel(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BUTTON_BASALT = BLOCKS.register("button_basalt", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 4));
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
-  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
+  //  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
   public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("pedestal", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));

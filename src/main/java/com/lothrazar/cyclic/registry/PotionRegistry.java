@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.potion.TickableEffect;
+import com.lothrazar.cyclic.potion.effect.SnowwalkEffect;
 import com.lothrazar.cyclic.potion.effect.StunEffect;
 import com.lothrazar.cyclic.potion.effect.SwimEffect;
+import com.lothrazar.cyclic.potion.effect.WaterwalkEffect;
 import com.lothrazar.cyclic.recipe.ModBrewingRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -35,18 +37,14 @@ public class PotionRegistry {
     IForgeRegistry<MobEffect> r = event.getRegistry();
     PotionEffects.STUN = register(r, new StunEffect(MobEffectCategory.HARMFUL, 0xcccc00), "stun");
     PotionEffects.SWIMSPEED = register(r, new SwimEffect(MobEffectCategory.BENEFICIAL, 0x663300), "swimspeed");
-    PotionEffects.WATERWALK = register(r, new SwimEffect(MobEffectCategory.BENEFICIAL, 0x113399), "waterwalk");
+    PotionEffects.WATERWALK = register(r, new WaterwalkEffect(MobEffectCategory.BENEFICIAL, 0x113399), "waterwalk");
+    PotionEffects.SNOWWALK = register(r, new SnowwalkEffect(MobEffectCategory.NEUTRAL, 0x113399), "snowwalk");
     //from 1.12.2 
     //slowfall NIX in vanilla
     //ender aura - pearl + awkward - no pearl/tp dmg
-    //snow - snowball + awkward(change?) = snow
-    //butterfingers - gold + awkward (change to ?)
-    //waterwalking-  fish + snow
     //bouncy - slime + ender
     //frost walker ice + snow
-    //magnetism - lapis + awk
-    //saturation from hunger +cake
-    //    r.register(new Potion(ModCyclic.MODID + "_saturation", new EffectInstance(Effects.SATURATION, 3600)).setRegistryName(ModCyclic.MODID + ":saturation"));
+    //magnetism - lapis + awk 
   }
 
   private static TickableEffect register(IForgeRegistry<MobEffect> r, TickableEffect pot, String name) {
@@ -72,6 +70,7 @@ public class PotionRegistry {
     r.register(new Potion(ModCyclic.MODID + "_wither", new MobEffectInstance(MobEffects.WITHER, smal)).setRegistryName(ModCyclic.MODID + ":wither"));
     r.register(new Potion(ModCyclic.MODID + "_resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, smal)).setRegistryName(ModCyclic.MODID + ":resistance"));
     r.register(new Potion(ModCyclic.MODID + "_waterwalk", new MobEffectInstance(PotionEffects.WATERWALK, normal)).setRegistryName(ModCyclic.MODID + ":waterwalk"));
+    r.register(new Potion(ModCyclic.MODID + "_snow", new MobEffectInstance(PotionEffects.SNOWWALK, normal)).setRegistryName(ModCyclic.MODID + ":snowwalk"));
   }
 
   public static class PotionEffects {
@@ -83,6 +82,7 @@ public class PotionRegistry {
     @ObjectHolder(ModCyclic.MODID + ":swimspeed")
     public static TickableEffect SWIMSPEED;
     public static TickableEffect WATERWALK;
+    public static TickableEffect SNOWWALK;
   }
 
   public static class PotionItem {
@@ -97,6 +97,8 @@ public class PotionRegistry {
     public static Potion SWIMSPEED;
     @ObjectHolder(ModCyclic.MODID + ":waterwalk")
     public static Potion WATERWALK;
+    @ObjectHolder(ModCyclic.MODID + ":snowwalk")
+    public static Potion SNOWWALK;
     @ObjectHolder(ModCyclic.MODID + ":blind")
     public static Potion BLIND;
     @ObjectHolder(ModCyclic.MODID + ":levitation")
@@ -110,9 +112,6 @@ public class PotionRegistry {
     @ObjectHolder(ModCyclic.MODID + ":resistance")
     public static Potion RESISTANCE;
   }
-  //resistance : strength pot + iron ingot
-  //wither : fermented spider eye + weakness pot 
-  //saturation = cake + hunger pot 
 
   public static void setup(FMLCommonSetupEvent event) {
     ///haste recipes
@@ -125,7 +124,6 @@ public class PotionRegistry {
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.STUN, Items.CLAY);
     //swimspeed recipes
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.SWIMSPEED, Items.DRIED_KELP_BLOCK);
-    basicBrewing(awkwardPotion.copy(), PotionItem.WATERWALK, Items.AMETHYST_SHARD);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.NIGHT_VISION), PotionRegistry.PotionItem.BLIND, Items.BEETROOT);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), PotionItem.LEVITATION, Items.FERMENTED_SPIDER_EYE);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), PotionItem.RESISTANCE, Items.IRON_INGOT);
@@ -133,6 +131,10 @@ public class PotionRegistry {
     basicBrewing(thickPotion.copy(), PotionRegistry.PotionItem.HUNGER, Items.ROTTEN_FLESH);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.HUNGER),
         PotionRegistry.PotionItem.STRONG_HUNGER, Items.REDSTONE);
+    //
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.WATERWALK, Items.LEATHER);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.SNOWWALK, Items.SNOWBALL);
+    //    basicBrewing(awkwardPotion.copy(), PotionItem.WATERWALK, Items.AMETHYST_SHARD);
   }
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {
