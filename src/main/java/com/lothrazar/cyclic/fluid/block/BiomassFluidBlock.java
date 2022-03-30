@@ -17,11 +17,9 @@ public class BiomassFluidBlock extends LiquidBlock {
     super(supplier, props);
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-    if (entityIn instanceof LivingEntity && worldIn.random.nextDouble() < 000.1F) {
-      LivingEntity ent = (LivingEntity) entityIn;
+    if (!worldIn.isClientSide && entityIn instanceof LivingEntity ent && worldIn.random.nextDouble() < 000.1F) {
       ent.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 0));
     }
     super.entityInside(state, worldIn, pos, entityIn);

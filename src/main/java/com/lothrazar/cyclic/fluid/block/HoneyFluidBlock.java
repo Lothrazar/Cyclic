@@ -20,9 +20,8 @@ public class HoneyFluidBlock extends LiquidBlock {
   @SuppressWarnings("deprecation")
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-    if (entityIn instanceof LivingEntity) {
-      LivingEntity ent = (LivingEntity) entityIn;
-      ent.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 1));
+    if (!worldIn.isClientSide && entityIn instanceof LivingEntity ent) {
+      ent.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0));
       ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
       ent.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 5));
       ent.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 5));

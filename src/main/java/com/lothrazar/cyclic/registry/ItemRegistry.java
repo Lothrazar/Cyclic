@@ -24,6 +24,7 @@ import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MilkBottle;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.ShieldCyclicItem;
+import com.lothrazar.cyclic.item.ShieldCyclicItem.ShieldType;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.SpawnInspectorTool;
 import com.lothrazar.cyclic.item.SpelunkerCaveFinder;
@@ -116,8 +117,6 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
@@ -463,7 +462,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword", () -> new SwordItem(MaterialRegistry.ToolMats.GEMOBSIDIAN, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SANDSTONE_SWORD = ITEMS.register("sandstone_sword", () -> new SwordItem(MaterialRegistry.ToolMats.SANDSTONE, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> NETHERBRICK_SWORD = ITEMS.register("netherbrick_sword", () -> new SwordItem(MaterialRegistry.ToolMats.NETHERBRICK, 3, -2.4F, (new Item.Properties()).tab(MaterialRegistry.ITEM_GROUP)));
-  //
+  // NEW content
   public static final RegistryObject<Item> LASER_CANNON = ITEMS.register("laser_cannon", () -> new LaserItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAND_HYPNO = ITEMS.register("wand_hypno", () -> new WandHypnoItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAND_MISSILE = ITEMS.register("wand_missile", () -> new WandMissileItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
@@ -482,19 +481,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
-
-    @Override
-    public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
-      return stackIngredient.is(Items.STICK) || super.isValidRepairItem(stackShield, stackIngredient);
-    }
-  });
-  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP)) {
-
-    @Override
-    public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
-      return stackIngredient.is(Items.LEATHER) || super.isValidRepairItem(stackShield, stackIngredient);
-    }
-  });
+  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP), ShieldType.WOOD));
+  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP), ShieldType.LEATHER));
   //  public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
 }

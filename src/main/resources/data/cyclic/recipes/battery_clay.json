@@ -10,7 +10,7 @@
       "item": "minecraft:brick"
     },
     "b": {
-      "item": "minecraft:glass_pane"
+      "tag": "forge:storage_blocks/cobblestone"
     },
     "a": {
       "tag": "forge:nuggets/copper"

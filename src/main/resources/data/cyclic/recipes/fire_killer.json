@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " w ",
+    "r r",
+    "rir"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:tripwire_hook"
+    },
+    "r": {
+      "item": "minecraft:dye_red"
+    },
+    "i": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    }
+  },
+  "result": {
+    "item": "cyclic:fire_killer"
+  }
+}

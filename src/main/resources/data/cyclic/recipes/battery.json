@@ -7,10 +7,10 @@
   ],
   "key": {
     "c": {
-      "tag": "forge:storage_blocks/cobblestone"
+      "tag": "forge:nuggets/copper"
     },
     "b": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:heavy_weighted_pressure_plate"
     },
     "a": {
       "item": "minecraft:redstone_block"

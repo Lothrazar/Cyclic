@@ -1,19 +1,19 @@
 package com.lothrazar.cyclic.item;
 
+import java.util.function.Consumer;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.render.ShieldBlockEntityWithoutLevelRenderer;
-import java.util.function.Consumer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
@@ -25,13 +25,29 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
 
   public static final ResourceLocation BLOCKING = new ResourceLocation("minecraft:blocking");
 
+  public static enum ShieldType {
+    LEATHER, WOOD;
+  }
+
+  private ShieldType type;
+
   /**
    * See ItemEvents:onShieldBlock and ClientRegistryCyclic:initShields
    *
    * @param properties
    */
-  public ShieldCyclicItem(Properties properties) {
+  public ShieldCyclicItem(Properties properties, ShieldType type) {
     super(properties);
+    this.type = type;
+  }
+
+  @Override
+  public boolean isValidRepairItem(ItemStack stackShield, ItemStack stackIngredient) {
+    if (type == ShieldType.WOOD)
+      return stackIngredient.is(Items.STICK);
+    if (type == ShieldType.LEATHER)
+      return stackIngredient.is(Items.LEATHER);
+    return false;
   }
 
   @Override
@@ -71,38 +87,41 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
     LivingEntity shieldHolder = event.getEntityLiving();
     ItemStack shield = shieldHolder.getUseItem();
     //not called if event was cancelled from a players cooldown
-    System.out.println("Blocked with my shield" + event.getBlockedDamage());
-    if (this == ItemRegistry.SHIELD_WOOD.get()) {
+    if (this.type == ShieldType.LEATHER) {
+      System.out.println("Blocked with my LEATHER shield" + event.getBlockedDamage());
       //reduce by 50% so its weaker than vanilla shield
-      event.setBlockedDamage(event.getBlockedDamage() * .50F);
+      event.setBlockedDamage(event.getBlockedDamage() * .50F); // TODO Config
       if (shieldHolder instanceof Player playerIn) {
-        playerIn.getCooldowns().addCooldown(shield.getItem(), 200);
+        playerIn.getCooldowns().addCooldown(shield.getItem(), 200); // TOOD config
       }
     }
     if (this == ItemRegistry.SHIELD_LEATHER.get()) {
-      //reduce by 25% so its weaker than vanilla shield
-      event.setBlockedDamage(event.getBlockedDamage() * .75F);
+      //reduce by 25% so its weaker than vanilla shielda
+      event.setBlockedDamage(event.getBlockedDamage() * .75F); // TOOD configol
       if (shieldHolder instanceof Player playerIn) {
         playerIn.getCooldowns().addCooldown(shield.getItem(), 4);
         //        event.sour
       }
     }
-    if (event.getDamageSource().isProjectile()) {
+    DamageSource dmgSource = event.getDamageSource();
+    if (dmgSource.isProjectile()) {
       //projectile damage
       // do something custom like kill the projectile
     }
-    if (event.getDamageSource().isExplosion()) {
-      System.out.println("Blocked explosion" );
+    if (dmgSource.isExplosion() && this.type == ShieldType.WOOD) {
+      System.out.println("Blocked explosion");
       //projectile damage
+      //cp
+      //
       // do something custom like kill the projectile
     }
-//    if (event.getDamageSource() instanceof EntityDamageSource eds) {
-//      Entity enemy = eds.getEntity();
-//      if (enemy instanceof LivingEntity liv) {
-//        enemy.hurt(DamageSource.thorns(shieldHolder), 1);
-//      }
-//    }
-    if (event.getDamageSource() instanceof IndirectEntityDamageSource eds) {
+    //    if (event.getDamageSource() instanceof EntityDamageSource eds) {
+    //      Entity enemy = eds.getEntity();
+    //      if (enemy instanceof LivingEntity liv) {
+    //        enemy.hurt(DamageSource.thorns(shieldHolder), 1);
+    //      }
+    //    }
+    if (dmgSource instanceof IndirectEntityDamageSource eds) {
       Entity enemy = eds.getEntity();
       System.out.println("Blocked ENEMY" + enemy);
       if (enemy instanceof LivingEntity liv) {
@@ -110,7 +129,6 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
         System.out.println("THORNS tO ENEMY" + enemy);
       }
     }
-
     //make some not take damage
     //    event.setShieldTakesDamage(false);
   }

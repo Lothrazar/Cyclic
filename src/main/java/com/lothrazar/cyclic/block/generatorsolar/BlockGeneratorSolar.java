@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BlockGeneratorSolar extends BlockCyclic {
 
   public static final VoxelShape AABB = Block.box(0, 0, 0,
-      16, 2, 16);
+      16, 1, 16);
 
   public BlockGeneratorSolar(Properties properties) {
     super(properties.strength(1.8F));

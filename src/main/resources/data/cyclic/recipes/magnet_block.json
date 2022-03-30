@@ -13,7 +13,7 @@
       "tag": "minecraft:planks"
     },
     "x": {
-      "tag": "minecraft:dye_purple"
+      "item": "minecraft:dye_purple"
     }
   },
   "result": {
