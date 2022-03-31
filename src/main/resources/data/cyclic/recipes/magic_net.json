@@ -13,7 +13,7 @@
       "tag": "minecraft:coral_blocks"
     },
     "a": {
-      "item": "minecraft:cyan_dye"
+      "tag": "forge:dyes/cyan"
     },
     "q": {
       "item": "minecraft:snowball"

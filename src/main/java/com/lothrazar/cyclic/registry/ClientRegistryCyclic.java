@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
@@ -57,7 +58,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
@@ -72,9 +72,10 @@ public class ClientRegistryCyclic {
 
   public static final Material SHIELD_BASE_WOOD = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base"));
   public static final Material SHIELD_BASE_WOOD_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base_nopattern"));
-
   public static final Material SHIELD_BASE_LEATHER = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/leather_base"));
   public static final Material SHIELD_BASE_LEATHER_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/leather_base_nopattern"));
+  public static final Material SHIELD_BASE_FLINT = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/flint_base"));
+  public static final Material SHIELD_BASE_FLINT_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/flint_base_nopattern"));
 
   @SubscribeEvent
   public static void onStitch(TextureStitchEvent.Pre event) {
@@ -83,6 +84,8 @@ public class ClientRegistryCyclic {
       event.addSprite(SHIELD_BASE_WOOD_NOPATTERN.texture());
       event.addSprite(SHIELD_BASE_LEATHER.texture());
       event.addSprite(SHIELD_BASE_LEATHER_NOPATTERN.texture());
+      event.addSprite(SHIELD_BASE_FLINT.texture());
+      event.addSprite(SHIELD_BASE_FLINT_NOPATTERN.texture());
     }
   }
 
@@ -132,7 +135,8 @@ public class ClientRegistryCyclic {
     //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
     ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
     ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), ShieldCyclicItem.BLOCKING, blockFn);
-    ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(),  ShieldCyclicItem.BLOCKING, blockFn);
+    ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), ShieldCyclicItem.BLOCKING, blockFn);
+    ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
   }
 
   private static void initRenderLayers() {
@@ -219,6 +223,5 @@ public class ClientRegistryCyclic {
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public static void registerModels(FMLClientSetupEvent event) {
-  }
+  public static void registerModels(FMLClientSetupEvent event) {}
 }

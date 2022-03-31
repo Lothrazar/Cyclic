@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.shield_leather",
+  "icon": "cyclic:shield_leather",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.shield_leather.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shield_leather"
+    }
+  ]
+}

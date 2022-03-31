@@ -7,7 +7,7 @@
   ],
   "key": {
     "p": {
-      "item": "minecraft:purple_dye"
+      "tag": "forge:dyes/purple"
     },
     "i": {
       "item": "minecraft:iron_ingot"

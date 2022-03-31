@@ -7,13 +7,13 @@
   ],
   "key": {
     "s": {
-      "item": "minecraft:string"
+    "tag": "forge:string"
     },
     "i": {
       "item": "minecraft:iron_nugget"
     },
     "r": {
-      "item": "minecraft:gray_dye"
+      "tag": "forge:dyes/gray"
     }
   },
   "result": {

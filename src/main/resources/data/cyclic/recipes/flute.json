@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	" c ",    
+    " c ",
+    " d "
+  ],
+  "key": {
+  	"d": {
+  		"item":"minecraft:wooden_sword"
+  	},
+  	"c": {
+  		"item":"minecraft:bamboo"
+  	}
+  },
+  "result": {
+    "item": "cyclic:flute",
+    "count": 1
+  }
+}

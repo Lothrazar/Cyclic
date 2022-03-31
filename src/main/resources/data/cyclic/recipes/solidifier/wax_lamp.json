@@ -1,0 +1,15 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [{
+    "item": "minecraft:redstone_lamp"
+  }
+  ],
+  "mix": {
+    "tag": "forge:wax",
+    "count": 100
+  },
+  "result": {
+    "item": "cyclic:lamp",
+	"count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients":[ {
+    "tag": "forge:string"
+  }
+  ],
+  "mix": {
+    "tag": "forge:wax",
+    "count": 200
+  },
+  "result": {
+    "item": "minecraft:candle",
+	"count": 2
+  }
+}

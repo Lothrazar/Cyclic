@@ -102,6 +102,8 @@ public class ItemEvents {
         ModCyclic.LOGGER.info("Spawn cancelled by candle " + mob.getType());
         event.setResult(Result.DENY);
       }
+      //get ALL blocks that are an altar first
+      //then check if it has altar type for my entity type and cancel there, without looping if possible 
       if (BlockAltarSol.isTrader(mob, res)
           && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
               BlockRegistry.ALTAR.get().defaultBlockState().setValue(BlockAltarSol.TYPE, AltarType.TRADER),
@@ -130,8 +132,11 @@ public class ItemEvents {
           event.setCanceled(true);
           return;
         }
+        shieldItem.onShieldBlock(event, playerIn);
       }
-      shieldItem.onShieldBlock(event);
+      else {
+        shieldItem.onShieldBlock(event, null);
+      }
     }
   }
 

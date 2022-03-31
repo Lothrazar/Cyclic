@@ -1,0 +1,19 @@
+{
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+    "tag": "forge:string"
+		},
+		{
+			"tag": "forge:dyes/light_blue"
+		}
+	],
+	"mix": {
+		"tag": "forge:wax",
+		"count": 100
+	},
+	"result": {
+		"item": "minecraft:light_blue_candle",
+		"count": 1
+	}
+}

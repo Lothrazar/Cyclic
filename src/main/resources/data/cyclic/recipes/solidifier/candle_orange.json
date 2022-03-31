@@ -1,0 +1,19 @@
+{
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+    "tag": "forge:string"
+		},
+		{
+			"tag": "forge:dyes/orange"
+		}
+	],
+	"mix": {
+		"tag": "forge:wax",
+		"count": 100
+	},
+	"result": {
+		"item": "minecraft:orange_candle",
+		"count": 1
+	}
+}

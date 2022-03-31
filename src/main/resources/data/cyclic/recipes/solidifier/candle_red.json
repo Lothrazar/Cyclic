@@ -1,0 +1,19 @@
+{
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+    "tag": "forge:string"
+		},
+		{
+			"tag": "forge:dyes/red"
+		}
+	],
+	"mix": {
+		"tag": "forge:wax",
+		"count": 100
+	},
+	"result": {
+		"item": "minecraft:red_candle",
+		"count": 1
+	}
+}

@@ -7,7 +7,7 @@
   ],
   "key": {
     "o": {
-      "item": "minecraft:orange_dye"
+      "tag": "forge:tags/orange"
     },
     "s": {
       "item": "minecraft:white_terracotta"

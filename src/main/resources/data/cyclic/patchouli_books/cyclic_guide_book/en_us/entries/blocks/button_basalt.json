@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.button_basalt",
+  "icon": "cyclic:button_basalt",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.button_basalt.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:button_basalt"
+    }
+  ]
+}

@@ -10,7 +10,7 @@
       "item": "minecraft:clay_ball"
     },
     "d": {
-      "item": "minecraft:cyan_dye"
+      "tag": "forge:dyes/cyan"
     },
     "b": {
       "tag": "forge:leather"

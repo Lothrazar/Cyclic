@@ -16,7 +16,7 @@
       "item": "cyclic:gem_amber"
     },
     "g": {
-      "item": "minecraft:lime_dye"
+      "tag": "forge:dyes/lime"
     },
     "r": {
       "item": "minecraft:fire_charge"

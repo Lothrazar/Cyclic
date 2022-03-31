@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.shield_flint",
+  "icon": "cyclic:shield_flint",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.shield_flint.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shield_flint"
+    }
+  ]
+}

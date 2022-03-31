@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.milk_bottle",
+  "icon": "cyclic:milk_bottle",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.milk_bottle.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:milk_bottle"
+    }
+  ]
+}

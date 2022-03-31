@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.button_blackstone",
+  "icon": "cyclic:button_blackstone",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.button_blackstone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:button_blackstone"
+    }
+  ]
+}

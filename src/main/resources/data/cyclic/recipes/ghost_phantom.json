@@ -7,7 +7,7 @@
   ],
   "key": {
     "s": {
-      "item": "minecraft:string"
+    "tag": "forge:string"
     },
     "i": {
       "item": "minecraft:iron_nugget"

@@ -1,0 +1,19 @@
+{
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+    "tag": "forge:string"
+		},
+		{
+			"tag": "forge:dyes/white"
+		}
+	],
+	"mix": {
+		"tag": "forge:wax",
+		"count": 100
+	},
+	"result": {
+		"item": "minecraft:white_candle",
+		"count": 1
+	}
+}

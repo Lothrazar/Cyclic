@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.wand_missile",
+  "icon": "cyclic:wand_missile",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.wand_missile.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:wand_missile"
+    }
+  ]
+}

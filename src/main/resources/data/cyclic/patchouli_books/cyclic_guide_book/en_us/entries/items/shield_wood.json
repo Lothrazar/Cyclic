@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.shield_wood",
+  "icon": "cyclic:shield_wood",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.shield_wood.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shield_wood"
+    }
+  ]
+}

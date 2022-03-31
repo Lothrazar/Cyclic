@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.wand_hypno",
+  "icon": "cyclic:wand_hypno",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.wand_hypno.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:wand_hypno"
+    }
+  ]
+}

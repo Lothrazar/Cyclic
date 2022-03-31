@@ -481,7 +481,8 @@ public class ItemRegistry {
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP), ShieldType.WOOD));
-  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(336).tab(MaterialRegistry.ITEM_GROUP), ShieldType.LEATHER));
+  public static final RegistryObject<Item> SHIELD_WOOD = ITEMS.register("shield_wood", () -> new ShieldCyclicItem(new Item.Properties().durability(84).tab(MaterialRegistry.ITEM_GROUP), ShieldType.WOOD));
+  public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(168).tab(MaterialRegistry.ITEM_GROUP), ShieldType.LEATHER));
+  public static final RegistryObject<Item> SHIELD_FLINT = ITEMS.register("shield_flint", () -> new ShieldCyclicItem(new Item.Properties().durability(168 + 84).tab(MaterialRegistry.ITEM_GROUP), ShieldType.FLINT));
   //  public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
 }

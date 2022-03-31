@@ -1,22 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "sgs",
-    " bg",
-    "b s"
+    "WoW",
+    "WWW",
+    " W "
   ],
   "key": {
-    "b": {
+    "W": {
       "item": "minecraft:stick"
     },
-    "s": {
+    "o": {
       "tag": "forge:storage_blocks/flint"
-    },
-    "g": {
-      "tag": "forge:dyes/light_blue"
     }
   },
   "result": {
-    "item": "cyclic:spelunker"
+    "item": "cyclic:shield_flint"
   }
 }

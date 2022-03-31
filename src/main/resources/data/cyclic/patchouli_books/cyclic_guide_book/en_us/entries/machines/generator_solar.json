@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.generator_solar",
+  "icon": "cyclic:generator_solar",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.generator_solar.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:generator_solar"
+    }
+  ]
+}

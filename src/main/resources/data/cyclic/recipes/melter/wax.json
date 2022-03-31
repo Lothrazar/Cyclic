@@ -1,0 +1,11 @@
+{
+  "type": "cyclic:melter",
+  "ingredients":[ {
+    "item": "minecraft:honeycomb_block"
+  }],
+  "energy": 1000,
+  "result": {
+    "fluid": "cyclic:wax",
+    "count": 1000
+  }
+}

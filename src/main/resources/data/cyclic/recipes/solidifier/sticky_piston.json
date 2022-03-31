@@ -1,0 +1,15 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [{
+    "item": "minecraft:piston"
+  }
+  ],
+  "mix": {
+    "tag": "forge:slime",
+    "count": 100
+  },
+  "result": {
+    "item": "minecraft:sticky_piston",
+	"count": 1
+  }
+}

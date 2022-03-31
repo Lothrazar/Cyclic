@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.flute",
+  "icon": "cyclic:flute",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.flute.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:flute"
+    }
+  ]
+}
