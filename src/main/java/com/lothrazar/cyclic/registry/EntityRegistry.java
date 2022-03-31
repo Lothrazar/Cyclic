@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.item.endereye.EyeOfEnderEntityNodrop;
 import com.lothrazar.cyclic.item.findspawner.EntityDungeonEye;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.slingshot.LaserEntity;
+import com.lothrazar.cyclic.item.slingshot.MagicMissileEntity;
 import com.lothrazar.cyclic.item.slingshot.StoneEntity;
 import com.lothrazar.cyclic.item.torchthrow.EntityTorchBolt;
 import net.minecraft.world.entity.EntityType;
@@ -52,6 +53,8 @@ public class EntityRegistry {
   public static EntityType<ConveyorItemEntity> CONVEYOR_ITEM;
   @ObjectHolder(ModCyclic.MODID + ":laser_bolt")
   public static EntityType<LaserEntity> LASER_BOLT;
+  @ObjectHolder(ModCyclic.MODID + ":magic_missile")
+  public static EntityType<MagicMissileEntity> MAGIC_MISSILE;
 
   @SubscribeEvent
   public static void registerEntity(RegistryEvent.Register<EntityType<?>> e) {
@@ -150,8 +153,16 @@ public class EntityRegistry {
             .setUpdateInterval(1)
             .setTrackingRange(128)
             .sized(.6f, .6f)
-            .build("stone_bolt")
+            .build("laser_bolt")
             .setRegistryName("laser_bolt"));
+    r.register(
+        EntityType.Builder.<MagicMissileEntity> of(MagicMissileEntity::new, MobCategory.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .sized(.6f, .6f)
+            .build("magic_missile")
+            .setRegistryName("magic_missile"));
     r.register(
         EntityType.Builder.<ConveyorItemEntity> of(ConveyorItemEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)

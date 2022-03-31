@@ -35,12 +35,9 @@ public class WandHypnoItem extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     BlockPos p = player.blockPosition();
-    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE,
-        p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
-    //    playerIn.startUsingItem(handIn);
+    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
     List<Mob> trimmedTargets = new ArrayList<Mob>();
     for (Mob target : all) {
-      //
       MobCategory type = target.getClassification(false);
       if (target.getUUID().compareTo(player.getUUID()) != 0
           && !type.isFriendly()) {
