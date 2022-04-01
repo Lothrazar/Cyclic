@@ -9,7 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +29,7 @@ public class ItemBaseCyclic extends Item {
     ItemRegistry.ITEMSFIXME.add(this);
   }
 
-  protected void shootMe(Level world, Player shooter, ThrowableItemProjectile ball, float pitch, float velocityFactor) {
+  protected void shootMe(Level world, Player shooter, Projectile ball, float pitch, float velocityFactor) {
     if (world.isClientSide) {
       return;
     }

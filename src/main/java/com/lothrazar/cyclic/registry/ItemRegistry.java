@@ -485,4 +485,6 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SHIELD_LEATHER = ITEMS.register("shield_leather", () -> new ShieldCyclicItem(new Item.Properties().durability(168).tab(MaterialRegistry.ITEM_GROUP), ShieldType.LEATHER));
   public static final RegistryObject<Item> SHIELD_FLINT = ITEMS.register("shield_flint", () -> new ShieldCyclicItem(new Item.Properties().durability(168 + 84).tab(MaterialRegistry.ITEM_GROUP), ShieldType.FLINT));
   //  public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> FIREBALL = ITEMS.register("fireball", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> FIREBALL_dark = ITEMS.register("fireball_dark", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
 }

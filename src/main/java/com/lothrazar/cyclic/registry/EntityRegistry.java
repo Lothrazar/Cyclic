@@ -160,7 +160,7 @@ public class EntityRegistry {
             .setShouldReceiveVelocityUpdates(true)
             .setUpdateInterval(1)
             .setTrackingRange(128)
-            .sized(.6f, .6f)
+            .sized(.3f, .3f)
             .build("magic_missile")
             .setRegistryName("magic_missile"));
     r.register(

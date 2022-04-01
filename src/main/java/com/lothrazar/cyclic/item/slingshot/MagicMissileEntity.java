@@ -21,8 +21,8 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class MagicMissileEntity extends ThrowableItemProjectile {
 
-  private static final int MAX_LIFETIME = 120;
-  private static final int TIME_UNTIL_HOMING = 8;
+  private static final int MAX_LIFETIME = 120000;
+  private static final int TIME_UNTIL_HOMING = 4;
   private static final double SPEED = 0.95;
   private UUID targetId = null;
   private LivingEntity targetEntity;
@@ -33,15 +33,16 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
   }
 
   public MagicMissileEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.LASER_BOLT, livingEntityIn, worldIn);
+    super(EntityRegistry.MAGIC_MISSILE, livingEntityIn, worldIn);
   }
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.NETHERITE_NUGGET.get();
+    return ItemRegistry.FIREBALL.get();
   }
 
   public void setTarget(LivingEntity target) {
+    ModCyclic.LOGGER.info("Magic missile target found " + target);
     targetId = target == null ? null : target.getUUID();
     targetEntity = target;
   }
@@ -50,23 +51,29 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
   public void tick() {
     super.tick();
     lifetime--;
-    if (lifetime > MAX_LIFETIME - TIME_UNTIL_HOMING) {
-      return; //keep normal path for first fiew
+    if (!this.level.isClientSide && lifetime <= 0) {
+      //      this.kill();
+      //no target found
+      ModCyclic.LOGGER.info(" server side Self I took too long " + targetEntity);
+      return;
     }
     //ModCyclic.logger.error("UPDATE ET  isclient==" + this.world.isRemote);
-    if (lifetime == 0 || targetId == null || targetEntity == null || !targetEntity.isAlive()) {
+    if (!this.level.isClientSide &&
+        (targetEntity == null || !targetEntity.isAlive())) {
       this.kill();
       //no target found
-      ModCyclic.LOGGER.info("Self kill no target found");
+      ModCyclic.LOGGER.info(" server side Self kill dead entity  " + targetEntity);
       return;
     }
-    if (this.level.isClientSide &&
-        (targetEntity == null || this.targetEntity.blockPosition().equals(this.blockPosition()))) {
-      this.kill(); //setDead(); bandaid for client leftover
-      return;
+    //    if (!this.level.isClientSide &&
+    //        (targetEntity == null || this.targetEntity.blockPosition().equals(this.blockPosition()))) {
+    //      //      this.kill(); //setDead(); bandaid for client leftover
+    //      return;
+    //    }
+    //we made it this far
+    if (targetEntity != null && !targetEntity.blockPosition().equals(this.blockPosition())) {
+      moveTowardsTarget();
     }
-    //+ target.getEyeHeight() / 2.0
-    moveTowardsTarget();
   }
 
   private void moveTowardsTarget() {

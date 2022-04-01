@@ -36,7 +36,7 @@ public class WandMissileItem extends ItemBaseCyclic {
     //    playerIn.startUsingItem(handIn);
     System.out.println("TODO: consume RF and new MAIGC MISSILE  entity");
     BlockPos p = player.blockPosition();
-    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - 1, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + 1, p.getZ() + RANGE));
+    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
     List<Mob> trimmedTargets = new ArrayList<Mob>();
     for (Mob target : all) {
       MobCategory type = target.getClassification(false);
@@ -46,9 +46,11 @@ public class WandMissileItem extends ItemBaseCyclic {
         trimmedTargets.add(target);
       }
     }
-    MagicMissileEntity projectile = new MagicMissileEntity(player, world);
-    projectile.setTarget(UtilEntity.getClosestEntity(world, player, trimmedTargets));
-    shootMe(world, player, projectile, 0, ItemBaseCyclic.VELOCITY_MAX * 0.3F);
+    if (!world.isClientSide) {
+      MagicMissileEntity projectile = new MagicMissileEntity(player, world);
+      projectile.setTarget(UtilEntity.getClosestEntity(world, player, trimmedTargets));
+      shootMe(world, player, projectile, 0, ItemBaseCyclic.VELOCITY_MAX * 0.3F);
+    }
     // TODO: RF POWER NOT DURAB
     UtilItemStack.damageItem(player, itemstack);
     return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);

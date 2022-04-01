@@ -76,6 +76,8 @@ public class ClientRegistryCyclic {
   public static final Material SHIELD_BASE_LEATHER_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/leather_base_nopattern"));
   public static final Material SHIELD_BASE_FLINT = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/flint_base"));
   public static final Material SHIELD_BASE_FLINT_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/flint_base_nopattern"));
+  //  public static final Material FIREBALL = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "items/fireball"));
+  //  public static final Material FIREBALL_DARK = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "items/fireball_dark"));
 
   @SubscribeEvent
   public static void onStitch(TextureStitchEvent.Pre event) {
@@ -86,6 +88,8 @@ public class ClientRegistryCyclic {
       event.addSprite(SHIELD_BASE_LEATHER_NOPATTERN.texture());
       event.addSprite(SHIELD_BASE_FLINT.texture());
       event.addSprite(SHIELD_BASE_FLINT_NOPATTERN.texture());
+      //      event.addSprite(FIREBALL.texture());
+      //      event.addSprite(FIREBALL_DARK.texture());
     }
   }
 
@@ -218,6 +222,7 @@ public class ClientRegistryCyclic {
     event.registerEntityRenderer(EntityRegistry.STONE_BOLT, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LASER_BOLT, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LIGHTNINGBOLT, ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.MAGIC_MISSILE, ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.CONVEYOR_ITEM, ConveyorItemRenderer::new);
   }
 
