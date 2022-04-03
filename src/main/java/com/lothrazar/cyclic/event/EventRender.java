@@ -25,12 +25,19 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
@@ -102,7 +109,8 @@ public class EventRender {
 
   @SubscribeEvent
   public void onRenderWorldLast(RenderLevelLastEvent event) {
-    Player player = Minecraft.getInstance().player;
+    Minecraft mc = Minecraft.getInstance();
+    Player player = mc.player;
     if (player == null) {
       return;
     }
@@ -173,15 +181,86 @@ public class EventRender {
         }
       }
     }
-    stack = LaserItem.getIfHeld(player);
-    if (!stack.isEmpty()) {
-      RenderMiningLaser.renderLaser(event, player, Minecraft.getInstance().getFrameTime(), stack, InteractionHand.MAIN_HAND);
-    }
-    // other items added here
-    //
     //render the pos->colour map
     if (renderCubes.keySet().size() > 0) {
       UtilRender.renderColourCubes(event, renderCubes, alpha);
     }
+    /****************** end rendering cubes. start laser beam render ********************/
+    stack = LaserItem.getIfHeld(player);
+    if (!stack.isEmpty() && player.isUsingItem()) {
+      // RayTraceResult  became HitResult
+      // objectMouseOver became hitResult
+      if (mc.crosshairPickEntity != null) {
+        System.out.println(" crosshairPickEntity  " + mc.crosshairPickEntity); // TODO use this  and not hitResult if we need to
+        //        System.out.println(" !ehr found right away " + ehr);
+        //TODO: different color/more damage/ different data packet arguments
+        RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
+        return;// TODO: done 
+      }
+      EntityHitResult ehr = null;
+      if (mc.hitResult.getType() == HitResult.Type.ENTITY) {
+        ehr = (EntityHitResult) mc.hitResult;
+      }
+      else {
+        //out of range- do custom raytrace
+        final float p_109088_ = 1.0F;
+        double laserGamemodeRange = mc.gameMode.getPickRange() * LaserItem.RANGE_FACTOR; // TODO: hardcoded laser range
+        Entity camera = mc.getCameraEntity();
+        //        HitResult testResult = camera.pick(laserGamemodeRange, p_109088_, false);
+        //        if (testResult.getType() == HitResult.Type.ENTITY) {
+        //          ehr = (EntityHitResult) testResult;
+        //          //this means it was within players normal crosshair reach/range
+        //          //so maybe a bonus to damage here
+        //        }
+        //        else {
+        //outside of range
+        //          System.out.println("what is range " + d0);
+        Vec3 cameraViewVector = camera.getViewVector(1.0F);
+        Vec3 cameraEyePosition = camera.getEyePosition(p_109088_);
+        Vec3 cameraEyeViewRay = cameraEyePosition.add(cameraViewVector.x * laserGamemodeRange, cameraViewVector.y * laserGamemodeRange, cameraViewVector.z * laserGamemodeRange);
+        AABB aabb = camera.getBoundingBox().expandTowards(cameraViewVector.scale(laserGamemodeRange)).inflate(1.0D, 1.0D, 1.0D);
+        //          System.out.println("projectile util " + aabb);
+        ehr = ProjectileUtil.getEntityHitResult(camera, cameraEyePosition, cameraEyeViewRay, aabb, (ent) -> {
+          ///
+          //            System.out.println(ent.isAlive() + "  -> predicate  " + ent);
+          return ent.isAlive(); // ignore isPickable().   !ent.isSpectator() && 
+        }, 0);
+        if (ehr != null) {
+          //TODO: problem: it shoots thru walls
+          //              Entity entity1 = entityhitresult.getEntity();
+          Vec3 entityHitResultLocation = ehr.getLocation();
+          double distance = Math.sqrt(cameraEyePosition.distanceToSqr(entityHitResultLocation));
+          final int MAX = 6660;
+          //            System.out.println(distance + " => getEntity() " + ehr.getEntity());
+          if (distance < MAX) {
+            //first vector is FROM, second is TO
+            BlockHitResult miss = mc.level.clip(new ClipContext(cameraEyePosition, entityHitResultLocation, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, mc.player));
+            //              BlockHitResult miss = BlockHitResult.miss(entityHitResultLocation, Direction.getNearest(cameraViewVector.x, cameraViewVector.y, cameraViewVector.z),
+            //                  new BlockPos(entityHitResultLocation));
+            if (miss.getType() == HitResult.Type.BLOCK) {
+              //works shooting down but not across?
+              System.out.println(" ! LOL u hit a block " + miss.getBlockPos() + mc.level.getBlockState(miss.getBlockPos()));
+            }
+            else { // MISS
+              double test = miss.distanceTo(camera);
+              System.out.println(miss.getType() + " not a block ok great. ------ " + ehr.getEntity());
+              RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
+              // NOW actually send a client->server packet to deal damage
+              //server will verify item is held, consumes energy or whatever , players not dead etc 
+            } //              BlockHitResult notMiss = new BlockHitResult(entityHitResultLocation, Direction.getNearest(cameraViewVector.x, cameraViewVector.y, cameraViewVector.z),
+            //                  new BlockPos(entityHitResultLocation), true);
+            //              System.out.println(notMiss.getType() + "  NOTMISS?" + notMiss.getBlockPos() + mc.level.getBlockState(miss.getBlockPos()));
+            //              System.out.println("---------- " + notMiss.distanceTo(camera));
+          }
+          //            }
+        }
+        //        }
+      }
+      //      EntityRenderer<?> test;
+      //      test = mc.getEntityRenderDispatcher().getRenderer(player);
+      //      Minecraft.getInstance().getEntityRenderDispatcher().get
+    }
+    // other items added here
+    //
   }
 }
