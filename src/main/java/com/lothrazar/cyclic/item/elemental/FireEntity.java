@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.EntityRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -32,7 +32,7 @@ public class FireEntity extends ThrowableItemProjectile {
 
   @Override
   protected Item getDefaultItem() {
-    return Items.FIRE_CHARGE;
+    return ItemRegistry.FIREBALL_DARK.get();
   }
 
   @Override

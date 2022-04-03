@@ -10,9 +10,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
@@ -20,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 
 public class WandHypnoItem extends ItemBaseCyclic {
 
+  private static final double MIN_CHARGE = 0.6;
   private static final double RANGE = 16.0;
 
   public WandHypnoItem(Properties properties) {
@@ -28,12 +31,32 @@ public class WandHypnoItem extends ItemBaseCyclic {
 
   @Override
   public UseAnim getUseAnimation(ItemStack stack) {
-    return UseAnim.NONE;
+    return UseAnim.SPEAR;
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
-    ItemStack itemstack = player.getItemInHand(handIn);
+  public int getUseDuration(ItemStack stack) {
+    return 72000;
+  }
+
+  @Override
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    ItemStack itemstack = playerIn.getItemInHand(handIn);
+    playerIn.startUsingItem(handIn);
+    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+  }
+
+  @Override
+  public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
+    if (entity instanceof Player == false) {
+      return;
+    }
+    Player player = (Player) entity;
+    int charge = this.getUseDuration(stack) - chargeTimer;
+    float percentageCharged = BowItem.getPowerForTime(charge); //never zero, its from [0.03,1];
+    if (percentageCharged < MIN_CHARGE) { // MINIMUM_CHARGE
+      return; //not enough force to go with any realistic path 
+    }
     BlockPos p = player.blockPosition();
     List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
     List<Mob> trimmedTargets = new ArrayList<Mob>();
@@ -67,7 +90,7 @@ public class WandHypnoItem extends ItemBaseCyclic {
       UtilChat.sendStatusMessage(player, "wand.result.notargets");
     }
     System.out.println("Item that takes RF?");
-    UtilItemStack.damageItem(player, itemstack);
-    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+    UtilItemStack.damageItem(player, stack);
+    //    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
   }
 }

@@ -52,7 +52,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
     super.tick();
     lifetime--;
     if (!this.level.isClientSide && lifetime <= 0) {
-      //      this.kill();
+      this.kill();
       //no target found
       ModCyclic.LOGGER.info(" server side Self I took too long " + targetEntity);
       return;
@@ -62,21 +62,19 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
         (targetEntity == null || !targetEntity.isAlive())) {
       this.kill();
       //no target found
-      ModCyclic.LOGGER.info(" server side Self kill dead entity  " + targetEntity);
+      ModCyclic.LOGGER.info(" - erase self dead entity  " + targetEntity);
       return;
     }
-    //    if (!this.level.isClientSide &&
-    //        (targetEntity == null || this.targetEntity.blockPosition().equals(this.blockPosition()))) {
-    //      //      this.kill(); //setDead(); bandaid for client leftover
-    //      return;
-    //    }
-    //we made it this far
-    if (targetEntity != null && !targetEntity.blockPosition().equals(this.blockPosition())) {
-      moveTowardsTarget();
-    }
+    moveTowardsTarget();
   }
 
   private void moveTowardsTarget() {
+    if (this.targetEntity == null) {
+      return;
+    }
+    if (targetEntity.blockPosition().equals(this.blockPosition())) {
+      return; // equal pos
+    }
     double posX = this.position().x;
     double posY = this.position().y;
     double posZ = this.position().z;

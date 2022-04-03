@@ -679,7 +679,7 @@
   "item.cyclic.ender_eye_reuse.tooltip": "Reuseable ender eye for finding strongholds",
   "item.cyclic.ender_eye_reuse.guide": "Reuseable Ender Eye for finding strongholds. Can be thrown multiple times and will not break.",
   "item.cyclic.fire_scepter": "Duskflame Hex",
-  "item.cyclic.fire_scepter.tooltip": "Paralyzing triple shot",
+  "item.cyclic.fire_scepter.tooltip": "Magic wand with a triple fire shot",
   "item.cyclic.fire_scepter.guide": "Launch three projectiles that burn and damage entities.  Does not set fire to the world.",
   "item.cyclic.fire_dark_anim": "Duskflame Essence",
   "item.cyclic.fire_dark_anim.tooltip": "Used for Duskflame Hex",

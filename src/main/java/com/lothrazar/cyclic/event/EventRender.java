@@ -16,12 +16,15 @@ import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
+import com.lothrazar.cyclic.item.slingshot.LaserItem;
+import com.lothrazar.cyclic.util.RenderMiningLaser;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilRender;
 import com.lothrazar.cyclic.util.UtilWorld;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -169,6 +172,10 @@ public class EventRender {
           renderCubes.put(here.offset(s), ClientConfigCyclic.getColor(stack));
         }
       }
+    }
+    stack = LaserItem.getIfHeld(player);
+    if (!stack.isEmpty()) {
+      RenderMiningLaser.renderLaser(event, player, Minecraft.getInstance().getFrameTime(), stack, InteractionHand.MAIN_HAND);
     }
     // other items added here
     //

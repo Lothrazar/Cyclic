@@ -21,6 +21,18 @@ public class LaserItem extends ItemBaseCyclic {
     return UseAnim.NONE;
   }
 
+  public static ItemStack getIfHeld(Player player) {
+    ItemStack heldItem = player.getMainHandItem();
+    if (heldItem.getItem() instanceof LaserItem) {
+      return heldItem;
+    }
+    heldItem = player.getOffhandItem();
+    if (heldItem.getItem() instanceof LaserItem) {
+      return heldItem;
+    }
+    return ItemStack.EMPTY;
+  }
+
   @Override
   public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
