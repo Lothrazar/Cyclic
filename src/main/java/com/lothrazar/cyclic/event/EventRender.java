@@ -17,6 +17,8 @@ import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.item.slingshot.LaserItem;
+import com.lothrazar.cyclic.net.PacketEntityLaser;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.RenderMiningLaser;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilRender;
@@ -41,6 +43,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EventRender {
@@ -188,77 +192,47 @@ public class EventRender {
     /****************** end rendering cubes. start laser beam render ********************/
     stack = LaserItem.getIfHeld(player);
     if (!stack.isEmpty() && player.isUsingItem()) {
+      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (storage == null || storage.getEnergyStored() < LaserItem.COST) {
+        return;
+      }
       // RayTraceResult  became HitResult
       // objectMouseOver became hitResult
       if (mc.crosshairPickEntity != null) {
-        System.out.println(" crosshairPickEntity  " + mc.crosshairPickEntity); // TODO use this  and not hitResult if we need to
-        //        System.out.println(" !ehr found right away " + ehr);
         //TODO: different color/more damage/ different data packet arguments
         RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
-        return;// TODO: done 
-      }
-      EntityHitResult ehr = null;
-      if (mc.hitResult.getType() == HitResult.Type.ENTITY) {
-        ehr = (EntityHitResult) mc.hitResult;
+        PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
       }
       else {
-        //out of range- do custom raytrace
-        final float p_109088_ = 1.0F;
-        double laserGamemodeRange = mc.gameMode.getPickRange() * LaserItem.RANGE_FACTOR; // TODO: hardcoded laser range
+        //out of range- do custom raytrace 
+        double laserGamemodeRange = mc.gameMode.getPickRange() * LaserItem.RANGE_FACTOR;
         Entity camera = mc.getCameraEntity();
-        //        HitResult testResult = camera.pick(laserGamemodeRange, p_109088_, false);
-        //        if (testResult.getType() == HitResult.Type.ENTITY) {
-        //          ehr = (EntityHitResult) testResult;
-        //          //this means it was within players normal crosshair reach/range
-        //          //so maybe a bonus to damage here
-        //        }
-        //        else {
-        //outside of range
-        //          System.out.println("what is range " + d0);
         Vec3 cameraViewVector = camera.getViewVector(1.0F);
-        Vec3 cameraEyePosition = camera.getEyePosition(p_109088_);
+        Vec3 cameraEyePosition = camera.getEyePosition(1.0F);
         Vec3 cameraEyeViewRay = cameraEyePosition.add(cameraViewVector.x * laserGamemodeRange, cameraViewVector.y * laserGamemodeRange, cameraViewVector.z * laserGamemodeRange);
         AABB aabb = camera.getBoundingBox().expandTowards(cameraViewVector.scale(laserGamemodeRange)).inflate(1.0D, 1.0D, 1.0D);
-        //          System.out.println("projectile util " + aabb);
-        ehr = ProjectileUtil.getEntityHitResult(camera, cameraEyePosition, cameraEyeViewRay, aabb, (ent) -> {
-          ///
-          //            System.out.println(ent.isAlive() + "  -> predicate  " + ent);
-          return ent.isAlive(); // ignore isPickable().   !ent.isSpectator() && 
+        EntityHitResult ehr = ProjectileUtil.getEntityHitResult(camera, cameraEyePosition, cameraEyeViewRay, aabb, (ent) -> {
+          return ent.isAttackable() && ent.isAlive();
         }, 0);
         if (ehr != null) {
-          //TODO: problem: it shoots thru walls
-          //              Entity entity1 = entityhitresult.getEntity();
           Vec3 entityHitResultLocation = ehr.getLocation();
           double distance = Math.sqrt(cameraEyePosition.distanceToSqr(entityHitResultLocation));
-          final int MAX = 6660;
-          //            System.out.println(distance + " => getEntity() " + ehr.getEntity());
-          if (distance < MAX) {
+          if (distance < LaserItem.RANGE_MAX) {
             //first vector is FROM, second is TO
             BlockHitResult miss = mc.level.clip(new ClipContext(cameraEyePosition, entityHitResultLocation, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, mc.player));
-            //              BlockHitResult miss = BlockHitResult.miss(entityHitResultLocation, Direction.getNearest(cameraViewVector.x, cameraViewVector.y, cameraViewVector.z),
-            //                  new BlockPos(entityHitResultLocation));
+            //              BlockHitResult miss = BlockHitResult.miss(entityHitResultLocation, Direction.getNearest(cameraViewVector.x, cameraViewVector.y, cameraViewVector.z),                new BlockPos(entityHitResultLocation));
             if (miss.getType() == HitResult.Type.BLOCK) {
-              //works shooting down but not across?
-              System.out.println(" ! LOL u hit a block " + miss.getBlockPos() + mc.level.getBlockState(miss.getBlockPos()));
+              //we hit a wall, dont shoot thru walls
             }
-            else { // MISS
-              double test = miss.distanceTo(camera);
-              System.out.println(miss.getType() + " not a block ok great. ------ " + ehr.getEntity());
+            else {
               RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
+              PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
               // NOW actually send a client->server packet to deal damage
               //server will verify item is held, consumes energy or whatever , players not dead etc 
-            } //              BlockHitResult notMiss = new BlockHitResult(entityHitResultLocation, Direction.getNearest(cameraViewVector.x, cameraViewVector.y, cameraViewVector.z),
-            //                  new BlockPos(entityHitResultLocation), true);
-            //              System.out.println(notMiss.getType() + "  NOTMISS?" + notMiss.getBlockPos() + mc.level.getBlockState(miss.getBlockPos()));
-            //              System.out.println("---------- " + notMiss.distanceTo(camera));
+            }
           }
-          //            }
         }
-        //        }
       }
-      //      EntityRenderer<?> test;
-      //      test = mc.getEntityRenderDispatcher().getRenderer(player);
-      //      Minecraft.getInstance().getEntityRenderDispatcher().get
     }
     // other items added here
     //

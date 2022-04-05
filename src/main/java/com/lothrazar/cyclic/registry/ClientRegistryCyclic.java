@@ -42,7 +42,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
@@ -59,7 +58,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
 
   public static KeyMapping CAKE;
@@ -69,25 +68,18 @@ public class ClientRegistryCyclic {
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
   }
-
-  public static final Material SHIELD_BASE_WOOD = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base"));
-  public static final Material SHIELD_BASE_WOOD_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/wood_base_nopattern"));
-  public static final Material SHIELD_BASE_LEATHER = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/leather_base"));
-  public static final Material SHIELD_BASE_LEATHER_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/leather_base_nopattern"));
-  public static final Material SHIELD_BASE_FLINT = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/flint_base"));
-  public static final Material SHIELD_BASE_FLINT_NOPATTERN = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "entity/shield/flint_base_nopattern"));
   //  public static final Material FIREBALL = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "items/fireball"));
   //  public static final Material FIREBALL_DARK = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "items/fireball_dark"));
 
   @SubscribeEvent
   public static void onStitch(TextureStitchEvent.Pre event) {
     if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
-      event.addSprite(SHIELD_BASE_WOOD.texture());
-      event.addSprite(SHIELD_BASE_WOOD_NOPATTERN.texture());
-      event.addSprite(SHIELD_BASE_LEATHER.texture());
-      event.addSprite(SHIELD_BASE_LEATHER_NOPATTERN.texture());
-      event.addSprite(SHIELD_BASE_FLINT.texture());
-      event.addSprite(SHIELD_BASE_FLINT_NOPATTERN.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_WOOD.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_WOOD_NOPATTERN.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_LEATHER.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_LEATHER_NOPATTERN.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT_NOPATTERN.texture());
       //      event.addSprite(FIREBALL.texture());
       //      event.addSprite(FIREBALL_DARK.texture());
     }

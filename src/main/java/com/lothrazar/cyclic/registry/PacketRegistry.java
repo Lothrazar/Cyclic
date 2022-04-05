@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.PacketBaseCyclic;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.net.PacketEnergySync;
+import com.lothrazar.cyclic.net.PacketEntityLaser;
 import com.lothrazar.cyclic.net.PacketFilterCard;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.net.PacketHarvesting;
@@ -63,6 +64,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketKeyBind.class, PacketKeyBind::encode, PacketKeyBind::decode, PacketKeyBind::handle);
     INSTANCE.registerMessage(id++, PacketRecordSound.class, PacketRecordSound::encode, PacketRecordSound::decode, PacketRecordSound::handle);
     INSTANCE.registerMessage(id++, PacketHarvesting.class, PacketHarvesting::encode, PacketHarvesting::decode, PacketHarvesting::handle);
+    INSTANCE.registerMessage(id++, PacketEntityLaser.class, PacketEntityLaser::encode, PacketEntityLaser::decode, PacketEntityLaser::handle);
   }
 
   public static void sendToAllClients(Level world, PacketBaseCyclic packet) {

@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.render;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.MaterialShieldRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
@@ -54,13 +54,13 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     boolean isBanner = (stackIn.getTagElement("BlockEntityTag") != null);
     Material rendermaterial = isBanner ? ModelBakery.SHIELD_BASE : ModelBakery.NO_PATTERN_SHIELD;
     if (stackIn.is(ItemRegistry.SHIELD_WOOD.get())) {
-      rendermaterial = isBanner ? ClientRegistryCyclic.SHIELD_BASE_WOOD : ClientRegistryCyclic.SHIELD_BASE_WOOD_NOPATTERN;
+      rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_WOOD : MaterialShieldRegistry.SHIELD_BASE_WOOD_NOPATTERN;
     }
     else if (stackIn.is(ItemRegistry.SHIELD_LEATHER.get())) {
-      rendermaterial = isBanner ? ClientRegistryCyclic.SHIELD_BASE_LEATHER : ClientRegistryCyclic.SHIELD_BASE_LEATHER_NOPATTERN;
+      rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_LEATHER : MaterialShieldRegistry.SHIELD_BASE_LEATHER_NOPATTERN;
     }
     else if (stackIn.is(ItemRegistry.SHIELD_FLINT.get())) {
-      rendermaterial = isBanner ? ClientRegistryCyclic.SHIELD_BASE_FLINT : ClientRegistryCyclic.SHIELD_BASE_FLINT_NOPATTERN;
+      rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_FLINT : MaterialShieldRegistry.SHIELD_BASE_FLINT_NOPATTERN;
     }
     VertexConsumer vertex = rendermaterial.sprite().wrap(ItemRenderer.getFoilBufferDirect(buffer, shieldModel.renderType(rendermaterial.atlasLocation()), true, stackIn.hasFoil()));
     shieldModel.handle().render(ps, vertex, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
