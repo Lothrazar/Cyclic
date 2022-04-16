@@ -37,9 +37,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseWhistle extends ItemBaseCyclic implements IEntityInteractable {
+public class ItemFlute extends ItemBaseCyclic implements IEntityInteractable {
 
-  public ItemHorseWhistle(Properties prop) {
+  public ItemFlute(Properties prop) {
     super(prop);
   }
 

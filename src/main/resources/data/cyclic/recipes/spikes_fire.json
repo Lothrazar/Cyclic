@@ -6,7 +6,7 @@
   ],
   "key": {
     "s": {
-      "item": "minecraft:fire_charge"
+      "item": "cyclic:fireball"
     },
     "t": {
       "item": "cyclic:spikes_iron"

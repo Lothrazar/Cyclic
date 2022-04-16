@@ -32,7 +32,7 @@ public class FireEntity extends ThrowableItemProjectile {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.FIREBALL_DARK.get();
+    return ItemRegistry.FIREBALL.get();
   }
 
   @Override

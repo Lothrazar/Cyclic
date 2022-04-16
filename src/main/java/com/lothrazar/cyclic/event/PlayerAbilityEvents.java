@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.data.CyclicFile;
+import com.lothrazar.cyclic.item.FireballItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,8 +12,8 @@ public class PlayerAbilityEvents {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
-    if (event.getEntityLiving() instanceof Player) {
-      Player player = (Player) event.getEntityLiving();
+    if (event.getEntityLiving() instanceof Player player) {
+      FireballItem.tickHoldingFireball(player);
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
       tickFlying(player, datFile);
       tickSpec(player, datFile);

@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic.item.datacard;
 
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import java.util.List;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;

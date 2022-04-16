@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.worldgen.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,13 +15,10 @@ import net.minecraft.tags.ConfiguredStructureTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemEnderEyeReuse extends ItemBaseCyclic {
 
@@ -45,24 +41,24 @@ public class ItemEnderEyeReuse extends ItemBaseCyclic {
       ChunkGenerator chunkGenerator = sw.getChunkSource().getGenerator();
       //compat with Repurposed Structures Mod see #1517
       StructureFeature<?> vanillaStronghold = StructureFeature.STRONGHOLD;
-//      StructureFeature<?> rsStronghold;
-//      StructureFeature<?> rsNetherStronghold;
-//      EyeOfEnder y;
-//      BlockPos closestBlockPos = chunkGenerator.findNearestMapFeature(sw, StructureFeatures.STRONGHOLD, new BlockPos(player.blockPosition()), 100, false);
+      //      StructureFeature<?> rsStronghold;
+      //      StructureFeature<?> rsNetherStronghold;
+      //      EyeOfEnder y;
+      //      BlockPos closestBlockPos = chunkGenerator.findNearestMapFeature(sw, StructureFeatures.STRONGHOLD, new BlockPos(player.blockPosition()), 100, false);
       BlockPos closestBlockPos = sw.findNearestMapFeature(ConfiguredStructureTags.EYE_OF_ENDER_LOCATED, player.blockPosition(), 100, false);
-//      BlockPos rsBlockPos;
-//      if (ModList.get().isLoaded(RS_MODID)) {
-//        if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_RESOURCE_LOCATION)) {
-//          rsStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_RESOURCE_LOCATION);
-//          rsBlockPos = chunkGenerator.findNearestMapFeature(sw, rsStronghold, new BlockPos(player.blockPosition()), 100, false);
-//          closestBlockPos = returnClosest(player.blockPosition(), closestBlockPos, rsBlockPos);
-//        }
-//        if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_NETHER_RESOURCE_LOCATION)) {
-//          rsNetherStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_NETHER_RESOURCE_LOCATION);
-//          rsBlockPos = chunkGenerator.findNearestMapFeature(sw, rsNetherStronghold, new BlockPos(player.blockPosition()), 100, false);
-//          closestBlockPos = returnClosest(player.blockPosition(), closestBlockPos, rsBlockPos);
-//        }
-//      }
+      //      BlockPos rsBlockPos;
+      //      if (ModList.get().isLoaded(RS_MODID)) {
+      //        if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_RESOURCE_LOCATION)) {
+      //          rsStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_RESOURCE_LOCATION);
+      //          rsBlockPos = chunkGenerator.findNearestMapFeature(sw, rsStronghold, new BlockPos(player.blockPosition()), 100, false);
+      //          closestBlockPos = returnClosest(player.blockPosition(), closestBlockPos, rsBlockPos);
+      //        }
+      //        if (ForgeRegistries.STRUCTURE_FEATURES.containsKey(RS_NETHER_RESOURCE_LOCATION)) {
+      //          rsNetherStronghold = ForgeRegistries.STRUCTURE_FEATURES.getValue(RS_NETHER_RESOURCE_LOCATION);
+      //          rsBlockPos = chunkGenerator.findNearestMapFeature(sw, rsNetherStronghold, new BlockPos(player.blockPosition()), 100, false);
+      //          closestBlockPos = returnClosest(player.blockPosition(), closestBlockPos, rsBlockPos);
+      //        }
+      //      }
       if (closestBlockPos != null) {
         double posX = player.getX();
         double posY = player.getY();

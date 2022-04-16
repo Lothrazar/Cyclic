@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "brb",
-    "brb",
+    "bfb",
     "bbb"
   ],
   "key": {
@@ -11,6 +11,9 @@
     },
     "r": {
       "item": "minecraft:netherrack"
+    },
+    "f": {
+      "item": "cyclic:fireball"
     }
   },
   "result": {

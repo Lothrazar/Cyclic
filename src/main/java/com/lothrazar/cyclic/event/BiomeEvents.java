@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.event;
 
-import com.lothrazar.cyclic.registry.WorldGenRegistry;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.world.WorldGenPlacements;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -18,7 +18,7 @@ public class BiomeEvents {
 
   @SubscribeEvent
   public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
-    if (!WorldGenRegistry.GENERATES.get()) {
+    if (!ConfigRegistry.GENERATE_FLOWERS.get()) {
       return;
     }
     BiomeGenerationSettingsBuilder generation = event.getGeneration();

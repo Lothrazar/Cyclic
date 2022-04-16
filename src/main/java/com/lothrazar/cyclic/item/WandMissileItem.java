@@ -30,6 +30,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class WandMissileItem extends ItemBaseCyclic {
 
+  public static final int COST = 50;
   private static final int MAX_ENERGY = 16000;
   private static final double MIN_CHARGE = 0.6;
   private static final double RANGE = 16.0; // TOOD config
@@ -46,7 +47,7 @@ public class WandMissileItem extends ItemBaseCyclic {
 
   @Override
   public int getUseDuration(ItemStack stack) {
-    return 72000;
+    return 72000 / 20;
   }
 
   @Override
@@ -123,9 +124,14 @@ public class WandMissileItem extends ItemBaseCyclic {
       }
     }
     if (!world.isClientSide) {
-      MagicMissileEntity projectile = new MagicMissileEntity(player, world);
-      projectile.setTarget(UtilEntity.getClosestEntity(world, player, trimmedTargets));
-      shootMe(world, player, projectile, 0, ItemBaseCyclic.VELOCITY_MAX * percentageCharged);
+      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (storage != null && storage.extractEnergy(COST, true) == COST) {
+        //we can afford it
+        storage.extractEnergy(COST, false);
+        MagicMissileEntity projectile = new MagicMissileEntity(player, world);
+        projectile.setTarget(UtilEntity.getClosestEntity(world, player, trimmedTargets));
+        shootMe(world, player, projectile, 0, ItemBaseCyclic.VELOCITY_MAX * percentageCharged);
+      }
     }
     // TODO: RF POWER NOT DURAB
     UtilItemStack.damageItem(player, stack);

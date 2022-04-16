@@ -1,11 +1,6 @@
 package com.lothrazar.cyclic.event;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.api.IEntityInteractable;
-import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.CandlePeaceBlock;
-import com.lothrazar.cyclic.block.altar.AltarType;
-import com.lothrazar.cyclic.block.altar.BlockAltarSol;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.data.DataTags;
@@ -45,7 +40,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -68,7 +62,6 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionAddedEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
@@ -86,48 +79,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ItemEvents {
 
-  //technically BlockEvents 
-  @SubscribeEvent
-  public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-    LivingEntity mob = event.getEntityLiving();
-    MobSpawnType res = event.getSpawnReason();
-    if (res == MobSpawnType.NATURAL ||
-        res == MobSpawnType.REINFORCEMENT ||
-        res == MobSpawnType.EVENT) {
-      if (CandlePeaceBlock.isBad(mob, res)
-          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
-              CandlePeaceBlock.RADIUS.get(), CandlePeaceBlock.HEIGHT.get())) {
-        //default range 32 and filtered
-        ModCyclic.LOGGER.info("Spawn cancelled by candle " + mob.getType());
-        event.setResult(Result.DENY);
-      }
-      //get ALL blocks that are an altar first
-      //then check if it has altar type for my entity type and cancel there, without looping if possible 
-      if (BlockAltarSol.isTrader(mob, res)
-          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.ALTAR.get().defaultBlockState().setValue(BlockAltarSol.TYPE, AltarType.TRADER),
-              16, 16)) {
-        ModCyclic.LOGGER.info("Spawn cancelled by altar " + mob.getType());
-        event.setResult(Result.DENY);
-      }
-      if (BlockAltarSol.isPhantom(mob, res)
-          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.ALTAR.get().defaultBlockState().setValue(BlockAltarSol.TYPE, AltarType.PHANTOM),
-              16, 16)) {
-        ModCyclic.LOGGER.info("Spawn cancelled by phantom altar " + mob.getType());
-        event.setResult(Result.DENY);
-      }
-    }
-  }
-
   @SubscribeEvent
   public void onShieldBlock(ShieldBlockEvent event) {
     ItemStack shield = event.getEntityLiving().getUseItem();
     if (shield.getItem() instanceof ShieldCyclicItem shieldItem) {
       if (event.getEntityLiving() instanceof Player playerIn) {
         if (playerIn.getCooldowns().isOnCooldown(shield.getItem())) {
-          System.out.println("Cancel block, its in cooldown eh");
           UtilSound.playSound(playerIn, SoundEvents.SHIELD_BREAK);
           event.setCanceled(true);
           return;

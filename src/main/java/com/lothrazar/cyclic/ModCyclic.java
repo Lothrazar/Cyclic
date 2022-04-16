@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic;
 
-import net.minecraftforge.common.ForgeMod;
 import org.apache.logging.log4j.LogManager;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
@@ -13,6 +12,7 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.RecipeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -40,5 +40,8 @@ public class ModCyclic {
     TileRegistry.TILES.register(bus);
     FluidRegistry.FLUIDS.register(bus);
     ForgeMod.enableMilkFluid();
+    // milk bottle in recipes !!!
+    // CHARGE AND CONSUME RF ON SOME ITEMS!?
+    // shield tooltips to tell abilities 
   }
 }

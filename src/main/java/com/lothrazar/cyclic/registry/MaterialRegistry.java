@@ -1,9 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.ModCyclic;
 import java.util.List;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.Material;
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
@@ -16,10 +14,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.ForgeTier;
 import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class MaterialRegistry {
 
@@ -64,7 +60,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-            break;
+          break;
         }
         return 0;
       }
@@ -120,7 +116,7 @@ public class MaterialRegistry {
           case MAINHAND:
           case OFFHAND:
           default:
-            break;
+          break;
         }
         return 0;
       }

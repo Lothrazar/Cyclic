@@ -137,7 +137,7 @@ public class UtilWorld {
     return false;
   }
 
-  public static ArrayList<BlockPos> findBlocksByTag(Level world, BlockPos start, TagKey blockHunt, final int radius) {
+  public static ArrayList<BlockPos> findBlocksByTag(Level world, BlockPos start, TagKey<Block> blockHunt, final int radius) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
     int xMin = start.getX() - radius;
     int xMax = start.getX() + radius;
@@ -158,6 +158,7 @@ public class UtilWorld {
     }
     return found;
   }
+
   public static ArrayList<BlockPos> findBlocks(Level world, BlockPos start, Block blockHunt, final int radius) {
     ArrayList<BlockPos> found = new ArrayList<BlockPos>();
     int xMin = start.getX() - radius;

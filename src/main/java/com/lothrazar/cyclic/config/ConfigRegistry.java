@@ -74,8 +74,8 @@ import com.lothrazar.cyclic.item.heart.HeartToxicItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
-import com.lothrazar.cyclic.registry.WorldGenRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -94,6 +94,7 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
+  public static BooleanValue GENERATE_FLOWERS;
   static {
     buildDefaults();
     initConfig();
@@ -197,7 +198,7 @@ public class ConfigRegistry {
         it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
-    WorldGenRegistry.GENERATES = CFG.comment("Do the four generate in the world. "
+    GENERATE_FLOWERS = CFG.comment("Do the four generate in the world. "
         + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "
         + "but the mod will not use the features to generate/place flowers in world-generation")
         .define("flowers.enabled", true);

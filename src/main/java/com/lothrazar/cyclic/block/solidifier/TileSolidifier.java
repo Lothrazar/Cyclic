@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.solidifier;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
@@ -144,7 +143,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inputSlots.serializeNBT());
-//    ModCyclic.LOGGER.info("saveAd: " + inputSlots.serializeNBT().toString());
+    //    ModCyclic.LOGGER.info("saveAd: " + inputSlots.serializeNBT().toString());
     tag.put("invoutput", outputSlots.serializeNBT());
     super.saveAdditional(tag);
   }

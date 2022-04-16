@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,9 +16,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -28,7 +26,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -38,11 +35,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BlockAltarSol extends BlockCyclic {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-  public static final EnumProperty<AltarType> TYPE = EnumProperty.create("type", AltarType.class);
+  private final AltarType type;
 
-  public BlockAltarSol(Properties properties) {
+  public BlockAltarSol(Properties properties, AltarType type) {
     super(properties.strength(1.8F).noOcclusion());
-    this.registerDefaultState(defaultBlockState().setValue(TYPE, AltarType.EMPTY).setValue(WATERLOGGED, false));
+    this.type = type; //    .setValue(TYPE, AltarType.EMPTY)
+    this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
 
   @Override
@@ -51,28 +49,14 @@ public class BlockAltarSol extends BlockCyclic {
   }
 
   @Override
-  public int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
-    if (blockState.getValue(TYPE).isEmpty()) {
-      return 0;
-    }
-    return 15;
-  }
-
-  @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-    AltarType old = state.getValue(TYPE);
-    ItemStack held = player.getItemInHand(hand);
-    AltarType newt = old;
-    if (held.is(Items.PHANTOM_MEMBRANE)) {
-      newt = AltarType.PHANTOM;
+    if (hand == InteractionHand.MAIN_HAND && player.getItemInHand(hand).isEmpty()) {
+      world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
+      UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
+      UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+      return InteractionResult.SUCCESS;
     }
-    else {//toggle between empty and trader
-      newt = old.isEmpty() ? AltarType.TRADER : AltarType.EMPTY;
-    }
-    world.setBlockAndUpdate(pos, state.setValue(TYPE, newt));
-    UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-    UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
-    return InteractionResult.SUCCESS;
+    return super.use(state, world, pos, player, hand, result);
   }
 
   @Override
@@ -90,7 +74,7 @@ public class BlockAltarSol extends BlockCyclic {
   //copy campfire
   @Override
   public void animateTick(BlockState bs, Level world, BlockPos pos, Random rand) {
-    if (!bs.getValue(TYPE).isEmpty()) {
+    if (bs.getValue(LIT)) {
       if (rand.nextInt(10) == 0) {
         world.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);
       }
@@ -105,7 +89,7 @@ public class BlockAltarSol extends BlockCyclic {
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     super.createBlockStateDefinition(builder);
-    builder.add(TYPE).add(WATERLOGGED);
+    builder.add(LIT).add(WATERLOGGED);
   }
 
   @Override
@@ -115,13 +99,16 @@ public class BlockAltarSol extends BlockCyclic {
 
   public static boolean isTrader(LivingEntity mob, MobSpawnType res) {
     return mob.getType() == EntityType.TRADER_LLAMA
-        || mob.getType() == EntityType.WANDERING_TRADER
-        || mob.getType() == EntityType.BAT;
+        || mob.getType() == EntityType.WANDERING_TRADER;
   }
 
-  public static boolean isPhantom(LivingEntity mob, MobSpawnType res) {
+  public static boolean isExplosive(LivingEntity mob, MobSpawnType res) {
+    return mob.getType() == EntityType.CREEPER
+        || mob instanceof Creeper;
+  }
+
+  public static boolean isFlight(LivingEntity mob, MobSpawnType res) {
     return mob.getType() == EntityType.PHANTOM
-        || mob.getType() == EntityType.ENDERMAN
-        || mob.getType() == EntityType.ENDERMITE;
+        || mob.getType() == EntityType.BAT;
   }
 }

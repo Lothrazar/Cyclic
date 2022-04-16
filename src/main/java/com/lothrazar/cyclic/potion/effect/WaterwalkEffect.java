@@ -25,7 +25,6 @@ public class WaterwalkEffect extends TickableEffect {
       }
       entity.setOnGround(true); // act as if on solid ground
       entity.setDeltaMovement(entity.getDeltaMovement().x, 0, entity.getDeltaMovement().z);
-      System.out.println("waterwalk?");
     }
   }
 }

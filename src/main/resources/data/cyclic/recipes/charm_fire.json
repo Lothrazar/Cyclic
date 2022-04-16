@@ -13,7 +13,7 @@
       "item": "minecraft:iron_block"
     },
     "w": {
-      "item": "minecraft:blaze_rod"
+      "item": "cyclic:fireball"
     }
   },
   "result": {

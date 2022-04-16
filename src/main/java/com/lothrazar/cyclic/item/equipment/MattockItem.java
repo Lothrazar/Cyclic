@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.equipment;
 
+import java.util.List;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.util.UtilShape;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -71,10 +71,10 @@ public class MattockItem extends DiggerItem {
             && ForgeEventFactory.doPlayerHarvestCheck(player, bsCurrent, true)
             && this.getDestroySpeed(stack, bsCurrent) > 1
             && (bsCurrent.canHarvestBlock(world, pos, player)
-            || bsCurrent.getBlock().builtInRegistryHolder().is(this.getTier().getTag())
+                || bsCurrent.is(this.getTier().getTag())
             //this.getTier().getTag().contains(bsCurrent.getBlock())
-        )
-          //end of OR
+            )
+        //end of OR
         ) {
           stack.mineBlock(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();

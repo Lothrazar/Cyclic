@@ -41,9 +41,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -73,7 +73,7 @@ public class ClientRegistryCyclic {
 
   @SubscribeEvent
   public static void onStitch(TextureStitchEvent.Pre event) {
-    if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
+    if (event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_WOOD.texture());
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_WOOD_NOPATTERN.texture());
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_LEATHER.texture());

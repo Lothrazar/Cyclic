@@ -25,7 +25,6 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -37,8 +36,8 @@ public class PotionRegistry {
     IForgeRegistry<MobEffect> r = event.getRegistry();
     PotionEffects.STUN = register(r, new StunEffect(MobEffectCategory.HARMFUL, 0xcccc00), "stun");
     PotionEffects.SWIMSPEED = register(r, new SwimEffect(MobEffectCategory.BENEFICIAL, 0x663300), "swimspeed");
-    PotionEffects.WATERWALK = register(r, new WaterwalkEffect(MobEffectCategory.BENEFICIAL, 0x113399), "waterwalk");
-    PotionEffects.SNOWWALK = register(r, new SnowwalkEffect(MobEffectCategory.NEUTRAL, 0x113399), "snowwalk");
+    PotionEffects.WATERWALK = register(r, new WaterwalkEffect(MobEffectCategory.BENEFICIAL, 0x221061), "waterwalk");
+    PotionEffects.SNOWWALK = register(r, new SnowwalkEffect(MobEffectCategory.NEUTRAL, 0xf0ecdf), "snowwalk");
     //from 1.12.2 
     //slowfall NIX in vanilla
     //ender aura - pearl + awkward - no pearl/tp dmg
@@ -77,9 +76,7 @@ public class PotionRegistry {
 
     //for events
     public static final List<TickableEffect> EFFECTS = new ArrayList<TickableEffect>();
-    @ObjectHolder(ModCyclic.MODID + ":stun")
     public static TickableEffect STUN;
-    @ObjectHolder(ModCyclic.MODID + ":swimspeed")
     public static TickableEffect SWIMSPEED;
     public static TickableEffect WATERWALK;
     public static TickableEffect SNOWWALK;
@@ -113,28 +110,23 @@ public class PotionRegistry {
     public static Potion RESISTANCE;
   }
 
-  public static void setup(FMLCommonSetupEvent event) {
+  public static void setup() {
     ///haste recipes
     final ItemStack awkwardPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
     final ItemStack thickPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.THICK);
+    // Potion recipes 
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.HASTE, Items.EMERALD);
-    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.HASTE),
-        PotionRegistry.PotionItem.STRONG_HASTE, Items.REDSTONE);
-    //STUN recipes
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.HASTE), PotionRegistry.PotionItem.STRONG_HASTE, Items.REDSTONE);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.STUN, Items.CLAY);
-    //swimspeed recipes
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.SWIMSPEED, Items.DRIED_KELP_BLOCK);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.NIGHT_VISION), PotionRegistry.PotionItem.BLIND, Items.BEETROOT);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING), PotionItem.LEVITATION, Items.FERMENTED_SPIDER_EYE);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRENGTH), PotionItem.RESISTANCE, Items.IRON_INGOT);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WEAKNESS), PotionItem.WITHER, Items.NETHER_BRICK);
     basicBrewing(thickPotion.copy(), PotionRegistry.PotionItem.HUNGER, Items.ROTTEN_FLESH);
-    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.HUNGER),
-        PotionRegistry.PotionItem.STRONG_HUNGER, Items.REDSTONE);
-    //
-    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.WATERWALK, Items.LEATHER);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionItem.HUNGER), PotionRegistry.PotionItem.STRONG_HUNGER, Items.REDSTONE);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.WATERWALK, Items.PRISMARINE_SHARD);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.PotionItem.SNOWWALK, Items.SNOWBALL);
-    //    basicBrewing(awkwardPotion.copy(), PotionItem.WATERWALK, Items.AMETHYST_SHARD);
   }
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {

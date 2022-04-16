@@ -17,7 +17,6 @@ import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.PressurePlateMetal;
-import com.lothrazar.cyclic.block.altar.BlockAltarSol;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
@@ -283,19 +282,21 @@ public class BlockRegistry {
   public static final RegistryObject<Block> UNBREAKABLE_REACTIVE = BLOCKS.register("unbreakable_reactive", () -> new UnbreakablePoweredBlock(Block.Properties.of(Material.STONE))); //reactive and unstable, ignores players and reads redstone 
   public static final RegistryObject<Block> ENDER_SHELF = BLOCKS.register("ender_shelf", () -> new BlockEnderShelf(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ENDER_CONTROLLER = BLOCKS.register("ender_controller", () -> new BlockEnderCtrl(Block.Properties.of(Material.STONE)));
-  //
+  //1.7+
   public static final RegistryObject<Block> MAGNET_BLOCK = BLOCKS.register("magnet_block", () -> new BlockMagnetPanel(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BUTTON_BASALT = BLOCKS.register("button_basalt", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 4));
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
-  //  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
-  public static final RegistryObject<Block> ALTAR = BLOCKS.register("altar", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
-  public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("pedestal", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
-  //block  // peace from traders . and ? also kill?
-  //block  // peace from creeper types?
+  public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of(Material.STONE))); // NOGUI
+  //  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
+  //cursed altars
+  //flight = bat and phaontom. destruc = explosions. fortune = wandering traders
+  //  public static final RegistryObject<BlockAltarSol> ALTAR_FLIGHT = BLOCKS.register("altar_flight", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.FLIGHT));
+  //  public static final RegistryObject<BlockAltarSol> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.DESTRUCTION));
+  //  public static final RegistryObject<BlockAltarSol> ALTAR_FORTUNE = BLOCKS.register("altar_fortune", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.TRADER));
+  //  public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("pedestal", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
   //powered furnace
   //  public static final RegistryObject<Block> GENERATOR_CAT = BLOCKS.register("generator_cat", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
-  public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of(Material.STONE))); // NOGUI
   //  public static final RegistryObject<Block> DOOR_GOLD = BLOCKS.register("door_gold", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.GOLD).sound(SoundType.METAL)));
   //  public static final RegistryObject<Block> DOOR_NETHERITE = BLOCKS.register("door_netherite", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.TERRACOTTA_BLACK).sound(SoundType.METAL)));
   //drain use bottle on it to fill. and its a fluid cap

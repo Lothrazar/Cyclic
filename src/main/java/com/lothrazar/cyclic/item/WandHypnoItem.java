@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -31,6 +30,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class WandHypnoItem extends ItemBaseCyclic {
 
+  public static final int COST = 50;
   private static final int MAX_ENERGY = 16000;
   private static final double MIN_CHARGE = 0.6;
   private static final double RANGE = 16.0;
@@ -110,6 +110,18 @@ public class WandHypnoItem extends ItemBaseCyclic {
     if (percentageCharged < MIN_CHARGE) { // MINIMUM_CHARGE
       return; //not enough force to go with any realistic path 
     }
+    if (player.level.isClientSide) {
+      return;
+    }
+    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    if (storage != null && storage.extractEnergy(COST, true) == COST) {
+      storage.extractEnergy(COST, false);
+      fireHypnoAggression(world, player);
+    }
+    //    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+  }
+
+  private void fireHypnoAggression(Level world, Player player) {
     BlockPos p = player.blockPosition();
     List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
     List<Mob> trimmedTargets = new ArrayList<Mob>();
@@ -142,8 +154,5 @@ public class WandHypnoItem extends ItemBaseCyclic {
     if (targeted == 0) {
       UtilChat.sendStatusMessage(player, "wand.result.notargets");
     }
-    System.out.println("Item that takes RF?");
-    UtilItemStack.damageItem(player, stack);
-    //    return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
   }
 }

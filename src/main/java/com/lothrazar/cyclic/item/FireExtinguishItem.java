@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -54,7 +53,6 @@ public class FireExtinguishItem extends ItemBaseCyclic {
     }
     final int maxRadius = 32;
     int rad = (int) percentageCharged * maxRadius;
-
     for (BlockPos pos : UtilWorld.findBlocksByTag(world, entity.blockPosition(), BlockTags.FIRE, rad + 1)) {
       world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
       UtilParticle.spawnParticle(world, ParticleTypes.SNOWFLAKE, pos, 6);

@@ -13,7 +13,7 @@
       "item": "minecraft:lime_concrete_powder"
     },
     "f": {
-      "item": "minecraft:gunpowder"
+      "item": "cyclic:fireball"
     },
     "a": {
       "tag": "forge:storage_blocks/ender_pearl"
