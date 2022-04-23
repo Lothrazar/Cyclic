@@ -40,8 +40,5 @@ public class ModCyclic {
     TileRegistry.TILES.register(bus);
     FluidRegistry.FLUIDS.register(bus);
     ForgeMod.enableMilkFluid();
-    // milk bottle in recipes !!!
-    // CHARGE AND CONSUME RF ON SOME ITEMS!?
-    // shield tooltips to tell abilities 
   }
 }

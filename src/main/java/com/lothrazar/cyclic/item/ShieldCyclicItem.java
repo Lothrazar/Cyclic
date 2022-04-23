@@ -51,18 +51,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    //new lines
-    System.out.println("tooltip");
-    switch (this.type) {
-      case FLINT:
-      break;
-      case LEATHER:
-      break;
-      case WOOD:
-      break;
-      default:
-      break;
-    }
+    // tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip.line").withStyle(ChatFormatting.GRAY));
   }
 
   @Override

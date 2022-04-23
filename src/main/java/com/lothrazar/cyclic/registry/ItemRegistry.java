@@ -475,7 +475,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //
+  //totem of repair
   //  public static final RegistryObject<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //  public static final RegistryObject<Item> FLUTE = ITEMS.register("flute", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //  public static final RegistryObject<Item> ALTAR_FLIGHT = ITEMS.register("altar_flight", () -> new BlockItem(BlockRegistry.ALTAR_FLIGHT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
