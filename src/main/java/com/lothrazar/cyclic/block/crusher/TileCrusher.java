@@ -139,10 +139,10 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     }
     if (this.burnTimeMax > 0) {
       setLitProperty(true); // has recipe so lit
-      int onSim = energy.extractEnergy(currentRecipe.getRfpertick(), true);
-      if (onSim >= currentRecipe.getRfpertick()) {
+      int onSim = energy.extractEnergy(currentRecipe.energy.rfPt(), true);
+      if (onSim >= currentRecipe.energy.rfPt()) {
         //gen up. we burned away a tick of this fuel 
-        energy.extractEnergy(currentRecipe.getRfpertick(), false);
+        energy.extractEnergy(currentRecipe.energy.rfPt(), false);
         this.burnTime--; // paying per tick for this recipe
       }
     }
@@ -157,7 +157,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     for (RecipeCrusher<?> rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;
-        this.burnTimeMax = this.currentRecipe.getTicks();
+        this.burnTimeMax = this.currentRecipe.energy.getTicks();
         this.burnTime = this.burnTimeMax;
         this.inputSlots.extractItem(0, 1, false);
         return;

@@ -43,6 +43,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
+  @Deprecated // TODO: replace with default value of recipe energy
   public static final int TIMER_FULL = Const.TICKS_PER_SEC * 3;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);

@@ -87,15 +87,15 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   @Override
   public void draw(RecipeCrusher recipe, PoseStack ms, double mouseX, double mouseY) {
     int x = 78;
-    if (recipe.getTicks() < 40) {
-      Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", x, 6, FONT);
+    if (recipe.energy.getTicks() < 40) {
+      Minecraft.getInstance().font.draw(ms, recipe.energy.getTicks() + " t", x, 6, FONT);
     }
     else {
-      int sec = recipe.getTicks() / 20;
+      int sec = recipe.energy.getTicks() / 20;
       Minecraft.getInstance().font.draw(ms, sec + " s", x, 6, FONT);
     }
-    Minecraft.getInstance().font.draw(ms, recipe.getRfpertick() + " RF/t", x, 16, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.getRfTotal() + " RF", x, 26, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.energy.rfPt() + " RF/t", x, 16, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.energy.getEnergyTotal() + " RF", x, 26, FONT);
     if (!recipe.bonus.isEmpty() && recipe.percent > 0) {
       Minecraft.getInstance().font.draw(ms, recipe.percent + "%", 56, 36, FONT);
     }

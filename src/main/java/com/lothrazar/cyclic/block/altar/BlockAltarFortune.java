@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.altar;
 
 import java.util.Random;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -16,7 +15,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -32,20 +30,21 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockAltarSol extends BlockCyclic {
+public class BlockAltarFortune extends BlockCyclic {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-  private final AltarType type;
+  private static final double BOUNDS = 3;
+  public static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
+      16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
 
-  public BlockAltarSol(Properties properties, AltarType type) {
+  public BlockAltarFortune(Properties properties) {
     super(properties.strength(1.8F).noOcclusion());
-    this.type = type; //    .setValue(TYPE, AltarType.EMPTY)
     this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-    return CandlePeaceBlock.AABB;
+    return AABB;
   }
 
   @Override
@@ -97,18 +96,18 @@ public class BlockAltarSol extends BlockCyclic {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  public static boolean isTrader(LivingEntity mob, MobSpawnType res) {
+  public static boolean isSpawnDenied(LivingEntity mob, MobSpawnType res) {
     return mob.getType() == EntityType.TRADER_LLAMA
-        || mob.getType() == EntityType.WANDERING_TRADER;
-  }
-
-  public static boolean isExplosive(LivingEntity mob, MobSpawnType res) {
-    return mob.getType() == EntityType.CREEPER
-        || mob instanceof Creeper;
-  }
-
-  public static boolean isFlight(LivingEntity mob, MobSpawnType res) {
-    return mob.getType() == EntityType.PHANTOM
+        || mob.getType() == EntityType.WANDERING_TRADER
         || mob.getType() == EntityType.BAT;
   }
+  //  public static boolean isExplosive(LivingEntity mob, MobSpawnType res) {
+  //    return mob.getType() == EntityType.CREEPER
+  //        || mob instanceof Creeper;
+  //  }
+  //
+  //  public static boolean isFlight(LivingEntity mob, MobSpawnType res) {
+  //    return mob.getType() == EntityType.PHANTOM
+  //        || mob.getType() == EntityType.BAT;
+  //  }
 }

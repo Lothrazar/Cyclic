@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.recipe;
+package com.lothrazar.cyclic.recipe.ingredient;
 
 import java.util.ArrayList;
 import java.util.List;

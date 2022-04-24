@@ -1,11 +1,16 @@
 {
-  "type": "cyclic:melter",
-    "ingredients": [ {
-      "tag": "minecraft:candles"
-  }],
-  "energy": 1000,
-  "result": {
-    "fluid": "cyclic:wax",
-    "count": 100
-  }
+	"type": "cyclic:melter",
+	"ingredients": [
+		{
+			"tag": "minecraft:candles"
+		}
+	],
+	"energy": {
+		"ticks": 10,
+		"rfpertick": 100
+	},
+	"result": {
+		"fluid": "cyclic:wax",
+		"count": 100
+	}
 }

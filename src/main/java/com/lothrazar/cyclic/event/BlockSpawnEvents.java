@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
+import com.lothrazar.cyclic.block.altar.BlockAltarFortune;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.world.entity.LivingEntity;
@@ -57,13 +58,13 @@ public class BlockSpawnEvents {
       //Altar / Pedestal disabled
       //get ALL blocks that are an altar first
       //then check if it has altar type for my entity type and cancel there, without looping if possible 
-      //      if (BlockAltarSol.isTrader(mob, res)
-      //          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-      //              BlockRegistry.ALTAR_FORTUNE.get().defaultBlockState().setValue(BlockAltarSol.LIT, true),
-      //              radius, height)) {
-      //        ModCyclic.LOGGER.info("Spawn cancelled by FORTUNE altar " + mob.getType());
-      //        event.setResult(Result.DENY);
-      //      }
+      if (BlockAltarFortune.isSpawnDenied(mob, res)
+          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
+              BlockRegistry.ALTAR_FORTUNE.get().defaultBlockState().setValue(BlockAltarFortune.LIT, true),
+              radius, height)) {
+        ModCyclic.LOGGER.info("Spawn cancelled by FORTUNE altar " + mob.getType());
+        event.setResult(Result.DENY);
+      }
       //      if (BlockAltarSol.isFlight(mob, res)
       //          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
       //              BlockRegistry.ALTAR_FLIGHT.get().defaultBlockState().setValue(BlockAltarSol.LIT, true),

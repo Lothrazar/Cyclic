@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
+import com.lothrazar.cyclic.recipe.ingredient.RandomizedOutputIngredient;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -22,16 +24,14 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
 
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  private int ticks;
-  private int rfpertick;
+  public final EnergyIngredient energy;
   public ItemStack bonus = ItemStack.EMPTY;
   public int percent;
 
-  public RecipeCrusher(ResourceLocation id, Ingredient in, int ticks, int rfpertick, ItemStack out, int percIn, ItemStack optional) {
+  public RecipeCrusher(ResourceLocation id, Ingredient in, EnergyIngredient energy, ItemStack out, int percIn, ItemStack optional) {
     super(id);
+    this.energy = energy;
     ingredients.add(in);
-    this.setTicks(Math.max(1, ticks));
-    this.rfpertick = Math.max(1, rfpertick);
     this.result = out;
     this.percent = Math.max(0, percIn);
     if (percIn > 100) {
@@ -87,26 +87,6 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
     return SERIALCRUSH;
   }
 
-  public int getTicks() {
-    return ticks;
-  }
-
-  public void setTicks(int ticks) {
-    this.ticks = ticks;
-  }
-
-  public int getRfpertick() {
-    return rfpertick;
-  }
-
-  public void setRfpertick(int rfpertick) {
-    this.rfpertick = rfpertick;
-  }
-
-  public int getRfTotal() {
-    return this.getRfpertick() * this.getTicks();
-  }
-
   public static final SerializeGenerateItem SERIALCRUSH = new SerializeGenerateItem();
 
   public static class SerializeGenerateItem extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeCrusher<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
@@ -124,17 +104,15 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
     public RecipeCrusher<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
       try {
         Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
-        JsonObject energy = json.get("energy").getAsJsonObject();
-        int ticks = energy.get("ticks").getAsInt();
-        int rfpertick = energy.get("rfpertick").getAsInt();
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
         int percent = 0;
         ItemStack bonusStack = ItemStack.EMPTY;
+        RandomizedOutputIngredient rando = null; // TODO: this
         if (json.has("bonus") && json.has("percent")) {
           bonusStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "bonus"));
           percent = json.get("percent").getAsInt();
         }
-        RecipeCrusher r = new RecipeCrusher(recipeId, inputFirst, ticks, rfpertick, resultStack, percent, bonusStack);
+        RecipeCrusher r = new RecipeCrusher(recipeId, inputFirst, new EnergyIngredient(json), resultStack, percent, bonusStack);
         return r;
       }
       catch (Exception e) {
@@ -145,7 +123,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeCrusher fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-      RecipeCrusher r = new RecipeCrusher(recipeId, Ingredient.fromNetwork(buffer), buffer.readInt(), buffer.readInt(), buffer.readItem(), buffer.readInt(), buffer.readItem());
+      RecipeCrusher r = new RecipeCrusher(recipeId, Ingredient.fromNetwork(buffer), new EnergyIngredient(buffer.readInt(), buffer.readInt()), buffer.readItem(), buffer.readInt(), buffer.readItem());
       //server reading recipe from client or vice/versa 
       return r;
     }
@@ -154,8 +132,8 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
     public void toNetwork(FriendlyByteBuf buffer, RecipeCrusher recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       zero.toNetwork(buffer);
-      buffer.writeInt(recipe.getTicks());
-      buffer.writeInt(recipe.rfpertick);
+      buffer.writeInt(recipe.energy.rfpertick);
+      buffer.writeInt(recipe.energy.ticks);
       //
       buffer.writeItem(recipe.getResultItem());
       buffer.writeInt(recipe.percent);

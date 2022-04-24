@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.recipe;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;

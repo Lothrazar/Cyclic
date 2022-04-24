@@ -14,7 +14,10 @@
     "fluid": "minecraft:lava",
     "count": 100
   },
-  "energy": 2000,
+	"energy": {
+		"ticks": 640,
+		"rfpertick": 100
+	},
   "result": {
     "item": "minecraft:gilded_blackstone",
 		"count": 1
