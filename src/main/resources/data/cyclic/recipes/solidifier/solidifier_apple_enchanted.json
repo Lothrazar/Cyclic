@@ -13,6 +13,10 @@
 		"tag": "forge:honey",
 		"count": 4000
 	},
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
 	"result": {
 		"item": "minecraft:enchanted_golden_apple",
 		"count": 1

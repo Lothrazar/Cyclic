@@ -9,6 +9,10 @@
 		"tag": "forge:slime",
 		"count": 100
 	},
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
 	"result": {
 		"item": "minecraft:lead",
 		"count": 1

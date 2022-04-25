@@ -8,6 +8,10 @@
     "tag": "forge:wax",
     "count": 200
   },
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
   "result": {
     "item": "minecraft:candle",
 	"count": 2

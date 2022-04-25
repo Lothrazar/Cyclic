@@ -12,6 +12,10 @@
 		"tag": "forge:wax",
 		"count": 100
 	},
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
 	"result": {
 		"item": "minecraft:magenta_candle",
 		"count": 1

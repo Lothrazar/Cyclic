@@ -10,10 +10,13 @@
     "tag": "forge:ingots/gold"
   }],
   "mix": {
-    "fluid": "cyclic:magma",
     "tag": "forge:magma",
     "count": 1000
   },
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
   "result": {
     "item": "cyclic:gem_amber",
   	"count": 2

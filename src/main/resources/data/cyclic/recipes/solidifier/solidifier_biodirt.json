@@ -9,7 +9,10 @@
    {
     "item": "minecraft:dirt"
   }],
-  "energy": 1000,
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
   "mix": {
     "tag": "forge:biomass",
     "count": 200

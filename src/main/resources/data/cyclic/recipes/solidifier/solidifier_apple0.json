@@ -7,6 +7,10 @@
     "tag": "forge:honey",
     "count": 100
   },
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
   "result": {
     "item": "cyclic:apple_honey",
 	"count": 1
