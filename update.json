@@ -24,6 +24,6 @@
 		,"1.6.16":"Ported to 1.18.2.  Flowers can now be composted.  Fixed renderlayer of Copper Soul Lantern and Gold Soul Lantern.  Developed on jei=9.5.0.132 and forge=40.0.12+  "
 		,"1.6.17": "Fixed fluids broken rendering & invisible.  Added solidifier recipe for putting liquid milk in buckets"
 		,"1.6.18":"Fix harvest scythe bug on servers.  Fixed Block Reach enchant by using Attribute Modifiers (mod compatibility).  Fixed Lava Sponge. Fixed Water Candle.  Fluid Hoppers and Cables now extract from Water Cauldron and Lava Cauldron. Item Hoppers can now insert into Composter. Update default Obsidian Pressure plate recipe.  Fix Fluid Tag recipes in Solidifier. Clean up 'Unknown recipe category' "
-		,"1.7.0":"New content: Shields, Fireball, Basalt button, Blackstone Button, solar generator, claystone battery, Milk Bottle, Wax fluid.  Ported from 1.12.2: Magnet Block, Rainbow Cannon, Chaos Reaper, Spirit Seeker, Fire Extinguisher, Potion of Snow-walker, Potion of Waterwalking.  "
+		,"1.7.0":"Several recipes have options to specify the Energy cost and processing time (solidifier, melter, generator_item). New content: Shields, Fireball, Basalt button, Blackstone Button, solar generator, claystone battery, Milk Bottle, Wax fluid.  Ported from 1.12.2: Magnet Block, Rainbow Cannon, Chaos Reaper, Spirit Seeker, Fire Extinguisher, Potion of Snow-walker, Potion of Waterwalking.  "
 	} 
 }

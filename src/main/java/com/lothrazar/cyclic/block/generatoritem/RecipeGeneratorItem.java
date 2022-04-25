@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -19,14 +20,12 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
 
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  private int ticks;
-  private int rfpertick;
+  private final EnergyIngredient energy;
 
-  public RecipeGeneratorItem(ResourceLocation id, Ingredient in, int ticks, int rfpertick) {
+  public RecipeGeneratorItem(ResourceLocation id, Ingredient in, EnergyIngredient energy) {
     super(id);
     ingredients.add(in);
-    this.setTicks(Math.max(1, ticks));
-    this.rfpertick = Math.max(1, rfpertick);
+    this.energy = energy;
   }
 
   @Override
@@ -77,19 +76,11 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
   }
 
   public int getTicks() {
-    return ticks;
-  }
-
-  public void setTicks(int ticks) {
-    this.ticks = ticks;
+    return energy.getTicks();
   }
 
   public int getRfpertick() {
-    return rfpertick;
-  }
-
-  public void setRfpertick(int rfpertick) {
-    this.rfpertick = rfpertick;
+    return energy.getRfPertick();
   }
 
   public int getRfTotal() {
@@ -114,13 +105,7 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
       RecipeGeneratorItem r = null;
       try {
         Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "fuel"));
-        JsonObject result = json.get("energy").getAsJsonObject();
-        int ticks = result.get("ticks").getAsInt();
-        int rfpertick = result.get("rfpertick").getAsInt();
-        //        String fluidId = JSONUtils.getString(result, "fluid");
-        //        ResourceLocation resourceLocation = new ResourceLocation(fluidId);
-        //        Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
-        r = new RecipeGeneratorItem(recipeId, inputFirst, ticks, rfpertick);
+        r = new RecipeGeneratorItem(recipeId, inputFirst, new EnergyIngredient(json));
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
@@ -130,7 +115,8 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeGeneratorItem fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-      RecipeGeneratorItem r = new RecipeGeneratorItem(recipeId, Ingredient.fromNetwork(buffer), buffer.readInt(), buffer.readInt());
+      RecipeGeneratorItem r = new RecipeGeneratorItem(recipeId, Ingredient.fromNetwork(buffer),
+          new EnergyIngredient(buffer.readInt(), buffer.readInt()));
       //server reading recipe from client or vice/versa 
       return r;
     }
@@ -139,8 +125,8 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
     public void toNetwork(FriendlyByteBuf buffer, RecipeGeneratorItem recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       zero.toNetwork(buffer);
-      buffer.writeInt(recipe.getTicks());
-      buffer.writeInt(recipe.rfpertick);
+      buffer.writeInt(recipe.energy.getTicks());
+      buffer.writeInt(recipe.energy.getRfPertick());
     }
   }
 }

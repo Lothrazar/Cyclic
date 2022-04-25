@@ -94,7 +94,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
       int sec = recipe.energy.getTicks() / 20;
       Minecraft.getInstance().font.draw(ms, sec + " s", x, 6, FONT);
     }
-    Minecraft.getInstance().font.draw(ms, recipe.energy.rfPt() + " RF/t", x, 16, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
     Minecraft.getInstance().font.draw(ms, recipe.energy.getEnergyTotal() + " RF", x, 26, FONT);
     if (!recipe.bonus.isEmpty() && recipe.percent > 0) {
       Minecraft.getInstance().font.draw(ms, recipe.percent + "%", 56, 36, FONT);

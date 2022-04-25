@@ -1,13 +1,19 @@
 {
-  "type": "cyclic:melter",
-  "ingredients": [{
-      "item": "minecraft:snow_block"
-  },
-   {
-      "item": "minecraft:snow_block"
-  }],
-  "result": {
-    "fluid": "minecraft:water",
-    "count": 200
-  }
+	"type": "cyclic:melter",
+	"ingredients": [
+		{
+			"item": "minecraft:snow_block"
+		},
+		{
+			"item": "minecraft:snow_block"
+		}
+	],
+	"energy": {
+		"rfpertick": 40,
+		"ticks": 120
+	},
+	"result": {
+		"fluid": "minecraft:water",
+		"count": 200
+	}
 }

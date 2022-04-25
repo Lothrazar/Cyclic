@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,10 +22,11 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
-  private final int energy;
+  private final EnergyIngredient energy;
 
-  public RecipeMelter(ResourceLocation id, NonNullList<Ingredient> ingredientsIn, FluidStack out, int energyIn) {
+  public RecipeMelter(ResourceLocation id, NonNullList<Ingredient> ingredientsIn, FluidStack out, EnergyIngredient energy) {
     super(id);
+    this.energy = energy;
     ingredients = ingredientsIn;
     if (ingredients.size() == 1) {
       ingredients.add(Ingredient.EMPTY);
@@ -33,10 +35,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
       throw new IllegalArgumentException("Melter recipe must have at most two ingredients");
     }
     this.outFluid = out;
-    if (energyIn < 0) {
-      energyIn = 0;
-    }
-    this.energy = energyIn;
   }
 
   @Override
@@ -115,11 +113,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
         NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);
         JsonObject result = json.get("result").getAsJsonObject();
         FluidStack fluid = UtilRecipe.getFluid(result);
-        int energy = 5000;
-        if (json.has("energy")) {
-          energy = json.get("energy").getAsInt();
-        }
-        r = new RecipeMelter(recipeId, list, fluid, energy);
+        r = new RecipeMelter(recipeId, list, fluid, new EnergyIngredient(json));
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
@@ -128,25 +122,27 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeMelter fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public RecipeMelter fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
       NonNullList<Ingredient> ins = NonNullList.create();
-      ins.add(Ingredient.fromNetwork(buffer));
-      ins.add(Ingredient.fromNetwork(buffer));
-      return new RecipeMelter(recipeId, ins, FluidStack.readFromPacket(buffer), buffer.readInt());
+      ins.add(Ingredient.fromNetwork(buf));
+      ins.add(Ingredient.fromNetwork(buf));
+      return new RecipeMelter(recipeId, ins, FluidStack.readFromPacket(buf),
+          new EnergyIngredient(buf.readInt(), buf.readInt()));
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buffer, RecipeMelter recipe) {
+    public void toNetwork(FriendlyByteBuf buf, RecipeMelter recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       Ingredient one = (Ingredient) recipe.ingredients.get(1);
-      zero.toNetwork(buffer);
-      one.toNetwork(buffer);
-      recipe.outFluid.writeToPacket(buffer);
-      buffer.writeInt(recipe.getEnergyCost());
+      zero.toNetwork(buf);
+      one.toNetwork(buf);
+      recipe.outFluid.writeToPacket(buf);
+      buf.writeInt(recipe.energy.getRfPertick());
+      buf.writeInt(recipe.energy.getTicks());
     }
   }
 
   public int getEnergyCost() {
-    return this.energy;
+    return this.energy.getEnergyTotal(); // TODO: 
   }
 }

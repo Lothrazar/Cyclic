@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:grass_block"
-  },
-   {
-    "item": "minecraft:grass_block"
-  },
-   {
-    "item": "minecraft:grass_block"
-  }],
-  "mix": {
-    "tag": "forge:biomass",
-    "count": 100
-  },
-  "result": {
-    "item": "minecraft:farmland",
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:grass_block"
+		},
+		{
+			"item": "minecraft:grass_block"
+		},
+		{
+			"item": "minecraft:grass_block"
+		}
+	],
+	"mix": {
+		"tag": "forge:biomass",
+		"count": 100
+	},
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
+	"result": {
+		"item": "minecraft:farmland",
 		"count": 3
-  }
+	}
 }

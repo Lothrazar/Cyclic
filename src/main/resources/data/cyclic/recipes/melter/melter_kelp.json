@@ -6,6 +6,10 @@
    {
       "item": "minecraft:kelp"
   }],
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
   "result": {
     "fluid": "cyclic:biomass",
     "count": 1000

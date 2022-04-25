@@ -3,7 +3,10 @@
   "ingredients":[ {
       "item": "cyclic:biomass"
   }],
-  "energy": 1000,
+	"energy": {
+		"rfpertick": 40,
+		"ticks": 60
+	},
   "result": {
     "fluid": "cyclic:biomass",
     "count": 500

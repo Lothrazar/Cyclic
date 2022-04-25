@@ -1,13 +1,19 @@
 {
-  "type": "cyclic:melter",
-  "ingredients": [{
-      "item": "cyclic:biomass"
-  },
-   {
-      "tag": "forge:seeds"
-  }],
-  "result": {
-    "fluid": "cyclic:biomass",
-    "count": 1000
-  }
+	"type": "cyclic:melter",
+	"ingredients": [
+		{
+			"item": "cyclic:biomass"
+		},
+		{
+			"tag": "forge:seeds"
+		}
+	],
+	"energy":{
+		"rfpertick": 20,
+		"ticks": 60
+	},
+	"result": {
+		"fluid": "cyclic:biomass",
+		"count": 1000
+	}
 }

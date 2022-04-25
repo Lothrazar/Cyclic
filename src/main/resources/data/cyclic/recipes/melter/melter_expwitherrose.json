@@ -6,7 +6,10 @@
   {
       "item": "minecraft:wither_rose"
   }],
-  "energy": 1000,
+	"energy": {
+		"rfpertick": 40,
+		"ticks": 60
+	},
   "result": {
     "fluid": "cyclic:xpjuice",
     "count": 1200

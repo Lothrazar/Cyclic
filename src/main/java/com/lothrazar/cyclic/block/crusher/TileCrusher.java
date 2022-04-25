@@ -139,10 +139,10 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     }
     if (this.burnTimeMax > 0) {
       setLitProperty(true); // has recipe so lit
-      int onSim = energy.extractEnergy(currentRecipe.energy.rfPt(), true);
-      if (onSim >= currentRecipe.energy.rfPt()) {
+      int onSim = energy.extractEnergy(currentRecipe.energy.getRfPertick(), true);
+      if (onSim >= currentRecipe.energy.getRfPertick()) {
         //gen up. we burned away a tick of this fuel 
-        energy.extractEnergy(currentRecipe.energy.rfPt(), false);
+        energy.extractEnergy(currentRecipe.energy.getRfPertick(), false);
         this.burnTime--; // paying per tick for this recipe
       }
     }

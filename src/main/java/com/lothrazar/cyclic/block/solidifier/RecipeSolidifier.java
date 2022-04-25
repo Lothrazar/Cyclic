@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
@@ -26,11 +27,13 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  private final int energy;
+  public final EnergyIngredient energy;
   public final FluidTagIngredient fluidIngredient;
 
-  public RecipeSolidifier(ResourceLocation id, NonNullList<Ingredient> inList, FluidTagIngredient fluid, ItemStack result, int energyIn) {
+  public RecipeSolidifier(ResourceLocation id, NonNullList<Ingredient> inList,
+      FluidTagIngredient fluid, ItemStack result, EnergyIngredient energy) {
     super(id);
+    this.energy = energy;
     ingredients = inList;
     if (ingredients.size() == 2) {
       ingredients.add(Ingredient.EMPTY);
@@ -44,10 +47,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
     this.fluidIngredient = fluid;
     this.result = result;
-    if (energyIn < 0) {
-      energyIn = 0;
-    }
-    this.energy = energyIn;
   }
 
   @Override
@@ -125,10 +124,6 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     return CyclicRecipeType.SOLID;
   }
 
-  public int getEnergyCost() {
-    return this.energy;
-  }
-
   @Override
   public RecipeSerializer<?> getSerializer() {
     return SERIALIZER;
@@ -151,12 +146,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
         NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
         FluidTagIngredient fs = parseFluid(json, "mix");
-        //valid recipe created
-        int energy = 5000;
-        if (json.has("energy")) {
-          energy = json.get("energy").getAsInt();
-        }
-        r = new RecipeSolidifier(recipeId, list, fs, resultStack, energy);
+        r = new RecipeSolidifier(recipeId, list, fs, resultStack, new EnergyIngredient(json));
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
@@ -165,29 +155,31 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     }
 
     @Override
-    public RecipeSolidifier fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public RecipeSolidifier fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
       NonNullList<Ingredient> ins = NonNullList.create();
-      ins.add(Ingredient.fromNetwork(buffer));
-      ins.add(Ingredient.fromNetwork(buffer));
-      ins.add(Ingredient.fromNetwork(buffer));
-      FluidTagIngredient fsi = FluidTagIngredient.readFromPacket(buffer);
+      ins.add(Ingredient.fromNetwork(buf));
+      ins.add(Ingredient.fromNetwork(buf));
+      ins.add(Ingredient.fromNetwork(buf));
+      FluidTagIngredient fsi = FluidTagIngredient.readFromPacket(buf);
       RecipeSolidifier r = new RecipeSolidifier(recipeId,
           ins, fsi,
-          buffer.readItem(), buffer.readInt());
+          buf.readItem(),
+          new EnergyIngredient(buf.readInt(), buf.readInt()));
       return r;
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buffer, RecipeSolidifier recipe) {
+    public void toNetwork(FriendlyByteBuf buf, RecipeSolidifier recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       Ingredient one = (Ingredient) recipe.ingredients.get(1);
       Ingredient two = (Ingredient) recipe.ingredients.get(2);
-      zero.toNetwork(buffer);
-      one.toNetwork(buffer);
-      two.toNetwork(buffer);
-      recipe.fluidIngredient.writeToPacket(buffer);
-      buffer.writeItem(recipe.getResultItem());
-      buffer.writeInt(recipe.energy);
+      zero.toNetwork(buf);
+      one.toNetwork(buf);
+      two.toNetwork(buf);
+      recipe.fluidIngredient.writeToPacket(buf);
+      buf.writeItem(recipe.getResultItem());
+      buf.writeInt(recipe.energy.getRfPertick());
+      buf.writeInt(recipe.energy.getTicks());
     }
   }
 }

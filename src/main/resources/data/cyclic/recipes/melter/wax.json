@@ -3,7 +3,10 @@
   "ingredients":[ {
     "item": "minecraft:honeycomb_block"
   }],
-  "energy": 1000,
+	"energy": {
+		"rfpertick": 40,
+		"ticks": 120
+	},
   "result": {
     "fluid": "cyclic:wax",
     "count": 1000

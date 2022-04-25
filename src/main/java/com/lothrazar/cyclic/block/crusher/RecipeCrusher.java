@@ -132,8 +132,8 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
     public void toNetwork(FriendlyByteBuf buffer, RecipeCrusher recipe) {
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       zero.toNetwork(buffer);
-      buffer.writeInt(recipe.energy.rfpertick);
-      buffer.writeInt(recipe.energy.ticks);
+      buffer.writeInt(recipe.energy.getRfPertick());
+      buffer.writeInt(recipe.energy.getTicks());
       //
       buffer.writeItem(recipe.getResultItem());
       buffer.writeInt(recipe.percent);

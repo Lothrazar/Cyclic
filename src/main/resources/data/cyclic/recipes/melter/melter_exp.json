@@ -6,7 +6,10 @@
   {
       "item": "cyclic:experience_food"
   }],
-  "energy": 5000,
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 160
+	},
   "result": {
     "fluid": "cyclic:xpjuice",
     "count": 2000

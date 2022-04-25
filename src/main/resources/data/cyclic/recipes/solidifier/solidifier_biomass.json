@@ -13,6 +13,10 @@
     "fluid": "minecraft:water",
     "count": 50
   },
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
   "result": {
     "item": "cyclic:biomass",
 		"count": 8

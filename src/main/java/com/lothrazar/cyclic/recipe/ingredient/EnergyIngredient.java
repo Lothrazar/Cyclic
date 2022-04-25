@@ -5,9 +5,16 @@ import com.lothrazar.cyclic.ModCyclic;
 
 public class EnergyIngredient {
 
-  public static final int TICKS_DEFAULT = 60;
-  public int rfpertick;
-  public int ticks;
+  private static final String KEY_ENERGY = "energy";
+  private static final int TICKS_DEFAULT = 60;
+  private static final int RFPT_DEFAULT = 80;
+  private int rfPertick;
+  private int ticks;
+  //  @Deprecated
+  //  public EnergyIngredient(int energyTotal) {
+  //    setRf(energyTotal / TICKS_DEFAULT); //TileMelter etc had these previously
+  //    setTicks(TICKS_DEFAULT);
+  //  }
 
   public EnergyIngredient(int rf, int ticks) {
     setRf(rf);
@@ -19,18 +26,19 @@ public class EnergyIngredient {
   }
 
   private void parseData(final JsonObject recipeJson) {
-    if (!recipeJson.has("energy")) {
-      setRf(0);
-      setTicks(1);
+    if (!recipeJson.has(KEY_ENERGY)) {
+      ModCyclic.LOGGER.error("  Missing JSON 'energy', setting default values" + recipeJson);
+      setRf(RFPT_DEFAULT);
+      setTicks(TICKS_DEFAULT);
     }
-    else if (recipeJson.get("energy").isJsonObject()) {
-      JsonObject energyJson = recipeJson.get("energy").getAsJsonObject();
+    else if (recipeJson.get(KEY_ENERGY).isJsonObject()) {
+      JsonObject energyJson = recipeJson.get(KEY_ENERGY).getAsJsonObject();
       setRf(energyJson.get("rfpertick").getAsInt());
       setTicks(energyJson.get("ticks").getAsInt());
     }
     else {
-      ModCyclic.LOGGER.error("Deprecated JSON 'energy' should be object not integer. defaulting to 60 ticks " + recipeJson);
-      setRf(recipeJson.get("energy").getAsInt() / TICKS_DEFAULT);
+      ModCyclic.LOGGER.error("  Deprecated JSON 'energy' should be energy:{rfpertick,ticks} not integer. defaulting to 60 ticks " + recipeJson);
+      setRf(recipeJson.get(KEY_ENERGY).getAsInt() / TICKS_DEFAULT);
       setTicks(TICKS_DEFAULT);
     }
   }
@@ -40,18 +48,18 @@ public class EnergyIngredient {
   }
 
   private void setRf(int rf) {
-    this.rfpertick = Math.max(0, rf); // not negative, can be zero for free cost
+    this.rfPertick = Math.max(0, rf); // not negative, can be zero for free cost
   }
 
   public int getEnergyTotal() {
-    return rfpertick * ticks;
+    return rfPertick * ticks;
   }
 
   public int getTicks() {
     return ticks;
   }
 
-  public int rfPt() {
-    return this.rfpertick;
+  public int getRfPertick() {
+    return this.rfPertick;
   }
 }

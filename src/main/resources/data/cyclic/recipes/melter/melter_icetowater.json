@@ -6,6 +6,10 @@
   {
       "item": "minecraft:ice"
   }],
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
   "result": {
     "fluid": "minecraft:water",
     "count": 2000

@@ -1,17 +1,20 @@
 {
-  "type": "cyclic:melter",
-  "ingredients": [ 
-	  {
-		  "item": "cyclic:biomass"
-	  },
-	  {
-		  "item": "minecraft:bamboo"
-	  }
-  ],
-  "energy": 5000,
-  "result": {
-    "fluid": "cyclic:biomass",
-    "fluidTag": "forge:biomass",
-    "count": 1000
-  }
+	"type": "cyclic:melter",
+	"ingredients": [
+		{
+			"item": "cyclic:biomass"
+		},
+		{
+			"item": "minecraft:bamboo"
+		}
+	],
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
+	"result": {
+		"fluid": "cyclic:biomass",
+		"fluidTag": "forge:biomass",
+		"count": 1000
+	}
 }

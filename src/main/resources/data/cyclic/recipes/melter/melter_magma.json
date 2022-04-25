@@ -6,6 +6,10 @@
   {
     "item": "minecraft:magma_block"
   }],
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
   "result": {
     "fluid": "cyclic:magma",
     "count": 2000

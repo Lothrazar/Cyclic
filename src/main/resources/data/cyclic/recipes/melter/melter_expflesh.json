@@ -6,7 +6,10 @@
   {
       "item": "minecraft:rotten_flesh"
   }],
-  "energy": 1000,
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 160
+	},
   "result": {
     "fluid": "cyclic:xpjuice",
     "count": 1050

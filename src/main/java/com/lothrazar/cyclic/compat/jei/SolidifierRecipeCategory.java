@@ -95,7 +95,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public void draw(RecipeSolidifier recipe, PoseStack ms, double mouseX, double mouseY) {
-    Minecraft.getInstance().font.draw(ms, recipe.getEnergyCost() + " RF", 60, 20, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.energy.getEnergyTotal() + " RF", 60, 20, FONT);
   }
 
   @Override

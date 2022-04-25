@@ -6,8 +6,8 @@
 		}
 	],
 	"energy": {
-		"ticks": 10,
-		"rfpertick": 100
+		"rfpertick": 20,
+		"ticks": 40
 	},
 	"result": {
 		"fluid": "cyclic:wax",

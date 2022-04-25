@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,15 +21,13 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
 
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  private final int ticks;
-  private final int rfpertick;
   public final FluidTagIngredient fluidIng;
+  private final EnergyIngredient energy;
 
-  public RecipeGeneratorFluid(ResourceLocation id, FluidTagIngredient in, int ticks, int rfpertick) {
+  public RecipeGeneratorFluid(ResourceLocation id, FluidTagIngredient in, EnergyIngredient energy) {
     super(id);
     this.fluidIng = in;
-    this.ticks = (Math.max(1, ticks));
-    this.rfpertick = Math.max(1, rfpertick);
+    this.energy = energy;
   }
 
   @Override
@@ -84,11 +83,15 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
   }
 
   public int getTicks() {
-    return ticks;
+    return energy.getTicks();
   }
 
   public int getRfpertick() {
-    return rfpertick;
+    return energy.getRfPertick();
+  }
+
+  public int getRfTotal() {
+    return this.getRfpertick() * this.getTicks();
   }
 
   public static final SerializeGenerateFluid SERIALGENERATORF = new SerializeGenerateFluid();
@@ -110,10 +113,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
       try {
         //        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));
         FluidTagIngredient fs = parseFluid(json, "fuel");
-        JsonObject result = json.get("energy").getAsJsonObject();
-        int ticks = result.get("ticks").getAsInt();
-        int rfpertick = result.get("rfpertick").getAsInt();
-        r = new RecipeGeneratorFluid(recipeId, fs, ticks, rfpertick);
+        r = new RecipeGeneratorFluid(recipeId, fs, new EnergyIngredient(json));
       }
       catch (Exception e) {
         ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
@@ -123,22 +123,17 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeGeneratorFluid fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-      RecipeGeneratorFluid r = new RecipeGeneratorFluid(recipeId,
+      return new RecipeGeneratorFluid(recipeId,
           FluidTagIngredient.readFromPacket(buffer),
-          buffer.readInt(), buffer.readInt());
-      //server reading recipe from client or vice/versa 
-      return r;
+          new EnergyIngredient(buffer.readInt(), buffer.readInt()));
     }
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, RecipeGeneratorFluid recipe) {
       recipe.fluidIng.writeToPacket(buffer);
       buffer.writeInt(recipe.getTicks());
-      buffer.writeInt(recipe.rfpertick);
+      buffer.writeInt(recipe.energy.getRfPertick());
+      buffer.writeInt(recipe.energy.getTicks());
     }
-  }
-
-  public int getRfTotal() {
-    return this.getRfpertick() * this.getTicks();
   }
 }

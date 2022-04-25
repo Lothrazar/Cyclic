@@ -1,10 +1,16 @@
 {
-  "type": "cyclic:melter",
-  "ingredients": [{
-    "tag": "forge:slimeballs"
-  }],
-  "result": {
-    "fluid": "cyclic:slime",
-    "count": 250
-  }
+	"type": "cyclic:melter",
+	"ingredients": [
+		{
+			"tag": "forge:slimeballs"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 160
+	},
+	"result": {
+		"fluid": "cyclic:slime",
+		"count": 250
+	}
 }
