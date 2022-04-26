@@ -1,22 +1,27 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "tag": "forge:mushrooms"
-  },
-   {
-    "tag": "forge:mushrooms"
-  },
-   {
-    "item": "minecraft:dirt"
-  }],
-  "energy":1500,
-  "mix": {
-    "fluid": "cyclic:biomass",
-    "tag": "forge:biomass",
-    "count": 50
-  },
-  "result": {
-    "item": "minecraft:mycelium",
-	"count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"tag": "forge:mushrooms"
+		},
+		{
+			"tag": "forge:mushrooms"
+		},
+		{
+			"item": "minecraft:dirt"
+		}
+	],
+	"energy": {
+		"rfpertick": 150,
+		"ticks": 300
+	},
+	"mix": {
+		"fluid": "cyclic:biomass",
+		"tag": "forge:biomass",
+		"count": 50
+	},
+	"result": {
+		"item": "minecraft:mycelium",
+		"count": 1
+	}
 }

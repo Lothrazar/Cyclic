@@ -1,15 +1,20 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients": [{
-    "item": "minecraft:redstone_lamp"
-  }
-  ],
-  "mix": {
-    "tag": "forge:wax",
-    "count": 100
-  },
-  "result": {
-    "item": "cyclic:lamp",
-	"count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:redstone_lamp"
+		}
+	],
+	"mix": {
+		"tag": "forge:wax",
+		"count": 100
+	},
+	"energy": {
+		"rfpertick": 2000,
+		"ticks": 80
+	},
+	"result": {
+		"item": "cyclic:lamp",
+		"count": 1
+	}
 }

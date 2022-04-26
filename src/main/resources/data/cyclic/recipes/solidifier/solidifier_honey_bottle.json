@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:glass_bottle"
-  },
-   {
-    "item": "minecraft:glass_bottle"
-  },
-   {
-    "item": "minecraft:glass_bottle"
-  }],
-  "mix": {
-    "tag": "forge:honey",
-    "count": 750
-  },
-  "result": {
-    "item": "minecraft:honey_bottle",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:glass_bottle"
+		},
+		{
+			"item": "minecraft:glass_bottle"
+		},
+		{
+			"item": "minecraft:glass_bottle"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 100
+	},
+	"mix": {
+		"tag": "forge:honey",
+		"count": 750
+	},
+	"result": {
+		"item": "minecraft:honey_bottle",
+		"count": 3
+	}
 }

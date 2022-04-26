@@ -1,15 +1,21 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:cobblestone"
-  }],
-  "mix": {
-    "fluid": "cyclic:biomass",
-    "tag": "forge:biomass",
-    "count": 10
-  },
-  "result": {
-    "item": "minecraft:mossy_cobblestone",
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:cobblestone"
+		}
+	],
+	"energy": {
+		"rfpertick": 50,
+		"ticks": 60
+	},
+	"mix": {
+		"fluid": "cyclic:biomass",
+		"tag": "forge:biomass",
+		"count": 10
+	},
+	"result": {
+		"item": "minecraft:mossy_cobblestone",
 		"count": 1
-  }
+	}
 }

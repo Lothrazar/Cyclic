@@ -1,21 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:sugar"
-  },
-  {
-    "item": "minecraft:sugar"
-  },
-   {
-    "item": "minecraft:sugar"
-  }],
-  "energy": 100,
-  "mix": {
-    "tag": "forge:experience",
-    "count": 1000
-  },
-  "result": {
-    "item": "cyclic:experience_food",
-	"count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:sugar"
+		},
+		{
+			"item": "minecraft:sugar"
+		},
+		{
+			"item": "minecraft:sugar"
+		}
+	],
+	"energy": {
+		"rfpertick": 2000,
+		"ticks": 80
+	},
+	"mix": {
+		"tag": "forge:experience",
+		"count": 1000
+	},
+	"result": {
+		"item": "cyclic:experience_food",
+		"count": 1
+	}
 }

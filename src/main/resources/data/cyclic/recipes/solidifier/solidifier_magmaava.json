@@ -9,7 +9,11 @@
    {
     "item": "minecraft:gravel"
   }],
-  "mix": {
+	"energy": {
+		"rfpertick": 500,
+		"ticks": 220
+	},
+	"mix": {
     "fluid": "minecraft:lava",
     "count": 1000
   },

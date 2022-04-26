@@ -9,6 +9,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.CyclicLogger;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.LavaSpongeBlock;
@@ -30,6 +31,7 @@ import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generatorfood.TileGeneratorFood;
 import com.lothrazar.cyclic.block.generatorfuel.TileGeneratorFuel;
+import com.lothrazar.cyclic.block.generatorsolar.BlockGeneratorSolar;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.packager.TilePackager;
@@ -264,9 +266,13 @@ public class ConfigRegistry {
         .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
     TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
         .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
+    BlockGeneratorSolar.PER_TICK = CFG.comment("Maximum Energy per tick while solar is generating (can be less based on weather contitions).")
+        .defineInRange("generator_solar.per_tick_maximum", 8, 1, 6400);
     LavaSpongeBlock.RADIUS = CFG.comment("Reach of the sponge").defineInRange("sponge_lava.radius", 8, 1, 64);
     CandlePeaceBlock.HEIGHT = CFG.comment("Height reach of the candle for spawn prevention").defineInRange("peace_candle.height", 8, 1, 128);
     CandlePeaceBlock.RADIUS = CFG.comment("Reach of the candle for spawn prevention").defineInRange("peace_candle.radius", 32, 1, 128);
+    BlockNoTraders.HEIGHT = CFG.comment("Height reach of the no_soliciting for spawn prevention").defineInRange("no_soliciting.height", 32, 1, 128);
+    BlockNoTraders.RADIUS = CFG.comment("Reach of the no_soliciting for spawn prevention").defineInRange("no_soliciting.radius", 32, 1, 128);
     CandleWaterBlock.RADIUS = CFG.comment("Reach of the candle").defineInRange("water_candle.radius", 8, 1, 64);
     CandleWaterBlock.TICK_RATE = CFG.comment("Tick rate of the candle").defineInRange("water_candle.tick_rate", 60, 1, 2000);
     TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, 64000);

@@ -7,13 +7,13 @@
   ],
   "key": {
     "c": {
-      "item": "minecraft:brick"
+      "item": "minecraft:copper_ingot"
     },
     "b": {
       "tag": "forge:storage_blocks/cobblestone"
     },
     "a": {
-      "tag": "forge:nuggets/copper"
+      "item": "minecraft:clay_ball"
     }
   },
   "result": {

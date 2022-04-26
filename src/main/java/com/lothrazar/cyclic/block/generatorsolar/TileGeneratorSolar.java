@@ -47,24 +47,29 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic {
   //  @Override
   public void tick() {
     this.syncEnergy();
-    moveEnergy(Direction.DOWN, MAX / 64);
     if (level.isClientSide) {
       return;
     }
+    moveEnergy(Direction.DOWN, 1000);
     tryConsumeFuel();
   }
-
-  final static int PER_TICK = 5; // TODO config
 
   private void tryConsumeFuel() {
     setLitProperty(false);
     //pull in new fuel
     //TODO: half if raining/not sunny 
+    Integer receive = BlockGeneratorSolar.PER_TICK.get();
     if (this.level.isDay() && this.level.canSeeSky(this.getBlockPos().above())) {
-      if (energy.receiveEnergy(PER_TICK, true) > 0) {
+      if (this.level.isThundering()) {
+        receive = receive / 4;
+      }
+      else if (this.level.isRaining()) {
+        receive = receive / 2;
+      }
+      if (energy.receiveEnergy(receive, true) > 0) {
         setLitProperty(true);
         //we have room in the tank, burn one tck and fill up 
-        energy.receiveEnergy(PER_TICK, false);
+        energy.receiveEnergy(receive, false);
       }
     }
   }

@@ -1,21 +1,27 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:stone"
-  },
-   {
-    "item": "minecraft:stone"
-  },
-   {
-    "item": "minecraft:stone"
-  }],
-  "mix": {
-    "fluid": "cyclic:magma",
-    "tag": "forge:magma",
-    "count": 2700
-  },
-  "result": {
-    "item": "minecraft:magma_block",
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:stone"
+		},
+		{
+			"item": "minecraft:stone"
+		},
+		{
+			"item": "minecraft:stone"
+		}
+	],
+	"energy": {
+		"rfpertick": 500,
+		"ticks": 220
+	},
+	"mix": {
+		"fluid": "cyclic:magma",
+		"tag": "forge:magma",
+		"count": 2700
+	},
+	"result": {
+		"item": "minecraft:magma_block",
 		"count": 3
-  }
+	}
 }

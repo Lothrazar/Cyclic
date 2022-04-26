@@ -1,21 +1,27 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients": [{
-    "item": "minecraft:prismarine"
-  },
-   {
-    "tag": "forge:dusts/glowstone"
-  },
-  {
-    "item": "minecraft:prismarine"
-  }],
-  "mix": {
-    "fluid": "cyclic:magma",
-    "tag": "forge:biomass",
-    "count": 100
-  },
-  "result": {
-    "item": "minecraft:prismarine_crystals",
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:prismarine"
+		},
+		{
+			"tag": "forge:dusts/glowstone"
+		},
+		{
+			"item": "minecraft:prismarine"
+		}
+	],
+	"mix": {
+		"fluid": "cyclic:magma",
+		"tag": "forge:biomass",
+		"count": 100
+	},
+	"energy": {
+		"rfpertick": 200,
+		"ticks": 60
+	},
+	"result": {
+		"item": "minecraft:prismarine_crystals",
 		"count": 3
-  }
+	}
 }

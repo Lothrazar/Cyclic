@@ -1,21 +1,27 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:dirt"
-  },
-  {
-    "item": "minecraft:cobblestone"
-  },
-   {
-    "item": "minecraft:dirt"
-  }],
-  "mix": {
-    "fluid": "cyclic:magma",
-    "tag": "forge:magma",
-    "count": 250
-  },
-  "result": {
-    "item": "minecraft:gravel",
-	"count": 9
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:dirt"
+		},
+		{
+			"item": "minecraft:cobblestone"
+		},
+		{
+			"item": "minecraft:dirt"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 40
+	},
+	"mix": {
+		"fluid": "cyclic:magma",
+		"tag": "forge:magma",
+		"count": 250
+	},
+	"result": {
+		"item": "minecraft:gravel",
+		"count": 9
+	}
 }

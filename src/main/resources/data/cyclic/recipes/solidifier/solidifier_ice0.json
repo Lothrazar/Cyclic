@@ -3,7 +3,11 @@
   "ingredients":[ {
     "item": "minecraft:snow_block"
   }],
-  "mix": {
+
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 100
+	},  "mix": {
     "fluid": "minecraft:water",
     "count": 1000
   },

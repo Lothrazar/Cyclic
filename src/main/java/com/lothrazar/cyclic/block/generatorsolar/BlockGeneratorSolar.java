@@ -14,10 +14,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class BlockGeneratorSolar extends BlockCyclic {
 
   public static final VoxelShape AABB = Block.box(0, 0, 0, 16, 1, 16);
+  public static IntValue PER_TICK;
 
   public BlockGeneratorSolar(Properties properties) {
     super(properties.strength(1.2F));

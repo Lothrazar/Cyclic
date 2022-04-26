@@ -1,5 +1,5 @@
 {
-    "parent": "cyclic:parent/plate_horizontal",
+    "parent": "cyclic:parent/plate_small",
     "textures": {
         "0": "cyclic:blocks/magnet/face"
     }

@@ -9,7 +9,11 @@
    {
     "item": "minecraft:honeycomb"
   }],
-  "mix": {
+
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 100
+	},  "mix": {
     "tag": "forge:honey",
     "count": 100
   },

@@ -20,7 +20,6 @@ import com.lothrazar.cyclic.item.FireExtinguishItem;
 import com.lothrazar.cyclic.item.FireballItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.item.ItemFlute;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MilkBottle;
 import com.lothrazar.cyclic.item.OreProspector;
@@ -476,14 +475,14 @@ public class ItemRegistry {
   public static final RegistryObject<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> NO_SOLICITING = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.NO_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  //  public static final RegistryObject<Item> FLUTE = ITEMS.register("flute_summoning", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //totem of repair
   //!ENERGY OBJECT REFACTOR IN SOLIRECIPES!!
   // ??WAX more uses?CONFIGS?
   //solar balance? 
   // items change some to consume ENERGY. and test existing ones dont get destroyed on empty ?? 
   //  public static final RegistryObject<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> FLUTE = ITEMS.register("flute_summoning", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  public static final RegistryObject<Item> ALTAR_FORTUNE = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.ALTAR_FORTUNE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //public static final RegistryObject<Item> ALTAR_FORTUNE = ITEMS.register("altar_fortune", () -> new BlockItem(BlockRegistry.ALTAR_FORTUNE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> ALTAR_FLIGHT = ITEMS.register("altar_flight", () -> new BlockItem(BlockRegistry.ALTAR_FLIGHT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> ALTAR_DESTRUCTION = ITEMS.register("altar_destruction", () -> new BlockItem(BlockRegistry.ALTAR_DESTRUCTION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));

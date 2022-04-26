@@ -7,6 +7,10 @@
     "fluid": "minecraft:water",
     "count": 25
   },
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 60
+	},
   "result": {
     "item": "minecraft:clay",
 		"count": 1

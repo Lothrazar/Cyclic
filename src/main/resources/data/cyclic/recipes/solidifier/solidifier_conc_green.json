@@ -1,21 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:green_concrete_powder"
-  },
-   {
-    "item": "minecraft:green_concrete_powder"
-  },
-   {
-    "item": "minecraft:green_concrete_powder"
-  }],
-  "energy": 100,
-  "mix": {
-    "fluid": "minecraft:water",
-    "count": 10
-  },
-  "result": {
-    "item": "minecraft:green_concrete",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:green_concrete_powder"
+		},
+		{
+			"item": "minecraft:green_concrete_powder"
+		},
+		{
+			"item": "minecraft:green_concrete_powder"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 40
+	},
+	"mix": {
+		"fluid": "minecraft:water",
+		"count": 10
+	},
+	"result": {
+		"item": "minecraft:green_concrete",
+		"count": 3
+	}
 }

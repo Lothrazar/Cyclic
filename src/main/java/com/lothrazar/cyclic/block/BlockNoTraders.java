@@ -1,7 +1,6 @@
-package com.lothrazar.cyclic.block.altar;
+package com.lothrazar.cyclic.block;
 
 import java.util.Random;
-import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -29,16 +28,19 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class BlockAltarFortune extends BlockCyclic {
+public class BlockNoTraders extends BlockCyclic {
 
+  public static IntValue HEIGHT;
+  public static IntValue RADIUS;
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   private static final double BOUNDS = 3;
   public static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
       16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
 
-  public BlockAltarFortune(Properties properties) {
-    super(properties.strength(1.8F).noOcclusion());
+  public BlockNoTraders(Properties properties) {
+    super(properties.strength(1.2F).noOcclusion());
     this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
 
@@ -49,7 +51,7 @@ public class BlockAltarFortune extends BlockCyclic {
 
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-    if (hand == InteractionHand.MAIN_HAND && player.getItemInHand(hand).isEmpty()) {
+    if (hand == InteractionHand.MAIN_HAND) { //  && player.getItemInHand(hand).isEmpty()
       world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
       UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
       UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);

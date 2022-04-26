@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients": [{
-    "item": "minecraft:dead_bubble_coral"
-  },
-   {
-    "item": "minecraft:bubble_coral"
-  },
-   {
-    "item": "minecraft:dead_bubble_coral"
-  }],
-  "mix": {
-    "fluid": "minecraft:water",
-    "count": 100
-  },
-  "result": {
-    "item": "minecraft:bubble_coral",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:dead_bubble_coral"
+		},
+		{
+			"item": "minecraft:bubble_coral"
+		},
+		{
+			"item": "minecraft:dead_bubble_coral"
+		}
+	],
+	"energy": {
+		"rfpertick": 500,
+		"ticks": 160
+	},
+	"mix": {
+		"fluid": "minecraft:water",
+		"count": 100
+	},
+	"result": {
+		"item": "minecraft:bubble_coral",
+		"count": 3
+	}
 }

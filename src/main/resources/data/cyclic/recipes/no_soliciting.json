@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    " b ",
+    "ooo"
+  ],
+  "key": {
+    "o": {
+      "item": "cyclic:copper_pressure_plate"
+    },
+    "b": {
+      "item": "minecraft:basalt"
+    },
+    "s": {
+      "tag": "forge:glass/colorless"
+    }
+  },
+  "result": {
+    "item": "cyclic:no_soliciting",
+    "count": 1
+  }
+}

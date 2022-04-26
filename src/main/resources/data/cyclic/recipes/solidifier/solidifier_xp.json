@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:glass_bottle"
-  },
-  {
-    "item": "minecraft:glass_bottle"
-  },
-   {
-    "item": "minecraft:glass_bottle"
-  }],
-  "mix": {
-    "tag": "forge:experience",
-    "count": 750
-  },
-  "result": {
-    "item": "minecraft:experience_bottle",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:glass_bottle"
+		},
+		{
+			"item": "minecraft:glass_bottle"
+		},
+		{
+			"item": "minecraft:glass_bottle"
+		}
+	],
+	"mix": {
+		"tag": "forge:experience",
+		"count": 750
+	},
+	"energy": {
+		"rfpertick": 2000,
+		"ticks": 80
+	},
+	"result": {
+		"item": "minecraft:experience_bottle",
+		"count": 3
+	}
 }

@@ -1,21 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:apple"
-  },
-  {
-    "item": "minecraft:apple"
-  },
-   {
-    "item": "minecraft:apple"
-  }],
-  "energy": 1000,
-  "mix": {
-    "tag": "forge:honey",
-    "count": 300
-  },
-  "result": {
-    "item": "cyclic:apple_honey",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:apple"
+		},
+		{
+			"item": "minecraft:apple"
+		},
+		{
+			"item": "minecraft:apple"
+		}
+	],
+	"energy": {
+		"rfpertick": 2000,
+		"ticks": 80
+	},
+	"mix": {
+		"tag": "forge:honey",
+		"count": 300
+	},
+	"result": {
+		"item": "cyclic:apple_honey",
+		"count": 3
+	}
 }

@@ -9,7 +9,10 @@
   {
     "item": "minecraft:glass"
   }],
-  "energy": 100,
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 40
+	},
   "mix": {
     "fluid": "cyclic:magma",
     "tag": "forge:magma",

@@ -1,21 +1,27 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "cyclic:peat_fuel"
-  },
-  {
-    "item": "cyclic:peat_fuel"
-  },
-   {
-    "item": "cyclic:peat_fuel"
-  }],
-  "mix": {
-    "fluid": "cyclic:biomass",
-    "tag": "forge:biomass",
-    "count": 500
-  },
-  "result": {
-    "item": "cyclic:peat_fuel_enriched",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "cyclic:peat_fuel"
+		},
+		{
+			"item": "cyclic:peat_fuel"
+		},
+		{
+			"item": "cyclic:peat_fuel"
+		}
+	],
+	"mix": {
+		"fluid": "cyclic:biomass",
+		"tag": "forge:biomass",
+		"count": 500
+	},
+	"energy": {
+		"rfpertick": 50,
+		"ticks": 60
+	},
+	"result": {
+		"item": "cyclic:peat_fuel_enriched",
+		"count": 3
+	}
 }

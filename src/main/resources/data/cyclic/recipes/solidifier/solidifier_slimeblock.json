@@ -1,14 +1,20 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:slime_ball"
-  }],
-  "mix": {
-    "fluid": "cyclic:slime",
-    "count": 2000
-  },
-  "result": {
-    "item": "minecraft:slime_block",
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:slime_ball"
+		}
+	],
+	"mix": {
+		"fluid": "cyclic:slime",
+		"count": 2000
+	},
+	"energy": {
+		"rfpertick": 200,
+		"ticks": 60
+	},
+	"result": {
+		"item": "minecraft:slime_block",
 		"count": 1
-  }
+	}
 }

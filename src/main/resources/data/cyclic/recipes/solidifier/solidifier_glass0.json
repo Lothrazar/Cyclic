@@ -1,16 +1,21 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:glass"
-  }],
-  "energy": 100,
-  "mix": {
-    "fluid": "cyclic:magma",
-    "tag": "forge:magma",
-    "count": 10
-  },
-  "result": {
-    "item": "minecraft:sand",
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:glass"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 40
+	},
+	"mix": {
+		"fluid": "cyclic:magma",
+		"tag": "forge:magma",
+		"count": 10
+	},
+	"result": {
+		"item": "minecraft:sand",
 		"count": 1
-  }
+	}
 }

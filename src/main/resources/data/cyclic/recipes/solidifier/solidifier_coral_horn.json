@@ -9,7 +9,11 @@
    {
     "item": "minecraft:dead_horn_coral"
   }],
-  "mix": {
+
+	"energy": {
+		"rfpertick": 500,
+		"ticks": 160
+	},  "mix": {
     "fluid": "minecraft:water",
     "count": 100
   },

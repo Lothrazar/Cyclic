@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:location"
+      "recipe": "cyclic:location_data"
     }
   ]
 }

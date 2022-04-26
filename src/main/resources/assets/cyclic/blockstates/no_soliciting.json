@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/no_soliciting" },
+        "lit=true": { "model": "cyclic:block/no_soliciting_on" }
+    }
+}

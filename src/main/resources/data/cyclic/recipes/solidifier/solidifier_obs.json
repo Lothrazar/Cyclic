@@ -1,21 +1,27 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "tag": "forge:gems/emerald"
-  },
-  {
-    "item": "cyclic:gem_amber"
-  },
-   {
-    "item": "minecraft:amethyst_block"
-  }],
-  "mix": {
-    "fluid": "cyclic:slime",
-    "tag": "forge:slime",
-    "count": 500
-  },
-  "result": {
-    "item": "cyclic:gem_obsidian",
-  	"count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"tag": "forge:gems/emerald"
+		},
+		{
+			"item": "cyclic:gem_amber"
+		},
+		{
+			"item": "minecraft:amethyst_block"
+		}
+	],
+	"energy": {
+		"rfpertick": 1500,
+		"ticks": 300
+	},
+	"mix": {
+		"fluid": "cyclic:slime",
+		"tag": "forge:slime",
+		"count": 500
+	},
+	"result": {
+		"item": "cyclic:gem_obsidian",
+		"count": 1
+	}
 }

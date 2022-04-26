@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.no_soliciting",
+  "icon": "cyclic:no_soliciting",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.no_soliciting.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:no_soliciting"
+    }
+  ]
+}

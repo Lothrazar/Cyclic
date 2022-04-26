@@ -1,21 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:red_concrete_powder"
-  },
-   {
-    "item": "minecraft:red_concrete_powder"
-  },
-   {
-    "item": "minecraft:red_concrete_powder"
-  }],
-  "energy": 100,
-  "mix": {
-    "fluid": "minecraft:water",
-    "count": 10
-  },
-  "result": {
-    "item": "minecraft:red_concrete",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:red_concrete_powder"
+		},
+		{
+			"item": "minecraft:red_concrete_powder"
+		},
+		{
+			"item": "minecraft:red_concrete_powder"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 40
+	},
+	"mix": {
+		"fluid": "minecraft:water",
+		"count": 10
+	},
+	"result": {
+		"item": "minecraft:red_concrete",
+		"count": 3
+	}
 }

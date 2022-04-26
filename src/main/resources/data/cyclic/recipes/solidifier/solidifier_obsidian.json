@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "tag": "forge:cobblestone"
-  },
-  {
-    "tag": "forge:cobblestone"
-  },
-   {
-    "tag": "forge:cobblestone"
-  }],
-  "mix": {
-    "fluid": "minecraft:lava",
-    "count": 800
-  },
-  "result": {
-    "item": "minecraft:obsidian",
-	"count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"tag": "forge:cobblestone"
+		},
+		{
+			"tag": "forge:cobblestone"
+		},
+		{
+			"tag": "forge:cobblestone"
+		}
+	],
+	"energy": {
+		"rfpertick": 1500,
+		"ticks": 300
+	},
+	"mix": {
+		"fluid": "minecraft:lava",
+		"count": 800
+	},
+	"result": {
+		"item": "minecraft:obsidian",
+		"count": 1
+	}
 }

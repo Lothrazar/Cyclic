@@ -1,17 +1,20 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients": [
-    {
-      "item": "minecraft:bucket"
-    }
-  ],
-  "mix": {
-    "fluid": "minecraft:milk",
-    "count": 1000
-  },
-  "energy": 10,
-  "result": {
-    "item": "minecraft:milk_bucket",
-    "count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:bucket"
+		}
+	],
+	"energy": {
+		"rfpertick": 50,
+		"ticks": 60
+	},
+	"mix": {
+		"fluid": "minecraft:milk",
+		"count": 1000
+	},
+	"result": {
+		"item": "minecraft:milk_bucket",
+		"count": 1
+	}
 }

@@ -3,7 +3,11 @@
   "ingredients":[ {
     "item": "minecraft:stone_bricks"
   }],
-  "mix": {
+
+	"energy": {
+		"rfpertick": 50,
+		"ticks": 60
+	},  "mix": {
     "fluid": "cyclic:biomass",
     "tag": "forge:biomass",
     "count": 10

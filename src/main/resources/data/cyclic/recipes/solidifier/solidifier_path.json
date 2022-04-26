@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:grass_block"
-  },
-  {
-    "item": "minecraft:grass_block"
-  },
-   {
-    "item": "minecraft:grass_block"
-  }],
-  "mix": {
-    "fluid": "minecraft:water",
-    "count": 10
-  },
-  "result": {
-    "item": "minecraft:dirt_path",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:grass_block"
+		},
+		{
+			"item": "minecraft:grass_block"
+		},
+		{
+			"item": "minecraft:grass_block"
+		}
+	],
+	"mix": {
+		"fluid": "minecraft:water",
+		"count": 10
+	},
+	"energy": {
+		"rfpertick": 50,
+		"ticks": 60
+	},
+	"result": {
+		"item": "minecraft:dirt_path",
+		"count": 3
+	}
 }

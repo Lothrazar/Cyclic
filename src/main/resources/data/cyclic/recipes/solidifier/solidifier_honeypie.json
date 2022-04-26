@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients": [{
-    "item": "minecraft:egg"
-  },
-  {
-    "item": "minecraft:pumpkin"
-  },
-   {
-    "item": "minecraft:egg"
-  }],
-  "mix": {
-    "tag": "forge:honey",
-    "count": 100
-  },
-  "result": {
-    "item": "minecraft:pumpkin_pie",
-	"count": 3
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:egg"
+		},
+		{
+			"item": "minecraft:pumpkin"
+		},
+		{
+			"item": "minecraft:egg"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 100
+	},
+	"mix": {
+		"tag": "forge:honey",
+		"count": 100
+	},
+	"result": {
+		"item": "minecraft:pumpkin_pie",
+		"count": 3
+	}
 }

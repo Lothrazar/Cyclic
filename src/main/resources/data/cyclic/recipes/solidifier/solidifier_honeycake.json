@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:egg"
-  },
-   {
-    "item": "minecraft:wheat"
-  },
-   {
-    "item": "minecraft:egg"
-  }],
-  "mix": {
-    "tag": "forge:honey",
-    "count": 500
-  },
-  "result": {
-    "item": "minecraft:cake",
-	"count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:egg"
+		},
+		{
+			"item": "minecraft:wheat"
+		},
+		{
+			"item": "minecraft:egg"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 100
+	},
+	"mix": {
+		"tag": "forge:honey",
+		"count": 500
+	},
+	"result": {
+		"item": "minecraft:cake",
+		"count": 1
+	}
 }

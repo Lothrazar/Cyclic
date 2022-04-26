@@ -22,7 +22,7 @@ public class BlockPotion extends BlockCyclic {
 
   public BlockPotion(Properties properties) {
     super(properties.strength(1.8F)
-        .noOcclusion()//trying to get transparency
+        .noOcclusion() // transparency
     );
     this.setHasGui();
   }

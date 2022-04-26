@@ -1,20 +1,26 @@
 {
-  "type": "cyclic:solidifier",
-  "ingredients":[ {
-    "item": "minecraft:honeycomb_block"
-  },
-  {
-    "item": "minecraft:honeycomb"
-  },
-   {
-    "item": "minecraft:honeycomb_block"
-  }],
-  "mix": {
-    "tag": "forge:honey",
-    "count": 8000
-  },
-  "result": {
-    "item": "minecraft:bee_nest",
-	"count": 1
-  }
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:honeycomb_block"
+		},
+		{
+			"item": "minecraft:honeycomb"
+		},
+		{
+			"item": "minecraft:honeycomb_block"
+		}
+	],
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 100
+	},
+	"mix": {
+		"tag": "forge:honey",
+		"count": 8000
+	},
+	"result": {
+		"item": "minecraft:bee_nest",
+		"count": 1
+	}
 }

@@ -9,7 +9,10 @@
    {
     "item": "minecraft:brown_concrete_powder"
   }],
-  "energy": 100,
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 40
+	},
   "mix": {
     "fluid": "minecraft:water",
     "count": 10

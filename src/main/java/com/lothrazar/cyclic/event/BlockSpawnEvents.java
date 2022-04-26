@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
-import com.lothrazar.cyclic.block.altar.BlockAltarFortune;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.world.entity.LivingEntity;
@@ -58,9 +58,11 @@ public class BlockSpawnEvents {
       //Altar / Pedestal disabled
       //get ALL blocks that are an altar first
       //then check if it has altar type for my entity type and cancel there, without looping if possible 
-      if (BlockAltarFortune.isSpawnDenied(mob, res)
+      radius = BlockNoTraders.RADIUS.get();
+      height = BlockNoTraders.HEIGHT.get();
+      if (BlockNoTraders.isSpawnDenied(mob, res)
           && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.ALTAR_FORTUNE.get().defaultBlockState().setValue(BlockAltarFortune.LIT, true),
+              BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockNoTraders.LIT, true),
               radius, height)) {
         ModCyclic.LOGGER.info("Spawn cancelled by FORTUNE altar " + mob.getType());
         event.setResult(Result.DENY);

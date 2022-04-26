@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.BlockSimple;
 import com.lothrazar.cyclic.block.ButtonBlockMat;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
@@ -17,7 +18,6 @@ import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.PressurePlateMetal;
-import com.lothrazar.cyclic.block.altar.BlockAltarFortune;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
@@ -289,9 +289,9 @@ public class BlockRegistry {
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
   public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of(Material.STONE))); // NOGUI
+  public static final RegistryObject<BlockNoTraders> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockNoTraders(Block.Properties.of(Material.STONE)));
   //  public static final RegistryObject<BlockAltarSol> ALTAR_FLIGHT = BLOCKS.register("altar_flight", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.FLIGHT));
   //  public static final RegistryObject<BlockAltarSol> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.DESTRUCTION));
-  public static final RegistryObject<BlockAltarFortune> ALTAR_FORTUNE = BLOCKS.register("no_soliciting", () -> new BlockAltarFortune(Block.Properties.of(Material.STONE)));
   //  public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("pedestal", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
   //cursed altars
   //flight - for @a players in range

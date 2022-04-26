@@ -15,40 +15,29 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class TileInsertingMagnet extends TileBlockEntityCyclic {
 
-  private static final double ENTITY_PULL_DIST = 0.4; //closer than this and nothing happens
-  private static final double ENTITY_PULL_SPEED_CUTOFF = 3; //closer than this and it slows
+  private static final double ENTITY_PULL_DIST = 0.2; //closer than this and nothing happens
+  private static final double ENTITY_PULL_SPEED_CUTOFF = 2; //closer than this and it slows
   private static final float ITEMSPEEDFAR = 0.8F;
-  private static final float ITEMSPEEDCLOSE = 0.08F;
-  //TODO FILTER Card ITEM GUI
-  ItemStackHandler inventory = new ItemStackHandler(1);
+  private static final float ITEMSPEEDCLOSE = 0.09F;
 
-  //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public TileInsertingMagnet(BlockPos pos, BlockState state) {
     super(TileRegistry.MAGNET.get(), pos, state);
   }
 
   @Override
   public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
     super.saveAdditional(tag);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileInsertingMagnet e) {
-    if (e.isPowered()) {
-      e.setLitProperty(false);
-      return;
-    }
-    e.setLitProperty(true);
     Set<Item> filter = new HashSet<>(); // TODO: filter from DATACARD if present
     final int radius = 16; //  ConfigManager.MAGNET_RANGE.get();
     int vradius = 0;
@@ -57,7 +46,7 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
     int z = blockPos.getZ();
     AABB axisalignedbb = (new AABB(x, y, z, x + 1, y + 1, z + 1)).inflate(radius, vradius, radius);
     List<ItemEntity> list = level.getEntitiesOfClass(ItemEntity.class, axisalignedbb);
-    pullEntityList(x + 0.2, y + 0.5, z + 0.2, true, list, filter);
+    pullEntityList(x + 0.5, y + 0.1, z + 0.5, true, list, filter);
   }
 
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<ItemEntity> all, Set<Item> filter) {

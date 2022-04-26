@@ -1,11 +1,17 @@
 {
 	"type": "cyclic:solidifier",
-	"ingredients": [{
-    "tag": "forge:slimeballs"
-	}],
+	"ingredients": [
+		{
+			"tag": "forge:slimeballs"
+		}
+	],
+	"energy": {
+		"rfpertick": 500,
+		"ticks": 220
+	},
 	"mix": {
 		"fluid": "cyclic:magma",
-    "tag": "forge:magma",
+		"tag": "forge:magma",
 		"count": 50
 	},
 	"result": {
