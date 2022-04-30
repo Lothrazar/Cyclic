@@ -78,8 +78,8 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
   @Override
   public void draw(RecipeGeneratorItem recipe, PoseStack ms, double mouseX, double mouseY) {
     Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", 60, 0, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.getRfTotal() + " RF", 60, 20, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getRfPertick() + " RF/t", 60, 10, FONT);
+    Minecraft.getInstance().font.draw(ms, recipe.getEnergyTotal() + " RF", 60, 20, FONT);
   }
 
   @Override

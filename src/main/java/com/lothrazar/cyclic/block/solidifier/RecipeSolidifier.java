@@ -27,7 +27,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  public final EnergyIngredient energy;
+  private final EnergyIngredient energy;
   public final FluidTagIngredient fluidIngredient;
 
   public RecipeSolidifier(ResourceLocation id, NonNullList<Ingredient> inList,
@@ -53,17 +53,10 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public FluidStack getRecipeFluid() {
     return this.fluidIngredient.getFluidStack();
   }
-  //  public List<FluidStack> getRecipeFluids() {
-  //    List<Fluid> fluids = fluidIngredient.list();
-  //    if (fluids == null) {
-  //      return null;
-  //    }
-  //    List<FluidStack> me = new ArrayList<>();
-  //    for (Fluid f : fluids) {
-  //      me.add(new FluidStack(f, fluidIngredient.getFluidStack().getAmount()));
-  //    }
-  //    return me;
-  //  }
+
+  public EnergyIngredient getEnergy() {
+    return energy;
+  }
 
   @Override
   public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {

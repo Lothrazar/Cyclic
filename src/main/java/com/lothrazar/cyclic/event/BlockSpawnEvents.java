@@ -4,10 +4,10 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
+import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
@@ -20,28 +20,16 @@ public class BlockSpawnEvents {
 
   @SubscribeEvent
   public void onExplosionEvent(ExplosionEvent.Start event) {
-    //TODO: remake this idea
     Level world = event.getWorld();
-    Entity exploder = event.getExplosion().getExploder();
-    Integer radius = CandlePeaceBlock.RADIUS.get();
-    Integer height = CandlePeaceBlock.HEIGHT.get();
-    System.out.println("CONFIGS");
-    //    if (exploder.getType() == EntityType.CREEPER
-    //        || exploder instanceof Creeper) {
-    // what about any creeper at all
-    //      Creeper test;
-    if (UtilWorld.doesBlockExist(world, new BlockPos(event.getExplosion().getPosition()),
-        BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
-      ModCyclic.LOGGER.info(world.isClientSide + " =clinet;Explosion cancelled " + event.getExplosion()
-          + event.getExplosion().getDamageSource()
-      //            + " +" + exploder
-      );
+    //    Entity exploder = event.getExplosion().getExploder();
+    Integer radius = BlockDestruction.RADIUS.get();
+    Integer height = BlockDestruction.HEIGHT.get();
+    if (UtilWorld.doesBlockExist(world, new BlockPos(event.getExplosion().getPosition()), BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
+      ModCyclic.LOGGER.info(world.isClientSide + " =clinet;Explosion cancelled " + event.getExplosion());
       event.setCanceled(true);
     }
-    //    }
   }
 
-  // Peace Candle handler
   @SubscribeEvent
   public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
     MobSpawnType res = event.getSpawnReason();
@@ -60,17 +48,14 @@ public class BlockSpawnEvents {
         ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by candle " + mob.getType());
         event.setResult(Result.DENY);
       }
-      //TODO: remake this idea
-      //Altar / Pedestal disabled
-      //get ALL blocks that are an altar first
-      //then check if it has altar type for my entity type and cancel there, without looping if possible 
+      //
       radius = BlockNoTraders.RADIUS.get();
       height = BlockNoTraders.HEIGHT.get();
       if (BlockNoTraders.isSpawnDenied(mob, res)
           && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
               BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockNoTraders.LIT, true),
               radius, height)) {
-        ModCyclic.LOGGER.info("Spawn cancelled by FORTUNE altar " + mob.getType());
+        ModCyclic.LOGGER.info("Spawn cancelled by altar " + mob.getType());
         event.setResult(Result.DENY);
       }
       //      if (BlockAltarSol.isFlight(mob, res)

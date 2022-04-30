@@ -113,6 +113,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TileGeneratorDrops>> GENERATOR_ITEM = TILES.register("generator_item", () -> BlockEntityType.Builder.of(TileGeneratorDrops::new, BlockRegistry.GENERATOR_ITEM.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileGeneratorFluid>> GENERATOR_FLUID = TILES.register("generator_fluid", () -> BlockEntityType.Builder.of(TileGeneratorFluid::new, BlockRegistry.GENERATOR_FLUID.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileGeneratorSolar>> GENERATOR_SOLAR = TILES.register("generator_solar", () -> BlockEntityType.Builder.of(TileGeneratorSolar::new, BlockRegistry.GENERATOR_SOLAR.get()).build(null));
+  //  public static final RegistryObject<BlockEntityType<TileGeneratorExpl>> GENERATOR_DESTRUCTION = TILES.register("generator_destruction", () -> BlockEntityType.Builder.of(TileGeneratorExpl::new, BlockRegistry.GENERATOR_SOLAR.get()).build(null));
   public static final RegistryObject<BlockEntityType<TilePackager>> PACKAGER = TILES.register("packager", () -> BlockEntityType.Builder.of(TilePackager::new, BlockRegistry.PACKAGER.get()).build(null));
   public static final RegistryObject<BlockEntityType<MembraneLampTile>> LAMP = TILES.register("lamp", () -> BlockEntityType.Builder.of(MembraneLampTile::new, BlockRegistry.LAMP.get()).build(null));
   public static final RegistryObject<BlockEntityType<SoilTile>> SOIL = TILES.register("soil", () -> BlockEntityType.Builder.of(SoilTile::new, BlockRegistry.SOIL.get()).build(null));

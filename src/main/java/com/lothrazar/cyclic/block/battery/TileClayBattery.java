@@ -37,6 +37,9 @@ public class TileClayBattery extends TileBlockEntityCyclic {
     if (this.isPowered()) {
       //      moveEnergy(Direction.UP, MAX / 16);
       //TODO maybe blockstate toggle
+      //      if (!level.getBlockState(worldPosition.above()).is(BlockRegistry.BATTERY_CLAY.get())) {
+      //        //dont move up to one of myself only if its different
+      //      }
       moveEnergy(Direction.DOWN, MAX / 160);
     }
   }

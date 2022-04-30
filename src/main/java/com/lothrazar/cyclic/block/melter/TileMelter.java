@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -37,14 +36,12 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
-    REDSTONE, TIMER, RENDER;
+    REDSTONE, TIMER, RENDER, BURNMAX;
   }
 
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
-  @Deprecated // TODO: replace with default value of recipe energy
-  public static final int TIMER_FULL = Const.TICKS_PER_SEC * 3;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
@@ -52,6 +49,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private RecipeMelter currentRecipe;
+  private int burnTimeMax = 0; //only non zero if processing
 
   public TileMelter(BlockPos pos, BlockState state) {
     super(TileRegistry.MELTER.get(), pos, state);
@@ -94,8 +92,10 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       timer = 0;
     }
     if (timer == 0 && this.tryProcessRecipe()) {
-      this.timer = TIMER_FULL;
       energy.extractEnergy(cost, false);
+      if (this.currentRecipe != null) {
+        this.timer = this.currentRecipe.getEnergy().getTicks(); // may also reset during findRecipe
+      }
     }
   }
 
@@ -111,6 +111,9 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       case RENDER:
         this.render = value % 2;
       break;
+      case BURNMAX:
+        this.burnTimeMax = value;
+      break;
     }
   }
 
@@ -123,6 +126,8 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
         return this.needsRedstone;
       case RENDER:
         return this.render;
+      case BURNMAX:
+        return this.burnTimeMax;
     }
     return 0;
   }
@@ -146,6 +151,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     tank.readFromNBT(tag.getCompound(NBTFLUID));
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    burnTimeMax = tag.getInt("burnTimeMax");
     super.load(tag);
   }
 
@@ -156,6 +162,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inventory.serializeNBT());
+    tag.putInt("burnTimeMax", this.burnTimeMax);
     super.saveAdditional(tag);
   }
 
@@ -215,7 +222,8 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
           }
         }
         currentRecipe = rec;
-        this.timer = TIMER_FULL;
+        this.burnTimeMax = this.currentRecipe.getEnergy().getTicks();
+        this.timer = this.burnTimeMax;
         return;
       }
     }

@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.altar_destruction",
+  "icon": "cyclic:altar_destruction",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.altar_destruction.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:altar_destruction"
+    }
+  ]
+}

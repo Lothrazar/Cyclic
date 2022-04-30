@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -36,7 +35,10 @@ import net.minecraftforge.items.ItemStackHandler;
 @SuppressWarnings("rawtypes")
 public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static final int TIMER_FULL = Const.TICKS_PER_SEC * 5;
+  static enum Fields {
+    REDSTONE, TIMER, RENDER, BURNMAX;
+  }
+
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
@@ -49,10 +51,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-
-  static enum Fields {
-    REDSTONE, TIMER, RENDER;
-  }
+  private int burnTimeMax = 0; //only non zero if processing
 
   public TileSolidifier(BlockPos pos, BlockState state) {
     super(TileRegistry.SOLIDIFIER.get(), pos, state);
@@ -72,20 +71,21 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     this.syncEnergy();
     this.findMatchingRecipe();
     if (currentRecipe == null) {
-      this.timer = TIMER_FULL;
+      this.timer = 0;
       return;
     }
     this.timer--;
     if (timer < 0) {
       timer = 0;
     }
-    final int cost = this.currentRecipe.energy.getRfPertick();
+    final int cost = this.currentRecipe.getEnergy().getRfPertick();
     if (energy.getEnergyStored() < cost && cost > 0) {
       return;
     }
     if (timer == 0 && this.tryProcessRecipe()) {
-      this.timer = TIMER_FULL;
       energy.extractEnergy(cost, false);
+      if (this.currentRecipe != null)
+        this.timer = this.currentRecipe.getEnergy().getTicks();
     }
   }
 
@@ -101,6 +101,9 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       case RENDER:
         this.render = value % 2;
       break;
+      case BURNMAX:
+        this.burnTimeMax = value;
+      break;
     }
   }
 
@@ -113,6 +116,8 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
         return this.needsRedstone;
       case RENDER:
         return this.render;
+      case BURNMAX:
+        return this.burnTimeMax;
     }
     return 0;
   }
@@ -133,6 +138,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
     inputSlots.deserializeNBT(tag.getCompound(NBTINV));
     outputSlots.deserializeNBT(tag.getCompound("invoutput"));
+    burnTimeMax = tag.getInt("burnTimeMax");
     super.load(tag);
   }
 
@@ -145,6 +151,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     tag.put(NBTINV, inputSlots.serializeNBT());
     //    ModCyclic.LOGGER.info("saveAd: " + inputSlots.serializeNBT().toString());
     tag.put("invoutput", outputSlots.serializeNBT());
+    tag.putInt("burnTimeMax", this.burnTimeMax);
     super.saveAdditional(tag);
   }
 
@@ -189,11 +196,12 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     currentRecipe = null;
-    List<RecipeSolidifier<TileBlockEntityCyclic>> recipes = level.getRecipeManager()
-        .getAllRecipesFor(CyclicRecipeType.SOLID);
+    List<RecipeSolidifier<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID);
     for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, level)) {
         currentRecipe = rec;
+        this.burnTimeMax = this.currentRecipe.getEnergy().getTicks();
+        this.timer = this.burnTimeMax;
         break;
       }
     }

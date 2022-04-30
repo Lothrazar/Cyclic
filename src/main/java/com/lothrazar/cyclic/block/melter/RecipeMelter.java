@@ -143,6 +143,10 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   public int getEnergyCost() {
-    return this.energy.getEnergyTotal(); // TODO: 
+    return this.energy.getEnergyTotal();
+  }
+
+  public EnergyIngredient getEnergy() {
+    return energy;
   }
 }

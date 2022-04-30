@@ -39,7 +39,7 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileInsertingMagnet e) {
     Set<Item> filter = new HashSet<>(); // TODO: filter from DATACARD if present
-    final int radius = 16; //  ConfigManager.MAGNET_RANGE.get();
+    final int radius = BlockMagnetPanel.RADIUS.get();
     int vradius = 0;
     int x = blockPos.getX();
     int y = blockPos.getY();

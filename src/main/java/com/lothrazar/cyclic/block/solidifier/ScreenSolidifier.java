@@ -21,7 +21,6 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
     fluid = new FluidBar(this, 8, 8, TileSolidifier.CAPACITY);
     this.progress = new TexturedProgress(this, 68, 37, 24, 17, TextureRegistry.ARROW);
     this.progress.setTopDown(false);
-    this.progress.max = TileSolidifier.TIMER_FULL;
   }
 
   @Override
@@ -51,6 +50,7 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, menu.getEnergy());
+    this.progress.max = menu.tile.getField(TileSolidifier.Fields.BURNMAX.ordinal());
     progress.draw(ms, menu.tile.getField(TileSolidifier.Fields.TIMER.ordinal()));
     fluid.draw(ms, menu.tile.getFluid());
     drawSlotLarge(ms, 116, 32);

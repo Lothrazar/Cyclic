@@ -79,12 +79,12 @@ public class RecipeGeneratorItem<TileEntityBase> extends CyclicRecipe {
     return energy.getTicks();
   }
 
-  public int getRfpertick() {
+  public int getRfPertick() {
     return energy.getRfPertick();
   }
 
-  public int getRfTotal() {
-    return this.getRfpertick() * this.getTicks();
+  public int getEnergyTotal() {
+    return this.getRfPertick() * this.getTicks();
   }
 
   public static final SerializeGenerateItem SERIALGENERATOR = new SerializeGenerateItem();
