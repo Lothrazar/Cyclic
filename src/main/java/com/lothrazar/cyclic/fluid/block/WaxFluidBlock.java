@@ -20,6 +20,9 @@ public class WaxFluidBlock extends LiquidBlock {
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (!worldIn.isClientSide && entityIn instanceof LivingEntity ent) {
       ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0));
+      if (!ent.isOnFire()) {
+        ent.setSecondsOnFire(1);
+      }
     }
     super.entityInside(state, worldIn, pos, entityIn);
   }

@@ -174,7 +174,7 @@ public class UtilFluid {
     return tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side).orElse(null);
   }
 
-  public static boolean tryFillPositionFromTank(Level world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, int amount) {
+  public static boolean tryFillPositionFromTank(Level world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, final int amount) {
     if (tankFrom == null) {
       return false;
     }
@@ -195,7 +195,8 @@ public class UtilFluid {
           if (wasDrained == null) {
             return false;
           }
-          return fluidTo.fill(wasDrained, FluidAction.EXECUTE) > 0;
+          int actuallyFilled = fluidTo.fill(wasDrained, FluidAction.EXECUTE);
+          return actuallyFilled > 0;
         }
       }
       return false;

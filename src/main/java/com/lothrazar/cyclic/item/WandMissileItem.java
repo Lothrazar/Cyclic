@@ -112,6 +112,8 @@ public class WandMissileItem extends ItemBaseCyclic {
       return; //not enough force to go with any realistic path 
     }
     System.out.println("TODO: consume RF and new MAIGC MISSILE  entity");
+    //
+    //
     BlockPos p = player.blockPosition();
     List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
     List<Mob> trimmedTargets = new ArrayList<Mob>();

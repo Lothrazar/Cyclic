@@ -212,6 +212,8 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     currentRecipe = null;
+    this.burnTimeMax = 0;
+    this.timer = 0;
     List<RecipeMelter<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER);
     for (RecipeMelter rec : recipes) {
       if (rec.matches(this, level)) {

@@ -196,6 +196,8 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     currentRecipe = null;
+    this.burnTimeMax = 0;
+    this.timer = 0;
     List<RecipeSolidifier<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID);
     for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, level)) {
