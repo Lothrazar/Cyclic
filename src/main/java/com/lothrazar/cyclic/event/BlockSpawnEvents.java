@@ -6,8 +6,11 @@ import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -18,20 +21,23 @@ public class BlockSpawnEvents {
   @SubscribeEvent
   public void onExplosionEvent(ExplosionEvent.Start event) {
     //TODO: remake this idea
-    //    Level world = event.getWorld();
-    //    Entity exploder = event.getExplosion().getExploder();
-    //    Integer radius = CandlePeaceBlock.RADIUS.get();
-    //    Integer height = CandlePeaceBlock.HEIGHT.get();
+    Level world = event.getWorld();
+    Entity exploder = event.getExplosion().getExploder();
+    Integer radius = CandlePeaceBlock.RADIUS.get();
+    Integer height = CandlePeaceBlock.HEIGHT.get();
+    System.out.println("CONFIGS");
     //    if (exploder.getType() == EntityType.CREEPER
     //        || exploder instanceof Creeper) {
-    //      // what about any creeper at all
-    //      //      Creeper test;
-    //      if (UtilWorld.doesBlockExist(world, new BlockPos(event.getExplosion().getPosition()),
-    //          BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
-    //          radius, height)) {
-    //        //
-    //        event.setCanceled(true);
-    //      }
+    // what about any creeper at all
+    //      Creeper test;
+    if (UtilWorld.doesBlockExist(world, new BlockPos(event.getExplosion().getPosition()),
+        BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
+      ModCyclic.LOGGER.info(world.isClientSide + " =clinet;Explosion cancelled " + event.getExplosion()
+          + event.getExplosion().getDamageSource()
+      //            + " +" + exploder
+      );
+      event.setCanceled(true);
+    }
     //    }
   }
 

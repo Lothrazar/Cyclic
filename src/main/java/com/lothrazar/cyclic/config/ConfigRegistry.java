@@ -266,8 +266,10 @@ public class ConfigRegistry {
         .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
     TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
         .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
-    BlockGeneratorSolar.PER_TICK = CFG.comment("Maximum Energy per tick while solar is generating (can be less based on weather contitions).")
-        .defineInRange("generator_solar.per_tick_maximum", 8, 1, 6400);
+    BlockGeneratorSolar.ENERGY_GENERATE = CFG.comment("Base level of solar power generation (affected by weather contitions).")
+        .defineInRange("generator_solar.energy", 4, 1, 100);
+    BlockGeneratorSolar.TIMEOUT = CFG.comment("Ticks between power gen interval. Example: 40 ticks is 2 seconds. 0 means every tick it generates")
+        .defineInRange("generator_solar.ticks", 60, 0, 6400);
     LavaSpongeBlock.RADIUS = CFG.comment("Reach of the sponge").defineInRange("sponge_lava.radius", 8, 1, 64);
     CandlePeaceBlock.HEIGHT = CFG.comment("Height reach of the candle for spawn prevention").defineInRange("peace_candle.height", 8, 1, 128);
     CandlePeaceBlock.RADIUS = CFG.comment("Reach of the candle for spawn prevention").defineInRange("peace_candle.radius", 32, 1, 128);

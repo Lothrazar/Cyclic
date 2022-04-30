@@ -474,10 +474,13 @@ public class ItemRegistry {
   public static final RegistryObject<Item> MAGNET_BLOCK = ITEMS.register("magnet_block", () -> new BlockItem(BlockRegistry.MAGNET_BLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  //keep but nether star
+  public static final RegistryObject<Item> ALTAR_DESTRUCTION = ITEMS.register("altar_destruction", () -> new BlockItem(BlockRegistry.ALTAR_DESTRUCTION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NO_SOLICITING = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.NO_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> FLUTE = ITEMS.register("flute_summoning", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //totem of repair
+  //  lunch box u can eat from. make sure apples trigger
   //!ENERGY OBJECT REFACTOR IN SOLIRECIPES!!
   // ??WAX more uses?CONFIGS?
   //solar balance? 
@@ -485,7 +488,6 @@ public class ItemRegistry {
   //  public static final RegistryObject<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //public static final RegistryObject<Item> ALTAR_FORTUNE = ITEMS.register("altar_fortune", () -> new BlockItem(BlockRegistry.ALTAR_FORTUNE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> ALTAR_FLIGHT = ITEMS.register("altar_flight", () -> new BlockItem(BlockRegistry.ALTAR_FLIGHT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> ALTAR_DESTRUCTION = ITEMS.register("altar_destruction", () -> new BlockItem(BlockRegistry.ALTAR_DESTRUCTION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> PEDESTAL = ITEMS.register("pedestal", () -> new BlockItem(BlockRegistry.PEDESTAL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //  public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));

@@ -13,13 +13,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class BlockGeneratorSolar extends BlockCyclic {
 
   public static final VoxelShape AABB = Block.box(0, 0, 0, 16, 1, 16);
-  public static IntValue PER_TICK;
+  public static IntValue ENERGY_GENERATE;
+  public static IntValue TIMEOUT;
 
   public BlockGeneratorSolar(Properties properties) {
     super(properties.strength(1.2F));
@@ -29,6 +31,11 @@ public class BlockGeneratorSolar extends BlockCyclic {
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return AABB;
+  }
+
+  @Override
+  public VoxelShape getOcclusionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    return Shapes.block();
   }
 
   @Override

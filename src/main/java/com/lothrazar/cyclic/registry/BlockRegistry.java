@@ -290,8 +290,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
   public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of(Material.STONE))); // NOGUI
   public static final RegistryObject<BlockNoTraders> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockNoTraders(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockCyclic(Block.Properties.of(Material.STONE)));
   //  public static final RegistryObject<BlockAltarSol> ALTAR_FLIGHT = BLOCKS.register("altar_flight", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.FLIGHT));
-  //  public static final RegistryObject<BlockAltarSol> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.DESTRUCTION));
   //  public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("pedestal", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
   //cursed altars
   //flight - for @a players in range
