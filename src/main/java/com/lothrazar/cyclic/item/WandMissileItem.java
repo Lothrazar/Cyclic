@@ -15,13 +15,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class WandMissileItem extends ItemBaseCyclic {
 
-  public static final int COST = 150;
-  private static final double RANGE = 64.0; // TOOD config
+  public static IntValue COST;
+  public static IntValue RANGE;
 
   public WandMissileItem(Properties properties) {
     super(properties.stacksTo(1));
@@ -47,7 +48,8 @@ public class WandMissileItem extends ItemBaseCyclic {
 
   private void doAction(ItemStack stack, Level world, Player player) {
     BlockPos p = player.blockPosition();
-    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
+    final int r = RANGE.get();
+    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - r, p.getY() - r, p.getZ() - r, p.getX() + r, p.getY() + r, p.getZ() + r));
     List<Mob> trimmedTargets = new ArrayList<Mob>();
     for (Mob target : all) {
       MobCategory type = target.getClassification(false);
@@ -59,9 +61,10 @@ public class WandMissileItem extends ItemBaseCyclic {
     }
     if (!world.isClientSide) {
       IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (storage != null && storage.extractEnergy(COST, true) == COST) {
+      final int cost = COST.get();
+      if (storage != null && storage.extractEnergy(cost, true) == cost) {
         //we can afford it
-        storage.extractEnergy(COST, false);
+        storage.extractEnergy(cost, false);
         MagicMissileEntity projectile = new MagicMissileEntity(player, world);
         projectile.setTarget(UtilEntity.getClosestEntity(world, player, trimmedTargets));
         shootMe(world, player, projectile, 0, ItemBaseCyclic.VELOCITY_MAX);

@@ -90,6 +90,13 @@
 			#Base XP cost to activate at level 1 (level 2 is this/2)
 			#Range: 1 ~ 9999
 			xp_cost = 50
+			#How many ticks of cooldown, 0 to disable
+			#Range: 0 ~ 99999
+			cooldown = 20
+			#Set false to disable enchantment
+			enabled = true
+
+		[cyclic.enchantment.steady]
 			#Set false to disable enchantment
 			enabled = true
 
@@ -112,6 +119,14 @@
 			#Range: 1 ~ 128
 			radius = 32
 			#Height reach of the candle for spawn prevention
+			#Range: 1 ~ 128
+			height = 8
+
+		[cyclic.blocks.altar_destruction]
+			#Reach for explosion prevention
+			#Range: 1 ~ 128
+			radius = 32
+			#Height for explosion prevention
 			#Range: 1 ~ 128
 			height = 8
 
@@ -223,6 +238,14 @@
 			#Range: 0.0010000000474974513 ~ 1.0
 			conversion_chance = 0.07999999821186066
 
+		[cyclic.blocks.no_soliciting]
+			#Reach of the no_soliciting for spawn prevention
+			#Range: 1 ~ 128
+			radius = 32
+			#Height reach of the no_soliciting for spawn prevention
+			#Range: 1 ~ 128
+			height = 32
+
 		[cyclic.blocks.sprinkler]
 			#Tick rate.  20 will fire one block per second
 			#Range: 1 ~ 20
@@ -257,6 +280,11 @@
 			#Range: 1 ~ 6400
 			ticks_per_food = 100
 
+		[cyclic.blocks.magnet_block]
+			#Reach for magnet distance to find items
+			#Range: 1 ~ 128
+			radius = 16
+
 		[cyclic.blocks.packager]
 			#Power per recipe in the packager
 			#Range: 0 ~ 64000
@@ -284,6 +312,14 @@
 			#Power per use uncraft
 			#Range: 0 ~ 64000
 			energy_cost = 1000
+
+		[cyclic.blocks.generator_solar]
+			#Ticks between power gen interval. Example: 40 ticks is 2 seconds. 0 means every tick it generates
+			#Range: 0 ~ 6400
+			ticks = 60
+			#Base level of solar power generation (affected by weather contitions).
+			#Range: 1 ~ 100
+			energy = 4
 
 		[cyclic.blocks.beacon]
 			#Power per tick while in use
@@ -374,10 +410,36 @@
 			#Range: 1 ~ 256
 			range = 64
 
+		[cyclic.items.shield_wood]
+			#How much weaker than the regular shield is this item (used to calculate damage blocked)
+			#Range: 0 ~ 100
+			blocked_damage_percent = 60
+
+		[cyclic.items.wand_hypno]
+			#Range to search out enemies for this multi-target attack
+			#Range: 1 ~ 256
+			range = 16
+			#Energy cost per item use
+			#Range: 1 ~ 50000
+			energy = 150
+
 		[cyclic.items.chorus_spectral]
 			#Seconds of noClip per chorus_spectral
 			#Range: 1 ~ 20000
 			ticks = 600
+
+		[cyclic.items.shield_leather]
+			#How much weaker than the regular shield is this item (used to calculate damage blocked)
+			#Range: 0 ~ 100
+			blocked_damage_percent = 20
+
+		[cyclic.items.wand_missile]
+			#Range to search out enemies for this attack
+			#Range: 1 ~ 512
+			range = 64
+			#Energy cost per item use
+			#Range: 1 ~ 50000
+			energy = 150
 
 		[cyclic.items.charm_attack_speed]
 			#Boost given by item charm_attackspeed
@@ -404,6 +466,14 @@
 			#Which wall to place torches on when digging a 1-wide tunnel
 			#True means left, False means right
 			prefer_left_wall = false
+
+		[cyclic.items.shield_flint]
+			#What % chance does this have to apply thorns damage against ranged non-explosive attackers
+			#Range: 0 ~ 100
+			damage = 50
+			#How much weaker than the regular shield is this item (used to calculate damage blocked)
+			#Range: 0 ~ 100
+			blocked_damage_percent = 30
 
 		#Wand settings
 		[cyclic.items.teleport_wand]

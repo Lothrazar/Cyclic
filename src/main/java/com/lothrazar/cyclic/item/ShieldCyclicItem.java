@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
@@ -35,6 +36,10 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
     // STONE? COPPER? 
   }
 
+  public static IntValue LEATHER_PCT;
+  public static IntValue WOOD_PCT;
+  public static IntValue FLINT_PCT;
+  public static IntValue FLINT_THORNS_PCT;
   private ShieldType type;
 
   /**
@@ -111,7 +116,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
     switch (this.type) {
       case LEATHER:
         cooldown = 4;
-        reduceBlockedDamagePct = 0.25F; // 0.25F means so 25% weaker than normal shield  TODO config?
+        reduceBlockedDamagePct = LEATHER_PCT.get() / 100F; // 0.25F means so 25% weaker than normal shield  TODO config?
         //reduce by 50% so its weaker than vanilla shield // 0.50F means 50% weaker than shield
         if (dmgSource.isExplosion()) {
           immuneToDamage = true;
@@ -119,21 +124,21 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       break;
       case WOOD:
         cooldown = 10;
-        reduceBlockedDamagePct = 0.50F; //50% so half as effectve as normal TODO config?
+        reduceBlockedDamagePct = WOOD_PCT.get() / 100F; //50% so half as effectve as normal TODO config?
         if (dmgSource.isExplosion()) {
           isDestroyed = true;
         }
       break;
       case FLINT:
         cooldown = 4;
-        reduceBlockedDamagePct = 0.25F;
+        reduceBlockedDamagePct = FLINT_PCT.get() / 100F;
         if (dmgSource.isProjectile()) {
           //50% chance to not take durability from arrows 
           immuneToDamage = playerIn.level.random.nextDouble() < 0.5; // 50% chance  TODO config and hardcoded in lang
         }
         if (!dmgSource.isExplosion()
             && dmgSource.isProjectile()
-            && playerIn.level.random.nextDouble() < 0.25) { // chance on  TODO: config and hardcoded in lang
+            && playerIn.level.random.nextDouble() < (FLINT_THORNS_PCT.get() / 100F)) { // chance on  TODO: config and hardcoded in lang
           //ranged thorns
           thornsDmg = 1;
         }
@@ -145,9 +150,6 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       event.setShieldTakesDamage(false);
     }
     if (isDestroyed && playerIn != null) {
-      //      shield.setDamageValue(shield.getMaxDamage()); 
-      //      shield.setCount(0);
-      //TODO: extra sound?
       shield.hurtAndBreak(shield.getMaxDamage(), playerIn, (p) -> {
         p.broadcastBreakEvent(playerIn.getUsedItemHand());
       });

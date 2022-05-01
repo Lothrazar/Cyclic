@@ -68,7 +68,10 @@ import com.lothrazar.cyclic.enchant.XpEnchant;
 import com.lothrazar.cyclic.item.EdibleFlightItem;
 import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.OreProspector;
+import com.lothrazar.cyclic.item.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
+import com.lothrazar.cyclic.item.WandHypnoItem;
+import com.lothrazar.cyclic.item.WandMissileItem;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
@@ -221,6 +224,14 @@ public class ConfigRegistry {
     CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
     CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
+    ShieldCyclicItem.LEATHER_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_leather.blocked_damage_percent", 20, 0, 100);
+    ShieldCyclicItem.WOOD_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_wood.blocked_damage_percent", 60, 0, 100);
+    ShieldCyclicItem.FLINT_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_flint.blocked_damage_percent", 30, 0, 100);
+    ShieldCyclicItem.FLINT_THORNS_PCT = CFG.comment("What % chance does this have to apply thorns damage against ranged non-explosive attackers").defineInRange("shield_flint.damage", 50, 0, 100);
+    WandHypnoItem.COST = CFG.comment("Energy cost per item use").defineInRange("wand_hypno.energy", 500, 1, 50000);
+    WandHypnoItem.RANGE = CFG.comment("Range to search out enemies for this multi-target attack").defineInRange("wand_hypno.range", 16, 1, 256);
+    WandMissileItem.COST = CFG.comment("Energy cost per item use").defineInRange("wand_missile.energy", 150, 1, 50000);
+    WandMissileItem.RANGE = CFG.comment("Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
     ItemProjectileDungeon.RANGE = CFG.comment("Range in all directions to search for spawner").defineInRange("spawner_seeker.range", 64, 1, 256);
     AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);

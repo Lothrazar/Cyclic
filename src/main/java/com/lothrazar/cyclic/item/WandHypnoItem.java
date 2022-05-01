@@ -16,13 +16,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class WandHypnoItem extends ItemBaseCyclic {
 
-  public static final int COST = 150;
-  private static final double RANGE = 16.0;
+  public static IntValue COST;
+  public static IntValue RANGE;
 
   public WandHypnoItem(Properties properties) {
     super(properties.stacksTo(1));
@@ -49,8 +50,9 @@ public class WandHypnoItem extends ItemBaseCyclic {
   private void doAction(ItemStack stack, Level world, Player player) {
     if (!player.level.isClientSide) {
       IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-      if (storage != null && storage.extractEnergy(COST, true) == COST) {
-        storage.extractEnergy(COST, false);
+      final int cost = COST.get();
+      if (storage != null && storage.extractEnergy(cost, true) == cost) {
+        storage.extractEnergy(cost, false);
         fireHypnoAggression(world, player);
       }
     }
@@ -58,7 +60,8 @@ public class WandHypnoItem extends ItemBaseCyclic {
 
   private void fireHypnoAggression(Level world, Player player) {
     BlockPos p = player.blockPosition();
-    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - RANGE, p.getY() - RANGE, p.getZ() - RANGE, p.getX() + RANGE, p.getY() + RANGE, p.getZ() + RANGE));
+    final int r = RANGE.get();
+    List<Mob> all = world.getEntitiesOfClass(Mob.class, new AABB(p.getX() - r, p.getY() - r, p.getZ() - r, p.getX() + r, p.getY() + r, p.getZ() + r));
     List<Mob> trimmedTargets = new ArrayList<Mob>();
     for (Mob target : all) {
       MobCategory type = target.getClassification(false);
@@ -87,6 +90,9 @@ public class WandHypnoItem extends ItemBaseCyclic {
     }
     if (targeted == 0) {
       UtilChat.sendStatusMessage(player, "wand.result.notargets");
+    }
+    else {
+      player.getCooldowns().addCooldown(this, 60);
     }
   }
 }
