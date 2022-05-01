@@ -7,7 +7,7 @@
   ],
   "key": {
     "W": {
-      "item": "minecraft:stick"
+      "tag": "minecraft:planks"
     },
     "o": {
       "tag": "forge:leather"
