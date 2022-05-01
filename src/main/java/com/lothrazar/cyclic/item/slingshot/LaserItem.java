@@ -24,8 +24,8 @@ public class LaserItem extends ItemBaseCyclic {
 
   //TODO config 
   public static final int DELAYDAMAGETICKS = 5;
-  public static final int DMG_FAR = 4;
-  public static final int COST = 50;
+  public static final int DMG_FAR = 4; // TODO: config/properties/whatever
+  public static final int COST = 50; // TODO: config/properties/whatever
   public static final int DMG_CLOSE = 6;
   public static final double RANGE_FACTOR = 8;
   public static final double RANGE_MAX = 6000;

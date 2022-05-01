@@ -23,40 +23,73 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
+import java.util.List;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.UtilSound;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
 public class ItemFlute extends ItemBaseCyclic implements IEntityInteractable {
 
+  private static final String UNIQUEMAGIC = "uniquemagic";
+  private static final String FLUTENAME = "flutename";
+  public static final int CD = 30;
+
   public ItemFlute(Properties prop) {
-    super(prop);
+    super(prop.stacksTo(1));
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-    ItemStack itemstack = playerIn.getItemInHand(handIn);
+  public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+    ItemStack itemstack = player.getItemInHand(handIn);
     //    playerIn.startUsingItem(handIn);
-    if (itemstack.hasTag() && itemstack.getTag().contains(EntityMagicNetEmpty.NBT_ENTITYID)) {
-      //
-      int id = itemstack.getTag().getInt("uniquemagic");
+    if (!player.getCooldowns().isOnCooldown(this) &&
+        itemstack.hasTag() && itemstack.getTag().contains(EntityMagicNetEmpty.NBT_ENTITYID)) {
+      int id = itemstack.getTag().getInt(UNIQUEMAGIC);
       Entity found = worldIn.getEntity(id);
-      if (found != null) {
-        UtilChat.addChatMessage(playerIn, UtilChat.lang("item.cyclic.whistle.saved") + found);
+      if (found instanceof LivingEntity living) {
+        boolean success = UtilEntity.enderTeleportEvent(living, worldIn, player.blockPosition());
+        if (success) {
+          UtilChat.addChatMessage(player, UtilChat.lang("item.cyclic.flute_summoning.teleported"));
+          player.getCooldowns().addCooldown(this, CD);
+          UtilSound.playSound(player, SoundRegistry.HOVERING, 0.5F);
+        }
       }
-      //
     }
     return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public boolean isFoil(ItemStack stack) {
+    return stack.hasTag() && stack.getTag().contains(UNIQUEMAGIC);
+  }
+
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    if (stack.hasTag() && stack.getTag().contains(FLUTENAME)) {
+      tooltip.add(new TranslatableComponent(stack.getTag().getString(FLUTENAME)).withStyle(ChatFormatting.LIGHT_PURPLE));
+    }
   }
 
   @Override
@@ -65,14 +98,19 @@ public class ItemFlute extends ItemBaseCyclic implements IEntityInteractable {
     Player player = event.getPlayer();
     if (event.getItemStack().getItem() == this
         && !player.getCooldowns().isOnCooldown(this)
-        && UtilEntity.isTamedByPlayer(target, player)) {
+        && UtilEntity.haveSameDimension(target, player)
+    //TODO:  
+    //        && UtilEntity.isTamedByPlayer(target, player)
+    ) {
       //      boolean test = event.getTarget() instanceof net.minecraft.world.entity.TamableAnimal;
       String id = EntityType.getKey(target.getType()).toString();
+      event.getItemStack().getOrCreateTag().putString(FLUTENAME, target.getDisplayName().getString());
       event.getItemStack().getOrCreateTag().putString(EntityMagicNetEmpty.NBT_ENTITYID, id);
-      event.getItemStack().getOrCreateTag().putInt("uniquemagic", target.getId());
-      player.getCooldowns().addCooldown(this, 30);
+      event.getItemStack().getOrCreateTag().putInt(UNIQUEMAGIC, target.getId());
+      player.getCooldowns().addCooldown(this, CD);
       player.swing(event.getHand());
-      UtilChat.addChatMessage(player, "item.cyclic.whistle.saved");
+      UtilChat.addChatMessage(player, "item.cyclic.flute_summoning.saved");
+      UtilSound.playSound(player, SoundRegistry.BASS_ECHO, 0.5F);
       event.setCancellationResult(InteractionResult.SUCCESS);
     }
   }

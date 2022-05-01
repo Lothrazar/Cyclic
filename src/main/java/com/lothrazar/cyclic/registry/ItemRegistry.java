@@ -20,6 +20,7 @@ import com.lothrazar.cyclic.item.FireExtinguishItem;
 import com.lothrazar.cyclic.item.FireballItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.item.ItemFlute;
 import com.lothrazar.cyclic.item.LeverRemote;
 import com.lothrazar.cyclic.item.MilkBottle;
 import com.lothrazar.cyclic.item.OreProspector;
@@ -478,7 +479,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> ALTAR_DESTRUCTION = ITEMS.register("altar_destruction", () -> new BlockItem(BlockRegistry.ALTAR_DESTRUCTION.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NO_SOLICITING = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.NO_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> FLUTE = ITEMS.register("flute_summoning", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> FLUTE = ITEMS.register("flute_summoning", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //totem of repair
   //  lunch box u can eat from. make sure apples trigger
   //!ENERGY OBJECT REFACTOR IN SOLIRECIPES!!

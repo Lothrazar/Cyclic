@@ -19,9 +19,11 @@ import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.item.slingshot.LaserItem;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.RenderMiningLaser;
 import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilRender;
+import com.lothrazar.cyclic.util.UtilSound;
 import com.lothrazar.cyclic.util.UtilWorld;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -199,9 +201,12 @@ public class EventRender {
       // RayTraceResult  became HitResult
       // objectMouseOver became hitResult
       if (mc.crosshairPickEntity != null) {
-        //TODO: different color/more damage/ different data packet arguments
+        //Render and Shoot
         RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
-        PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
+        if (world.getGameTime() % 4 == 0) {
+          PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
+          UtilSound.playSound(player, SoundRegistry.LASERBEANPEW, 0.2F);
+        }
       }
       else {
         //out of range- do custom raytrace 
@@ -225,16 +230,16 @@ public class EventRender {
               //we hit a wall, dont shoot thru walls
             }
             else {
+              //Render and Shoot
               RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
-              PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
-              // NOW actually send a client->server packet to deal damage
-              //server will verify item is held, consumes energy or whatever , players not dead etc 
+              if (world.getGameTime() % 4 == 0) {
+                PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
+                UtilSound.playSound(player, SoundRegistry.LASERBEANPEW, 0.2F);
+              }
             }
           }
         }
       }
     }
-    // other items added here
-    //
   }
 }

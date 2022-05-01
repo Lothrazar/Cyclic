@@ -133,11 +133,11 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void interactEntities(BlockPos target) {
-    int r = 1; // TODO radius
+    final int r = 1; // TODO radius controls in GUI
     AABB ab = new AABB(target.getX() + r, target.getY(), target.getZ() + r,
         target.getX() - r, target.getY() + 1, target.getZ() - r);
     this.level.getEntities(fakePlayer.get(), ab, EntitySelector.NO_SPECTATORS).forEach((e) -> {
-//      ModCyclic.LOGGER.info(worldPosition + "| ??   " + fakePlayer.get().getMainHandItem());
+      //      ModCyclic.LOGGER.info(worldPosition + "| ??   " + fakePlayer.get().getMainHandItem());
       if (doHitBreak) {
         fakePlayer.get().attack(e);
         ModCyclic.LOGGER.info(worldPosition + "| interactEntities ATTACK  " + e);

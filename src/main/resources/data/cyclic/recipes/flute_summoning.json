@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "a",
+    "c",
+    "s"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "c": {
+      "tag": "minecraft:candles"
+    },
+    "s": {
+      "tag": "minecraft:signs"
+    }
+  },
+  "result": {
+    "item": "cyclic:flute_summoning"
+  }
+}

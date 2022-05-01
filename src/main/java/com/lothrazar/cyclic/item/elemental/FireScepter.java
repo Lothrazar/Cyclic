@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 
 public class FireScepter extends ItemBaseCyclic {
 
-  private static final int COOLDOWN = 16; // TODO config 
+  private static final int COOLDOWN = 16;
 
   public FireScepter(Properties properties) {
     super(properties);

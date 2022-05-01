@@ -58,7 +58,7 @@ public class PacketEntityLaser extends PacketBaseCyclic {
       if (PacketEntityLaser.canShoot(sender, target, stack)) {
         IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
         if (storage != null) {
-          float dmg = message.crosshair ? LaserItem.DMG_CLOSE : LaserItem.DMG_FAR; // TODO: config/properties/whatever
+          float dmg = message.crosshair ? LaserItem.DMG_CLOSE : LaserItem.DMG_FAR;
           if (target.hurt(DamageSource.indirectMagic(sender, sender), dmg)) {
             //DRAIN RF ETC 
             LaserItem.resetStackDamageCool(stack, level.getGameTime());

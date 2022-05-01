@@ -1,5 +1,5 @@
 {
-  "name": "item.cyclic.peat_fuel_enriched.guide.title",
+  "name": "item.cyclic.peat_fuel_enriched",
   "icon": "cyclic:peat_fuel_enriched",
   "category": "cyclic:misc",
   "pages": [
