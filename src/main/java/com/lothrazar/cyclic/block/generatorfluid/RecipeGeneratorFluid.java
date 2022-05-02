@@ -131,7 +131,6 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
     @Override
     public void toNetwork(FriendlyByteBuf buffer, RecipeGeneratorFluid recipe) {
       recipe.fluidIng.writeToPacket(buffer);
-      buffer.writeInt(recipe.getTicks());
       buffer.writeInt(recipe.energy.getRfPertick());
       buffer.writeInt(recipe.energy.getTicks());
     }

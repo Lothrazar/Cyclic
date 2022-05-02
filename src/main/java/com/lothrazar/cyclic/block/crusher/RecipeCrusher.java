@@ -123,6 +123,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeCrusher fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+      // ing, (int, int), item, int, item
       RecipeCrusher r = new RecipeCrusher(recipeId, Ingredient.fromNetwork(buffer), new EnergyIngredient(buffer.readInt(), buffer.readInt()), buffer.readItem(), buffer.readInt(), buffer.readItem());
       //server reading recipe from client or vice/versa 
       return r;

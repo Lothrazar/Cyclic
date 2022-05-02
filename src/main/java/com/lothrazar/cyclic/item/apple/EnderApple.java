@@ -109,12 +109,6 @@ public class EnderApple extends ItemBaseCyclic {
           break;
         }
       }
-      //
-      //      String name = regName.replace("minecraft:", "");
-      //      literalargumentbuilder = literalargumentbuilder.then(Commands.literal(name)
-      //            .executes(ctx -> locate(ctx.getSource(), structureFeature)));
-      //collections CUSTOM SORT by distance 
-      //
     }
     return super.finishUsingItem(stack, worldIn, entityLiving);
   }

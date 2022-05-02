@@ -149,6 +149,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public RecipeSolidifier fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
+      // ing,ing,ing, fluid, item, int, int
       NonNullList<Ingredient> ins = NonNullList.create();
       ins.add(Ingredient.fromNetwork(buf));
       ins.add(Ingredient.fromNetwork(buf));

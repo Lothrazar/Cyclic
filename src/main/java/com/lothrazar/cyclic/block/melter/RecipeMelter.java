@@ -124,6 +124,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     @Override
     public RecipeMelter fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
       NonNullList<Ingredient> ins = NonNullList.create();
+      // ing, ing, fluid, (int,int)
       ins.add(Ingredient.fromNetwork(buf));
       ins.add(Ingredient.fromNetwork(buf));
       return new RecipeMelter(recipeId, ins, FluidStack.readFromPacket(buf),
@@ -132,6 +133,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public void toNetwork(FriendlyByteBuf buf, RecipeMelter recipe) {
+      //ing, ing, fluid, (int,int)
       Ingredient zero = (Ingredient) recipe.ingredients.get(0);
       Ingredient one = (Ingredient) recipe.ingredients.get(1);
       zero.toNetwork(buf);
