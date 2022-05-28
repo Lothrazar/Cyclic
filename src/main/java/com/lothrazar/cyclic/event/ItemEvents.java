@@ -17,13 +17,13 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseEnder;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
-import com.lothrazar.cyclic.item.heart.HeartItem;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.AttributesUtil;
 import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
@@ -307,7 +307,7 @@ public class ItemEvents {
   public void onPlayerCloneDeath(PlayerEvent.Clone event) {
     AttributeInstance original = event.getOriginal().getAttribute(Attributes.MAX_HEALTH);
     if (original != null) {
-      AttributeModifier healthModifier = original.getModifier(HeartItem.ID);
+      AttributeModifier healthModifier = original.getModifier(AttributesUtil.DEFAULT_ID);
       if (healthModifier != null) {
         event.getPlayer().getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(healthModifier);
       }

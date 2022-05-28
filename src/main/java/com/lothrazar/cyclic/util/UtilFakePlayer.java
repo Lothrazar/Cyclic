@@ -38,13 +38,16 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class UtilFakePlayer {
 
+  private static final UUID ID = UUID.randomUUID();
+
   public static boolean isFakePlayer(Entity attacker) {
     return attacker instanceof FakePlayer;
   }
 
-  public static WeakReference<FakePlayer> initFakePlayer(ServerLevel ws, UUID uname, String blockName) {
-    GameProfile breakerProfile = new GameProfile(uname, ModCyclic.MODID + ".fake_player." + blockName);
+  public static WeakReference<FakePlayer> initFakePlayer(ServerLevel ws, String blockName) {
+    GameProfile breakerProfile = new GameProfile(ID, ModCyclic.MODID + ".fake_player." + blockName);
     WeakReference<FakePlayer> fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
+    ModCyclic.LOGGER.info("Created new fake player " + fakePlayer + "|" + breakerProfile);
     if (fakePlayer == null || fakePlayer.get() == null) {
       fakePlayer = null;
       return null; // trying to get around https://github.com/PrinceOfAmber/Cyclic/issues/113

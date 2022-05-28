@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.heart;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.AttributesUtil;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -31,7 +32,7 @@ public class HeartToxicItem extends ItemBaseCyclic {
     AttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
     //    if (healthAttribute != null && healthAttribute.getBaseValue() > 2) {
     //get attribute modif by id
-    AttributeModifier oldHealthModifier = healthAttribute.getModifier(HeartItem.ID);
+    AttributeModifier oldHealthModifier = healthAttribute.getModifier(AttributesUtil.DEFAULT_ID);
     double addedHealth = 0;
     if (oldHealthModifier != null && oldHealthModifier.getAmount() <= -18) {
       addedHealth = -18;
@@ -46,8 +47,8 @@ public class HeartToxicItem extends ItemBaseCyclic {
       playerIn.giveExperiencePoints(HEARTXPMINUS.get());
     }
     //replace the modifier on the main attribute
-    healthAttribute.removeModifier(HeartItem.ID);
-    AttributeModifier healthModifier = new AttributeModifier(HeartItem.ID, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
+    healthAttribute.removeModifier(AttributesUtil.DEFAULT_ID);
+    AttributeModifier healthModifier = new AttributeModifier(AttributesUtil.DEFAULT_ID, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
     healthAttribute.addPermanentModifier(healthModifier);
     //
     return super.use(worldIn, playerIn, handIn);

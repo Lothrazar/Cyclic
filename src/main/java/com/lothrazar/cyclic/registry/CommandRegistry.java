@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import java.util.Collection;
+import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.command.CommandGetHome;
 import com.lothrazar.cyclic.command.CommandHealth;
@@ -9,9 +10,11 @@ import com.lothrazar.cyclic.command.CommandHunger;
 import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
 import com.lothrazar.cyclic.command.CommandTask;
+import com.lothrazar.cyclic.util.AttributesUtil;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -20,20 +23,29 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.ObjectiveArgument;
+import net.minecraft.commands.arguments.ResourceKeyArgument;
+import net.minecraft.commands.arguments.ScoreHolderArgument;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.scores.Objective;
+import net.minecraft.world.scores.Score;
+import net.minecraft.world.scores.Scoreboard;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CommandRegistry {
 
+  private static final String ARG_MIN = "min";
+  private static final String ARG_MAX = "max";
   private static final String ARG_VALUE = "value";
   private static final String ARG_PLAYER = "player";
 
   public enum CyclicCommands {
 
-    HOME, GETHOME, HEALTH, HUNGER, DEV, PING, TODO, HEARTS, GAMEMODE, GRAVITY, GLOWING;
+    HOME, GETHOME, HEALTH, HUNGER, DEV, PING, TODO, HEARTS, GAMEMODE, GRAVITY, GLOWING, SCOREBOARD, ATTRIBUTE;
 
     @Override
     public String toString() {
@@ -73,17 +85,65 @@ public class CommandRegistry {
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, FloatArgumentType.floatArg(0, 100F))
                     .executes(x -> {
-                      return CommandHealth.execute(x, EntityArgument.getPlayers(x, ARG_PLAYER), FloatArgumentType.getFloat(x, ARG_VALUE));
+                      return CommandHealth.executeHealth(x, EntityArgument.getPlayers(x, ARG_PLAYER), FloatArgumentType.getFloat(x, ARG_VALUE));
                     }))))
         .then(Commands.literal(CyclicCommands.HEARTS.toString())
             .requires((p) -> {
               return p.hasPermission(COMMANDHEALTH.get() ? 3 : 0);
             })
+            //reverted to old way. deprecate in future
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(1, 100))
                     .executes(x -> {
-                      return CommandHealth.executeHearts(x, EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                      return AttributesUtil.setHearts(EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                     }))))
+        //cyclic scoreboard rng @p <objective> <min> <max>
+        .then(Commands.literal(CyclicCommands.SCOREBOARD.toString())
+            .requires((p) -> {
+              return p.hasPermission(0); // 3 for
+            })
+            .then(Commands.literal("rng")
+                .then(Commands.argument("targets", ScoreHolderArgument.scoreHolders())
+                    .then(Commands.argument(ARG_MIN, IntegerArgumentType.integer(1, 100))
+                        .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer(1, 100))
+                            .then(Commands.argument("objective", StringArgumentType.greedyString())
+                                .executes(x -> {
+                                  return CommandRegistry.executeRng(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
+                                      ObjectiveArgument.getObjective(x, "objective"),
+                                      IntegerArgumentType.getInteger(x, ARG_MIN),
+                                      IntegerArgumentType.getInteger(x, ARG_MAX));
+                                }))))))
+            //cyclic scoreboard test @p <objective>
+            .then(Commands.literal("test")
+                .then(Commands.argument("targets", ScoreHolderArgument.scoreHolders())
+                    .then(Commands.argument("objective", ObjectiveArgument.objective())
+                        .executes(x -> {
+                          return CommandRegistry.executeRngTest(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
+                              ObjectiveArgument.getObjective(x, "objective"));
+                        })))))
+        // /cyclic attributes reach_dist add 3
+        .then(Commands.literal(CyclicCommands.ATTRIBUTE.toString()) //same as hearts but subcommand again instead of just number
+            .requires((p) -> {
+              return p.hasPermission(2);
+            })
+            .then(Commands.argument("attribute", ResourceKeyArgument.key(Registry.ATTRIBUTE_REGISTRY))
+                .then(Commands.literal("add")
+                    .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                        .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(-10000, 10000))
+                            .executes(x -> {
+                              return AttributesUtil.add(ResourceKeyArgument.getAttribute(x, "attribute"), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                            }))))
+                .then(Commands.literal("factor")
+                    .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                        .then(Commands.argument(ARG_VALUE, DoubleArgumentType.doubleArg(0, 100))
+                            .executes(x -> {
+                              return AttributesUtil.multiply(ResourceKeyArgument.getAttribute(x, "attribute"), EntityArgument.getPlayers(x, ARG_PLAYER), DoubleArgumentType.getDouble(x, ARG_VALUE));
+                            }))))
+                .then(Commands.literal("reset")
+                    .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                        .executes(x -> {
+                          return AttributesUtil.reset(ResourceKeyArgument.getAttribute(x, "attribute"), EntityArgument.getPlayers(x, ARG_PLAYER));
+                        })))))
         .then(Commands.literal(CyclicCommands.GAMEMODE.toString())
             .requires((p) -> {
               return p.hasPermission(3); // 3 for gamemode
@@ -164,6 +224,29 @@ public class CommandRegistry {
                 })))
     //
     );
+  }
+
+  private static int executeRngTest(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective) {
+    Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
+    Random rand = new Random();
+    for (String s : scoreHolderTargets) {
+      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
+      ModCyclic.LOGGER.error("score test " + score.getScore());
+    }
+    return 0;
+  }
+
+  private static int executeRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int min, int max) {
+    Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
+    int i = 0;
+    Random rand = new Random();
+    for (String s : scoreHolderTargets) {
+      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
+      score.setScore(rand.nextInt(min, max));
+      ModCyclic.LOGGER.info("objective rng " + score.getScore());
+      i += score.getScore();
+    }
+    return i;
   }
 
   private static int executeGlowing(CommandContext<CommandSourceStack> x, Collection<ServerPlayer> players, boolean bool) {

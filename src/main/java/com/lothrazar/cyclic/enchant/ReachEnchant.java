@@ -23,7 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.util.UtilPlayer;
+import java.util.UUID;
+import com.lothrazar.cyclic.util.AttributesUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -66,14 +67,16 @@ public class ReachEnchant extends EnchantmentCyclic {
     return this.canEnchant(stack);
   }
 
+  public static final UUID ENCHANTMENT_REACH_ID = UUID.fromString("1abcdef2-eff2-4a81-b92b-a1cb95f115c6");
+
   private void turnReachOff(Player player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, false);
-    UtilPlayer.removePlayerReach(player);
+    AttributesUtil.removePlayerReach(ENCHANTMENT_REACH_ID, player);
   }
 
   private void turnReachOn(Player player) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, true);
-    UtilPlayer.addPlayerReach(player, REACH_BOOST);
+    AttributesUtil.setPlayerReach(ENCHANTMENT_REACH_ID, player, REACH_BOOST);
   }
 
   @SubscribeEvent

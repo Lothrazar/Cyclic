@@ -197,9 +197,9 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name, UUID uuid) {
-    WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, uuid, name);
+    WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, name);
     if (fakePlayer == null) {
-      ModCyclic.LOGGER.error("Fake player failed to init " + name + " " + uuid);
+      ModCyclic.LOGGER.error("Fake player failed to init " + name);
       return null;
     }
     //fake player facing the same direction as tile. for throwables
