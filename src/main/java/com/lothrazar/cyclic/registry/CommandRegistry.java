@@ -95,7 +95,7 @@ public class CommandRegistry {
             })
             //reverted to old way. deprecate in future
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
-                .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(1, 100))
+                .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer())
                     .executes(x -> {
                       return AttributesUtil.setHearts(EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                     }))))
@@ -104,10 +104,10 @@ public class CommandRegistry {
             .requires((p) -> {
               return p.hasPermission(0); // 3 for
             })
-            .then(Commands.literal("rng")
+            .then(Commands.literal("random")
                 .then(Commands.argument("targets", ScoreHolderArgument.scoreHolders())
-                    .then(Commands.argument(ARG_MIN, IntegerArgumentType.integer(1, 100))
-                        .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer(1, 100))
+                    .then(Commands.argument(ARG_MIN, IntegerArgumentType.integer())
+                        .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer())
                             .then(Commands.argument("objective", StringArgumentType.greedyString())
                                 .executes(x -> {
                                   return CommandRegistry.scoreboardRng(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
@@ -116,6 +116,14 @@ public class CommandRegistry {
                                       IntegerArgumentType.getInteger(x, ARG_MAX));
                                 }))))))
             //cyclic scoreboard test @p <objective>
+            .then(Commands.literal("add")
+                .then(Commands.argument("targets", ScoreHolderArgument.scoreHolders())
+                    .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer())
+                        .then(Commands.argument("objective", ObjectiveArgument.objective())
+                            .executes(x -> {
+                              return CommandRegistry.scoreboardAdd(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
+                                  ObjectiveArgument.getObjective(x, "objective"), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                            })))))
             .then(Commands.literal("test")
                 .then(Commands.argument("targets", ScoreHolderArgument.scoreHolders())
                     .then(Commands.argument("objective", ObjectiveArgument.objective())
@@ -193,7 +201,15 @@ public class CommandRegistry {
             .then(Commands.literal("tags")
                 .executes(x -> {
                   return CommandNbt.executePrintTags(x);
-                })))
+                }))
+            .then(Commands.literal("random")
+                .then(Commands.argument(ARG_MIN, IntegerArgumentType.integer())
+                    .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer())
+                        .executes(x -> {
+                          return CommandRegistry.returnIntRng(
+                              IntegerArgumentType.getInteger(x, ARG_MIN),
+                              IntegerArgumentType.getInteger(x, ARG_MAX));
+                        })))))
         .then(Commands.literal(CyclicCommands.PING.toString())
             .requires((p) -> {
               return p.hasPermission(COMMANDPING.get() ? 3 : 0);
@@ -228,13 +244,31 @@ public class CommandRegistry {
     );
   }
 
+  private static int returnIntRng(int min, int max) {
+    return RAND.nextInt(min, max);
+  }
+
   private static int scoreboardRngTest(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
+    int i = 0;
     for (String s : scoreHolderTargets) {
       Score score = scoreboard.getOrCreatePlayerScore(s, objective);
-      ModCyclic.LOGGER.error("score test " + score.getScore());
+      ModCyclic.LOGGER.error("[test cmd]" + score.getScore());
+      i += score.getScore();
     }
-    return 0;
+    return i;
+  }
+
+  private static int scoreboardAdd(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int integer) {
+    Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
+    int i = 0;
+    for (String s : scoreHolderTargets) {
+      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
+      score.add(integer);
+      ModCyclic.LOGGER.info("objective add " + score.getScore());
+      i += score.getScore();
+    }
+    return i;
   }
 
   private static int scoreboardRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int min, int max) {

@@ -8,10 +8,6 @@
       "text": "item.cyclic.experience_food.guide",
       "item": "cyclic:experience_food",
       "link_recipe": true
-    },
-    {
-      "type": "crafting",
-      "recipe": "cyclic:experience_food"
     }
   ]
 }

@@ -9,7 +9,7 @@
     },
     {
       "type": "smelting",
-      "recipe": "cyclic:peat_fuel"
+      "recipe": "cyclic:smelting/peat_fuel"
     }
   ]
 }
