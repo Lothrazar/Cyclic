@@ -372,6 +372,29 @@
 			#Range: 0 ~ 15
 			light_level = 9
 
+		#####################################################################################
+		# Obsidian gear settings
+		#####################################################################################
+		[cyclic.items.obsidian]
+			#Weapon damage
+			#Range: 0.10000000149011612 ~ 99.0
+			damage = 10.5
+			#Damage Reduction
+			#Range: 1 ~ 99
+			chest = 11
+			#Damage Reduction
+			#Range: 1 ~ 99
+			boots = 7
+			#Armor toughness
+			#Range: 0.10000000149011612 ~ 99.0
+			toughness = 6.0
+			#Damage Reduction
+			#Range: 1 ~ 99
+			helm = 7
+			#Damage Reduction
+			#Range: 1 ~ 99
+			leg = 10
+
 		#Sack of Holding settings
 		[cyclic.items.tile_transporter]
 			#Block these from being picked up
@@ -421,7 +444,7 @@
 			range = 16
 			#Energy cost per item use
 			#Range: 1 ~ 50000
-			energy = 150
+			energy = 500
 
 		[cyclic.items.chorus_spectral]
 			#Seconds of noClip per chorus_spectral
@@ -480,6 +503,29 @@
 			#Maximum distance to activate
 			#Range: 8 ~ 1024
 			range = 256
+
+		#####################################################################################
+		# Emerald gear settings
+		#####################################################################################
+		[cyclic.items.emerald]
+			#Weapon damage
+			#Range: 0.10000000149011612 ~ 99.0
+			damage = 4.5
+			#Damage Reduction
+			#Range: 1 ~ 99
+			chest = 9
+			#Damage Reduction
+			#Range: 1 ~ 99
+			boots = 4
+			#Armor toughness
+			#Range: 0.10000000149011612 ~ 99.0
+			toughness = 3.0
+			#Damage Reduction
+			#Range: 1 ~ 99
+			helm = 4
+			#Damage Reduction
+			#Range: 1 ~ 99
+			leg = 7
 
 	#####################################################################################
 	# Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  
