@@ -38,6 +38,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CommandRegistry {
 
+  static final Random RAND = new Random();
+  private static final String ARG_ATTR = "attribute";
   private static final String ARG_MIN = "min";
   private static final String ARG_MAX = "max";
   private static final String ARG_VALUE = "value";
@@ -108,7 +110,7 @@ public class CommandRegistry {
                         .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer(1, 100))
                             .then(Commands.argument("objective", StringArgumentType.greedyString())
                                 .executes(x -> {
-                                  return CommandRegistry.executeRng(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
+                                  return CommandRegistry.scoreboardRng(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
                                       ObjectiveArgument.getObjective(x, "objective"),
                                       IntegerArgumentType.getInteger(x, ARG_MIN),
                                       IntegerArgumentType.getInteger(x, ARG_MAX));
@@ -118,7 +120,7 @@ public class CommandRegistry {
                 .then(Commands.argument("targets", ScoreHolderArgument.scoreHolders())
                     .then(Commands.argument("objective", ObjectiveArgument.objective())
                         .executes(x -> {
-                          return CommandRegistry.executeRngTest(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
+                          return CommandRegistry.scoreboardRngTest(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, "targets"),
                               ObjectiveArgument.getObjective(x, "objective"));
                         })))))
         // /cyclic attributes reach_dist add 3
@@ -126,23 +128,23 @@ public class CommandRegistry {
             .requires((p) -> {
               return p.hasPermission(2);
             })
-            .then(Commands.argument("attribute", ResourceKeyArgument.key(Registry.ATTRIBUTE_REGISTRY))
+            .then(Commands.argument(ARG_ATTR, ResourceKeyArgument.key(Registry.ATTRIBUTE_REGISTRY))
                 .then(Commands.literal("add")
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(-10000, 10000))
                             .executes(x -> {
-                              return AttributesUtil.add(ResourceKeyArgument.getAttribute(x, "attribute"), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                              return AttributesUtil.add(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                             }))))
                 .then(Commands.literal("factor")
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_VALUE, DoubleArgumentType.doubleArg(0, 100))
                             .executes(x -> {
-                              return AttributesUtil.multiply(ResourceKeyArgument.getAttribute(x, "attribute"), EntityArgument.getPlayers(x, ARG_PLAYER), DoubleArgumentType.getDouble(x, ARG_VALUE));
+                              return AttributesUtil.multiply(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER), DoubleArgumentType.getDouble(x, ARG_VALUE));
                             }))))
                 .then(Commands.literal("reset")
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .executes(x -> {
-                          return AttributesUtil.reset(ResourceKeyArgument.getAttribute(x, "attribute"), EntityArgument.getPlayers(x, ARG_PLAYER));
+                          return AttributesUtil.reset(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER));
                         })))))
         .then(Commands.literal(CyclicCommands.GAMEMODE.toString())
             .requires((p) -> {
@@ -226,9 +228,8 @@ public class CommandRegistry {
     );
   }
 
-  private static int executeRngTest(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective) {
+  private static int scoreboardRngTest(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
-    Random rand = new Random();
     for (String s : scoreHolderTargets) {
       Score score = scoreboard.getOrCreatePlayerScore(s, objective);
       ModCyclic.LOGGER.error("score test " + score.getScore());
@@ -236,13 +237,18 @@ public class CommandRegistry {
     return 0;
   }
 
-  private static int executeRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int min, int max) {
+  private static int scoreboardRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int min, int max) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
     int i = 0;
-    Random rand = new Random();
     for (String s : scoreHolderTargets) {
       Score score = scoreboard.getOrCreatePlayerScore(s, objective);
-      score.setScore(rand.nextInt(min, max));
+      if (min < max) {
+        score.setScore(RAND.nextInt(min, max));
+      }
+      else {
+        //either equal, or max is lower than min
+        score.setScore(min);
+      }
       ModCyclic.LOGGER.info("objective rng " + score.getScore());
       i += score.getScore();
     }

@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.spikes;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
-import java.util.UUID;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -23,7 +22,6 @@ import net.minecraftforge.common.util.FakePlayer;
 public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
   WeakReference<FakePlayer> fakePlayer;
-  private UUID uuid;
 
   public TileDiamondSpikes(BlockPos pos, BlockState state) {
     super(TileRegistry.SPIKES_DIAMOND.get(), pos, state);
@@ -31,17 +29,11 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
   @Override
   public void saveAdditional(CompoundTag tag) {
-    if (uuid != null) {
-      tag.putUUID("uuid", uuid);
-    }
     super.saveAdditional(tag);
   }
 
   @Override
   public void load(CompoundTag tag) {
-    if (tag.contains("uuid")) {
-      uuid = tag.getUUID("uuid");
-    }
     super.load(tag);
   }
 
@@ -60,10 +52,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
     }
     timer = level.random.nextInt(24) + 12;
     if (fakePlayer == null && level instanceof ServerLevel) {
-      if (uuid == null) {
-        uuid = UUID.randomUUID();
-      }
-      fakePlayer = setupBeforeTrigger((ServerLevel) level, "spikes_diamond", uuid);
+      fakePlayer = setupBeforeTrigger((ServerLevel) level, "spikes_diamond");
       if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
         Map<Enchantment, Integer> map = Maps.newHashMap();
         map.put(Enchantments.BANE_OF_ARTHROPODS, 2);
@@ -74,7 +63,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
         fakePlayer.get().setItemInHand(InteractionHand.MAIN_HAND, sword);
       }
       if (level.random.nextDouble() < 0.001F) {
-        tryDumpFakePlayerInvo(fakePlayer, null,true);
+        tryDumpFakePlayerInvo(fakePlayer, null, true);
       }
     }
   }

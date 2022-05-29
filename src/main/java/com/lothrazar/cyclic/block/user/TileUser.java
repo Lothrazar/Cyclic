@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.user;
 
 import java.lang.ref.WeakReference;
-import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
@@ -51,10 +50,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(userSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
-  private UUID uuid;
   private int timerDelay = 20;
   boolean doHitBreak = false;
-  boolean entities = true;
+  boolean entities = false;
 
   public TileUser(BlockPos pos, BlockState state) {
     super(TileRegistry.USER.get(), pos, state);
@@ -84,10 +82,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     //timer is zero so trigger
     timer = timerDelay;
     if (fakePlayer == null) {
-      if (uuid == null) {
-        uuid = UUID.randomUUID();
-      }
-      fakePlayer = setupBeforeTrigger((ServerLevel) level, "user", uuid);
+      fakePlayer = setupBeforeTrigger((ServerLevel) level, "user");
     }
     final int repair = POWERCONF.get();
     if (repair > 0) {
@@ -217,9 +212,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     userSlots.deserializeNBT(tag.getCompound(NBTINV));
     doHitBreak = tag.getBoolean("doBreakBlock");
     entities = tag.getBoolean("entities");
-    if (tag.contains("uuid")) {
-      uuid = tag.getUUID("uuid");
-    }
     super.load(tag);
   }
 
@@ -228,9 +220,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     tag.putInt("delay", timerDelay);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, userSlots.serializeNBT());
-    if (uuid != null) {
-      tag.putUUID("uuid", uuid);
-    }
     tag.putBoolean("doBreakBlock", doHitBreak);
     tag.putBoolean("entities", entities);
     super.saveAdditional(tag);

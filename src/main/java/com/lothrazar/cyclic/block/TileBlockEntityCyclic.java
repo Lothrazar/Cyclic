@@ -4,7 +4,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
@@ -196,7 +195,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return fakePlayer.get().gameMode.destroyBlock(targetPos);
   }
 
-  public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name, UUID uuid) {
+  public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name) {
     WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, name);
     if (fakePlayer == null) {
       ModCyclic.LOGGER.error("Fake player failed to init " + name);
@@ -206,10 +205,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     fakePlayer.get().setPos(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()); //seems to help interact() mob drops like milk
     fakePlayer.get().setYRot(UtilEntity.getYawFromFacing(this.getCurrentFacing()));
     return fakePlayer;
-  }
-
-  public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name) {
-    return setupBeforeTrigger(sw, name, UUID.randomUUID());
   }
 
   public void setLitProperty(boolean lit) {
