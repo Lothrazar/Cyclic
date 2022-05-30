@@ -143,6 +143,13 @@ public class CommandRegistry {
                             .executes(x -> {
                               return AttributesUtil.add(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                             }))))
+                .then(Commands.literal("random")
+                    .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
+                        .then(Commands.argument(ARG_MIN, IntegerArgumentType.integer(-10000, 10000))
+                            .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer(-10000, 10000))
+                                .executes(x -> {
+                                  return AttributesUtil.addRandom(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_MIN), IntegerArgumentType.getInteger(x, ARG_MAX));
+                                })))))
                 .then(Commands.literal("factor")
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_VALUE, DoubleArgumentType.doubleArg(0, 100))

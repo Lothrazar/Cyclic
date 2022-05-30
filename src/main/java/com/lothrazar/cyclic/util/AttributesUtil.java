@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import java.util.Collection;
+import java.util.Random;
 import java.util.UUID;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -12,12 +13,20 @@ import net.minecraftforge.common.ForgeMod;
 
 public class AttributesUtil {
 
+  static final Random RAND = new Random();
   public static final UUID DEFAULT_ID = UUID.fromString("06d30aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID MULT_ID = UUID.fromString("c6d30aa2-eff2-4a81-b92b-a1cb95f115cd");
 
   public static int add(Attribute attribute, Collection<ServerPlayer> players, int integer) {
     for (ServerPlayer playerIn : players) {
       updateAttrModifierBy(attribute, DEFAULT_ID, playerIn, integer);
+    }
+    return 0;
+  }
+
+  public static int addRandom(Attribute attribute, Collection<ServerPlayer> players, int min, int max) {
+    for (ServerPlayer playerIn : players) {
+      updateAttrModifierBy(attribute, DEFAULT_ID, playerIn, RAND.nextInt(min, max));
     }
     return 0;
   }
