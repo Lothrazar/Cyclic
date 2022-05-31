@@ -123,14 +123,18 @@ public class TileFanSlab extends TileBlockEntityCyclic {
     switch (face) {
       case NORTH:
         start = start.south();
+        start = start.south();// push while INSIDE the block
       break;
       case SOUTH:
+        start = start.north(); // push while INSIDE the block
         end = end.south();
       break;
       case EAST:
+        start = start.west(); // push while INSIDE the block
         end = end.east();
       break;
       case WEST:
+        start = start.east(); // push while INSIDE the block
         start = start.east();
       break;
       case DOWN:

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block;
 
+import java.util.List;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -103,13 +103,13 @@ public class BlockCyclic extends BaseEntityBlock {
           IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getDirection()).orElse(null);
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
+              if (player instanceof ServerPlayer) {
+                UtilSound.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL, 1F, 1F);
+              }
               //success so display new amount
               if (handler.getFluidInTank(0) != null) {
                 displayClientFluidMessage(player, handler);
-              }
-              //and also play the fluid sound
-              if (player instanceof ServerPlayer) {
-                UtilSound.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL, 1F, 1F);
+                return InteractionResult.SUCCESS;
               }
             }
             else {
@@ -117,9 +117,6 @@ public class BlockCyclic extends BaseEntityBlock {
             }
           }
         }
-      }
-      if (FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()) {
-        return InteractionResult.SUCCESS;
       }
     }
     if (this.hasGui) {
@@ -178,8 +175,7 @@ public class BlockCyclic extends BaseEntityBlock {
   /**
    * Override per block for render-ers/screens/etc
    */
-  public void registerClient() {
-  }
+  public void registerClient() {}
 
   public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
     return hasCapabilityDir(facing, world, facingPos, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
