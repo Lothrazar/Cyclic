@@ -16,6 +16,8 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.ForgeTier;
 import net.minecraftforge.common.TierSortingRegistry;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class MaterialRegistry {
 
@@ -33,6 +35,18 @@ public class MaterialRegistry {
       return new ItemStack(ItemRegistry.GEM_AMBER.get());
     }
   };
+  public static IntValue EMERALD_BOOTS;
+  public static IntValue EMERALD_LEG;
+  public static IntValue EMERALD_CHEST;
+  public static IntValue EMERALD_HELM;
+  public static IntValue OBS_BOOTS;
+  public static IntValue OBS_LEG;
+  public static IntValue OBS_CHEST;
+  public static IntValue OBS_HELM;
+  public static DoubleValue EMERALD_TOUGH;
+  public static DoubleValue EMERALD_DMG;
+  public static DoubleValue OBS_TOUGH;
+  public static DoubleValue OBS_DMG;
 
   public static class ArmorMats {
 
@@ -43,20 +57,20 @@ public class MaterialRegistry {
 
       @Override
       public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return (ArmorMaterials.DIAMOND.getDurabilityForSlot(slotIn) + ArmorMaterials.NETHERITE.getDurabilityForSlot(slotIn)) / 2;
+    	return ArmorMaterials.DIAMOND.getDurabilityForSlot(slotIn) + ArmorMaterials.IRON.getDurabilityForSlot(slotIn);
       }
 
       @Override
       public int getDefenseForSlot(EquipmentSlot slot) {
         switch (slot) {
           case CHEST:
-            return ArmorMaterials.DIAMOND.getDefenseForSlot(slot) - 2;
+        	return EMERALD_CHEST.get();
           case FEET:
-            return ArmorMaterials.DIAMOND.getDefenseForSlot(slot) + 2;
+        	return EMERALD_BOOTS.get();
           case HEAD:
-            return ArmorMaterials.DIAMOND.getDefenseForSlot(slot) - 1;
+        	return EMERALD_HELM.get();
           case LEGS:
-            return ArmorMaterials.DIAMOND.getDefenseForSlot(slot) + 1;
+        	return EMERALD_LEG.get();
           case MAINHAND:
           case OFFHAND:
           default:
@@ -67,7 +81,7 @@ public class MaterialRegistry {
 
       @Override
       public int getEnchantmentValue() {
-        return ArmorMaterials.GOLD.getEnchantmentValue() * 4;
+    	return ArmorMaterials.GOLD.getEnchantmentValue();
       }
 
       @Override
@@ -87,32 +101,32 @@ public class MaterialRegistry {
 
       @Override
       public float getToughness() {
-        return (ArmorMaterials.DIAMOND.getToughness() + ArmorMaterials.NETHERITE.getToughness()) / 2;
+    	return EMERALD_TOUGH.get().floatValue();
       }
 
       @Override
       public float getKnockbackResistance() {
-        return (ArmorMaterials.DIAMOND.getKnockbackResistance() + ArmorMaterials.NETHERITE.getKnockbackResistance()) / 2;
+        return ArmorMaterials.DIAMOND.getKnockbackResistance();
       }
     };
     public static final ArmorMaterial GEMOBSIDIAN = new ArmorMaterial() {
 
       @Override
       public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return ArmorMaterials.NETHERITE.getEnchantmentValue() * 2;
+        return ArmorMaterials.DIAMOND.getDurabilityForSlot(slotIn) * 4;
       }
 
       @Override
       public int getDefenseForSlot(EquipmentSlot slot) {
         switch (slot) {
           case CHEST:
-            return ArmorMaterials.NETHERITE.getDefenseForSlot(slot) - 1;
+        	return OBS_CHEST.get();
           case FEET:
-            return ArmorMaterials.NETHERITE.getDefenseForSlot(slot) + 2;
+        	return OBS_BOOTS.get();
           case HEAD:
-            return ArmorMaterials.NETHERITE.getDefenseForSlot(slot) - 2;
+        	return OBS_HELM.get();
           case LEGS:
-            return ArmorMaterials.NETHERITE.getDefenseForSlot(slot) + 3;
+        	return OBS_LEG.get();
           case MAINHAND:
           case OFFHAND:
           default:
@@ -123,7 +137,7 @@ public class MaterialRegistry {
 
       @Override
       public int getEnchantmentValue() {
-        return ArmorMaterials.NETHERITE.getEnchantmentValue() + 2;
+        return ArmorMaterials.GOLD.getEnchantmentValue() + 3;
       }
 
       @Override
@@ -143,7 +157,7 @@ public class MaterialRegistry {
 
       @Override
       public float getToughness() {
-        return ArmorMaterials.NETHERITE.getToughness() * 1.5F;
+    	return OBS_TOUGH.get().floatValue();
       }
 
       @Override
@@ -202,7 +216,7 @@ public class MaterialRegistry {
     public static final Tier GEMOBSIDIAN = TierSortingRegistry.registerTier(
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.NETHERITE.getLevel(),
-            Tiers.DIAMOND.getUses() * 4, Tiers.DIAMOND.getSpeed() * 4, Tiers.DIAMOND.getAttackDamageBonus() + 1, (Tiers.DIAMOND.getEnchantmentValue() + Tiers.GOLD.getEnchantmentValue()) / 2,
+            Tiers.DIAMOND.getUses() * 4, Tiers.DIAMOND.getSpeed() * 4, OBS_DMG.get().floatValue(), Tiers.GOLD.getEnchantmentValue() + 1,
             BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_obsidian_tool")),
             () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get())),
         new ResourceLocation(ModCyclic.MODID, "gem_obsidian"),
@@ -228,8 +242,8 @@ public class MaterialRegistry {
     //
     public static final Tier EMERALD = TierSortingRegistry.registerTier(
         //harvestLevel, uses, toolSpeed, damage, enchantability
-        new ForgeTier(Tiers.NETHERITE.getLevel(),
-            (Tiers.DIAMOND.getUses() + Tiers.NETHERITE.getUses()) / 2, (Tiers.DIAMOND.getSpeed() + Tiers.IRON.getSpeed()) / 2, (Tiers.DIAMOND.getAttackDamageBonus() + Tiers.IRON.getAttackDamageBonus()) / 2, Tiers.DIAMOND.getEnchantmentValue() + 2,
+        new ForgeTier(Tiers.DIAMOND.getLevel(),
+            Tiers.DIAMOND.getUses() + Tiers.GOLD.getUses(), Tiers.DIAMOND.getSpeed() * 2, EMERALD_DMG.get().floatValue(), Tiers.GOLD.getEnchantmentValue() + 1,
             BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_emerald_tool")),
             () -> Ingredient.of(Items.EMERALD)),
         new ResourceLocation(ModCyclic.MODID, "emerald"),
