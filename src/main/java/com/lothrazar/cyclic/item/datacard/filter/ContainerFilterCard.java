@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
@@ -18,7 +17,7 @@ public class ContainerFilterCard extends ContainerBase {
   public ItemStack bag;
   public int slot;
   public int slotcount;
-  public CompoundTag nbt;
+  //  public CompoundTag nbt;
 
   public ContainerFilterCard(int id, Inventory playerInventory, Player player) {
     super(ContainerScreenRegistry.FILTER_DATA, id);
@@ -34,7 +33,7 @@ public class ContainerFilterCard extends ContainerBase {
       this.slot = 40;
     }
     //
-    this.nbt = bag.getOrCreateTag();
+    //    this.nbt = bag.getOrCreateTag();
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
       this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {

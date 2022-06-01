@@ -50,16 +50,15 @@ public class FilterCardItem extends ItemBaseCyclic {
         String fluidTooltip = stackTag.getString("fluidTooltip");
         tooltip.add(new TranslatableComponent(fluidTooltip).withStyle(ChatFormatting.AQUA));
       }
-      if (stackTag.contains("itemTooltip")) {
-        String itemTooltip = stackTag.getString("itemTooltip");
-        tooltip.add(new TranslatableComponent(itemTooltip).withStyle(ChatFormatting.GRAY));
-      }
       if (stackTag.contains("itemCount")) {
         int itemCount = stackTag.getInt("itemCount");
-        t = new TranslatableComponent("cyclic.screen.filter.item.count");
-        t.append("" + itemCount);
-        t.withStyle(ChatFormatting.GRAY);
-        tooltip.add(t);
+        if (itemCount > 0) {
+          if (stackTag.contains("itemTooltip")) {
+            String itemTooltip = stackTag.getString("itemTooltip");
+            tooltip.add(new TranslatableComponent(itemTooltip).withStyle(ChatFormatting.GRAY));
+          }
+          tooltip.add(new TranslatableComponent("cyclic.screen.filter.item.count").append("" + itemCount).withStyle(ChatFormatting.GRAY));
+        }
       }
     }
     else {

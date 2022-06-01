@@ -66,6 +66,7 @@ import com.lothrazar.cyclic.item.carrot.ItemHorseToxic;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.craftingsimple.CraftingStickItem;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
+import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
@@ -481,23 +482,12 @@ public class ItemRegistry {
   public static final RegistryObject<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NO_SOLICITING = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.NO_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> FLUTE = ITEMS.register("flute_summoning", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new FireballItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //totem of repair
-  //  lunch box u can eat from. make sure apples trigger
-  //!ENERGY OBJECT REFACTOR IN SOLIRECIPES!!
-  // ??WAX more uses?CONFIGS?
-  //solar balance? 
-  // items change some to consume ENERGY. and test existing ones dont get destroyed on empty ?? 
-  //  public static final RegistryObject<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //public static final RegistryObject<Item> ALTAR_FORTUNE = ITEMS.register("altar_fortune", () -> new BlockItem(BlockRegistry.ALTAR_FORTUNE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> ALTAR_FLIGHT = ITEMS.register("altar_flight", () -> new BlockItem(BlockRegistry.ALTAR_FLIGHT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> PEDESTAL = ITEMS.register("pedestal", () -> new BlockItem(BlockRegistry.PEDESTAL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  //  lunch box u can eat from. make sure apples trigger 
+  // ??WAX more uses 
   //  public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  public static final RegistryObject<Item> DOOR_GOLD = ITEMS.register("door_gold", () -> new BlockItem(BlockRegistry.DOOR_GOLD.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> DOOR_NETHERITE = ITEMS.register("door_netherite", () -> new BlockItem(BlockRegistry.DOOR_NETHERITE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> EXPERIENCE_DRAIN = ITEMS.register("experience_drain", () -> new BlockItem(BlockRegistry.EXPERIENCE_DRAIN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> GENERATOR_CAT = ITEMS.register("generator_cat", () -> new BlockItem(BlockRegistry.GENERATOR_CAT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  //  public static final RegistryObject<Item> ENCHANTER = ITEMS.register("enchanter", () -> new BlockItem(BlockRegistry.ENCHANTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //mixed foods?(this might be better in a different mod. chocolate and sugar could be melted, salad, etc)
   //chalk??
 }

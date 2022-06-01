@@ -34,8 +34,7 @@ public class CapabilityProviderFilterCard implements ICapabilitySerializable<Com
   @Override
   public CompoundTag serializeNBT() {
     if (inventory.isPresent()) {
-      CompoundTag nbt = inventory.resolve().get().serializeNBT();
-      return nbt;
+      return inventory.resolve().get().serializeNBT();
     }
     return new CompoundTag();
   }

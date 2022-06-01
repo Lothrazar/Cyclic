@@ -293,16 +293,11 @@ public class BlockRegistry {
   public static final RegistryObject<Block> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockNoTraders(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockDestruction(Block.Properties.of(Material.STONE)));
   //  public static final RegistryObject<BlockAltarSol> ALTAR_FLIGHT = BLOCKS.register("altar_flight", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.FLIGHT));
-  //  public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("pedestal", () -> new BlockAltarSol(Block.Properties.of(Material.STONE)));
-  //cursed altars
-  //flight - for @a players in range
-  //anti-flight = bat and phaontom. 
+  // ones that use entity data cards
   // destruc = prevent explosions. 
   //powered furnace
   //  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   //  public static final RegistryObject<Block> GENERATOR_CAT = BLOCKS.register("generator_cat", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
-  //  public static final RegistryObject<Block> DOOR_GOLD = BLOCKS.register("door_gold", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.GOLD).sound(SoundType.METAL)));
-  //  public static final RegistryObject<Block> DOOR_NETHERITE = BLOCKS.register("door_netherite", () -> new DoorBlock(Block.Properties.of(Material.METAL, MaterialColor.TERRACOTTA_BLACK).sound(SoundType.METAL)));
   //drain use bottle on it to fill. and its a fluid cap
   //  public static final RegistryObject<Block> EXPERIENCE_DRAIN = BLOCKS.register("experience_drain", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
   //magnet_anti_block87

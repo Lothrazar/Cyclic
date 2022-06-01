@@ -146,12 +146,12 @@ public class EventRender {
     stack = RandomizerItem.getIfHeld(player);
     if (stack.getItem() instanceof RandomizerItem) {
       BlockHitResult lookingAt = UtilRender.getLookingAt(player, (int) range);
-      if (player.level.getBlockState(lookingAt.getBlockPos()) == Blocks.AIR.defaultBlockState()) {
+      if (world.getBlockState(lookingAt.getBlockPos()) == Blocks.AIR.defaultBlockState()) {
         return;
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());
       for (BlockPos e : coords) {
-        renderCubes.put(e, RandomizerItem.canMove(player.level.getBlockState(e), player.level, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
+        renderCubes.put(e, RandomizerItem.canMove(world.getBlockState(e), world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
       }
     }
     stack = OreProspector.getIfHeld(player);
@@ -166,8 +166,16 @@ public class EventRender {
         }
       }
     }
-    ///////////////////// LocationGpsItem
     stack = player.getMainHandItem();
+    //    if (EntityDataCard.hasEntity(stack)) {
+    //      Entity etar = EntityDataCard.matchesEntity(etar, stack);
+    //      System.out.println("etar" + etar);
+    //      if (etar != null) {
+    //        etar.setGlowingTag(true);
+    //        //            UtilParticle.spawnParticle(world, ParticleTypes.HEART, etar.blockPosition(), 1);
+    //      }
+    //    }
+    ///////////////////// LocationGpsItem
     if (stack.getItem() instanceof LocationGpsCard) {
       BlockPosDim loc = LocationGpsCard.getPosition(stack);
       if (loc != null) {

@@ -97,9 +97,9 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
 
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3693704")
-  //  implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
-  //  implementation fg.deobf("curse.maven:cobblestoney-582368:3692841")
-  //  implementation fg.deobf("curse.maven:the-one-probe-245211:3671753")
+    implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
+    implementation fg.deobf("curse.maven:cobblestoney-582368:3692841")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3671753")
   //  implementation fg.deobf("curse.maven:roots-classic-295780:3703952")
 
 //    implementation fg.deobf("curse.maven:gardening-tools-351990:3694027")
