@@ -10,11 +10,6 @@ public class EnergyIngredient {
   private static final int RFPT_DEFAULT = 80;
   private int rfPertick;
   private int ticks;
-  //  @Deprecated
-  //  public EnergyIngredient(int energyTotal) {
-  //    setRf(energyTotal / TICKS_DEFAULT); //TileMelter etc had these previously
-  //    setTicks(TICKS_DEFAULT);
-  //  }
 
   public EnergyIngredient(int rf, int ticks) {
     setRf(rf);

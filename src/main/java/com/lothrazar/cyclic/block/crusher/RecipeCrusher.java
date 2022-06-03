@@ -25,19 +25,14 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   public final EnergyIngredient energy;
-  public ItemStack bonus = ItemStack.EMPTY;
-  public int percent;
+  public RandomizedOutputIngredient randOutput;
 
-  public RecipeCrusher(ResourceLocation id, Ingredient in, EnergyIngredient energy, ItemStack out, int percIn, ItemStack optional) {
+  public RecipeCrusher(ResourceLocation id, Ingredient in, EnergyIngredient energy, ItemStack out, RandomizedOutputIngredient randOutput) {
     super(id);
     this.energy = energy;
     ingredients.add(in);
     this.result = out;
-    this.percent = Math.max(0, percIn);
-    if (percIn > 100) {
-      percIn = 100;
-    }
-    bonus = optional;
+    this.randOutput = randOutput;
   }
 
   @Override
@@ -105,14 +100,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
       try {
         Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-        int percent = 0;
-        ItemStack bonusStack = ItemStack.EMPTY;
-        RandomizedOutputIngredient rando = null; // TODO: this
-        if (json.has("bonus") && json.has("percent")) {
-          bonusStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "bonus"));
-          percent = json.get("percent").getAsInt();
-        }
-        RecipeCrusher r = new RecipeCrusher(recipeId, inputFirst, new EnergyIngredient(json), resultStack, percent, bonusStack);
+        RecipeCrusher r = new RecipeCrusher(recipeId, inputFirst, new EnergyIngredient(json), resultStack, new RandomizedOutputIngredient(json));
         return r;
       }
       catch (Exception e) {
@@ -124,7 +112,8 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
     @Override
     public RecipeCrusher fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
       // ing, (int, int), item, int, item
-      RecipeCrusher r = new RecipeCrusher(recipeId, Ingredient.fromNetwork(buffer), new EnergyIngredient(buffer.readInt(), buffer.readInt()), buffer.readItem(), buffer.readInt(), buffer.readItem());
+      RecipeCrusher r = new RecipeCrusher(recipeId, Ingredient.fromNetwork(buffer), new EnergyIngredient(buffer.readInt(), buffer.readInt()), buffer.readItem(),
+          new RandomizedOutputIngredient(buffer.readInt(), buffer.readItem()));
       //server reading recipe from client or vice/versa 
       return r;
     }
@@ -137,19 +126,19 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
       buffer.writeInt(recipe.energy.getTicks());
       //
       buffer.writeItem(recipe.getResultItem());
-      buffer.writeInt(recipe.percent);
-      buffer.writeItem(recipe.bonus);
+      buffer.writeInt(recipe.randOutput.percent);
+      buffer.writeItem(recipe.randOutput.bonus);
     }
   }
   //optional recipes for grinder ores / other mod ores
   //  
 
   public ItemStack createBonus(Random rand) {
-    ItemStack getBonus = this.bonus.copy();
-    if (this.bonus.getCount() > 1) {
+    ItemStack getBonus = this.randOutput.bonus.copy();
+    if (this.randOutput.bonus.getCount() > 1) {
       //if its 1 just leave it. otherwise RNG
       //so if getCount==3 , then get rand [0,2] + 1 = [1,3]
-      getBonus.setCount(1 + rand.nextInt(this.bonus.getCount()));
+      getBonus.setCount(1 + rand.nextInt(this.randOutput.bonus.getCount()));
     }
     return getBonus;
   }

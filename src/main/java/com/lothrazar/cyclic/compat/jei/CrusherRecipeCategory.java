@@ -73,14 +73,14 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
     Collections.addAll(stuff, recipe.ingredientAt(0));
     in.add(stuff);
     ingredients.setInputLists(VanillaTypes.ITEM, in);
-    if (recipe.bonus.isEmpty()) {
+    if (recipe.randOutput.bonus.isEmpty()) {
       ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
     else if (recipe.getResultItem().isEmpty()) {
-      ingredients.setOutput(VanillaTypes.ITEM, recipe.bonus);
+      ingredients.setOutput(VanillaTypes.ITEM, recipe.randOutput.bonus);
     }
     else {
-      ingredients.setOutputs(VanillaTypes.ITEM, Arrays.asList(recipe.getResultItem(), recipe.bonus));
+      ingredients.setOutputs(VanillaTypes.ITEM, Arrays.asList(recipe.getResultItem(), recipe.randOutput.bonus));
     }
   }
 
@@ -96,8 +96,8 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
     }
     Minecraft.getInstance().font.draw(ms, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
     Minecraft.getInstance().font.draw(ms, recipe.energy.getEnergyTotal() + " RF", x, 26, FONT);
-    if (!recipe.bonus.isEmpty() && recipe.percent > 0) {
-      Minecraft.getInstance().font.draw(ms, recipe.percent + "%", 56, 36, FONT);
+    if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
+      Minecraft.getInstance().font.draw(ms, recipe.randOutput.percent + "%", 56, 36, FONT);
     }
   }
 
@@ -109,9 +109,9 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
     guiItemStacks.set(0, inputs.get(0));
     guiItemStacks.init(1, false, 34, 5);
     guiItemStacks.set(1, recipe.getResultItem());
-    if (!recipe.bonus.isEmpty() && recipe.percent > 0) {
+    if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
       guiItemStacks.init(2, false, 33, 30);
-      guiItemStacks.set(2, recipe.bonus);
+      guiItemStacks.set(2, recipe.randOutput.bonus);
     }
   }
 }

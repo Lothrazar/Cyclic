@@ -120,10 +120,10 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
       if (!currentRecipe.getResultItem().isEmpty()) {
         this.outputSlots.insertItem(0, currentRecipe.getResultItem().copy(), false);
       }
-      if (!currentRecipe.bonus.isEmpty() && currentRecipe.percent > 0) {
+      if (!currentRecipe.randOutput.bonus.isEmpty() && currentRecipe.randOutput.percent > 0) {
         // 1 is always, 0 is never so yeah
         //if you put 90, and i roll between 0 and 90 gj u win
-        if (currentRecipe.percent == 1 || level.random.nextInt(100) < currentRecipe.percent) {
+        if (currentRecipe.randOutput.percent == 1 || level.random.nextInt(100) < currentRecipe.randOutput.percent) {
           this.outputSlots.insertItem(1, this.currentRecipe.createBonus(level.random), false);
         }
       }
