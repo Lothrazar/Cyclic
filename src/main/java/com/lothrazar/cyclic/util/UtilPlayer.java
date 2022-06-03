@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.util;
 
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -18,6 +19,10 @@ public class UtilPlayer {
     double progress = Math.round(player.getXpNeededForNextLevel() * player.experienceProgress);
     totalExp += (int) progress;
     return totalExp;
+  }
+
+  public static boolean isPlayerCrouching(Entity entity) {
+    return entity instanceof Player && ((Player) entity).isCrouching();
   }
 
   public static int getXpForLevel(int level) {

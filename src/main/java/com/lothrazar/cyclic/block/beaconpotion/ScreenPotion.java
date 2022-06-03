@@ -61,6 +61,7 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawSlot(ms, 148, 8, TextureRegistry.SLOT_FILTER, 18);
     energy.draw(ms, menu.tile.getEnergy());
     this.drawSlot(ms, 8, 34);
     int x = leftPos + 29, y = topPos + 16;

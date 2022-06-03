@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +21,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EntityDataCard extends ItemBaseCyclic {
 
+  private static final String ENTITY_DATA = "entity_data";
+  private static final String ENTITY_KEY = "entity_key";
+
   public EntityDataCard(Properties properties) {
     super(properties);
   }
@@ -28,7 +32,7 @@ public class EntityDataCard extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
-      TranslatableComponent t = new TranslatableComponent(stack.getTag().getString("entity_key"));
+      TranslatableComponent t = new TranslatableComponent(stack.getTag().getString(ENTITY_KEY));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }
@@ -38,18 +42,27 @@ public class EntityDataCard extends ItemBaseCyclic {
   }
 
   @Override
+  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    if (player.isCrouching()) {
+      CompoundTag atag = player.getItemInHand(hand).getOrCreateTag();
+      atag.put(ENTITY_DATA, player.getPersistentData());
+      atag.putString(ENTITY_KEY, "player");
+    }
+    return super.use(level, player, hand);
+  }
+
+  @Override
   public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
     playerIn.swing(hand);
     CompoundTag atag = stack.getOrCreateTag();
-    atag.put("entity_data", target.getPersistentData());
+    atag.put(ENTITY_DATA, target.getPersistentData());
     if (target instanceof Player) {
-      atag.putString("entity_key", "player");
+      atag.putString(ENTITY_KEY, "player");
     }
     else {
       String key = EntityType.getKey(target.getType()).toString();
-      atag.putString("entity_key", key);
+      atag.putString(ENTITY_KEY, key);
     }
-    //    atag.putInt("entity_id", target.getId());
     stack.setTag(atag);
     return super.interactLivingEntity(stack, playerIn, target, hand);
   }
@@ -63,14 +76,16 @@ public class EntityDataCard extends ItemBaseCyclic {
   }
 
   private static EntityType<?> getEntityType(ItemStack stack) {
-    final String key = stack.getTag().getString("entity_key");
-    return EntityType.byString(key).orElse(null);
+    if (stack.getItem() instanceof EntityDataCard) {
+      final String key = stack.getTag().getString(ENTITY_KEY);
+      return EntityType.byString(key).orElse(null);
+    }
+    return null;
   }
 
   public static boolean hasEntity(ItemStack stack) {
-    if (stack.getItem() instanceof EntityDataCard
-        && stack.hasTag() && stack.getTag().contains("entity_key")) {
-      return true;
+    if (stack.getItem() instanceof EntityDataCard) {
+      return stack.hasTag() && stack.getTag().contains(ENTITY_KEY);
     }
     return false;
   }

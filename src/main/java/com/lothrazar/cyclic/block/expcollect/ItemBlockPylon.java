@@ -74,7 +74,6 @@ public class ItemBlockPylon extends BlockItem {
         return;
       }
     }
-    System.out.println("PFFFF");
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 

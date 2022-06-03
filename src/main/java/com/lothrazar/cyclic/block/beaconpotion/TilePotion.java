@@ -5,6 +5,8 @@ import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.EntityFilterType;
+import com.lothrazar.cyclic.item.datacard.EntityDataCard;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,6 +50,13 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
   public static IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getItem() == ItemRegistry.ENTITY_DATA.get();
+    }
+  };
   /**
    * Primary potion effect given by this beacon.
    */
@@ -138,6 +147,7 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void load(CompoundTag tag) {
+    filter.deserializeNBT(tag.getCompound("filter"));
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
@@ -157,6 +167,7 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void saveAdditional(CompoundTag tag) {
+    tag.put("filter", filter.serializeNBT());
     tag.putInt("radius", radius);
     tag.putInt("entityFilter", entityFilter.ordinal());
     tag.put(NBTENERGY, energy.serializeNBT());
@@ -204,6 +215,11 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
     List<? extends LivingEntity> list = this.entityFilter.getEntities(level, worldPosition, radius);
     for (LivingEntity entity : list) {
       if (entity == null) {
+        continue;
+      }
+      if (EntityDataCard.hasEntity(filter.getStackInSlot(0))
+          && !EntityDataCard.matchesEntity(entity, filter.getStackInSlot(0))) {
+//        System.out.println("p!otion skip ent " + entity);
         continue;
       }
       for (MobEffectInstance eff : this.effects) {

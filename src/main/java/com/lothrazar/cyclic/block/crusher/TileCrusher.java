@@ -45,6 +45,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileCrusher(BlockPos pos, BlockState state) {
     super(TileRegistry.CRUSHER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrusher tileAnvilAuto) {

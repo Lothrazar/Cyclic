@@ -2,9 +2,12 @@ package com.lothrazar.cyclic.block.fan;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilPlayer;
 import com.lothrazar.cyclic.util.UtilShape;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,10 +19,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -33,6 +38,13 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
   public static final int MAX_SPEED = 20;
   private int range = 7;
   private int speed = 5;
+  ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getItem() == ItemRegistry.ENTITY_DATA.get();
+    }
+  };
 
   public TileFan(BlockPos pos, BlockState state) {
     super(TileRegistry.FAN.get(), pos, state);
@@ -147,8 +159,13 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
     int direction = 1;
     float speed = this.getSpeedCalc();
     for (Entity entity : entitiesFound) {
-      if (entity instanceof Player && ((Player) entity).isCrouching()) {
+      if (UtilPlayer.isPlayerCrouching(entity)) {
         continue; //sneak avoid feature
+      }
+      if (EntityDataCard.hasEntity(filter.getStackInSlot(0))
+          && !EntityDataCard.matchesEntity(entity, filter.getStackInSlot(0))) {
+        // ln("fan skip, it does not match filter");
+        continue;
       }
       moved++;
       double newx = entity.getDeltaMovement().x();
@@ -191,6 +208,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void load(CompoundTag tag) {
+    filter.deserializeNBT(tag.getCompound("filter"));
     speed = tag.getInt("speed");
     range = tag.getInt("range");
     super.load(tag);
@@ -198,6 +216,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void saveAdditional(CompoundTag tag) {
+    tag.put("filter", filter.serializeNBT());
     tag.putInt("speed", speed);
     tag.putInt("range", range);
     super.saveAdditional(tag);

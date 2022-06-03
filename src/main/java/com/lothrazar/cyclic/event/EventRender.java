@@ -169,11 +169,6 @@ public class EventRender {
     stack = player.getMainHandItem();
     //    if (EntityDataCard.hasEntity(stack)) {
     //      Entity etar = EntityDataCard.matchesEntity(etar, stack);
-    //      System.out.println("etar" + etar);
-    //      if (etar != null) {
-    //        etar.setGlowingTag(true);
-    //        //            UtilParticle.spawnParticle(world, ParticleTypes.HEART, etar.blockPosition(), 1);
-    //      }
     //    }
     ///////////////////// LocationGpsItem
     if (stack.getItem() instanceof LocationGpsCard) {

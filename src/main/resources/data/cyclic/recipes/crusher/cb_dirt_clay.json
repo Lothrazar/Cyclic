@@ -1,0 +1,38 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "cobblestoney:dirt_clay"
+	},
+	"energy": {
+		"ticks": 100,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "cobblestoney:mud",
+		"count": 1
+	},
+	"percent": 50,
+	"bonus": {
+		"item": "minecraft:clay_ball",
+		"count": 1
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"modid": "cobblestoney",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

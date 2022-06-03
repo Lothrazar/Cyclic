@@ -8,7 +8,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMiner extends ContainerBase {
@@ -20,22 +19,20 @@ public class ContainerMiner extends ContainerBase {
     tile = (TileMiner) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 33, 9) {
+    this.endInv = tile.inventory.getSlots();
+    addSlot(new SlotItemHandler(tile.inventory, 0, 33, 9) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-      addSlot(new SlotItemHandler(h, 1, 135, 9) {
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(tile.inventory, 1, 135, 9) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
     });
     layoutPlayerInventorySlots(8, 84);
     trackEnergy(tile);

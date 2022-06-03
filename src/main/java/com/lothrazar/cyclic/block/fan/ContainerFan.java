@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerFan extends ContainerBase {
 
@@ -18,6 +19,14 @@ public class ContainerFan extends ContainerBase {
     tile = (TileFan) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
+    this.endInv = 1;
+    addSlot(new SlotItemHandler(tile.filter, 0, 149, 9) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileFan.Fields.values().length);
     this.trackEnergy(tile);

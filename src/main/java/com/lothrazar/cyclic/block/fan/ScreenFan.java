@@ -58,5 +58,6 @@ public class ScreenFan extends ScreenBase<ContainerFan> {
   @Override
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
+    this.drawSlot(ms, 148, 8, TextureRegistry.SLOT_FILTER, 18);
   }
 }

@@ -1,0 +1,38 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+		"item": "cobblestoney:stone_silt"
+	},
+	"energy": {
+		"ticks": 100,
+		"rfpertick": 20
+	},
+	"result": {
+		"item": "cobblestoney:silt",
+		"count": 2
+	},
+	"percent": 0,
+	"bonus": {
+		"item": "cobblestoney:silt",
+		"count": 2
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"modid": "cobblestoney",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}
