@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.waxed_redstone",
+  "icon": "cyclic:waxed_redstone",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.waxed_redstone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/waxed_redstone"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+    "variants": {
+		"facing=north":	{ "model": "cyclic:block/waxed_redstone"},
+		"facing=east":	{ "model": "cyclic:block/waxed_redstone", "y": 90 },
+		"facing=south":	{ "model": "cyclic:block/waxed_redstone" , "y": 180 },
+		"facing=west":	{ "model": "cyclic:block/waxed_redstone", "y": 270 },
+		"facing=up":	{ "model": "cyclic:block/waxed_redstone_up" },
+		"facing=down":	{ "model": "cyclic:block/waxed_redstone_up", "x": 180 }
+    }
+}

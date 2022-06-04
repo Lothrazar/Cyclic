@@ -51,6 +51,10 @@ public class BlockCyclic extends BaseEntityBlock {
     BlockRegistry.BLOCKSCLIENTREGISTRY.add(this);
   }
 
+  public static boolean never(BlockState bs, BlockGetter bg, BlockPos pos) {
+    return false;
+  }
+
   @Override
   public RenderShape getRenderShape(BlockState st) {
     return RenderShape.MODEL;

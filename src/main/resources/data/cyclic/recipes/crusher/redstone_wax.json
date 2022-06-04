@@ -1,0 +1,34 @@
+{
+	"type": "cyclic:crusher",
+	"input": {
+ 	"item": "cyclic:waxed_redstone"
+	},
+	"energy": {
+		"ticks": 500,
+		"rfpertick": 100
+	},
+	"result": {
+		"item": "minecraft:redstone",
+		"count": 9
+	},
+	"percent": 0,
+	"bonus": {
+		"item": "minecraft:honeycomb",
+		"count": 1
+	},
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "cyclic",
+					"type": "forge:mod_loaded"
+				},
+				{
+					"item": "cyclic:crusher",
+					"type": "forge:item_exists"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

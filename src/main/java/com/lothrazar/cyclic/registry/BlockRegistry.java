@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.BlockSimple;
+import com.lothrazar.cyclic.block.BlockWaxedRedstone;
 import com.lothrazar.cyclic.block.ButtonBlockMat;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
@@ -292,6 +293,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of(Material.STONE))); // NOGUI
   public static final RegistryObject<Block> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockNoTraders(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockDestruction(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> WAXED_REDSTONE = BLOCKS.register("waxed_redstone", () -> new BlockWaxedRedstone(Block.Properties.of(Material.METAL, MaterialColor.FIRE)));
+  //k(BlockBehaviour.
   //  public static final RegistryObject<BlockAltarSol> ALTAR_FLIGHT = BLOCKS.register("altar_flight", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.FLIGHT));
   // ones that use entity data cards
   // destruc = prevent explosions. 
