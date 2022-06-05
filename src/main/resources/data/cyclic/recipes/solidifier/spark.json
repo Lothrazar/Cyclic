@@ -1,0 +1,26 @@
+{
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"tag": "minecraft:candles"
+		},
+		{
+			"tag": "forge:dusts/glowstone"
+		},
+		{
+			"tag": "forge:torches"
+		}
+	],
+	"mix": {
+		"tag": "forge:wax",
+		"count": 10
+	},
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 120
+	},
+	"result": {
+		"item": "cyclic:spark",
+		"count": 4
+	}
+}

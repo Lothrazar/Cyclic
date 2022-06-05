@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+			{
+			"tag": "minecraft:candles"
+		},
+		{
+			"tag": "forge:dusts/glowstone"
+		},
+		{
+			"tag": "forge:torches"
+		}
+	],
+	"result": {
+		"item": "cyclic:spark",
+		"count": 2
+	}
+}

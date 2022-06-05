@@ -20,6 +20,7 @@ import com.lothrazar.cyclic.item.EvokerFangItem;
 import com.lothrazar.cyclic.item.FireExtinguishItem;
 import com.lothrazar.cyclic.item.FireballItem;
 import com.lothrazar.cyclic.item.GemstoneItem;
+import com.lothrazar.cyclic.item.GlowingSpark;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.ItemFlute;
 import com.lothrazar.cyclic.item.LeverRemote;
@@ -483,6 +484,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> NO_SOLICITING = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.NO_SOLICITING.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> FLUTE = ITEMS.register("flute_summoning", () -> new ItemFlute(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  public static final RegistryObject<Item> SPARK = ITEMS.register("spark", () -> new GlowingSpark(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new FireballItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //totem of repair

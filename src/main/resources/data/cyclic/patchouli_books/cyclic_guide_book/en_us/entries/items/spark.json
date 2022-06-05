@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.spark",
+  "icon": "cyclic:spark",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.spark.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/spark"
+    }
+  ]
+}
