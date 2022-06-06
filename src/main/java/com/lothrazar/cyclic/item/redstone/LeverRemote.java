@@ -1,6 +1,7 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.redstone;
 
 import java.util.List;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilNBT;
 import com.lothrazar.cyclic.util.UtilWorld;

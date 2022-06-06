@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.item.boomerang.BoomerangEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
+import com.lothrazar.cyclic.item.elemental.DarkFireEntity;
 import com.lothrazar.cyclic.item.elemental.FireEntity;
 import com.lothrazar.cyclic.item.elemental.LightningEntity;
 import com.lothrazar.cyclic.item.elemental.SnowEntity;
@@ -47,6 +48,8 @@ public class EntityRegistry {
   public static EntityType<EyeOfEnderEntityNodrop> EYE;
   @ObjectHolder(ModCyclic.MODID + ":fire_bolt")
   public static EntityType<FireEntity> FIRE_BOLT;
+  @ObjectHolder(ModCyclic.MODID + ":darkfire_bolt")
+  public static EntityType<DarkFireEntity> DARKFIRE_BOLT;
   @ObjectHolder(ModCyclic.MODID + ":stone_bolt")
   public static EntityType<StoneEntity> STONE_BOLT;
   @ObjectHolder(ModCyclic.MODID + ":conveyor_item")
@@ -171,5 +174,13 @@ public class EntityRegistry {
             .sized(0.45F, 0.45F)
             .build("conveyor_item")
             .setRegistryName("conveyor_item"));
+    r.register(
+        EntityType.Builder.<DarkFireEntity> of(DarkFireEntity::new, MobCategory.MISC)
+            .setShouldReceiveVelocityUpdates(true)
+            .setUpdateInterval(1)
+            .setTrackingRange(128)
+            .sized(.6f, .6f)
+            .build("darkfire_bolt")
+            .setRegistryName("darkfire_bolt"));
   }
 }

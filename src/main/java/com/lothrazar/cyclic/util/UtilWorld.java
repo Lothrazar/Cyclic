@@ -79,7 +79,7 @@ public class UtilWorld {
     for (int i = 0; i < max; i++) {
       BlockState state = world.getBlockState(posLoop);
       if (state.getBlock() != null
-          && world.getBlockState(posLoop).getBlock() == Blocks.AIR) {
+          && world.getBlockState(posLoop).isAir()) {
         posToPlaceAt = posLoop;
         break;
       }
@@ -264,9 +264,9 @@ public class UtilWorld {
     BlockPos posCurrent = null;
     for (int y = pos.getY() + 1; y < Const.WORLDHEIGHT; y++) {
       posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
-      if (world.getBlockState(posCurrent).getBlock() == Blocks.AIR &&
-          world.getBlockState(posCurrent.above()).getBlock() == Blocks.AIR &&
-          world.getBlockState(posCurrent.below()).getBlock() != Blocks.AIR) {
+      if (world.getBlockState(posCurrent).isAir() &&
+          world.getBlockState(posCurrent.above()).isAir() &&
+          !world.getBlockState(posCurrent.below()).isAir()) {
         return posCurrent;
       }
     }

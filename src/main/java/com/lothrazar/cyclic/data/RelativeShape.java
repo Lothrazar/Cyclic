@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class RelativeShape {
@@ -54,7 +53,7 @@ public class RelativeShape {
       shape = new ArrayList<>();
       for (BlockPos pos : options) {
         BlockState bs = world.getBlockState(pos);
-        if (bs.getBlock() != Blocks.AIR) {
+        if (!bs.isAir()) {
           shape.add(pos.offset(-1 * center.getX(), -1 * center.getY(), -1 * center.getZ()));
         }
       }

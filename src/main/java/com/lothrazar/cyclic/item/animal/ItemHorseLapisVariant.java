@@ -21,28 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.animal;
 
-import net.minecraft.world.InteractionHand;
+import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class StirrupsReverseItem extends ItemBaseCyclic {
+public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInteractable {
 
-  public StirrupsReverseItem(Properties properties) {
-    super(properties);
+  public ItemHorseLapisVariant(Properties prop) {
+    super(prop);
   }
 
   @Override
-  public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
-    playerIn.swing(hand);
-    if (playerIn.hasPassenger(target)) {
-      target.removeVehicle();
-      playerIn.removeVehicle();
-      return InteractionResult.SUCCESS;
+  public void interactWith(EntityInteract event) {
+    if (event.getItemStack().getItem() == this
+        && event.getTarget() instanceof Horse
+        //        && event.getWorld().isRemote == false
+        && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
+      // lets go 
+      Horse ahorse = (Horse) event.getTarget();
+      int seed = event.getWorld().random.nextInt(7);
+      //setHorseVariant
+      //  access transformers
+      ahorse.getEntityData().set(Horse.DATA_ID_TYPE_VARIANT, (seed | event.getWorld().random.nextInt(5) << 8));
+      event.setCanceled(true);
+      event.setCancellationResult(InteractionResult.SUCCESS);
+      event.getPlayer().getCooldowns().addCooldown(this, 10);
+      event.getItemStack().shrink(1);
+      UtilEntity.eatingHorse(ahorse);
     }
-    return target.startRiding(playerIn, true) ? InteractionResult.SUCCESS : super.interactLivingEntity(stack, playerIn, target, hand);
   }
 }

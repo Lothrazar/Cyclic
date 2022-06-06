@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.apple;
+package com.lothrazar.cyclic.item.food;
 
 import java.util.Arrays;
 import java.util.HashMap;

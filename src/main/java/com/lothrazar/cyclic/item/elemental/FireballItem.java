@@ -1,6 +1,6 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.elemental;
 
-import com.lothrazar.cyclic.item.elemental.FireEntity;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -23,12 +23,12 @@ public class FireballItem extends ItemBaseCyclic {
     if (!shooter.isCreative()) {
       shooter.getItemInHand(hand).shrink(1);
     }
-    shooter.getCooldowns().addCooldown(ItemRegistry.FIREBALL.get(), 20);
+    shooter.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 20);
     return super.use(world, shooter, hand);
   }
 
   public static void tickHoldingFireball(Player player) {
-    if (player.getItemInHand(InteractionHand.MAIN_HAND).is(ItemRegistry.FIREBALL.get())) {
+    if (player.getItemInHand(InteractionHand.MAIN_HAND).is(ItemRegistry.FIREBALL_ORANGE.get())) {
       //hurt
       //not if youre on fire
       int fireProt = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_PROTECTION, player);
@@ -38,7 +38,7 @@ public class FireballItem extends ItemBaseCyclic {
         //i am holding fireball in my main hand
         //i am not on fire right now, i have no fire prot
         player.setRemainingFireTicks(30); // 20 ticks is one secondfireProt
-        player.getCooldowns().addCooldown(ItemRegistry.FIREBALL.get(), 5);
+        player.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 5);
         //          player.hurt(DamageSource.IN_FIRE, 0.5F);
       }
     }

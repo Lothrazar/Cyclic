@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.apple;
+package com.lothrazar.cyclic.item.food;
 
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;

@@ -38,7 +38,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.FIREBALL.get();
+    return ItemRegistry.FIREBALL_ORANGE.get();
   }
 
   public void setTarget(LivingEntity target) {

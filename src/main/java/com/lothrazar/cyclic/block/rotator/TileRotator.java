@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.util.UtilPlaceBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -34,7 +33,7 @@ public class TileRotator extends TileBlockEntityCyclic {
       BlockPos target = worldPosition.relative(currentFacing);
       BlockState state = level.getBlockState(target);
       //
-      if (state.getBlock() != Blocks.AIR &&
+      if (!state.isAir() &&
           state.getDestroySpeed(level, target) >= 0) {
         //        boolean succ = 
         UtilPlaceBlocks.rotateBlockValidState(level, target, currentFacing.getOpposite());

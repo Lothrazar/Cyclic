@@ -18,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -60,7 +59,7 @@ public class BlockstateCard extends ItemBaseCyclic {
       for (int i = 0; i < stateTags.size(); ++i) {
         CompoundTag currTag = stateTags.getCompound(i);
         BlockState stateFound = NbtUtils.readBlockState(currTag);
-        if (stateFound != null && stateFound.getBlock() != Blocks.AIR) {
+        if (stateFound != null && !stateFound.isAir()) {
           BlockStateMatcher matcher = new BlockStateMatcher();
           matcher.setState(stateFound);
           if (currTag.contains(EXACT_TAG)) {

@@ -35,7 +35,6 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -146,7 +145,7 @@ public class EventRender {
     stack = RandomizerItem.getIfHeld(player);
     if (stack.getItem() instanceof RandomizerItem) {
       BlockHitResult lookingAt = UtilRender.getLookingAt(player, (int) range);
-      if (world.getBlockState(lookingAt.getBlockPos()) == Blocks.AIR.defaultBlockState()) {
+      if (world.getBlockState(lookingAt.getBlockPos()).isAir()) {
         return;
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());

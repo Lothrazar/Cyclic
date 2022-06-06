@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.heart;
+package com.lothrazar.cyclic.item.food;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;

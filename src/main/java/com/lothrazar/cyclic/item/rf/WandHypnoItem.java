@@ -1,7 +1,8 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.rf;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilParticle;
 import net.minecraft.core.BlockPos;

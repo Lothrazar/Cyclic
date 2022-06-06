@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.data.CyclicFile;
-import com.lothrazar.cyclic.item.FireballItem;
+import com.lothrazar.cyclic.item.elemental.FireballItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

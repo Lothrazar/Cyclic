@@ -1,5 +1,6 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.drink;
 
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;

@@ -68,16 +68,16 @@ import com.lothrazar.cyclic.enchant.XpEnchant;
 import com.lothrazar.cyclic.item.EdibleFlightItem;
 import com.lothrazar.cyclic.item.EdibleSpecItem;
 import com.lothrazar.cyclic.item.OreProspector;
-import com.lothrazar.cyclic.item.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
-import com.lothrazar.cyclic.item.WandHypnoItem;
-import com.lothrazar.cyclic.item.WandMissileItem;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
+import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.findspawner.ItemProjectileDungeon;
-import com.lothrazar.cyclic.item.heart.HeartItem;
-import com.lothrazar.cyclic.item.heart.HeartToxicItem;
+import com.lothrazar.cyclic.item.food.HeartItem;
+import com.lothrazar.cyclic.item.food.HeartToxicItem;
+import com.lothrazar.cyclic.item.rf.WandHypnoItem;
+import com.lothrazar.cyclic.item.rf.WandMissileItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
@@ -159,6 +159,8 @@ public class ConfigRegistry {
     UNCRAFT_RECIPE_IDS.add("mysticalagriculture:farmland_till");
     UNCRAFT_RECIPE_IDS.add("refinedstorage:coloring_recipes*");
     UNCRAFT_RECIPE_IDS.add("forcecraft:transmutation*");
+    UNCRAFT_RECIPE_IDS.add("cyclic:fireball");
+    UNCRAFT_RECIPE_IDS.add("cyclic:shapeless/spark");
     //
     TRANSPORTBAG.addAll(Arrays.asList(
         //legacy

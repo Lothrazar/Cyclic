@@ -1,7 +1,8 @@
-package com.lothrazar.cyclic.item;
+package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
 import java.util.function.Consumer;
+import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.render.ShieldBlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;

@@ -47,13 +47,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemFlute extends ItemBaseCyclic implements IEntityInteractable {
+public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
 
   private static final String UNIQUEMAGIC = "uniquemagic";
   private static final String FLUTENAME = "flutename";
   public static final int CD = 30;
 
-  public ItemFlute(Properties prop) {
+  public FluteItem(Properties prop) {
     super(prop.stacksTo(1));
   }
 

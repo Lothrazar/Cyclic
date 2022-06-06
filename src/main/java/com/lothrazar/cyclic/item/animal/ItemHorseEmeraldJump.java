@@ -21,40 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.item.carrot;
+package com.lothrazar.cyclic.item.animal;
 
+import java.util.UUID;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEntityInteractable {
+public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInteractable {
 
-  public static final int HEARTS_MAX = 40;
+  private static final int JUMP_MAX = 10;
+  private static final double JUMP_AMT = 0.08;
+  public static final UUID MODIFIER_ID = UUID.fromString("abc30aa2-eff2-4a81-b92b-a1cb95f115c6");
 
-  public ItemHorseHealthDiamondCarrot(Properties prop) {
+  public ItemHorseEmeraldJump(Properties prop) {
     super(prop);
   }
 
   @Override
   public void interactWith(EntityInteract event) {
-    if (event.getItemStack().getItem() instanceof ItemHorseHealthDiamondCarrot
+    if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof Horse) {
       // lets go 
       Horse ahorse = (Horse) event.getTarget();
-      float mh = (float) ahorse.getAttribute(Attributes.MAX_HEALTH).getValue();
-      if (mh < 2 * ItemHorseHealthDiamondCarrot.HEARTS_MAX) { // 20 hearts == 40 health points
-        ahorse.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mh + 2);
-        event.setCanceled(true);
+      Attribute attr = UtilEntity.getAttributeJump(ahorse);
+      //got the attribute instance
+      AttributeInstance mainAttribute = ahorse.getAttribute(attr);
+      //now create a modifier 
+      if (mainAttribute.getValue() < JUMP_MAX) {
+        //ok good 
+        AttributeModifier oldModifier = mainAttribute.getModifier(MODIFIER_ID);
+        //what was the previous value
+        double newAdded = (oldModifier == null) ? JUMP_AMT : oldModifier.getAmount() + JUMP_AMT;
+        //got it      //replace the modifier on the main attribute
+        mainAttribute.removeModifier(MODIFIER_ID);
+        AttributeModifier newModifier = new AttributeModifier(MODIFIER_ID, "Cyclic Carrot Jump", newAdded, AttributeModifier.Operation.ADDITION);
+        mainAttribute.addPermanentModifier(newModifier);
+        //finish up
+        //
+        //success doesnt work, its broken. player still does the mounting lol
         event.setCancellationResult(InteractionResult.SUCCESS);
+        event.setCanceled(true);
         event.getItemStack().shrink(1);
-        ahorse.mobInteract(event.getPlayer(), event.getHand());
-        //processInteract
-        //trigger eatingHorse
         UtilEntity.eatingHorse(ahorse);
+        UtilChat.sendStatusMessage(event.getPlayer(), "" + (mainAttribute.getValue() + newAdded));
       }
     }
   }
