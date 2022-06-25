@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./gradlew cleanJar build
+./gradlew cleanJar build signJar copyJar
