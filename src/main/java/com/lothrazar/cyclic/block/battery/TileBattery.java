@@ -87,7 +87,6 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     ItemStack slotItem = this.batterySlots.getStackInSlot(0);
     IEnergyStorage itemStackStorage = slotItem.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     if (itemStackStorage != null) {
-
       int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE, true);
       int accepted = itemStackStorage.receiveEnergy(extracted, true);
       if (accepted > 0) {

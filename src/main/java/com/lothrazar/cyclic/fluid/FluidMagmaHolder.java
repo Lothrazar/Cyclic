@@ -36,9 +36,9 @@ public class FluidMagmaHolder {
         FluidAttributes.builder(
             new ResourceLocation("minecraft:block/" + id),
             new ResourceLocation("minecraft:block/" + id))
-           // .color(COLOR)
+    // .color(COLOR)
     )
-                .bucket(BUCKET)
-                .block(BLOCK);
+        .bucket(BUCKET)
+        .block(BLOCK);
   }
 }

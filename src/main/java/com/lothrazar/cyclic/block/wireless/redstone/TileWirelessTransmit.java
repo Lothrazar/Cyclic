@@ -110,7 +110,7 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     switch (Fields.values()[field]) {
       case RENDER:
         this.render = value % 2;
-        break;
+      break;
     }
   }
 

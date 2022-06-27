@@ -23,19 +23,16 @@ public class WorldGenFeatures {
           BlockRegistry.FLOWER_CYAN.get().defaultBlockState(),
           List.of(Blocks.POPPY.defaultBlockState(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState()),
           List.of(Blocks.POPPY.defaultBlockState(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState()))));
-
   public static Holder<ConfiguredFeature<SimpleBlockConfiguration, ?>> TULIP = buildFlower("flower_tulip",
       new SimpleBlockConfiguration(new NoiseThresholdProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0D), 0.005F, -0.8F, 0.33333334F,
           BlockRegistry.FLOWER_PURPLE_TULIP.get().defaultBlockState(),
           List.of(BlockRegistry.FLOWER_PURPLE_TULIP.get().defaultBlockState(), BlockRegistry.FLOWER_ABSALON_TULIP.get().defaultBlockState(), Blocks.PINK_TULIP.defaultBlockState()),
           List.of(BlockRegistry.FLOWER_ABSALON_TULIP.get().defaultBlockState()))));
-
   public static Holder<ConfiguredFeature<SimpleBlockConfiguration, ?>> LIME = buildFlower("flower_lime",
       new SimpleBlockConfiguration(new NoiseThresholdProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0D), 0.005F, -0.8F, 0.33333334F,
           BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(),
           List.of(BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState()),
-          List.of(BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(), Blocks.ALLIUM.defaultBlockState())))
-  );
+          List.of(BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(), Blocks.ALLIUM.defaultBlockState()))));
   //  public static final ConfiguredFeature<?, ?> FEAT_FLOWER_LIME = Feature.FLOWER.configured(new RandomPatchConfiguration(32, 8, 6, () -> {
   //    return Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(new NoiseThresholdProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0D), 0.005F, -0.8F, 0.33333334F,
   //        BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(),

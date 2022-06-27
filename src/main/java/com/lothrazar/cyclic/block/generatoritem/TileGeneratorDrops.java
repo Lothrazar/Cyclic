@@ -89,7 +89,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     if (this.burnTimeMax == 0) {
       this.findMatchingRecipe();
     }
-    if (burnPerTick == 0 || this.burnTime == 0 ) {
+    if (burnPerTick == 0 || this.burnTime == 0) {
       return;
     }
     //we are burning a valid recipe now

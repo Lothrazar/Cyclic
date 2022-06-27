@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.enchant.Multishot;
 import com.lothrazar.cyclic.item.AntimatterEvaporatorWandItem;
@@ -379,11 +380,14 @@ public class ItemEvents {
     Level world = event.getWorld();
     BlockPos pos = event.getPos();
     BlockState state = world.getBlockState(pos);
-    if (state.getBlock() == Blocks.PODZOL && world.isEmptyBlock(pos.above())) {
-      event.setResult(Result.ALLOW);
-      world.setBlockAndUpdate(pos.above(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState());
+    if (ConfigRegistry.CYAN_PODZOL_LEGACY.get()) {
+      //legacy feature, i meant to remove it in minecraft 1.16.2ish but forgot so now its a config
+      if (state.getBlock() == Blocks.PODZOL && world.isEmptyBlock(pos.above())) {
+        event.setResult(Result.ALLOW);
+        world.setBlockAndUpdate(pos.above(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState());
+      }
     }
-    else if (state.getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
+    if (state.getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setResult(Result.ALLOW);
       if (world.random.nextDouble() < 0.5) {
         UtilItemStack.drop(world, pos, new ItemStack(BlockRegistry.FLOWER_CYAN.get()));

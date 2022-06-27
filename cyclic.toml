@@ -109,6 +109,10 @@
 			#Do the four generate in the world.  If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), but the mod will not use the features to generate/place flowers in world-generation
 			enabled = true
 
+		[cyclic.worldgen.cyan_podzol_legacy]
+			#Enable the legacy feature that will spawn a Cyan flower when bonemeal is used on Podzol
+			enabled = false
+
 	#####################################################################################
 	# Block specific configs
 	#####################################################################################

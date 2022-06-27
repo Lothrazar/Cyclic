@@ -113,7 +113,6 @@ public class BlockCyclic extends BaseEntityBlock {
               //success so display new amount
               if (handler.getFluidInTank(0) != null) {
                 displayClientFluidMessage(player, handler);
-                return InteractionResult.SUCCESS;
               }
             }
             else {
@@ -121,6 +120,9 @@ public class BlockCyclic extends BaseEntityBlock {
             }
           }
         }
+      }
+      if (FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()) { // reverted to how 1.16.5 does it fix sapphys bug
+        return InteractionResult.SUCCESS;
       }
     }
     if (this.hasGui) {

@@ -16,13 +16,13 @@
       "item": "minecraft:iron_bars"
     },
     "r": {
-      "tag": "forge:tags/red"
+      "tag": "forge:dyes/red"
     },
     "g": {
-      "tag": "forge:tags/green"
+      "tag": "forge:dyes/green"
     },
     "b": {
-      "tag": "forge:tags/blue"
+      "tag": "forge:dyes/blue"
     }
   },
   "result": {

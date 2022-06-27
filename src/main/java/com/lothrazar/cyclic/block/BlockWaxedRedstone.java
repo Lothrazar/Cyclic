@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 public class BlockWaxedRedstone extends BlockCyclic {
 
   public BlockWaxedRedstone(Properties properties) {
-    super(properties.requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).isRedstoneConductor(BlockCyclic::never));
+    super(properties.strength(4.0F, 5.0F).sound(SoundType.METAL).isRedstoneConductor(BlockCyclic::never));
   }
 
   @Override

@@ -103,6 +103,7 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
   public static BooleanValue GENERATE_FLOWERS;
+  public static BooleanValue CYAN_PODZOL_LEGACY;
   static {
     buildDefaults();
     initConfig();
@@ -212,6 +213,8 @@ public class ConfigRegistry {
         + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "
         + "but the mod will not use the features to generate/place flowers in world-generation")
         .define("flowers.enabled", true);
+    CYAN_PODZOL_LEGACY = CFG.comment("Enable the legacy feature that will spawn a Cyan flower when bonemeal is used on Podzol")
+        .define("cyan_podzol_legacy.enabled", false);
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");

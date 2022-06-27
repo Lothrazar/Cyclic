@@ -97,7 +97,7 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     if (stack.isEdible()) {
-      float foodVal = stack.getItem().getFoodProperties().getNutrition() + stack.getItem().getFoodProperties().getSaturationModifier();
+      float foodVal = stack.getItem().getFoodProperties(stack, null).getNutrition() + stack.getItem().getFoodProperties(stack, null).getSaturationModifier();
       int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
       //      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
       // BURN IT

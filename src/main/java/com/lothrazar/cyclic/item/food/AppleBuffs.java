@@ -22,8 +22,8 @@ public class AppleBuffs extends ItemBaseCyclic {
 
   @Override
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (this.getFoodProperties() != null && this.getFoodProperties().getEffects() != null) {
-      List<Pair<MobEffectInstance, Float>> eff = this.getFoodProperties().getEffects();
+    if (this.getFoodProperties(stack, null) != null && this.getFoodProperties(stack, null).getEffects() != null) {
+      List<Pair<MobEffectInstance, Float>> eff = this.getFoodProperties(stack, null).getEffects();
       for (Pair<MobEffectInstance, Float> entry : eff) {
         MobEffectInstance effCurrent = entry.getFirst();
         if (effCurrent == null || effCurrent.getEffect() == null) {

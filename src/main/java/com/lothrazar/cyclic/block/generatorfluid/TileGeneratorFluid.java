@@ -204,16 +204,16 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
     switch (Fields.values()[field]) {
       case REDSTONE:
         this.needsRedstone = value % 2;
-        break;
+      break;
       case TIMER:
         this.burnTime = value;
-        break;
+      break;
       case BURNMAX:
         this.burnTimeMax = value;
-        break;
+      break;
       case FLOWING:
         this.flowing = value;
-        break;
+      break;
     }
   }
 
