@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -33,8 +34,18 @@ public class BlockWorkbench extends BlockCyclic {
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileWorkbench(pos, state);
   }
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.workbench, world.isClientSide ? TileWorkbench::clientTick : TileWorkbench::serverTick);
-  //  }
+
+  @Override // was onReplaced
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      TileWorkbench tileentity = (TileWorkbench) worldIn.getBlockEntity(pos);
+      if (tileentity != null) {
+        for (int i = 0; i < tileentity.inventory.getSlots(); ++i) {
+          // was  InventoryHelper.spawnItemStack
+          Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.inventory.getStackInSlot(i));
+        }
+      }
+      super.onRemove(state, worldIn, pos, newState, isMoving);
+    }
+  }
 }

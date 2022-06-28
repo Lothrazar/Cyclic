@@ -64,28 +64,17 @@ public class BlockWirelessItem extends BlockCyclic {
     return createTickerHelper(type, TileRegistry.WIRELESS_ITEM.get(), world.isClientSide ? TileWirelessItem::clientTick : TileWirelessItem::serverTick);
   }
 
-  @Override
+  @Override // was onReplaced
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileWirelessItem tileentity = (TileWirelessItem) worldIn.getBlockEntity(pos);
       if (tileentity != null) {
         for (int i = 0; i < tileentity.gpsSlots.getSlots(); ++i) {
+          // was  InventoryHelper.spawnItemStack
           Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.gpsSlots.getStackInSlot(i));
         }
       }
       super.onRemove(state, worldIn, pos, newState, isMoving);
     }
   }
-  //  @Override
-  //  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-  //    if (state.getBlock() != newState.getBlock()) {
-  //      TileWirelessItem tileentity = (TileWirelessItem) worldIn.getTileEntity(pos);
-  //      if (tileentity != null) {
-  //        for (int i = 0; i < tileentity.gpsSlots.getSlots(); ++i) {
-  //          InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.gpsSlots.getStackInSlot(i));
-  //        }
-  //      }
-  //      super.onReplaced(state, worldIn, pos, newState, isMoving);
-  //    }
-  //  }
 }
