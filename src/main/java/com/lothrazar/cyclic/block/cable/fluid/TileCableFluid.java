@@ -9,8 +9,7 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.cyclic.util.UtilFluid;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -45,7 +44,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
   public static final int EXTRACT_RATE = CAPACITY;
   private final FluidTank fluidTank = new FluidTankBase(this, CAPACITY, fluidStack -> FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
   private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> fluidTank);
-  private final Map<Direction, LazyOptional<IFluidHandler>> fluidCapSides = new HashMap<>();
+  private final ConcurrentHashMap<Direction, LazyOptional<IFluidHandler>> fluidCapSides = new ConcurrentHashMap<>();
 
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
@@ -121,21 +120,32 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
       if (side == null) {
         return fluidCap.cast();
       }
-      if (fluidCapSides.containsKey(side)) {
-        LazyOptional<IFluidHandler> sidedCap = fluidCapSides.get(side);
+      LazyOptional<IFluidHandler> sidedCap = fluidCapSides.get(side);
+      if (sidedCap == null) {
+        if (getConnectionType(side) != EnumConnectType.BLOCKED) {
+          sidedCap = LazyOptional.of(() -> fluidTank);
+          fluidCapSides.put(side, sidedCap);
+          return sidedCap.cast();
+        }
+      }
+      else {
         return sidedCap.cast();
       }
-      final LazyOptional<IFluidHandler> fluidCapSide = fluidCapSides.computeIfAbsent(side, k -> {
-        if (getConnectionType(k) != EnumConnectType.BLOCKED) {
-          final LazyOptional<IFluidHandler> v = LazyOptional.of(() -> fluidTank);
-          fluidCapSides.put(k, v);
-          return v;
-        }
-        return LazyOptional.empty();
-      });
-      if (fluidCapSide != null) {
-        return fluidCapSide.cast();
-      }
+      //works but
+      //      if (fluidCapSides.containsKey(side)) {
+      //        LazyOptional<IFluidHandler> sidedCap = fluidCapSides.get(side);
+      //        return sidedCap.cast();
+      //      }
+      //      final LazyOptional<IFluidHandler> fluidCapSide = fluidCapSides.computeIfAbsent(side, k -> {
+      //        if (getConnectionType(k) != EnumConnectType.BLOCKED) {
+      //          //          final LazyOptional<IFluidHandler> v = LazyOptional.of(() -> fluidTank);
+      //          return LazyOptional.of(() -> fluidTank);
+      //        }
+      //        return LazyOptional.empty();
+      //      });
+      //      if (fluidCapSide != null) {
+      //        return fluidCapSide.cast();
+      //      }
     }
     return super.getCapability(cap, side);
   }

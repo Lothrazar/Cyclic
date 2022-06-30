@@ -1,7 +1,7 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.5.15"
+		"1.16.5-latest": "1.5.17"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -72,5 +72,7 @@
 		,"1.5.13":"Added support for using the left hand on Item User. #1994 by 'metalshark' Fixes issue #1992.  "
 		,"1.5.14":"Fix #2016 regarding settings data card.  Fix Crash when trying to push Cyclic item cables with create piston.   Merge pull request #2013 from metalshark : Add caching of packager recipes and move static methods out of main class for scaling.   Merge pull request #2011 from metalshark : Invalidate capabilities when declaring them "
 		,"1.5.15":"Fluids cyclic:honey, xpjuice, and biomass are now swim-able. Fix harvesting Battery and Tank.  Fix scythe of foraging not harvesting some 2-tall flower bushes. Fix cannot shift-click from Packager. Added client text config 'FluidContents'. Reusable Ender Eye now works with YUNGS better strongholds (structure ID 'betterstrongholds:stronghold').  Fix Item Transfer Node missing loot table. Fix ender shelf event conflict with supplementaries:book_pile. Empty Ender Shelf now drops item stack with no datatag. Hoppers can now insert into Composter.  Fix wooden hopper sometimes not picking up items on top of it. Fluid Cable and Fluid Hopper can now extract water from a full Water Cauldron.  Cyan Flower can now go into Compost. Fix harvest scythe desync on servers.  Fix #2057 doorbell on leaf blocks. fix #2054 dodge concurrent exceptions when present so isabesnt is overkill. Fix #2056 remove event blocking bonemeal and podzol. Fix #2041 Inaccessible Enchantments, update enchant rarity levels to match mc1.18.2+ settings. Tunnel added to Shape Builder #1911.  Fix #2061 Block Reach enchant by using Attribute Modifiers (mod compatibility).   "
+		,"1.5.16":" Fix Workbench deletes items inside when mined #2121"
+		,"1.5.17":" Fix Workbench deletes items inside when mined #2121. Fix Fluid cable crashing game #2118 fluid pipe server crash #2090 using ConcurrentHashMap for smp issues (ConcurrentModificationException)."
 	}
  }

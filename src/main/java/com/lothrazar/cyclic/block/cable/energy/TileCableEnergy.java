@@ -9,8 +9,8 @@ import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -27,7 +27,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
   private static final int MAX = 32000;
   final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private final Map<Direction, LazyOptional<IEnergyStorage>> energyCapSides = new HashMap<>();
+  private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> energyCapSides = new ConcurrentHashMap<>();
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
   private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
 
@@ -146,6 +146,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
     return super.getCapability(cap, side);
   }
 
+  @Override
   public void invalidateCaps() {
     energyCap.invalidate();
     for (final LazyOptional<IEnergyStorage> sidedCap : energyCapSides.values()) {

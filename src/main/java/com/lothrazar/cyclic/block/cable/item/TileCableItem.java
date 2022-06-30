@@ -6,8 +6,7 @@ import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -45,7 +44,7 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
     }
   };
   private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> itemHandler);
-  private final Map<Direction, LazyOptional<IItemHandler>> itemCapSides = new HashMap<>();
+  private final ConcurrentHashMap<Direction, LazyOptional<IItemHandler>> itemCapSides = new ConcurrentHashMap<>();
 
   public TileCableItem() {
     super(TileRegistry.item_pipeTile);
