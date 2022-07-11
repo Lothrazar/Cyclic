@@ -89,6 +89,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
       haxor.add(cpy);
     }
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(VanillaTypes.ITEM_STACK, haxor);
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.getResultItem());
   }
   //  @Override
   //  public void setIngredients(CraftingRecipe recipe, IIngredients ingredients) {

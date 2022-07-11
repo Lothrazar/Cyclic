@@ -9,6 +9,9 @@ import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import net.minecraft.world.item.crafting.RecipeType;
 
+/**
+ * TODO: Clean up this gross mess
+ */
 public class CyclicRecipeType<RECIPE_TYPE extends CyclicRecipe> implements RecipeType<RECIPE_TYPE> {
 
   public static final CyclicRecipeType<RecipeSolidifier<TileBlockEntityCyclic>> SOLID = create("solidifier");

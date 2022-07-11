@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
 import com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.melter.ScreenMelter;
+import com.lothrazar.cyclic.block.packager.ContainerPackager;
 import com.lothrazar.cyclic.block.packager.ScreenPackager;
 import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
@@ -90,12 +91,10 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(GenitemRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM)));
     registry.addRecipes(GenfluidRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID)));
     registry.addRecipes(CrusherRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER)));
+    registry.addRecipes(PackagerRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(RecipeType.CRAFTING)));
     for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
-      if (!st.isEmpty()
-          && (st.getItem() instanceof BucketItem == false)
-      //          && UtilString.isCyclic(item.getRegistryName())
-      ) {
+      if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {
         registry.addIngredientInfo(st, VanillaTypes.ITEM_STACK, new TranslatableComponent(item.get().getDescriptionId() + ".guide"));
       }
     }
@@ -146,8 +145,8 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeTransferHandler(ContainerCrusher.class, CrusherRecipeCategory.TYPE,
         0, 1, //recipeSLotStart, recipeSlotCount
         1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    //    registry.addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
-    //        10, 9, //recipeSLotStart, recipeSlotCount
-    //        30, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
+    registry.addRecipeTransferHandler(ContainerPackager.class, PackagerRecipeCategory.TYPE,
+        0, 1, //recipeSLotStart, recipeSlotCount
+        1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount 
   }
 }
