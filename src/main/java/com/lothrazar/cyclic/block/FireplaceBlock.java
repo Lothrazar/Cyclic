@@ -89,7 +89,6 @@ public class FireplaceBlock extends BlockCyclic {
 
   private boolean hasInfiniburnTag(Level worldIn, BlockPos pos) {
     BlockState state = worldIn.getBlockState(pos);
-    Block b = state.getBlock();
     return (state.is(BlockTags.INFINIBURN_END) && worldIn.dimension() == Level.END)
         || (state.is(BlockTags.INFINIBURN_NETHER) && worldIn.dimension() == Level.NETHER)
         || (state.is(BlockTags.INFINIBURN_OVERWORLD) && worldIn.dimension() == Level.OVERWORLD);

@@ -90,10 +90,10 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
           && fluidHere.getType() != Fluids.EMPTY) {
         tryHere = true;
       }
-      else if (fluidMode == EvaporateMode.WATER && fluidHere.getType().is(FluidTags.WATER)) {
+      else if (fluidMode == EvaporateMode.WATER && fluidHere.is(FluidTags.WATER)) {
         tryHere = true;
       }
-      else if (fluidMode == EvaporateMode.LAVA && fluidHere.getType().is(FluidTags.LAVA)) {
+      else if (fluidMode == EvaporateMode.LAVA && fluidHere.is(FluidTags.LAVA)) {
         tryHere = true;
       }
       if (tryHere && UtilWorld.removeFlowingLiquid(world, posTarget, true)) {

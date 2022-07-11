@@ -308,4 +308,21 @@ public class UtilWorld {
     }
     return targetPos.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world));
   }
+
+  //TODO: unused?
+  public static BlockPos returnClosest(BlockPos playerPos, BlockPos pos1, BlockPos pos2) {
+    if (pos1 == null && pos2 == null) {
+      return null;
+    }
+    else if (pos1 == null) {
+      return pos2;
+    }
+    else if (pos2 == null) {
+      return pos1;
+    }
+    else if (UtilWorld.distanceBetweenHorizontal(playerPos, pos1) <= UtilWorld.distanceBetweenHorizontal(playerPos, pos2)) {
+      return pos1;
+    }
+    return pos2;
+  }
 }

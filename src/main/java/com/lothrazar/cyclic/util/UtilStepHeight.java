@@ -19,6 +19,7 @@ public class UtilStepHeight {
     }
     disableStepHeightInternal(player);
   }
+  // TODO: Fix step height
 
   private static void disableStepHeightInternal(Player player) {
     player.maxUpStep = 0.6F; // LivingEntity.class constructor defaults to this

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.slingshot;
 
-import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -24,7 +23,6 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
   private static final int MAX_LIFETIME = 120000;
   private static final int TIME_UNTIL_HOMING = 4;
   private static final double SPEED = 0.95;
-  private UUID targetId = null;
   private LivingEntity targetEntity;
   private int lifetime = MAX_LIFETIME;
 
@@ -43,7 +41,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
 
   public void setTarget(LivingEntity target) {
     ModCyclic.LOGGER.info("Magic missile target found " + target);
-    targetId = target == null ? null : target.getUUID();
+    //    targetId = target == null ? null : target.getUUID();
     targetEntity = target;
   }
 
