@@ -82,10 +82,14 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     return -1;
   }
 
+  public Ingredient at(int slot) {
+    return ingredients.get(slot);
+  }
+
   private boolean matchItems(TileSolidifier tile) {
-    Ingredient top = ingredients.get(0);
-    Ingredient middle = ingredients.get(1);
-    Ingredient bottom = ingredients.get(2);
+    Ingredient top = at(0);
+    Ingredient middle = at(1);
+    Ingredient bottom = at(2);
     //
     List<Integer> matchingSlots = new ArrayList<>();
     matchingSlots.add(findMatchingSlot(tile, top, matchingSlots));
@@ -103,7 +107,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   public ItemStack[] ingredientAt(int slot) {
-    Ingredient ing = ingredients.get(slot);
+    Ingredient ing = at(slot);
     return ing.getItems();
   }
 

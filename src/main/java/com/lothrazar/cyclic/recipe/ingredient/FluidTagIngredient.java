@@ -44,18 +44,8 @@ public class FluidTagIngredient {
     }
     TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(tag));
     if (ft != null) {
-      //      ft. todo : how to get all fluids for this tag
-      //      Registry.FLUID_REGISTRY.get
-      //      Codec<TagKey<Fluid>> wtf = TagKey.hashedCodec(Registry.FLUID_REGISTRY);
-      //      MapCodec<TagKey<Fluid>> whatisthis = wtf.fieldOf(tag);
       TagKey<Fluid> key = ForgeRegistries.FLUIDS.tags().createTagKey(new ResourceLocation(tag));
       return ForgeRegistries.FLUIDS.tags().getTag(key).stream().toList();
-      //      return key.
-      //      for (TagKey<Fluid> key : getAllTags) {
-      //        if (key.toString().equalsIgnoreCase(tag)) {
-      //          //add all fluids for tag?
-      //          return fluidTag.getValue().getValues();
-      //        }
     }
     return null;
   }

@@ -59,7 +59,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
   }
 
   @Override
-  public RecipeType getRecipeType() {
+  public RecipeType<CraftingRecipe> getRecipeType() {
     return TYPE;
   }
 
@@ -70,9 +70,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   @Override
   public void setIngredients(CraftingRecipe recipe, IIngredients ingredients) {
-    //    if (!TilePackager.isRecipeValid(recipe)) {
-    //      return;
-    //    }
     if (recipe.getIngredients().size() == 0) {
       return;
     }

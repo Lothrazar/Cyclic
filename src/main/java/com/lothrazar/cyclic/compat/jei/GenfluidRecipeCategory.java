@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.compat.jei;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.recipe.CyclicRecipeType;
@@ -19,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 @SuppressWarnings("rawtypes")
 public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFluid> {
@@ -73,8 +75,8 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeGeneratorFluid recipe, IFocusGroup focuses) {
-    builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(ForgeTypes.FLUID_STACK,
-        recipe.fluidIng.getMatchingFluids());
+    List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+    builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids);
   }
   //keep old code for reference
   //

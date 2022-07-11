@@ -64,8 +64,12 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   public ItemStack[] ingredientAt(int slot) {
-    Ingredient ing = ingredients.get(slot);
+    Ingredient ing = at(slot);
     return ing.getItems();
+  }
+
+  public Ingredient at(int slot) {
+    return ingredients.get(slot);
   }
 
   @Override
