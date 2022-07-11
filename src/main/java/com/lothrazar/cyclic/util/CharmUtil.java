@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.util;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import com.lothrazar.cyclic.api.IHasClickToggle;
 import com.lothrazar.cyclic.compat.CompatConstants;
@@ -9,6 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 public class CharmUtil {
 
@@ -28,9 +28,10 @@ public class CharmUtil {
     if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
       //check curios slots IF mod is loaded
       try {
-        final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
-        if (equipped != null && isMatching(equipped.right, match)) {
-          return equipped.right;
+        //        final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
+        SlotResult first = CuriosApi.getCuriosHelper().findFirstCurio(player, match).orElse(null);
+        if (first != null && isMatching(first.stack(), match)) {
+          return first.stack();
         }
       }
       catch (Exception e) {
@@ -47,18 +48,19 @@ public class CharmUtil {
    * @param match
    * @return
    */
-  public static Triple<String, Integer, ItemStack> isCurioOrInventory(Player player, Item match) {
+  private static Triple<String, Integer, ItemStack> isCurioOrInventory(Player player, Item match) {
     Triple<String, Integer, ItemStack> stackFound = Triple.of("", -1, ItemStack.EMPTY);
     if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
       //check curios slots IF mod is loaded
       try {
-        final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
-        if (equipped != null && isMatching(equipped.right, match)) {
-          ItemStack found = equipped.right;
+        //  final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
+        SlotResult first = CuriosApi.getCuriosHelper().findFirstCurio(player, match).orElse(null);
+        if (first != null && isMatching(first.stack(), match)) {
+          ItemStack found = first.stack();
           if (found.getItem() instanceof IHasClickToggle) {
             IHasClickToggle testMe = (IHasClickToggle) found.getItem();
             if (testMe.isOn(found)) {
-              return Triple.of(CompatConstants.CURIOS, equipped.middle, equipped.right);
+              return Triple.of(CompatConstants.CURIOS, first.slotContext().index(), first.stack());
             }
             //else its found but turned off , keep looking
           }
