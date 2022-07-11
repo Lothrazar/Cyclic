@@ -27,12 +27,13 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
 
   private static final int FONT = 4210752;
   static final ResourceLocation ID = new ResourceLocation(CyclicRecipeType.GENERATOR_ITEM.toString());
+  static final RecipeType<RecipeGeneratorItem> TYPE = RecipeType.create(ModCyclic.MODID, "generator_item", RecipeGeneratorItem.class);
   private IDrawable gui;
   private IDrawable icon;
 
   public GenitemRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_item.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(BlockRegistry.GENERATOR_ITEM.get()));
+    icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.GENERATOR_ITEM.get()));
   }
 
   @Override
@@ -61,8 +62,8 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
   }
 
   @Override
-  public RecipeType getRecipeType() {
-    return new RecipeType(getUid(), getRecipeClass());
+  public RecipeType<RecipeGeneratorItem> getRecipeType() {
+    return TYPE;
   }
 
   @Override

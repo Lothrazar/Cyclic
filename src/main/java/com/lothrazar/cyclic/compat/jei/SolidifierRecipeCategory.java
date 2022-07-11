@@ -30,6 +30,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   private static final int FONT = 4210752;
   static final ResourceLocation ID = new ResourceLocation(CyclicRecipeType.SOLID.toString());
+  static final RecipeType<RecipeSolidifier> TYPE = RecipeType.create(ModCyclic.MODID, "solidifier", RecipeSolidifier.class);
   private IDrawable gui;
   private IDrawable icon;
 
@@ -64,8 +65,8 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   }
 
   @Override
-  public RecipeType getRecipeType() {
-    return new RecipeType(getUid(), getRecipeClass());
+  public RecipeType<RecipeSolidifier> getRecipeType() {
+    return TYPE;
   }
 
   @Override

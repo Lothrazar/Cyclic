@@ -40,7 +40,7 @@ public class FluidTagIngredient {
 
   public List<Fluid> list() {
     if (!hasTag()) {
-      return null;
+      return List.of(fluid.getFluid());
     }
     TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(tag));
     if (ft != null) {

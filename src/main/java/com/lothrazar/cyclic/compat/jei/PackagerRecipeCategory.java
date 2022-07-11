@@ -24,12 +24,13 @@ import net.minecraft.world.item.crafting.Ingredient;
 public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   static final ResourceLocation ID = new ResourceLocation("cyclic:packager");
+  static final RecipeType<CraftingRecipe> TYPE = RecipeType.create(ModCyclic.MODID, "packager", CraftingRecipe.class);
   private IDrawable gui;
   private IDrawable icon;
 
   public PackagerRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/packager.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
-    icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(BlockRegistry.PACKAGER.get()));
+    icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.PACKAGER.get()));
   }
 
   @Override
@@ -59,7 +60,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   @Override
   public RecipeType getRecipeType() {
-    return new RecipeType(getUid(), getRecipeClass());
+    return TYPE;
   }
 
   @Override
