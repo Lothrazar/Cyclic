@@ -61,18 +61,33 @@ public class GrowthEnchant extends EnchantmentCyclic {
   }
 
   @Override
-  public int getMaxLevel() {
-    return 3;
+  public boolean isTradeable() {
+    return isEnabled() && super.isTradeable();
   }
 
   @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return stack.getItem() instanceof HoeItem;
+  public boolean isDiscoverable() {
+    return isEnabled() && super.isDiscoverable();
+  }
+
+  @Override
+  public boolean isAllowedOnBooks() {
+    return isEnabled() && super.isAllowedOnBooks();
   }
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    return canApplyAtEnchantingTable(stack);
+    return isEnabled() && super.canEnchant(stack) && stack.getItem() instanceof HoeItem;
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
+    return isEnabled() && super.canApplyAtEnchantingTable(stack);
+  }
+
+  @Override
+  public int getMaxLevel() {
+    return 3;
   }
 
   @SubscribeEvent

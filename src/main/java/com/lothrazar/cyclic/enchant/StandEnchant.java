@@ -33,6 +33,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -57,10 +58,35 @@ public class StandEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean checkCompatibility(Enchantment ench) {
-    return super.checkCompatibility(ench) && ench != EnchantRegistry.LAUNCH.get()
-        && ench != EnchantRegistry.EXPERIENCE_BOOST.get()
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.LAUNCH
+        && ench != EnchantRegistry.EXPERIENCE_BOOST
         && ench != Enchantments.MENDING
         && ench != Enchantments.THORNS;
+  }
+
+  @Override
+  public boolean isTradeable() {
+    return isEnabled() && super.isTradeable();
+  }
+
+  @Override
+  public boolean isDiscoverable() {
+    return isEnabled() && super.isDiscoverable();
+  }
+
+  @Override
+  public boolean isAllowedOnBooks() {
+    return isEnabled() && super.isAllowedOnBooks();
+  }
+
+  @Override
+  public boolean canEnchant(ItemStack stack) {
+    return isEnabled() && super.canEnchant(stack);
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
+    return isEnabled() && super.canApplyAtEnchantingTable(stack);
   }
 
   @Override

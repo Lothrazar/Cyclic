@@ -63,6 +63,31 @@ public class BeheadingEnchant extends EnchantmentCyclic {
   }
 
   @Override
+  public boolean isTradeable() {
+    return isEnabled() && super.isTradeable();
+  }
+
+  @Override
+  public boolean isDiscoverable() {
+    return isEnabled() && super.isDiscoverable();
+  }
+
+  @Override
+  public boolean isAllowedOnBooks() {
+    return isEnabled() && super.isAllowedOnBooks();
+  }
+
+  @Override
+  public boolean canEnchant(ItemStack stack) {
+    return isEnabled() && super.canEnchant(stack);
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
+    return isEnabled() && super.canApplyAtEnchantingTable(stack);
+  }
+
+  @Override
   public int getMaxLevel() {
     return 3;
   }

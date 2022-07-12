@@ -48,6 +48,26 @@ public class StepEnchant extends EnchantmentCyclic {
   }
 
   @Override
+  public boolean isTradeable() {
+    return isEnabled() && super.isTradeable();
+  }
+
+  @Override
+  public boolean isDiscoverable() {
+    return isEnabled() && super.isDiscoverable();
+  }
+
+  @Override
+  public boolean isAllowedOnBooks() {
+    return isEnabled() && super.isAllowedOnBooks();
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
+    return isEnabled() && super.canApplyAtEnchantingTable(stack);
+  }
+
+  @Override
   public boolean isEnabled() {
     return CFG.get();
   }
@@ -60,14 +80,10 @@ public class StepEnchant extends EnchantmentCyclic {
   @Override
   public boolean canEnchant(ItemStack stack) {
     //anything that goes on your feet
-    boolean yes = (stack.getItem() instanceof ArmorItem)
+    boolean yes = isEnabled()
+        && (stack.getItem() instanceof ArmorItem)
         && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.LEGS;
     return yes;
-  }
-
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack) {
-    return this.canEnchant(stack);
   }
 
   @SubscribeEvent

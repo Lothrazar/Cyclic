@@ -28,6 +28,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
@@ -50,6 +51,31 @@ public class BeekeeperEnchant extends EnchantmentCyclic {
   @Override
   public boolean isEnabled() {
     return CFG.get();
+  }
+
+  @Override
+  public boolean isTradeable() {
+    return isEnabled() && super.isTradeable();
+  }
+
+  @Override
+  public boolean isDiscoverable() {
+    return isEnabled() && super.isDiscoverable();
+  }
+
+  @Override
+  public boolean isAllowedOnBooks() {
+    return isEnabled() && super.isAllowedOnBooks();
+  }
+
+  @Override
+  public boolean canEnchant(ItemStack stack) {
+    return isEnabled() && super.canEnchant(stack);
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
+    return isEnabled() && super.canApplyAtEnchantingTable(stack);
   }
 
   @Override

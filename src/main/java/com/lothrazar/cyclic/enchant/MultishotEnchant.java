@@ -37,12 +37,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
-public class Multishot extends EnchantmentCyclic {
+public class MultishotEnchant extends EnchantmentCyclic {
 
   public static final String ID = "multishot";
   public static BooleanValue CFG;
 
-  public Multishot(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
+  public MultishotEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
   }
 
@@ -52,8 +52,28 @@ public class Multishot extends EnchantmentCyclic {
   }
 
   @Override
+  public boolean isTradeable() {
+    return isEnabled() && super.isTradeable();
+  }
+
+  @Override
+  public boolean isDiscoverable() {
+    return isEnabled() && super.isDiscoverable();
+  }
+
+  @Override
+  public boolean isAllowedOnBooks() {
+    return isEnabled() && super.isAllowedOnBooks();
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
+    return isEnabled() && super.canApplyAtEnchantingTable(stack);
+  }
+
+  @Override
   public boolean canEnchant(ItemStack stack) {
-    return stack.getItem() instanceof BowItem;
+    return isEnabled() && stack.getItem() instanceof BowItem;
   }
 
   @Override

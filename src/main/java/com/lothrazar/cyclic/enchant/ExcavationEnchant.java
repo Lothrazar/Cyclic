@@ -69,18 +69,38 @@ public class ExcavationEnchant extends EnchantmentCyclic {
   }
 
   @Override
+  public boolean isTradeable() {
+    return isEnabled() && super.isTradeable();
+  }
+
+  @Override
+  public boolean isDiscoverable() {
+    return isEnabled() && super.isDiscoverable();
+  }
+
+  @Override
+  public boolean isAllowedOnBooks() {
+    return isEnabled() && super.isAllowedOnBooks();
+  }
+
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack) {
+    return isEnabled() && super.canApplyAtEnchantingTable(stack);
+  }
+
+  @Override
   public int getMaxLevel() {
     return 5;
   }
 
   @Override
   public boolean canEnchant(ItemStack stack) {
-    return super.canEnchant(stack) || stack.is(Tags.Items.SHEARS);
+    return isEnabled() && (super.canEnchant(stack) || stack.is(Tags.Items.SHEARS));
   }
 
   @Override
   public boolean checkCompatibility(Enchantment ench) {
-    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST.get();
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
   }
 
   private int getHarvestMax(int level) {

@@ -55,7 +55,7 @@ import com.lothrazar.cyclic.enchant.ExcavationEnchant;
 import com.lothrazar.cyclic.enchant.GrowthEnchant;
 import com.lothrazar.cyclic.enchant.LifeLeechEnchant;
 import com.lothrazar.cyclic.enchant.MagnetEnchant;
-import com.lothrazar.cyclic.enchant.Multishot;
+import com.lothrazar.cyclic.enchant.MultishotEnchant;
 import com.lothrazar.cyclic.enchant.PearlEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
@@ -181,7 +181,8 @@ public class ConfigRegistry {
 
   private static void initConfig() {
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
-    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up but have functions disabled)", WALL).push("enchantment");
+    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
+        .push("enchantment");
     ////////////////////////////////////////////////////////////////// enchantment
     AutoSmeltEnchant.CFG = CFG.comment("Set false to disable enchantment").define(AutoSmeltEnchant.ID + ".enabled", true);
     BeekeeperEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeekeeperEnchant.ID + ".enabled", true);
@@ -193,7 +194,7 @@ public class ConfigRegistry {
     ElytraLaunchEnchant.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(ElytraLaunchEnchant.ID + ".enabled", true);
     LifeLeechEnchant.CFG = CFG.comment("Set false to disable enchantment").define(LifeLeechEnchant.ID + ".enabled", true);
     MagnetEnchant.CFG = CFG.comment("Set false to disable enchantment").define(MagnetEnchant.ID + ".enabled", true);
-    Multishot.CFG = CFG.comment("Set false to disable enchantment").define(Multishot.ID + ".enabled", true);
+    MultishotEnchant.CFG = CFG.comment("Set false to disable enchantment").define(MultishotEnchant.ID + ".enabled", true);
     PearlEnchant.CFG = CFG.comment("Set false to disable enchantment").define(PearlEnchant.ID + ".enabled", true);
     QuickdrawEnchant.CFG = CFG.comment("Set false to disable enchantment").define(QuickdrawEnchant.ID + ".enabled", true);
     ReachEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ReachEnchant.ID + ".enabled", true);
