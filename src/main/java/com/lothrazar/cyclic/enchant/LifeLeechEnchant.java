@@ -40,7 +40,7 @@ public class LifeLeechEnchant extends EnchantmentCyclic {
 
   public LifeLeechEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    MinecraftForge.EVENT_BUS.register(this);
+    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
@@ -84,7 +84,9 @@ public class LifeLeechEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
-    //    EntityLivingBase target = (EntityLivingBase) event.getTarget();
+    if (!isEnabled()) {
+      return;
+    }
     Player attacker = event.getPlayer();
     int level = getCurrentLevelTool(attacker);
     if (level > 0 && attacker.getHealth() < attacker.getMaxHealth()) {

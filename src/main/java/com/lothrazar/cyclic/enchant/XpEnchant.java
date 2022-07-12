@@ -69,7 +69,7 @@ public class XpEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean checkCompatibility(Enchantment ench) {
-    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXCAVATE;
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXCAVATE.get();
   }
 
   /**

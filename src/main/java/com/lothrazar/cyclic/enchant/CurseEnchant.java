@@ -26,7 +26,7 @@ public class CurseEnchant extends EnchantmentCyclic {
 
   public CurseEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    MinecraftForge.EVENT_BUS.register(this);
+    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
 
   public static BooleanValue CFG;

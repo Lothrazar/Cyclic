@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -38,7 +37,7 @@ public class SteadyEnchant extends EnchantmentCyclic {
 
   public SteadyEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    MinecraftForge.EVENT_BUS.register(this);
+    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
@@ -54,7 +53,6 @@ public class SteadyEnchant extends EnchantmentCyclic {
   @SubscribeEvent
   public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
     if (this.getCurrentArmorLevel(event.getEntityLiving()) > 0) {
-      ModCyclic.LOGGER.info("steady body  knockback eh"); //steady body
       event.setCanceled(true);
     }
   }

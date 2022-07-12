@@ -44,7 +44,7 @@ public class BeekeeperEnchant extends EnchantmentCyclic {
 
   public BeekeeperEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    MinecraftForge.EVENT_BUS.register(this);
+    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
@@ -76,6 +76,9 @@ public class BeekeeperEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onLivingDamageEvent(LivingDamageEvent event) {
+    if (!isEnabled()) {
+      return;
+    }
     int level = this.getCurrentArmorLevel(event.getEntityLiving());
     if (level >= 1 && event.getSource() != null
         && event.getSource().getDirectEntity() != null) {

@@ -181,7 +181,8 @@ public class ConfigRegistry {
 
   private static void initConfig() {
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
-    CFG.comment(WALL, " Enchantment related configs", WALL).push("enchantment"); ////////////////////////////////////////////////////////////////// enchantment
+    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up but have functions disabled)", WALL).push("enchantment");
+    ////////////////////////////////////////////////////////////////// enchantment
     AutoSmeltEnchant.CFG = CFG.comment("Set false to disable enchantment").define(AutoSmeltEnchant.ID + ".enabled", true);
     BeekeeperEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeekeeperEnchant.ID + ".enabled", true);
     BeheadingEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeheadingEnchant.ID + ".enabled", true);

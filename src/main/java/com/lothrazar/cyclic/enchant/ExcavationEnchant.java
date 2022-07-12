@@ -60,7 +60,7 @@ public class ExcavationEnchant extends EnchantmentCyclic {
 
   public ExcavationEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    MinecraftForge.EVENT_BUS.register(this);
+    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
@@ -80,7 +80,7 @@ public class ExcavationEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean checkCompatibility(Enchantment ench) {
-    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST.get();
   }
 
   private int getHarvestMax(int level) {

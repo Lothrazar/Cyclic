@@ -52,13 +52,15 @@ public class StandEnchant extends EnchantmentCyclic {
 
   public StandEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    MinecraftForge.EVENT_BUS.register(this);
+    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
   public boolean checkCompatibility(Enchantment ench) {
-    return super.checkCompatibility(ench) && ench != EnchantRegistry.LAUNCH && ench != EnchantRegistry.EXPERIENCE_BOOST
-        && ench != Enchantments.MENDING && ench != Enchantments.THORNS;
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.LAUNCH.get()
+        && ench != EnchantRegistry.EXPERIENCE_BOOST.get()
+        && ench != Enchantments.MENDING
+        && ench != Enchantments.THORNS;
   }
 
   @Override
