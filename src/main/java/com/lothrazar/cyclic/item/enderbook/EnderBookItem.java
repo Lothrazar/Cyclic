@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilItemStack;
@@ -154,7 +154,7 @@ public class EnderBookItem extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.ENDER_BOOK, ScreenEnderBook::new);
+    MenuScreens.register(MenuTypeRegistry.ENDER_BOOK.get(), ScreenEnderBook::new);
   }
 
   // ShareTag for server->client capability data sync

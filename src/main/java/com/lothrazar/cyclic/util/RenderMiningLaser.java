@@ -33,13 +33,14 @@ public class RenderMiningLaser {
     return 0.9f + 0.1f * Mth.sin(gameTime * 0.99f) * Mth.sin(gameTime * 0.3f) * Mth.sin(gameTime * 0.1f);
   }
 
+  public static final int RANGE = 18;
+
   public static void renderLaser(RenderLevelLastEvent event, Player player, float ticks,
       ItemStack stack, InteractionHand hand) {
-    int range = 18;// TODO
     Vec3 playerPos = player.getEyePosition(ticks);
-    HitResult trace = player.pick(range, 0.0F, false);
+    HitResult trace = player.pick(RANGE, 0.0F, false);
     // parse data from item
-    float speedModifier = 0.4F; // TODO from stack or whatever
+    float speedModifier = 0.4F;
     drawLasers(hand, stack, event, playerPos, trace, 0, 0, 0,
         100F / 255f, 0F / 255f, 2F / 255f, 0.02f, player, ticks, speedModifier);
   }

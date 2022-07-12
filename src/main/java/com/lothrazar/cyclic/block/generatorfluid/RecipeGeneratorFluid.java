@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.block.generatorfluid;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
+import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -74,12 +74,12 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
 
   @Override
   public RecipeType<?> getType() {
-    return CyclicRecipeType.GENERATOR_FLUID;
+    return CyclicRecipeType.GENERATOR_FLUID.get();
   }
 
   @Override
   public RecipeSerializer<?> getSerializer() {
-    return SERIALGENERATORF;
+    return CyclicRecipeType.GENERATOR_FLUID_S.get();
   }
 
   public int getTicks() {
@@ -94,14 +94,9 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
     return this.getRfpertick() * this.getTicks();
   }
 
-  public static final SerializeGenerateFluid SERIALGENERATORF = new SerializeGenerateFluid();
-
   public static class SerializeGenerateFluid extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeGeneratorFluid<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
 
-    SerializeGenerateFluid() {
-      // This registry name is what people will specify in their json files.
-      this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "generator_fluid"));
-    }
+    public SerializeGenerateFluid() {}
 
     /**
      * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129

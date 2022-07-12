@@ -26,7 +26,7 @@ package com.lothrazar.cyclic.block.crafter;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -51,7 +51,7 @@ public class ContainerCrafter extends ContainerBase {
   public static final int PREVIEW_START_Y = 35;
 
   public ContainerCrafter(int windowId, Level clientWorld, BlockPos pos, Inventory inv, Player clientPlayer) {
-    super(ContainerScreenRegistry.CRAFTER, windowId);
+    super(MenuTypeRegistry.CRAFTER.get(), windowId);
     tile = (TileCrafter) clientWorld.getBlockEntity(pos);
     trackEnergy(tile);
     this.endInv = TileCrafter.IO_NUM_COLS * TileCrafter.IO_NUM_ROWS;

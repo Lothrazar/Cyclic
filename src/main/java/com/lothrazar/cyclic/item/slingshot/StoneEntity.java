@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.slingshot;
 
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import com.lothrazar.cyclic.registry.PotionRegistry;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,7 +27,7 @@ public class StoneEntity extends ThrowableItemProjectile {
   }
 
   public StoneEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.STONE_BOLT, livingEntityIn, worldIn);
+    super(EntityRegistry.STONE_BOLT.get(), livingEntityIn, worldIn);
   }
 
   @Override
@@ -48,7 +48,7 @@ public class StoneEntity extends ThrowableItemProjectile {
         target.hurt(DamageSource.thrown(this, owner), Mth.nextInt(level.random, 2, 6));
         if (target.level.random.nextDouble() < CHANCE_STUN && !target.level.isClientSide && target instanceof LivingEntity) {
           LivingEntity living = (LivingEntity) target;
-          MobEffectInstance effect = new MobEffectInstance(PotionRegistry.PotionEffects.STUN, Const.TICKS_PER_SEC * 2, 1);
+          MobEffectInstance effect = new MobEffectInstance(PotionEffectRegistry.STUN.get(), Const.TICKS_PER_SEC * 2, 1);
           effect.visible = false;
           living.addEffect(effect);
         }

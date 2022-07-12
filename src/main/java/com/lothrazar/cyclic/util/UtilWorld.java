@@ -309,7 +309,6 @@ public class UtilWorld {
     return targetPos.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world));
   }
 
-  //TODO: unused?
   public static BlockPos returnClosest(BlockPos playerPos, BlockPos pos1, BlockPos pos2) {
     if (pos1 == null && pos2 == null) {
       return null;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.world;
 
-import com.lothrazar.cyclic.ModCyclic;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;

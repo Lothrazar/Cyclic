@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.crusher.RecipeCrusher;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,8 +22,8 @@ import net.minecraft.world.item.ItemStack;
 public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
 
   private static final int FONT = 4210752;
-  static final ResourceLocation ID = new ResourceLocation(CyclicRecipeType.CRUSHER.toString());
-  static final RecipeType<RecipeCrusher> TYPE = RecipeType.create(ModCyclic.MODID, "crusher", RecipeCrusher.class);
+  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "crusher");
+  static final RecipeType<RecipeCrusher> TYPE = new RecipeType<>(ID, RecipeCrusher.class);
   private IDrawable gui;
   private IDrawable icon;
 

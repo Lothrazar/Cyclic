@@ -4,7 +4,7 @@ import java.util.Optional;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.gui.ContainerBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -28,7 +28,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   //does NOT save inventory into the stack, very simple and plain
   public CraftingStickContainer(int id, Inventory playerInventory, Player player, InteractionHand hand) {
-    super(ContainerScreenRegistry.CRAFTING_STICK, id);
+    super(MenuTypeRegistry.CRAFTING_STICK.get(), id);
     this.hand = hand;
     this.playerEntity = player;
     this.playerInventory = playerInventory;

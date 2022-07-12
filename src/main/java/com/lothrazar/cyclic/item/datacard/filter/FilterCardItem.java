@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.datacard.filter;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -81,7 +81,7 @@ public class FilterCardItem extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.FILTER_DATA, ScreenFilterCard::new);
+    MenuScreens.register(MenuTypeRegistry.FILTER_DATA.get(), ScreenFilterCard::new);
   }
 
   public static void toggleFilterType(ItemStack filter) {

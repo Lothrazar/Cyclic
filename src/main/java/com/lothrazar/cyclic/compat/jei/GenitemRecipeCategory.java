@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.compat.jei;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,8 +22,8 @@ import net.minecraft.world.item.ItemStack;
 public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorItem> {
 
   private static final int FONT = 4210752;
-  static final ResourceLocation ID = new ResourceLocation(CyclicRecipeType.GENERATOR_ITEM.toString());
-  static final RecipeType<RecipeGeneratorItem> TYPE = RecipeType.create(ModCyclic.MODID, "generator_item", RecipeGeneratorItem.class);
+  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "generator_item");
+  static final RecipeType<RecipeGeneratorItem> TYPE = new RecipeType<>(ID, RecipeGeneratorItem.class);
   private IDrawable gui;
   private IDrawable icon;
 

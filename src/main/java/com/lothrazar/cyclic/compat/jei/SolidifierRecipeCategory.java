@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.compat.jei;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -26,8 +25,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
 
   private static final int FONT = 4210752;
-  static final ResourceLocation ID = new ResourceLocation(CyclicRecipeType.SOLID.toString());
-  static final RecipeType<RecipeSolidifier> TYPE = RecipeType.create(ModCyclic.MODID, "solidifier", RecipeSolidifier.class);
+  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "solidifier");
+  static final RecipeType<RecipeSolidifier> TYPE = new RecipeType<>(ID, RecipeSolidifier.class);
   private IDrawable gui;
   private IDrawable icon;
 

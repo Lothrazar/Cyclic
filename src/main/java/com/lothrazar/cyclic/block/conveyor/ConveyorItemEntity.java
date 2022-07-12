@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 public class ConveyorItemEntity extends ItemEntity {
 
   public ConveyorItemEntity(Level worldIn, double x, double y, double z, ItemStack stack) {
-    super(EntityRegistry.CONVEYOR_ITEM, worldIn);
+    super(EntityRegistry.CONVEYOR_ITEM.get(), worldIn);
     this.setPos(x, y, z);
     this.setItem(stack);
     this.lifespan = Integer.MAX_VALUE;

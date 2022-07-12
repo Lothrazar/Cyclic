@@ -98,11 +98,7 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
     Player player = event.getPlayer();
     if (event.getItemStack().getItem() == this
         && !player.getCooldowns().isOnCooldown(this)
-        && UtilEntity.haveSameDimension(target, player)
-    //TODO:  
-    //        && UtilEntity.isTamedByPlayer(target, player)
-    ) {
-      //      boolean test = event.getTarget() instanceof net.minecraft.world.entity.TamableAnimal;
+        && UtilEntity.haveSameDimension(target, player)) {
       String id = EntityType.getKey(target.getType()).toString();
       event.getItemStack().getOrCreateTag().putString(FLUTENAME, target.getDisplayName().getString());
       event.getItemStack().getOrCreateTag().putString(EntityMagicNetEmpty.NBT_ENTITYID, id);

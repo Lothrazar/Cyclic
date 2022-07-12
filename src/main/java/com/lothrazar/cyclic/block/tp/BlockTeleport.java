@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.tp;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
 import com.lothrazar.cyclic.world.DimensionTransit;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -75,15 +75,11 @@ public class BlockTeleport extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.TELEPORT, ScreenTeleport::new);
+    MenuScreens.register(MenuTypeRegistry.TELEPORT.get(), ScreenTeleport::new);
   }
 
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileTeleport(pos, state);
   }
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.TELEPORT.get(), world.isClientSide ? TileTeleport::clientTick : TileTeleport::serverTick);
-  //  }
 }

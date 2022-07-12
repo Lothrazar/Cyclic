@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.world;
 
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import java.util.List;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.world.level.block.Blocks;

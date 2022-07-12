@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.compat.jei;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -26,8 +25,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFluid> {
 
   private static final int FONT = 4210752;
-  static final ResourceLocation ID = new ResourceLocation(CyclicRecipeType.GENERATOR_FLUID.toString());
-  static final RecipeType<RecipeGeneratorFluid> TYPE = RecipeType.create(ModCyclic.MODID, "generator_fluid", RecipeGeneratorFluid.class);
+  static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "generator_fluid");
+  static final RecipeType<RecipeGeneratorFluid> TYPE = new RecipeType<>(ID, RecipeGeneratorFluid.class);
   private IDrawable gui;
   private IDrawable icon;
 

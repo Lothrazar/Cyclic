@@ -100,7 +100,7 @@ public class TileConveyor extends TileBlockEntityCyclic {
       double hackEdge = 0.1;
       if (normalizedX < hackEdge || normalizedZ < hackEdge
           || normalizedX > 1 - hackEdge || normalizedZ > 1 - hackEdge) {
-        // TODO: investigate jump hacks here
+        // ?? : investigate jump hacks here
         entity.setPos(entity.getX(), entity.getY() + .2, entity.getZ());
       }
       ySpeed = speed * 1.3;

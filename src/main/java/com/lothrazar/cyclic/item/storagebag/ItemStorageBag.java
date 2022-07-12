@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilSound;
 import net.minecraft.ChatFormatting;
@@ -135,7 +135,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.STORAGE_BAG, ScreenStorageBag::new);
+    MenuScreens.register(MenuTypeRegistry.STORAGE_BAG.get(), ScreenStorageBag::new);
   }
 
   @Override

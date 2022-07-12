@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.uncrafter;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -37,7 +37,6 @@ public class BlockUncraft extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    //    RenderTypeLookup.setRenderLayer(this, RenderType.getTranslucent());
-    MenuScreens.register(ContainerScreenRegistry.UNCRAFT, ScreenUncraft::new);
+    MenuScreens.register(MenuTypeRegistry.UNCRAFTER.get(), ScreenUncraft::new);
   }
 }

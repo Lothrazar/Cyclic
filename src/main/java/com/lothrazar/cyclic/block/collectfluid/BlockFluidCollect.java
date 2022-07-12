@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -26,7 +26,7 @@ public class BlockFluidCollect extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.COLLECTOR_FLUID, ScreenFluidCollect::new);
+    MenuScreens.register(MenuTypeRegistry.COLLECTOR_FLUID.get(), ScreenFluidCollect::new);
   }
 
   @Override

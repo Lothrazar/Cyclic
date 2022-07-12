@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.crusher;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ public class ContainerCrusher extends ContainerBase {
   TileCrusher tile;
 
   public ContainerCrusher(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.CRUSHER, windowId);
+    super(MenuTypeRegistry.CRUSHER.get(), windowId);
     tile = (TileCrusher) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

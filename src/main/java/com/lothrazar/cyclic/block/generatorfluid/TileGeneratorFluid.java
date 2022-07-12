@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
+import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -116,13 +116,14 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
     }
   }
 
+  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorFluid<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID);
-    for (RecipeGeneratorFluid<?> rec : recipes) {
+    List<RecipeGeneratorFluid<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
+    for (RecipeGeneratorFluid rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getTicks();

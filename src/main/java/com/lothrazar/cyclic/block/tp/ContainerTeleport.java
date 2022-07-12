@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.tp;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ public class ContainerTeleport extends ContainerBase {
   protected TileTeleport tile;
 
   public ContainerTeleport(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.TELEPORT, windowId);
+    super(MenuTypeRegistry.TELEPORT.get(), windowId);
     tile = (TileTeleport) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

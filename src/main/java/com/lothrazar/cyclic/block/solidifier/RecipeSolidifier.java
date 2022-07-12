@@ -5,9 +5,9 @@ import java.util.List;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
+import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -118,22 +118,20 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   @Override
   public RecipeType<?> getType() {
-    return CyclicRecipeType.SOLID;
+    return CyclicRecipeType.SOLID.get();
   }
 
   @Override
   public RecipeSerializer<?> getSerializer() {
-    return SERIALIZER;
+    return CyclicRecipeType.SOLID_S.get();
   }
-
-  public static final SerializeSolidifier SERIALIZER = new SerializeSolidifier();
 
   @SuppressWarnings("unchecked")
   public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
 
-    SerializeSolidifier() {
+    public SerializeSolidifier() {
       // This registry name is what people will specify in their json files.
-      this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "solidifier"));
+      //      this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "solidifier"));
     }
 
     @Override

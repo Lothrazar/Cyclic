@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.anvilvoid;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -43,7 +43,7 @@ public class BlockAnvilVoid extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.ANVIL_VOID, ScreenAnvilVoid::new);
+    MenuScreens.register(MenuTypeRegistry.ANVIL_VOID.get(), ScreenAnvilVoid::new);
   }
 
   @Override

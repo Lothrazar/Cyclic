@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.item.enderbook;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +21,7 @@ public class ContainerEnderBook extends ContainerBase {
   public CompoundTag nbt;
 
   public ContainerEnderBook(int id, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.ENDER_BOOK, id);
+    super(MenuTypeRegistry.ENDER_BOOK.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = CapabilityProviderEnderBook.SLOTS;

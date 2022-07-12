@@ -17,7 +17,7 @@ public class DarkFireballItem extends ItemBaseCyclic {
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level world, Player shooter, InteractionHand hand) {
-    shootMe(world, shooter, new FireEntity(shooter, world), 0, ItemBaseCyclic.VELOCITY_MAX);
+    shootMe(world, shooter, new DarkFireEntity(shooter, world), 0, ItemBaseCyclic.VELOCITY_MAX);
     if (!shooter.isCreative()) {
       shooter.getItemInHand(hand).shrink(1);
     }

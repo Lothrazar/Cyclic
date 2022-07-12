@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.potion.TickableEffect;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,6 +12,7 @@ public class WaterwalkEffect extends TickableEffect {
 
   public WaterwalkEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
+    PotionEffectRegistry.EFFECTS.add(this);
   }
 
   @Override

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.placerfluid;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -26,7 +26,7 @@ public class BlockPlacerFluid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.PLACER_FLUID, ScreenPlacerFluid::new);
+    MenuScreens.register(MenuTypeRegistry.PLACER_FLUID.get(), ScreenPlacerFluid::new);
   }
 
   @Override

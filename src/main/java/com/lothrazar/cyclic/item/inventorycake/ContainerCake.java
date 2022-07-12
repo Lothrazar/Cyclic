@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.gui.ContainerBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.ItemStackHandler;
@@ -16,7 +16,7 @@ public class ContainerCake extends ContainerBase {
   private ItemStackHandler mirror;
 
   public ContainerCake(int id, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.INVENTORY_CAKE, id);
+    super(MenuTypeRegistry.INVENTORY_CAKE.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.datFile = PlayerDataEvents.getOrCreate(player);

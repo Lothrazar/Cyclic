@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.workbench;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
@@ -27,7 +27,7 @@ public class BlockWorkbench extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.WORKBENCH, ScreenWorkbench::new);
+    MenuScreens.register(MenuTypeRegistry.WORKBENCH.get(), ScreenWorkbench::new);
   }
 
   @Override

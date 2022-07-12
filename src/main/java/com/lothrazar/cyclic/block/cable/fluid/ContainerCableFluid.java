@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.cable.fluid;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ public class ContainerCableFluid extends ContainerBase {
   protected TileCableFluid tile;
 
   public ContainerCableFluid(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.FLUID_PIPE, windowId);
+    super(MenuTypeRegistry.FLUID_PIPE.get(), windowId);
     tile = (TileCableFluid) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

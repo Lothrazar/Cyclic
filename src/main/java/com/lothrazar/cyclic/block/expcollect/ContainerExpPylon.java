@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +14,7 @@ public class ContainerExpPylon extends ContainerBase {
   TileExpPylon tile;
 
   public ContainerExpPylon(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.EXPERIENCE_PYLON, windowId);
+    super(MenuTypeRegistry.EXPERIENCE_PYLON.get(), windowId);
     tile = (TileExpPylon) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

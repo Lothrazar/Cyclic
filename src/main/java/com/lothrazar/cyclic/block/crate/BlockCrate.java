@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.crate;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -40,7 +40,7 @@ public class BlockCrate extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.CRATE, ScreenCrate::new);
+    MenuScreens.register(MenuTypeRegistry.CRATE.get(), ScreenCrate::new);
   }
 
   @Override

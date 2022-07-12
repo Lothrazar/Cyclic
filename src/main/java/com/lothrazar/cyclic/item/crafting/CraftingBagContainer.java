@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.crafting;
 import java.util.Optional;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.gui.ContainerBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -31,7 +31,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   //  public int slot;
 
   public CraftingBagContainer(int id, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.CRAFTING_BAG, id);
+    super(MenuTypeRegistry.CRAFTING_BAG.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;

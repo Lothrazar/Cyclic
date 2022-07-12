@@ -21,7 +21,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
   }
 
   public EntityDungeonEye(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.DUNGEON, livingEntityIn, worldIn);
+    super(EntityRegistry.DUNGEON.get(), livingEntityIn, worldIn);
   }
 
   private static final double DISTLIMIT = 0.8;

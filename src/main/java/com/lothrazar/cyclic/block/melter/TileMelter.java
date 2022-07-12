@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,7 +32,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-@SuppressWarnings("rawtypes")
 public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
@@ -48,7 +47,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   ItemStackHandler inventory = new ItemStackHandler(2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  private RecipeMelter currentRecipe;
+  private RecipeMelter<?> currentRecipe;
   private int burnTimeMax = 0; //only non zero if processing
 
   public TileMelter(BlockPos pos, BlockState state) {
@@ -74,9 +73,6 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       timer = 0;
     }
     final int cost = this.currentRecipe.getEnergyCost();
-    //=======
-    //    final int cost = POWERCONF.get();
-    //>>>>>>> 54f4445a2d7902cf4ef454efe328c9667ca5b652
     if (energy.getEnergyStored() < cost && cost > 0) {
       this.timer = 0;
       return;
@@ -207,6 +203,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
   }
 
+  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
@@ -214,7 +211,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     currentRecipe = null;
     this.burnTimeMax = 0;
     this.timer = 0;
-    List<RecipeMelter<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER);
+    List<RecipeMelter<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER.get());
     for (RecipeMelter rec : recipes) {
       if (rec.matches(this, level)) {
         if (this.tank.getFluid() != null && !this.tank.getFluid().isEmpty()) {

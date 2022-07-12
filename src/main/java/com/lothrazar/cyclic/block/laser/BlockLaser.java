@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.laser;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -21,7 +21,7 @@ public class BlockLaser extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.LASER, ScreenLaser::new);
+    MenuScreens.register(MenuTypeRegistry.LASER.get(), ScreenLaser::new);
   }
 
   @Override

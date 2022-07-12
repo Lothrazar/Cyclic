@@ -23,7 +23,7 @@ public class LightningEntity extends ThrowableItemProjectile {
   }
 
   public LightningEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.LIGHTNINGBOLT, livingEntityIn, worldIn);
+    super(EntityRegistry.LIGHTNING_BOLT.get(), livingEntityIn, worldIn);
   }
 
   @Override

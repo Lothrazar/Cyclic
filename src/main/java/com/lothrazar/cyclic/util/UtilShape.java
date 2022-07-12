@@ -279,10 +279,7 @@ public class UtilShape {
         else {
           newOffset = p.below(i);
         }
-        // TODO: 1.18 world min and max height not zero here 
-        //if (newOffset.getY() >= 0 && newOffset.getY() <= Const.WORLDHEIGHT) {
         newShape.add(newOffset);
-        // }
       }
     }
     return newShape;

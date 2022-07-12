@@ -4,7 +4,7 @@ import java.util.Optional;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.gui.ContainerBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,24 +41,15 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
   private boolean doneOpening = false;
 
   public ContainerWorkbench(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.WORKBENCH, windowId);
+    super(MenuTypeRegistry.WORKBENCH.get(), windowId);
     this.tile = (TileWorkbench) world.getBlockEntity(pos);
     this.player = player;
-    //<<<<<<< HEAD
     this.worldPosCallable = ContainerLevelAccess.create(world, pos);
     this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, OUTPUT_START_X, OUTPUT_START_Y));
     int index = 0;
     for (int rowPos = 0; rowPos < GRID_NUM_ROWS; rowPos++) {
       for (int colPos = 0; colPos < GRID_NUM_ROWS; colPos++) {
         this.craftMatrix.setItem(index, tile.inventory.getStackInSlot(index));
-        //=======
-        //    this.worldPosCallable = IWorldPosCallable.of(world, pos);
-        //    this.addSlot(new CraftingResultSlot(player, this.craftMatrix, this.craftResult, 0, OUTPUT_START_X, OUTPUT_START_Y));
-        //    int index = 0;
-        //    for (int rowPos = 0; rowPos < GRID_NUM_ROWS; rowPos++) {
-        //      for (int colPos = 0; colPos < GRID_NUM_ROWS; colPos++) {
-        //        this.craftMatrix.setInventorySlotContents(index, tile.inventory.getStackInSlot(index));
-        //>>>>>>> 54f4445a2d7902cf4ef454efe328c9667ca5b652
         this.addSlot(new Slot(this.craftMatrix, index,
             GRID_START_X + colPos * Const.SQ,
             GRID_START_Y + rowPos * Const.SQ));

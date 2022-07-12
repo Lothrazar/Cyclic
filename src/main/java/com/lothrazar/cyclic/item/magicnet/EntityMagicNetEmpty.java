@@ -36,7 +36,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
   }
 
   public EntityMagicNetEmpty(Level worldIn, LivingEntity livingEntityIn) {
-    super(EntityRegistry.NETBALL, livingEntityIn, worldIn);
+    super(EntityRegistry.MAGIC_NET.get(), livingEntityIn, worldIn);
   }
 
   @Override

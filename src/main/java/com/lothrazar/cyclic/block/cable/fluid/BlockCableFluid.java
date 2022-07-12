@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -56,7 +56,7 @@ public class BlockCableFluid extends CableBase {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.FLUID_PIPE, ScreenCableFluid::new);
+    MenuScreens.register(MenuTypeRegistry.FLUID_PIPE.get(), ScreenCableFluid::new);
   }
 
   @Override

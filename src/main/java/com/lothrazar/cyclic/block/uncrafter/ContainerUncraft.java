@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.uncrafter;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ public class ContainerUncraft extends ContainerBase {
   protected TileUncraft tile;
 
   public ContainerUncraft(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.UNCRAFT, windowId);
+    super(MenuTypeRegistry.UNCRAFTER.get(), windowId);
     tile = (TileUncraft) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

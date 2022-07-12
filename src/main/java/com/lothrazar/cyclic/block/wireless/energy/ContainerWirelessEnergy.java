@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.wireless.energy;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +16,7 @@ public class ContainerWirelessEnergy extends ContainerBase {
   protected TileWirelessEnergy tile;
 
   public ContainerWirelessEnergy(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.WIRELESS_ENERGY, windowId);
+    super(MenuTypeRegistry.WIRELESS_ENERGY.get(), windowId);
     tile = (TileWirelessEnergy) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

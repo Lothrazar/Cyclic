@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.soundplay;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -40,7 +40,7 @@ public class BlockSoundPlayer extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.SOUND_PLAYER, ScreenSoundPlayer::new);
+    MenuScreens.register(MenuTypeRegistry.SOUND_PLAYER.get(), ScreenSoundPlayer::new);
   }
 
   @Override

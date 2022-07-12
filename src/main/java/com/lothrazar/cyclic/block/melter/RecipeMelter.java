@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.melter;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
+import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.util.UtilRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -89,23 +89,18 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
 
   @Override
   public RecipeType<?> getType() {
-    return CyclicRecipeType.MELTER;
+    return CyclicRecipeType.MELTER.get();
   }
 
   @Override
   public RecipeSerializer<?> getSerializer() {
-    return SERIALMELTER;
+    return CyclicRecipeType.MELTER_S.get();
   }
-
-  public static final SerializeMelter SERIALMELTER = new SerializeMelter();
 
   @SuppressWarnings("unchecked")
   public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
 
-    SerializeMelter() {
-      // This registry name is what people will specify in their json files.
-      this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "melter"));
-    }
+    public SerializeMelter() {}
 
     /**
      * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129

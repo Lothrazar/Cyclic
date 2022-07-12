@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -49,6 +49,6 @@ public class BlockItemCollector extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.COLLECTOR, ScreenItemCollector::new);
+    MenuScreens.register(MenuTypeRegistry.COLLECTOR.get(), ScreenItemCollector::new);
   }
 }

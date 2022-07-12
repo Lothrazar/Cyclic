@@ -22,8 +22,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
-  static final ResourceLocation ID = new ResourceLocation("cyclic:packager");
-  static final RecipeType<CraftingRecipe> TYPE = RecipeType.create(ModCyclic.MODID, "packager", CraftingRecipe.class);
+  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "packager");
+  static final RecipeType<CraftingRecipe> TYPE = new RecipeType<>(ID, CraftingRecipe.class);
   private IDrawable gui;
   private IDrawable icon;
 

@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,7 +32,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-@SuppressWarnings("rawtypes")
 public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
@@ -42,7 +41,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
-  private RecipeSolidifier currentRecipe;
+  private RecipeSolidifier<?> currentRecipe;
   FluidTankBase tank;
   ItemStackHandler inputSlots = new ItemStackHandler(3);
   ItemStackHandler outputSlots = new ItemStackHandler(1);
@@ -191,6 +190,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     tank.setFluid(fluid);
   }
 
+  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
@@ -198,7 +198,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     currentRecipe = null;
     this.burnTimeMax = 0;
     this.timer = 0;
-    List<RecipeSolidifier<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID);
+    List<RecipeSolidifier<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID.get());
     for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, level)) {
         currentRecipe = rec;

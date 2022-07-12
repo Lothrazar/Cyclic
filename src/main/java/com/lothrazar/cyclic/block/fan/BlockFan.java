@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.fan;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -48,7 +48,7 @@ public class BlockFan extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.FAN, ScreenFan::new);
+    MenuScreens.register(MenuTypeRegistry.FAN.get(), ScreenFan::new);
   }
 
   @Override

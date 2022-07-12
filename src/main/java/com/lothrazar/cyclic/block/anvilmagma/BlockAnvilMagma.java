@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.anvilmagma;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -39,7 +39,7 @@ public class BlockAnvilMagma extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.ANVIL_MAGMA, ScreenAnvilMagma::new);
+    MenuScreens.register(MenuTypeRegistry.ANVIL_MAGMA.get(), ScreenAnvilMagma::new);
   }
 
   @Override

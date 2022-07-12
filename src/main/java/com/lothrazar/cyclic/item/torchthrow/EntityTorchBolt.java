@@ -30,7 +30,7 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
   }
 
   public EntityTorchBolt(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.TORCHBOLT, livingEntityIn, worldIn);
+    super(EntityRegistry.TORCH_BOLT.get(), livingEntityIn, worldIn);
   }
 
   @Override

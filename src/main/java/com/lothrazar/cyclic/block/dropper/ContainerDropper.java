@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.dropper;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ public class ContainerDropper extends ContainerBase {
   TileDropper tile;
 
   public ContainerDropper(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.DROPPER, windowId);
+    super(MenuTypeRegistry.DROPPER.get(), windowId);
     tile = (TileDropper) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

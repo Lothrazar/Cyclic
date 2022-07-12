@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.potion.TickableEffect;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,6 +14,7 @@ public class SnowwalkEffect extends TickableEffect {
 
   public SnowwalkEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
+    PotionEffectRegistry.EFFECTS.add(this);
   }
 
   @Override

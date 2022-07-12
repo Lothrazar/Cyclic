@@ -16,8 +16,8 @@ public class BoomerangEntityStun extends BoomerangEntity {
     boomerangType = Boomer.STUN;
   }
 
-  public BoomerangEntityStun(Level worldIn, LivingEntity throwerIn) {
-    super(EntityRegistry.BOOMERANG_STUN, throwerIn, worldIn);
+  public BoomerangEntityStun(LivingEntity throwerIn, Level worldIn) {
+    super(EntityRegistry.BOOMERANG_STUN.get(), throwerIn, worldIn);
     boomerangType = Boomer.STUN;
   }
 

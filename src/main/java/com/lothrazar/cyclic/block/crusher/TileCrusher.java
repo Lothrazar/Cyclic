@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
+import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -149,13 +149,14 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
+  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeCrusher<TileBlockEntityCyclic>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER);
-    for (RecipeCrusher<?> rec : recipes) {
+    List<RecipeCrusher<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
+    for (RecipeCrusher rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.energy.getTicks();

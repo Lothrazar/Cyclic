@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.fishing;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -30,7 +30,7 @@ public class BlockFisher extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.FISHER, ScreenFisher::new);
+    MenuScreens.register(MenuTypeRegistry.FISHER.get(), ScreenFisher::new);
   }
 
   @Override

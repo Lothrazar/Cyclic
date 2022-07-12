@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -31,7 +31,7 @@ public class BlockGeneratorDrops extends BlockCyclic {
   @Override
   public void registerClient() {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(ContainerScreenRegistry.GENERATOR_ITEM, ScreenGeneratorDrops::new);
+    MenuScreens.register(MenuTypeRegistry.GENERATOR_DROPS.get(), ScreenGeneratorDrops::new);
   }
 
   @Override

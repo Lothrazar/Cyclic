@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.compat.jei;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
-import com.lothrazar.cyclic.recipe.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -26,8 +25,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   private static final int FONT = 4210752;
-  static ResourceLocation ID = new ResourceLocation(CyclicRecipeType.MELTER.toString());
-  static final RecipeType<RecipeMelter> TYPE = RecipeType.create(ModCyclic.MODID, "melter", RecipeMelter.class);
+  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "melter");
+  static final RecipeType<RecipeMelter> TYPE = new RecipeType<>(ID, RecipeMelter.class);
   private IDrawable gui;
   private IDrawable icon;
 

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.collectfluid;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +16,7 @@ public class ContainerFluidCollect extends ContainerBase {
   protected TileFluidCollect tile;
 
   public ContainerFluidCollect(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.COLLECTOR_FLUID, windowId);
+    super(MenuTypeRegistry.COLLECTOR_FLUID.get(), windowId);
     tile = (TileFluidCollect) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

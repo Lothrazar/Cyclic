@@ -30,7 +30,7 @@ public class DarkFireEntity extends ThrowableItemProjectile {
   }
 
   public DarkFireEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.DARKFIRE_BOLT, livingEntityIn, worldIn);
+    super(EntityRegistry.DARKFIRE_BOLT.get(), livingEntityIn, worldIn);
   }
 
   @Override

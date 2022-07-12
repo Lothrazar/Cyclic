@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.cable.item;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class BlockCableItem extends CableBase {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.ITEM_PIPE, ScreenCableItem::new);
+    MenuScreens.register(MenuTypeRegistry.ITEM_PIPE.get(), ScreenCableItem::new);
   }
 
   @Override

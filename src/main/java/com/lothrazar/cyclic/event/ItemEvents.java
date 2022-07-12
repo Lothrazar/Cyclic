@@ -22,7 +22,7 @@ import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PotionRegistry;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.AttributesUtil;
 import com.lothrazar.cyclic.util.CharmUtil;
@@ -349,7 +349,7 @@ public class ItemEvents {
           && liv.getAirSupply() < liv.getMaxAirSupply()
           && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
         liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60, 4));
-        liv.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.SWIMSPEED, 20 * 60, 1));
+        liv.addEffect(new MobEffectInstance(PotionEffectRegistry.SWIMSPEED.get(), 20 * 60, 1));
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.isOnFire()

@@ -203,20 +203,20 @@ public class ClientRegistryCyclic {
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerEntityRenderer(EntityRegistry.SNOWBOLT, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.BOOMERANG_STUN, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.BOOMERANG_CARRY, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.BOOMERANG_DAMAGE, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.NETBALL, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.TORCHBOLT, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.DUNGEON, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.EYE, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.FIRE_BOLT, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.STONE_BOLT, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.LASER_BOLT, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.LIGHTNINGBOLT, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.MAGIC_MISSILE, ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.CONVEYOR_ITEM, ConveyorItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.SNOW_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_STUN.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_CARRY.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_DAMAGE.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.MAGIC_NET.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.TORCH_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.DUNGEON.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.EYE.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.FIRE_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.STONE_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.LASER_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.LIGHTNING_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.MAGIC_MISSILE.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.CONVEYOR_ITEM.get(), ConveyorItemRenderer::new);
   }
 
   @OnlyIn(Dist.CLIENT)

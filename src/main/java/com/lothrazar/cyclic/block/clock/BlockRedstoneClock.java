@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.clock;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -55,7 +55,7 @@ public class BlockRedstoneClock extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.CLOCK, ScreenClock::new);
+    MenuScreens.register(MenuTypeRegistry.CLOCK.get(), ScreenClock::new);
   }
 
   @Override

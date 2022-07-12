@@ -16,8 +16,8 @@ public class BoomerangEntityCarry extends BoomerangEntity {
     boomerangType = Boomer.CARRY;
   }
 
-  public BoomerangEntityCarry(Level worldIn, LivingEntity throwerIn) {
-    super(EntityRegistry.BOOMERANG_CARRY, throwerIn, worldIn);
+  public BoomerangEntityCarry(LivingEntity throwerIn, Level worldIn) {
+    super(EntityRegistry.BOOMERANG_CARRY.get(), throwerIn, worldIn);
     boomerangType = Boomer.CARRY;
   }
 

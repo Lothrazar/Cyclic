@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.wireless.fluid;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -49,7 +49,7 @@ public class BlockWirelessFluid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.WIRELESS_FLUID, ScreenWirelessFluid::new);
+    MenuScreens.register(MenuTypeRegistry.WIRELESS_FLUID.get(), ScreenWirelessFluid::new);
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 

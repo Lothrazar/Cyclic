@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.fan;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ public class ContainerFan extends ContainerBase {
   protected TileFan tile;
 
   public ContainerFan(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.FAN, windowId);
+    super(MenuTypeRegistry.FAN.get(), windowId);
     tile = (TileFan) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

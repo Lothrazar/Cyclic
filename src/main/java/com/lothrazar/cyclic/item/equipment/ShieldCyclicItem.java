@@ -144,7 +144,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
           thornsDmg = 1;
         }
       break;
-      //TODO: thorns on MELEE unused. very OP against zombie, might be neat with a cooldown
+      //TODO: feature idea?  thorns on MELEE unused. very OP against zombie, might be neat with a cooldown
     }
     //results
     if (immuneToDamage) {

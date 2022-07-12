@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.breaker;
 
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +14,7 @@ public class ContainerBreaker extends ContainerBase {
   protected TileBreaker tile;
 
   public ContainerBreaker(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.BREAKER, windowId);
+    super(MenuTypeRegistry.BREAKER.get(), windowId);
     tile = (TileBreaker) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;

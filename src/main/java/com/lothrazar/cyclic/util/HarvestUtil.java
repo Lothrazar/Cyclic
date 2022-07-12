@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.properties.Property;
 public class HarvestUtil {
 
   public static void harvestShape(Level world, BlockPos pos, int radius) {
-    // TODO Auto-generated method stub
     List<BlockPos> shape = UtilShape.squareHorizontalFull(pos, radius);
     for (BlockPos p : shape) {
       HarvestUtil.tryHarvestSingle(world, p);

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.storagebag;
 
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
@@ -18,7 +18,7 @@ public class ContainerStorageBag extends ContainerBase {
   public int slotCount;
 
   public ContainerStorageBag(int i, Inventory playerInventory, Player player) {
-    super(ContainerScreenRegistry.STORAGE_BAG, i);
+    super(MenuTypeRegistry.STORAGE_BAG.get(), i);
     if (player.getMainHandItem().getItem() instanceof ItemStorageBag) {
       this.bag = player.getMainHandItem();
       this.slot = player.getInventory().selected;

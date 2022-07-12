@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.net.PacketKeyBind;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -34,7 +34,7 @@ public class ItemCakeInventory extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.INVENTORY_CAKE, ScreenCake::new);
+    MenuScreens.register(MenuTypeRegistry.INVENTORY_CAKE.get(), ScreenCake::new);
   }
 
   @Override

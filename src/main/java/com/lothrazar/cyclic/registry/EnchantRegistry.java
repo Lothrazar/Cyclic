@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
 import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
 import com.lothrazar.cyclic.enchant.BeheadingEnchant;
@@ -27,11 +28,14 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EnchantRegistry {
 
+  public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, ModCyclic.MODID);
   private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
   public static final Enchantment TRAVELLER = new TravellerEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS).setRegistryName(TravellerEnchant.ID);
   public static final EnchantmentCyclic MULTIBOW = (EnchantmentCyclic) new Multishot(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND).setRegistryName(Multishot.ID);
@@ -40,6 +44,7 @@ public class EnchantRegistry {
   public static final ElytraLaunchEnchant LAUNCH = (ElytraLaunchEnchant) new ElytraLaunchEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.FEET }).setRegistryName(ElytraLaunchEnchant.ID);
   public static final SteadyEnchant STEADY = (SteadyEnchant) new SteadyEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS }).setRegistryName(SteadyEnchant.ID);
 
+  //TODO dynamic
   @SubscribeEvent
   public static void onEnchantRegister(final RegistryEvent.Register<Enchantment> event) {
     IForgeRegistry<Enchantment> r = event.getRegistry();

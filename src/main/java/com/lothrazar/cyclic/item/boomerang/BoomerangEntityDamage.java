@@ -16,8 +16,8 @@ public class BoomerangEntityDamage extends BoomerangEntity {
     boomerangType = Boomer.DAMAGE;
   }
 
-  public BoomerangEntityDamage(Level worldIn, LivingEntity throwerIn) {
-    super(EntityRegistry.BOOMERANG_DAMAGE, throwerIn, worldIn);
+  public BoomerangEntityDamage(LivingEntity throwerIn, Level worldIn) {
+    super(EntityRegistry.BOOMERANG_DAMAGE.get(), throwerIn, worldIn);
     boomerangType = Boomer.DAMAGE;
   }
 

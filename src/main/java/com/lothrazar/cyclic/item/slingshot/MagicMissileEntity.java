@@ -31,7 +31,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
   }
 
   public MagicMissileEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.MAGIC_MISSILE, livingEntityIn, worldIn);
+    super(EntityRegistry.MAGIC_MISSILE.get(), livingEntityIn, worldIn);
   }
 
   @Override

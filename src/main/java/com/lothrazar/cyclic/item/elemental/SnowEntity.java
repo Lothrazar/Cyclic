@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import com.lothrazar.cyclic.registry.PotionRegistry;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
@@ -26,7 +26,7 @@ public class SnowEntity extends ThrowableItemProjectile {
   }
 
   public SnowEntity(LivingEntity livingEntityIn, Level worldIn) {
-    super(EntityRegistry.SNOWBOLT, livingEntityIn, worldIn);
+    super(EntityRegistry.SNOW_BOLT.get(), livingEntityIn, worldIn);
   }
 
   @Override
@@ -46,7 +46,7 @@ public class SnowEntity extends ThrowableItemProjectile {
         target.hurt(DamageSource.thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 5));
         target.hurt(DamageSource.DRY_OUT, Mth.nextInt(level.random, 2, 3));
         LivingEntity living = (LivingEntity) target;
-        living.addEffect(new MobEffectInstance(PotionRegistry.PotionEffects.STUN, 60, 1));
+        living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN.get(), 60, 1));
         //        if (world.isAirBlock(living.getPosition()))
         //          this.world.setBlockState(living.getPosition(), Blocks.SNOW.getDefaultState());
       }

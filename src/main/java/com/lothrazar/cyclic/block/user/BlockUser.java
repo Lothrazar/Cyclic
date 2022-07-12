@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.user;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -26,7 +26,7 @@ public class BlockUser extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(ContainerScreenRegistry.USER, ScreenUser::new);
+    MenuScreens.register(MenuTypeRegistry.USER.get(), ScreenUser::new);
   }
 
   @Override
