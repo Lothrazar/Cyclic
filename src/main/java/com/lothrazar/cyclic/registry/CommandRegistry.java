@@ -62,6 +62,7 @@ public class CommandRegistry {
   public static BooleanValue COMMANDHUNGER;
   public static BooleanValue COMMANDPING;
 
+  //TODO 1.19 only fix command registry
   @SubscribeEvent
   public void onRegisterCommandsEvent(RegisterCommandsEvent event) {
     CommandDispatcher<CommandSourceStack> r = event.getDispatcher();

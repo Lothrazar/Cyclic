@@ -10,11 +10,15 @@ import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SoundRegistry {
 
+  //TODO : SOUND DYNAMIC RG
+  public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ModCyclic.MODID);
   private static final List<SoundEvent> SOUNDS = new ArrayList<>();
   public static final SoundEvent BASEY = make("basey");
   public static final SoundEvent BASS_ECHO = make("bass_echo");

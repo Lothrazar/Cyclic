@@ -15,6 +15,7 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
@@ -36,7 +37,6 @@ public class ModCyclic {
     ConfigRegistry.setup();
     ConfigRegistry.setupClient();
     DataTags.setup();
-    //    FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(RecipeSerializer.class, RecipeRegistry::registerRecipeSerializers);
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
     BlockRegistry.BLOCKS.register(bus);
@@ -50,6 +50,7 @@ public class ModCyclic {
     PotionRegistry.POTIONS.register(bus);
     PotionEffectRegistry.MOB_EFFECTS.register(bus);
     EnchantRegistry.ENCHANTMENTS.register(bus);
+    SoundRegistry.SOUND_EVENTS.register(bus);
     ForgeMod.enableMilkFluid();
   }
 }

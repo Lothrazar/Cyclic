@@ -128,9 +128,9 @@ repositories {
     name = "mappings"
     url 'https://dogforce-games.com/maven'
   }
-  maven { url 'https://www.cursemaven.com'  }
+//  maven { url 'https://www.cursemaven.com'  }
+//  maven { url = "https://modmaven.dev"  }    
   maven { url = "https://dvs1.progwml6.com/files/maven/"  }
-  maven { url = "https://modmaven.dev"  }    
   maven { url = "https://maven.theillusivec4.top/"    }
   maven { url 'https://maven.blamejared.com' }    
 }
