@@ -120,7 +120,7 @@ public class StandEnchant extends EnchantmentCyclic {
       event.setAmount(toSurvive);
       player.giveExperiencePoints(-1 * xpCost);
       //now the fluff
-      UtilSound.playSoundFromServer(player, SoundRegistry.CHAOS_REAPER, 1F, 0.4F);
+      UtilSound.playSoundFromServer(player, SoundRegistry.CHAOS_REAPER.get(), 1F, 0.4F);
       UtilChat.sendStatusMessage(player, "enchantment." + ModCyclic.MODID + "." + ID + ".activated");
       if (ABS.get() > 0) {
         player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ABS.get(), level - 1));

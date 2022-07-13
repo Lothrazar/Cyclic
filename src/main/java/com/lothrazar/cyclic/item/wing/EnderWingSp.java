@@ -60,7 +60,7 @@ public class EnderWingSp extends ItemBaseCyclic implements IHasClickToggle {
       BlockPos spawn = new BlockPos(worldInfo.getXSpawn(), worldInfo.getYSpawn(), worldInfo.getZSpawn());
       if (spawn != null) {
         UtilEntity.enderTeleportEvent(playerIn, worldIn, spawn);
-        UtilSound.playSound(playerIn, SoundRegistry.WARP_ECHO);
+        UtilSound.playSound(playerIn, SoundRegistry.WARP_ECHO.get());
         UtilItemStack.damageItem(playerIn, held);
         playerIn.getCooldowns().addCooldown(this, cooldown);
       }

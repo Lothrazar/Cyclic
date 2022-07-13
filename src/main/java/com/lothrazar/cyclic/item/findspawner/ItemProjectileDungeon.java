@@ -29,7 +29,7 @@ public class ItemProjectileDungeon extends ItemBaseCyclic {
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
     shootMe(world, player, ball, 0, ItemBaseCyclic.VELOCITY_MAX);
     stack.shrink(1);
-    UtilSound.playSound(player, SoundRegistry.DUNGEONFINDER, 0.1F, 1.0F);
+    UtilSound.playSound(player, SoundRegistry.DUNGEONFINDER.get(), 0.1F, 1.0F);
     findTargetLocation(player, ball);
     return super.use(world, player, hand);
   }

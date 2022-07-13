@@ -105,7 +105,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
       player.swing(context.getHand());
       UtilItemStack.damageItem(player, itemstack);
       if (world.isClientSide) {
-        UtilSound.playSound(world, pos, SoundRegistry.PSCHEW_FIRE);
+        UtilSound.playSound(world, pos, SoundRegistry.PSCHEW_FIRE.get());
       }
     }
     return InteractionResult.SUCCESS;
@@ -140,7 +140,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
     if (player.level.isClientSide) {
       player.displayClientMessage(getModeTooltip(stack), true);
-      UtilSound.playSound(player, SoundRegistry.TOOL_MODE);
+      UtilSound.playSound(player, SoundRegistry.TOOL_MODE.get());
     }
   }
 }

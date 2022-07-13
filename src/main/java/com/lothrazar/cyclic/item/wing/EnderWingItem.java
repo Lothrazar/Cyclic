@@ -96,7 +96,7 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
             UtilItemStack.damageItem(playerIn, held);
             playerIn.getCooldowns().addCooldown(this, COOLDOWN);
             UtilEntity.enderTeleportEvent(playerIn, spawnWorld, pos);
-            UtilSound.playSound(playerIn, SoundRegistry.WARP_ECHO);
+            UtilSound.playSound(playerIn, SoundRegistry.WARP_ECHO.get());
           }
         }
         else {

@@ -86,7 +86,7 @@ public class TeleporterWandItem extends ItemBaseCyclic {
           UtilItemStack.damageItem(player, stack);
           if (world.isClientSide) {
             UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
-            UtilSound.playSound(player, SoundRegistry.WARP_ECHO);
+            UtilSound.playSound(player, SoundRegistry.WARP_ECHO.get());
           }
         }
       }

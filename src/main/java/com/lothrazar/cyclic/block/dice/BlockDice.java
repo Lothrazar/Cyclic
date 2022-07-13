@@ -81,7 +81,7 @@ public class BlockDice extends BlockCyclic {
     if (hand == InteractionHand.MAIN_HAND && tile instanceof TileDice) {
       ((TileDice) tile).startSpinning();
       if (world.isClientSide) {
-        UtilSound.playSound(world, pos, SoundRegistry.DICE_MIKE_KOENIG);
+        UtilSound.playSound(world, pos, SoundRegistry.DICE_MIKE_KOENIG.get());
       }
       return InteractionResult.SUCCESS;
     }

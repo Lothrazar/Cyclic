@@ -36,15 +36,16 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 public class UtilFluid {
 
+  private static final int COLOUR_DEFAULT = 0xADD8E6; // if some random mod adds a fluid with no colour 
+  private static final int COLOUR_MILK = 0xF1F1F1; // mojang/forge didnt give any
+  private static final int COLOUR_LAVA = 0xff8c00; // mojang/forge didnt give lava any colour value
   public static final FluidRenderMap<Int2ObjectMap<Model3D>> CACHED_FLUIDS = new FluidRenderMap<>();
   public static final int STAGES = 1400;
 
   public static int getColorFromFluid(FluidStack fstack) {
     if (fstack != null && fstack.getFluid() != null) {
-      if (fstack.getFluid() == Fluids.LAVA) {
-        return 0xff8c00; // TODO: client-config or share with ItemBlockCask.java
-      }
-      else if (fstack.getFluid() == FluidBiomassHolder.STILL.get()) {
+      //first check mine
+      if (fstack.getFluid() == FluidBiomassHolder.STILL.get()) {
         return FluidBiomassHolder.COLOR;
       }
       else if (fstack.getFluid() == FluidHoneyHolder.STILL.get()) {
@@ -58,15 +59,18 @@ public class UtilFluid {
       }
       else if (fstack.getFluid() == FluidXpJuiceHolder.STILL.get()) {
         return FluidXpJuiceHolder.COLOR;
-      }
-      else if (fstack.getFluid() == ForgeMod.MILK.get()) {
-        return 0xF1F1F1;
-      }
+      } //now check if the fluid has a color
       else if (fstack.getFluid().getAttributes().getColor() > 0) {
         return fstack.getFluid().getAttributes().getColor();
       }
+      else if (fstack.getFluid() == ForgeMod.MILK.get()) {
+        return COLOUR_MILK;
+      }
+      else if (fstack.getFluid() == Fluids.LAVA) {
+        return COLOUR_LAVA;
+      }
     }
-    return 0xADD8E6; // TODO: client-config or share with ItemBlockCask.java
+    return COLOUR_DEFAULT;
   }
 
   public static void extractSourceWaterloggedCauldron(Level level, BlockPos posTarget, IFluidHandler tank) {

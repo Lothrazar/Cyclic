@@ -52,7 +52,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
       pos = pos.relative(context.getClickedFace());
     }
     Level world = context.getLevel();
-    UtilSound.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE, 0.3F, 1F);
+    UtilSound.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE.get(), 0.3F, 1F);
     if (!world.isClientSide) {
       Entity entity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
           .create(world);

@@ -208,7 +208,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         }
         player.swing(handIn);
         if (world.isClientSide) {
-          UtilSound.playSound(player, SoundRegistry.THUNK, 0.2F, 1F);
+          UtilSound.playSound(player, SoundRegistry.THUNK.get(), 0.2F, 1F);
         }
       }
     }

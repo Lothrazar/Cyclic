@@ -70,7 +70,7 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
         if (success) {
           UtilChat.addChatMessage(player, UtilChat.lang("item.cyclic.flute_summoning.teleported"));
           player.getCooldowns().addCooldown(this, CD);
-          UtilSound.playSound(player, SoundRegistry.HOVERING, 0.5F);
+          UtilSound.playSound(player, SoundRegistry.HOVERING.get(), 0.5F);
         }
       }
     }
@@ -106,7 +106,7 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
       player.getCooldowns().addCooldown(this, CD);
       player.swing(event.getHand());
       UtilChat.addChatMessage(player, "item.cyclic.flute_summoning.saved");
-      UtilSound.playSound(player, SoundRegistry.BASS_ECHO, 0.5F);
+      UtilSound.playSound(player, SoundRegistry.BASS_ECHO.get(), 0.5F);
       event.setCancellationResult(InteractionResult.SUCCESS);
     }
   }

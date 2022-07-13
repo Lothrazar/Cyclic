@@ -90,7 +90,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       targetHeightOffset = target.getBbHeight() / 2;
       particleType = ParticleTypes.PORTAL;
       UtilItemStack.drop(level, this.blockPosition(), drop);
-      UtilSound.playSound(target, SoundRegistry.MONSTER_BALL_CAPTURE);
+      UtilSound.playSound(target, SoundRegistry.MONSTER_BALL_CAPTURE.get());
       target.remove(RemovalReason.DISCARDED);
     }
     else if (type == HitResult.Type.BLOCK) {

@@ -141,13 +141,13 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
       world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, true));
       if (!world.isClientSide) {
         //playSoundFromServer
-        UtilSound.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_ON);
+        UtilSound.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_ON.get());
       }
     }
     else if (state.getValue(ACTIVATED).booleanValue() && world.hasNeighborSignal(pos) == false) {
       world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
       if (!world.isClientSide) {
-        UtilSound.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_OFF);
+        UtilSound.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_OFF.get());
       }
     }
     super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);

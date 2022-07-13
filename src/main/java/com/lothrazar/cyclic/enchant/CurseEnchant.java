@@ -17,7 +17,6 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class CurseEnchant extends EnchantmentCyclic {
 
-  //TODO: config
   public static final double BASE_ACTIVATION_CHANCE = 0.1;
   public static final double BASE_APPLY_CHANCE = 0.3;
   public static final double MIN_EFFECTS = 1;

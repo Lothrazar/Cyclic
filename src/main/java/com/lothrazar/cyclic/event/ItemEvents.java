@@ -491,14 +491,14 @@ public class ItemEvents {
         BuilderActionType.setBlockState(held, target);
         UtilChat.sendStatusMessage(player, target.getBlock().getDescriptionId());
         event.setCanceled(true);
-        UtilSound.playSound(player, SoundRegistry.DCOIN, 0.3F, 1F);
+        UtilSound.playSound(player, SoundRegistry.DCOIN.get(), 0.3F, 1F);
       }
       else {
         //change size
         if (!world.isClientSide) {
           BuilderActionType.toggle(held);
         }
-        UtilSound.playSound(player, SoundRegistry.TOOL_MODE);
+        UtilSound.playSound(player, SoundRegistry.TOOL_MODE.get());
         UtilChat.sendStatusMessage(player, UtilChat.lang(BuilderActionType.getName(held)));
         event.setCanceled(true);
       }

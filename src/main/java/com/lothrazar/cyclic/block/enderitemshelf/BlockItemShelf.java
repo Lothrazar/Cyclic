@@ -89,7 +89,7 @@ public class BlockItemShelf extends BlockCyclic {
         if (remaining.isEmpty() || remaining.getCount() != shelfStack.getCount()) {
           player.setItemInHand(hand, remaining);
           player.swing(hand);
-          UtilSound.playSound(player, SoundRegistry.CRACKLE, oldEmpty ? 0.3F : 0.1F, 0.3F);
+          UtilSound.playSound(player, SoundRegistry.CRACKLE.get(), oldEmpty ? 0.3F : 0.1F, 0.3F);
           //          UtilSound.playSound(player, SoundRegistry.POW, 0.06F, 0.3F);
           //          UtilSound.playSound(player, SoundRegistry.GUITAR, 0.1F, 0.3F);
           return InteractionResult.CONSUME;

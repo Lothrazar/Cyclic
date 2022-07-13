@@ -1,98 +1,76 @@
 package com.lothrazar.cyclic.registry;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.common.util.ForgeSoundType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SoundRegistry {
 
-  //TODO : SOUND DYNAMIC RG
   public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ModCyclic.MODID);
-  private static final List<SoundEvent> SOUNDS = new ArrayList<>();
-  public static final SoundEvent BASEY = make("basey");
-  public static final SoundEvent BASS_ECHO = make("bass_echo");
-  public static final SoundEvent BIP = make("bip");
-  public static final SoundEvent BUZZP = make("buzzp");
-  public static final SoundEvent BWEWE = make("bwewe");
-  public static final SoundEvent BWOAAAP = make("bwoaaap");
-  public static final SoundEvent CHAOS_REAPER = make("chaos_reaper");
-  public static final SoundEvent COIN = make("coin");
-  public static final SoundEvent CRACK = make("crack");
-  public static final SoundEvent CRACKLE = make("crackle");
-  public static final SoundEvent DCOIN = make("dcoin");
-  public static final SoundEvent DICE_MIKE_KOENIG_SHORT = make("dice_mike_koenig_short");
-  public static final SoundEvent DOORBELL_MIKEKOENIG = make("doorbell_mikekoenig");
-  public static final SoundEvent EXPLOSM = make("explosm");
-  public static final SoundEvent FIREBALL_EXPLODE = make("fireball_explode");
-  public static final SoundEvent FIRELAUNCH = make("firelaunch");
-  public static final SoundEvent GOODLAUNCH = make("goodlaunch");
-  public static final SoundEvent GUITAR = make("guitar");
-  public static final SoundEvent HOVERING = make("hovering");
-  public static final SoundEvent LASERBEANPEW = make("laserbeanpew");
-  public static final SoundEvent MACHINE_LAUNCH = make("machine_launch");
-  public static final SoundEvent MAGIC_MISSILE = make("magic_missile");
-  public static final SoundEvent MONSTER_BALL_CAPTURE = make("monster_ball_capture");
-  public static final SoundEvent MONSTER_BALL_RELEASE = make("monster_ball_release");
-  public static final SoundEvent PEW = make("pew");
-  public static final SoundEvent PEW_LONG = make("pew_long");
-  public static final SoundEvent POW = make("pow");
-  public static final SoundEvent POWERUPSCALES = make("powerupscales");
-  public static final SoundEvent SPIKEMAYBE = make("spikemaybe");
-  public static final SoundEvent SPIKES_IN = make("spikes_in");
-  public static final SoundEvent SPIRIT_SEEKER = make("spirit_seeker");
-  public static final SoundEvent STEP_HEIGHT_DOWN = make("step_height_down");
-  public static final SoundEvent STEP_HEIGHT_UP = make("step_height_up");
-  public static final SoundEvent PSCHEW_FIRE = make("pschew_fire");
-  public static final SoundEvent FROST_STAFF_LAUNCH = make("frost_staff_launch");
-  public static final SoundEvent LIGHTNING_STAFF_LAUNCH = make("lightning_staff_launch");
-  public static final SoundEvent FIREBALL_STAFF_LAUNCH = make("fireball_staff_launch");
-  public static final SoundEvent BLOCK_SCAFFOLDING_0 = make("block_scaffolding_0");
-  public static final SoundEvent BLOCK_SCAFFOLDING_1 = make("block_scaffolding_1");
-  public static final SoundEvent DUNGEONFINDER = make("dungeonfinder");
-  public static final SoundEvent SPIKES_ON = make("spikes_on");
-  public static final SoundEvent SPIKES_OFF = make("spikes_off");
-  public static final SoundEvent WARP_ECHO = make("warp_echo");
-  public static final SoundEvent TOOL_MODE = make("tool_mode");
-  public static final SoundEvent DICE_MIKE_KOENIG = make("dice_mike_koenig");
-  public static final SoundEvent FILL = make("fill");
-  public static final SoundEvent THUNK = make("thunk");
-  public static final SoundEvent FAN_LOOP = make("fan_loop");
-  public static final SoundEvent FAN_OFF = make("fan_off");
-  public static final SoundEvent FAN_ON = make("fan_on");
-  public static final SoundEvent METAL_PITCH = make("metal_pitch");
-  public static final SoundEvent ITEM_ARMOR_EQUIP_EMERALD = make("equip_emerald");
-  //update: forge sound type exists apparently
+  public static final RegistryObject<SoundEvent> BASEY = SOUND_EVENTS.register("basey", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "basey")));
+  public static final RegistryObject<SoundEvent> BASS_ECHO = SOUND_EVENTS.register("bass_echo", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "bass_echo")));
+  public static final RegistryObject<SoundEvent> BIP = SOUND_EVENTS.register("bip", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "bip")));
+  public static final RegistryObject<SoundEvent> BUZZP = SOUND_EVENTS.register("buzzp", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "buzzp")));
+  public static final RegistryObject<SoundEvent> BWEWE = SOUND_EVENTS.register("bwewe", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "bwewe")));
+  public static final RegistryObject<SoundEvent> BWOAAAP = SOUND_EVENTS.register("bwoaaap", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "bwoaaap")));
+  public static final RegistryObject<SoundEvent> CHAOS_REAPER = SOUND_EVENTS.register("chaos_reaper", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "chaos_reaper")));
+  public static final RegistryObject<SoundEvent> COIN = SOUND_EVENTS.register("coin", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "coin")));
+  public static final RegistryObject<SoundEvent> CRACK = SOUND_EVENTS.register("crack", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "crack")));
+  public static final RegistryObject<SoundEvent> CRACKLE = SOUND_EVENTS.register("crackle", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "crackle")));
+  public static final RegistryObject<SoundEvent> DCOIN = SOUND_EVENTS.register("dcoin", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "dcoin")));
+  public static final RegistryObject<SoundEvent> DICE_MIKE_KOENIG_SHORT = SOUND_EVENTS.register("dice_mike_koenig_short", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "dice_mike_koenig_short")));
+  public static final RegistryObject<SoundEvent> EXPLOSM = SOUND_EVENTS.register("explosm", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "explosm")));
+  public static final RegistryObject<SoundEvent> FIREBALL_EXPLODE = SOUND_EVENTS.register("fireball_explode", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "fireball_explode")));
+  public static final RegistryObject<SoundEvent> DOORBELL_MIKEKOENIG = SOUND_EVENTS.register("doorbell_mikekoenig", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "doorbell_mikekoenig")));
+  public static final RegistryObject<SoundEvent> FIRELAUNCH = SOUND_EVENTS.register("firelaunch", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "firelaunch")));
+  public static final RegistryObject<SoundEvent> GOODLAUNCH = SOUND_EVENTS.register("goodlaunch", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "goodlaunch")));
+  public static final RegistryObject<SoundEvent> GUITAR = SOUND_EVENTS.register("guitar", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "guitar")));
+  public static final RegistryObject<SoundEvent> HOVERING = SOUND_EVENTS.register("hovering", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "hovering")));
+  public static final RegistryObject<SoundEvent> LASERBEANPEW = SOUND_EVENTS.register("laserbeanpew", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "laserbeanpew")));
+  public static final RegistryObject<SoundEvent> MACHINE_LAUNCH = SOUND_EVENTS.register("machine_launch", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "machine_launch")));
+  public static final RegistryObject<SoundEvent> MAGIC_MISSILE = SOUND_EVENTS.register("magic_missile", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "magic_missile")));
+  public static final RegistryObject<SoundEvent> MONSTER_BALL_CAPTURE = SOUND_EVENTS.register("monster_ball_capture", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "monster_ball_capture")));
+  public static final RegistryObject<SoundEvent> MONSTER_BALL_RELEASE = SOUND_EVENTS.register("monster_ball_release", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "monster_ball_release")));
+  public static final RegistryObject<SoundEvent> PEW = SOUND_EVENTS.register("pew", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "pew")));
+  public static final RegistryObject<SoundEvent> PEW_LONG = SOUND_EVENTS.register("pew_long", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "pew_long")));
+  public static final RegistryObject<SoundEvent> POW = SOUND_EVENTS.register("pow", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "pow")));
+  public static final RegistryObject<SoundEvent> POWERUPSCALES = SOUND_EVENTS.register("powerupscales", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "powerupscales")));
+  public static final RegistryObject<SoundEvent> SPIKEMAYBE = SOUND_EVENTS.register("spikemaybe", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "spikemaybe")));
+  public static final RegistryObject<SoundEvent> SPIKES_IN = SOUND_EVENTS.register("spikes_in", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "spikes_in")));
+  public static final RegistryObject<SoundEvent> SPIRIT_SEEKER = SOUND_EVENTS.register("spirit_seeker", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "spirit_seeker")));
+  public static final RegistryObject<SoundEvent> STEP_HEIGHT_DOWN = SOUND_EVENTS.register("step_height_down", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "step_height_down")));
+  public static final RegistryObject<SoundEvent> STEP_HEIGHT_UP = SOUND_EVENTS.register("step_height_up", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "step_height_up")));
+  public static final RegistryObject<SoundEvent> PSCHEW_FIRE = SOUND_EVENTS.register("pschew_fire", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "pschew_fire")));
+  public static final RegistryObject<SoundEvent> FROST_STAFF_LAUNCH = SOUND_EVENTS.register("frost_staff_launch", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "frost_staff_launch")));
+  public static final RegistryObject<SoundEvent> LIGHTNING_STAFF_LAUNCH = SOUND_EVENTS.register("lightning_staff_launch", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "lightning_staff_launch")));
+  public static final RegistryObject<SoundEvent> FIREBALL_STAFF_LAUNCH = SOUND_EVENTS.register("fireball_staff_launch", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "fireball_staff_launch")));
+  public static final RegistryObject<SoundEvent> BLOCK_SCAFFOLDING_0 = SOUND_EVENTS.register("block_scaffolding_0", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "block_scaffolding_0")));
+  public static final RegistryObject<SoundEvent> BLOCK_SCAFFOLDING_1 = SOUND_EVENTS.register("block_scaffolding_1", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "block_scaffolding_1")));
+  public static final RegistryObject<SoundEvent> DUNGEONFINDER = SOUND_EVENTS.register("dungeonfinder", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "dungeonfinder")));
+  public static final RegistryObject<SoundEvent> SPIKES_ON = SOUND_EVENTS.register("spikes_on", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "spikes_on")));
+  public static final RegistryObject<SoundEvent> SPIKES_OFF = SOUND_EVENTS.register("spikes_off", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "spikes_off")));
+  public static final RegistryObject<SoundEvent> WARP_ECHO = SOUND_EVENTS.register("warp_echo", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "warp_echo")));
+  public static final RegistryObject<SoundEvent> TOOL_MODE = SOUND_EVENTS.register("tool_mode", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "tool_mode")));
+  public static final RegistryObject<SoundEvent> DICE_MIKE_KOENIG = SOUND_EVENTS.register("dice_mike_koenig", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "dice_mike_koenig")));
+  public static final RegistryObject<SoundEvent> FILL = SOUND_EVENTS.register("fill", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "fill")));
+  public static final RegistryObject<SoundEvent> THUNK = SOUND_EVENTS.register("thunk", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "thunk")));
+  public static final RegistryObject<SoundEvent> FAN_LOOP = SOUND_EVENTS.register("fan_loop", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "fan_loop")));
+  public static final RegistryObject<SoundEvent> FAN_OFF = SOUND_EVENTS.register("fan_off", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "fan_off")));
+  public static final RegistryObject<SoundEvent> FAN_ON = SOUND_EVENTS.register("fan_on", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "fan_on")));
+  public static final RegistryObject<SoundEvent> METAL_PITCH = SOUND_EVENTS.register("metal_pitch", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "metal_pitch")));
+  public static final RegistryObject<SoundEvent> EQUIP_EMERALD = SOUND_EVENTS.register("equip_emerald", () -> new SoundEvent(new ResourceLocation(ModCyclic.MODID, "equip_emerald")));
   public static SoundType SCAFFOLD = new ForgeSoundType(1.0F, 1.0F,
       //suppliers
-      () -> BLOCK_SCAFFOLDING_0,
-      () -> BLOCK_SCAFFOLDING_1,
-      () -> BLOCK_SCAFFOLDING_0,
-      () -> BLOCK_SCAFFOLDING_1,
-      () -> BLOCK_SCAFFOLDING_1);
-
-  private static SoundEvent make(String s) {
-    SoundEvent se = new SoundEvent(new ResourceLocation(ModCyclic.MODID, s));
-    se.setRegistryName(s);
-    SOUNDS.add(se);
-    return se;
-  }
-
-  @SubscribeEvent
-  public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
-    IForgeRegistry<SoundEvent> r = event.getRegistry();
-    for (SoundEvent se : SOUNDS) {
-      r.register(se);
-    }
-  }
+      BLOCK_SCAFFOLDING_0,
+      BLOCK_SCAFFOLDING_1,
+      BLOCK_SCAFFOLDING_0,
+      BLOCK_SCAFFOLDING_1,
+      BLOCK_SCAFFOLDING_1);
 }

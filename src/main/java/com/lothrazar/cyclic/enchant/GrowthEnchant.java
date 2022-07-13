@@ -45,7 +45,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class GrowthEnchant extends EnchantmentCyclic {
 
-  //TODO config
   public static final double ODDS_ROTATE = 0.04;
   public static final String ID = "growth";
   public static BooleanValue CFG;
@@ -127,6 +126,7 @@ public class GrowthEnchant extends EnchantmentCyclic {
         int maxAge = Collections.max(propAge.getPossibleValues());
         Integer currentAge = target.getValue(propAge);
         if (currentAge < maxAge) {
+          //TODO trigger bonemeal instead https://github.com/Lothrazar/Cyclic/issues/2117
           if (entity.level.setBlockAndUpdate(pos, target.setValue(propAge, currentAge + 1))) {
             grown++;
           }

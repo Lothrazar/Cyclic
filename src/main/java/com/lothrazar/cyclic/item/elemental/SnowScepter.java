@@ -29,7 +29,7 @@ public class SnowScepter extends ItemBaseCyclic {
     shootMe(world, player, new SnowEntity(player, world), -10, ItemBaseCyclic.VELOCITY_MAX);
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH);
+    UtilSound.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH.get());
     return super.use(world, player, handIn);
   }
 }

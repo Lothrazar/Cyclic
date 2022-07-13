@@ -18,7 +18,6 @@ import net.minecraft.world.level.material.Fluids;
 public class DoorbellButton extends ButtonBlock {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-  private static final SoundEvent SOUND = SoundRegistry.DOORBELL_MIKEKOENIG;
   public static final int LIGHTLVL = 4;
   public static final int POWERLVL = 1;
 
@@ -65,6 +64,6 @@ public class DoorbellButton extends ButtonBlock {
 
   @Override
   protected SoundEvent getSound(boolean isOn) {
-    return isOn ? SOUND : null;
+    return isOn ? SoundRegistry.DOORBELL_MIKEKOENIG.get() : null;
   }
 }

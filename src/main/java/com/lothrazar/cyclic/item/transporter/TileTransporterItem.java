@@ -80,7 +80,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
     }
     if (placeStoredTileEntity(player, stack, offset)) {
       player.setItemInHand(context.getHand(), ItemStack.EMPTY);
-      UtilSound.playSound(player, SoundRegistry.THUNK);
+      UtilSound.playSound(player, SoundRegistry.THUNK.get());
       if (player.isCreative() == false) {
         UtilItemStack.drop(world, player.blockPosition(), new ItemStack(ItemRegistry.TILE_TRANSPORTER_EMPTY.get()));
       }

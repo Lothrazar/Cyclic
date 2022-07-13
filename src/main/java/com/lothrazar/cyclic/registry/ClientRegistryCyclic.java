@@ -211,7 +211,8 @@ public class ClientRegistryCyclic {
     event.registerEntityRenderer(EntityRegistry.TORCH_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.DUNGEON.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.EYE.get(), ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.FIRE_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.FIRE_BOLT.get(), ThrownItemRenderer::new); // TODO FIRE SOUNDS!!!
+    event.registerEntityRenderer(EntityRegistry.DARKFIRE_BOLT.get(), ThrownItemRenderer::new); // TODO FIRE SOUNDS!!!
     event.registerEntityRenderer(EntityRegistry.STONE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LASER_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LIGHTNING_BOLT.get(), ThrownItemRenderer::new);

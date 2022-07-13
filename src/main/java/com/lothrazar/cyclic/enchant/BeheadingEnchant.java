@@ -39,6 +39,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,9 +47,8 @@ import net.minecraftforge.fml.ModList;
 
 public class BeheadingEnchant extends EnchantmentCyclic {
 
-  // TODO: config
-  public static final int PERCDROP = 20;
-  public static final int PERCPERLEVEL = 25;
+  public static IntValue PERCDROP;
+  public static IntValue PERCPERLEVEL;
   public static final String ID = "beheading";
   public static BooleanValue CFG;
 
@@ -93,7 +93,7 @@ public class BeheadingEnchant extends EnchantmentCyclic {
   }
 
   private int percentForLevel(int level) {
-    return PERCDROP + (level - 1) * PERCPERLEVEL;
+    return PERCDROP.get() + (level - 1) * PERCPERLEVEL.get();
   }
 
   @SubscribeEvent

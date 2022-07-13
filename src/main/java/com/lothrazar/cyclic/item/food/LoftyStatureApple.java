@@ -49,7 +49,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
 
   @Override
   public SoundEvent getEatingSound() {
-    return SoundRegistry.STEP_HEIGHT_UP;
+    return SoundRegistry.STEP_HEIGHT_UP.get();
   }
 
   public static void onUpdate(Player player) {

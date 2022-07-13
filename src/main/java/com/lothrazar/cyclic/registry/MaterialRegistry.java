@@ -86,7 +86,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getEquipSound() {
-        return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
+        return SoundRegistry.EQUIP_EMERALD.get();
       }
 
       @Override
@@ -142,7 +142,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getEquipSound() {
-        return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
+        return SoundRegistry.EQUIP_EMERALD.get();
       }
 
       @Override
@@ -186,7 +186,7 @@ public class MaterialRegistry {
 
       @Override
       public SoundEvent getEquipSound() {
-        return SoundRegistry.ITEM_ARMOR_EQUIP_EMERALD;
+        return SoundRegistry.EQUIP_EMERALD.get();
       }
 
       @Override
@@ -265,7 +265,7 @@ public class MaterialRegistry {
     public static final Tier EMERALD = TierSortingRegistry.registerTier(
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.DIAMOND.getLevel(),
-            Tiers.DIAMOND.getUses() + Tiers.GOLD.getUses(), Tiers.DIAMOND.getSpeed() * 2, // uses aka durability TODO: config
+            Tiers.DIAMOND.getUses() + Tiers.GOLD.getUses(), Tiers.DIAMOND.getSpeed() * 2, // uses aka durability  
             EMERALD_DMG.get().floatValue(), Tiers.GOLD.getEnchantmentValue() + 1,
             BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_emerald_tool")),
             () -> Ingredient.of(Items.EMERALD)),
@@ -276,7 +276,7 @@ public class MaterialRegistry {
     public static final Tier GEMOBSIDIAN = TierSortingRegistry.registerTier(
         //harvestLevel, uses, toolSpeed, damage, enchantability
         new ForgeTier(Tiers.NETHERITE.getLevel(),
-            Tiers.DIAMOND.getUses() * 4, Tiers.DIAMOND.getSpeed() * 4, // uses aka durability TODO: config
+            Tiers.DIAMOND.getUses() * 4, Tiers.DIAMOND.getSpeed() * 4, // uses aka durability  
             OBS_DMG.get().floatValue(), Tiers.GOLD.getEnchantmentValue() + 1,
             BlockTags.create(new ResourceLocation(ModCyclic.MODID, "needs_obsidian_tool")),
             () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get())),

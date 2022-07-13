@@ -38,13 +38,13 @@ public class ElevationWandItem extends ItemBaseCyclic {
     BlockPos destination = UtilWorld.getFirstBlockAbove(world, target.blockPosition());
     if (destination != null) {
       //play sound at old locaiton on leaving
-      UtilSound.playSound(target, SoundRegistry.WARP_ECHO);
+      UtilSound.playSound(target, SoundRegistry.WARP_ECHO.get());
       if (!world.isClientSide) {
         UtilEntity.enderTeleportEvent(target, world, destination);
         UtilItemStack.damageItem(playerIn, stack);
       }
       //play sound att new location also, may be far away
-      UtilSound.playSound(target, SoundRegistry.WARP_ECHO);
+      UtilSound.playSound(target, SoundRegistry.WARP_ECHO.get());
       return true;
     }
     UtilSound.playSound(target, SoundEvents.FIRE_EXTINGUISH, 0.1F, 1F);

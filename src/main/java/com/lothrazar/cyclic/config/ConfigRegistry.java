@@ -187,6 +187,10 @@ public class ConfigRegistry {
     AutoSmeltEnchant.CFG = CFG.comment("Set false to disable enchantment").define(AutoSmeltEnchant.ID + ".enabled", true);
     BeekeeperEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeekeeperEnchant.ID + ".enabled", true);
     BeheadingEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeheadingEnchant.ID + ".enabled", true);
+    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING,
+        it -> it instanceof String);
+    BeheadingEnchant.PERCDROP = CFG.comment("Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
+    BeheadingEnchant.PERCPERLEVEL = CFG.comment("Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
     CurseEnchant.CFG = CFG.comment("Set false to disable enchantment").define(CurseEnchant.ID + ".enabled", true);
     DisarmEnchant.CFG = CFG.comment("Set false to disable enchantment").define(DisarmEnchant.ID + ".enabled", true);
     ExcavationEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ExcavationEnchant.ID + ".enabled", true);
@@ -207,8 +211,6 @@ public class ConfigRegistry {
     TravellerEnchant.CFG = CFG.comment("Set false to disable enchantment").define(TravellerEnchant.ID + ".enabled", true);
     VenomEnchant.CFG = CFG.comment("Set false to disable enchantment").define(VenomEnchant.ID + ".enabled", true);
     XpEnchant.CFG = CFG.comment("Set false to disable enchantment").define(XpEnchant.ID + ".enabled", true);
-    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(BeekeeperEnchant.ID + ".EntityMHF", BEHEADING,
-        it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     GENERATE_FLOWERS = CFG.comment("Do the four generate in the world. "

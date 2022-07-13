@@ -53,6 +53,6 @@ public class FireScepter extends ItemBaseCyclic {
     shootMe(worldIn, player, new FireEntity(player, worldIn), -10, velocityFactor);
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
     UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.FIREBALL_STAFF_LAUNCH);
+    UtilSound.playSound(player, SoundRegistry.FIREBALL_STAFF_LAUNCH.get());
   }
 }

@@ -207,7 +207,7 @@ public class EventRender {
         RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
         if (world.getGameTime() % 4 == 0) {
           PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
-          UtilSound.playSound(player, SoundRegistry.LASERBEANPEW, 0.2F);
+          UtilSound.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
         }
       }
       else {
@@ -236,7 +236,7 @@ public class EventRender {
               RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
               if (world.getGameTime() % 4 == 0) {
                 PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
-                UtilSound.playSound(player, SoundRegistry.LASERBEANPEW, 0.2F);
+                UtilSound.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
               }
             }
           }

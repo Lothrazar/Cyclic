@@ -36,7 +36,7 @@ public class HeartItem extends ItemBaseCyclic {
       //finish up
       playerIn.getCooldowns().addCooldown(this, COOLDOWN);
       playerIn.getItemInHand(handIn).shrink(1);
-      UtilSound.playSound(playerIn, SoundRegistry.FILL);
+      UtilSound.playSound(playerIn, SoundRegistry.FILL.get());
     }
     return super.use(worldIn, playerIn, handIn);
   }

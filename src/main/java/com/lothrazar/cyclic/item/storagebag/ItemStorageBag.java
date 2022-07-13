@@ -100,7 +100,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
           }
         }
       }
-      UtilSound.playSound(context.getPlayer(), SoundRegistry.BASEY);
+      UtilSound.playSound(context.getPlayer(), SoundRegistry.BASEY.get());
       return InteractionResult.SUCCESS;
     }
     return InteractionResult.PASS;

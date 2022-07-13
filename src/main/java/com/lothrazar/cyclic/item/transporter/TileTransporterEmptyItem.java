@@ -74,7 +74,7 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
       UtilChat.sendStatusMessage(player, "chest_sack.error.config");
       return InteractionResult.FAIL;
     }
-    UtilSound.playSound(player, SoundRegistry.THUNK);
+    UtilSound.playSound(player, SoundRegistry.THUNK.get());
     if (world.isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketChestSack(pos));
     }
