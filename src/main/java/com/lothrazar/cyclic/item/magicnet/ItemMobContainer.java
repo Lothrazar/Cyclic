@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -52,7 +52,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
       pos = pos.relative(context.getClickedFace());
     }
     Level world = context.getLevel();
-    UtilSound.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE.get(), 0.3F, 1F);
+    SoundUtil.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE.get(), 0.3F, 1F);
     if (!world.isClientSide) {
       Entity entity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
           .create(world);

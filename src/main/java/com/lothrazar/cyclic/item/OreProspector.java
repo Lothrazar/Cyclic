@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilNBT;
-import com.lothrazar.cyclic.util.UtilShape;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
+import com.lothrazar.cyclic.util.ShapeUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -33,7 +33,7 @@ public class OreProspector extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
     ItemStack itemstack = player.getItemInHand(handIn);
     if (player.isCrouching()) {
-      UtilItemStack.deleteTag(itemstack);
+      ItemStackUtil.deleteTag(itemstack);
       player.swing(handIn);
     }
     return InteractionResultHolder.fail(itemstack);
@@ -51,7 +51,7 @@ public class OreProspector extends ItemBaseCyclic {
     //first delete old pos
     held.setTag(null);
     BlockPos pos = context.getClickedPos();
-    List<BlockPos> shape = UtilShape.cubeSquareBase(pos.below(), RANGE.get(), 2);
+    List<BlockPos> shape = ShapeUtil.cubeSquareBase(pos.below(), RANGE.get(), 2);
     List<BlockPos> ores = new ArrayList<>();
     Level world = context.getLevel();
     for (BlockPos p : shape) {
@@ -60,17 +60,17 @@ public class OreProspector extends ItemBaseCyclic {
         ores.add(p);
       }
     }
-    held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.level));
+    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level));
     int i = 0;
     for (BlockPos p : ores) {
       CompoundTag tag = new CompoundTag();
-      UtilNBT.putBlockPos(tag, p);
+      TagDataUtil.putBlockPos(tag, p);
       held.getTag().put("tag" + i, tag);
       i++;
     }
     held.getTag().putInt(ORESIZE, i);
     player.swing(hand);
-    UtilItemStack.damageItem(player, held);
+    ItemStackUtil.damageItem(player, held);
     //    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")      + UtilChat.blockPosToString(pos));
     return InteractionResult.SUCCESS;
   }
@@ -95,7 +95,7 @@ public class OreProspector extends ItemBaseCyclic {
     int size = item.getTag().getInt(ORESIZE);
     String dim = item.getTag().getString(NBT_DIM);
     for (int i = 0; i < size; i++) {
-      BlockPos pos = UtilNBT.getBlockPos(item.getTag().getCompound("tag" + i));
+      BlockPos pos = TagDataUtil.getBlockPos(item.getTag().getCompound("tag" + i));
       list.add(new BlockPosDim(pos, dim, item.getTag()));
     }
     //    this.read  

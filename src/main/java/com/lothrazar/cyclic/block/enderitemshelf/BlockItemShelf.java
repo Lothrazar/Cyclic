@@ -6,9 +6,9 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilBlockstates;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.BlockstatesUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -89,7 +89,7 @@ public class BlockItemShelf extends BlockCyclic {
         if (remaining.isEmpty() || remaining.getCount() != shelfStack.getCount()) {
           player.setItemInHand(hand, remaining);
           player.swing(hand);
-          UtilSound.playSound(player, SoundRegistry.CRACKLE.get(), oldEmpty ? 0.3F : 0.1F, 0.3F);
+          SoundUtil.playSound(player, SoundRegistry.CRACKLE.get(), oldEmpty ? 0.3F : 0.1F, 0.3F);
           //          UtilSound.playSound(player, SoundRegistry.POW, 0.06F, 0.3F);
           //          UtilSound.playSound(player, SoundRegistry.GUITAR, 0.1F, 0.3F);
           return InteractionResult.CONSUME;
@@ -131,7 +131,7 @@ public class BlockItemShelf extends BlockCyclic {
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
       //facing state if needed 
-      world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
+      world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, BlockstatesUtil.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
     BlockEntity tileentity = world.getBlockEntity(pos);
     TileItemShelf shelf = (TileItemShelf) tileentity;
@@ -151,6 +151,6 @@ public class BlockItemShelf extends BlockCyclic {
       //read from tile, write to itemstack 
       newStack.setTag(tileData);
     }
-    UtilItemStack.drop(world, pos, newStack);
+    ItemStackUtil.drop(world, pos, newStack);
   }
 }

@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.food;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.AttributesUtil;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -42,7 +42,7 @@ public class HeartToxicItem extends ItemBaseCyclic {
       //actually DO the eating of the thing
       playerIn.getCooldowns().addCooldown(this, COOLDOWN);
       playerIn.getItemInHand(handIn).shrink(1);
-      UtilSound.playSound(playerIn, SoundRegistry.FILL.get());
+      SoundUtil.playSound(playerIn, SoundRegistry.FILL.get());
       playerIn.getFoodData().eat(3, 1);
       playerIn.giveExperiencePoints(HEARTXPMINUS.get());
     }

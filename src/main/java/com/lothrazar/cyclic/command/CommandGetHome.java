@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -28,10 +28,10 @@ public class CommandGetHome {
     }
     if (optional.isPresent()) {
       BlockPos bedLocation = new BlockPos(optional.get());
-      UtilChat.sendFeedback(ctx, UtilChat.lang("command.cyclic.gethome.yours") + " " + UtilChat.blockPosToString(bedLocation));
+      ChatUtil.sendFeedback(ctx, ChatUtil.lang("command.cyclic.gethome.yours") + " " + ChatUtil.blockPosToString(bedLocation));
     }
     else {
-      UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");
+      ChatUtil.sendFeedback(ctx, "command.cyclic.gethome.bed");
     }
     return 0;
   }

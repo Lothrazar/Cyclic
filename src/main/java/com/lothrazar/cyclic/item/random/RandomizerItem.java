@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -47,7 +47,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     if (player.level.isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketRandomize(pos, side, context.getHand()));
     }
-    UtilEntity.setCooldownItem(player, this, COOLDOWN);
+    EntityUtil.setCooldownItem(player, this, COOLDOWN);
     return super.useOn(context);
   }
 
@@ -86,7 +86,7 @@ public class RandomizerItem extends ItemBaseCyclic {
         yMin -= offsetRadius;
         yMax += offsetRadius;
       }
-      places = UtilWorld.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
+      places = LevelWorldUtil.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
     }
     return places;
   }

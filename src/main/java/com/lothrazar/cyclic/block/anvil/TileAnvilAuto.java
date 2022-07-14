@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -139,7 +139,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
     }
     //shift to other slot
     if (work) {
-      UtilItemStack.repairItem(stack);
+      ItemStackUtil.repairItem(stack);
       boolean done = stack.getDamageValue() == 0;
       if (done && outputSlots.getStackInSlot(0).isEmpty()) {
         outputSlots.insertItem(0, stack.copy(), false);

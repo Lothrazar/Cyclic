@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -54,8 +54,8 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(menu.tile);
-    btnEntity.setTooltip(UtilChat.lang("cyclic.beacon.entitytype.tooltip"));
-    btnEntity.setMessage(UtilChat.ilang("cyclic.entitytype." + menu.tile.entityFilter.name().toLowerCase()));
+    btnEntity.setTooltip(ChatUtil.lang("cyclic.beacon.entitytype.tooltip"));
+    btnEntity.setMessage(ChatUtil.ilang("cyclic.entitytype." + menu.tile.entityFilter.name().toLowerCase()));
   }
 
   @Override

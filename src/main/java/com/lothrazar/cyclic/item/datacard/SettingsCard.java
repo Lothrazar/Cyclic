@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -57,7 +57,7 @@ public class SettingsCard extends ItemBaseCyclic {
     if (player.level.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
       //      Blocks.BEDROCK.isu
       held.setTag(null); //clear
-      UtilChat.addChatMessage(player, getDescriptionId() + ".deleted");
+      ChatUtil.addChatMessage(player, getDescriptionId() + ".deleted");
     }
     //
     CompoundTag stackdata = held.getOrCreateTag();
@@ -74,7 +74,7 @@ public class SettingsCard extends ItemBaseCyclic {
         }
         tiledata.putBoolean(NBT_SETSAVED, true);
         held.setTag(tiledata);
-        UtilChat.addChatMessage(player, getDescriptionId() + ".savednew");
+        ChatUtil.addChatMessage(player, getDescriptionId() + ".savednew");
       }
     }
     else if (stackdata.getBoolean(NBT_SETSAVED)) {
@@ -92,7 +92,7 @@ public class SettingsCard extends ItemBaseCyclic {
           stackdata.remove(NBT_ID);
           tiledata = tiledata.merge(stackdata);
           tile.load(tiledata);
-          UtilChat.addChatMessage(player, getDescriptionId() + ".written");
+          ChatUtil.addChatMessage(player, getDescriptionId() + ".written");
         }
       }
     }

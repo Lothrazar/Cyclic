@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -76,6 +76,6 @@ public class BlockCrate extends BlockCyclic {
         newStack.getOrCreateTag().put(NBTCRATE + i, nbt);
       }
     }
-    UtilItemStack.drop(world, pos, newStack);
+    ItemStackUtil.drop(world, pos, newStack);
   }
 }

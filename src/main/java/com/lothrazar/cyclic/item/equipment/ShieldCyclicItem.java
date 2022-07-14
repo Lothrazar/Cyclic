@@ -139,7 +139,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
         }
         if (!dmgSource.isExplosion()
             && dmgSource.isProjectile()
-            && playerIn.level.random.nextDouble() < (FLINT_THORNS_PCT.get() / 100F)) { // chance on  TODO: config and hardcoded in lang
+            && playerIn.level.random.nextDouble() < (FLINT_THORNS_PCT.get() / 100F)) {
           //ranged thorns
           thornsDmg = 1;
         }

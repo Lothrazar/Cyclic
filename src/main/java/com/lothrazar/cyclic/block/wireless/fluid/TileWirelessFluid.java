@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -129,7 +129,7 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
     boolean moved = false;
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot(0);
-    if (loc != null && UtilWorld.dimensionIsEqual(loc, level)) {
+    if (loc != null && LevelWorldUtil.dimensionIsEqual(loc, level)) {
       this.moveFluids(loc.getSide(), loc.getPos(), this.transferRate, tank);
     }
     this.setLitProperty(moved);

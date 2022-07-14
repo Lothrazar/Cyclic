@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.net.PacketBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclic.util.UtilPlayer;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.BlockUtil;
+import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -77,11 +77,11 @@ public class PacketSwapBlock extends PacketBaseCyclic {
             continue; //dont process the same location more than once per click
           }
           processed.put(curPos, processed.get(curPos) + 1);
-          int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
+          int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
             //nothign found. is that ok?
             if (!player.isCreative()) {
-              UtilChat.sendStatusMessage(player, "scepter.cyclic.empty");
+              ChatUtil.sendStatusMessage(player, "scepter.cyclic.empty");
               break;
               //you have no materials left
             }
@@ -106,7 +106,7 @@ public class PacketSwapBlock extends PacketBaseCyclic {
             continue; //since we know -1 is unbreakable
           }
           //wait, do they match? are they the same? do not replace myself
-          if (UtilWorld.doBlockStatesMatch(replacedBlockState, targetState)) {
+          if (LevelWorldUtil.doBlockStatesMatch(replacedBlockState, targetState)) {
             continue;
           }
           //break it and drop the whatever
@@ -116,11 +116,11 @@ public class PacketSwapBlock extends PacketBaseCyclic {
           //place item block gets slabs in top instead of bottom. but tries to do facing stairs
           // success = UtilPlaceBlocks.placeItemblock(world, curPos, stackBuildWith, player);
           if (!success) {
-            success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, targetState);
+            success = BlockUtil.placeStateSafe(world, player, curPos, targetState);
           }
           if (success) {
             atLeastOne = true;
-            UtilPlayer.decrStackSize(player, slot);
+            PlayerUtil.decrStackSize(player, slot);
             world.levelEvent(2001, curPos, Block.getId(targetState));
             //always break with PLAYER CONTEXT in mind
             replacedBlock.playerDestroy(world, player, curPos, replacedBlockState, null, itemStackHeld);
@@ -128,7 +128,7 @@ public class PacketSwapBlock extends PacketBaseCyclic {
         } // close off the for loop   
       }
       if (atLeastOne) {
-        UtilItemStack.damageItem(player, itemStackHeld);
+        ItemStackUtil.damageItem(player, itemStackHeld);
       }
     });
     message.done(ctx);
@@ -196,7 +196,7 @@ public class PacketSwapBlock extends PacketBaseCyclic {
         yMin -= offsetW;
         yMax += offsetW;
       }
-      places = UtilWorld.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
+      places = LevelWorldUtil.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
     for (BlockPos p : places) {

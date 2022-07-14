@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.sprinkler;
 
 import com.lothrazar.cyclic.render.FluidTankRenderType;
-import com.lothrazar.cyclic.util.UtilFluid;
-import com.lothrazar.cyclic.util.UtilRender;
+import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,12 +28,12 @@ public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler> {
       return;
     }
     VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.RESIZABLE);
-    matrix.scale(1F, UtilFluid.getScale(tankHere.tank) / 4F, 1F);
+    matrix.scale(1F, FluidHelpers.getScale(tankHere.tank) / 4F, 1F);
     float f = 0.5F;
     matrix.scale(f, 1F, f);
     matrix.translate(f, 0, f);
-    UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.STAGES - 1),
-        matrix, buffer, UtilRender.getColorARGB(fluid, 0.1F),
-        UtilRender.calculateGlowLight(light, fluid));
+    RenderUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
+        matrix, buffer, RenderUtils.getColorARGB(fluid, 0.1F),
+        RenderUtils.calculateGlowLight(light, fluid));
   }
 }

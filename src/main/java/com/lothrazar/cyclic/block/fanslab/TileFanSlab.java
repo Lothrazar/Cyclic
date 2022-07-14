@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -78,7 +78,7 @@ public class TileFanSlab extends TileBlockEntityCyclic {
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.line(getBlockPos(), getCurrentFacing(), getCurrentRange());
+    return ShapeUtil.line(getBlockPos(), getCurrentFacing(), getCurrentRange());
   }
 
   @Override

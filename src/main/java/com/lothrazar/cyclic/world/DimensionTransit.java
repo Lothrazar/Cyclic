@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.world;
 
 import java.util.function.Function;
 import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -65,6 +65,6 @@ public class DimensionTransit implements ITeleporter {
   }
 
   public ServerLevel getTargetLevel() {
-    return world == null ? null : world.getServer().getLevel(UtilWorld.stringToDimension(target.getDimension()));
+    return world == null ? null : world.getServer().getLevel(LevelWorldUtil.stringToDimension(target.getDimension()));
   }
 }

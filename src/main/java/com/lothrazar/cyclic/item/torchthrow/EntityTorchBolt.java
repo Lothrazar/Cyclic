@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.torchthrow;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -52,7 +52,7 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
       if (target.isAlive()) {
         target.hurt(DamageSource.thrown(this, this.getOwner()), 0);
       }
-      UtilItemStack.drop(level, target.blockPosition(), new ItemStack(Items.TORCH));
+      ItemStackUtil.drop(level, target.blockPosition(), new ItemStack(Items.TORCH));
     }
     else if (type == HitResult.Type.BLOCK) {
       BlockHitResult bRayTrace = (BlockHitResult) result;
@@ -99,7 +99,7 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
       }
       if (!itPlaced) {
         //we hit grass or a slab or something
-        UtilItemStack.drop(level, this.blockPosition(), new ItemStack(Items.TORCH));
+        ItemStackUtil.drop(level, this.blockPosition(), new ItemStack(Items.TORCH));
       }
     }
     this.remove(RemovalReason.DISCARDED);

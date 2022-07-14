@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -47,14 +47,14 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
-    btnU.setTooltip(UtilChat.lang("gui.cyclic.flowing.up"));
+    btnU.setTooltip(ChatUtil.lang("gui.cyclic.flowing.up"));
     y = topPos + 60;
     btnD = addRenderableWidget(new ButtonMachine(x, y, size, size, "D", (p) -> {
       int f = Fields.D.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
-    btnD.setTooltip(UtilChat.lang("gui.cyclic.flowing.down"));
+    btnD.setTooltip(ChatUtil.lang("gui.cyclic.flowing.down"));
     int xCenter = leftPos + 80;
     int yCenter = topPos + 38;
     int space = 18;
@@ -65,7 +65,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
-    btnN.setTooltip(UtilChat.lang("gui.cyclic.flowing.north"));
+    btnN.setTooltip(ChatUtil.lang("gui.cyclic.flowing.north"));
     x = xCenter;
     y = yCenter + space;
     btnS = addRenderableWidget(new ButtonMachine(x, y, size, size, "S", (p) -> {
@@ -73,7 +73,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
-    btnS.setTooltip(UtilChat.lang("gui.cyclic.flowing.south"));
+    btnS.setTooltip(ChatUtil.lang("gui.cyclic.flowing.south"));
     //now east west
     x = xCenter + space;
     y = yCenter;
@@ -82,7 +82,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
-    btnE.setTooltip(UtilChat.lang("gui.cyclic.flowing.east"));
+    btnE.setTooltip(ChatUtil.lang("gui.cyclic.flowing.east"));
     x = xCenter - space;
     y = yCenter;
     btnW = addRenderableWidget(new ButtonMachine(x, y, size, size, "W", (p) -> {
@@ -90,7 +90,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
       menu.tile.setField(f, menu.tile.getField(f) + 1);
       PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
-    btnW.setTooltip(UtilChat.lang("gui.cyclic.flowing.west"));
+    btnW.setTooltip(ChatUtil.lang("gui.cyclic.flowing.west"));
   }
 
   @Override
@@ -103,7 +103,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
 
   @Override
   protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
-    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + menu.tile.getFlowing()));
+    btnToggle.setTooltip(ChatUtil.lang("gui.cyclic.flowing" + menu.tile.getFlowing()));
     btnToggle.setTextureId(menu.tile.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
     btnU.setTextureId(getTextureId(Fields.U));
     btnD.setTextureId(getTextureId(Fields.D));

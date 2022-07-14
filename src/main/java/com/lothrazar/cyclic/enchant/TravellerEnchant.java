@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.Arrays;
 import java.util.List;
-import com.lothrazar.cyclic.util.UtilParticle;
+import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -128,7 +128,7 @@ public class TravellerEnchant extends EnchantmentCyclic {
         if (event.getAmount() > event.getEntityLiving().getHealth() - 0.5F) {
           //either you crashed flying straight into the ground, or just fell while wearing elytra (you still die to void tho)
           event.setAmount(event.getEntityLiving().getHealth() - 1F);
-          UtilParticle.spawnParticle(event.getEntity().level, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().blockPosition(), 4);
+          ParticleUtil.spawnParticle(event.getEntity().level, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().blockPosition(), 4);
         }
       }
     }

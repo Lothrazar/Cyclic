@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,7 +20,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     super(screenContainer, inv, titleIn);
     energy = new EnergyBar(this, TileDisenchant.MAX);
     fluid = new FluidBar(this, 134, 8, TileDisenchant.CAPACITY);
-    fluid.emtpyTooltip = "0 " + UtilChat.lang("fluid.cyclic.xpjuice");
+    fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid.cyclic.xpjuice");
   }
 
   @Override

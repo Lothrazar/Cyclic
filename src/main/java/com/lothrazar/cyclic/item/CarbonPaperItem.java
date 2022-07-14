@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -56,7 +56,7 @@ public class CarbonPaperItem extends ItemBaseCyclic {
       if (held.hasTag()) {
         //clean with cauldron
         held.setTag(null);
-        UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.deleted");
+        ChatUtil.sendStatusMessage(player, "item.cyclic.carbon_paper.deleted");
         player.swing(hand);
         return InteractionResult.SUCCESS;
       }
@@ -73,14 +73,14 @@ public class CarbonPaperItem extends ItemBaseCyclic {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());
           sign.setMessage(i, fakeSign.messages[i]);
         }
-        UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.written");
+        ChatUtil.sendStatusMessage(player, "item.cyclic.carbon_paper.written");
       }
       else {
         //so it has NO tag right now at all
         //read
         CompoundTag data = sign.serializeNBT();
         held.setTag(data);
-        UtilChat.sendStatusMessage(player, "item.cyclic.carbon_paper.copied");
+        ChatUtil.sendStatusMessage(player, "item.cyclic.carbon_paper.copied");
       }
       player.swing(hand);
       return InteractionResult.SUCCESS;

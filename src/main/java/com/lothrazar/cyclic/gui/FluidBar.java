@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.gui;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.render.RenderUtils;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
-import com.lothrazar.cyclic.util.UtilFluid;
-import com.lothrazar.cyclic.util.UtilRender;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -72,7 +72,7 @@ public class FluidBar {
     float amount = fluid.getAmount();
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-    TextureAtlasSprite icon = UtilFluid.getBaseFluidTexture(fluid.getFluid(), FluidType.STILL);
+    TextureAtlasSprite icon = FluidHelpers.getBaseFluidTexture(fluid.getFluid(), FluidType.STILL);
     if (fluid.getFluid() == Fluids.WATER) {
       //hack in the blue because water is grey and is filled in by the biome when in-world
       RenderSystem.setShaderColor(0, 0, 1, 1);
@@ -84,7 +84,7 @@ public class FluidBar {
   }
 
   protected void drawTiledSprite(PoseStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-    UtilRender.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
+    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {

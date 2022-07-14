@@ -44,7 +44,6 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   /**
    * exact copy of super() but replaced hardcoded 20 with this.height
    */
-  //  @SuppressWarnings("deprecation")
   @Override
   protected void renderBg(PoseStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
     //    minecraft.getTextureManager().bind(WIDGETS_LOCATION);

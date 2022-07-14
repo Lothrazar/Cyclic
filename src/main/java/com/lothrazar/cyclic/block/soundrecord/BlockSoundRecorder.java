@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilBlockstates;
+import com.lothrazar.cyclic.util.BlockstatesUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -48,7 +48,7 @@ public class BlockSoundRecorder extends BlockCyclic {
     if (event.getSound() == null || event.getSound().getLocation() == null || event.getSound() instanceof TickableSoundInstance || clientWorld == null) {
       return;
     } //long term/repeating/music
-    List<BlockPos> blocks = UtilBlockstates.findBlocks(clientWorld,
+    List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld,
         new BlockPos(event.getSound().getX(), event.getSound().getY(), event.getSound().getZ()), this, RADIUS.get());
     for (BlockPos nearby : blocks) {
       String sid = event.getSound().getLocation().toString();

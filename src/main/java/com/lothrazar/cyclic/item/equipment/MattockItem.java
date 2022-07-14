@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -46,20 +46,20 @@ public class MattockItem extends DiggerItem {
       Direction sideHit = brt.getDirection();
       List<BlockPos> shape;
       if (sideHit == Direction.UP || sideHit == Direction.DOWN) {
-        shape = UtilShape.squareHorizontalHollow(pos, radius);
+        shape = ShapeUtil.squareHorizontalHollow(pos, radius);
         if (radius == 2) {
-          shape.addAll(UtilShape.squareHorizontalHollow(pos, radius - 1));
+          shape.addAll(ShapeUtil.squareHorizontalHollow(pos, radius - 1));
         }
       }
       else if (sideHit == Direction.EAST || sideHit == Direction.WEST) {
         int y = 1 + radius - yoff;
         int z = radius;
-        shape = UtilShape.squareVerticalZ(pos, y, z);
+        shape = ShapeUtil.squareVerticalZ(pos, y, z);
       }
       else { //has to be NORTHSOUTH
         int x = radius;
         int y = 1 + radius - yoff;
-        shape = UtilShape.squareVerticalX(pos, x, y);
+        shape = ShapeUtil.squareVerticalX(pos, x, y);
       }
       for (BlockPos posCurrent : shape) {
         BlockState bsCurrent = world.getBlockState(posCurrent);

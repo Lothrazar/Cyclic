@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.animal;
 
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -52,7 +52,7 @@ public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInte
       event.setCancellationResult(InteractionResult.SUCCESS);
       event.getPlayer().getCooldowns().addCooldown(this, 10);
       event.getItemStack().shrink(1);
-      UtilEntity.eatingHorse(ahorse);
+      EntityUtil.eatingHorse(ahorse);
     }
   }
 }

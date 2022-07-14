@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -131,7 +131,7 @@ public class ExcavationEnchant extends EnchantmentCyclic {
       int harvested = this.harvestSurrounding((Level) world, player, pos, block, 1, level, player.swingingArm);
       if (harvested > 0) {
         //damage but also respect the unbreaking chant  
-        UtilItemStack.damageItem(player, stackHarvestingWith);
+        ItemStackUtil.damageItem(player, stackHarvestingWith);
       }
     }
   }

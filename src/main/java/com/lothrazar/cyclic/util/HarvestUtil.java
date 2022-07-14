@@ -6,23 +6,78 @@ import com.lothrazar.cyclic.api.IHarvesterOverride;
 import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.item.scythe.ScytheType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 
 public class HarvestUtil {
 
+  // hardcoded as MAIN hand
+  public static boolean harvestByScytheType(Level world, Player player, BlockPos posCurrent, ScytheType type) {
+    boolean doBreak = false;
+    BlockState blockState = world.getBlockState(posCurrent);
+    if (blockState.hasProperty(DoublePlantBlock.HALF) && blockState.getValue(DoublePlantBlock.HALF).equals(DoubleBlockHalf.LOWER)) {
+      //the upper half has the drops, so only do that. avoid glitches and item loss
+      // ie: rose, lilac, sunflower
+      return false;
+    }
+    switch (type) {
+      case LEAVES:
+        doBreak = blockState.is(BlockTags.LEAVES);
+      break;
+      case BRUSH:
+        doBreak = blockState.is(DataTags.PLANTS);
+      break;
+      case FORAGE:
+        doBreak = blockState.is(BlockTags.FLOWERS)
+            || blockState.is(BlockTags.CORALS) || blockState.is(BlockTags.WALL_CORALS)
+            || blockState.is(DataTags.MUSHROOMS)
+            || blockState.is(DataTags.VINES)
+            || blockState.is(DataTags.CACTUS)
+            || blockState.is(DataTags.CROP_BLOCKS);
+      break;
+    }
+    if (doBreak) {
+      if (blockState.is(DataTags.CROP_BLOCKS)) {
+        world.destroyBlock(posCurrent, false, player);
+        ItemStackUtil.drop(world, posCurrent, blockState.getBlock()); //like shears
+      }
+      else {
+        //harvest block with player context: better mod compatibility
+        if (type == ScytheType.BRUSH && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player) > 0) {
+          //only brush needed silk override, tree leaves worked regardless
+          ItemStackUtil.drop(world, posCurrent, blockState.getBlock());
+        }
+        else {
+          blockState.getBlock().playerDestroy(world, player, posCurrent, blockState, world.getBlockEntity(posCurrent), player.getMainHandItem());
+        }
+        //sometimes this doesnt work and/or doesnt sync ot client, so force it
+        world.destroyBlock(posCurrent, false, player);
+        //break with false to disable dropsfor the above versions, dont want to dupe tallflowers
+      }
+      return true;
+    }
+    return false;
+  }
+
   public static void harvestShape(Level world, BlockPos pos, int radius) {
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(pos, radius);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalFull(pos, radius);
     for (BlockPos p : shape) {
       HarvestUtil.tryHarvestSingle(world, p);
     }
@@ -45,11 +100,11 @@ public class HarvestUtil {
       }
     }
     if (applicable != null) {
-      return applicable.attemptHarvest(blockState, world, posCurrent, stack -> UtilItemStack.drop(world, posCurrent, blockState.getBlock()));
+      return applicable.attemptHarvest(blockState, world, posCurrent, stack -> ItemStackUtil.drop(world, posCurrent, blockState.getBlock()));
     }
     // Fall back to default logic
     if (simpleBreakDrop(blockState)) {
-      UtilItemStack.drop(world, posCurrent, blockState.getBlock());
+      ItemStackUtil.drop(world, posCurrent, blockState.getBlock());
       world.destroyBlock(posCurrent, false);
       return true;
     }
@@ -88,7 +143,7 @@ public class HarvestUtil {
         seed = null;
       }
       //drop the rest
-      UtilWorld.dropItemStackInWorld(world, posCurrent, dropStack);
+      LevelWorldUtil.dropItemStackInWorld(world, posCurrent, dropStack);
     }
     if (world instanceof ServerLevel) {
       blockState.spawnAfterBreak((ServerLevel) world, posCurrent, ItemStack.EMPTY);

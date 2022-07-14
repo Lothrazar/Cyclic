@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.rotator;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclic.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -36,7 +36,7 @@ public class TileRotator extends TileBlockEntityCyclic {
       if (!state.isAir() &&
           state.getDestroySpeed(level, target) >= 0) {
         //        boolean succ = 
-        UtilPlaceBlocks.rotateBlockValidState(level, target, currentFacing.getOpposite());
+        BlockUtil.rotateBlockValidState(level, target, currentFacing.getOpposite());
       }
     }
     //now powered and lit match

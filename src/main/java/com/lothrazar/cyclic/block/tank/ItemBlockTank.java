@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.tank;
 
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
-import com.lothrazar.cyclic.util.UtilFluid;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -62,7 +62,7 @@ public class ItemBlockTank extends BlockItem {
   @Override
   public int getBarColor(ItemStack stack) {
     FluidStack fstack = copyFluidFromStack(stack);
-    return UtilFluid.getColorFromFluid(fstack);
+    return FluidHelpers.getColorFromFluid(fstack);
   }
 
   @Override

@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.fan;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilBlockstates;
+import com.lothrazar.cyclic.util.BlockstatesUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -64,7 +64,7 @@ public class BlockFan extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, UtilBlockstates.getFacingFromEntity(pos, entity)), 2);
+      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, BlockstatesUtil.getFacingFromEntity(pos, entity)), 2);
     }
   }
 

@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.scythe;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -61,7 +61,7 @@ public class ScytheBrush extends ItemBaseCyclic {
       PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
     }
     context.getPlayer().swing(context.getHand());
-    UtilItemStack.damageItem(context.getPlayer(), context.getItemInHand());
+    ItemStackUtil.damageItem(context.getPlayer(), context.getItemInHand());
     return super.useOn(context);
   }
 }

@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.compat.botania.BotaniaWrapper;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -98,7 +98,7 @@ public class MagnetEnchant extends EnchantmentCyclic {
     //Ticking
     int level = getLevelAll(entity);
     if (level > 0 && !BotaniaWrapper.hasSolegnoliaAround(entity)) {
-      UtilEntity.moveEntityItemsInRegion(entity.getCommandSenderWorld(), entity.blockPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
+      EntityUtil.moveEntityItemsInRegion(entity.getCommandSenderWorld(), entity.blockPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }
   }
 }

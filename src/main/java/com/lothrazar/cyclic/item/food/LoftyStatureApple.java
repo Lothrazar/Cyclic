@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilStepHeight;
+import com.lothrazar.cyclic.util.AttributesUtil;
+import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -42,7 +42,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
     if (!worldIn.isClientSide) {
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
       datFile.toggleStepHeight();
-      UtilChat.addServerChatMessage(player, "cyclic.unlocks.stepheight." + datFile.stepHeight);
+      ChatUtil.addServerChatMessage(player, "cyclic.unlocks.stepheight." + datFile.stepHeight);
     }
     return super.finishUsingItem(stack, worldIn, entityLiving);
   }
@@ -55,12 +55,13 @@ public class LoftyStatureApple extends ItemBaseCyclic {
   public static void onUpdate(Player player) {
     CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
     if (datFile.stepHeight) {
-      UtilStepHeight.enableStepHeight(player);
+      AttributesUtil.enableStepHeight(player);
     }
     else {
       // do we force it off?
       if (datFile.stepHeightForceOff) {
-        UtilStepHeight.disableStepHeightForced(player);
+        AttributesUtil.disableStepHeight(player);
+        datFile.stepHeightForceOff = false;
       }
     }
   }

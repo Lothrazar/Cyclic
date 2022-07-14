@@ -25,9 +25,9 @@ package com.lothrazar.cyclic.item.elemental;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -55,15 +55,15 @@ public class IceWand extends ItemBaseCyclic {
     }
     if (spreadWaterFromCenter(context.getLevel(), pos.relative(side))) {
       //but the real sound
-      UtilSound.playSound(player, Blocks.PACKED_ICE.defaultBlockState().getSoundType().getBreakSound());
-      UtilItemStack.damageItem(player, context.getItemInHand());
+      SoundUtil.playSound(player, Blocks.PACKED_ICE.defaultBlockState().getSoundType().getBreakSound());
+      ItemStackUtil.damageItem(player, context.getItemInHand());
     }
     return super.useOn(context);
   }
 
   private boolean spreadWaterFromCenter(Level world, BlockPos posCenter) {
     int count = 0;
-    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
+    List<BlockPos> water = LevelWorldUtil.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
     for (BlockPos pos : water) {
       FluidState fluidState = world.getBlockState(pos).getFluidState();
       if (fluidState != null &&

@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -146,10 +146,10 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
   }
 
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
     int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
-      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+      shape = ShapeUtil.repeatShapeByHeight(shape, diff * height);
     }
     return shape;
   }

@@ -26,8 +26,8 @@ package com.lothrazar.cyclic.item.animal;
 import java.util.UUID;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -51,7 +51,7 @@ public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInter
         && event.getTarget() instanceof Horse) {
       // lets go 
       Horse ahorse = (Horse) event.getTarget();
-      Attribute attr = UtilEntity.getAttributeJump(ahorse);
+      Attribute attr = EntityUtil.getAttributeJump(ahorse);
       //got the attribute instance
       AttributeInstance mainAttribute = ahorse.getAttribute(attr);
       //now create a modifier 
@@ -70,8 +70,8 @@ public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInter
         event.setCancellationResult(InteractionResult.SUCCESS);
         event.setCanceled(true);
         event.getItemStack().shrink(1);
-        UtilEntity.eatingHorse(ahorse);
-        UtilChat.sendStatusMessage(event.getPlayer(), "" + (mainAttribute.getValue() + newAdded));
+        EntityUtil.eatingHorse(ahorse);
+        ChatUtil.sendStatusMessage(event.getPlayer(), "" + (mainAttribute.getValue() + newAdded));
       }
     }
   }

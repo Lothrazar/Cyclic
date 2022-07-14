@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.expcollect;
 import java.util.List;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
 import com.lothrazar.cyclic.capabilities.FluidHandlerCapabilityStack;
-import com.lothrazar.cyclic.util.UtilFluid;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -55,7 +55,7 @@ public class ItemBlockPylon extends BlockItem {
   @Override
   public int getBarColor(ItemStack stack) {
     FluidStack fstack = ItemBlockTank.copyFluidFromStack(stack);
-    return UtilFluid.getColorFromFluid(fstack);
+    return FluidHelpers.getColorFromFluid(fstack);
   }
 
   @Override

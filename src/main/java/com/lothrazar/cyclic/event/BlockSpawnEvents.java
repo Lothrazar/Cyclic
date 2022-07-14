@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -24,7 +24,7 @@ public class BlockSpawnEvents {
     //    Entity exploder = event.getExplosion().getExploder();
     Integer radius = BlockDestruction.RADIUS.get();
     Integer height = BlockDestruction.HEIGHT.get();
-    if (UtilWorld.doesBlockExist(world, new BlockPos(event.getExplosion().getPosition()), BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
+    if (LevelWorldUtil.doesBlockExist(world, new BlockPos(event.getExplosion().getPosition()), BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
       ModCyclic.LOGGER.info(world.isClientSide + " =clinet;Explosion cancelled " + event.getExplosion());
       event.setCanceled(true);
     }
@@ -41,7 +41,7 @@ public class BlockSpawnEvents {
       Integer height = CandlePeaceBlock.HEIGHT.get();
       LivingEntity mob = event.getEntityLiving();
       if (CandlePeaceBlock.isBad(mob, res)
-          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
+          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(),
               BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
               radius, height)) {
         //default range 32 and filtered
@@ -52,7 +52,7 @@ public class BlockSpawnEvents {
       radius = BlockNoTraders.RADIUS.get();
       height = BlockNoTraders.HEIGHT.get();
       if (BlockNoTraders.isSpawnDenied(mob, res)
-          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
+          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(),
               BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockNoTraders.LIT, true),
               radius, height)) {
         ModCyclic.LOGGER.info("Spawn cancelled by altar " + mob.getType());

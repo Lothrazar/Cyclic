@@ -5,9 +5,9 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilFluid;
-import com.lothrazar.cyclic.util.UtilParticle;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -58,13 +58,13 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     if (WATERCOST.get() > 0 && tank.getFluidAmount() < WATERCOST.get()) {
       return;
     }
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(worldPosition, RAD);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalFull(worldPosition, RAD);
     shapeIndex++;
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
     }
     if (level.isClientSide && TileTerraPreta.isValidGrow(level, shape.get(shapeIndex))) {
-      UtilParticle.spawnParticle(level, ParticleTypes.FALLING_WATER, shape.get(shapeIndex), 9);
+      ParticleUtil.spawnParticle(level, ParticleTypes.FALLING_WATER, shape.get(shapeIndex), 9);
     }
     if (TileTerraPreta.grow(level, shape.get(shapeIndex), 1)) {
       //it worked, so double drain
@@ -89,7 +89,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     BlockEntity below = this.level.getBlockEntity(this.worldPosition.below());
     if (below != null) {
       //from below, fill this.pos 
-      UtilFluid.tryFillPositionFromTank(level, this.worldPosition, Direction.DOWN, below.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null), CAPACITY);
+      FluidHelpers.tryFillPositionFromTank(level, this.worldPosition, Direction.DOWN, below.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null), CAPACITY);
     }
   }
 

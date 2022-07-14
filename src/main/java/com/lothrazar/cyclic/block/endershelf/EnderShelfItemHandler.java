@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilEnchant;
+import com.lothrazar.cyclic.util.EnchantUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -151,7 +151,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
       return match;
     }
     //else no cache, old way
-    return UtilEnchant.doBookEnchantmentsMatch(stackIn, stackHere);
+    return EnchantUtil.doBookEnchantmentsMatch(stackIn, stackHere);
   }
 
   public boolean isEmptyShelves() {

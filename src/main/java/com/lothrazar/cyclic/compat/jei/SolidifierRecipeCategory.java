@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
@@ -37,7 +37,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public Component getTitle() {
-    return UtilChat.ilang(BlockRegistry.SOLIDIFIER.get().getDescriptionId());
+    return ChatUtil.ilang(BlockRegistry.SOLIDIFIER.get().getDescriptionId());
   }
 
   @Override
@@ -74,12 +74,12 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeSolidifier recipe, IFocusGroup focuses) {
-    List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
-    builder.addSlot(RecipeIngredientRole.INPUT, 4, 25).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids);
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 7).addIngredients(recipe.at(0));
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 25).addIngredients(recipe.at(1));
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 43).addIngredients(recipe.at(2));
     builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 25).addItemStack(recipe.getResultItem());
+    List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
+    builder.addSlot(RecipeIngredientRole.INPUT, 4, 25).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids);
   }
   //  @Override
   //  public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {

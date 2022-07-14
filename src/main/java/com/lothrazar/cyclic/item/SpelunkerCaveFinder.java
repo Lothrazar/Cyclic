@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -62,15 +62,15 @@ public class SpelunkerCaveFinder extends ItemBaseCyclic {
     for (int i = 1; i <= RANGE; i++) {
       current = current.relative(direction.getOpposite());
       if (context.getLevel().isEmptyBlock(current)) {
-        UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.cave") + i);
+        ChatUtil.addChatMessage(player, ChatUtil.lang("tool.spelunker.cave") + i);
         found = true;
       }
       else if (worldObj.getBlockState(current) == Blocks.WATER.defaultBlockState()) {
-        UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.water") + i);
+        ChatUtil.addChatMessage(player, ChatUtil.lang("tool.spelunker.water") + i);
         found = true;
       }
       else if (worldObj.getBlockState(current) == Blocks.LAVA.defaultBlockState()) {
-        UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.lava") + i);
+        ChatUtil.addChatMessage(player, ChatUtil.lang("tool.spelunker.lava") + i);
         found = true;
       }
       if (found) {
@@ -78,10 +78,10 @@ public class SpelunkerCaveFinder extends ItemBaseCyclic {
       }
     }
     if (found == false) {
-      UtilChat.addChatMessage(player, UtilChat.lang("tool.spelunker.none") + RANGE);
+      ChatUtil.addChatMessage(player, ChatUtil.lang("tool.spelunker.none") + RANGE);
     }
-    UtilItemStack.damageItem(player, stack);
-    UtilEntity.setCooldownItem(player, this, COOLDOWN);
+    ItemStackUtil.damageItem(player, stack);
+    EntityUtil.setCooldownItem(player, this, COOLDOWN);
     return super.useOn(context);
   }
 }

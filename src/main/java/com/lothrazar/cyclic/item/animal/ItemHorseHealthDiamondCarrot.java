@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.animal;
 
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -54,7 +54,7 @@ public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEnt
         ahorse.mobInteract(event.getPlayer(), event.getHand());
         //processInteract
         //trigger eatingHorse
-        UtilEntity.eatingHorse(ahorse);
+        EntityUtil.eatingHorse(ahorse);
       }
     }
   }

@@ -13,10 +13,10 @@ import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilFakePlayer;
-import com.lothrazar.cyclic.util.UtilFluid;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.FakePlayerUtil;
+import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -116,7 +116,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
         fp.get().getInventory().items.set(i, s);
     }
     if (onGround)
-      UtilItemStack.drop(this.level, this.worldPosition.above(), toDrop);
+      ItemStackUtil.drop(this.level, this.worldPosition.above(), toDrop);
   }
 
   public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, InteractionHand hand) {
@@ -196,14 +196,14 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   public WeakReference<FakePlayer> setupBeforeTrigger(ServerLevel sw, String name) {
-    WeakReference<FakePlayer> fakePlayer = UtilFakePlayer.initFakePlayer(sw, name);
+    WeakReference<FakePlayer> fakePlayer = FakePlayerUtil.initFakePlayer(sw, name);
     if (fakePlayer == null) {
       ModCyclic.LOGGER.error("Fake player failed to init " + name);
       return null;
     }
     //fake player facing the same direction as tile. for throwables
     fakePlayer.get().setPos(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()); //seems to help interact() mob drops like milk
-    fakePlayer.get().setYRot(UtilEntity.getYawFromFacing(this.getCurrentFacing()));
+    fakePlayer.get().setYRot(EntityUtil.getYawFromFacing(this.getCurrentFacing()));
     return fakePlayer;
   }
 
@@ -276,7 +276,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       return;
     }
     Direction themFacingMe = myFacingDir.getOpposite();
-    UtilFluid.tryFillPositionFromTank(level, posTarget, themFacingMe, tank, toFlow);
+    FluidHelpers.tryFillPositionFromTank(level, posTarget, themFacingMe, tank, toFlow);
   }
 
   public void tryExtract(IItemHandler myself, Direction extractSide, int qty, ItemStackHandler nullableFilter) {

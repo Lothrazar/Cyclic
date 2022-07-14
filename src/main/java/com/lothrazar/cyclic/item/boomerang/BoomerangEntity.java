@@ -4,10 +4,10 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -110,11 +110,11 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   private void moveTowardsTarget() {
-    float newyRot = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
-    float newxRot = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
+    float newyRot = (float) Math.toRadians(EntityUtil.yawDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
+    float newxRot = (float) Math.toRadians(EntityUtil.pitchDegreesBetweenPoints(getX(), getY(), getZ(), targetEntity.getX(), targetEntity.getY(), targetEntity.getZ()));
     this.setYRot(newyRot);
     this.setXRot(newxRot);
-    Vec3 moveVec = UtilEntity.lookVector(this.getYRot(), this.getXRot()).scale(SPEED);
+    Vec3 moveVec = EntityUtil.lookVector(this.getYRot(), this.getXRot()).scale(SPEED);
     this.setDeltaMovement(
         0.5f * this.getDeltaMovement().x() + 0.5f * moveVec.x,
         0.5f * this.getDeltaMovement().y() + 0.503f * moveVec.y,
@@ -190,7 +190,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         }
       }
       else {
-        UtilItemStack.drop(level, this.blockPosition().above(), boomerangThrown);
+        ItemStackUtil.drop(level, this.blockPosition().above(), boomerangThrown);
         boomerangThrown = ItemStack.EMPTY;
       }
     }
@@ -209,7 +209,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     }
     final BlockPos pos = this.blockPosition();
     Entity owner = getOwner();
-    if (owner != null && UtilWorld.distanceBetweenHorizontal(pos, owner.blockPosition()) < 1) {
+    if (owner != null && LevelWorldUtil.distanceBetweenHorizontal(pos, owner.blockPosition()) < 1) {
       dropAsItem();
       return;
     }
@@ -288,7 +288,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
           LivingEntity live = (LivingEntity) entityHit;
           if (live.hasEffect(PotionEffectRegistry.STUN.get()) == false) {
             live.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN.get(), STUN_SECONDS * 20, 1));
-            UtilSound.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
+            SoundUtil.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }
       break;

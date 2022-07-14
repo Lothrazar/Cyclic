@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.scaffolding;
 import java.util.Random;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -64,6 +64,6 @@ public class BlockScaffolding extends BlockCyclic {
     if (!entityIn.horizontalCollision) {
       return;
     }
-    UtilEntity.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);
+    EntityUtil.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);
   }
 }

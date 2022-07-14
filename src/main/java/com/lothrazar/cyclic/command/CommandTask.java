@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.command;
 
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -16,7 +16,7 @@ public class CommandTask {
     String extra = String.join(" ", string);
     int j = file.todoTasks.size();
     file.todoTasks.add(extra);
-    UtilChat.addServerChatMessage(player, j + ")" + extra);
+    ChatUtil.addServerChatMessage(player, j + ")" + extra);
     return 0;
   }
 
@@ -24,7 +24,7 @@ public class CommandTask {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     CyclicFile file = PlayerDataEvents.getOrCreate(player);
     file.todoTasks.remove(integer);
-    UtilChat.addServerChatMessage(player, "[" + file.todoTasks.size() + "]");
+    ChatUtil.addServerChatMessage(player, "[" + file.todoTasks.size() + "]");
     return 0;
   }
 
@@ -39,7 +39,7 @@ public class CommandTask {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     CyclicFile file = PlayerDataEvents.getOrCreate(player);
     for (int i = 0; i < file.todoTasks.size(); i++) {
-      UtilChat.addServerChatMessage(player, i + ")" + file.todoTasks.get(i));
+      ChatUtil.addServerChatMessage(player, i + ")" + file.todoTasks.get(i));
     }
     return 0;
   }

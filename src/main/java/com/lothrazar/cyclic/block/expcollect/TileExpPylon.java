@@ -7,8 +7,8 @@ import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilPlayer;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -112,7 +112,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     List<Player> players = level.getEntitiesOfClass(Player.class,
         new AABB(this.getBlockPos().above()));
     for (Player p : players) {
-      double myTotal = UtilPlayer.getExpTotal(p);
+      double myTotal = PlayerUtil.getExpTotal(p);
       if (p.isCrouching() && myTotal > 0) {
         //go
         int addMeXp = 1;
@@ -143,7 +143,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
           p.giveExperiencePoints(-1 * addMeXp);
           tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
           //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
-          UtilSound.playSound(p, SoundEvents.EXPERIENCE_ORB_PICKUP);
+          SoundUtil.playSound(p, SoundEvents.EXPERIENCE_ORB_PICKUP);
           this.setChanged();
         }
       }

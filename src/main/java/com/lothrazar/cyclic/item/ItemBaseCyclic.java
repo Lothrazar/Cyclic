@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item;
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
@@ -72,7 +72,7 @@ public class ItemBaseCyclic extends Item {
       ItemStack torches = this.findAmmo(player, target);
       if (!torches.isEmpty()) {
         torches.shrink(1);
-        UtilItemStack.repairItem(stackToRepair);
+        ItemStackUtil.repairItem(stackToRepair);
       }
     }
   }

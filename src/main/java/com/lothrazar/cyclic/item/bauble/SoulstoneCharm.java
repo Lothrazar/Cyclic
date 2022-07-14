@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -49,7 +49,7 @@ public class SoulstoneCharm extends ItemBaseToggle {
       player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
       player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
       player.level.broadcastEntityEvent(player, (byte) 35);
-      UtilItemStack.damageItem(player, itemstack);
+      ItemStackUtil.damageItem(player, itemstack);
       return true;
     }
   }

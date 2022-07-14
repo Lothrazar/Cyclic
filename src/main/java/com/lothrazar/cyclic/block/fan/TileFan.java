@@ -7,8 +7,8 @@ import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilPlayer;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -103,7 +103,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.line(getBlockPos(), getCurrentFacing(), getCurrentRange());
+    return ShapeUtil.line(getBlockPos(), getCurrentFacing(), getCurrentRange());
   }
 
   private int pushEntities() {
@@ -159,7 +159,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
     int direction = 1;
     float speed = this.getSpeedCalc();
     for (Entity entity : entitiesFound) {
-      if (UtilPlayer.isPlayerCrouching(entity)) {
+      if (PlayerUtil.isPlayerCrouching(entity)) {
         continue; //sneak avoid feature
       }
       if (EntityDataCard.hasEntity(filter.getStackInSlot(0))

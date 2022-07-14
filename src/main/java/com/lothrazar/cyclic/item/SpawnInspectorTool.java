@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -68,7 +68,7 @@ public class SpawnInspectorTool extends ItemBaseCyclic {
         else {
           str.append(new TextComponent(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.RED));
         }
-        UtilChat.addServerChatMessage(context.getPlayer(), str);
+        ChatUtil.addServerChatMessage(context.getPlayer(), str);
       }
     }
     context.getPlayer().swing(context.getHand());

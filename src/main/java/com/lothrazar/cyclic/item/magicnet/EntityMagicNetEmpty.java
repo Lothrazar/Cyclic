@@ -5,9 +5,9 @@ import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilString;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -77,7 +77,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
         return;
       }
       String id = EntityType.getKey(target.getType()).toString();
-      if (UtilString.isInList(ConfigRegistry.getMagicNetList(), EntityType.getKey(target.getType()))) {
+      if (StringParseUtil.isInList(ConfigRegistry.getMagicNetList(), EntityType.getKey(target.getType()))) {
         ModCyclic.LOGGER.info("ignored by: CONFIG LIST" + id);
         return;
       }
@@ -89,8 +89,8 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       drop.setTag(compound);
       targetHeightOffset = target.getBbHeight() / 2;
       particleType = ParticleTypes.PORTAL;
-      UtilItemStack.drop(level, this.blockPosition(), drop);
-      UtilSound.playSound(target, SoundRegistry.MONSTER_BALL_CAPTURE.get());
+      ItemStackUtil.drop(level, this.blockPosition(), drop);
+      SoundUtil.playSound(target, SoundRegistry.MONSTER_BALL_CAPTURE.get());
       target.remove(RemovalReason.DISCARDED);
     }
     else if (type == HitResult.Type.BLOCK) {
@@ -98,7 +98,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       BlockPos pos = this.blockPosition();
       targetHeightOffset = 0.0D;
       particleType = ParticleTypes.POOF;
-      UtilItemStack.drop(level, pos, new ItemStack(ItemRegistry.MAGIC_NET.get()));
+      ItemStackUtil.drop(level, pos, new ItemStack(ItemRegistry.MAGIC_NET.get()));
     }
     if (particleType != null) {
       Vec3 hitVec = result.getLocation();

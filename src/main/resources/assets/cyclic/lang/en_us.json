@@ -1376,6 +1376,8 @@
   "effect.cyclic.swimspeed": "Swim Speed",
   "effect.cyclic.stun": "Paralyze",
   "effect.cyclic.waterwalk": "Waterwalking",
+  "effect.cyclic.lightweight": "Light-weight",
+  "effect.cyclic.heavyweight": "Heavy-weight",
   "item.minecraft.potion.effect.cyclic_strong_haste": "Potion of Haste II",
   "item.minecraft.splash_potion.effect.cyclic_strong_haste": "Splash Potion of Haste II",
   "item.minecraft.lingering_potion.effect.cyclic_strong_haste": "Lingering Potion of Haste II",

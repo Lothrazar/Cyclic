@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.api.IHasClickToggle;
-import com.lothrazar.cyclic.item.inventorycake.ItemCakeInventory;
+import com.lothrazar.cyclic.item.food.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemScroll;

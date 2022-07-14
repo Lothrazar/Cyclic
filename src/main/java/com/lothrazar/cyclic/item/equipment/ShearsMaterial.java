@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.dispenser.ShearsDispenseItemBehavior;
 import net.minecraft.sounds.SoundEvents;
@@ -49,7 +49,7 @@ public class ShearsMaterial extends ShearsItem {
       worldIn.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BEEHIVE_SHEAR, SoundSource.NEUTRAL, 1.0F, 1.0F);
       BeehiveBlock.dropHoneycomb(worldIn, blockPos);
       worldIn.setBlockAndUpdate(blockPos, blockState.setValue(BeehiveBlock.HONEY_LEVEL, 0));
-      UtilItemStack.damageItem(player, context.getItemInHand());
+      ItemStackUtil.damageItem(player, context.getItemInHand());
       return InteractionResult.SUCCESS;
     }
     return super.useOn(context);

@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.animal;
 
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -47,12 +47,12 @@ public class ItemHorseRedstoneSpeed extends ItemBaseCyclic implements IEntityInt
       Horse ahorse = (Horse) event.getTarget();
       double speed = ahorse.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
       double newSpeed = speed + SPEED_AMT;
-      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
+      if (EntityUtil.getSpeedTranslated(newSpeed) < SPEED_MAX) {
         ahorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.SUCCESS);
         event.getItemStack().shrink(1);
-        UtilEntity.eatingHorse(ahorse);
+        EntityUtil.eatingHorse(ahorse);
       }
     }
   }

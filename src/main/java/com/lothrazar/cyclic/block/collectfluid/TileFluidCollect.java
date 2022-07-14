@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -140,8 +140,8 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   //for render
   public List<BlockPos> getShapeHollow() {
     BlockPos ctr = getTargetCenter();
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(ctr.below(height), this.size);
-    shape = UtilShape.repeatShapeByHeight(shape, height);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalHollow(ctr.below(height), this.size);
+    shape = ShapeUtil.repeatShapeByHeight(shape, height);
     if (targetPos != null) {
       shape.add(targetPos);
     }
@@ -151,8 +151,8 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   //for harvest
   public List<BlockPos> getShapeFilled() {
     BlockPos ctr = getTargetCenter();
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(ctr.below(height), this.size);
-    shape = UtilShape.repeatShapeByHeight(shape, height - 1);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalFull(ctr.below(height), this.size);
+    shape = ShapeUtil.repeatShapeByHeight(shape, height - 1);
     return shape;
   }
 

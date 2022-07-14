@@ -32,8 +32,8 @@ import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -165,8 +165,8 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
             .reversed());
     final Direction facing = player.getDirection();
     for (TorchPos torchPos : validTorchPositions) {
-      if (UtilPlaceBlocks.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
-        UtilItemStack.damageItem(player, stack);
+      if (BlockUtil.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
+        ItemStackUtil.damageItem(player, stack);
         timer.set(TICK_DELAY);
         return;
       }
@@ -184,8 +184,8 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
             .thenComparing(TorchPos::isNotOnGround)
             .reversed());
     for (TorchPos torchPos : validTorchPositions) {
-      if (UtilPlaceBlocks.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
-        UtilItemStack.damageItem(player, stack);
+      if (BlockUtil.placeTorchSafely(world, torchPos.pos, torchPos.getPlacementDirection(facing))) {
+        ItemStackUtil.damageItem(player, stack);
         timer.set(TICK_DELAY);
         return;
       }

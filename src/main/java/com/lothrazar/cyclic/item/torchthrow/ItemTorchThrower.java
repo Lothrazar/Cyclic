@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.torchthrow;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -27,7 +27,7 @@ public class ItemTorchThrower extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level world, Player shooter, InteractionHand hand) {
     shootMe(world, shooter, new EntityTorchBolt(shooter, world), 0, ItemBaseCyclic.VELOCITY_MAX);
-    UtilItemStack.damageItem(shooter, shooter.getItemInHand(hand));
+    ItemStackUtil.damageItem(shooter, shooter.getItemInHand(hand));
     return super.use(world, shooter, hand);
   }
 }

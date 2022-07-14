@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.food;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.AttributesUtil;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -36,7 +36,7 @@ public class HeartItem extends ItemBaseCyclic {
       //finish up
       playerIn.getCooldowns().addCooldown(this, COOLDOWN);
       playerIn.getItemInHand(handIn).shrink(1);
-      UtilSound.playSound(playerIn, SoundRegistry.FILL.get());
+      SoundUtil.playSound(playerIn, SoundRegistry.FILL.get());
     }
     return super.use(worldIn, playerIn, handIn);
   }

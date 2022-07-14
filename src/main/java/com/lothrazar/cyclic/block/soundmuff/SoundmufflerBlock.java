@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.soundmuff;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.util.UtilBlockstates;
+import com.lothrazar.cyclic.util.BlockstatesUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -34,7 +34,7 @@ public class SoundmufflerBlock extends BlockCyclic {
       return;
     } //long term/repeating/music
     SoundInstance sound = event.getSound();
-    List<BlockPos> blocks = UtilBlockstates.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this, RADIUS);
+    List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this, RADIUS);
     if (blocks == null || blocks.size() == 0) {
       return;
     }

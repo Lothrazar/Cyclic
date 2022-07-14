@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.slingshot;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -79,10 +79,10 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
     this.setRot(TIME_UNTIL_HOMING, MAX_LIFETIME);
     // pitch is Y
     //yaw is X 
-    float rotationYaw = (float) Math.toRadians(UtilEntity.yawDegreesBetweenPoints(posX, posY, posZ, targetEntity.position().x, targetEntity.position().y, targetEntity.position().z));
-    float rotationPitch = (float) Math.toRadians(UtilEntity.pitchDegreesBetweenPoints(posX, posY, posZ, targetEntity.position().x, targetEntity.position().y, targetEntity.position().z));
+    float rotationYaw = (float) Math.toRadians(EntityUtil.yawDegreesBetweenPoints(posX, posY, posZ, targetEntity.position().x, targetEntity.position().y, targetEntity.position().z));
+    float rotationPitch = (float) Math.toRadians(EntityUtil.pitchDegreesBetweenPoints(posX, posY, posZ, targetEntity.position().x, targetEntity.position().y, targetEntity.position().z));
     this.setRot(rotationYaw, rotationPitch);
-    Vec3 moveVec = UtilEntity.lookVector(rotationYaw, rotationPitch).scale(SPEED);
+    Vec3 moveVec = EntityUtil.lookVector(rotationYaw, rotationPitch).scale(SPEED);
     this.setDeltaMovement(moveVec);
   }
 

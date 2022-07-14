@@ -26,8 +26,8 @@ package com.lothrazar.cyclic.enchant;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclic.util.HarvestUtil;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -109,8 +109,8 @@ public class GrowthEnchant extends EnchantmentCyclic {
       }
       final int growthLimit = level * 2 + (entity.level.isRaining() ? 4 : 1); //faster when raining too 
       int grown = 0;
-      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.blockPosition().below(), level + 2);
-      shape = UtilShape.repeatShapeByHeight(shape, 2);
+      List<BlockPos> shape = ShapeUtil.squareHorizontalFull(entity.blockPosition().below(), level + 2);
+      shape = ShapeUtil.repeatShapeByHeight(shape, 2);
       Collections.shuffle(shape);
       for (int i = 0; i < shape.size(); i++) {
         if (grown >= growthLimit) {
@@ -133,7 +133,7 @@ public class GrowthEnchant extends EnchantmentCyclic {
         }
       }
       if (grown > 0) {
-        UtilItemStack.damageItem(entity, entity.getItemInHand(InteractionHand.MAIN_HAND));
+        ItemStackUtil.damageItem(entity, entity.getItemInHand(InteractionHand.MAIN_HAND));
       }
     }
   }

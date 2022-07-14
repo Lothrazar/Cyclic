@@ -11,7 +11,7 @@ import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
 import com.lothrazar.cyclic.command.CommandTask;
 import com.lothrazar.cyclic.util.AttributesUtil;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -62,7 +62,6 @@ public class CommandRegistry {
   public static BooleanValue COMMANDHUNGER;
   public static BooleanValue COMMANDPING;
 
-  //TODO 1.19 only fix command registry
   @SubscribeEvent
   public void onRegisterCommandsEvent(RegisterCommandsEvent event) {
     CommandDispatcher<CommandSourceStack> r = event.getDispatcher();
@@ -327,7 +326,7 @@ public class CommandRegistry {
           p.setGameMode(GameType.SPECTATOR);
         break;
         default:
-          UtilChat.sendFeedback(x, integer + " = ?!");
+          ChatUtil.sendFeedback(x, integer + " = ?!");
         break;
       }
     }

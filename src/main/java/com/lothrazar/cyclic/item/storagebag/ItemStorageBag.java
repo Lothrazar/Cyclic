@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -100,7 +100,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
           }
         }
       }
-      UtilSound.playSound(context.getPlayer(), SoundRegistry.BASEY.get());
+      SoundUtil.playSound(context.getPlayer(), SoundRegistry.BASEY.get());
       return InteractionResult.SUCCESS;
     }
     return InteractionResult.PASS;

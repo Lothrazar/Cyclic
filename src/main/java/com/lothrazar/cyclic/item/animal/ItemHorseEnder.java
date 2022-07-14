@@ -26,9 +26,9 @@ package com.lothrazar.cyclic.item.animal;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilParticle;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
@@ -46,8 +46,8 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
   }
 
   public static void onSuccess(LivingEntity liv) {
-    UtilSound.playSound(liv, SoundEvents.GENERIC_DRINK);
-    UtilParticle.spawnParticle(liv.level, ParticleTypes.CRIT, liv.blockPosition(), 3);
+    SoundUtil.playSound(liv, SoundEvents.GENERIC_DRINK);
+    ParticleUtil.spawnParticle(liv.level, ParticleTypes.CRIT, liv.blockPosition(), 3);
     increment(liv, -1);
     //    int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
     //    UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);
@@ -77,7 +77,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
       event.getPlayer().getCooldowns().addCooldown(this, 1);
       event.getItemStack().shrink(1);
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
-      UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("item.cyclic.carrot_ender.count") + current);
+      ChatUtil.addChatMessage(event.getPlayer(), ChatUtil.lang("item.cyclic.carrot_ender.count") + current);
       //
       //test
       //      if (ahorse.getType() == EntityType.ZOMBIE_HORSE) {

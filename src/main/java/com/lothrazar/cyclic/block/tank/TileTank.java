@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.tank;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilFluid;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -82,7 +82,7 @@ public class TileTank extends TileBlockEntityCyclic {
     //drain below but only to one of myself
     BlockEntity below = this.level.getBlockEntity(this.worldPosition.below());
     if (below != null && below instanceof TileTank) {
-      UtilFluid.tryFillPositionFromTank(level, this.worldPosition.below(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
+      FluidHelpers.tryFillPositionFromTank(level, this.worldPosition.below(), Direction.UP, tank, TRANSFER_FLUID_PER_TICK);
     }
   }
 }

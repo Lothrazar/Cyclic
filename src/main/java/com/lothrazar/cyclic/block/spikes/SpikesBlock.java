@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.spikes;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -141,13 +141,13 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
       world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, true));
       if (!world.isClientSide) {
         //playSoundFromServer
-        UtilSound.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_ON.get());
+        SoundUtil.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_ON.get());
       }
     }
     else if (state.getValue(ACTIVATED).booleanValue() && world.hasNeighborSignal(pos) == false) {
       world.setBlockAndUpdate(pos, state.setValue(ACTIVATED, false));
       if (!world.isClientSide) {
-        UtilSound.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_OFF.get());
+        SoundUtil.playSoundFromServer((ServerLevel) world, pos, SoundRegistry.SPIKES_OFF.get());
       }
     }
     super.neighborChanged(state, world, pos, blockIn, fromPos, isMoving);

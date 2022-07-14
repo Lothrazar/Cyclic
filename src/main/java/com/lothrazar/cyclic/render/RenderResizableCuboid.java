@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.render;
 
 import java.util.Arrays;
 import com.lothrazar.cyclic.data.Model3D;
-import com.lothrazar.cyclic.util.UtilRender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -62,10 +61,10 @@ public class RenderResizableCuboid {
    * model 3d cube is the fluid
    */
   public void renderCube(Model3D cube, PoseStack matrix, VertexConsumer buffer, int argb, int light) {
-    float red = UtilRender.getRed(argb);
-    float green = UtilRender.getGreen(argb);
-    float blue = UtilRender.getBlue(argb);
-    float alpha = UtilRender.getAlpha(argb);
+    float red = RenderUtils.getRed(argb);
+    float green = RenderUtils.getGreen(argb);
+    float blue = RenderUtils.getBlue(argb);
+    float alpha = RenderUtils.getAlpha(argb);
     Vec3 size = new Vec3(cube.sizeX(), cube.sizeY(), cube.sizeZ());
     matrix.pushPose();
     matrix.translate(cube.minX, cube.minY, cube.minZ);

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.util.UtilBlockstates;
+import com.lothrazar.cyclic.util.BlockstatesUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,7 +38,7 @@ public class BlockWaxedRedstone extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, UtilBlockstates.getFacingFromEntity(pos, entity)), 2);
+      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, BlockstatesUtil.getFacingFromEntity(pos, entity)), 2);
     }
   }
 

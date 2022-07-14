@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -83,8 +83,8 @@ public class PearlEnchant extends EnchantmentCyclic {
         ThrownEnderpearl pearl = new ThrownEnderpearl(world, player);
         Vec3 lookVector = player.getLookAngle();
         pearl.shoot(lookVector.x(), lookVector.y(), lookVector.z(), VELOCITY, INNACCURACY);
-        UtilEntity.setCooldownItem(player, event.getItemStack().getItem(), adjustedCooldown);
-        UtilSound.playSound(player, SoundEvents.ENDER_PEARL_THROW, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
+        EntityUtil.setCooldownItem(player, event.getItemStack().getItem(), adjustedCooldown);
+        SoundUtil.playSound(player, SoundEvents.ENDER_PEARL_THROW, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
         world.addFreshEntity(pearl);
         //block propogation of event 
         event.setResult(Result.DENY);

@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -151,8 +151,8 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
           .create(LootContextParamSets.FISHING);
       List<ItemStack> lootDrops = table.getRandomItems(lootContext);
       if (lootDrops != null && lootDrops.size() > 0) {
-        UtilItemStack.damageItem(null, fishingRod);
-        UtilItemStack.drop(world, center, lootDrops);
+        ItemStackUtil.damageItem(null, fishingRod);
+        ItemStackUtil.drop(world, center, lootDrops);
       }
     }
   }

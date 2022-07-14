@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.melter;
 
 import com.lothrazar.cyclic.render.FluidTankRenderType;
-import com.lothrazar.cyclic.util.UtilFluid;
-import com.lothrazar.cyclic.util.UtilRender;
+import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -52,10 +52,10 @@ public class RenderMelter implements BlockEntityRenderer<TileMelter> {
     }
     VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.RESIZABLE);
     matrixStack.pushPose();
-    matrixStack.scale(1F, UtilFluid.getScale(tankHere.tank), 1F);
-    UtilRender.renderObject(UtilFluid.getFluidModel(fluid, UtilFluid.STAGES - 1),
-        matrixStack, vertexBuffer, UtilRender.getColorARGB(fluid, 0.1F),
-        UtilRender.calculateGlowLight(light, fluid));
+    matrixStack.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);
+    RenderUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
+        matrixStack, vertexBuffer, RenderUtils.getColorARGB(fluid, 0.1F),
+        RenderUtils.calculateGlowLight(light, fluid));
     matrixStack.popPose();
   }
 }

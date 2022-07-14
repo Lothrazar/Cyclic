@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -93,7 +93,7 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     for (int s = 0; s < inventory.getSlots(); s++) {
       BlockPosDim targetPos = getTargetInSlot(s);
       if (targetPos == null ||
-          UtilWorld.dimensionIsEqual(targetPos, level) == false) {
+          LevelWorldUtil.dimensionIsEqual(targetPos, level) == false) {
         continue;
       }
       toggleTarget(targetPos.getPos());

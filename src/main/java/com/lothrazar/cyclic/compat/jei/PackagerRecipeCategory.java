@@ -5,7 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -34,7 +34,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   @Override
   public Component getTitle() {
-    return UtilChat.ilang(BlockRegistry.PACKAGER.get().getDescriptionId());
+    return ChatUtil.ilang(BlockRegistry.PACKAGER.get().getDescriptionId());
   }
 
   @Override

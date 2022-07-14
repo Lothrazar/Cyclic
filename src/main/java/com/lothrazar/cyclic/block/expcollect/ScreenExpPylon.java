@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -44,7 +44,7 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
     this.drawName(ms, this.title.getString());
     int xp = menu.tile.getStoredXp();
     if (xp >= 0) {
-      this.font.draw(ms, xp + " " + UtilChat.lang("cyclic.screen.xp"), (this.getXSize()) / 2 + 4, 40.0F, 4209792);
+      this.font.draw(ms, xp + " " + ChatUtil.lang("cyclic.screen.xp"), (this.getXSize()) / 2 + 4, 40.0F, 4209792);
     }
     btnRedstone.onValueUpdate(menu.tile);
   }

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.EntityUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -23,10 +23,10 @@ public class CommandHome {
     optional = Player.findRespawnPositionAndUseSpawnBlock(player.getLevel(), respawnPos, 0.0F, true, true);
     if (optional.isPresent()) {
       BlockPos bedLocation = new BlockPos(optional.get());
-      UtilEntity.enderTeleportEvent(player, player.level, bedLocation);
+      EntityUtil.enderTeleportEvent(player, player.level, bedLocation);
     }
     else {
-      UtilChat.sendFeedback(ctx, "command.cyclic.gethome.bed");
+      ChatUtil.sendFeedback(ctx, "command.cyclic.gethome.bed");
     }
     return 0;
   }

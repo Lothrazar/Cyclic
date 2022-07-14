@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.compat.jei;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.crusher.RecipeCrusher;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -34,7 +34,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
 
   @Override
   public Component getTitle() {
-    return UtilChat.ilang(BlockRegistry.CRUSHER.get().getDescriptionId());
+    return ChatUtil.ilang(BlockRegistry.CRUSHER.get().getDescriptionId());
   }
 
   @Override

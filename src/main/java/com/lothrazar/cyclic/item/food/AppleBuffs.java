@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.food;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -30,7 +30,7 @@ public class AppleBuffs extends ItemBaseCyclic {
           continue;
         }
         TranslatableComponent t = new TranslatableComponent(effCurrent.getEffect().getDescriptionId());
-        t.append(" " + UtilChat.lang("potion.potency." + effCurrent.getAmplifier()));
+        t.append(" " + ChatUtil.lang("potion.potency." + effCurrent.getAmplifier()));
         t.withStyle(ChatFormatting.DARK_GRAY);
         tooltip.add(t);
       }

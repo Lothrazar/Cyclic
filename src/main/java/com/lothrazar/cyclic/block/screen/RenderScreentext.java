@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.screen;
 
-import com.lothrazar.cyclic.util.UtilRenderText;
+import com.lothrazar.cyclic.render.UtilRenderText;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

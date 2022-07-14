@@ -20,11 +20,11 @@ import com.lothrazar.cyclic.item.slingshot.LaserItem;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.RenderMiningLaser;
-import com.lothrazar.cyclic.util.UtilPlayer;
-import com.lothrazar.cyclic.util.UtilRender;
-import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.render.RenderMiningLaser;
+import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -64,7 +64,7 @@ public class EventRender {
         if (targetState != null) {
           //ok still 
           drawStack(new ItemStack(targetState.getBlock()));
-          int slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
+          int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
           if (slot < 0) {
             //nothing found
             int width = mc.getWindow().getGuiScaledWidth();
@@ -144,7 +144,7 @@ public class EventRender {
     ///////////////////// RandomizerItem
     stack = RandomizerItem.getIfHeld(player);
     if (stack.getItem() instanceof RandomizerItem) {
-      BlockHitResult lookingAt = UtilRender.getLookingAt(player, (int) range);
+      BlockHitResult lookingAt = RenderUtils.getLookingAt(player, (int) range);
       if (world.getBlockState(lookingAt.getBlockPos()).isAir()) {
         return;
       }
@@ -159,8 +159,8 @@ public class EventRender {
       for (BlockPosDim loc : coords) {
         if (loc != null) {
           if (loc.getDimension() == null ||
-              loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
-            UtilRender.createBox(event.getPoseStack(), loc.getPos());
+              loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(world))) {
+            RenderUtils.createBox(event.getPoseStack(), loc.getPos());
           }
         }
       }
@@ -174,7 +174,7 @@ public class EventRender {
       BlockPosDim loc = LocationGpsCard.getPosition(stack);
       if (loc != null) {
         if (loc.getDimension() == null ||
-            loc.getDimension().equalsIgnoreCase(UtilWorld.dimensionToString(world))) {
+            loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(world))) {
           renderCubes.put(loc.getPos(), ClientConfigCyclic.getColor(stack));
         }
       }
@@ -191,7 +191,7 @@ public class EventRender {
     }
     //render the pos->colour map
     if (renderCubes.keySet().size() > 0) {
-      UtilRender.renderColourCubes(event, renderCubes, alpha);
+      RenderUtils.renderColourCubes(event, renderCubes, alpha);
     }
     /****************** end rendering cubes. start laser beam render ********************/
     stack = LaserItem.getIfHeld(player);
@@ -207,7 +207,7 @@ public class EventRender {
         RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
         if (world.getGameTime() % 4 == 0) {
           PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
-          UtilSound.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
+          SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
         }
       }
       else {
@@ -236,7 +236,7 @@ public class EventRender {
               RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
               if (world.getGameTime() % 4 == 0) {
                 PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
-                UtilSound.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
+                SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
               }
             }
           }

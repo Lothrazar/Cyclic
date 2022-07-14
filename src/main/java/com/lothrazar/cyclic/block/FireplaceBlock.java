@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.util.UtilBlockstates;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.BlockstatesUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -34,7 +34,7 @@ public class FireplaceBlock extends BlockCyclic {
     }
     if (isPowered && !state.getValue(LIT)) { //set fire
       if (setFire(worldIn, posFire, false) && worldIn.isClientSide) {
-        UtilSound.playSound(worldIn, pos, SoundEvents.FLINTANDSTEEL_USE);
+        SoundUtil.playSound(worldIn, pos, SoundEvents.FLINTANDSTEEL_USE);
       }
     }
     else if (!isPowered && state.getValue(LIT)) { //put out fire
@@ -97,7 +97,7 @@ public class FireplaceBlock extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, UtilBlockstates.getFacingFromEntity(pos, entity)), 2);
+      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, BlockstatesUtil.getFacingFromEntity(pos, entity)), 2);
     }
   }
 

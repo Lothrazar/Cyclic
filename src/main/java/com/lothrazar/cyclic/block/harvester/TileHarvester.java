@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.HarvestUtil;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -97,20 +97,20 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
 
   //for harvest
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, 0);
+    List<BlockPos> shape = ShapeUtil.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, 0);
     int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
-      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+      shape = ShapeUtil.repeatShapeByHeight(shape, diff * height);
     }
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
     int diff = directionIsUp ? 1 : -1;
     if (height > 0) {
-      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+      shape = ShapeUtil.repeatShapeByHeight(shape, diff * height);
     }
     return shape;
   }

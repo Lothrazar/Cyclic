@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -107,7 +107,7 @@ public class VenomEnchant extends EnchantmentCyclic {
     if (level > 0) {
       // we -1  since potion level 1 is Poison II
       //so that means enchantment I giving poison I means this
-      UtilEntity.addOrMergePotionEffect(target, new MobEffectInstance(MobEffects.POISON, TICKSPERLEVEL * level, level - 1));
+      EntityUtil.addOrMergePotionEffect(target, new MobEffectInstance(MobEffects.POISON, TICKSPERLEVEL * level, level - 1));
     }
   }
 }

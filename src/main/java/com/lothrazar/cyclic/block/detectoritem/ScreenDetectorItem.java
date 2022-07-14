@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -77,8 +77,8 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRender.onValueUpdate(menu.tile);
-    btnComp.setTooltip(UtilChat.lang("cyclic.detector.compare.tooltip"));
-    btnComp.setMessage(UtilChat.ilang("cyclic.detector.compare" +
+    btnComp.setTooltip(ChatUtil.lang("cyclic.detector.compare.tooltip"));
+    btnComp.setMessage(ChatUtil.ilang("cyclic.detector.compare" +
         menu.tile.getField(TileDetectorItem.Fields.GREATERTHAN.ordinal())));
   }
 

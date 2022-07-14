@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -79,7 +79,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
         BlockPos invA = getTarget(SLOT_A);
         BlockPos invB = getTarget(SLOT_B);
         if (invA != null && invB != null) {
-          List<BlockPos> shape = UtilShape.rect(invA, invB);
+          List<BlockPos> shape = ShapeUtil.rect(invA, invB);
           RelativeShape worldShape = new RelativeShape(level, shape, this.worldPosition);
           //read from WORLD to CARD
           //only works if all three cards set

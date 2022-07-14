@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.gui.EnergyBar;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -51,7 +51,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     if (menu.tile.getStatus() != UncraftStatusEnum.EMPTY) {
-      String name = UtilChat.lang(
+      String name = ChatUtil.lang(
           ModCyclic.MODID + ".gui.uncrafter." + menu.tile.getStatus().name().toLowerCase());
       int center = (this.getXSize() - this.font.width(name)) / 2;
       drawString(ms, name, center + 37, 24);

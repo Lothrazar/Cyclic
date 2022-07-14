@@ -11,7 +11,7 @@ import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -79,7 +79,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
         x = this.leftPos + 8;
         y += bsize;
       }
-      String shapeName = UtilChat.lang("buildertype." + shape.name().toLowerCase());
+      String shapeName = ChatUtil.lang("buildertype." + shape.name().toLowerCase());
       ButtonMachine btnShape = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize,
           shapeName.substring(0, 2), (p) -> {
             //      container.tile.setFlowing((container.getFlowing() + 1) % 2);

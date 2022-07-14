@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -47,7 +47,7 @@ public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvid
     ItemStack card = this.inventory.getStackInSlot(0);
     if (card.hasTag() && card.getTag().contains(SoundCard.SOUND_ID) && level instanceof ServerLevel) {
       String sid = card.getTag().getString(SoundCard.SOUND_ID);
-      UtilSound.playSoundFromServerById((ServerLevel) level, worldPosition, sid);
+      SoundUtil.playSoundFromServerById((ServerLevel) level, worldPosition, sid);
     }
   }
 

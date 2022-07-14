@@ -16,7 +16,7 @@ import com.lothrazar.cyclic.block.solidifier.ContainerSolidifier;
 import com.lothrazar.cyclic.block.solidifier.ScreenSolidifier;
 import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
-import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
+import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -92,8 +92,6 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(GenfluidRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get())));
     registry.addRecipes(CrusherRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get())));
     registry.addRecipes(PackagerRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(RecipeType.CRAFTING)));
-    //TODO: ContainerGeneratorDrops
-    // ContainerGeneratorFood
     for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {

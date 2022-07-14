@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -52,7 +52,7 @@ public class FireScepter extends ItemBaseCyclic {
     shootMe(worldIn, player, new FireEntity(player, worldIn), 10, velocityFactor);
     shootMe(worldIn, player, new FireEntity(player, worldIn), -10, velocityFactor);
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
-    UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.FIREBALL_STAFF_LAUNCH.get());
+    ItemStackUtil.damageItem(player, stack);
+    SoundUtil.playSound(player, SoundRegistry.FIREBALL_STAFF_LAUNCH.get());
   }
 }

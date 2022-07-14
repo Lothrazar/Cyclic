@@ -31,7 +31,7 @@ import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -125,7 +125,7 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     }
     if (outer == null) {
       outer = getShape();
-      List<BlockPos> waterShape = UtilShape.squareHorizontalHollow(this.getBlockPos(), SIZE);
+      List<BlockPos> waterShape = ShapeUtil.squareHorizontalHollow(this.getBlockPos(), SIZE);
       outer.addAll(waterShape);
     }
     for (int i = 0; i < PER_TICK; i++) {
@@ -188,8 +188,8 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   List<BlockPos> getShape() {
-    List<BlockPos> outer = UtilShape.squareHorizontalHollow(this.worldPosition, 7);
-    outer.addAll(UtilShape.squareHorizontalHollow(this.worldPosition, 5));
+    List<BlockPos> outer = ShapeUtil.squareHorizontalHollow(this.worldPosition, 7);
+    outer.addAll(ShapeUtil.squareHorizontalHollow(this.worldPosition, 5));
     return outer;
   }
 

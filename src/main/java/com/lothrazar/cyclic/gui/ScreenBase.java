@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -80,14 +80,14 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
    * @param name
    */
   protected void drawName(PoseStack ms, String name) {
-    name = UtilChat.lang("block." + ModCyclic.MODID + "." + name);
+    name = ChatUtil.lang("block." + ModCyclic.MODID + "." + name);
     drawString(ms, name,
         (this.getXSize() - this.font.width(name)) / 2,
         6.0F);
   }
 
   protected void drawString(PoseStack ms, String name, float x, float y) {
-    this.font.draw(ms, UtilChat.lang(name), x, y, 4210752);
+    this.font.draw(ms, ChatUtil.lang(name), x, y, 4210752);
   }
 
   public void drawButtonTooltips(PoseStack ms, int mouseX, int mouseY) {

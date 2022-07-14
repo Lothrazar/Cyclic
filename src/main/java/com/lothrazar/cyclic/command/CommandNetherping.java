@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.command;
 
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -15,7 +15,7 @@ public class CommandNetherping {
   public static int execute(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     BlockPos pos = player.blockPosition();
-    UtilChat.sendFeedback(ctx, UtilChat.blockPosToString(pos));
+    ChatUtil.sendFeedback(ctx, ChatUtil.blockPosToString(pos));
     return 0;
   }
 
@@ -31,10 +31,10 @@ public class CommandNetherping {
     double x = pos.getX();
     double z = pos.getZ();
     BlockPos netherpos = new BlockPos(x * factor, pos.getY(), z * factor);
-    UtilChat.sendFeedback(ctx,
-        UtilChat.blockPosToString(pos)
+    ChatUtil.sendFeedback(ctx,
+        ChatUtil.blockPosToString(pos)
             + " -> " +
-            UtilChat.blockPosToString(netherpos));
+            ChatUtil.blockPosToString(netherpos));
     return 0;
   }
 }

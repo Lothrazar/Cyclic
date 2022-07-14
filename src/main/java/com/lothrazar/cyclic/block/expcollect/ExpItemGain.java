@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -24,7 +24,7 @@ public class ExpItemGain extends ItemBaseCyclic {
     if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
       playerIn.giveExperiencePoints(EXP_PER_FOOD);
       playerIn.getMainHandItem().shrink(1);
-      UtilSound.playSound(playerIn, SoundEvents.EXPERIENCE_ORB_PICKUP);
+      SoundUtil.playSound(playerIn, SoundEvents.EXPERIENCE_ORB_PICKUP);
     }
     return super.use(worldIn, playerIn, handIn);
   }

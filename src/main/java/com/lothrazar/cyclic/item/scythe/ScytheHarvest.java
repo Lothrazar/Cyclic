@@ -4,8 +4,8 @@ import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.net.PacketHarvesting;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +22,7 @@ public class ScytheHarvest extends ItemBaseCyclic {
   private static final int RADIUS_SNEAKING = 2; //2x2
 
   public List<BlockPos> getShape(BlockPos pos, int radius) {
-    return UtilShape.squareHorizontalFull(pos, radius);
+    return ShapeUtil.squareHorizontalFull(pos, radius);
   }
 
   @Override
@@ -38,7 +38,7 @@ public class ScytheHarvest extends ItemBaseCyclic {
       PacketRegistry.INSTANCE.sendToServer(new PacketHarvesting(pos, radius));
     }
     player.swing(context.getHand());
-    UtilItemStack.damageItem(player, context.getItemInHand());
+    ItemStackUtil.damageItem(player, context.getItemInHand());
     return super.useOn(context);
   }
 }

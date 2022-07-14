@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -106,11 +106,11 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
   protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     this.drawSlot(ms, 151, 7, TextureRegistry.SLOT_GPS, 18);
-    btnX.setMessage(UtilChat.ilang("button.offsetblock.name" +
+    btnX.setMessage(ChatUtil.ilang("button.offsetblock.name" +
         menu.tile.getField(TileLaser.Fields.XOFF.ordinal())));
-    btnY.setMessage(UtilChat.ilang("button.offsetblock.name" +
+    btnY.setMessage(ChatUtil.ilang("button.offsetblock.name" +
         menu.tile.getField(TileLaser.Fields.YOFF.ordinal())));
-    btnZ.setMessage(UtilChat.ilang("button.offsetblock.name" +
+    btnZ.setMessage(ChatUtil.ilang("button.offsetblock.name" +
         menu.tile.getField(TileLaser.Fields.ZOFF.ordinal())));
   }
 }

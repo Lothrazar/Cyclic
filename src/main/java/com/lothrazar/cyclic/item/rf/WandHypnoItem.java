@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.item.rf;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilParticle;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
@@ -85,12 +85,12 @@ public class WandHypnoItem extends ItemBaseCyclic {
         //        cur.setLastAttackedEntity(curTarget);
         cur.setLastHurtMob(curTarget);
         cur.setTarget(curTarget); // this leads to forge hook onLivingSetAttackTarget
-        UtilParticle.spawnParticle(world, ParticleTypes.DRAGON_BREATH, cur.blockPosition(), 15);
+        ParticleUtil.spawnParticle(world, ParticleTypes.DRAGON_BREATH, cur.blockPosition(), 15);
         targeted++;
       }
     }
     if (targeted == 0) {
-      UtilChat.sendStatusMessage(player, "wand.result.notargets");
+      ChatUtil.sendStatusMessage(player, "wand.result.notargets");
     }
     else {
       player.getCooldowns().addCooldown(this, 60);

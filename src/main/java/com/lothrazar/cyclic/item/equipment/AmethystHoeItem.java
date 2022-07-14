@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,7 +23,7 @@ public class AmethystHoeItem extends HoeItem {
   @Override
   public InteractionResult useOn(UseOnContext cont) {
     if (cont.getPlayer() instanceof ServerPlayer) {
-      UtilSound.playSound(cont.getPlayer(), SoundEvents.AMETHYST_CLUSTER_BREAK);
+      SoundUtil.playSound(cont.getPlayer(), SoundEvents.AMETHYST_CLUSTER_BREAK);
     }
     return super.useOn(cont);
   }
@@ -31,7 +31,7 @@ public class AmethystHoeItem extends HoeItem {
   @Override
   public boolean mineBlock(ItemStack s, Level w, BlockState state, BlockPos pos, LivingEntity entity) {
     if (w instanceof ServerLevel) {
-      UtilSound.playSoundFromServer((ServerLevel) w, pos, SoundEvents.AMETHYST_CLUSTER_BREAK);
+      SoundUtil.playSoundFromServer((ServerLevel) w, pos, SoundEvents.AMETHYST_CLUSTER_BREAK);
     }
     return super.mineBlock(s, w, state, pos, entity);
   }

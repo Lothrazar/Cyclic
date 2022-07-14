@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.magnet;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilParticle;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -47,8 +47,8 @@ public class BlockMagnetPanel extends BlockCyclic {
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
     if (hand == InteractionHand.MAIN_HAND) {
       world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
-      UtilSound.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-      UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+      SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
+      ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
       return InteractionResult.SUCCESS;
     }
     return super.use(state, world, pos, player, hand, result);

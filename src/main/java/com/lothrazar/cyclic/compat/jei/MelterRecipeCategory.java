@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.melter.RecipeMelter;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
@@ -37,7 +37,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   @Override
   public Component getTitle() {
-    return UtilChat.ilang(BlockRegistry.MELTER.get().getDescriptionId());
+    return ChatUtil.ilang(BlockRegistry.MELTER.get().getDescriptionId());
   }
 
   @Override

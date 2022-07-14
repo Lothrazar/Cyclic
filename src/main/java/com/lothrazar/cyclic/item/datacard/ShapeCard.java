@@ -4,8 +4,8 @@ import java.util.List;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilPlayer;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.PlayerUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +48,7 @@ public class ShapeCard extends ItemBaseCyclic {
       if (target != null) {
         block = target.getBlock().getDescriptionId();
       }
-      tooltip.add(new TranslatableComponent(ChatFormatting.AQUA + UtilChat.lang(block)));
+      tooltip.add(new TranslatableComponent(ChatFormatting.AQUA + ChatUtil.lang(block)));
       if (flagIn.isAdvanced()) {
         //        String side = "S: " + dim.getSide().toString().toUpperCase();
         //        tooltip.add(new TranslationTextComponent(side));
@@ -82,24 +82,24 @@ public class ShapeCard extends ItemBaseCyclic {
           int slot = -1;
           if (!player.isCreative()) {
             //not creative
-            slot = UtilPlayer.getFirstSlotWithBlock(player, targetState);
+            slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
             if (slot < 0) {
               //cannot find material
-              UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.empty");
+              ChatUtil.sendStatusMessage(player, "item.cyclic.shape_data.empty");
               break; //stop looping
             }
           }
           if (world.setBlock(posBuild, targetState, 1)) {
-            UtilPlayer.decrStackSize(player, slot);
+            PlayerUtil.decrStackSize(player, slot);
           }
         }
       }
       else { // no state selected
-        UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.state");
+        ChatUtil.sendStatusMessage(player, "item.cyclic.shape_data.state");
       }
     }
     else {
-      UtilChat.sendStatusMessage(player, "item.cyclic.shape_data.nothing");
+      ChatUtil.sendStatusMessage(player, "item.cyclic.shape_data.nothing");
     }
     player.swing(hand);
     return super.use(world, player, hand);

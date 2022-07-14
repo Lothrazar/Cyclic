@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.builder;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,14 +32,14 @@ public class BuilderItem extends ItemBaseCyclic {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    String msg = ChatFormatting.GREEN + UtilChat.lang(BuilderActionType.getName(stack));
+    String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
     tooltip.add(new TranslatableComponent(msg));
     BlockState target = BuilderActionType.getBlockState(stack);
     String block = "scepter.cyclic.nothing";
     if (target != null) {
       block = target.getBlock().getDescriptionId();
     }
-    tooltip.add(new TranslatableComponent(ChatFormatting.AQUA + UtilChat.lang(block)));
+    tooltip.add(new TranslatableComponent(ChatFormatting.AQUA + ChatUtil.lang(block)));
   }
 
   @Override

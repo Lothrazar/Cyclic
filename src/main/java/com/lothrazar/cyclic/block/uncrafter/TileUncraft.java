@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilString;
+import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -241,12 +241,12 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     }
     //check config
     List<String> recipes = (List<String>) TileUncraft.IGNORELIST_RECIPES.get();
-    if (UtilString.isInList(recipes, recipe.getId())) {
+    if (StringParseUtil.isInList(recipes, recipe.getId())) {
       //check the RECIPE id list
       this.status = UncraftStatusEnum.CONFIG;
       return false;
     }
-    if (UtilString.isInList((List<String>) TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
+    if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
       //checked the ITEM id list
       this.status = UncraftStatusEnum.CONFIG;
       return false;

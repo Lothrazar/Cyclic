@@ -26,9 +26,9 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilPlayer;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -112,7 +112,7 @@ public class StandEnchant extends EnchantmentCyclic {
         return; //if equippped enchanted item is on cooldown for any reason, done
       }
       final int xpCost = Math.max(1, COST.get() / level); // min 1.  higher level gives a lower cost. level 1 is 30xp, lvl 3 is 10xp etc
-      if (UtilPlayer.getExpTotal(player) < xpCost) {
+      if (PlayerUtil.getExpTotal(player) < xpCost) {
         return; // POOR
       }
       //survive
@@ -120,8 +120,8 @@ public class StandEnchant extends EnchantmentCyclic {
       event.setAmount(toSurvive);
       player.giveExperiencePoints(-1 * xpCost);
       //now the fluff
-      UtilSound.playSoundFromServer(player, SoundRegistry.CHAOS_REAPER.get(), 1F, 0.4F);
-      UtilChat.sendStatusMessage(player, "enchantment." + ModCyclic.MODID + "." + ID + ".activated");
+      SoundUtil.playSoundFromServer(player, SoundRegistry.CHAOS_REAPER.get(), 1F, 0.4F);
+      ChatUtil.sendStatusMessage(player, "enchantment." + ModCyclic.MODID + "." + ID + ".activated");
       if (ABS.get() > 0) {
         player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ABS.get(), level - 1));
       }

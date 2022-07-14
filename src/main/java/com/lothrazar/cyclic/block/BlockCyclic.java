@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block;
 import java.util.List;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -108,7 +108,7 @@ public class BlockCyclic extends BaseEntityBlock {
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               if (player instanceof ServerPlayer) {
-                UtilSound.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL, 1F, 1F);
+                SoundUtil.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL, 1F, 1F);
               }
               //success so display new amount
               if (handler.getFluidInTank(0) != null) {

@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.animal;
 
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -64,7 +64,7 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
       IItemHandler horseChest = horseOldEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
       if (horseChest != null && horseChest.getSlots() >= 2) {
         //dont drop saddle since i re-saddle. drop horse arm
-        UtilItemStack.drop(event.getWorld(), event.getPos(), horseChest.getStackInSlot(1));
+        ItemStackUtil.drop(event.getWorld(), event.getPos(), horseChest.getStackInSlot(1));
       }
       if (horseOldEntity.hasCustomName()) {
         zombieNewEntity.setCustomName(horseOldEntity.getCustomName());

@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclic.util.UtilEnchant;
-import com.lothrazar.cyclic.util.UtilFakePlayer;
+import com.lothrazar.cyclic.util.EnchantUtil;
+import com.lothrazar.cyclic.util.FakePlayerUtil;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -69,7 +69,7 @@ public class CurseEnchant extends EnchantmentCyclic {
   @Override
   public void doPostHurt(LivingEntity user, Entity attacker, int level) {
     if (user.level.isClientSide || !(attacker instanceof LivingEntity)
-        || UtilFakePlayer.isFakePlayer(attacker)) {
+        || FakePlayerUtil.isFakePlayer(attacker)) {
       //do nothing on clientside, server only
       //only trigger if attacker is alive and not a fakeplayer
       return;
@@ -83,7 +83,7 @@ public class CurseEnchant extends EnchantmentCyclic {
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
     //does it pass the chance
     if (adjustedActivationChance > user.level.random.nextDouble()) {
-      List<MobEffect> negativeEffects = UtilEnchant.getNegativeEffects();
+      List<MobEffect> negativeEffects = EnchantUtil.getNegativeEffects();
       Collections.shuffle(negativeEffects);
       int appliedEffects = 0;
       for (MobEffect effect : negativeEffects) {

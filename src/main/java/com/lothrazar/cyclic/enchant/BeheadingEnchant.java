@@ -26,8 +26,8 @@ package com.lothrazar.cyclic.enchant;
 import java.util.Map;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilNBT;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -118,7 +118,7 @@ public class BeheadingEnchant extends EnchantmentCyclic {
       BlockPos pos = target.blockPosition();
       if (target instanceof Player) {
         //player head
-        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull((Player) target));
+        ItemStackUtil.drop(world, pos, TagDataUtil.buildNamedPlayerSkull((Player) target));
         return;
       }
       //else the random number was less than 10, so it passed the 10% chance req
@@ -126,56 +126,56 @@ public class BeheadingEnchant extends EnchantmentCyclic {
       ////we allow all these, which include config, to override the vanilla skulls below 
       Map<String, String> mappedBeheading = ConfigRegistry.getMappedBeheading();
       if (target.getType() == EntityType.ENDER_DRAGON) {
-        UtilItemStack.drop(world, pos, new ItemStack(Items.DRAGON_HEAD));
+        ItemStackUtil.drop(world, pos, new ItemStack(Items.DRAGON_HEAD));
       }
       else if (target.getType() == EntityType.CREEPER) {
-        UtilItemStack.drop(world, pos, new ItemStack(Items.CREEPER_HEAD));
+        ItemStackUtil.drop(world, pos, new ItemStack(Items.CREEPER_HEAD));
       }
       else if (target.getType() == EntityType.ZOMBIE) {
-        UtilItemStack.drop(world, pos, new ItemStack(Items.ZOMBIE_HEAD));
+        ItemStackUtil.drop(world, pos, new ItemStack(Items.ZOMBIE_HEAD));
       }
       else if (target.getType() == EntityType.SKELETON) {
-        UtilItemStack.drop(world, pos, new ItemStack(Items.SKELETON_SKULL));
+        ItemStackUtil.drop(world, pos, new ItemStack(Items.SKELETON_SKULL));
       }
       else if (target.getType() == EntityType.WITHER_SKELETON) {
-        UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL));
+        ItemStackUtil.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL));
       }
       else if (target.getType() == EntityType.WITHER) { //Drop number of heads equal to level of enchant [1,3] 
-        UtilItemStack.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL, Math.max(level, 3)));
+        ItemStackUtil.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL, Math.max(level, 3)));
       }
       else if (ModList.get().isLoaded(CompatConstants.TCONSTRUCT)) {
         //tconstruct: drowned_head husk_head enderman_head cave_spider_head stray_head
         String id = CompatConstants.TCONSTRUCT;
         ItemStack tFound = ItemStack.EMPTY;
         if (target.getType() == EntityType.DROWNED) {
-          tFound = UtilItemStack.findItem(id + ":drowned_head");
+          tFound = ItemStackUtil.findItem(id + ":drowned_head");
         }
         else if (target.getType() == EntityType.HUSK) {
-          tFound = UtilItemStack.findItem(id + ":husk_head");
+          tFound = ItemStackUtil.findItem(id + ":husk_head");
         }
         else if (target.getType() == EntityType.ENDERMAN) {
-          tFound = UtilItemStack.findItem(id + ":enderman_head");
+          tFound = ItemStackUtil.findItem(id + ":enderman_head");
         }
         else if (target.getType() == EntityType.SPIDER) {
-          tFound = UtilItemStack.findItem(id + ":spider_head");
+          tFound = ItemStackUtil.findItem(id + ":spider_head");
         }
         else if (target.getType() == EntityType.CAVE_SPIDER) {
-          tFound = UtilItemStack.findItem(id + ":cave_spider_head");
+          tFound = ItemStackUtil.findItem(id + ":cave_spider_head");
         }
         else if (target.getType() == EntityType.STRAY) {
-          tFound = UtilItemStack.findItem(id + ":stray_head");
+          tFound = ItemStackUtil.findItem(id + ":stray_head");
         }
         else if (target.getType() == EntityType.BLAZE) {
-          tFound = UtilItemStack.findItem(id + ":blaze_head");
+          tFound = ItemStackUtil.findItem(id + ":blaze_head");
         }
         if (!tFound.isEmpty()) {
-          UtilItemStack.drop(world, pos, tFound);
+          ItemStackUtil.drop(world, pos, tFound);
           return;
         }
       }
       else if (mappedBeheading.containsKey(key)) {
         //otherwise not a real mob, try the config last
-        UtilItemStack.drop(world, pos, UtilNBT.buildNamedPlayerSkull(mappedBeheading.get(key)));
+        ItemStackUtil.drop(world, pos, TagDataUtil.buildNamedPlayerSkull(mappedBeheading.get(key)));
       }
     }
   }

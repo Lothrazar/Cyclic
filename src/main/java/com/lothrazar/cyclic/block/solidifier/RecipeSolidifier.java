@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
-import com.lothrazar.cyclic.util.UtilRecipe;
+import com.lothrazar.cyclic.util.RecipeUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -138,7 +138,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     public RecipeSolidifier<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
-        NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);
+        NonNullList<Ingredient> list = RecipeUtil.getIngredientsArray(json);
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
         FluidTagIngredient fs = parseFluid(json, "mix");
         r = new RecipeSolidifier(recipeId, list, fs, resultStack, new EnergyIngredient(json));

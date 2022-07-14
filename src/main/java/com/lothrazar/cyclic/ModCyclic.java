@@ -52,5 +52,8 @@ public class ModCyclic {
     EnchantRegistry.ENCHANTMENTS.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
     ForgeMod.enableMilkFluid();
+    //TODO: 
+    //    ForgeMod.SWIM_SPEED swimsp
+    //    ForgeMod.ENTITY_GRAVITY slowfall
   }
 }

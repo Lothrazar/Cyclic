@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.item.redstone;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilNBT;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -32,12 +32,12 @@ public class LeverRemote extends ItemBaseCyclic {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    BlockPos pointer = UtilNBT.getItemStackBlockPos(stack);
+    BlockPos pointer = TagDataUtil.getItemStackBlockPos(stack);
     if (pointer != null) {
       int dimensionTarget = stack.getOrCreateTag().getInt("LeverDim");
       tooltip.add(
           new TranslatableComponent(
-              ChatFormatting.RED + UtilChat.blockPosToString(pointer) + " [" + dimensionTarget + "]"));
+              ChatFormatting.RED + ChatUtil.blockPosToString(pointer) + " [" + dimensionTarget + "]"));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
@@ -66,12 +66,12 @@ public class LeverRemote extends ItemBaseCyclic {
     ItemStack stack = player.getItemInHand(context.getHand());
     BlockPos pos = context.getClickedPos();
     if (world.getBlockState(pos).getBlock() instanceof LeverBlock) {
-      UtilNBT.setItemStackBlockPos(stack, pos);
+      TagDataUtil.setItemStackBlockPos(stack, pos);
       //and save dimension
-      stack.getOrCreateTag().putString("LeverDim", UtilWorld.dimensionToString(player.level));
+      stack.getOrCreateTag().putString("LeverDim", LevelWorldUtil.dimensionToString(player.level));
       //      UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
       if (world.isClientSide) {
-        UtilChat.sendStatusMessage(player, this.getDescriptionId() + ".saved");
+        ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".saved");
       }
       //      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       return InteractionResult.SUCCESS;
@@ -90,29 +90,29 @@ public class LeverRemote extends ItemBaseCyclic {
   }
 
   private boolean trigger(ItemStack stack, Level world, Player player) {
-    BlockPos blockPos = UtilNBT.getItemStackBlockPos(stack);
+    BlockPos blockPos = TagDataUtil.getItemStackBlockPos(stack);
     //default is zero which is ok
     if (blockPos == null) {
       if (world.isClientSide) {
-        UtilChat.sendStatusMessage(player, this.getDescriptionId() + ".invalid");
+        ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".invalid");
       }
       return false;
     }
     String dimensionTarget = stack.getOrCreateTag().getString("LeverDim");
     //check if we can avoid crossing dimensions
-    String currentDim = UtilWorld.dimensionToString(player.level);
+    String currentDim = LevelWorldUtil.dimensionToString(player.level);
     if (dimensionTarget.equalsIgnoreCase(currentDim)) { //same dim eh
       BlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
         if (world.isClientSide) {
-          UtilChat.sendStatusMessage(player, this.getDescriptionId() + ".invalid");
+          ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".invalid");
         }
         return false;
       }
       blockState = world.getBlockState(blockPos);
       boolean hasPowerHere = blockState.getValue(LeverBlock.POWERED).booleanValue();
-      UtilWorld.toggleLeverPowerState(world, blockPos, blockState);
-      UtilChat.sendStatusMessage(player, this.getDescriptionId() + ".powered." + (!hasPowerHere));
+      LevelWorldUtil.toggleLeverPowerState(world, blockPos, blockState);
+      ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".powered." + (!hasPowerHere));
       //      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
       //      UtilEntity.setCooldownItem(player, this, COOLDOWN);
       return true;

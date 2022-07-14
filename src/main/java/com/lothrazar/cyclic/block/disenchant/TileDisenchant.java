@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -127,10 +127,10 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     //and input has at least one enchantment 
     //success happening
     if (level.random.nextDouble() < 0.5) {
-      UtilSound.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
+      SoundUtil.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
     }
     else {
-      UtilSound.playSound(level, worldPosition, SoundEvents.ANVIL_USE);
+      SoundUtil.playSound(level, worldPosition, SoundEvents.ANVIL_USE);
     }
     energy.extractEnergy(cost, false);
     if (FLUIDCOST.get() > 0) {

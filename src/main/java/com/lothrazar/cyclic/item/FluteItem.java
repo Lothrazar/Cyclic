@@ -27,9 +27,9 @@ import java.util.List;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -66,11 +66,11 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
       int id = itemstack.getTag().getInt(UNIQUEMAGIC);
       Entity found = worldIn.getEntity(id);
       if (found instanceof LivingEntity living) {
-        boolean success = UtilEntity.enderTeleportEvent(living, worldIn, player.blockPosition());
+        boolean success = EntityUtil.enderTeleportEvent(living, worldIn, player.blockPosition());
         if (success) {
-          UtilChat.addChatMessage(player, UtilChat.lang("item.cyclic.flute_summoning.teleported"));
+          ChatUtil.addChatMessage(player, ChatUtil.lang("item.cyclic.flute_summoning.teleported"));
           player.getCooldowns().addCooldown(this, CD);
-          UtilSound.playSound(player, SoundRegistry.HOVERING.get(), 0.5F);
+          SoundUtil.playSound(player, SoundRegistry.HOVERING.get(), 0.5F);
         }
       }
     }
@@ -98,15 +98,15 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
     Player player = event.getPlayer();
     if (event.getItemStack().getItem() == this
         && !player.getCooldowns().isOnCooldown(this)
-        && UtilEntity.haveSameDimension(target, player)) {
+        && EntityUtil.haveSameDimension(target, player)) {
       String id = EntityType.getKey(target.getType()).toString();
       event.getItemStack().getOrCreateTag().putString(FLUTENAME, target.getDisplayName().getString());
       event.getItemStack().getOrCreateTag().putString(EntityMagicNetEmpty.NBT_ENTITYID, id);
       event.getItemStack().getOrCreateTag().putInt(UNIQUEMAGIC, target.getId());
       player.getCooldowns().addCooldown(this, CD);
       player.swing(event.getHand());
-      UtilChat.addChatMessage(player, "item.cyclic.flute_summoning.saved");
-      UtilSound.playSound(player, SoundRegistry.BASS_ECHO.get(), 0.5F);
+      ChatUtil.addChatMessage(player, "item.cyclic.flute_summoning.saved");
+      SoundUtil.playSound(player, SoundRegistry.BASS_ECHO.get(), 0.5F);
       event.setCancellationResult(InteractionResult.SUCCESS);
     }
   }

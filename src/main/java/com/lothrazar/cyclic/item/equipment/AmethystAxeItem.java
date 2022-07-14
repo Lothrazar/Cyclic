@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -20,7 +20,7 @@ public class AmethystAxeItem extends AxeItem {
   @Override
   public boolean mineBlock(ItemStack s, Level w, BlockState state, BlockPos pos, LivingEntity entity) {
     if (w instanceof ServerLevel) {
-      UtilSound.playSoundFromServer((ServerLevel) w, pos, SoundEvents.AMETHYST_CLUSTER_BREAK);
+      SoundUtil.playSoundFromServer((ServerLevel) w, pos, SoundEvents.AMETHYST_CLUSTER_BREAK);
     }
     return super.mineBlock(s, w, state, pos, entity);
   }

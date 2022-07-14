@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
-import com.lothrazar.cyclic.util.UtilRecipe;
+import com.lothrazar.cyclic.util.RecipeUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -109,9 +109,9 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     public RecipeMelter<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeMelter r = null;
       try {
-        NonNullList<Ingredient> list = UtilRecipe.getIngredientsArray(json);
+        NonNullList<Ingredient> list = RecipeUtil.getIngredientsArray(json);
         JsonObject result = json.get("result").getAsJsonObject();
-        FluidStack fluid = UtilRecipe.getFluid(result);
+        FluidStack fluid = RecipeUtil.getFluid(result);
         r = new RecipeMelter(recipeId, list, fluid, new EnergyIngredient(json));
       }
       catch (Exception e) {

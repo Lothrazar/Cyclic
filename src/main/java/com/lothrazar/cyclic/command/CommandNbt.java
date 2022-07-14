@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
 import java.util.stream.Collectors;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -16,10 +16,10 @@ public class CommandNbt {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     ItemStack held = player.getMainHandItem();
     if (held.hasTag()) {
-      UtilChat.sendFeedback(ctx, held.getTag().toString());
+      ChatUtil.sendFeedback(ctx, held.getTag().toString());
     }
     else {
-      UtilChat.sendFeedback(ctx, "command.cyclic.nbtprint.null");
+      ChatUtil.sendFeedback(ctx, "command.cyclic.nbtprint.null");
     }
     return 0;
   }
@@ -28,7 +28,7 @@ public class CommandNbt {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     ItemStack held = player.getMainHandItem();
     for (TagKey<Item> tag : held.getTags().collect(Collectors.toList())) {
-      UtilChat.sendFeedback(ctx, tag.toString());
+      ChatUtil.sendFeedback(ctx, tag.toString());
     }
     return 0;
   }

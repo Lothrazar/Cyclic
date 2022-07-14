@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -83,7 +83,7 @@ public class ItemScaffolding extends BlockItem {
     if (worldIn.isClientSide == false && worldIn.isEmptyBlock(pos)) {
       ItemStack stac = player.getItemInHand(hand);
       if (worldIn.setBlockAndUpdate(pos, Block.byItem(this).defaultBlockState())) {
-        UtilItemStack.shrink(player, stac);
+        ItemStackUtil.shrink(player, stac);
       }
       return new InteractionResultHolder<>(InteractionResult.SUCCESS, stac);
     }

@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -208,7 +208,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         }
         player.swing(handIn);
         if (world.isClientSide) {
-          UtilSound.playSound(player, SoundRegistry.THUNK.get(), 0.2F, 1F);
+          SoundUtil.playSound(player, SoundRegistry.THUNK.get(), 0.2F, 1F);
         }
       }
     }

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.dice;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -61,7 +61,7 @@ public class TileDice extends TileBlockEntityCyclic {
       //toggle block state
       if (this.timer % TICKS_PER_CHANGE == 0) {
         this.spinningIfZero = 0;
-        Direction fac = UtilWorld.getRandomDirection(level.random);
+        Direction fac = LevelWorldUtil.getRandomDirection(level.random);
         BlockState stateold = level.getBlockState(worldPosition);
         BlockState newstate = stateold.setValue(BlockStateProperties.FACING, fac);
         level.setBlockAndUpdate(worldPosition, newstate);

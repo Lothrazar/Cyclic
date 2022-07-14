@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -74,7 +74,7 @@ public class EnderApple extends ItemBaseCyclic {
             Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> searchResult = serverWorld.getChunkSource().getGenerator().findNearestMapFeature(serverWorld,
                 holderSetOfFeature, targetPos, 100, false);
             if (searchResult != null && searchResult.getFirst() != null) {
-              double distance = UtilWorld.distanceBetweenHorizontal(searchResult.getFirst(), targetPos);
+              double distance = LevelWorldUtil.distanceBetweenHorizontal(searchResult.getFirst(), targetPos);
               distanceStructNames.put(name, (int) distance);
             }
           }
@@ -102,7 +102,7 @@ public class EnderApple extends ItemBaseCyclic {
       int count = 0;
       //      UtilChat.addServerChatMessage(player, "STARRT");
       for (Map.Entry<String, Integer> e : sortedMap.entrySet()) {
-        UtilChat.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());
+        ChatUtil.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());
         count++;
         //?? is it sorted
         if (count >= NUM_PRINTED) {

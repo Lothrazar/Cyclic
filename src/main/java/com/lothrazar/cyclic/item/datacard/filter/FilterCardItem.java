@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.datacard.filter;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.nbt.CompoundTag;
@@ -119,7 +119,7 @@ public class FilterCardItem extends ItemBaseCyclic {
         if (!filterPtr.isEmpty()) {
           isEmpty = false; //at least one thing is in the filter 
           //does it match
-          if (UtilItemStack.matches(itemTarget, filterPtr)) {
+          if (ItemStackUtil.matches(itemTarget, filterPtr)) {
             isMatchingList = true;
             break;
           }

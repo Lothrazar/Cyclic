@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.tp;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.lothrazar.cyclic.world.DimensionTransit;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -46,7 +46,7 @@ public class BlockTeleport extends BlockCyclic {
     TileTeleport tile = (TileTeleport) worldIn.getBlockEntity(pos);
     BlockPosDim dimpos = tile.getTargetInSlot(0);
     if (dimpos != null && worldIn instanceof ServerLevel) {
-      final int pay = UtilWorld.dimensionIsEqual(dimpos, worldIn) ? POWERCONF.get() : COSTDIM.get();
+      final int pay = LevelWorldUtil.dimensionIsEqual(dimpos, worldIn) ? POWERCONF.get() : COSTDIM.get();
       int sim = tile.energy.extractEnergy(pay, true);
       if (pay == 0 || sim == pay) {
         tile.energy.extractEnergy(pay, false);

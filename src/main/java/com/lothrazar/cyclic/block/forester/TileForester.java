@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -219,13 +219,13 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
   //for harvest
   public List<BlockPos> getShape() {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, height);
+    shape = ShapeUtil.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, height);
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), this.radius);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), this.radius);
     BlockPos targetPos = getShapeTarget(shape);
     if (targetPos != null) {
       shape.add(targetPos);

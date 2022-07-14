@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.util.UtilStepHeight;
+import com.lothrazar.cyclic.util.AttributesUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -115,7 +115,7 @@ public class StepEnchant extends EnchantmentCyclic {
 
   private void turnOn(Player player, ItemStack armor) {
     player.getPersistentData().putBoolean(NBT_ON, true);
-    UtilStepHeight.enableStepHeight(player);
+    AttributesUtil.enableStepHeight(player);
     //    ModCyclic.log("ON " + player.getPersistentData().getBoolean(NBT_ON));
   }
 
@@ -123,7 +123,7 @@ public class StepEnchant extends EnchantmentCyclic {
     //skip if lofty stature has override
     //was it on before, do we need to do an off hit
     if (player.getPersistentData().contains(NBT_ON) && player.getPersistentData().getBoolean(NBT_ON)) {
-      UtilStepHeight.disableStepHeight(player);
+      AttributesUtil.disableStepHeight(player);
       player.getPersistentData().putBoolean(NBT_ON, false);
     }
   }

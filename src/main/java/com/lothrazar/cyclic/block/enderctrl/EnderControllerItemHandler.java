@@ -5,7 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
-import com.lothrazar.cyclic.util.UtilEnchant;
+import com.lothrazar.cyclic.util.EnchantUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -66,7 +66,7 @@ public class EnderControllerItemHandler extends ItemStackHandler {
       if (slotStack.isEmpty()) {
         emptySlots.add(i);
       }
-      else if (slotStack.getCount() < shelf.inventory.getStackLimit(i, stack) && UtilEnchant.doBookEnchantmentsMatch(stack, slotStack)) {
+      else if (slotStack.getCount() < shelf.inventory.getStackLimit(i, stack) && EnchantUtil.doBookEnchantmentsMatch(stack, slotStack)) {
         ItemStack inserted = shelf.inventory.insertItem(i, stack, simulate);
         if (inserted.isEmpty()) {
           return inserted;

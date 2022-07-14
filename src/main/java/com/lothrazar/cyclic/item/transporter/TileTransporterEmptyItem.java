@@ -28,11 +28,11 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclic.util.UtilSound;
-import com.lothrazar.cyclic.util.UtilString;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.BlockUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -66,15 +66,15 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
     //
     if (state == null || tile == null || state.getBlock() == null
         || state.getBlock().getRegistryName() == null) {
-      UtilChat.sendStatusMessage(player, "chest_sack.error.null");
+      ChatUtil.sendStatusMessage(player, "chest_sack.error.null");
       return InteractionResult.FAIL;
     }
     ResourceLocation blockId = state.getBlock().getRegistryName();
-    if (UtilString.isInList((List<String>) IGNORELIST.get(), blockId)) {
-      UtilChat.sendStatusMessage(player, "chest_sack.error.config");
+    if (StringParseUtil.isInList((List<String>) IGNORELIST.get(), blockId)) {
+      ChatUtil.sendStatusMessage(player, "chest_sack.error.config");
       return InteractionResult.FAIL;
     }
-    UtilSound.playSound(player, SoundRegistry.THUNK.get());
+    SoundUtil.playSound(player, SoundRegistry.THUNK.get());
     if (world.isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketChestSack(pos));
     }
@@ -107,16 +107,16 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
     }
     if (held != null && held.getCount() > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
       if (held.getItem() instanceof TileTransporterEmptyItem) {
-        if (!UtilPlaceBlocks.destroyBlock(world, pos)) {
+        if (!BlockUtil.destroyBlock(world, pos)) {
           //we failed to break the block
           // try to undo the break if we can
-          UtilChat.sendStatusMessage(player, "chest_sack.error.pickup");
+          ChatUtil.sendStatusMessage(player, "chest_sack.error.pickup");
           world.setBlockAndUpdate(pos, state);
           return; // and dont drop the full item stack or shrink the empty just end
         }
         ItemStack drop = new ItemStack(ItemRegistry.TILE_TRANSPORTER.get());
         drop.setTag(itemData);
-        UtilItemStack.drop(world, player.blockPosition(), drop);
+        ItemStackUtil.drop(world, player.blockPosition(), drop);
         if (player.isCreative() == false && held.getCount() > 0) {
           held.shrink(1);
           if (held.getCount() == 0) {

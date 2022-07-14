@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.lightcompr;
 
-import com.lothrazar.cyclic.util.UtilRender;
+import com.lothrazar.cyclic.render.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -26,7 +26,7 @@ public class RenderLightCamo implements BlockEntityRenderer<TileLightCamo> {
     }
     ItemStack stack = inv.getStackInSlot(0);
     if (!stack.isEmpty()) {
-      UtilRender.renderAsBlock(te.getBlockPos(), te.getShape(), matrixStack, stack, 1F, 1F);
+      RenderUtils.renderAsBlock(te.getBlockPos(), te.getShape(), matrixStack, stack, 1F, 1F);
     }
   }
 }

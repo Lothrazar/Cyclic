@@ -4,9 +4,9 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilChat;
-import com.lothrazar.cyclic.util.UtilNBT;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -63,12 +63,12 @@ public class EnderBucket extends ItemBaseCyclic {
     Direction side = context.getClickedFace();
     ItemStack held = player.getItemInHand(hand);
     player.swing(hand);
-    UtilNBT.setItemStackBlockPos(held, pos);
-    held.getOrCreateTag().putString(NBT_DIM, UtilWorld.dimensionToString(player.level));
-    UtilNBT.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
-    UtilNBT.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
-    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")
-        + UtilChat.blockPosToString(pos));
+    TagDataUtil.setItemStackBlockPos(held, pos);
+    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level));
+    TagDataUtil.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
+    TagDataUtil.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
+    ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.location.saved")
+        + ChatUtil.blockPosToString(pos));
     // fl
     Vec3 vec = context.getClickLocation();
     held.getOrCreateTag().putDouble("hitx", vec.x - pos.getX());
@@ -79,7 +79,7 @@ public class EnderBucket extends ItemBaseCyclic {
   }
 
   public static BlockPosDim getPosition(ItemStack item) {
-    BlockPos pos = UtilNBT.getItemStackBlockPos(item);
+    BlockPos pos = TagDataUtil.getItemStackBlockPos(item);
     if (pos == null) {
       return null;
     }

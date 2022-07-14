@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -28,8 +28,8 @@ public class SnowScepter extends ItemBaseCyclic {
     shootMe(world, player, new SnowEntity(player, world), 10, ItemBaseCyclic.VELOCITY_MAX);
     shootMe(world, player, new SnowEntity(player, world), -10, ItemBaseCyclic.VELOCITY_MAX);
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
-    UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH.get());
+    ItemStackUtil.damageItem(player, stack);
+    SoundUtil.playSound(player, SoundRegistry.FROST_STAFF_LAUNCH.get());
     return super.use(world, player, handIn);
   }
 }

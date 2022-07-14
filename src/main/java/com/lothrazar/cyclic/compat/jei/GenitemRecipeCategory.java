@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.compat.jei;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatoritem.RecipeGeneratorItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -34,7 +34,7 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
 
   @Override
   public Component getTitle() {
-    return UtilChat.ilang(BlockRegistry.GENERATOR_ITEM.get().getDescriptionId());
+    return ChatUtil.ilang(BlockRegistry.GENERATOR_ITEM.get().getDescriptionId());
   }
 
   @Override

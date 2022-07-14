@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -25,13 +25,13 @@ public class GloveItem extends ItemBaseToggle {
     }
     if (entityIn instanceof Player) {
       Player player = (Player) entityIn;
-      UtilItemStack.damageItemRandomly(player, stack);
+      ItemStackUtil.damageItemRandomly(player, stack);
       if (player.horizontalCollision) {
         Level world = player.getCommandSenderWorld();
-        UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
-        UtilItemStack.damageItem(player, stack);
+        EntityUtil.tryMakeEntityClimb(world, player, CLIMB_SPEED);
+        ItemStackUtil.damageItem(player, stack);
         if (worldIn.getGameTime() % 20 == 0) {
-          UtilSound.playSound(player, SoundEvents.LADDER_STEP);
+          SoundUtil.playSound(player, SoundEvents.LADDER_STEP);
         }
       }
     }

@@ -26,9 +26,9 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilNBT;
-import com.lothrazar.cyclic.util.UtilParticle;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
+import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -103,7 +103,7 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
       if ((p.hasImpulse == false || p.isOnGround()) &&
           armorStack.getOrCreateTag().getInt(NBT_USES) > 0) {
         //you have landed on the ground, dont count previous jumps
-        UtilNBT.setItemStackNBTVal(armorStack, NBT_USES, 0);
+        TagDataUtil.setItemStackNBTVal(armorStack, NBT_USES, 0);
       }
     }
   }
@@ -129,17 +129,17 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
       int uses = feet.getOrCreateTag().getInt(NBT_USES);
       player.fallDistance = 0;
       float angle = (player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0) ? 90 : ROTATIONPITCH;
-      UtilEntity.launch(player, angle, POWER);
-      UtilParticle.spawnParticle(player.getCommandSenderWorld(), ParticleTypes.CRIT, player.blockPosition(), 7);
+      EntityUtil.launch(player, angle, POWER);
+      ParticleUtil.spawnParticle(player.getCommandSenderWorld(), ParticleTypes.CRIT, player.blockPosition(), 7);
       uses++;
       if (uses >= level) { // level is maxuses
         //now block useage for a while
         if (!feet.isEmpty()) {
-          UtilEntity.setCooldownItem(player, feet.getItem(), COOLDOWN);
+          EntityUtil.setCooldownItem(player, feet.getItem(), COOLDOWN);
         }
         uses = 0;
       }
-      UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);
+      TagDataUtil.setItemStackNBTVal(feet, NBT_USES, uses);
       player.fallDistance = 0;
       PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage()); //reset at bottom of jump
     }

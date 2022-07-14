@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.bauble;
 
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +43,7 @@ public class AirAntiGravity extends ItemBaseToggle {
       // (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
       if (player.getCommandSenderWorld().random.nextDouble() < 0.1) {
         //        super.damageCharm(player, stack);
-        UtilItemStack.damageItem(player, stack);
+        ItemStackUtil.damageItem(player, stack);
       }
       if (world.isClientSide && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());

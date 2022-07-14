@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilParticle;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -63,7 +63,7 @@ public class TeleporterWandItem extends ItemBaseCyclic {
       ItemStack pearls = this.findAmmo(player, target);
       if (!pearls.isEmpty()) {
         pearls.shrink(1);
-        UtilItemStack.repairItem(stackToRepair, 4);
+        ItemStackUtil.repairItem(stackToRepair, 4);
       }
     }
   }
@@ -82,11 +82,11 @@ public class TeleporterWandItem extends ItemBaseCyclic {
         Direction face = blockRayTraceResult.getDirection();
         BlockPos newPos = blockRayTraceResult.getBlockPos().relative(face);
         BlockPos oldPos = player.blockPosition();
-        if (UtilEntity.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos    
-          UtilItemStack.damageItem(player, stack);
+        if (EntityUtil.enderTeleportEvent(player, world, newPos)) { // && player.getPosition() != currentPlayerPos    
+          ItemStackUtil.damageItem(player, stack);
           if (world.isClientSide) {
-            UtilParticle.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
-            UtilSound.playSound(player, SoundRegistry.WARP_ECHO.get());
+            ParticleUtil.spawnParticleBeam(world, ParticleTypes.PORTAL, oldPos, newPos, RANGE.get());
+            SoundUtil.playSound(player, SoundRegistry.WARP_ECHO.get());
           }
         }
       }

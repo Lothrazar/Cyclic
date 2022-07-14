@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.dice;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilBlockstates;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.BlockstatesUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -66,7 +66,7 @@ public class BlockDice extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, UtilBlockstates.getFacingFromEntityHorizontal(pos, entity)), 2);
+      world.setBlock(pos, state.setValue(BlockStateProperties.FACING, BlockstatesUtil.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
   }
 
@@ -81,7 +81,7 @@ public class BlockDice extends BlockCyclic {
     if (hand == InteractionHand.MAIN_HAND && tile instanceof TileDice) {
       ((TileDice) tile).startSpinning();
       if (world.isClientSide) {
-        UtilSound.playSound(world, pos, SoundRegistry.DICE_MIKE_KOENIG.get());
+        SoundUtil.playSound(world, pos, SoundRegistry.DICE_MIKE_KOENIG.get());
       }
       return InteractionResult.SUCCESS;
     }

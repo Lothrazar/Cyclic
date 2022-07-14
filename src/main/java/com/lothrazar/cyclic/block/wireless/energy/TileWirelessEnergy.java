@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilWorld;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -117,7 +117,7 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
       if (used.contains(loc)) {
         continue;
       }
-      if (loc != null && UtilWorld.dimensionIsEqual(loc, level)) {
+      if (loc != null && LevelWorldUtil.dimensionIsEqual(loc, level)) {
         if (moveEnergy(loc.getSide(), loc.getPos(), transferRate)) {
           used.add(loc);
           moved = true;

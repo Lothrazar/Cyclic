@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.bedrock;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilParticle;
+import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.player.Player;
@@ -40,7 +40,7 @@ public class UnbreakablePoweredBlock extends BlockCyclic {
     if (oldBreakable != isBreakable) {
       world.setBlockAndUpdate(pos, state.setValue(BREAKABLE, isBreakable));
       if (world.isClientSide) {
-        UtilParticle.spawnParticle(world, DustParticleOptions.REDSTONE, pos, 5);
+        ParticleUtil.spawnParticle(world, DustParticleOptions.REDSTONE, pos, 5);
       }
     }
   }

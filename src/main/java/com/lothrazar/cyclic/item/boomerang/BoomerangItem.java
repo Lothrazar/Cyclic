@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.boomerang;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -71,7 +71,7 @@ public class BoomerangItem extends ItemBaseCyclic {
       break;
     }
     shootMe(world, player, e, 0, percentageCharged * ItemBaseCyclic.VELOCITY_MAX);
-    UtilItemStack.damageItem(player, stack);
+    ItemStackUtil.damageItem(player, stack);
     player.setItemInHand(player.getUsedItemHand(), ItemStack.EMPTY);
     e.setBoomerangThrown(stack.copy());
     e.setOwner(player);

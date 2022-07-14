@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -27,7 +27,7 @@ public class PeatBlock extends BlockCyclic {
   @Override
   public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
     super.randomTick(state, world, pos, random);
-    List<BlockPos> around = UtilShape.squareHorizontalHollow(pos, 1);
+    List<BlockPos> around = ShapeUtil.squareHorizontalHollow(pos, 1);
     int sidesWet = 0;
     List<BlockPos> waters = new ArrayList<>();
     for (BlockPos p : around) {

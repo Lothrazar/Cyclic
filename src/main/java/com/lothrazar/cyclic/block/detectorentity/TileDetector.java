@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilShape;
+import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -111,7 +111,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   public List<BlockPos> getShape() {
-    return UtilShape.getShape(getRange(), worldPosition.getY());
+    return ShapeUtil.getShape(getRange(), worldPosition.getY());
   }
 
   private int getCountInRange() {

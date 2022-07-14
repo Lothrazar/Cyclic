@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -26,8 +26,8 @@ public class LightningScepter extends ItemBaseCyclic {
     //    ent.shoot(player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
     //    worldIn.addEntity(ent);
     player.getCooldowns().addCooldown(stack.getItem(), 20);
-    UtilItemStack.damageItem(player, stack);
-    UtilSound.playSound(player, SoundRegistry.LIGHTNING_STAFF_LAUNCH.get());
+    ItemStackUtil.damageItem(player, stack);
+    SoundUtil.playSound(player, SoundRegistry.LIGHTNING_STAFF_LAUNCH.get());
     return super.use(worldIn, player, handIn);
   }
 }

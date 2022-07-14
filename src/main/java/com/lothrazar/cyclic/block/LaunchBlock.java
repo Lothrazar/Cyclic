@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.util.UtilEntity;
+import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -47,7 +47,7 @@ public class LaunchBlock extends BlockCyclic {
       return;
     }
     if (worldIn.isClientSide) {
-      UtilEntity.launch(entity, ANGLE, getPower(worldIn, pos));
+      EntityUtil.launch(entity, ANGLE, getPower(worldIn, pos));
     }
     else if (entity instanceof Player) {
       //          ((EntityPlayer) entity).addPotionEffect(new PotionEffect(PotionEffects.BOUNCE, 300, 0));

@@ -50,10 +50,10 @@ import com.lothrazar.cyclic.block.wireless.item.ContainerWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.ContainerTransmit;
 import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
-import com.lothrazar.cyclic.item.craftingsimple.CraftingStickContainer;
+import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
-import com.lothrazar.cyclic.item.enderbook.ContainerEnderBook;
-import com.lothrazar.cyclic.item.inventorycake.ContainerCake;
+import com.lothrazar.cyclic.item.ender.EnderBookContainer;
+import com.lothrazar.cyclic.item.food.inventorycake.ContainerCake;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -113,7 +113,7 @@ public class MenuTypeRegistry {
   public static final RegistryObject<MenuType<ContainerCrusher>> CRUSHER = CONTAINERS.register("crusher", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerCrusher(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerTeleport>> TELEPORT = CONTAINERS.register("teleport", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerTeleport(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   //  Items with containers
-  public static final RegistryObject<MenuType<ContainerEnderBook>> ENDER_BOOK = CONTAINERS.register("ender_book", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerEnderBook(windowId, inv, inv.player)));
+  public static final RegistryObject<MenuType<EnderBookContainer>> ENDER_BOOK = CONTAINERS.register("ender_book", () -> IForgeMenuType.create((windowId, inv, data) -> new EnderBookContainer(windowId, inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerStorageBag>> STORAGE_BAG = CONTAINERS.register("storage_bag", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player)));
   public static final RegistryObject<MenuType<CraftingBagContainer>> CRAFTING_BAG = CONTAINERS.register("crafting_bag", () -> IForgeMenuType.create((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player)));
   public static final RegistryObject<MenuType<CraftingStickContainer>> CRAFTING_STICK = CONTAINERS.register("crafting_stick", () -> IForgeMenuType.create((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null)));

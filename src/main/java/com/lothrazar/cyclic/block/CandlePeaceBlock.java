@@ -24,8 +24,8 @@
 package com.lothrazar.cyclic.block;
 
 import java.util.Random;
-import com.lothrazar.cyclic.util.UtilParticle;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -95,15 +95,15 @@ public class CandlePeaceBlock extends BlockCyclic {
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
     boolean old = state.getValue(LIT);
     world.setBlockAndUpdate(pos, state.setValue(LIT, !old));
-    UtilSound.playSound(world, pos, old ? SoundEvents.FIRE_EXTINGUISH : SoundEvents.FIRE_AMBIENT);
-    UtilParticle.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+    SoundUtil.playSound(world, pos, old ? SoundEvents.FIRE_EXTINGUISH : SoundEvents.FIRE_AMBIENT);
+    ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
     return InteractionResult.SUCCESS;
   }
 
   @Override
   public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
     if (stateIn.getValue(LIT) && rand.nextDouble() < CHANCE_SOUND) {
-      UtilSound.playSound(worldIn, pos, SoundEvents.FIRE_AMBIENT);
+      SoundUtil.playSound(worldIn, pos, SoundEvents.FIRE_AMBIENT);
     }
     super.animateTick(stateIn, worldIn, pos, rand);
   }

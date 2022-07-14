@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.util.UtilItemStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +31,7 @@ public class CharmInvisible extends ItemBaseToggle {
         eff.showIcon = false;
         eff.visible = false;
         living.addEffect(eff);
-        UtilItemStack.damageItem(living, stack);
+        ItemStackUtil.damageItem(living, stack);
       }
     }
   }

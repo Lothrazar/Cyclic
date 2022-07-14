@@ -13,7 +13,7 @@ import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilFluid;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -82,7 +82,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
     }
     BlockPos target = this.worldPosition.relative(extractSide);
     Direction incomingSide = extractSide.getOpposite();
-    IFluidHandler stuff = UtilFluid.getTank(level, target, incomingSide);
+    IFluidHandler stuff = FluidHelpers.getTank(level, target, incomingSide);
     //check filter
     if (stuff != null
         && stuff.getTanks() > 0
@@ -90,14 +90,14 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     //is it a tank? try pulling from a tank
-    boolean success = UtilFluid.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, TRANSFER_RATE.get());
+    boolean success = FluidHelpers.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, TRANSFER_RATE.get());
     if (success) {
       return;
     }
     //not a tank. try the world
     FluidTankBase tank = flow.get(extractSide).orElse(null);
     if (tank != null && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      UtilFluid.extractSourceWaterloggedCauldron(level, target, tank);
+      FluidHelpers.extractSourceWaterloggedCauldron(level, target, tank);
     }
   }
 

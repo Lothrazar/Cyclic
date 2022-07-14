@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.net.PacketBaseCyclic;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -72,13 +72,13 @@ public class PacketRandomize extends PacketBaseCyclic {
           swapState = rstates.get(i);
           world.destroyBlock(swapPos, false);
           //playing sound here in large areas causes ConcurrentModificationException
-          if (UtilPlaceBlocks.placeStateSafe(world, player, swapPos, swapState, false)) {
+          if (BlockUtil.placeStateSafe(world, player, swapPos, swapState, false)) {
             atLeastOne = true;
           }
         }
       }
       if (atLeastOne) {
-        UtilItemStack.damageItem(player, player.getItemInHand(message.hand));
+        ItemStackUtil.damageItem(player, player.getItemInHand(message.hand));
       }
     });
     message.done(ctx);

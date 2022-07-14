@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -61,7 +61,7 @@ public class ScreenGeneratorFuel extends ScreenBase<ContainerGeneratorFuel> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     int fld = TileGeneratorFuel.Fields.FLOWING.ordinal();
-    btnToggle.setTooltip(UtilChat.lang("gui.cyclic.flowing" + menu.tile.getField(fld)));
+    btnToggle.setTooltip(ChatUtil.lang("gui.cyclic.flowing" + menu.tile.getField(fld)));
     btnToggle.setTextureId(menu.tile.getField(fld) == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
   }
 

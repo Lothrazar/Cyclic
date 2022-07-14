@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.util;
 import java.util.Collection;
 import java.util.Random;
 import java.util.UUID;
+import com.lothrazar.cyclic.ModCyclic;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -16,6 +17,42 @@ public class AttributesUtil {
   static final Random RAND = new Random();
   public static final UUID DEFAULT_ID = UUID.fromString("06d30aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID MULT_ID = UUID.fromString("c6d30aa2-eff2-4a81-b92b-a1cb95f115cd");
+  public static final UUID ID_STEP_HEIGHT = UUID.fromString("66d30aa2-eaa2-4a81-b92b-a1cb95f115ca");
+  static final float VANILLA = 0.6F;
+
+  //    player.maxUpStep = 0.6F; // LivingEntity.class constructor defaults to this
+  public static void disableStepHeight(Player player) {
+    AttributeInstance attr = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+    attr.removeModifier(ID_STEP_HEIGHT);
+  }
+
+  public static void enableStepHeight(Player player) {
+    float newVal;
+    if (player.isCrouching()) {
+      //make sure that, when sneaking, dont fall off!!
+      newVal = 0.9F - VANILLA;
+    }
+    else {
+      newVal = 1.0F + (1F / 16F) - VANILLA; //PATH BLOCKS etc are 1/16th downif MY feature turns this on, then do it
+    }
+    //    player.maxUpStep = newVal; // Deprecated
+    AttributeInstance attr = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+    AttributeModifier oldModifier = attr.getModifier(AttributesUtil.ID_STEP_HEIGHT);
+    double old = oldModifier == null ? 0 : oldModifier.getAmount();
+    if (newVal != old) {
+      AttributesUtil.setStepHeightInternal(player, newVal);
+    }
+  }
+
+  private static void setStepHeightInternal(Player player, double newVal) {
+    //    player.maxUpStep = 0.6F; // LivingEntity.class constructor defaults to this
+    AttributeInstance attr = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+    attr.removeModifier(ID_STEP_HEIGHT);
+    if (newVal != 0) {
+      AttributeModifier healthModifier = new AttributeModifier(ID_STEP_HEIGHT, ModCyclic.MODID, newVal, AttributeModifier.Operation.ADDITION);
+      attr.addPermanentModifier(healthModifier);
+    }
+  }
 
   public static int add(Attribute attribute, Collection<ServerPlayer> players, int integer) {
     for (ServerPlayer playerIn : players) {
@@ -48,17 +85,17 @@ public class AttributesUtil {
   }
 
   //ench
-  public static void removePlayerReach(UUID ENCHANTMENT_REACH_ID, Player playerIn) {
-    AttributeInstance attr = playerIn.getAttribute(ForgeMod.REACH_DISTANCE.get());
-    attr.removeModifier(ENCHANTMENT_REACH_ID);
+  public static void removePlayerReach(UUID id, Player player) {
+    AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+    attr.removeModifier(id);
   }
 
   // ench
-  public static void setPlayerReach(UUID ENCHANTMENT_REACH_ID, Player playerIn, int reachBoost) {
-    removePlayerReach(ENCHANTMENT_REACH_ID, playerIn);
-    AttributeInstance attr = playerIn.getAttribute(ForgeMod.REACH_DISTANCE.get());
+  public static void setPlayerReach(UUID id, Player player, int reachBoost) {
+    removePlayerReach(id, player);
+    AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
     //vanilla is 5, so +11 it becomes 16
-    AttributeModifier enchantment = new AttributeModifier(ENCHANTMENT_REACH_ID, "ReachEnchantmentCyclic", reachBoost, AttributeModifier.Operation.ADDITION);
+    AttributeModifier enchantment = new AttributeModifier(id, "ReachEnchantmentCyclic", reachBoost, AttributeModifier.Operation.ADDITION);
     attr.addPermanentModifier(enchantment);
   }
 

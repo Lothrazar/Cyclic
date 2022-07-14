@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -38,7 +38,7 @@ public class SoundCard extends ItemBaseCyclic {
       player.swing(context.getHand());
       //actually play it
       String sid = stack.getTag().getString(SOUND_ID);
-      UtilSound.playSoundById(player, sid);
+      SoundUtil.playSoundById(player, sid);
     }
     return InteractionResult.PASS;
   }

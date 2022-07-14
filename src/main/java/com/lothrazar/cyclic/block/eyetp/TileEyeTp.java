@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.eyetp;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilEntity;
-import com.lothrazar.cyclic.util.UtilPlayer;
+import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -41,7 +41,7 @@ public class TileEyeTp extends TileBlockEntityCyclic {
     timer = FREQUENCY.get();
     Player player = getLookingPlayer(RANGE.get(), true);
     if (this.canTp(player)) {
-      boolean success = UtilEntity.enderTeleportEvent(player, level, this.worldPosition.above());
+      boolean success = EntityUtil.enderTeleportEvent(player, level, this.worldPosition.above());
       if (success) {
         this.payCost(player);
       }
@@ -55,7 +55,7 @@ public class TileEyeTp extends TileBlockEntityCyclic {
     if (player.isCreative()) {
       return true;
     }
-    if (EXP.get() > 0 && UtilPlayer.getExpTotal(player) < EXP.get()) {
+    if (EXP.get() > 0 && PlayerUtil.getExpTotal(player) < EXP.get()) {
       return false;
     }
     //ignore hunger. if its zero ya dyin anyway

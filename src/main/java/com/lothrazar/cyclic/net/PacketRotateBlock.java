@@ -24,9 +24,9 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.util.UtilItemStack;
-import com.lothrazar.cyclic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclic.util.UtilSound;
+import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.BlockUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -64,13 +64,13 @@ public class PacketRotateBlock extends PacketBaseCyclic {
     ctx.get().enqueueWork(() -> {
       //rotate type
       Level world = ctx.get().getSender().level;
-      boolean succ = UtilPlaceBlocks.rotateBlockValidState(world, message.pos, message.side);
+      boolean succ = BlockUtil.rotateBlockValidState(world, message.pos, message.side);
       if (succ) {
         ServerPlayer player = ctx.get().getSender();
         ItemStack itemStackHeld = player.getItemInHand(message.hand);
-        UtilItemStack.damageItem(player, itemStackHeld);
+        ItemStackUtil.damageItem(player, itemStackHeld);
         if (world.getBlockState(message.pos).getSoundType() != null) {
-          UtilSound.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound(), 1F, 1F);
+          SoundUtil.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound(), 1F, 1F);
         }
       }
     });

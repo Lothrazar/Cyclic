@@ -26,8 +26,8 @@ package com.lothrazar.cyclic.net;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.data.CyclicFile;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
-import com.lothrazar.cyclic.item.inventorycake.ContainerProviderCake;
-import com.lothrazar.cyclic.util.UtilChat;
+import com.lothrazar.cyclic.item.food.inventorycake.ContainerProviderCake;
+import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -60,7 +60,7 @@ public class PacketKeyBind extends PacketBaseCyclic {
         NetworkHooks.openGui(sender, new ContainerProviderCake(), sender.blockPosition());
       }
       else {
-        UtilChat.addServerChatMessage(sender, "cyclic.unlocks.extended.locked");
+        ChatUtil.addServerChatMessage(sender, "cyclic.unlocks.extended.locked");
         //        Triple<String, Integer, ItemStack> result = CharmUtil.isCurioOrInventory(sender, ItemRegistry.CRAFTING_STICK.get());
         //        if (!result.getRight().isEmpty())
         //          NetworkHooks.openGui(sender, new CraftingStickContainerProvider(null), sender.blockPosition());
