@@ -50,7 +50,7 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
   private int burnPerTick;
-  private RecipeGeneratorItem<?> currentRecipe;
+  private RecipeGeneratorItem currentRecipe;
 
   public TileGeneratorDrops(BlockPos pos, BlockState state) {
     super(TileRegistry.GENERATOR_ITEM.get(), pos, state);
@@ -102,13 +102,12 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     }
   }
 
-  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorItem<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get());
+    List<RecipeGeneratorItem> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get());
     for (RecipeGeneratorItem rec : recipes) {
       if (rec.matches(this, level)) {
         this.burnTimeMax = rec.getTicks();

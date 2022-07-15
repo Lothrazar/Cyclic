@@ -18,7 +18,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-@SuppressWarnings("rawtypes")
 public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorItem> {
 
   private static final int FONT = 4210752;

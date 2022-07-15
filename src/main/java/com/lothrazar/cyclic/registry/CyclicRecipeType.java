@@ -30,7 +30,7 @@ public class CyclicRecipeType { // <RECIPE_TYPE extends CyclicRecipe> implements
   public static final RegistryObject<RecipeType<RecipeCrusher>> CRUSHER = RECIPE_TYPES.register("crusher", () -> new RecipeType<RecipeCrusher>() {});
   public static final RegistryObject<RecipeCrusher.SerializeCrusher> CRUSHER_S = RECIPE_SERIALIZERS.register("crusher", () -> new RecipeCrusher.SerializeCrusher());
   //
-  public static final RegistryObject<RecipeType<RecipeGeneratorItem<?>>> GENERATOR_ITEM = RECIPE_TYPES.register("generator_item", () -> new RecipeType<RecipeGeneratorItem<?>>() {});
+  public static final RegistryObject<RecipeType<RecipeGeneratorItem>> GENERATOR_ITEM = RECIPE_TYPES.register("generator_item", () -> new RecipeType<RecipeGeneratorItem>() {});
   public static final RegistryObject<RecipeGeneratorItem.SerializeGenerateItem> GENERATOR_ITEM_S = RECIPE_SERIALIZERS.register("generator_item", () -> new RecipeGeneratorItem.SerializeGenerateItem());
   //
   public static final RegistryObject<RecipeType<RecipeGeneratorFluid<?>>> GENERATOR_FLUID = RECIPE_TYPES.register("generator_fluid", () -> new RecipeType<RecipeGeneratorFluid<?>>() {});
