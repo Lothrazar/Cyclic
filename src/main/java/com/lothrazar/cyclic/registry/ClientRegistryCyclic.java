@@ -58,6 +58,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+@SuppressWarnings("deprecation") //shield itemproperty
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
 
@@ -68,8 +69,6 @@ public class ClientRegistryCyclic {
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
   }
-  //  public static final Material FIREBALL = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "items/fireball"));
-  //  public static final Material FIREBALL_DARK = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(ModCyclic.MODID, "items/fireball_dark"));
 
   @SubscribeEvent
   public static void onStitch(TextureStitchEvent.Pre event) {
@@ -80,15 +79,11 @@ public class ClientRegistryCyclic {
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_LEATHER_NOPATTERN.texture());
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT.texture());
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT_NOPATTERN.texture());
-      //      event.addSprite(FIREBALL.texture());
-      //      event.addSprite(FIREBALL_DARK.texture());
     }
   }
 
   @SubscribeEvent
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    //    import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
-    //    BlockEntityRendererProvider.Context lol; //  is required in constructor
     event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM.get(), RenderPeatFarm::new);
     event.registerBlockEntityRenderer(TileRegistry.STRUCTURE.get(), RenderStructure::new);
     event.registerBlockEntityRenderer(TileRegistry.COLLECTOR_FLUID.get(), RenderFluidCollect::new);
@@ -210,8 +205,8 @@ public class ClientRegistryCyclic {
     event.registerEntityRenderer(EntityRegistry.TORCH_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.DUNGEON.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.EYE.get(), ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.FIRE_BOLT.get(), ThrownItemRenderer::new); // TODO FIRE SOUNDS!!!
-    event.registerEntityRenderer(EntityRegistry.DARKFIRE_BOLT.get(), ThrownItemRenderer::new); // TODO FIRE SOUNDS!!!
+    event.registerEntityRenderer(EntityRegistry.FIRE_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.DARKFIRE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.STONE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LASER_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LIGHTNING_BOLT.get(), ThrownItemRenderer::new);

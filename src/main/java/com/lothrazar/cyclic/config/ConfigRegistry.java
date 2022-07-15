@@ -14,6 +14,7 @@ import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.LavaSpongeBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
+import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -290,6 +291,11 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     //buffer size for cables 
+    TileAntiBeacon.RADIUS = CFG.comment("Radius to clear effects from living entities")
+        .defineInRange("anti_beacon.radius", 16, 1, 128);
+    TileAntiBeacon.TICKS = CFG.comment("Ticks to fire like a beacon and clear potion-effects from living entities")
+        .defineInRange("anti_beacon.ticks", 30, 1, 9999);
+    //TODO: config list of strings? or recipe or tags or something
     TileCableFluid.BUFFERSIZE = CFG.comment("How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);
     TileCableFluid.TRANSFER_RATE = CFG.comment("How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode")

@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -73,7 +74,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   public static IntValue FLUIDCOST;
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
-    return p.getFluid().is(DataTags.EXPERIENCE);
+    return FluidHelpers.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 

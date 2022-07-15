@@ -62,7 +62,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
     try {
       TileSolidifier tile = (TileSolidifier) inv;
-      return matchItems(tile) && CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIngredient);
+      return matchItems(tile) && RecipeUtil.matchFluid(tile.getFluid(), this.fluidIngredient);
     }
     catch (ClassCastException e) {
       return false; // i think we fixed this
@@ -140,7 +140,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
       try {
         NonNullList<Ingredient> list = RecipeUtil.getIngredientsArray(json);
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-        FluidTagIngredient fs = parseFluid(json, "mix");
+        FluidTagIngredient fs = RecipeUtil.parseFluid(json, "mix");
         r = new RecipeSolidifier(recipeId, list, fs, resultStack, new EnergyIngredient(json));
       }
       catch (Exception e) {

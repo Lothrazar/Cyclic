@@ -27,10 +27,12 @@ public class PotionEffectRegistry {
   public static final RegistryObject<SnowwalkEffect> SNOWWALK = MOB_EFFECTS.register("snowwalk", () -> new SnowwalkEffect(MobEffectCategory.NEUTRAL, 0xf0ecdf));
   //  public static final RegistryObject<MobEffect> LIGHTWEIGHT = MOB_EFFECTS.register("lightweight", () -> new AttrEffect(MobEffectCategory.NEUTRAL, 0x35db77)
   //      .addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "6207DE5E-7CE8-4030-940E-514C1F160890", -0.07, AttributeModifier.Operation.ADDITION)); // 0.08D is default
-  public static final RegistryObject<MobEffect> HEAVYWEIGHT = MOB_EFFECTS.register("heavyweight", () -> new AttrEffect(MobEffectCategory.NEUTRAL, 0x730043)
+  public static final RegistryObject<MobEffect> GRAVITY = MOB_EFFECTS.register("gravity", () -> new AttrEffect(MobEffectCategory.HARMFUL, 0x730043)
       .addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 0.92, AttributeModifier.Operation.ADDITION));
+  public static final RegistryObject<MobEffect> ANTIGRAVITY = MOB_EFFECTS.register("antigravity", () -> new AttrEffect(MobEffectCategory.NEUTRAL, 0x730043)
+      .addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", -0.08, AttributeModifier.Operation.ADDITION));
   public static final RegistryObject<MobEffect> ATTACK_RANGE = MOB_EFFECTS.register("attack_range", () -> new AttrEffect(MobEffectCategory.BENEFICIAL, 0x35db77)
       .addAttributeModifier(ForgeMod.ATTACK_RANGE.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 2, AttributeModifier.Operation.MULTIPLY_TOTAL));
-  public static final RegistryObject<MobEffect> REACH_DISTANCE = MOB_EFFECTS.register("reach_distance", () -> new AttrEffect(MobEffectCategory.BENEFICIAL, 0x35db77)
+  public static final RegistryObject<MobEffect> REACH_DISTANCE = MOB_EFFECTS.register("reach_distance", () -> new AttrEffect(MobEffectCategory.BENEFICIAL, 0x500980)
       .addAttributeModifier(ForgeMod.REACH_DISTANCE.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 2, AttributeModifier.Operation.MULTIPLY_TOTAL));
 }

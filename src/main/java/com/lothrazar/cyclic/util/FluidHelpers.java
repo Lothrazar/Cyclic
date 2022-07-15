@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -212,5 +213,12 @@ public class FluidHelpers {
       // https://github.com/PrinceOfAmber/Cyclic/issues/605https://pastebin.com/YVtMYsF6
       return false;
     }
+  }
+
+  /**
+   * true if the tag and fluid match
+   */
+  public static boolean matches(Fluid fluid, TagKey<Fluid> ft) {
+    return (ft != null && fluid != null && fluid.is(ft));
   }
 }

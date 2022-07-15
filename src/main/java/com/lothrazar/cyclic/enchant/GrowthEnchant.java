@@ -126,7 +126,7 @@ public class GrowthEnchant extends EnchantmentCyclic {
         int maxAge = Collections.max(propAge.getPossibleValues());
         Integer currentAge = target.getValue(propAge);
         if (currentAge < maxAge) {
-          //TODO trigger bonemeal instead https://github.com/Lothrazar/Cyclic/issues/2117
+          //TODO: 1.19 trigger bonemeal instead https://github.com/Lothrazar/Cyclic/issues/2117
           if (entity.level.setBlockAndUpdate(pos, target.setValue(propAge, currentAge + 1))) {
             grown++;
           }

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.battery;
 
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -40,7 +41,7 @@ public class ItemBlockBattery extends BlockItem {
       max = storage.getMaxEnergyStored();
     }
     else if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
-      //TODO in 1.19 port delete this branch
+      //TODO 1.19 port delete this branch
       current = stack.getTag().getInt(ENERGYTT);
       max = stack.getTag().getInt(ENERGYTTMAX);
     }
@@ -49,7 +50,7 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public int getBarColor(ItemStack stack) {
-    return 0xBA0909; // TODO: cyclic-client.toml ?
+    return TextureRegistry.COLOUR_RF_BAR;
   }
 
   @Override
@@ -63,7 +64,7 @@ public class ItemBlockBattery extends BlockItem {
       tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
     }
     else if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
-      //TODO in 1.19 port  delete this branch
+      //TODO 1.19 port  delete this branch
       current = stack.getTag().getInt(ENERGYTT);
       energyttmax = stack.getTag().getInt(ENERGYTTMAX);
       tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.BLUE));

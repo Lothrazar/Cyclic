@@ -1,5 +1,5 @@
-/*******************************************************************************
- * The MIT License (MIT)
+/** 
+* The MIT License (MIT)
  *
  * Copyright (C) 2014-2018 Sam Bassett (aka Lothrazar)
  *
@@ -23,18 +23,12 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.recipe;
 
-import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
 
@@ -76,40 +70,5 @@ public abstract class CyclicRecipe implements Recipe<TileBlockEntityCyclic> {
   @Override
   public RecipeSerializer<?> getSerializer() {
     return null;
-  }
-
-  public static boolean matchFluid(FluidStack tileFluid, FluidTagIngredient ing) {
-    if (tileFluid == null || tileFluid.isEmpty()) {
-      return false;
-    }
-    if (ing.hasFluid() && tileFluid.getFluid() == ing.getFluidStack().getFluid()) {
-      return true;
-    }
-    //either recipe has no fluid or didnt match, try for tag
-    if (ing.hasTag()) {
-      //see /data/<id>/tags/fluids/
-      TagKey<Fluid> ft = FluidTags.create(new ResourceLocation(ing.getTag()));
-      if (ft != null && tileFluid.getFluid().is(ft)) {
-        return true; // yes is matching the tag
-      }
-    }
-    return false;
-  }
-
-  public static FluidTagIngredient parseFluid(JsonObject json, String key) {
-    JsonObject mix = json.get(key).getAsJsonObject();
-    int count = mix.get("count").getAsInt();
-    if (count < 1) {
-      count = 1;
-    }
-    FluidStack fluidstack = FluidStack.EMPTY;
-    if (mix.has("fluid")) {
-      String fluidId = mix.get("fluid").getAsString(); // JSONUtils.getString(mix, "fluid");
-      ResourceLocation resourceLocation = new ResourceLocation(fluidId);
-      Fluid fluid = ForgeRegistries.FLUIDS.getValue(resourceLocation);
-      fluidstack = (fluid == null) ? FluidStack.EMPTY : new FluidStack(fluid, count);
-    }
-    String ftag = mix.has("tag") ? mix.get("tag").getAsString() : "";
-    return new FluidTagIngredient(fluidstack, ftag, count);
   }
 }

@@ -117,7 +117,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
     switch (this.type) {
       case LEATHER:
         cooldown = 4;
-        reduceBlockedDamagePct = LEATHER_PCT.get() / 100F; // 0.25F means so 25% weaker than normal shield  TODO config?
+        reduceBlockedDamagePct = LEATHER_PCT.get() / 100F; // 0.25F means so 25% weaker than normal shield  
         //reduce by 50% so its weaker than vanilla shield // 0.50F means 50% weaker than shield
         if (dmgSource.isExplosion()) {
           immuneToDamage = true;
@@ -125,7 +125,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       break;
       case WOOD:
         cooldown = 10;
-        reduceBlockedDamagePct = WOOD_PCT.get() / 100F; //50% so half as effectve as normal TODO config?
+        reduceBlockedDamagePct = WOOD_PCT.get() / 100F; //50% so half as effectve as normal 
         if (dmgSource.isExplosion()) {
           isDestroyed = true;
         }

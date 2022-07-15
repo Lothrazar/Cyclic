@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +26,7 @@ public class FireballItem extends ItemBaseCyclic {
       shooter.getItemInHand(hand).shrink(1);
     }
     shooter.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 20);
+    SoundUtil.playSound(shooter, SoundRegistry.FIRELAUNCH.get());
     return super.use(world, shooter, hand);
   }
 

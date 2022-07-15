@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.PlayerUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
@@ -72,7 +73,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   public Predicate<FluidStack> isFluidValid() {
-    return p -> p.getFluid().is(DataTags.EXPERIENCE);
+    return p -> FluidHelpers.matches(p.getFluid(), DataTags.EXPERIENCE);
   }
 
   @Override

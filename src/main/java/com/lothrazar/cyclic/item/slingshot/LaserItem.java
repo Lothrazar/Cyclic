@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item.slingshot;
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -73,7 +74,7 @@ public class LaserItem extends ItemBaseCyclic {
 
   @Override
   public int getBarColor(ItemStack stack) {
-    return 0xBA0909; // TODO: cyclic-client.toml ?
+    return TextureRegistry.COLOUR_RF_BAR;
   }
   //** energy
 

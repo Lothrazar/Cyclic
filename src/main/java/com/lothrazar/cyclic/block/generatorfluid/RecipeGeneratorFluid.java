@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
+import com.lothrazar.cyclic.util.RecipeUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +40,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
   public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
     try {
       TileGeneratorFluid tile = (TileGeneratorFluid) inv;
-      return CyclicRecipe.matchFluid(tile.getFluid(), this.fluidIng);
+      return RecipeUtil.matchFluid(tile.getFluid(), this.fluidIng);
     }
     catch (ClassCastException e) {
       return false;
@@ -107,7 +108,7 @@ public class RecipeGeneratorFluid<TileEntityBase> extends CyclicRecipe {
       RecipeGeneratorFluid r = null;
       try {
         //        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));
-        FluidTagIngredient fs = parseFluid(json, "fuel");
+        FluidTagIngredient fs = RecipeUtil.parseFluid(json, "fuel");
         r = new RecipeGeneratorFluid(recipeId, fs, new EnergyIngredient(json));
       }
       catch (Exception e) {

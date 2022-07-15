@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.slingshot.MagicMissileEntity;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -37,7 +38,7 @@ public class WandMissileItem extends ItemBaseCyclic {
 
   @Override
   public int getBarColor(ItemStack stack) {
-    return 0xBA0909; // TODO: cyclic-client.toml ?
+    return TextureRegistry.COLOUR_RF_BAR;
   }
 
   @Override
