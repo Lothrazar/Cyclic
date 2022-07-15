@@ -43,6 +43,11 @@ public class RecipeMelter implements Recipe<TileMelter> {
   }
 
   @Override
+  public boolean isSpecial() {
+    return true;
+  }
+
+  @Override
   public boolean matches(TileMelter inv, Level worldIn) {
     try {
       TileMelter tile = inv;

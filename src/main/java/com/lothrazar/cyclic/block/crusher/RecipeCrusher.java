@@ -41,6 +41,11 @@ public class RecipeCrusher implements Recipe<TileCrusher> {
   }
 
   @Override
+  public boolean isSpecial() {
+    return true;
+  }
+
+  @Override
   public boolean matches(TileCrusher inv, Level worldIn) {
     try {
       return matches(inv.inputSlots.getStackInSlot(0), ingredients.get(0));

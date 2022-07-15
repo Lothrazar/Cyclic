@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
@@ -15,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -22,9 +22,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-@SuppressWarnings("rawtypes")
-public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
+public class RecipeSolidifier implements Recipe<TileSolidifier> {
 
+  private final ResourceLocation id;
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private final EnergyIngredient energy;
@@ -32,7 +32,7 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
   public RecipeSolidifier(ResourceLocation id, NonNullList<Ingredient> inList,
       FluidTagIngredient fluid, ItemStack result, EnergyIngredient energy) {
-    super(id);
+    this.id = id;
     this.energy = energy;
     ingredients = inList;
     if (ingredients.size() == 2) {
@@ -49,9 +49,29 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     this.result = result;
   }
 
-  @Override
+  //  @Override
   public FluidStack getRecipeFluid() {
     return this.fluidIngredient.getFluidStack();
+  }
+
+  @Override
+  public boolean isSpecial() {
+    return true;
+  }
+
+  @Override
+  public ItemStack assemble(TileSolidifier inv) {
+    return ItemStack.EMPTY;
+  }
+
+  @Override
+  public boolean canCraftInDimensions(int width, int height) {
+    return true;
+  }
+
+  @Override
+  public ResourceLocation getId() {
+    return id;
   }
 
   public EnergyIngredient getEnergy() {
@@ -59,9 +79,9 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
+  public boolean matches(TileSolidifier inv, Level worldIn) {
     try {
-      TileSolidifier tile = (TileSolidifier) inv;
+      TileSolidifier tile = inv;
       return matchItems(tile) && RecipeUtil.matchFluid(tile.getFluid(), this.fluidIngredient);
     }
     catch (ClassCastException e) {
@@ -126,16 +146,10 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
     return CyclicRecipeType.SOLID_S.get();
   }
 
-  @SuppressWarnings("unchecked")
-  public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
-
-    public SerializeSolidifier() {
-      // This registry name is what people will specify in their json files.
-      //      this.setRegistryName(new ResourceLocation(ModCyclic.MODID, "solidifier"));
-    }
+  public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier> {
 
     @Override
-    public RecipeSolidifier<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
+    public RecipeSolidifier fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeSolidifier r = null;
       try {
         NonNullList<Ingredient> list = RecipeUtil.getIngredientsArray(json);
@@ -166,9 +180,9 @@ public class RecipeSolidifier<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public void toNetwork(FriendlyByteBuf buf, RecipeSolidifier recipe) {
-      Ingredient zero = (Ingredient) recipe.ingredients.get(0);
-      Ingredient one = (Ingredient) recipe.ingredients.get(1);
-      Ingredient two = (Ingredient) recipe.ingredients.get(2);
+      Ingredient zero = recipe.ingredients.get(0);
+      Ingredient one = recipe.ingredients.get(1);
+      Ingredient two = recipe.ingredients.get(2);
       zero.toNetwork(buf);
       one.toNetwork(buf);
       two.toNetwork(buf);

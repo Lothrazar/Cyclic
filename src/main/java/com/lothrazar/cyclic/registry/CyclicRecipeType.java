@@ -21,7 +21,7 @@ public class CyclicRecipeType { // <RECIPE_TYPE extends CyclicRecipe> implements
   public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, ModCyclic.MODID);
   public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ModCyclic.MODID);
   //
-  public static final RegistryObject<RecipeType<RecipeSolidifier<?>>> SOLID = RECIPE_TYPES.register("solidifier", () -> new RecipeType<RecipeSolidifier<?>>() {});
+  public static final RegistryObject<RecipeType<RecipeSolidifier>> SOLID = RECIPE_TYPES.register("solidifier", () -> new RecipeType<RecipeSolidifier>() {});
   public static final RegistryObject<SerializeSolidifier> SOLID_S = RECIPE_SERIALIZERS.register("solidifier", () -> new SerializeSolidifier());
   //
   public static final RegistryObject<RecipeType<RecipeMelter>> MELTER = RECIPE_TYPES.register("melter", () -> new RecipeType<RecipeMelter>() {});
@@ -33,7 +33,7 @@ public class CyclicRecipeType { // <RECIPE_TYPE extends CyclicRecipe> implements
   public static final RegistryObject<RecipeType<RecipeGeneratorItem>> GENERATOR_ITEM = RECIPE_TYPES.register("generator_item", () -> new RecipeType<RecipeGeneratorItem>() {});
   public static final RegistryObject<RecipeGeneratorItem.SerializeGenerateItem> GENERATOR_ITEM_S = RECIPE_SERIALIZERS.register("generator_item", () -> new RecipeGeneratorItem.SerializeGenerateItem());
   //
-  public static final RegistryObject<RecipeType<RecipeGeneratorFluid<?>>> GENERATOR_FLUID = RECIPE_TYPES.register("generator_fluid", () -> new RecipeType<RecipeGeneratorFluid<?>>() {});
+  public static final RegistryObject<RecipeType<RecipeGeneratorFluid>> GENERATOR_FLUID = RECIPE_TYPES.register("generator_fluid", () -> new RecipeType<RecipeGeneratorFluid>() {});
   public static final RegistryObject<SerializeGenerateFluid> GENERATOR_FLUID_S = RECIPE_SERIALIZERS.register("generator_fluid", () -> new SerializeGenerateFluid());
   //
   //

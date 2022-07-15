@@ -50,7 +50,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
-  private RecipeGeneratorFluid<?> currentRecipe;
+  private RecipeGeneratorFluid currentRecipe;
 
   public TileGeneratorFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.GENERATOR_FLUID.get(), pos, state);
@@ -116,13 +116,12 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
     }
   }
 
-  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorFluid<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
+    List<RecipeGeneratorFluid> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
     for (RecipeGeneratorFluid rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;

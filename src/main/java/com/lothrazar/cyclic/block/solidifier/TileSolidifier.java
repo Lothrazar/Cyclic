@@ -41,7 +41,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
-  private RecipeSolidifier<?> currentRecipe;
+  private RecipeSolidifier currentRecipe;
   FluidTankBase tank;
   ItemStackHandler inputSlots = new ItemStackHandler(3);
   ItemStackHandler outputSlots = new ItemStackHandler(1);
@@ -190,7 +190,6 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     tank.setFluid(fluid);
   }
 
-  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
@@ -198,7 +197,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     currentRecipe = null;
     this.burnTimeMax = 0;
     this.timer = 0;
-    List<RecipeSolidifier<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID.get());
+    List<RecipeSolidifier> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID.get());
     for (RecipeSolidifier rec : recipes) {
       if (rec.matches(this, level)) {
         currentRecipe = rec;
