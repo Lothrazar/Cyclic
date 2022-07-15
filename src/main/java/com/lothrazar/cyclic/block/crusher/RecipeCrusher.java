@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.crusher;
 import java.util.Random;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.RandomizedOutputIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
@@ -13,22 +12,23 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-@SuppressWarnings("rawtypes")
-public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
+public class RecipeCrusher implements Recipe<TileCrusher> {
 
+  private final ResourceLocation id;
   private ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   public final EnergyIngredient energy;
   public RandomizedOutputIngredient randOutput;
 
   public RecipeCrusher(ResourceLocation id, Ingredient in, EnergyIngredient energy, ItemStack out, RandomizedOutputIngredient randOutput) {
-    super(id);
+    this.id = id;
     this.energy = energy;
     ingredients.add(in);
     this.result = out;
@@ -36,10 +36,14 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
+  public ResourceLocation getId() {
+    return id;
+  }
+
+  @Override
+  public boolean matches(TileCrusher inv, Level worldIn) {
     try {
-      TileCrusher tile = (TileCrusher) inv;
-      return matches(tile.inputSlots.getStackInSlot(0), ingredients.get(0));
+      return matches(inv.inputSlots.getStackInSlot(0), ingredients.get(0));
     }
     catch (ClassCastException e) {
       return false;
@@ -86,16 +90,15 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
     return CyclicRecipeType.CRUSHER_S.get();
   }
 
-  public static class SerializeCrusher extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeCrusher<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
+  public static class SerializeCrusher extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeCrusher> {
 
     public SerializeCrusher() {}
 
     /**
      * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public RecipeCrusher<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
+    public RecipeCrusher fromJson(ResourceLocation recipeId, JsonObject json) {
       try {
         Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
         ItemStack resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
@@ -119,7 +122,7 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
 
     @Override
     public void toNetwork(FriendlyByteBuf buffer, RecipeCrusher recipe) {
-      Ingredient zero = (Ingredient) recipe.ingredients.get(0);
+      Ingredient zero = recipe.ingredients.get(0);
       zero.toNetwork(buffer);
       buffer.writeInt(recipe.energy.getRfPertick());
       buffer.writeInt(recipe.energy.getTicks());
@@ -140,5 +143,15 @@ public class RecipeCrusher<TileEntityBase> extends CyclicRecipe {
       getBonus.setCount(1 + rand.nextInt(this.randOutput.bonus.getCount()));
     }
     return getBonus;
+  }
+
+  @Override
+  public ItemStack assemble(TileCrusher t) {
+    return ItemStack.EMPTY;
+  }
+
+  @Override
+  public boolean canCraftInDimensions(int width, int height) {
+    return width <= 1 && height <= 1;
   }
 }

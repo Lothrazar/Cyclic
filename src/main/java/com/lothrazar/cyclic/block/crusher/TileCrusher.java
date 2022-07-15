@@ -41,7 +41,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
-  private RecipeCrusher<?> currentRecipe;
+  private RecipeCrusher currentRecipe;
 
   public TileCrusher(BlockPos pos, BlockState state) {
     super(TileRegistry.CRUSHER.get(), pos, state);
@@ -149,13 +149,12 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
-  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeCrusher<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
+    List<RecipeCrusher> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
     for (RecipeCrusher rec : recipes) {
       if (rec.matches(this, level)) {
         this.currentRecipe = rec;
