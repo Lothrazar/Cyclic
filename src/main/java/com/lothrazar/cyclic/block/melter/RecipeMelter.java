@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.melter;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.recipe.CyclicRecipe;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.util.RecipeUtil;
@@ -11,21 +10,22 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-@SuppressWarnings("rawtypes")
-public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
+public class RecipeMelter implements Recipe<TileMelter> {
 
+  private final ResourceLocation id;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
   private final EnergyIngredient energy;
 
   public RecipeMelter(ResourceLocation id, NonNullList<Ingredient> ingredientsIn, FluidStack out, EnergyIngredient energy) {
-    super(id);
+    this.id = id;
     this.energy = energy;
     ingredients = ingredientsIn;
     if (ingredients.size() == 1) {
@@ -38,9 +38,14 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
   }
 
   @Override
-  public boolean matches(com.lothrazar.cyclic.block.TileBlockEntityCyclic inv, Level worldIn) {
+  public ResourceLocation getId() {
+    return id;
+  }
+
+  @Override
+  public boolean matches(TileMelter inv, Level worldIn) {
     try {
-      TileMelter tile = (TileMelter) inv;
+      TileMelter tile = inv;
       //if first one matches check second
       //if first does not match, fail
       boolean matchLeft = matches(tile.getStackInputSlot(0), ingredients.get(0));
@@ -82,7 +87,6 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     return ItemStack.EMPTY;
   }
 
-  @Override
   public FluidStack getRecipeFluid() {
     return outFluid.copy();
   }
@@ -97,8 +101,17 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     return CyclicRecipeType.MELTER_S.get();
   }
 
-  @SuppressWarnings("unchecked")
-  public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic>> {
+  @Override
+  public ItemStack assemble(TileMelter t) {
+    return ItemStack.EMPTY;
+  }
+
+  @Override
+  public boolean canCraftInDimensions(int width, int height) {
+    return width <= 2 && height <= 1;
+  }
+
+  public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter> {
 
     public SerializeMelter() {}
 
@@ -106,7 +119,7 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
      * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
      */
     @Override
-    public RecipeMelter<? extends com.lothrazar.cyclic.block.TileBlockEntityCyclic> fromJson(ResourceLocation recipeId, JsonObject json) {
+    public RecipeMelter fromJson(ResourceLocation recipeId, JsonObject json) {
       RecipeMelter r = null;
       try {
         NonNullList<Ingredient> list = RecipeUtil.getIngredientsArray(json);
@@ -133,8 +146,8 @@ public class RecipeMelter<TileEntityBase> extends CyclicRecipe {
     @Override
     public void toNetwork(FriendlyByteBuf buf, RecipeMelter recipe) {
       //ing, ing, fluid, (int,int)
-      Ingredient zero = (Ingredient) recipe.ingredients.get(0);
-      Ingredient one = (Ingredient) recipe.ingredients.get(1);
+      Ingredient zero = recipe.ingredients.get(0);
+      Ingredient one = recipe.ingredients.get(1);
       zero.toNetwork(buf);
       one.toNetwork(buf);
       recipe.outFluid.writeToPacket(buf);

@@ -24,7 +24,7 @@ public class CyclicRecipeType { // <RECIPE_TYPE extends CyclicRecipe> implements
   public static final RegistryObject<RecipeType<RecipeSolidifier<?>>> SOLID = RECIPE_TYPES.register("solidifier", () -> new RecipeType<RecipeSolidifier<?>>() {});
   public static final RegistryObject<SerializeSolidifier> SOLID_S = RECIPE_SERIALIZERS.register("solidifier", () -> new SerializeSolidifier());
   //
-  public static final RegistryObject<RecipeType<RecipeMelter<?>>> MELTER = RECIPE_TYPES.register("melter", () -> new RecipeType<RecipeMelter<?>>() {});
+  public static final RegistryObject<RecipeType<RecipeMelter>> MELTER = RECIPE_TYPES.register("melter", () -> new RecipeType<RecipeMelter>() {});
   public static final RegistryObject<SerializeMelter> MELTER_S = RECIPE_SERIALIZERS.register("melter", () -> new RecipeMelter.SerializeMelter());
   //
   public static final RegistryObject<RecipeType<RecipeCrusher>> CRUSHER = RECIPE_TYPES.register("crusher", () -> new RecipeType<RecipeCrusher>() {});

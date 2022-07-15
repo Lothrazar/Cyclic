@@ -21,7 +21,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-@SuppressWarnings("rawtypes")
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   private static final int FONT = 4210752;

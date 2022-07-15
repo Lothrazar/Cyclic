@@ -47,7 +47,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   ItemStackHandler inventory = new ItemStackHandler(2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  private RecipeMelter<?> currentRecipe;
+  private RecipeMelter currentRecipe;
   private int burnTimeMax = 0; //only non zero if processing
 
   public TileMelter(BlockPos pos, BlockState state) {
@@ -203,7 +203,6 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
   }
 
-  @SuppressWarnings("rawtypes")
   private void findMatchingRecipe() {
     if (currentRecipe != null && currentRecipe.matches(this, level)) {
       return;
@@ -211,7 +210,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     currentRecipe = null;
     this.burnTimeMax = 0;
     this.timer = 0;
-    List<RecipeMelter<?>> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER.get());
+    List<RecipeMelter> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER.get());
     for (RecipeMelter rec : recipes) {
       if (rec.matches(this, level)) {
         if (this.tank.getFluid() != null && !this.tank.getFluid().isEmpty()) {
