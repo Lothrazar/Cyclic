@@ -232,7 +232,7 @@ public class ConfigRegistry {
     CFG.pop(); //command
     CFG.comment(WALL, " Logging related configs", WALL)
         .push("logging");
-    CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
+    CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", true);//TODO: fixme
     CFG.pop(); //logging 
     CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
     ShieldCyclicItem.LEATHER_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_leather.blocked_damage_percent", 20, 0, 100);
@@ -291,10 +291,19 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     //buffer size for cables 
-    TileAntiBeacon.RADIUS = CFG.comment("Radius to clear effects from living entities")
+    TileAntiBeacon.HARMFUL_POTIONS = CFG.comment("if true this cures any harmful potion effect (regardless of potion list)").define("harmful_potions", true);
+    TileAntiBeacon.RADIUS = CFG.comment("Radius to clear effects from living entities, used by sponge and anti beacon")
         .defineInRange("anti_beacon.radius", 16, 1, 128);
-    TileAntiBeacon.TICKS = CFG.comment("Ticks to fire like a beacon and clear potion-effects from living entities")
+    TileAntiBeacon.TICKS = CFG.comment("Ticks to fire anti beacon and remove effects from entities (20 = 1 second)")
         .defineInRange("anti_beacon.ticks", 30, 1, 9999);
+    //TODO: variant that is (only harmful effects? just like milk that does all effects) ?
+    TileAntiBeacon.POTIONS = CFG.comment("List of extra effects to clear. supports wildcard such as 'cyclic:*'")
+        .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither", "cyclic:gravity",
+            "cyclic:antigravity",
+            "minecraft:night_vision", "minecraft:invisibility",
+            "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
+    //    TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use")
+    //    .defineList("ignore_list", UNCRAFT_IGNORE_ITEMS, it -> it instanceof String);
     //TODO: config list of strings? or recipe or tags or something
     TileCableFluid.BUFFERSIZE = CFG.comment("How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);

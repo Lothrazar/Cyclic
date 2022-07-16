@@ -22,7 +22,7 @@ public class MilkSpongeBlock extends BlockCyclic {
   }
 
   public void absorbPotions(Level world, BlockPos pos) {
-    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.TICKS.get(), 3));
+    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.RADIUS.get(), 3));
     for (LivingEntity e : all) {
       e.removeAllEffects();
     }

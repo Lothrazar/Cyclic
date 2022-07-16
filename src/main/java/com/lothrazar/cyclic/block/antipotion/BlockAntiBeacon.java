@@ -1,15 +1,18 @@
 package com.lothrazar.cyclic.block.antipotion;
 
+import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -25,7 +28,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BlockAntiBeacon extends BlockCyclic {
 
   public static IntValue RADIUS;
-  static String test = "minecraft:poison";
 
   public BlockAntiBeacon(Properties properties) {
     super(properties.randomTicks().strength(0.7F).noOcclusion());
@@ -59,35 +61,50 @@ public class BlockAntiBeacon extends BlockCyclic {
   @Override
   public void onPlace(BlockState bs, Level world, BlockPos pos, BlockState bsIn, boolean p_56815_) {
     if (!bsIn.is(bs.getBlock())) {
-      claimPotions(world, pos);
+      //      claimPotions(world, pos);
       absorbPotions(world, pos);
     }
   }
-
-  private void claimPotions(Level world, BlockPos pos) {
-    // TODO Auto-generated method stub
-    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.TICKS.get(), 3));
-    for (LivingEntity e : all) {
-      for (MobEffectInstance f : e.getActiveEffects()) {
-        ResourceLocation key = ForgeRegistries.MOB_EFFECTS.getKey(f.getEffect());
-        if (key != null) {
-          //
-          System.out.println("claim me? " + key);
-        }
-      }
-    }
-  }
+  //  private void claimPotions(Level world, BlockPos pos) {
+  //    // TODO Auto-generated method stub
+  //    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.TICKS.get(), 3));
+  //    for (LivingEntity e : all) {
+  //      for (MobEffectInstance f : e.getActiveEffects()) {
+  //        ResourceLocation key = ForgeRegistries.MOB_EFFECTS.getKey(f.getEffect());
+  //        if (key != null) {
+  //          //
+  //          //          System.out.println("claim me? " + key);
+  //        }
+  //      }
+  //    }
+  //  }
   //TODO: tile entity that pulses
 
+  @SuppressWarnings("unchecked")
   public static void absorbPotions(Level world, BlockPos pos) {
     //todo: parse from config or whatever
-    MobEffect eff = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(test));
-    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.TICKS.get(), 3));
+    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.RADIUS.get(), 3));
+    //    ModCyclic.LOGGER.info("try absorb potions on " + all.size());
+    List<String> potions = (List<String>) TileAntiBeacon.POTIONS.get();
+    //    ModCyclic.LOGGER.info("potions TEST poison" + potions);
     for (LivingEntity e : all) {
-      if (eff != null && e.hasEffect(eff)) {
-        //then go
-        System.out.println("remove poison" + eff);
-        e.removeEffect(eff);
+      List<MobEffect> cureMe = new ArrayList<>();
+      for (MobEffect mobEffect : e.getActiveEffectsMap().keySet()) {
+        if (TileAntiBeacon.HARMFUL_POTIONS.get() && mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
+          //if its harmful, cure it if config wants to
+          cureMe.add(mobEffect);
+        }
+        else {
+          //if its in config, cure it
+          ResourceLocation potionId = ForgeRegistries.MOB_EFFECTS.getKey(mobEffect);
+          if (StringParseUtil.isInList(potions, potionId)) {
+            cureMe.add(mobEffect);
+          }
+        }
+      }
+      for (MobEffect curedEffect : cureMe) {
+        ModCyclic.LOGGER.info("  !!!!!!!!!  remove poison" + curedEffect);
+        e.removeEffect(curedEffect);
       }
     }
   }

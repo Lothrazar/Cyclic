@@ -136,7 +136,6 @@ public class AttributesUtil {
       AttributeModifier healthModifier = new AttributeModifier(DEFAULT_ID, "HP Bonus from Cyclic", (modifiedHearts * 2), AttributeModifier.Operation.ADDITION);
       healthAttribute.addPermanentModifier(healthModifier);
       if (playerIn.getHealth() > healthAttribute.getValue()) {
-        //        System.out.println("forceheal to go down");
         playerIn.setHealth((float) healthAttribute.getValue());
       }
       //finish up
