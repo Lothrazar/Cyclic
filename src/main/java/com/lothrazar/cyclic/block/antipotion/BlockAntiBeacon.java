@@ -65,47 +65,37 @@ public class BlockAntiBeacon extends BlockCyclic {
       absorbPotions(world, pos);
     }
   }
-  //  private void claimPotions(Level world, BlockPos pos) {
-  //    // TODO Auto-generated method stub
-  //    List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.TICKS.get(), 3));
-  //    for (LivingEntity e : all) {
-  //      for (MobEffectInstance f : e.getActiveEffects()) {
-  //        ResourceLocation key = ForgeRegistries.MOB_EFFECTS.getKey(f.getEffect());
-  //        if (key != null) {
-  //          //
-  //          //          System.out.println("claim me? " + key);
-  //        }
-  //      }
-  //    }
-  //  }
-  //TODO: tile entity that pulses
 
   @SuppressWarnings("unchecked")
   public static void absorbPotions(Level world, BlockPos pos) {
     //todo: parse from config or whatever
     List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.RADIUS.get(), 3));
-    //    ModCyclic.LOGGER.info("try absorb potions on " + all.size());
+    ModCyclic.LOGGER.info(pos + " BEACON try absorb potions on " + all.size());
     List<String> potions = (List<String>) TileAntiBeacon.POTIONS.get();
     //    ModCyclic.LOGGER.info("potions TEST poison" + potions);
     for (LivingEntity e : all) {
-      List<MobEffect> cureMe = new ArrayList<>();
-      for (MobEffect mobEffect : e.getActiveEffectsMap().keySet()) {
-        if (TileAntiBeacon.HARMFUL_POTIONS.get() && mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
-          //if its harmful, cure it if config wants to
+      cureAllRelevant(potions, e);
+    }
+  }
+
+  private static void cureAllRelevant(List<String> potions, LivingEntity e) {
+    List<MobEffect> cureMe = new ArrayList<>();
+    for (MobEffect mobEffect : e.getActiveEffectsMap().keySet()) {
+      if (TileAntiBeacon.HARMFUL_POTIONS.get() && mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
+        //if its harmful, cure it if config wants to
+        cureMe.add(mobEffect);
+      }
+      else {
+        //if its in config, cure it
+        ResourceLocation potionId = ForgeRegistries.MOB_EFFECTS.getKey(mobEffect);
+        if (StringParseUtil.isInList(potions, potionId)) {
           cureMe.add(mobEffect);
         }
-        else {
-          //if its in config, cure it
-          ResourceLocation potionId = ForgeRegistries.MOB_EFFECTS.getKey(mobEffect);
-          if (StringParseUtil.isInList(potions, potionId)) {
-            cureMe.add(mobEffect);
-          }
-        }
       }
-      for (MobEffect curedEffect : cureMe) {
-        ModCyclic.LOGGER.info("  !!!!!!!!!  remove poison" + curedEffect);
-        e.removeEffect(curedEffect);
-      }
+    }
+    for (MobEffect curedEffect : cureMe) {
+      ModCyclic.LOGGER.info("  !!!!!!!!!  remove poison" + curedEffect);
+      e.removeEffect(curedEffect);
     }
   }
 }

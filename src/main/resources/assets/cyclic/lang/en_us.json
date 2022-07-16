@@ -1027,6 +1027,10 @@
   "block.cyclic.beacon": "Pharos Beacon",
   "block.cyclic.beacon.tooltip": "Use potions to generate beacon effects",
   "block.cyclic.beacon.guide": "The Pharos Beacon takes power and potions as input and automatically applies potion effects to the selected type of entity in a radius around itself. Can target players, mobs, animals, etc. If Entity data card is present, it is also applied along with the button filter together.",
+  "block.cyclic.anti_beacon": "Artemis Beacon",
+  "block.cyclic.anti_beacon.tooltip": "Cures certain nearby potions",
+  "block.cyclic.anti_beacon.guide": "Nearby potions get cleared every few ticks, and on placement.  Many settings for this are in the config file.",
+  
   "block.cyclic.beacon_potion.players": "Players",
   "block.cyclic.beacon_potion.nonplayer": "Non-Players",
   "block.cyclic.beacon_potion.all": "All",

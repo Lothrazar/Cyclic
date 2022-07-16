@@ -33,4 +33,16 @@ public class PotionEffectRegistry {
       .addAttributeModifier(ForgeMod.ATTACK_RANGE.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 2, AttributeModifier.Operation.MULTIPLY_TOTAL));
   public static final RegistryObject<MobEffect> REACH_DISTANCE = MOB_EFFECTS.register("reach_distance", () -> new AttrEffect(MobEffectCategory.BENEFICIAL, 0x500980)
       .addAttributeModifier(ForgeMod.REACH_DISTANCE.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 2, AttributeModifier.Operation.MULTIPLY_TOTAL));
+  public static final RegistryObject<MobEffect> butterfingers = MOB_EFFECTS.register("butterfingers", () -> new StunEffect(MobEffectCategory.HARMFUL, 0x500980)
+  //      .addAttributeModifier(ForgeMod.REACH_DISTANCE.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 2, AttributeModifier.Operation.MULTIPLY_TOTAL)
+  );
+  public static final RegistryObject<MobEffect> frost_walker = MOB_EFFECTS.register("frost_walker", () -> new StunEffect(MobEffectCategory.HARMFUL, 0x500980)
+  //      .addAttributeModifier(ForgeMod.REACH_DISTANCE.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 2, AttributeModifier.Operation.MULTIPLY_TOTAL)
+  );
+  public static final RegistryObject<MobEffect> magnetic = MOB_EFFECTS.register("magnetic", () -> new StunEffect(MobEffectCategory.HARMFUL, 0x500980)
+  //      .addAttributeModifier(ForgeMod.REACH_DISTANCE.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", 2, AttributeModifier.Operation.MULTIPLY_TOTAL)
+  );
+  //
+  public static final RegistryObject<MobEffect> TEST = MOB_EFFECTS.register("test", () -> new AttrEffect(MobEffectCategory.NEUTRAL, 0x730043)
+      .addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "5207DE5E-7CE8-4030-940E-514C1F160890", -0.08, AttributeModifier.Operation.ADDITION));
 }

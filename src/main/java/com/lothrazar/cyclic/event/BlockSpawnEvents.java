@@ -55,7 +55,7 @@ public class BlockSpawnEvents {
           && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(),
               BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockNoTraders.LIT, true),
               radius, height)) {
-        ModCyclic.LOGGER.info("Spawn cancelled by altar " + mob.getType());
+        //ModCyclic.LOGGER.info("Spawn cancelled by altar " + mob.getType());
         event.setResult(Result.DENY);
       }
       //      if (BlockAltarSol.isFlight(mob, res)

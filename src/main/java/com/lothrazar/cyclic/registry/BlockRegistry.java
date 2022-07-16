@@ -216,7 +216,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
   public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE).noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
   public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.METAL, Blocks.COPPER_BLOCK.defaultMaterialColor()).noCollission().strength(0.5F)));
-  public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of(Material.SPONGE).lightLevel(p -> 2)));
+  public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of(Material.SPONGE).sound(SoundType.SPORE_BLOSSOM).lightLevel(p -> 2)));
   public static final RegistryObject<Block> SPONGE_MILK = BLOCKS.register("sponge_milk", () -> new MilkSpongeBlock(Block.Properties.of(Material.SPONGE).lightLevel(p -> 1)));
   public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> PEACE_CANDLE = BLOCKS.register("peace_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)

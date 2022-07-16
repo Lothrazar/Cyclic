@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.registry;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.RenderItemCollect;
 import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
@@ -107,6 +108,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
     event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
     event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
+    event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {

@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -15,7 +16,7 @@ public class LavaSpongeBlock extends BlockCyclic {
   public static IntValue RADIUS;
 
   public LavaSpongeBlock(Properties properties) {
-    super(properties.randomTicks().strength(0.7F));
+    super(properties.randomTicks().strength(0.7F).sound(SoundType.GRASS));
   }
 
   @Override

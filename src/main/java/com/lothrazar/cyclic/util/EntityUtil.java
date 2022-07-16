@@ -215,8 +215,7 @@ public class EntityUtil {
   }
 
   public static AABB makeBoundingBox(BlockPos center, int hRadius, int vRadius) {
-    //so if radius is 1, it goes 1 in each direction, and boom, 3x3 selected
-    return new AABB(center).expandTowards(hRadius, vRadius, hRadius);
+    return makeBoundingBox(center.getX(), center.getY(), center.getZ(), hRadius, vRadius);
   }
 
   public static AABB makeBoundingBox(double x, double y, double z, int hRadius, int vRadius) {
