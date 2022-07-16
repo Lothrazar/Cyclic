@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.sponge_lava",
+  "icon": "cyclic:sponge_lava",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.sponge_lava.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:sponge_lava"
+    }
+  ]
+}

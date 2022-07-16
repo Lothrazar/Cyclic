@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:milk_bottle"
+      "recipe": "cyclic:shapeless/milk_bottle"
     }
   ]
 }

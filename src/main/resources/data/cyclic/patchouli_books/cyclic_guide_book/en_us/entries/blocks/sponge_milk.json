@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.sponge_milk",
+  "icon": "cyclic:sponge_milk",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.sponge_milk.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/sponge_milk"
+    }
+  ]
+}

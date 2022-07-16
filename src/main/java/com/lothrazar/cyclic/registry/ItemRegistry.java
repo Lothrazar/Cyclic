@@ -277,6 +277,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> NETHERITE_PRESSURE_PLATE = ITEMS.register("netherite_pressure_plate", () -> new BlockItem(BlockRegistry.NETHERITE_PRESSURE_PLATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> NETHERITE_LANTERN = ITEMS.register("netherite_lantern", () -> new BlockItem(BlockRegistry.NETHERITE_LANTERN.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> SPONGE_LAVA = ITEMS.register("sponge_lava", () -> new BlockItem(BlockRegistry.SPONGE_LAVA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> SPONGE_MILK = ITEMS.register("sponge_milk", () -> new BlockItem(BlockRegistry.SPONGE_MILK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CRUSHER = ITEMS.register("crusher", () -> new BlockItem(BlockRegistry.CRUSHER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> GLASS_CONNECTED = ITEMS.register("glass_connected", () -> new BlockItem(BlockRegistry.GLASS_CONNECTED.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> LOCATION_DATA = ITEMS.register("location_data", () -> new LocationGpsCard(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
@@ -387,6 +388,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> ANVIL = ITEMS.register("anvil", () -> new BlockItem(BlockRegistry.ANVIL.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> ANVIL_MAGMA = ITEMS.register("anvil_magma", () -> new BlockItem(BlockRegistry.ANVIL_MAGMA.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BEACON = ITEMS.register("beacon", () -> new BlockItem(BlockRegistry.BEACON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> TANK = ITEMS.register("tank", () -> new ItemBlockTank(BlockRegistry.TANK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> DARK_GLASS = ITEMS.register("dark_glass", () -> new BlockItem(BlockRegistry.DARK_GLASS.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> TRASH = ITEMS.register("trash", () -> new BlockItem(BlockRegistry.TRASH.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -485,8 +487,6 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SPARK = ITEMS.register("spark", () -> new GlowingSpark(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new DarkFireballItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> SPONGE_MILK = ITEMS.register("sponge_milk", () -> new BlockItem(BlockRegistry.SPONGE_MILK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  public static final RegistryObject<Item> MORE_GRAVITY = ITEMS.register("more_gravity", () -> new ItemBaseToggle(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024 * 4)));
   //  public static final RegistryObject<Item> LESS_GRAVITY = ITEMS.register("less_gravity", () -> new ItemBaseToggle(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).durability(1024 * 4)));
   //  public static final RegistryObject<Item> MAGNETIC_TRASH = ITEMS.register("magnetic", () -> new MagnetChargeItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));

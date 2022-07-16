@@ -218,7 +218,6 @@ public class BlockRegistry {
   public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.METAL, Blocks.COPPER_BLOCK.defaultMaterialColor()).noCollission().strength(0.5F)));
   public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of(Material.SPONGE).lightLevel(p -> 2)));
   public static final RegistryObject<Block> SPONGE_MILK = BLOCKS.register("sponge_milk", () -> new MilkSpongeBlock(Block.Properties.of(Material.SPONGE).lightLevel(p -> 1)));
-  public static final RegistryObject<Block> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of(Material.STONE).lightLevel(p -> 2)));
   public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> PEACE_CANDLE = BLOCKS.register("peace_candle", () -> new CandlePeaceBlock(Block.Properties.of(Material.STONE)
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 6 : 0)));
@@ -261,6 +260,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> ANVIL = BLOCKS.register("anvil", () -> new BlockAnvilAuto(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)));
   public static final RegistryObject<Block> ANVIL_MAGMA = BLOCKS.register("anvil_magma", () -> new BlockAnvilMagma(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)));
   public static final RegistryObject<Block> BEACON = BLOCKS.register("beacon", () -> new BlockPotion(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of(Material.STONE).lightLevel(p -> 2)));
   public static final RegistryObject<Block> SOUNDPROOFING_GHOST = BLOCKS.register("soundproofing_ghost", () -> new SoundmufflerBlockGhost(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> SOUNDPROOFING = BLOCKS.register("soundproofing", () -> new SoundmufflerBlock(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> CLOCK = BLOCKS.register("clock", () -> new BlockRedstoneClock(Block.Properties.of(Material.STONE)));
