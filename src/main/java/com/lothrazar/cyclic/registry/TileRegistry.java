@@ -7,7 +7,8 @@ import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.battery.TileClayBattery;
-import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.beaconpotion.TilePotionBeacon;
+import com.lothrazar.cyclic.block.beaconredstone.TileBeaconRedstone;
 import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredTile;
 import com.lothrazar.cyclic.block.breaker.TileBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
@@ -127,7 +128,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TileEye>> EYE_REDSTONE = TILES.register("eye_redstone", () -> BlockEntityType.Builder.of(TileEye::new, BlockRegistry.EYE_REDSTONE.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileEyeTp>> EYE_TELEPORT = TILES.register("eye_teleport", () -> BlockEntityType.Builder.of(TileEyeTp::new, BlockRegistry.EYE_TELEPORT.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileAnvilMagma>> ANVIL_MAGMA = TILES.register("anvil_magma", () -> BlockEntityType.Builder.of(TileAnvilMagma::new, BlockRegistry.ANVIL_MAGMA.get()).build(null));
-  public static final RegistryObject<BlockEntityType<TilePotion>> BEACON = TILES.register("beacon", () -> BlockEntityType.Builder.of(TilePotion::new, BlockRegistry.BEACON.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TilePotionBeacon>> BEACON = TILES.register("beacon", () -> BlockEntityType.Builder.of(TilePotionBeacon::new, BlockRegistry.BEACON.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileBatteryInfinite>> BATTERY_INFINITE = TILES.register("battery_infinite", () -> BlockEntityType.Builder.of(TileBatteryInfinite::new, BlockRegistry.BATTERY_INFINITE.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileItemInfinite>> ITEM_INFINITE = TILES.register("item_infinite", () -> BlockEntityType.Builder.of(TileItemInfinite::new, BlockRegistry.ITEM_INFINITE.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileDice>> DICE = TILES.register("dice", () -> BlockEntityType.Builder.of(TileDice::new, BlockRegistry.DICE.get()).build(null));
@@ -177,5 +178,6 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TileWorkbench>> WORKBENCH = TILES.register("workbench", () -> BlockEntityType.Builder.of(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null));
   //
   public static final RegistryObject<BlockEntityType<TileAntiBeacon>> ANTI_BEACON = TILES.register("anti_beacon", () -> BlockEntityType.Builder.of(TileAntiBeacon::new, BlockRegistry.ANTI_BEACON.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileBeaconRedstone>> BEACON_REDSTONE = TILES.register("beacon_redstone", () -> BlockEntityType.Builder.of(TileBeaconRedstone::new, BlockRegistry.BEACON_REDSTONE.get()).build(null));
   //  public static final RegistryObject<BlockEntityType<TilePedestal>> PEDESTAL = TILES.register("pedestal", () -> BlockEntityType.Builder.of(TilePedestal::new, BlockRegistry.PEDESTAL.get()).build(null));
 }

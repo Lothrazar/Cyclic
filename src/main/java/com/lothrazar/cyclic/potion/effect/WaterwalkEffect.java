@@ -17,8 +17,8 @@ public class WaterwalkEffect extends TickableEffect {
 
   @Override
   public void tick(LivingUpdateEvent event) {
-    // delete me i guess 
     LivingEntity entity = event.getEntityLiving();
+    //    living.getEffect(this).getAmplifier()
     if (entity.isInWater() || entity.getLevel().getBlockState(entity.blockPosition()).is(Blocks.WATER)) {
       if (entity instanceof Player p) {
         if (p.isCrouching()) {

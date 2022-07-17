@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.beacon_redstone",
+  "icon": "cyclic:beacon_redstone",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.beacon_redstone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:beacon_redstone"
+    }
+  ]
+}

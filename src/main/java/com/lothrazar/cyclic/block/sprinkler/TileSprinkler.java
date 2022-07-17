@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.sprinkler;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
-import com.lothrazar.cyclic.capabilities.FluidTankBase;
+import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.ParticleUtil;

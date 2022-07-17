@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.anvilvoid;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.FluidTankBase;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
+import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;

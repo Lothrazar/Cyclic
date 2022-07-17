@@ -7,17 +7,17 @@
   ],
   "key": {
     "b": {
-      "tag": "cyclic:sponge_milk"
+      "item": "cyclic:sponge_milk"
     },
     "o": {
       "tag": "forge:obsidian"
     },
     "s": {
-      "tag": "forge:glass/colorless"
+      "tag": "forge:glass/dark"
     }
   },
   "result": {
-    "item": "cyclic:beacon",
+    "item": "cyclic:anti_beacon",
     "count": 1
   }
 }

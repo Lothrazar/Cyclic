@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.slingshot;
 
 import java.util.List;
-import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
+import com.lothrazar.cyclic.capabilities.item.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;

@@ -37,7 +37,7 @@ public class BlockPotion extends BlockCyclic {
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
-    return false;
+    return true;
   }
 
   @Override
@@ -53,12 +53,12 @@ public class BlockPotion extends BlockCyclic {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-    return new TilePotion(pos, state);
+    return new TilePotionBeacon(pos, state);
   }
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.BEACON.get(), world.isClientSide ? TilePotion::clientTick : TilePotion::serverTick);
+    return createTickerHelper(type, TileRegistry.BEACON.get(), world.isClientSide ? TilePotionBeacon::clientTick : TilePotionBeacon::serverTick);
   }
 
   @Override

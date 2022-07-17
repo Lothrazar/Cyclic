@@ -2,11 +2,17 @@
 	"type": "cyclic:solidifier",
 	"ingredients": [
 		{
-			"item": "minecraft:piston"
+			"item": "minecraft:sponge"
+		},
+		{
+			"tag": "forge:dyes/magenta"
+		},
+		{
+			"item": "minecraft:sponge"
 		}
 	],
 	"mix": {
-		"tag": "forge:slime",
+		"tag": "forge:milk",
 		"count": 100
 	},
 	"energy": {
@@ -14,7 +20,7 @@
 		"ticks": 80
 	},
 	"result": {
-		"item": "minecraft:sticky_piston",
-		"count": 1
+		"item": "cyclic:sponge_milk",
+		"count": 2
 	}
 }

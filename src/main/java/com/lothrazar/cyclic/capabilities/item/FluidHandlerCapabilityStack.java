@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.capabilities;
+package com.lothrazar.cyclic.capabilities.item;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

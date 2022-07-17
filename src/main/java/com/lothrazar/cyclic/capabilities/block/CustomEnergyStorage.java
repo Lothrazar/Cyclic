@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.capabilities;
+package com.lothrazar.cyclic.capabilities.block;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;

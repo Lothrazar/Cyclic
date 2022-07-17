@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.collectfluid;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
-import com.lothrazar.cyclic.capabilities.FluidTankBase;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;

@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.shapebuilder;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;

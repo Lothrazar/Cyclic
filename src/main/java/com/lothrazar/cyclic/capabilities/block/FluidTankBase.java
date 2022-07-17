@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.capabilities;
+package com.lothrazar.cyclic.capabilities.block;
 
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;

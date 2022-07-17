@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;

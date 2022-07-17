@@ -1,7 +1,8 @@
-package com.lothrazar.cyclic.capabilities;
+package com.lothrazar.cyclic.capabilities.item;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;

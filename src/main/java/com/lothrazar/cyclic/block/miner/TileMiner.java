@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.datacard.BlockStateMatcher;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;

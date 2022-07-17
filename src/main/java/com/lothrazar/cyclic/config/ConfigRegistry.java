@@ -18,7 +18,7 @@ import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
-import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.beaconpotion.TilePotionBeacon;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
@@ -340,7 +340,7 @@ public class ConfigRegistry {
     TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper.energy_cost", 50, 0, 64000);
     TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester.energy_cost", 50, 0, 64000);
     TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester.energy_cost", 250, 0, 64000);
-    TilePotion.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon.energy_cost", 10, 0, 64000);
+    TilePotionBeacon.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon.energy_cost", 10, 0, 64000);
     TileMiner.POWERCONF = CFG.comment("Power per use miner").defineInRange("miner.energy_cost", 10, 0, 64000);
     TileUncraft.POWERCONF = CFG.comment("Power per use uncraft").defineInRange("uncraft.energy_cost", 1000, 0, 64000);
     TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid.energy_cost", 500, 0, 64000);
@@ -349,7 +349,7 @@ public class ConfigRegistry {
     TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure.energy_cost", 10, 0, 64000);
     BlockTeleport.POWERCONF = CFG.comment("Power per use").defineInRange("teleport.energy_cost", 400, 0, 64000);
     BlockTeleport.COSTDIM = CFG.comment("Power per use while crossing dimensions").defineInRange("teleport.energy_cost_xdim", 8000, 0, 64000);
-    TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon.energy_cost", 0, 0, 64000);
+    TilePotionBeacon.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon.energy_cost", 0, 0, 64000);
     PeatBlock.PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
         .defineInRange("peat.conversion_chance",
             0.08000000000000F,

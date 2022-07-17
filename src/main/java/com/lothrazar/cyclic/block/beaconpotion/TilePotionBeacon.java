@@ -1,23 +1,19 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import com.google.common.collect.Lists;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.data.EntityFilterType;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,11 +23,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -41,7 +35,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
+public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
     TIMER, REDSTONE, RANGE, ENTITYTYPE;
@@ -78,22 +72,18 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  //beacon render shit // TODO: BeaconRenderer.java 
-  List<BeaconBlockEntity.BeaconBeamSection> beamSections = Lists.newArrayList();
-  List<BeaconBlockEntity.BeaconBeamSection> checkingBeamSections = Lists.newArrayList();
-  int lastCheckY;
+  private BeamStuff beamStuff = new BeamStuff();
 
-  //
-  public TilePotion(BlockPos pos, BlockState state) {
+  public TilePotionBeacon(BlockPos pos, BlockState state) {
     super(TileRegistry.BEACON.get(), pos, state);
     timer = 0;
   }
 
-  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePotion e) {
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePotionBeacon e) {
     e.tick(level, blockPos, blockState);
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TilePotion e) {
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TilePotionBeacon e) {
     e.tick(level, blockPos, blockState);
   }
 
@@ -114,6 +104,7 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
     energy.extractEnergy(cost, false);
     timer--;
     if (timer > 0) {
+      setLitProperty(true);
       tryAffectEntities(cost);
     }
     else {
@@ -128,96 +119,17 @@ public class TilePotion extends TileBlockEntityCyclic implements MenuProvider {
       }
       return;
     } //end of timer/potion checks 
-      //
-      //
-      //
-      //beacon render shit
-      //.out.println("  start l lastCheckY=" + lastCheckY);
-      //    lastCheckY = -50;
-      //    int i = pos.getX();
-      //    int j = pos.getY();
-      //    int k = pos.getZ();
-    BlockPos blockpos;
-    if (this.lastCheckY < pos.getY()) {
-      blockpos = pos;
-      this.checkingBeamSections = Lists.newArrayList();
-      this.lastCheckY = pos.getY() - 1;
-      //.out.println("    reset hey l lastCheckY=" + lastCheckY);
-    }
-    else {
-      blockpos = new BlockPos(pos.getX(), this.lastCheckY + 1, pos.getZ());
-      //.out.println("    new pos at one UP Y=" + lastCheckY);
-    }
-    BeaconBlockEntity.BeaconBeamSection beaconblockentity$beaconbeamsection = this.checkingBeamSections.isEmpty() ? null : this.checkingBeamSections.get(this.checkingBeamSections.size() - 1);
-    int surfaceHeight = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ());
-    for (int yLoop = 0; yLoop < 10 && blockpos.getY() <= surfaceHeight; ++yLoop) {
-      //.out.println(blockpos + "        l yLoop=" + yLoop);
-      BlockState blockstate = level.getBlockState(blockpos);
-      //      Block block = blockstate.getBlock();
-      float[] colorMult = blockstate.getBeaconColorMultiplier(level, blockpos, pos);
-      if (colorMult != null) {
-        //.out.println("     color from state=" + blockstate);
-        if (this.checkingBeamSections.size() <= 1) {
-          beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(colorMult);
-          this.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
-        }
-        else if (beaconblockentity$beaconbeamsection != null) {
-          float[] col = beaconblockentity$beaconbeamsection.getColor();
-          if (Arrays.equals(colorMult, col)) {
-            beaconblockentity$beaconbeamsection.increaseHeight();
-          }
-          else {
-            beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(new float[] { (col[0] + colorMult[0]) / 2.0F, (col[1] + colorMult[1]) / 2.0F, (col[2] + colorMult[2]) / 2.0F });
-            this.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
-          }
-        }
-      }
-      else {
-        //        System.out.println("     null color so check bedrock from state=" + blockstate);
-        if (beaconblockentity$beaconbeamsection == null || blockstate.getLightBlock(level, blockpos) >= 15 && !blockstate.is(Blocks.BEDROCK)) {
-          this.checkingBeamSections.clear();
-          //cancel does work but shoots thru sht. prevents us stopping at day zero
-          //.out.print("CANCELLED why reset to surface height here " + lastCheckY + " becomes " + surfaceHeight);
-          this.lastCheckY = surfaceHeight;
-          break;
-        }
-        if (beaconblockentity$beaconbeamsection != null)
-          beaconblockentity$beaconbeamsection.increaseHeight();
-      }
-      blockpos = blockpos.above();
-      ++this.lastCheckY;
-      //.out.println("     move up=" + lastCheckY);
-    }
-    if (level.getGameTime() % 80L == 0L) {
-      if (!this.beamSections.isEmpty()) {
-        //        applyEffects(p_155108_, p_155109_, this.levels, this.primaryPower, this.secondaryPower);
-        SoundUtil.playSound(level, pos, SoundEvents.BEACON_AMBIENT);
-      }
-    }
-    if (this.lastCheckY >= surfaceHeight) {
-      this.lastCheckY = level.getMinBuildHeight() - 1;
-      this.beamSections = this.checkingBeamSections;
-      //      if (!level.isClientSide) {  
-      //          SoundUtil.playSound(level, pos, SoundEvents.BEACON_ACTIVATE);
-      //          //          for (ServerPlayer serverplayer : level.getEntitiesOfClass(ServerPlayer.class, (new AABB(i, j, k, i, j - 4, k)).inflate(10.0D, 5.0D, 10.0D))) {
-      //          //            CriteriaTriggers.CONSTRUCT_BEACON.trigger(serverplayer, this.levels);
-      //          //          }
-      //        }
-      //        else if (flag && !flag1) {
-      //          SoundUtil.playSound(level, pos, SoundEvents.BEACON_DEACTIVATE);
-      //        }
-      //      }
-    }
+    updateBeam(level, pos, beamStuff);
   }
 
   @Override
   public void setLevel(Level p_155091_) {
     super.setLevel(p_155091_);
-    this.lastCheckY = p_155091_.getMinBuildHeight() - 1;
+    beamStuff.lastCheckY = p_155091_.getMinBuildHeight() - 1;
   }
 
   public List<BeaconBlockEntity.BeaconBeamSection> getBeamSections() {
-    return this.beamSections;
+    return beamStuff.beamSections;
   }
 
   @Override

@@ -11,6 +11,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,12 +23,12 @@ public class PotionRegistry {
   //from 1.12.2 
   //slowfall NIX in vanilla
   //ender aura - pearl + awkward - no pearl/tp dmg
-  //bouncy - slime + ender
-  //frost walker ice + snow
-  //magnetism - lapis + awk 
+  //TODO: bouncy - slime + ender 
   //
   static final int normal = 3600;
   static final int smal = 1800;
+  //TODO: health boost?
+  //TODO: luck !
   public static final RegistryObject<Potion> HASTE = POTIONS.register("haste", () -> new Potion(ModCyclic.MODID + "_haste", new MobEffectInstance(MobEffects.DIG_SPEED, normal)));
   public static final RegistryObject<Potion> STRONG_HASTE = POTIONS.register("strong_haste", () -> new Potion(ModCyclic.MODID + "_strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, smal, 1)));
   public static final RegistryObject<Potion> STUN = POTIONS.register("stun", () -> new Potion(ModCyclic.MODID + "_stun", new MobEffectInstance(PotionEffectRegistry.STUN.get(), smal)));
@@ -41,6 +42,13 @@ public class PotionRegistry {
   public static final RegistryObject<Potion> WATERWALK = POTIONS.register("waterwalk", () -> new Potion(ModCyclic.MODID + "_waterwalk", new MobEffectInstance(PotionEffectRegistry.WATERWALK.get(), smal)));
   public static final RegistryObject<Potion> SNOWWALK = POTIONS.register("snowwalk", () -> new Potion(ModCyclic.MODID + "_snow", new MobEffectInstance(PotionEffectRegistry.SNOWWALK.get(), smal)));
   public static final RegistryObject<Potion> GRAVITY = POTIONS.register("gravity", () -> new Potion(ModCyclic.MODID + "_gravity", new MobEffectInstance(PotionEffectRegistry.GRAVITY.get(), normal)));
+  public static final RegistryObject<Potion> ANTIGRAVITY = POTIONS.register("antigravity", () -> new Potion(ModCyclic.MODID + "_antigravity", new MobEffectInstance(PotionEffectRegistry.ANTIGRAVITY.get(), normal, 3)));
+  public static final RegistryObject<Potion> BUTTERFINGERS = POTIONS.register("butter", () -> new Potion(ModCyclic.MODID + "_butter", new MobEffectInstance(PotionEffectRegistry.BUTTERFINGERS.get(), normal)));
+  public static final RegistryObject<Potion> FROST_WALKER = POTIONS.register("frost_walker", () -> new Potion(ModCyclic.MODID + "_frost_walker", new MobEffectInstance(PotionEffectRegistry.FROST_WALKER.get(), normal)));
+  public static final RegistryObject<Potion> MAGNETIC = POTIONS.register("magnetic", () -> new Potion(ModCyclic.MODID + "_magnetic", new MobEffectInstance(PotionEffectRegistry.MAGNETIC.get(), normal)));
+  public static final RegistryObject<Potion> ATTACK_RANGE = POTIONS.register("attack_range", () -> new Potion(ModCyclic.MODID + "_attack_range", new MobEffectInstance(PotionEffectRegistry.ATTACK_RANGE.get(), normal)));
+  public static final RegistryObject<Potion> REACH_DISTANCE = POTIONS.register("reach_distance", () -> new Potion(ModCyclic.MODID + "_reach_distance", new MobEffectInstance(PotionEffectRegistry.REACH_DISTANCE.get(), normal)));
+  public static final RegistryObject<Potion> ANGELIC = POTIONS.register("angelic", () -> new Potion(ModCyclic.MODID + "_angelic", new MobEffectInstance(PotionEffectRegistry.REACH_DISTANCE.get(), normal)));
 
   public static void setup() {
     final ItemStack awkwardPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
@@ -57,7 +65,16 @@ public class PotionRegistry {
     basicBrewing(thickPotion.copy(), PotionRegistry.HUNGER.get(), Items.ROTTEN_FLESH);
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), HUNGER.get()), PotionRegistry.STRONG_HUNGER.get(), Items.REDSTONE);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.WATERWALK.get(), Items.PRISMARINE_SHARD);
+    basicBrewing(thickPotion.copy(), PotionRegistry.WATERWALK.get(), Items.COD);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.SNOWWALK.get(), Items.SNOWBALL);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.BUTTERFINGERS.get(), Items.GOLD_INGOT);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.FROST_WALKER.get(), Blocks.ICE.asItem());
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.MAGNETIC.get(), Items.LAPIS_LAZULI);
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LEAPING), PotionRegistry.GRAVITY.get(), Items.COPPER_INGOT);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.REACH_DISTANCE.get(), Items.AMETHYST_SHARD);
+    basicBrewing(awkwardPotion.copy(), PotionRegistry.ATTACK_RANGE.get(), Blocks.POINTED_DRIPSTONE.asItem());
+    //AMETHYST_SHARD for reach or attack range?
+    basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.GRAVITY.get()), PotionRegistry.ANTIGRAVITY.get(), Items.FERMENTED_SPIDER_EYE);
   }
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {

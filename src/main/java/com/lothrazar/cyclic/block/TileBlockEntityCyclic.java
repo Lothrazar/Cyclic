@@ -2,14 +2,16 @@ package com.lothrazar.cyclic.block;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import com.google.common.collect.Lists;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -17,6 +19,7 @@ import com.lothrazar.cyclic.util.EntityUtil;
 import com.lothrazar.cyclic.util.FakePlayerUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +27,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,11 +36,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -534,6 +541,73 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     for (Integer i : rawList) {
       Direction exportToSide = Direction.values()[i];
       moveEnergy(exportToSide, MENERGY / 2);
+    }
+  }
+
+  /**
+   * beam render tick
+   * 
+   * @param level
+   * @param pos
+   * @param beamStuff
+   */
+  public static void updateBeam(Level level, BlockPos pos, com.lothrazar.cyclic.block.beaconpotion.BeamStuff beamStuff) {
+    BlockPos blockpos;
+    if (beamStuff.lastCheckY < pos.getY()) {
+      blockpos = pos;
+      beamStuff.checkingBeamSections = Lists.newArrayList();
+      beamStuff.lastCheckY = pos.getY() - 1;
+    }
+    else {
+      blockpos = new BlockPos(pos.getX(), beamStuff.lastCheckY + 1, pos.getZ());
+    }
+    BeaconBlockEntity.BeaconBeamSection beaconblockentity$beaconbeamsection = beamStuff.checkingBeamSections.isEmpty() ? null : beamStuff.checkingBeamSections.get(beamStuff.checkingBeamSections.size() - 1);
+    int surfaceHeight = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ());
+    for (int yLoop = 0; yLoop < 10 && blockpos.getY() <= surfaceHeight; ++yLoop) {
+      BlockState blockstate = level.getBlockState(blockpos);
+      // important: start one up OR give your beacon block an override to getBeaconColorMultiplier
+      float[] colorMult = blockstate.getBeaconColorMultiplier(level, blockpos, pos);
+      if (colorMult != null) {
+        if (beamStuff.checkingBeamSections.size() <= 1) {
+          beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(colorMult);
+          beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
+        }
+        else if (beaconblockentity$beaconbeamsection != null) {
+          float[] col = beaconblockentity$beaconbeamsection.getColor();
+          if (Arrays.equals(colorMult, col)) {
+            beaconblockentity$beaconbeamsection.increaseHeight();
+          }
+          else {
+            beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(new float[] { (col[0] + colorMult[0]) / 2.0F, (col[1] + colorMult[1]) / 2.0F, (col[2] + colorMult[2]) / 2.0F });
+            beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
+          }
+        }
+      }
+      else {
+        //        System.out.println("     null color so check bedrock from state=" + blockstate);
+        if (beaconblockentity$beaconbeamsection == null || blockstate.getLightBlock(level, blockpos) >= 15 && !blockstate.is(Blocks.BEDROCK)) {
+          beamStuff.checkingBeamSections.clear();
+          //cancel does work but shoots thru sht. prevents us stopping at day zero
+          //.out.print("CANCELLED why reset to surface height here " + lastCheckY + " becomes " + surfaceHeight);
+          beamStuff.lastCheckY = surfaceHeight;
+          break;
+        }
+        if (beaconblockentity$beaconbeamsection != null)
+          beaconblockentity$beaconbeamsection.increaseHeight();
+      }
+      blockpos = blockpos.above();
+      ++beamStuff.lastCheckY;
+      //.out.println("     move up=" + lastCheckY);
+    }
+    if (level.getGameTime() % 80L == 0L) {
+      if (!beamStuff.beamSections.isEmpty()) {
+        //        applyEffects(p_155108_, p_155109_, this.levels, this.primaryPower, this.secondaryPower);
+        SoundUtil.playSound(level, pos, SoundEvents.BEACON_AMBIENT);
+      }
+    }
+    if (beamStuff.lastCheckY >= surfaceHeight) {
+      beamStuff.lastCheckY = level.getMinBuildHeight() - 1;
+      beamStuff.beamSections = beamStuff.checkingBeamSections;
     }
   }
 }

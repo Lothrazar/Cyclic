@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
-import com.lothrazar.cyclic.capabilities.CapabilityProviderEnergyStack;
+import com.lothrazar.cyclic.capabilities.item.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.ItemStackUtil;
 import com.mojang.math.Quaternion;

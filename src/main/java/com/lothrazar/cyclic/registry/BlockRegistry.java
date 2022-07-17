@@ -28,6 +28,7 @@ import com.lothrazar.cyclic.block.apple.AppleCropBlock;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
 import com.lothrazar.cyclic.block.battery.ClayBattery;
 import com.lothrazar.cyclic.block.beaconpotion.BlockPotion;
+import com.lothrazar.cyclic.block.beaconredstone.BlockBeaconRedstone;
 import com.lothrazar.cyclic.block.bedrock.UnbreakableBlock;
 import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredBlock;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
@@ -240,6 +241,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> BATTERY = BLOCKS.register("battery", () -> new BlockBattery(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> CASK = BLOCKS.register("cask", () -> new BlockCask(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> CRATE = BLOCKS.register("crate", () -> new BlockCrate(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> MINI_CRATE = BLOCKS.register("mini_crate", () -> new BlockCrate(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> MICRO_CRATE = BLOCKS.register("micro_crate", () -> new BlockCrate(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> EYE_REDSTONE = BLOCKS.register("eye_redstone", () -> new BlockEye(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> EYE_TELEPORT = BLOCKS.register("eye_teleport", () -> new BlockEyeTp(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> PLACER = BLOCKS.register("placer", () -> new BlockPlacer(Block.Properties.of(Material.STONE)));
@@ -260,6 +263,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> ANVIL = BLOCKS.register("anvil", () -> new BlockAnvilAuto(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)));
   public static final RegistryObject<Block> ANVIL_MAGMA = BLOCKS.register("anvil_magma", () -> new BlockAnvilMagma(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)));
   public static final RegistryObject<Block> BEACON = BLOCKS.register("beacon", () -> new BlockPotion(Block.Properties.of(Material.METAL)));
+  public static final RegistryObject<Block> BEACON_REDSTONE = BLOCKS.register("beacon_redstone", () -> new BlockBeaconRedstone(Block.Properties.of(Material.STONE).lightLevel(p -> 4)));
   public static final RegistryObject<Block> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of(Material.STONE).lightLevel(p -> 2)));
   public static final RegistryObject<Block> SOUNDPROOFING_GHOST = BLOCKS.register("soundproofing_ghost", () -> new SoundmufflerBlockGhost(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> SOUNDPROOFING = BLOCKS.register("soundproofing", () -> new SoundmufflerBlock(Block.Properties.of(Material.STONE)));
@@ -296,14 +300,15 @@ public class BlockRegistry {
   public static final RegistryObject<Block> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockNoTraders(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockDestruction(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> WAXED_REDSTONE = BLOCKS.register("waxed_redstone", () -> new BlockWaxedRedstone(Block.Properties.of(Material.METAL, MaterialColor.FIRE)));
-  //k(BlockBehaviour.
   //  public static final RegistryObject<BlockAltarSol> ALTAR_FLIGHT = BLOCKS.register("altar_flight", () -> new BlockAltarSol(Block.Properties.of(Material.STONE), AltarType.FLIGHT));
-  // ones that use entity data cards
-  // destruc = prevent explosions. 
-  //powered furnace
+  //^^ GIVE TICKS to the datfile thingy
+  // VECTOR
+  // ender hopper
+  // Player Interface (owned on placement). 
+  // PEACE_CANDLE target thing that use entity data cards
+  //POWERED FURNACE - existing furnace recipes
+  // MOB_SPAWNER ( exp, rf, data card)
   //  public static final RegistryObject<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of(Material.STONE)));
   //  public static final RegistryObject<Block> GENERATOR_CAT = BLOCKS.register("generator_cat", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
-  //drain use bottle on it to fill. and its a fluid cap
-  //  public static final RegistryObject<Block> EXPERIENCE_DRAIN = BLOCKS.register("experience_drain", () -> new Block(Block.Properties.of(Material.STONE))); // NOGUI
   //magnet_anti_block87
 }

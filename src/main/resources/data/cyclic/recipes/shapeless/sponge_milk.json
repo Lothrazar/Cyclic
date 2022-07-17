@@ -6,6 +6,9 @@
 		},
 		{
 			"item": "cyclic:milk_bottle"
+		},
+		{
+			"tag": "forge:dyes/magenta"
 		}
 	],
 	"result": {

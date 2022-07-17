@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lal",
+    "qiq",
+    "lal"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "l": {
+      "tag": "forge:vines"
+    },
+    "a": {
+      "tag": "forge:dyes/cyan"
+    },
+    "q": {
+      "item": "minecraft:ice"
+    }
+  },
+  "result": {
+    "item": "cyclic:magic_net",
+    "count": 4
+  }
+}
