@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_frost_walker",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:frost_walker\"}",
+      "text":"effect.cyclic.frost_walker"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_frost_walker",
+      "ingredient": "minecraft:ice",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:frost_walker\"}"
+    }
+  ]
+}

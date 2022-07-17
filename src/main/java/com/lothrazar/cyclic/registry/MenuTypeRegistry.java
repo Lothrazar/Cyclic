@@ -14,6 +14,7 @@ import com.lothrazar.cyclic.block.collectfluid.ContainerFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.ContainerItemCollector;
 import com.lothrazar.cyclic.block.crafter.ContainerCrafter;
 import com.lothrazar.cyclic.block.crate.ContainerCrate;
+import com.lothrazar.cyclic.block.cratemini.ContainerCrateMini;
 import com.lothrazar.cyclic.block.crusher.ContainerCrusher;
 import com.lothrazar.cyclic.block.detectorentity.ContainerDetector;
 import com.lothrazar.cyclic.block.detectoritem.ContainerDetectorItem;
@@ -82,6 +83,7 @@ public class MenuTypeRegistry {
   public static final RegistryObject<MenuType<ContainerTransmit>> WIRELESS_TRANSMITTER = CONTAINERS.register("wireless_transmitter", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerTransmit(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerClock>> CLOCK = CONTAINERS.register("clock", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerClock(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerCrate>> CRATE = CONTAINERS.register("crate", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerCrate(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
+  public static final RegistryObject<MenuType<ContainerCrateMini>> CRATE_MINI = CONTAINERS.register("crate_mini", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerCrateMini(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerPlacerFluid>> PLACER_FLUID = CONTAINERS.register("placer_fluid", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerPlacerFluid(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerFluidCollect>> COLLECTOR_FLUID = CONTAINERS.register("collector_fluid", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerFluidCollect(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerFan>> FAN = CONTAINERS.register("fan", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerFan(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));

@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_snow",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:snow\"}",
+      "text":"effect.cyclic.snow"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_snow",
+      "ingredient": "minecraft:snowball",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:snowwalk\"}"
+    }
+  ]
+}

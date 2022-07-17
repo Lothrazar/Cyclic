@@ -17,6 +17,7 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -32,7 +33,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class BlockMagnetPanel extends BlockCyclic {
+public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBlock {
 
   public static IntValue RADIUS;
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

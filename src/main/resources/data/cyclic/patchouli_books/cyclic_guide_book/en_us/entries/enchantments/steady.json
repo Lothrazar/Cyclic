@@ -1,0 +1,16 @@
+{
+  "name": "enchantment.cyclic.steady",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:steady\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.steady.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:steady\",lvl:1}]}",
+      "link_recipe": true
+    }
+  ]
+}

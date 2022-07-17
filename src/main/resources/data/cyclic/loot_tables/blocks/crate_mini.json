@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cyclic:crate"
+          "name": "cyclic:crate_mini"
         }
       ]
     }

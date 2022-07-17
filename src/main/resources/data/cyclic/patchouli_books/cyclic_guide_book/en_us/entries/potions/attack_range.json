@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_attack_range",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:attack_range\"}",
+      "text":"effect.cyclic.attack_range"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_attack_range",
+      "ingredient": "minecraft:pointed_dripstone",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:attack_range\"}"
+    }
+  ]
+}

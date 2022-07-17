@@ -370,8 +370,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> PLACER_FLUID = ITEMS.register("placer_fluid", () -> new BlockItem(BlockRegistry.PLACER_FLUID.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CASK = ITEMS.register("cask", () -> new ItemBlockCask(BlockRegistry.CASK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CRATE = ITEMS.register("crate", () -> new BlockItem(BlockRegistry.CRATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> MINI_CRATE = ITEMS.register("mini_crate", () -> new BlockItem(BlockRegistry.MINI_CRATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> MICRO_CRATE = ITEMS.register("micro_crate", () -> new BlockItem(BlockRegistry.MICRO_CRATE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> MINI_CRATE = ITEMS.register("crate_mini", () -> new BlockItem(BlockRegistry.CRATE_MINI.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> CLOCK = ITEMS.register("clock", () -> new BlockItem(BlockRegistry.CLOCK.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_TRANSMITTER = ITEMS.register("wireless_transmitter", () -> new BlockItem(BlockRegistry.WIRELESS_TRANSMITTER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> WIRELESS_RECEIVER = ITEMS.register("wireless_receiver", () -> new BlockItem(BlockRegistry.WIRELESS_RECEIVER.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
@@ -491,10 +490,10 @@ public class ItemRegistry {
   public static final RegistryObject<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new DarkFireballItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   //  ender_fishhook // and other ender 1.10.2?
+  //  public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
+  //  BOUNCE potion
   //totem of repair - save toolbreak - see events
   //  lunch box u can eat from. make sure apples trigger 
-  // ??WAX more uses 
-  //  public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //mixed foods?(this might be better in a different mod. chocolate and sugar could be melted, salad, etc)
   //chalk??
 }

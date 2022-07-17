@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.fireball",
+  "icon": "cyclic:fireball",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.fireball.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:fireball"
+    }
+  ]
+}

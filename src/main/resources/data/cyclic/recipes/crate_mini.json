@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "s s",
+    "rsr"
+  ],
+  "key": {
+    "s": {
+      "tag": "minecraft:signs"
+    },
+    "r": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cyclic:crate_mini",
+    "count": 1
+  }
+}

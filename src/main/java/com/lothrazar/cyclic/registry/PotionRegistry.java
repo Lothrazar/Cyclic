@@ -48,7 +48,6 @@ public class PotionRegistry {
   public static final RegistryObject<Potion> MAGNETIC = POTIONS.register("magnetic", () -> new Potion(ModCyclic.MODID + "_magnetic", new MobEffectInstance(PotionEffectRegistry.MAGNETIC.get(), normal)));
   public static final RegistryObject<Potion> ATTACK_RANGE = POTIONS.register("attack_range", () -> new Potion(ModCyclic.MODID + "_attack_range", new MobEffectInstance(PotionEffectRegistry.ATTACK_RANGE.get(), normal)));
   public static final RegistryObject<Potion> REACH_DISTANCE = POTIONS.register("reach_distance", () -> new Potion(ModCyclic.MODID + "_reach_distance", new MobEffectInstance(PotionEffectRegistry.REACH_DISTANCE.get(), normal)));
-  public static final RegistryObject<Potion> ANGELIC = POTIONS.register("angelic", () -> new Potion(ModCyclic.MODID + "_angelic", new MobEffectInstance(PotionEffectRegistry.REACH_DISTANCE.get(), normal)));
 
   public static void setup() {
     final ItemStack awkwardPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
@@ -73,7 +72,6 @@ public class PotionRegistry {
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LEAPING), PotionRegistry.GRAVITY.get(), Items.COPPER_INGOT);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.REACH_DISTANCE.get(), Items.AMETHYST_SHARD);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.ATTACK_RANGE.get(), Blocks.POINTED_DRIPSTONE.asItem());
-    //AMETHYST_SHARD for reach or attack range?
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.GRAVITY.get()), PotionRegistry.ANTIGRAVITY.get(), Items.FERMENTED_SPIDER_EYE);
   }
 

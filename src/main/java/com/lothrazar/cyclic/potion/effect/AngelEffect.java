@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class AngelEffect extends TickableEffect {
 
+  //TODO: this is disabled , doesnt really work
   public AngelEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
     PotionEffectRegistry.EFFECTS.add(this);
@@ -43,7 +44,7 @@ public class AngelEffect extends TickableEffect {
       if (!player.getAbilities().mayfly) {
         player.getAbilities().mayfly = true;
         player.getAbilities().flying = true;
-        System.out.println("mayflyht on !!!! ");
+        //.println("mayflyht on !!!! ");
         if (!living.getLevel().isClientSide) {
           //          CyclicFile file = PlayerDataEvents.getOrCreate(player);
           //          file.todoVisible = true; // set fly is from potion. les yes

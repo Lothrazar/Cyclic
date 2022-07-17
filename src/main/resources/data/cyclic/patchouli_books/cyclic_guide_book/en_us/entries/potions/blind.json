@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_blind",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:blind\"}",
+      "text":"effect.cyclic.blind"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_blind",
+      "ingredient": "minecraft:beetroot",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:night_vision\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:blind\"}"
+    }
+  ]
+}

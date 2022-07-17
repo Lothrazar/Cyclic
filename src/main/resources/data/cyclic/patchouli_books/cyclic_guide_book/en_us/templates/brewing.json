@@ -1,39 +1,38 @@
 {
   "components": [
     {
-      "type": "header",
-      "text": "#output->iname",
-      "centered": true,
+      "type": "patchouli:text",
+      "text": "#text",
       "x": -1,
       "y": -1
     },
     {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "#ingredient",
-      "x": 20,
-      "y": 40
+      "x": 50,
+      "y": 20
     },
     {
-      "type": "item",
-      "item": "#base_potion",
-      "x": 40,
-      "y": 40
-    },
-    {
-      "type": "item",
+      "type": "patchouli:item",
       "item": "minecraft:brewing_stand",
-      "x": 60,
+      "x": 50,
       "y": 40
     },
     {
-      "type": "item",
-      "item": "#output",
-      "x": 80,
-      "y": 40
+      "type": "patchouli:item",
+      "item": "#base_potion",
+      "x": 20,
+      "y": 60
     },
     {
-      "type": "item",
-      "item": "#output_strong",
+      "type": "patchouli:item",
+      "item": "#base_potion",
+      "x": 50,
+      "y": 80
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#base_potion",
       "x": 80,
       "y": 60
     }

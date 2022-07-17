@@ -1,0 +1,16 @@
+{
+  "name": "enchantment.cyclic.laststand",
+  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:laststand\",lvl:1}]}",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.laststand.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:laststand\",lvl:1}]}",
+      "link_recipe": true
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_wither",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:wither\"}",
+      "text":"effect.cyclic.wither"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_wither",
+      "ingredient": "minecraft:nether_brick",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:weakness\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:wither\"}"
+    }
+  ]
+}

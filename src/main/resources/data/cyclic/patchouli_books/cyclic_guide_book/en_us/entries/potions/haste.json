@@ -4,15 +4,16 @@
   "category": "cyclic:potions",
   "pages": [
     {
-      "type": "text",
-      "text": "item.minecraft.potion.effect.cyclic_haste.guide"
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:haste\"}",
+      "text":"effect.cyclic.haste"
     },
     {
       "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_haste",
       "ingredient": "minecraft:emerald",
-      "base_potion": "minecraft:potion#3{Potion:\"minecraft:awkward\"}",
-      "output": "minecraft:potion#3{Potion:\"cyclic:haste\"}",
-      "output_strong": "minecraft:potion#3{Potion:\"cyclic:strong_haste\"}"
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:haste\"}"
     }
   ]
 }

@@ -302,8 +302,14 @@
   "block.cyclic.terra_preta.tooltip": "Place below farmland for sprinkler-like growth",
   "block.cyclic.terra_preta.guide": "Place Terra Preta below farmland to increase the speed at which crops grow.  Works just like a sprinkler except there are no particles, and it only targets the block above. ",
   "block.cyclic.crate": "Crate",
-  "block.cyclic.crate.tooltip": "Reinforced item storage",
-  "block.cyclic.crate.guide": "The Crate is a container, like a chest, that is reinforced to survive explosions.",
+  "block.cyclic.crate.tooltip": "Reinforced and keeps contents when broken",
+  "block.cyclic.crate.guide": "The Crate is a container, like a chest, that is reinforced to survive explosions and wither attacks.",
+  
+  "block.cyclic.crate_mini": "Mini-Crate",
+  "block.cyclic.crate_mini.tooltip": "Small explosion-proof chest",
+  "block.cyclic.crate_mini.guide": "The Crate is a container, like a chest, that is reinforced to survive explosions.  Can be waterlogged",
+  
+  
   "block.cyclic.dark_glass": "Tempered Dark Glass",
   "block.cyclic.dark_glass.tooltip": "Immune to light, explosions, and wither blasts",
   "block.cyclic.dark_glass.guide": "Dark Glass, unlike regular glass, does not let light pass through.Oh, and it's also immune explosions, including those caused by the Wither.  See connected version",
@@ -1362,13 +1368,13 @@
 
 
   "effect.cyclic.snowwalk":"Snow-walker",
-  "item.minecraft.potion.effect.cyclic_snowwalk": "Potion of Snow-Walker",
-  "item.minecraft.splash_potion.effect.cyclic_snowwalk": "Splash Potion of Snow-Walker",
-  "item.minecraft.lingering_potion.effect.cyclic_snowwalk": "Lingering Potion of Snow-Walker",
-  "item.minecraft.tipped_arrow.effect.cyclic_snowwalk": "Arrow of Snow-Walker",
+  "item.minecraft.potion.effect.cyclic_snow": "Potion of Snow-Walker",
+  "item.minecraft.splash_potion.effect.cyclic_snow": "Splash Potion of Snow-Walker",
+  "item.minecraft.lingering_potion.effect.cyclic_snow": "Lingering Potion of Snow-Walker",
+  "item.minecraft.tipped_arrow.effect.cyclic_snow": "Arrow of Snow-Walker",
 
 
-  "effect.cyclic.frost_walker": "Swim Speed",
+  "effect.cyclic.frost_walker": "Frost Walker",
   "item.minecraft.potion.effect.cyclic_frost_walker": "Potion of Frost Walker",
   "item.minecraft.splash_potion.effect.cyclic_frost_walker": "Splash Potion of Frost Walker",
   "item.minecraft.lingering_potion.effect.cyclic_frost_walker": "Lingering Potion of Frost Walker",
@@ -1426,6 +1432,7 @@
   "item.minecraft.tipped_arrow.effect.cyclic_stun": "Arrow of Paralyze",
   "item.minecraft.potion.effect.cyclic_stun.guide": "The Potion of Paralyze completely immobilizes its target.",
   
+  "effect.cyclic.blind": "Blindness",
   "item.minecraft.potion.effect.cyclic_blind": "Potion of Blindness",
   "item.minecraft.splash_potion.effect.cyclic_blind": "Splash Potion of Blindness",
   "item.minecraft.lingering_potion.effect.cyclic_blind": "Lingering Potion of Blindness",
@@ -1434,20 +1441,25 @@
   "item.minecraft.splash_potion.effect.cyclic_strong_hunger": "Splash Potion of Hunger II",
   "item.minecraft.lingering_potion.effect.cyclic_strong_hunger": "Lingering Potion of Hunger II",
   "item.minecraft.tipped_arrow.effect.cyclic_strong_hunger": "Arrow of Hunger II",
+  "effect.cyclic.hunger": "Hunger",
   "item.minecraft.potion.effect.cyclic_hunger": "Potion of Hunger",
   "item.minecraft.splash_potion.effect.cyclic_hunger": "Splash Potion of Hunger",
   "item.minecraft.lingering_potion.effect.cyclic_hunger": "Lingering Potion of Hunger",
   "item.minecraft.tipped_arrow.effect.cyclic_hunger": "Arrow of Hunger",
 
+  "effect.cyclic.resistance":"Resistance",
   "item.minecraft.potion.effect.cyclic_resistance": "Potion of Resistance",
   "item.minecraft.splash_potion.effect.cyclic_resistance": "Splash Potion of Resistance",
   "item.minecraft.lingering_potion.effect.cyclic_resistance": "Lingering Potion of Resistance",
   "item.minecraft.tipped_arrow.effect.cyclic_resistance": "Arrow of Resistance",
+  "effect.cyclic.wither":"Wither",
 
   "item.minecraft.potion.effect.cyclic_wither": "Potion of Wither",
   "item.minecraft.splash_potion.effect.cyclic_wither": "Splash Potion of Wither",
   "item.minecraft.lingering_potion.effect.cyclic_wither": "Lingering Potion of Wither",
   "item.minecraft.tipped_arrow.effect.cyclic_wither": "Arrow of Wither",
+
+  "effect.cyclic.levitation":"Levitation",
 
   "item.minecraft.potion.effect.cyclic_levitation": "Potion of Levitation",
   "item.minecraft.splash_potion.effect.cyclic_levitation": "Splash Potion of Levitation",

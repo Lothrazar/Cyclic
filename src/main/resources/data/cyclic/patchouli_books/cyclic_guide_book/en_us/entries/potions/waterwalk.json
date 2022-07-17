@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_waterwalk",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:waterwalk\"}",
+      "text":"effect.cyclic.waterwalk"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_waterwalk",
+      "ingredient": "minecraft:cod",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:thick\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:waterwalk\"}"
+    }
+  ]
+}

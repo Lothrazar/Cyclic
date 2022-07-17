@@ -234,7 +234,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
       }
       if (EntityDataCard.hasEntity(filter.getStackInSlot(0))
           && !EntityDataCard.matchesEntity(entity, filter.getStackInSlot(0))) {
-        //        System.out.println("p!otion skip ent " + entity);
+        //     .println("p!otion skip ent " + entity);
         continue;
       }
       for (MobEffectInstance eff : this.effects) {

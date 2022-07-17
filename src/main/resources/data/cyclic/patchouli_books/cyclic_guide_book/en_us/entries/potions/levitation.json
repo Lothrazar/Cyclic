@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_levitation",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:levitation\"}",
+      "text":"effect.cyclic.levitation"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_levitation",
+      "ingredient": "minecraft:fermented_spider_eye",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:slow_falling\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:levitation\"}"
+    }
+  ]
+}

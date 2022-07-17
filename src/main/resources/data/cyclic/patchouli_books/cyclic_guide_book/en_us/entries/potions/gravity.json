@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_gravity",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:gravity\"}",
+      "text":"effect.cyclic.gravity"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_gravity",
+      "ingredient": "minecraft:copper_ingot",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:jump_boost\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:gravity\"}"
+    }
+  ]
+}

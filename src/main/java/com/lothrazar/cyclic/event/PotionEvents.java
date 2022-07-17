@@ -30,7 +30,7 @@ public class PotionEvents {
     //        //        file.todoVisible = true; // set fly is from potion. les yes
     //        if (file.todoVisible) {
     //          file.todoVisible = false;
-    //          System.out.println("booted from flight");
+    //          .println("booted from flight");
     //          player.fallDistance = 0.0F;
     //          player.getAbilities().flying = false;
     //          player.getAbilities().mayfly = false;

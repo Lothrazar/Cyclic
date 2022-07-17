@@ -41,6 +41,7 @@ import com.lothrazar.cyclic.block.collectitem.BlockItemCollector;
 import com.lothrazar.cyclic.block.conveyor.BlockConveyor;
 import com.lothrazar.cyclic.block.crafter.BlockCrafter;
 import com.lothrazar.cyclic.block.crate.BlockCrate;
+import com.lothrazar.cyclic.block.cratemini.BlockCrateMini;
 import com.lothrazar.cyclic.block.creativebattery.BlockBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.BlockItemInfinite;
 import com.lothrazar.cyclic.block.crusher.BlockCrusher;
@@ -241,8 +242,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> BATTERY = BLOCKS.register("battery", () -> new BlockBattery(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> CASK = BLOCKS.register("cask", () -> new BlockCask(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> CRATE = BLOCKS.register("crate", () -> new BlockCrate(Block.Properties.of(Material.WOOD)));
-  public static final RegistryObject<Block> MINI_CRATE = BLOCKS.register("mini_crate", () -> new BlockCrate(Block.Properties.of(Material.WOOD)));
-  public static final RegistryObject<Block> MICRO_CRATE = BLOCKS.register("micro_crate", () -> new BlockCrate(Block.Properties.of(Material.WOOD)));
+  public static final RegistryObject<Block> CRATE_MINI = BLOCKS.register("crate_mini", () -> new BlockCrateMini(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> EYE_REDSTONE = BLOCKS.register("eye_redstone", () -> new BlockEye(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> EYE_TELEPORT = BLOCKS.register("eye_teleport", () -> new BlockEyeTp(Block.Properties.of(Material.WOOD)));
   public static final RegistryObject<Block> PLACER = BLOCKS.register("placer", () -> new BlockPlacer(Block.Properties.of(Material.STONE)));

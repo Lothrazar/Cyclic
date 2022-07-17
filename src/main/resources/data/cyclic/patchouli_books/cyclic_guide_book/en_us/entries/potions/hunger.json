@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_hunger",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:hunger\"}",
+      "text":"effect.cyclic.hunger"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_hunger",
+      "ingredient": "minecraft:rotten_flesh",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:awkward\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:hunger\"}"
+    }
+  ]
+}

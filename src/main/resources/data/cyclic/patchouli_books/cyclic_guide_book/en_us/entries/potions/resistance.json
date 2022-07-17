@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_resistance",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:resistance\"}",
+      "text":"effect.cyclic.resistance"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_resistance",
+      "ingredient": "minecraft:iron_ingot",
+      "base_potion": "minecraft:potion#1{Potion:\"minecraft:strength\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:resistance\"}"
+    }
+  ]
+}

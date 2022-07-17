@@ -584,7 +584,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
         }
       }
       else {
-        //        System.out.println("     null color so check bedrock from state=" + blockstate);
+        //        .println("     null color so check bedrock from state=" + blockstate);
         if (beaconblockentity$beaconbeamsection == null || blockstate.getLightBlock(level, blockpos) >= 15 && !blockstate.is(Blocks.BEDROCK)) {
           beamStuff.checkingBeamSections.clear();
           //cancel does work but shoots thru sht. prevents us stopping at day zero

@@ -20,6 +20,7 @@ import com.lothrazar.cyclic.block.collectitem.TileItemCollector;
 import com.lothrazar.cyclic.block.conveyor.TileConveyor;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.crate.TileCrate;
+import com.lothrazar.cyclic.block.cratemini.TileCrateMini;
 import com.lothrazar.cyclic.block.creativebattery.TileBatteryInfinite;
 import com.lothrazar.cyclic.block.creativeitem.TileItemInfinite;
 import com.lothrazar.cyclic.block.crusher.TileCrusher;
@@ -140,6 +141,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TilePlacerFluid>> PLACER_FLUID = TILES.register("placer_fluid", () -> BlockEntityType.Builder.of(TilePlacerFluid::new, BlockRegistry.PLACER_FLUID.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileCask>> CASK = TILES.register("cask", () -> BlockEntityType.Builder.of(TileCask::new, BlockRegistry.CASK.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileCrate>> CRATE = TILES.register("crate", () -> BlockEntityType.Builder.of(TileCrate::new, BlockRegistry.CRATE.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileCrateMini>> CRATE_MINI = TILES.register("crate_mini", () -> BlockEntityType.Builder.of(TileCrateMini::new, BlockRegistry.CRATE_MINI.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileRedstoneClock>> CLOCK = TILES.register("clock", () -> BlockEntityType.Builder.of(TileRedstoneClock::new, BlockRegistry.CLOCK.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileWirelessRec>> WIRELESS_RECEIVER = TILES.register("wireless_receiver", () -> BlockEntityType.Builder.of(TileWirelessRec::new, BlockRegistry.WIRELESS_RECEIVER.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileWirelessTransmit>> WIRELESS_TRANSMITTER = TILES.register("wireless_transmitter", () -> BlockEntityType.Builder.of(TileWirelessTransmit::new, BlockRegistry.WIRELESS_TRANSMITTER.get()).build(null));

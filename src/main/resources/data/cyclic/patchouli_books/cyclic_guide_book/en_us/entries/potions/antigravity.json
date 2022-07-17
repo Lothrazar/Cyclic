@@ -1,0 +1,19 @@
+{
+  "name": "item.minecraft.potion.effect.cyclic_antigravity",
+  "icon": "minecraft:potion",
+  "category": "cyclic:potions",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:potion#1{Potion:\"cyclic:antigravity\"}",
+      "text":"effect.cyclic.antigravity"
+    },
+    {
+      "type": "cyclic:brewing",
+      "text":"item.minecraft.potion.effect.cyclic_antigravity",
+      "ingredient": "minecraft:fermented_spider_eye",
+      "base_potion": "minecraft:potion#1{Potion:\"cyclic:gravity\"}",
+      "output": "minecraft:potion#1{Potion:\"cyclic:antigravity\"}"
+    }
+  ]
+}

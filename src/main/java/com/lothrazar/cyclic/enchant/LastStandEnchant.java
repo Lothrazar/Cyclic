@@ -43,7 +43,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class StandEnchant extends EnchantmentCyclic {
+public class LastStandEnchant extends EnchantmentCyclic {
 
   public static final String ID = "laststand";
   public static BooleanValue CFG;
@@ -51,7 +51,7 @@ public class StandEnchant extends EnchantmentCyclic {
   public static IntValue ABS;
   public static IntValue COOLDOWN;
 
-  public StandEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
+  public LastStandEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }

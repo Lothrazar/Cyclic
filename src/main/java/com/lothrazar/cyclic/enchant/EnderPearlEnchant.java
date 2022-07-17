@@ -18,7 +18,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class PearlEnchant extends EnchantmentCyclic {
+public class EnderPearlEnchant extends EnchantmentCyclic {
 
   public static final int COOLDOWN = 6 * 20;
   private static final float VELOCITY = 1.5F; //Same as EnderPearlItem
@@ -26,7 +26,7 @@ public class PearlEnchant extends EnchantmentCyclic {
   public static final String ID = "ender";
   public static BooleanValue CFG;
 
-  public PearlEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
+  public EnderPearlEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
