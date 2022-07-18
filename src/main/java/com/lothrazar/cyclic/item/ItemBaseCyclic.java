@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item;
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.item.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ItemStackUtil;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -26,6 +28,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class ItemBaseCyclic extends Item {
 
+  private static final int MAX_ENERGY = 16000;
   public static final String ENERGYTTMAX = "energyttmax";
   public static final String ENERGYTT = "energytt";
   public static final float INACCURACY_DEFAULT = 1.0F;
@@ -82,6 +85,22 @@ public class ItemBaseCyclic extends Item {
   }
 
   @Override
+  public Rarity getRarity(ItemStack stack) {
+    if (hasEnergy) {
+      return Rarity.EPIC; //uses energy
+    }
+    return super.getRarity(stack);
+  }
+
+  @Override
+  public int getBarColor(ItemStack stack) {
+    if (hasEnergy) {
+      return TextureRegistry.COLOUR_RF_BAR;
+    }
+    return super.getBarColor(stack);
+  }
+
+  @Override
   public boolean isBarVisible(ItemStack stack) {
     if (hasEnergy) {
       IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
@@ -127,7 +146,7 @@ public class ItemBaseCyclic extends Item {
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     if (this.hasEnergy) {
-      return new CapabilityProviderEnergyStack(16000);
+      return new CapabilityProviderEnergyStack(MAX_ENERGY);
     }
     return super.initCapabilities(stack, nbt);
   }

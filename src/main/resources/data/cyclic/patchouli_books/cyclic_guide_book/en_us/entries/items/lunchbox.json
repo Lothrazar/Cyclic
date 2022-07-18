@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.lunchbox",
+  "icon": "cyclic:lunchbox",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.lunchbox.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:lunchbox"
+    }
+  ]
+}

@@ -37,4 +37,5 @@ public class TextureRegistry {
   public static final ResourceLocation ARROW = new ResourceLocation(ModCyclic.MODID, "textures/gui/arrow.png");
   public static final ResourceLocation SAW = new ResourceLocation(ModCyclic.MODID, "textures/gui/saw.png");
   public static final int COLOUR_RF_BAR = 0xBA0909;
+  public static final int COLOUR_FOOD_BAR = 0xCFFF04;
 }

@@ -6,8 +6,8 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
 import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -20,6 +20,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -30,6 +31,11 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   public GlowingHelmetItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
     super(materialIn, slot, builderIn);
+  }
+
+  @Override
+  public Rarity getRarity(ItemStack stack) {
+    return Rarity.UNCOMMON;
   }
 
   @Override

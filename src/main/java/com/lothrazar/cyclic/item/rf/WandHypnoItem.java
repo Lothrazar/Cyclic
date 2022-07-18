@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.rf;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
@@ -35,11 +34,6 @@ public class WandHypnoItem extends ItemBaseCyclic {
   @Override
   public UseAnim getUseAnimation(ItemStack stack) {
     return UseAnim.SPEAR;
-  }
-
-  @Override
-  public int getBarColor(ItemStack stack) {
-    return TextureRegistry.COLOUR_RF_BAR;
   }
 
   @Override

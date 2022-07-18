@@ -55,6 +55,7 @@ import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
 import com.lothrazar.cyclic.item.ender.EnderBookContainer;
 import com.lothrazar.cyclic.item.food.inventorycake.ContainerCake;
+import com.lothrazar.cyclic.item.lunchbox.ContainerLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -121,4 +122,5 @@ public class MenuTypeRegistry {
   public static final RegistryObject<MenuType<CraftingStickContainer>> CRAFTING_STICK = CONTAINERS.register("crafting_stick", () -> IForgeMenuType.create((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, null)));
   public static final RegistryObject<MenuType<ContainerFilterCard>> FILTER_DATA = CONTAINERS.register("filter_data", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerCake>> INVENTORY_CAKE = CONTAINERS.register("inventory_cake", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player)));
+  public static final RegistryObject<MenuType<ContainerLunchbox>> LUNCHBOX = CONTAINERS.register("lunchbox", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerLunchbox(windowId, inv, inv.player)));
 }

@@ -93,6 +93,7 @@ import com.lothrazar.cyclic.item.food.HeartToxicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;
 import com.lothrazar.cyclic.item.food.MilkBottle;
 import com.lothrazar.cyclic.item.food.inventorycake.ItemCakeInventory;
+import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.magicnet.ItemMagicNet;
 import com.lothrazar.cyclic.item.magicnet.ItemMobContainer;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
@@ -489,10 +490,9 @@ public class ItemRegistry {
   public static final RegistryObject<Item> SPARK = ITEMS.register("spark", () -> new GlowingSpark(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new DarkFireballItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> LUNCHBOX = ITEMS.register("lunchbox", () -> new ItemLunchbox(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
   //  ender_fishhook // and other ender 1.10.2?
   //  public static final RegistryObject<Item> CYCLIC = ITEMS.register("cyclic", () -> new CyclicWandItem(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP)));
-  //  BOUNCE potion
-  //totem of repair - save toolbreak - see events
   //  lunch box u can eat from. make sure apples trigger 
   //mixed foods?(this might be better in a different mod. chocolate and sugar could be melted, salad, etc)
   //chalk??

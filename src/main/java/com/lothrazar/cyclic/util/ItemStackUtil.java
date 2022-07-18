@@ -17,6 +17,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemStackUtil {
 
+  public static int countEmptySlots(IItemHandler handler) {
+    if (handler == null) {
+      return 0;
+    }
+    int empty = 0;
+    for (int i = 0; i < handler.getSlots(); i++) {
+      if (handler.getStackInSlot(i).isEmpty()) {
+        empty++;
+      }
+    }
+    return empty;
+  }
+
   public static ItemStack findItem(String id) {
     Item head = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(id));
     if (head != null) {

@@ -24,7 +24,7 @@ public class ChatUtil {
     addServerChatMessage(player, new TranslatableComponent(message));
   }
 
-  public static void addServerChatMessage(Player player, MutableComponent message) {
+  public static void addServerChatMessage(Player player, Component message) {
     if (!player.level.isClientSide) {
       player.sendMessage(message, player.getUUID());
     }
