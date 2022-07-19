@@ -1,10 +1,11 @@
 package com.lothrazar.cyclic.potion.effect;
 
+import com.lothrazar.cyclic.potion.CyclicMobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public class StunEffect extends AttrEffect {
+public class StunEffect extends CyclicMobEffect {
 
   public StunEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);

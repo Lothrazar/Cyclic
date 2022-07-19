@@ -17,7 +17,6 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class TileAntiBeacon extends TileBlockEntityCyclic {
 
   public static IntValue RADIUS;
-  public static IntValue TICKS;
   public static ConfigValue<List<? extends String>> POTIONS;
   public static BooleanValue HARMFUL_POTIONS;
   private BeamStuff beamStuff = new BeamStuff();
@@ -32,12 +31,6 @@ public class TileAntiBeacon extends TileBlockEntityCyclic {
       return;
     }
     //ok go
-    tile.timer--;
-    //    ModCyclic.LOGGER.info("t" + tile.timer);
-    if (tile.timer <= 0) {
-      BlockAntiBeacon.absorbPotions(level, blockPos);
-      tile.timer = TICKS.get();
-    }
     tile.tick(level, blockPos);
   }
 

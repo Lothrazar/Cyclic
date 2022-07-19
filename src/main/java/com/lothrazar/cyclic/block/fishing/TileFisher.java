@@ -142,8 +142,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
         return;
       }
       //got it
-      int luck = EnchantmentHelper.getItemEnchantmentLevel(
-          Enchantments.FISHING_LUCK, fishingRod) + 1;
+      int luck = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK, fishingRod) + 1;
       Vec3 fffffffffff = new Vec3(center.getX(), center.getY(), center.getZ());
       LootContext lootContext = new LootContext.Builder((ServerLevel) world)
           .withLuck(luck).withRandom(rand).withParameter(LootContextParams.ORIGIN, fffffffffff)

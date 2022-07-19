@@ -52,15 +52,15 @@ import com.lothrazar.cyclic.enchant.BeheadingEnchant;
 import com.lothrazar.cyclic.enchant.CurseEnchant;
 import com.lothrazar.cyclic.enchant.DisarmEnchant;
 import com.lothrazar.cyclic.enchant.ElytraLaunchEnchant;
+import com.lothrazar.cyclic.enchant.EnderPearlEnchant;
 import com.lothrazar.cyclic.enchant.ExcavationEnchant;
 import com.lothrazar.cyclic.enchant.GrowthEnchant;
+import com.lothrazar.cyclic.enchant.LastStandEnchant;
 import com.lothrazar.cyclic.enchant.LifeLeechEnchant;
 import com.lothrazar.cyclic.enchant.MagnetEnchant;
 import com.lothrazar.cyclic.enchant.MultishotEnchant;
-import com.lothrazar.cyclic.enchant.EnderPearlEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
-import com.lothrazar.cyclic.enchant.LastStandEnchant;
 import com.lothrazar.cyclic.enchant.SteadyEnchant;
 import com.lothrazar.cyclic.enchant.StepEnchant;
 import com.lothrazar.cyclic.enchant.TravellerEnchant;
@@ -291,16 +291,14 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     //buffer size for cables 
-    TileAntiBeacon.HARMFUL_POTIONS = CFG.comment("if true this cures any harmful potion effect (regardless of potion list)").define("harmful_potions", true);
-    TileAntiBeacon.RADIUS = CFG.comment("Radius to clear effects from living entities, used by sponge and anti beacon")
+    TileAntiBeacon.HARMFUL_POTIONS = CFG.comment("if true this cures any harmful potion effect").define("harmful_potions", true);
+    //TODO: another config JUST for spongey? 
+    TileAntiBeacon.RADIUS = CFG.comment("Radius to protect players and entities from potion effects being applied. ")
         .defineInRange("anti_beacon.radius", 16, 1, 128);
-    TileAntiBeacon.TICKS = CFG.comment("Ticks to fire anti beacon and remove effects from entities (20 = 1 second)")
-        .defineInRange("anti_beacon.ticks", 30, 1, 9999);
     //TODO: variant that is (only harmful effects? just like milk that does all effects) ?
-    TileAntiBeacon.POTIONS = CFG.comment("List of extra effects to clear. supports wildcard such as 'cyclic:*'")
-        .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither", "cyclic:gravity",
-            "cyclic:antigravity",
-            "minecraft:night_vision", "minecraft:invisibility",
+    TileAntiBeacon.POTIONS = CFG.comment("List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
+        .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",
+            "cyclic:gravity",
             "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
     //    TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use")
     //    .defineList("ignore_list", UNCRAFT_IGNORE_ITEMS, it -> it instanceof String);

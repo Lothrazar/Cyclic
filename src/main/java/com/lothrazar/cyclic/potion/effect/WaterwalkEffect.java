@@ -1,18 +1,16 @@
 package com.lothrazar.cyclic.potion.effect;
 
-import com.lothrazar.cyclic.potion.TickableEffect;
-import com.lothrazar.cyclic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclic.potion.CyclicMobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
-public class WaterwalkEffect extends TickableEffect {
+public class WaterwalkEffect extends CyclicMobEffect {
 
   public WaterwalkEffect(MobEffectCategory typeIn, int liquidColorIn) {
     super(typeIn, liquidColorIn);
-    PotionEffectRegistry.EFFECTS.add(this);
   }
 
   @Override

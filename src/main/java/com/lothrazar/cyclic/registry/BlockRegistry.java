@@ -264,7 +264,7 @@ public class BlockRegistry {
   public static final RegistryObject<Block> ANVIL_MAGMA = BLOCKS.register("anvil_magma", () -> new BlockAnvilMagma(Block.Properties.of(Material.HEAVY_METAL).sound(SoundType.ANVIL)));
   public static final RegistryObject<Block> BEACON = BLOCKS.register("beacon", () -> new BlockPotion(Block.Properties.of(Material.METAL)));
   public static final RegistryObject<Block> BEACON_REDSTONE = BLOCKS.register("beacon_redstone", () -> new BlockBeaconRedstone(Block.Properties.of(Material.STONE).lightLevel(p -> 4)));
-  public static final RegistryObject<Block> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of(Material.STONE).lightLevel(p -> 2)));
+  public static final RegistryObject<BlockAntiBeacon> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of(Material.STONE).lightLevel(p -> 2)));
   public static final RegistryObject<Block> SOUNDPROOFING_GHOST = BLOCKS.register("soundproofing_ghost", () -> new SoundmufflerBlockGhost(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> SOUNDPROOFING = BLOCKS.register("soundproofing", () -> new SoundmufflerBlock(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> CLOCK = BLOCKS.register("clock", () -> new BlockRedstoneClock(Block.Properties.of(Material.STONE)));

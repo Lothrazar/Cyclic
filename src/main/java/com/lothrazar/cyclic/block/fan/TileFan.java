@@ -199,7 +199,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
       }
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
-          && entity instanceof Player) {
+          && entity instanceof Player p) {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
       }
     }
