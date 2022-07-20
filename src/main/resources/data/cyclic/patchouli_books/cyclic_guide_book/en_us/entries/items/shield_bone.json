@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.shield_bone",
+  "icon": "cyclic:shield_bone",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.shield_bone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shield_bone"
+    }
+  ]
+}

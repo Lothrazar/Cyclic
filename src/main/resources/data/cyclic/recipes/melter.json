@@ -16,7 +16,7 @@
       "item": "minecraft:redstone_block"
     },
     "h": {
-      "item": "minecraft:obsidian"
+      "tag": "forge:obsidian"
     },
     "q": {
       "item": "minecraft:furnace"

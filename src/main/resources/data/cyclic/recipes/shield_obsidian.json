@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " io",
-    "ioi",
-    " i "
+    "WoW",
+    "WWW",
+    " W "
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
+    "W": {
+      "tag": "minecraft:planks"
     },
     "o": {
       "tag": "forge:obsidian"
     }
   },
   "result": {
-    "item": "cyclic:shears_obsidian"
+    "item": "cyclic:shield_obsidian"
   }
 }

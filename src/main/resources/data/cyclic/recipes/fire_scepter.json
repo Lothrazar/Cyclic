@@ -10,7 +10,7 @@
       "item": "cyclic:fireball"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "tag": "forge:obsidian"
     },
     "n": {
       "item": "minecraft:gold_block"

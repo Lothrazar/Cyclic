@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.ender_torch",
+  "icon": "cyclic:ender_torch",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.ender_torch.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/ender_torch"
+    }
+  ]
+}

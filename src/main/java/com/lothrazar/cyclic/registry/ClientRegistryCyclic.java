@@ -82,6 +82,10 @@ public class ClientRegistryCyclic {
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_LEATHER_NOPATTERN.texture());
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT.texture());
       event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT_NOPATTERN.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_BONE.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_BONE_NOPATTERN.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN.texture());
+      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN_NOPATTERN.texture());
     }
   }
 
@@ -134,6 +138,8 @@ public class ClientRegistryCyclic {
     ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
+    ItemProperties.register(ItemRegistry.SHIELD_BONE.get(), ShieldCyclicItem.BLOCKING, blockFn);
+    ItemProperties.register(ItemRegistry.SHIELD_OBSIDIAN.get(), ShieldCyclicItem.BLOCKING, blockFn);
   }
 
   private static void initRenderLayers() {
@@ -213,6 +219,7 @@ public class ClientRegistryCyclic {
     event.registerEntityRenderer(EntityRegistry.EYE.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.FIRE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.DARKFIRE_BOLT.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.ENDER_FISHING.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.STONE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LASER_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LIGHTNING_BOLT.get(), ThrownItemRenderer::new);

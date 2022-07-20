@@ -114,7 +114,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
       int y = worldPosition.getY();
       int z = worldPosition.getZ() + level.random.nextInt(RADIUS * 2) - RADIUS;
       BlockPos center = new BlockPos(x, y, z);
-      if (this.isWater(center)) {
+      if (isWater(this.level, center)) {
         try {
           this.doFishing(stack, center);
         } //loot tables are explosive
@@ -125,8 +125,8 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
-  private boolean isWater(BlockPos center) {
-    return this.level.getBlockState(center).getBlock() == Blocks.WATER;
+  public static boolean isWater(Level level, BlockPos center) {
+    return level.getBlockState(center).getBlock() == Blocks.WATER;
   }
 
   private void doFishing(ItemStack fishingRod, BlockPos center) {

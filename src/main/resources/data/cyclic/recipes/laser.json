@@ -10,7 +10,7 @@
       "tag": "forge:storage_blocks/redstone"
     },
     "o": {
-      "item": "minecraft:obsidian"
+      "tag": "forge:obsidian"
     },
     "s": {
       "tag": "forge:glass/colorless"

@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
 import com.lothrazar.cyclic.item.elemental.DarkFireEntity;
 import com.lothrazar.cyclic.item.elemental.FireEntity;
+import com.lothrazar.cyclic.item.elemental.FishingEnderEntity;
 import com.lothrazar.cyclic.item.elemental.LightningEntity;
 import com.lothrazar.cyclic.item.elemental.SnowEntity;
 import com.lothrazar.cyclic.item.ender.EntityDungeonEye;
@@ -115,4 +116,10 @@ public class EntityRegistry {
       .setTrackingRange(128)
       .sized(.6F, .6F)
       .build("darkfire_bolt"));
+  public static final RegistryObject<EntityType<FishingEnderEntity>> ENDER_FISHING = ENTITIES.register("ender_fishing", () -> EntityType.Builder.<FishingEnderEntity> of(FishingEnderEntity::new, MobCategory.MISC)
+      .setShouldReceiveVelocityUpdates(true)
+      .setUpdateInterval(1)
+      .setTrackingRange(128)
+      .sized(.6F, .6F)
+      .build("ender_fishing"));
 }

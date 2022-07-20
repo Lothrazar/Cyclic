@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+  	"minecraft:shield",
+    { "id":"cyclic:shield_obsidian","required":false},            
+    { "id":"cyclic:shield_bone","required":false},            
+    { "id":"cyclic:shield_wood","required":false},            
+    { "id":"cyclic:shield_leather","required":false},            
+    { "id":"cyclic:shield_flint","required":false}
+  ]
+}

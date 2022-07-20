@@ -1,14 +1,31 @@
 package com.lothrazar.cyclic.util;
 
+import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
+import com.lothrazar.cyclic.registry.PacketRegistry;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.NetworkDirection;
 
 public class PlayerUtil {
+
+  public static void setMayFlyFromServer(LivingEntity entity, boolean mayflyIn) {
+    if (entity instanceof ServerPlayer sp) {
+      //set server-player
+      sp.getAbilities().mayfly = mayflyIn;
+      if (!mayflyIn) {
+        sp.getAbilities().flying = false;
+      }
+      //sync to client
+      PacketRegistry.INSTANCE.sendTo(new PacketPlayerSyncToClient(mayflyIn), sp.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+  }
 
   public static double getExpTotal(Player player) {
     //  validateExpPositive(player);

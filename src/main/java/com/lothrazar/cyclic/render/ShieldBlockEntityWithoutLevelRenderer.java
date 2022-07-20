@@ -41,10 +41,6 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     instance = new ShieldBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     event.registerReloadListener(instance);
   }
-  //  @Override
-  //  public void onResourceManagerReload(ResourceManager rm) {
-  //    this.shield = new ShieldModel(this.ems.bakeLayer(ModelLayers.SHIELD));
-  //  }
 
   @Override
   public void renderByItem(ItemStack stackIn, ItemTransforms.TransformType type, PoseStack ps, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
@@ -62,9 +58,14 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     else if (stackIn.is(ItemRegistry.SHIELD_FLINT.get())) {
       rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_FLINT : MaterialShieldRegistry.SHIELD_BASE_FLINT_NOPATTERN;
     }
+    else if (stackIn.is(ItemRegistry.SHIELD_BONE.get())) {
+      rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_BONE : MaterialShieldRegistry.SHIELD_BASE_BONE_NOPATTERN;
+    }
+    else if (stackIn.is(ItemRegistry.SHIELD_OBSIDIAN.get())) {
+      rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN : MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN_NOPATTERN;
+    }
     VertexConsumer vertex = rendermaterial.sprite().wrap(ItemRenderer.getFoilBufferDirect(buffer, shieldModel.renderType(rendermaterial.atlasLocation()), true, stackIn.hasFoil()));
     shieldModel.handle().render(ps, vertex, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-    //how do i test banner support?> does it need recipes
     if (isBanner) {
       List<Pair<BannerPattern, DyeColor>> pattern = BannerBlockEntity.createPatterns(ShieldItem.getColor(stackIn), BannerBlockEntity.getItemPatterns(stackIn));
       BannerRenderer.renderPatterns(ps, buffer, combinedLight, combinedOverlay, shieldModel.plate(), rendermaterial, false, pattern, stackIn.hasFoil());

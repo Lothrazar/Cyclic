@@ -17,7 +17,6 @@ public class PacketPlayerSyncToClient extends PacketBaseCyclic {
 
   public static void handle(PacketPlayerSyncToClient message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      System.out.println("mayfly test packet" + message);
       Minecraft.getInstance().player.getAbilities().mayfly = message.mayfly;
       if (!message.mayfly) {
         //if not allowed to fly, also cancel flying

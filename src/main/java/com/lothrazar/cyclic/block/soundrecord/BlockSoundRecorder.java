@@ -48,8 +48,9 @@ public class BlockSoundRecorder extends BlockCyclic {
     if (event.getSound() == null || event.getSound().getLocation() == null || event.getSound() instanceof TickableSoundInstance || clientWorld == null) {
       return;
     } //long term/repeating/music
+    final boolean isPowered = false; // if im NOT powered, im running
     List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld,
-        new BlockPos(event.getSound().getX(), event.getSound().getY(), event.getSound().getZ()), this, RADIUS.get());
+        new BlockPos(event.getSound().getX(), event.getSound().getY(), event.getSound().getZ()), this, RADIUS.get(), isPowered);
     for (BlockPos nearby : blocks) {
       String sid = event.getSound().getLocation().toString();
       PacketRegistry.INSTANCE.sendToServer(new PacketRecordSound(sid, nearby));

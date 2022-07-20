@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
 import java.util.function.Consumer;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.render.ShieldBlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -15,17 +16,21 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 
 public class ShieldCyclicItem extends ItemBaseCyclic {
@@ -33,7 +38,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   public static final ResourceLocation BLOCKING = new ResourceLocation("minecraft:blocking");
 
   public static enum ShieldType {
-    LEATHER, WOOD, FLINT;
+    LEATHER, WOOD, FLINT, OBSIDIAN, BONE;
     // STONE? COPPER? 
   }
 
@@ -51,6 +56,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   public ShieldCyclicItem(Properties properties, ShieldType type) {
     super(properties);
     this.type = type;
+    DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
   }
 
   @Override
@@ -66,6 +72,10 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       return stackIngredient.is(Items.STICK);
     if (type == ShieldType.LEATHER)
       return stackIngredient.is(Items.LEATHER);
+    if (type == ShieldType.BONE)
+      return stackIngredient.is(Items.BONE);
+    if (type == ShieldType.OBSIDIAN)
+      return stackIngredient.is(Blocks.OBSIDIAN.asItem());
     if (type == ShieldType.FLINT)
       return stackIngredient.is(ItemTags.STONE_TOOL_MATERIALS);
     return false;
@@ -78,7 +88,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
 
   @Override
   public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-    return toolAction.equals(ToolActions.SHIELD_BLOCK);
+    return ToolActions.DEFAULT_SHIELD_ACTIONS.contains(toolAction) || toolAction.equals(ToolActions.SHIELD_BLOCK);
   }
 
   @Override
@@ -116,7 +126,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
     //decide based on type and stuff
     switch (this.type) {
       case LEATHER:
-        cooldown = 4;
+        cooldown = 6;
         reduceBlockedDamagePct = LEATHER_PCT.get() / 100F; // 0.25F means so 25% weaker than normal shield  
         //reduce by 50% so its weaker than vanilla shield // 0.50F means 50% weaker than shield
         if (dmgSource.isExplosion()) {
@@ -144,6 +154,25 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
           thornsDmg = 1;
         }
       break;
+      case BONE:
+        //        reduceBlockedDamagePct = default;
+        cooldown = 2;
+        //bone has no damage reduction
+        //immune to all arrow/projectile damage damage
+        if (!dmgSource.isBypassArmor() && dmgSource.isProjectile()) {
+          immuneToDamage = true;
+        }
+      break;
+      case OBSIDIAN:
+        reduceBlockedDamagePct = 0; // important!
+        cooldown = 0;
+        if (!dmgSource.isBypassArmor() && dmgSource.isProjectile()) {
+          immuneToDamage = true;
+        }
+        if (!dmgSource.isBypassArmor() && dmgSource.isExplosion()) {
+          immuneToDamage = true;
+        }
+      break;
     }
     //results
     if (immuneToDamage) {
@@ -155,6 +184,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       });
     }
     event.setBlockedDamage(event.getBlockedDamage() * reduceBlockedDamagePct);
+    ModCyclic.LOGGER.info(this + " original damage " + event.getOriginalBlockedDamage() + " :set Blocked Damage " + event.getBlockedDamage());
     if (playerIn != null && cooldown > 0) {
       playerIn.getCooldowns().addCooldown(shield.getItem(), cooldown);
     }
@@ -166,5 +196,28 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       }
     }
     //make some not take damage
+  }
+
+  public void onKnockback(LivingKnockBackEvent event) {
+    switch (this.type) {
+      case BONE:
+      //        System.out.println("!bone blocks blocks knockback from partway  " + event.getStrength());
+      //        event.setStrength(event.getStrength() / 2);
+      break;
+      case OBSIDIAN:
+        System.out.println("obsidian blocks knockback from everything" + event.getStrength());
+        event.setCanceled(true);
+      break;
+      case FLINT:
+      break;
+      case LEATHER:
+      break;
+      case WOOD:
+        System.out.println("!!wood increase knockbak  " + event.getStrength());
+        event.setStrength(event.getStrength() * 1.5F);
+      break;
+      default:
+      break;
+    }
   }
 }

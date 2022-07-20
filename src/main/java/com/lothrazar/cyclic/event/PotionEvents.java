@@ -12,7 +12,6 @@ public class PotionEvents {
 
   @SubscribeEvent
   public void onPotionAdded(PotionEvent.PotionAddedEvent event) {
-    System.out.println("PotionAddedEvent   " + event);
     if (event.getPotionEffect().getEffect() instanceof CyclicMobEffect self) {
       self.onPotionAdded(event);
     }

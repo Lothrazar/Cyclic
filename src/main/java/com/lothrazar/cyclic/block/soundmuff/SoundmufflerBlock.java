@@ -13,13 +13,14 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class SoundmufflerBlock extends BlockCyclic {
 
   private static final int VOL_REDUCE_PER_BLOCK = 2;
-  private static final int RADIUS = 6;
+  public static IntValue RADIUS; // 6
 
   public SoundmufflerBlock(Properties properties) {
     super(properties.strength(1F).sound(SoundType.SCAFFOLDING));
@@ -34,7 +35,13 @@ public class SoundmufflerBlock extends BlockCyclic {
       return;
     } //long term/repeating/music
     SoundInstance sound = event.getSound();
-    List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this, RADIUS);
+    //    if (tile.isPowered()) {
+    //      return; // redstone power = not running
+    //    }
+    final boolean isPowered = false; // if im NOT powered, im running
+    List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this,
+        RADIUS.get(),
+        isPowered);
     if (blocks == null || blocks.size() == 0) {
       return;
     }
@@ -43,10 +50,12 @@ public class SoundmufflerBlock extends BlockCyclic {
       //we do use it inside the sound class, but the engine callss tat later on, and our factor is tacked in
       SoundVolumeControlled newSound = new SoundVolumeControlled(sound);
       //the number of nearby blocks informs how much we muffle the sound by
-      float pct = (VOL_REDUCE_PER_BLOCK) / 6F;
+      final float pct = VOL_REDUCE_PER_BLOCK / 6F;
       //at 6 blocks, it caps off the reduction
-      newSound.setVolume((float) (Math.min(pct, 1.0) / blocks.size()));
+      final float newVolume = (float) (Math.min(pct, 1.0) / blocks.size());
+      newSound.setVolume(newVolume);
       event.setSound(newSound);
+      ModCyclic.LOGGER.info("sound muffled; size= " + blocks.size());
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("Error trying to detect volume of sound " + sound, e);

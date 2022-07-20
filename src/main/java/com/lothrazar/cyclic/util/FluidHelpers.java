@@ -218,6 +218,7 @@ public class FluidHelpers {
   /**
    * true if the tag and fluid match
    */
+  @SuppressWarnings("deprecation")
   public static boolean matches(Fluid fluid, TagKey<Fluid> ft) {
     return (ft != null && fluid != null && fluid.is(ft));
   }

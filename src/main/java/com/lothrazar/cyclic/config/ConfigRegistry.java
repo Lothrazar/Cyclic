@@ -40,6 +40,7 @@ import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
+import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
@@ -291,10 +292,14 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     //buffer size for cables 
-    TileAntiBeacon.HARMFUL_POTIONS = CFG.comment("if true this cures any harmful potion effect").define("harmful_potions", true);
-    //TODO: another config JUST for spongey? 
-    TileAntiBeacon.RADIUS = CFG.comment("Radius to protect players and entities from potion effects being applied. ")
+    SoundmufflerBlock.RADIUS = CFG.comment("Radius to find and muffle sounds. ")
+        .defineInRange("soundproofing.radius", 6, 1, 128);
+    TileAntiBeacon.HARMFUL_POTIONS = CFG.comment("If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
+        .define("harmful_potions", true);
+    TileAntiBeacon.RADIUS = CFG.comment("Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
         .defineInRange("anti_beacon.radius", 16, 1, 128);
+    TileAntiBeacon.TICKS = CFG.comment("Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
+        .defineInRange("anti_beacon.ticks", 200, 20, 9999);
     //TODO: variant that is (only harmful effects? just like milk that does all effects) ?
     TileAntiBeacon.POTIONS = CFG.comment("List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
         .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",

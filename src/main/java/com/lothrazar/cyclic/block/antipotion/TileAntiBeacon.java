@@ -17,6 +17,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 public class TileAntiBeacon extends TileBlockEntityCyclic {
 
   public static IntValue RADIUS;
+  public static IntValue TICKS;
   public static ConfigValue<List<? extends String>> POTIONS;
   public static BooleanValue HARMFUL_POTIONS;
   private BeamStuff beamStuff = new BeamStuff();
@@ -26,12 +27,15 @@ public class TileAntiBeacon extends TileBlockEntityCyclic {
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileAntiBeacon tile) {
-    boolean powered = tile.isPowered();
-    if (powered) {
-      return;
+    if (tile.isPowered()) {
+      return; // redstone power = not running
     }
     //ok go
     tile.tick(level, blockPos);
+    if (tile.timer <= 0) {
+      BlockAntiBeacon.absorbPotions(level, blockPos);
+      tile.timer = TICKS.get();
+    }
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAntiBeacon e) {

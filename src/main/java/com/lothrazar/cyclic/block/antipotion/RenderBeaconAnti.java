@@ -15,7 +15,7 @@ public class RenderBeaconAnti implements BlockEntityRenderer<TileAntiBeacon> {
   @Override
   public void render(TileAntiBeacon tile, float p_112141_, PoseStack p_112142_, MultiBufferSource p_112143_, int p_112144_, int p_112145_) {
     long i = tile.getLevel().getGameTime();
-    if (tile.isPowered()) {
+    if (tile.isPowered()) { // if im NOT powered, im running
       return; // do not render if redstone offed 
     }
     List<BeaconBlockEntity.BeaconBeamSection> list = tile.getBeamSections();

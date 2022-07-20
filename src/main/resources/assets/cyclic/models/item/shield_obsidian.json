@@ -1,0 +1,14 @@
+{
+    "parent": "item/shield",
+    "textures": {
+        "particle": "block/emerald_block"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "minecraft:blocking": 1
+            },
+            "model": "cyclic:item/shield_obsidian_blocking"
+        }
+    ]
+}

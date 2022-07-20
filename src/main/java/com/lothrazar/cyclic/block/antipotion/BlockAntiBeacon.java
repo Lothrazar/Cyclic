@@ -74,49 +74,34 @@ public class BlockAntiBeacon extends BlockCyclic {
     }
   }
 
-  @SuppressWarnings("unchecked")
   public static void absorbPotions(Level world, BlockPos pos) {
-    //todo: parse from config or whatever
     List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, TileAntiBeacon.RADIUS.get(), 3));
-    ModCyclic.LOGGER.info(pos + " BEACON try absorb potions on " + all.size());
-    List<String> potions = (List<String>) TileAntiBeacon.POTIONS.get();
-    //    ModCyclic.LOGGER.info("potions TEST poison" + potions);
     for (LivingEntity e : all) {
-      cureAllRelevant(potions, e);
+      cureAllRelevant(e);
     }
   }
 
-  private static void cureAllRelevant(List<String> potions, LivingEntity e) {
+  private static void cureAllRelevant(LivingEntity e) {
     List<MobEffect> cureMe = new ArrayList<>();
     for (MobEffect mobEffect : e.getActiveEffectsMap().keySet()) {
       if (BlockAntiBeacon.doesConfigBlockEffect(mobEffect)) {
         cureMe.add(mobEffect);
       }
-      //      if (TileAntiBeacon.HARMFUL_POTIONS.get() && mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
-      //        //if its harmful, cure it if config wants to
-      //        cureMe.add(mobEffect);
-      //      }
-      //      else {
-      //        //if its in config, cure it
-      //        ResourceLocation potionId = ForgeRegistries.MOB_EFFECTS.getKey(mobEffect);
-      //        if (StringParseUtil.isInList(potions, potionId)) {
-      //          cureMe.add(mobEffect);
-      //        }
-      //      }
     }
     for (MobEffect curedEffect : cureMe) {
-      ModCyclic.LOGGER.info("  !!!!!!!!!  remove poison" + curedEffect);
+      ModCyclic.LOGGER.info("[potion cured] " + curedEffect);
       e.removeEffect(curedEffect);
     }
   }
 
+  /** core key that checks both configs */
+  @SuppressWarnings("unchecked")
   private static boolean doesConfigBlockEffect(MobEffect mobEffect) {
     if (TileAntiBeacon.HARMFUL_POTIONS.get() && mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
       return true;
     }
-    List<String> potions = (List<String>) TileAntiBeacon.POTIONS.get();
     ResourceLocation potionId = ForgeRegistries.MOB_EFFECTS.getKey(mobEffect);
-    return StringParseUtil.isInList(potions, potionId);
+    return StringParseUtil.isInList((List<String>) TileAntiBeacon.POTIONS.get(), potionId);
   }
 
   public void isPotionApplicable(PotionApplicableEvent event) {
@@ -125,12 +110,12 @@ public class BlockAntiBeacon extends BlockCyclic {
     }
     //this will cancel it
     if (BlockAntiBeacon.doesConfigBlockEffect(event.getPotionEffect().getEffect())) {
-      //TODO: MATCH LIT STATE ONLY
+      final boolean isPowered = false; // if im NOT powered, im running
       List<BlockPos> blocks = BlockstatesUtil.findBlocks(event.getEntity().getCommandSenderWorld(),
-          event.getEntityLiving().blockPosition(), this, TileAntiBeacon.RADIUS.get());
+          event.getEntityLiving().blockPosition(), this, TileAntiBeacon.RADIUS.get(), isPowered);
       //can
       if (blocks != null && blocks.size() > 0) {
-        System.out.println(blocks.size() + "pot not applicable dude. wait is this global " + event.getPotionEffect());
+        ModCyclic.LOGGER.info("[potion blocked] " + event.getPotionEffect());
         event.setResult(Result.DENY);
       }
     }

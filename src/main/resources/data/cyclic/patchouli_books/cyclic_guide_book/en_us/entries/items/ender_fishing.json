@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.ender_fishing",
+  "icon": "cyclic:ender_fishing",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.ender_fishing.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/ender_fishing"
+    }
+  ]
+}
