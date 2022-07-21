@@ -151,13 +151,11 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
-    System.out.println("kb");
     if (event.getEntityLiving() instanceof Player) {
       Player ply = (Player) event.getEntityLiving();
       if (ply.isBlocking()) {
         ItemStack held = ply.getItemInHand(ply.getUsedItemHand());
         if (held.getItem() instanceof ShieldCyclicItem shieldType) {
-          System.out.println("kb usded in han d " + held);
           shieldType.onKnockback(event);
         }
       }

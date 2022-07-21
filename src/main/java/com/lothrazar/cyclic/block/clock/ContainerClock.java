@@ -18,7 +18,7 @@ public class ContainerClock extends ContainerBase {
     tile = (TileRedstoneClock) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    layoutPlayerInventorySlots(8, 84);
+    layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileRedstoneClock.Fields.values().length);
   }
 

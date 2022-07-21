@@ -201,11 +201,8 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   public void onKnockback(LivingKnockBackEvent event) {
     switch (this.type) {
       case BONE:
-      //        System.out.println("!bone blocks blocks knockback from partway  " + event.getStrength());
-      //        event.setStrength(event.getStrength() / 2);
       break;
       case OBSIDIAN:
-        System.out.println("obsidian blocks knockback from everything" + event.getStrength());
         event.setCanceled(true);
       break;
       case FLINT:
@@ -213,7 +210,6 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       case LEATHER:
       break;
       case WOOD:
-        System.out.println("!!wood increase knockbak  " + event.getStrength());
         event.setStrength(event.getStrength() * 1.5F);
       break;
       default:

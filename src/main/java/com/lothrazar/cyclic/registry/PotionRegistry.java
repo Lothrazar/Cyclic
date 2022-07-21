@@ -20,15 +20,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class PotionRegistry {
 
   public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, ModCyclic.MODID);
-  //from 1.12.2 
-  //slowfall NIX in vanilla
-  //ender aura - pearl + awkward - no pearl/tp dmg
-  //TODO: bouncy - slime + ender 
-  //
+  //TODO: ender aura - pearl + awkward - no pearl/tp dmg
+  //TODO: bouncy - slime + ender above 
   static final int normal = 3600;
   static final int smal = 1800;
-  //TODO: health boost?
-  //TODO: luck !
   public static final RegistryObject<Potion> HASTE = POTIONS.register("haste", () -> new Potion(ModCyclic.MODID + "_haste", new MobEffectInstance(MobEffects.DIG_SPEED, normal)));
   public static final RegistryObject<Potion> STRONG_HASTE = POTIONS.register("strong_haste", () -> new Potion(ModCyclic.MODID + "_strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, smal, 1)));
   public static final RegistryObject<Potion> STUN = POTIONS.register("stun", () -> new Potion(ModCyclic.MODID + "_stun", new MobEffectInstance(PotionEffectRegistry.STUN.get(), smal)));

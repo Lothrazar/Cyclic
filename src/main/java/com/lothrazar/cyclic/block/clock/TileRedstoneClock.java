@@ -131,6 +131,10 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
   }
 
   private void updateMyState() throws IllegalArgumentException {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
     BlockState blockState = level.getBlockState(worldPosition);
     if (blockState.hasProperty(BlockRedstoneClock.LIT) == false) {
       return;
