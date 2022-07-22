@@ -32,9 +32,4 @@ Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 - JEI https://www.curseforge.com/minecraft/mc-mods/jei
 - Enchantment Descriptions https://minecraft.curseforge.com/projects/enchantment-descriptions
 
-# Servers
 
-Looking to host a Modded server? Get a discount with my promo code
-
-
-[![Nodecraft Server](https://nodecraft.com/assets/images/partners/loth/mashup.png)](https://nodecraft.com/r/loth)

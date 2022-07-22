@@ -122,6 +122,10 @@ public class TileRedstoneClock extends TileEntityBase implements ITickableTileEn
   }
 
   private void updateMyState() throws IllegalArgumentException {
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+      return;
+    }
     BlockState blockState = world.getBlockState(pos);
     if (blockState.hasProperty(BlockRedstoneClock.LIT) == false) {
       return;
