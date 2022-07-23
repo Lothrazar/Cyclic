@@ -126,20 +126,22 @@ public class AttributesUtil {
     }
   }
 
-  //legacy
   public static int setHearts(Collection<ServerPlayer> players, int finalHearts) {
-    int modifiedHearts = finalHearts - 10;
     for (ServerPlayer playerIn : players) {
-      AttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
-      healthAttribute.removeModifier(DEFAULT_ID);
-      //just remove and replace the modifier
-      AttributeModifier healthModifier = new AttributeModifier(DEFAULT_ID, "HP Bonus from Cyclic", (modifiedHearts * 2), AttributeModifier.Operation.ADDITION);
-      healthAttribute.addPermanentModifier(healthModifier);
-      if (playerIn.getHealth() > healthAttribute.getValue()) {
-        playerIn.setHealth((float) healthAttribute.getValue());
-      }
-      //finish up
+      setHearts(finalHearts, playerIn);
     }
     return 0;
+  }
+
+  private static void setHearts(int finalHearts, ServerPlayer playerIn) {
+    int modifiedHearts = finalHearts - 10;
+    AttributeInstance healthAttribute = playerIn.getAttribute(Attributes.MAX_HEALTH);
+    healthAttribute.removeModifier(DEFAULT_ID);
+    //just remove and replace the modifier
+    AttributeModifier healthModifier = new AttributeModifier(DEFAULT_ID, "HP Bonus from Cyclic", (modifiedHearts * 2), AttributeModifier.Operation.ADDITION);
+    healthAttribute.addPermanentModifier(healthModifier);
+    if (playerIn.getHealth() > healthAttribute.getValue()) {
+      playerIn.setHealth((float) healthAttribute.getValue());
+    }
   }
 }

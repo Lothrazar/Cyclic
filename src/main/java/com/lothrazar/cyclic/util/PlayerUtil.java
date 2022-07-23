@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.util;
 
+import java.util.Optional;
 import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -11,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkDirection;
 
 public class PlayerUtil {
@@ -103,5 +106,15 @@ public class PlayerUtil {
     //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
     Item item = (inslot.isEmpty()) ? null : inslot.getItem();
     return item;
+  }
+
+  public static Optional<Vec3> getPlayerHome(ServerPlayer player) {
+    BlockPos respawnPos = player.getRespawnPosition();
+    Optional<Vec3> optional = Optional.empty();
+    if (respawnPos != null) {
+      optional = Player.findRespawnPositionAndUseSpawnBlock(player.getLevel(), respawnPos, 0.0F, true, true);
+    }
+    //    optional = Player.findRespawnPositionAndUseSpawnBlock(player.getLevel(), respawnPos, 0.0F, true, true);
+    return optional;
   }
 }
