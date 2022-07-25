@@ -21,6 +21,7 @@ import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.net.PacketRotateBlock;
 import com.lothrazar.cyclic.net.PacketStorageBagScreen;
+import com.lothrazar.cyclic.net.PacketSyncManaToClient;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileString;
@@ -67,6 +68,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketHarvesting.class, PacketHarvesting::encode, PacketHarvesting::decode, PacketHarvesting::handle);
     INSTANCE.registerMessage(id++, PacketEntityLaser.class, PacketEntityLaser::encode, PacketEntityLaser::decode, PacketEntityLaser::handle);
     INSTANCE.registerMessage(id++, PacketPlayerSyncToClient.class, PacketPlayerSyncToClient::encode, PacketPlayerSyncToClient::decode, PacketPlayerSyncToClient::handle);
+    INSTANCE.registerMessage(id++, PacketSyncManaToClient.class, PacketSyncManaToClient::encode, PacketSyncManaToClient::decode, PacketSyncManaToClient::handle);
   }
 
   public static void sendToAllClients(Level world, PacketBaseCyclic packet) {

@@ -86,12 +86,10 @@ import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.TileWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.TileWorkbench;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TileRegistry {
 
   public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ModCyclic.MODID);

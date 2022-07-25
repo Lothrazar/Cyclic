@@ -30,6 +30,7 @@ import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmuffRender;
 import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
+import com.lothrazar.cyclic.capabilities.ManaManager.ClientManaData;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
@@ -53,6 +54,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
@@ -65,12 +69,39 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
 
+  //TODO: refactor split into keyboard registry, overlay registry, other renderers below 
   public static KeyMapping CAKE;
+  public static final IIngameOverlay HUD_MANA = (gui, poseStack, partialTicks, width, height) -> {
+    final String toDisplay = "P:" + ClientManaData.getPlayerMana() + " CH:" + ClientManaData.getChunkMana();
+    int x = 10; // ManaConfig.MANA_HUD_X.get();
+    int y = 10; // ManaConfig.MANA_HUD_Y.get(); //TODO: client-config
+    if (x >= 0 && y >= 0) {
+      gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
+    }
+  };
 
   public ClientRegistryCyclic() {
     //fired by mod constructor  DistExecutor.safeRunForDist
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
+  }
+
+  public static void setupClient(final FMLClientSetupEvent event) {
+    for (BlockCyclic b : BlockRegistry.BLOCKSCLIENTREGISTRY) {
+      b.registerClient();
+    }
+    for (ItemBaseCyclic i : ItemRegistry.ITEMSFIXME) {
+      i.registerClient();
+    }
+    initRenderLayers();
+    initColours();
+    initKeybindings();
+    initShields();
+    initOverlay();
+  }
+
+  private static void initOverlay() {
+    OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "name", HUD_MANA);
   }
 
   @SubscribeEvent
@@ -117,19 +148,6 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
     event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
-  }
-
-  public static void setupClient(final FMLClientSetupEvent event) {
-    for (BlockCyclic b : BlockRegistry.BLOCKSCLIENTREGISTRY) {
-      b.registerClient();
-    }
-    for (ItemBaseCyclic i : ItemRegistry.ITEMSFIXME) {
-      i.registerClient();
-    }
-    initRenderLayers();
-    initColours();
-    initKeybindings();
-    initShields();
   }
 
   private static void initShields() {
