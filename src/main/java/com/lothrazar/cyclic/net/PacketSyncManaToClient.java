@@ -1,14 +1,18 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.capabilities.ManaManager;
+import com.lothrazar.cyclic.capabilities.ClientDataManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
+/**
+ * Sync Player and Chunk capabilities to client
+ *
+ */
 public class PacketSyncManaToClient extends PacketBaseCyclic {
 
-  private int playerMana;
-  private int chunkMana;
+  private int playerMana; // TODO : playerData object
+  private int chunkMana; // TODO: chunkData object
 
   public PacketSyncManaToClient(int playerMana, int chunkMana) {
     this.playerMana = playerMana;
@@ -18,11 +22,8 @@ public class PacketSyncManaToClient extends PacketBaseCyclic {
 
   public static void handle(PacketSyncManaToClient message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      // Here we are client side.
-      // Be very careful not to access client-only classes here! (like Minecraft) because
-      // this packet needs to be available server-side too
-      System.out.println("client sync message spam");
-      ManaManager.ClientManaData.set(message.playerMana, message.chunkMana);
+      // .println("client sync message spam");
+      ClientDataManager.set(message.playerMana, message.chunkMana);
     });
     message.done(ctx);
   }

@@ -30,7 +30,7 @@ import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmuffRender;
 import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
-import com.lothrazar.cyclic.capabilities.ManaManager.ClientManaData;
+import com.lothrazar.cyclic.capabilities.ClientDataManager;
 import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
@@ -72,11 +72,13 @@ public class ClientRegistryCyclic {
   //TODO: refactor split into keyboard registry, overlay registry, other renderers below 
   public static KeyMapping CAKE;
   public static final IIngameOverlay HUD_MANA = (gui, poseStack, partialTicks, width, height) -> {
-    final String toDisplay = "P:" + ClientManaData.getPlayerMana() + " CH:" + ClientManaData.getChunkMana();
-    int x = 10; // ManaConfig.MANA_HUD_X.get();
-    int y = 10; // ManaConfig.MANA_HUD_Y.get(); //TODO: client-config
-    if (x >= 0 && y >= 0) {
-      gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
+    if (Minecraft.getInstance().player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
+      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
+      int x = 10; // ManaConfig.MANA_HUD_X.get();
+      int y = 10; // ManaConfig.MANA_HUD_Y.get(); //TODO: client-config
+      if (x >= 0 && y >= 0) {
+        gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
+      }
     }
   };
 
@@ -101,7 +103,7 @@ public class ClientRegistryCyclic {
   }
 
   private static void initOverlay() {
-    OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "name", HUD_MANA);
+    OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "data", HUD_MANA);
   }
 
   @SubscribeEvent

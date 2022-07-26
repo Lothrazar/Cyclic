@@ -39,6 +39,8 @@ public class ModCyclic {
     ConfigRegistry.setup();
     ConfigRegistry.setupClient();
     DataTags.setup();
+    MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, CapabilityRegistry::onAttachCapabilitiesPlayer);
+    MinecraftForge.EVENT_BUS.register(new CapabilityRegistry());
     MinecraftForge.EVENT_BUS.register(new CommandRegistry());
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
     BlockRegistry.BLOCKS.register(bus);
@@ -54,8 +56,6 @@ public class ModCyclic {
     EnchantRegistry.ENCHANTMENTS.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
     ForgeMod.enableMilkFluid();
-    MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, CapabilityRegistry::onAttachCapabilitiesPlayer);
-    MinecraftForge.EVENT_BUS.register(new CapabilityRegistry());
     //TODO: 1.18 new content 
     //anti beacon
     //poison cleansing magic aura

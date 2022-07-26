@@ -2,8 +2,6 @@ package com.lothrazar.cyclic.capabilities.player;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclic.capabilities.ManaManager;
-import com.lothrazar.cyclic.capabilities.ManaManager.PlayerCapabilityStorage;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
@@ -13,16 +11,16 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class PlayerCapProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-  public static Capability<PlayerCapabilityStorage> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<>() {});
+  public static Capability<PlayerCapabilityStorage> CYCLIC_PLAYER = CapabilityManager.get(new CapabilityToken<>() {});
   private PlayerCapabilityStorage playerMana = null;
-  private final LazyOptional<ManaManager.PlayerCapabilityStorage> opt = LazyOptional.of(this::createPlayerMana);
+  private final LazyOptional<PlayerCapabilityStorage> opt = LazyOptional.of(this::createMe);
 
   @Nonnull
-  private PlayerCapabilityStorage createPlayerMana() {
+  private PlayerCapabilityStorage createMe() {
     if (playerMana == null) {
-      playerMana = new ManaManager.PlayerCapabilityStorage();
+      playerMana = new PlayerCapabilityStorage();
     }
     return playerMana;
   }
@@ -30,7 +28,7 @@ public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable
   @Nonnull
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-    if (cap == PLAYER_MANA) {
+    if (cap == CYCLIC_PLAYER) {
       return opt.cast();
     }
     return LazyOptional.empty();
@@ -45,12 +43,12 @@ public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable
   @Override
   public CompoundTag serializeNBT() {
     CompoundTag nbt = new CompoundTag();
-    createPlayerMana().saveNBTData(nbt);
+    createMe().saveNBTData(nbt);
     return nbt;
   }
 
   @Override
   public void deserializeNBT(CompoundTag nbt) {
-    createPlayerMana().loadNBTData(nbt);
+    createMe().loadNBTData(nbt);
   }
 }
