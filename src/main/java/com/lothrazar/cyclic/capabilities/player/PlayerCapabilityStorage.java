@@ -6,6 +6,12 @@ public class PlayerCapabilityStorage {
 
   int mana;
 
+  public PlayerCapabilityStorage(int readInt) {
+    mana = readInt;
+  }
+
+  public PlayerCapabilityStorage() {}
+
   public int getMana() {
     return mana;
   }

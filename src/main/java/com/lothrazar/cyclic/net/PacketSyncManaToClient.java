@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
+import com.lothrazar.cyclic.capabilities.chunk.ChunkDataStorage;
+import com.lothrazar.cyclic.capabilities.player.PlayerCapabilityStorage;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -14,9 +16,9 @@ public class PacketSyncManaToClient extends PacketBaseCyclic {
   private int playerMana; // TODO : playerData object
   private int chunkMana; // TODO: chunkData object
 
-  public PacketSyncManaToClient(int playerMana, int chunkMana) {
-    this.playerMana = playerMana;
-    this.chunkMana = chunkMana;
+  public PacketSyncManaToClient(PlayerCapabilityStorage playerMana, ChunkDataStorage chunkMana) {
+    this.playerMana = playerMana.getMana();
+    this.chunkMana = chunkMana.getMana();
   }
   //  public PacketSyncManaToClient() {}
 
@@ -29,7 +31,7 @@ public class PacketSyncManaToClient extends PacketBaseCyclic {
   }
 
   public static PacketSyncManaToClient decode(FriendlyByteBuf buf) {
-    return new PacketSyncManaToClient(buf.readInt(), buf.readInt());
+    return new PacketSyncManaToClient(new PlayerCapabilityStorage(buf.readInt()), new ChunkDataStorage(buf.readInt()));
   }
 
   public static void encode(PacketSyncManaToClient msg, FriendlyByteBuf buf) {

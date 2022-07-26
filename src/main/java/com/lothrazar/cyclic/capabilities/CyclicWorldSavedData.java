@@ -21,9 +21,12 @@ import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraftforge.network.PacketDistributor;
 
+//
+// mcjty https://wiki.mcjty.eu/modding/index.php?title=Tutorial_1.18_Episode_7
+//
 public class CyclicWorldSavedData extends SavedData {
 
-  private final Map<ChunkPos, ChunkDataStorage> manaMap = new HashMap<>();
+  private final Map<ChunkPos, ChunkDataStorage> chunkPosData = new HashMap<>();
   private final Random random = new Random();
   //TODO: ticker in new whole thing Keep a counter so that we don't send mana back to the client every tick
   private int syncToClientCounter = 0;
@@ -35,15 +38,15 @@ public class CyclicWorldSavedData extends SavedData {
     for (Tag t : list) {
       CompoundTag manaTag = (CompoundTag) t;
       ChunkDataStorage mana = new ChunkDataStorage(manaTag);
-      ChunkPos pos = new ChunkPos(manaTag.getInt("x"), manaTag.getInt("z"));
-      manaMap.put(pos, mana);
+      ChunkPos chunkPos = new ChunkPos(manaTag.getInt("x"), manaTag.getInt("z"));
+      chunkPosData.put(chunkPos, mana);
     }
   }
 
   @Override
   public CompoundTag save(CompoundTag tag) {
     ListTag list = new ListTag();
-    manaMap.forEach((chunkPos, mana) -> {
+    chunkPosData.forEach((chunkPos, mana) -> {
       CompoundTag manaTag = new CompoundTag();
       manaTag.putInt("x", chunkPos.x);
       manaTag.putInt("z", chunkPos.z);
@@ -73,7 +76,7 @@ public class CyclicWorldSavedData extends SavedData {
   }
 
   private ChunkDataStorage getDataForChunk(ChunkPos chunkPos) {
-    return manaMap.computeIfAbsent(chunkPos, cp -> new ChunkDataStorage(random.nextInt(4444, 7777))); //default is what? zero? 9999
+    return chunkPosData.computeIfAbsent(chunkPos, cp -> new ChunkDataStorage(random.nextInt(4444, 7777))); //default is what? zero? 9999
   }
   //  public int getMana(BlockPos pos) {
   //    ChunkData mana = getManaInternal(pos);
@@ -108,11 +111,8 @@ public class CyclicWorldSavedData extends SavedData {
           //and at the same time, get data for the CHUNK you are in and sync at the same time
           //do both instead of once
           //send playerData and chunkData to client 
-          PacketRegistry.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new PacketSyncManaToClient(
-              //TODO: send whole obj
-              playerData == null ? -1 : playerData.getMana(),
-              //TODO: obj
-              chunkData.getMana()));
+          PacketRegistry.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
+              new PacketSyncManaToClient(playerData, chunkData));
         }
       });
     }
