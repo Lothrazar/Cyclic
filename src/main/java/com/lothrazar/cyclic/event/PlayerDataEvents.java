@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.data.CyclicFile;
+import com.lothrazar.cyclic.filesystem.CyclicFile;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.world.entity.player.Player;

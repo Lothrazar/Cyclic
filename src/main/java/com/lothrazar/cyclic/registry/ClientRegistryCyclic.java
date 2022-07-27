@@ -72,6 +72,11 @@ public class ClientRegistryCyclic {
   //TODO: refactor split into keyboard registry, overlay registry, other renderers below 
   public static KeyMapping CAKE;
   public static final IIngameOverlay HUD_MANA = (gui, poseStack, partialTicks, width, height) -> {
+    //cancel if turned off
+    if (!FeatureRegistry.PLAYER_RENDER_CAPS) {
+      return;
+    }
+    //ok go
     if (Minecraft.getInstance().player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
       final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
       int x = 10; // ManaConfig.MANA_HUD_X.get();

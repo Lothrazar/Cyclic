@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.data;
+package com.lothrazar.cyclic.filesystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class CyclicFile {
 
+  //TODO: deprecate everything EXCEPT item stacks. replace with player caps 
   public static final String NBTINV = "inv";
   public final UUID playerId;
   public boolean storageVisible = false;
