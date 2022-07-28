@@ -2,11 +2,11 @@ package com.lothrazar.cyclic.block;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,7 +25,7 @@ public class PeatBlock extends BlockCyclic {
 
   @SuppressWarnings("deprecation")
   @Override
-  public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+  public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
     super.randomTick(state, world, pos, random);
     List<BlockPos> around = ShapeUtil.squareHorizontalHollow(pos, 1);
     int sidesWet = 0;

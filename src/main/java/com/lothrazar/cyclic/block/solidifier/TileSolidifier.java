@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import java.awt.TextComponent;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -123,7 +123,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.SOLIDIFIER.get().getName();
   }
 
   @Override

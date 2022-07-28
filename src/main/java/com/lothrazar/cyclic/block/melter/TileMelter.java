@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.melter;
 
-import java.awt.TextComponent;
 import java.util.List;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
@@ -134,7 +134,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.MELTER.get().getName();
   }
 
   @Override

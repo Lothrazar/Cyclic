@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.gui;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
 import com.lothrazar.cyclic.render.RenderUtils;
-import com.lothrazar.cyclic.util.FluidHelpers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -71,7 +71,7 @@ public class FluidBar {
     float amount = fluid.getAmount();
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-    TextureAtlasSprite icon = FluidHelpers.getBaseFluidTexture(fluid.getFluid(), FluidFlow.STILL);
+    TextureAtlasSprite icon = FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL);
     if (fluid.getFluid() == Fluids.WATER) {
       //hack in the blue because water is grey and is filled in by the biome when in-world
       RenderSystem.setShaderColor(0, 0, 1, 1);

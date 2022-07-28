@@ -3,10 +3,11 @@ package com.lothrazar.cyclic.item.random;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.net.PacketBaseCyclic;
-import com.lothrazar.cyclic.util.ItemStackUtil;
 import com.lothrazar.cyclic.util.BlockUtil;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,6 +19,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class PacketRandomize extends PacketBaseCyclic {
 
+  private static final Random RND = new Random();
   private BlockPos pos;
   private Direction side;
   private InteractionHand hand;
@@ -63,7 +65,7 @@ public class PacketRandomize extends PacketBaseCyclic {
           rstates.add(stateHere);
         }
       }
-      Collections.shuffle(rpos, world.random);
+      Collections.shuffle(rpos, RND);
       BlockPos swapPos;
       BlockState swapState;
       synchronized (rpos) { //just in case

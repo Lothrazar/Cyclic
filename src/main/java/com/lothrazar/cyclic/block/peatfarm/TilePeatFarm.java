@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.peatfarm;
 
-import java.awt.TextComponent;
 import java.util.List;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
@@ -92,7 +91,7 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.PEAT_FARM.get().getName();
   }
 
   @Override

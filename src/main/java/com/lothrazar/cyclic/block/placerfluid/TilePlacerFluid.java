@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.placerfluid;
 
-import java.awt.TextComponent;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import net.minecraft.core.BlockPos;
@@ -86,7 +86,7 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.PLACER_FLUID.get().getName();
   }
 
   @Override

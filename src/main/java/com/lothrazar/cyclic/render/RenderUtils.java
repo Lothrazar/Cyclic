@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -194,7 +195,10 @@ public class RenderUtils {
    * @return
    */
   public static int calculateGlowLight(int light, FluidStack fluid) {
-    return fluid.isEmpty() ? light : calculateGlowLight(light, fluid.getFluid().getAttributes().getLuminosity(fluid));
+    //    IClientFluidTypeExtensions fluidAttributes = IClientFluidTypeExtensions.of(fluid.getFluid());
+    return fluid.isEmpty() ? light
+        : calculateGlowLight(light,
+            fluid.getFluid().getFluidType().getLightLevel());
   }
 
   // Replace various usages of this with the getter for calculating glow light, at least if we end up making it only
@@ -218,7 +222,8 @@ public class RenderUtils {
   }
 
   private static int getColorARGB(FluidStack fluidStack) {
-    return fluidStack.getFluid().getAttributes().getColor(fluidStack);
+    IClientFluidTypeExtensions fluidAttributes = IClientFluidTypeExtensions.of(fluidStack.getFluid());
+    return fluidAttributes.getTintColor(fluidStack);
   }
 
   public static float getRed(int color) {

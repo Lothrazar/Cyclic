@@ -5,6 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import com.lothrazar.cyclic.util.ShapeUtil;
@@ -159,7 +160,7 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.COLLECTOR_FLUID.get().getName();
   }
 
   @Override

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.disenchant;
 
-import java.awt.TextComponent;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
@@ -9,6 +8,7 @@ import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.SoundUtil;
@@ -189,7 +189,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.DISENCHANTER.get().getName();
   }
 
   @Override

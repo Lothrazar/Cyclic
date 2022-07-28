@@ -86,7 +86,7 @@ public class LifeLeechEnchant extends EnchantmentCyclic {
     }
     if (event.getSource().getEntity() instanceof Player && event.getEntity() instanceof LivingEntity) {
       Player attacker = (Player) event.getSource().getEntity();
-      LivingEntity target = (LivingEntity) event.getEntity();
+      LivingEntity target = event.getEntity();
       int level = getCurrentLevelTool(attacker);
       if (level > 0) {
         // we -1  since potion level 1 is  II
@@ -113,7 +113,7 @@ public class LifeLeechEnchant extends EnchantmentCyclic {
     if (!isEnabled()) {
       return;
     }
-    Player attacker = event.getPlayer();
+    Player attacker = event.getEntity();
     int level = getCurrentLevelTool(attacker);
     if (level > 0 && attacker.getHealth() < attacker.getMaxHealth()) {
       //      UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(2));

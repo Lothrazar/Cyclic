@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.crusher;
 
-import java.util.Random;
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
@@ -10,6 +9,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -139,7 +139,7 @@ public class RecipeCrusher implements Recipe<TileCrusher> {
   //optional recipes for grinder ores / other mod ores
   //  
 
-  public ItemStack createBonus(Random rand) {
+  public ItemStack createBonus(RandomSource rand) {
     ItemStack getBonus = this.randOutput.bonus.copy();
     if (this.randOutput.bonus.getCount() > 1) {
       //if its 1 just leave it. otherwise RNG

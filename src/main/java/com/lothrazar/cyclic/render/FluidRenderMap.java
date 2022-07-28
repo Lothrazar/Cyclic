@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -30,11 +31,12 @@ public class FluidRenderMap<V> extends Object2ObjectOpenCustomHashMap<FluidStack
   public static TextureAtlasSprite getFluidTexture(FluidStack fluidStack, FluidFlow type) {
     Fluid fluid = fluidStack.getFluid();
     ResourceLocation spriteLocation;
+    IClientFluidTypeExtensions fluidAttributes = IClientFluidTypeExtensions.of(fluid);
     if (type == FluidFlow.STILL) {
-      spriteLocation = fluid.getAttributes().getStillTexture(fluidStack);
+      spriteLocation = fluidAttributes.getStillTexture(fluidStack);
     }
     else {
-      spriteLocation = fluid.getAttributes().getFlowingTexture(fluidStack);
+      spriteLocation = fluidAttributes.getFlowingTexture(fluidStack);
     }
     return getSprite(spriteLocation);
   }

@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.wireless.fluid;
 
-import java.awt.TextComponent;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
@@ -66,7 +66,7 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.WIRELESS_FLUID.get().getName();
   }
 
   @Override

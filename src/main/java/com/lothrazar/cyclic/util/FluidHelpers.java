@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -116,25 +117,6 @@ public class FluidHelpers {
     }
   }
 
-  /**
-   * Thank you Mekanism which is MIT License https://github.com/mekanism/Mekanism
-   *
-   * @param fluid
-   * @param type
-   * @return
-   */
-  public static TextureAtlasSprite getBaseFluidTexture(Fluid fluid, FluidFlow type) {
-    ResourceLocation spriteLocation;
-    if (type == FluidFlow.STILL) {
-      //      RenderProperties.get(type);
-      spriteLocation = fluid.getAttributes().getStillTexture();
-    }
-    else {
-      spriteLocation = fluid.getAttributes().getFlowingTexture();
-    }
-    return getSprite(spriteLocation);
-  }
-
   public static TextureAtlasSprite getSprite(ResourceLocation spriteLocation) {
     return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(spriteLocation);
   }
@@ -145,7 +127,7 @@ public class FluidHelpers {
     }
     Model3D model = new Model3D();
     model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL));
-    if (fluid.getFluid().getAttributes().getStillTexture(fluid) != null) {
+    if (IClientFluidTypeExtensions.of(fluid.getFluid()).getStillTexture(fluid) != null) {
       double sideSpacing = 0.00625;
       double belowSpacing = 0.0625 / 4;
       double topSpacing = belowSpacing;

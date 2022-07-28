@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.expcollect;
 
-import java.awt.TextComponent;
 import java.util.List;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.PlayerUtil;
@@ -213,6 +213,6 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.EXPERIENCE_PYLON.get().getName();
   }
 }

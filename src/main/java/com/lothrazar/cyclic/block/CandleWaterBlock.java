@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block;
 
-import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
@@ -33,6 +32,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -84,7 +84,7 @@ public class CandleWaterBlock extends BlockCyclic {
   }
 
   @Override
-  public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+  public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
     if (stateIn.getValue(LIT) && rand.nextDouble() < CHANCE_SOUND) {
       SoundUtil.playSound(worldIn, pos, SoundEvents.FIRE_AMBIENT);
     }
@@ -92,16 +92,16 @@ public class CandleWaterBlock extends BlockCyclic {
   }
 
   @Override
-  public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+  public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
     triggerUpdate(worldIn, pos, rand);
   }
 
   @Override
-  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
     triggerUpdate(worldIn, pos, random);
   }
 
-  private void triggerUpdate(Level world, BlockPos pos, Random rand) {
+  private void triggerUpdate(Level world, BlockPos pos, RandomSource rand) {
     try {
       if (!world.isClientSide && world.getBlockState(pos).getValue(LIT)) {
         trySpawn(world, pos, rand);
@@ -112,7 +112,7 @@ public class CandleWaterBlock extends BlockCyclic {
     }
   }
 
-  private void trySpawn(Level world, BlockPos pos, Random rand) throws Exception {
+  private void trySpawn(Level world, BlockPos pos, RandomSource rand) throws Exception {
     //if radius is 3, then go be
     float x = pos.getX() + Mth.nextInt(rand, -1 * RADIUS.get(), RADIUS.get());
     float y = pos.getY();
@@ -137,12 +137,12 @@ public class CandleWaterBlock extends BlockCyclic {
     world.scheduleTick(pos, this, TICK_RATE.get());
   }
 
-  private void afterSpawnSuccess(Mob monster, Level world, BlockPos pos, Random rand) {
+  private void afterSpawnSuccess(Mob monster, Level world, BlockPos pos, RandomSource rand) {
     monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
     world.scheduleTick(pos, this, TICK_RATE.get());
   }
 
-  private Mob findMonsterToSpawn(Level world, BlockPos pos, Random rand) {
+  private Mob findMonsterToSpawn(Level world, BlockPos pos, RandomSource rand) {
     //    world.getBiome(pos)
     WeightedRandomList<MobSpawnSettings.SpawnerData> spawners = world.getBiome(pos).value().getMobSettings().getMobs(type);
     if (spawners.isEmpty()) {
