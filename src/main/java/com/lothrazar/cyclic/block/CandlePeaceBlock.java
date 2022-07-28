@@ -23,13 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block;
 
-import java.util.Random;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -101,7 +101,7 @@ public class CandlePeaceBlock extends BlockCyclic {
   }
 
   @Override
-  public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+  public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
     if (stateIn.getValue(LIT) && rand.nextDouble() < CHANCE_SOUND) {
       SoundUtil.playSound(worldIn, pos, SoundEvents.FIRE_AMBIENT);
     }

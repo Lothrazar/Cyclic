@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.apple;
 
-import java.util.Random;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -60,7 +60,7 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
   }
 
   @Override
-  public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+  public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
     return canBonemeal; //false if its a super-apple
   }
 
@@ -75,7 +75,7 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
   }
 
   @Override
-  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
     int age = state.getValue(AGE);
     if (age < MAX_AGE && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.random.nextInt(5) == 0)) {
       worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(age + 1)), 2);
@@ -94,7 +94,7 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
   }
 
   @Override
-  public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+  public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
     worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(state.getValue(AGE) + 1)), 2);
   }
 }

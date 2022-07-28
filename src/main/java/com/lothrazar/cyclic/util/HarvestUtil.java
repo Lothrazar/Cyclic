@@ -147,7 +147,8 @@ public class HarvestUtil {
       LevelWorldUtil.dropItemStackInWorld(world, posCurrent, dropStack);
     }
     if (world instanceof ServerLevel) {
-      blockState.spawnAfterBreak((ServerLevel) world, posCurrent, ItemStack.EMPTY);
+      boolean isPlayer = true;
+      blockState.spawnAfterBreak((ServerLevel) world, posCurrent, ItemStack.EMPTY, isPlayer);
     }
     //now update age to zero after harvest
     BlockState newState = blockState.setValue(propInt, minAge);
