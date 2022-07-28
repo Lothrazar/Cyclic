@@ -31,7 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class QuickdrawEnchant extends EnchantmentCyclic {
@@ -80,12 +80,12 @@ public class QuickdrawEnchant extends EnchantmentCyclic {
   }
 
   @SubscribeEvent
-  public void onPlayerUpdate(LivingUpdateEvent event) {
+  public void onPlayerUpdate(LivingTickEvent event) {
     if (!isEnabled()) {
       return;
     }
-    if (event.getEntity() instanceof Player) {
-      Player player = (Player) event.getEntity();
+    if (event.getEntity() instanceof Player player) {
+      //      Player player = (Player) event.getEntity();
       if (player.isUsingItem() == false) {
         return;
       }

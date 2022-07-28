@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,7 +43,7 @@ public class BlockCableEnergy extends CableBase {
       if (handlerHere != null) {
         int st = handlerHere.getEnergyStored();
         if (st > 0) {
-          player.displayClientMessage(new TranslatableComponent(st + ""), true);
+          player.displayClientMessage(Component.translatable(st + ""), true);
         }
       }
     }

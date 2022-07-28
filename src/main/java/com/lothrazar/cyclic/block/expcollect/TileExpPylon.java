@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.expcollect;
 
+import java.awt.TextComponent;
 import java.util.List;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
@@ -14,7 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
@@ -28,8 +28,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
@@ -43,7 +43,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   public static final int FLUID_PER_EXP = 20;
   public static final int EXP_PER_BOTTLE = 11;
   private static final int RADIUS = 16;
-  public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
+  public static final int CAPACITY = 64000 * FluidType.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 

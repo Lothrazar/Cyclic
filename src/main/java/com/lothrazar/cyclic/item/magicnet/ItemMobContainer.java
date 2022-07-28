@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +31,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
-      TranslatableComponent t = new TranslatableComponent(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
+      MutableComponent t = Component.translatable(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }
@@ -54,7 +54,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
     Level world = context.getLevel();
     SoundUtil.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE.get(), 0.3F, 1F);
     if (!world.isClientSide) {
-      Entity entity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
+      Entity entity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
           .create(world);
       //    entity.egg
       entity.load(stack.getTag());

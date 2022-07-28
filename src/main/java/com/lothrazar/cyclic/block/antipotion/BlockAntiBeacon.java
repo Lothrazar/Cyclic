@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -104,18 +104,18 @@ public class BlockAntiBeacon extends BlockCyclic {
     return StringParseUtil.isInList((List<String>) TileAntiBeacon.POTIONS.get(), potionId);
   }
 
-  public void isPotionApplicable(PotionApplicableEvent event) {
-    if (event.getPotionEffect() == null) {
+  public void isPotionApplicable(MobEffectEvent.Applicable event) {
+    if (event.getEffectInstance() == null) {
       return;
     }
     //this will cancel it
-    if (BlockAntiBeacon.doesConfigBlockEffect(event.getPotionEffect().getEffect())) {
+    if (BlockAntiBeacon.doesConfigBlockEffect(event.getEffectInstance().getEffect())) {
       final boolean isPowered = false; // if im NOT powered, im running
       List<BlockPos> blocks = BlockstatesUtil.findBlocks(event.getEntity().getCommandSenderWorld(),
-          event.getEntityLiving().blockPosition(), this, TileAntiBeacon.RADIUS.get(), isPowered);
+          event.getEntity().blockPosition(), this, TileAntiBeacon.RADIUS.get(), isPowered);
       //can
       if (blocks != null && blocks.size() > 0) {
-        ModCyclic.LOGGER.info("[potion blocked] " + event.getPotionEffect());
+        ModCyclic.LOGGER.info("[potion blocked] " + event.getEffectInstance());
         event.setResult(Result.DENY);
       }
     }

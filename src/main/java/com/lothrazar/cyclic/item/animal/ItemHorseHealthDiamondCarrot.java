@@ -51,7 +51,7 @@ public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEnt
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.SUCCESS);
         event.getItemStack().shrink(1);
-        ahorse.mobInteract(event.getPlayer(), event.getHand());
+        ahorse.mobInteract(event.getEntity(), event.getHand());
         //processInteract
         //trigger eatingHorse
         EntityUtil.eatingHorse(ahorse);

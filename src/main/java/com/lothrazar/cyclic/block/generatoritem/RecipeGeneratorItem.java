@@ -14,7 +14,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
 
@@ -111,7 +110,7 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
     return this.getRfPertick() * this.getTicks();
   }
 
-  public static class SerializeGenerateItem extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeGeneratorItem> {
+  public static class SerializeGenerateItem implements RecipeSerializer<RecipeGeneratorItem> {
 
     public SerializeGenerateItem() {}
 

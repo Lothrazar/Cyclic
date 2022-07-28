@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 
 public class AppleChocolate extends ItemBaseCyclic {
 
@@ -28,7 +28,7 @@ public class AppleChocolate extends ItemBaseCyclic {
     Iterator<MobEffectInstance> itr = entityLiving.getActiveEffectsMap().values().iterator();
     while (itr.hasNext()) {
       MobEffectInstance effect = itr.next();
-      if (MinecraftForge.EVENT_BUS.post(new PotionEvent.PotionRemoveEvent(entityLiving, effect))) {
+      if (MinecraftForge.EVENT_BUS.post(new MobEffectEvent.Remove(entityLiving, effect))) {
         continue;
       }
       if (effect.getEffect().isBeneficial() == false) {

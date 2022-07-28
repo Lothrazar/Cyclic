@@ -8,7 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -40,7 +40,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
       boolean isIgnore = getIsIgnoreList(stack);
-      TranslatableComponent t = new TranslatableComponent("cyclic.screen.filter." + isIgnore);
+      MutableComponent t = Component.translatable("cyclic.screen.filter." + isIgnore);
       t.withStyle(isIgnore ? ChatFormatting.DARK_GRAY : ChatFormatting.DARK_BLUE);
       tooltip.add(t);
       // caps arent synced from server very well
@@ -48,16 +48,16 @@ public class FilterCardItem extends ItemBaseCyclic {
       CompoundTag stackTag = stack.getOrCreateTag();
       if (stackTag.contains("fluidTooltip")) {
         String fluidTooltip = stackTag.getString("fluidTooltip");
-        tooltip.add(new TranslatableComponent(fluidTooltip).withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable(fluidTooltip).withStyle(ChatFormatting.AQUA));
       }
       if (stackTag.contains("itemCount")) {
         int itemCount = stackTag.getInt("itemCount");
         if (itemCount > 0) {
           if (stackTag.contains("itemTooltip")) {
             String itemTooltip = stackTag.getString("itemTooltip");
-            tooltip.add(new TranslatableComponent(itemTooltip).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable(itemTooltip).withStyle(ChatFormatting.GRAY));
           }
-          tooltip.add(new TranslatableComponent("cyclic.screen.filter.item.count").append("" + itemCount).withStyle(ChatFormatting.GRAY));
+          tooltip.add(Component.translatable("cyclic.screen.filter.item.count").append("" + itemCount).withStyle(ChatFormatting.GRAY));
         }
       }
     }
@@ -69,7 +69,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayer) playerIn, new ContainerProviderFilterCard(), playerIn.blockPosition());
+      NetworkHooks.openScreen((ServerPlayer) playerIn, new ContainerProviderFilterCard(), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
   }

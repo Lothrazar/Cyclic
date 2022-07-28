@@ -37,7 +37,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -132,13 +132,13 @@ public class TileTransporterItem extends ItemBaseCyclic {
     if (itemStack.getTag() != null && itemStack.getTag().contains(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTag().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
-        TranslatableComponent t = new TranslatableComponent(ChatUtil.lang(blockname));
+        MutableComponent t = Component.translatable(ChatUtil.lang(blockname));
         t.withStyle(ChatFormatting.DARK_GREEN);
         list.add(t);
       }
     }
     else {
-      TranslatableComponent t = new TranslatableComponent(ChatUtil.lang("invalid"));
+      MutableComponent t = Component.translatable(ChatUtil.lang("invalid"));
       t.withStyle(ChatFormatting.DARK_RED);
       list.add(t);
     }

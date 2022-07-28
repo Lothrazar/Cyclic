@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +29,7 @@ public class AppleBuffs extends ItemBaseCyclic {
         if (effCurrent == null || effCurrent.getEffect() == null) {
           continue;
         }
-        TranslatableComponent t = new TranslatableComponent(effCurrent.getEffect().getDescriptionId());
+        MutableComponent t = Component.translatable(effCurrent.getEffect().getDescriptionId());
         t.append(" " + ChatUtil.lang("potion.potency." + effCurrent.getAmplifier()));
         t.withStyle(ChatFormatting.DARK_GRAY);
         tooltip.add(t);

@@ -28,9 +28,9 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.BlockUtil;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.BlockUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
@@ -46,6 +46,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class TileTransporterEmptyItem extends ItemBaseCyclic {
 
@@ -64,12 +65,11 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
     BlockEntity tile = world.getBlockEntity(pos);
     BlockState state = world.getBlockState(pos);
     //
-    if (state == null || tile == null || state.getBlock() == null
-        || state.getBlock().getRegistryName() == null) {
+    if (state == null || tile == null || state.getBlock() == null) {
       ChatUtil.sendStatusMessage(player, "chest_sack.error.null");
       return InteractionResult.FAIL;
     }
-    ResourceLocation blockId = state.getBlock().getRegistryName();
+    ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(state.getBlock());
     if (StringParseUtil.isInList((List<String>) IGNORELIST.get(), blockId)) {
       ChatUtil.sendStatusMessage(player, "chest_sack.error.config");
       return InteractionResult.FAIL;
@@ -97,7 +97,7 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
     final CompoundTag itemData = new CompoundTag();
     itemData.putString(TileTransporterItem.KEY_BLOCKNAME, state.getBlock().getDescriptionId());
     itemData.put(TileTransporterItem.KEY_BLOCKTILE, tileData);
-    itemData.putString(TileTransporterItem.KEY_BLOCKID, state.getBlock().getRegistryName().toString());
+    itemData.putString(TileTransporterItem.KEY_BLOCKID, ForgeRegistries.BLOCKS.getKey(state.getBlock()).toString());
     itemData.put(TileTransporterItem.KEY_BLOCKSTATE, NbtUtils.writeBlockState(state));
     InteractionHand hand = InteractionHand.MAIN_HAND;
     ItemStack held = player.getItemInHand(hand);

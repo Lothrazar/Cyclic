@@ -48,16 +48,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
   }
 
   @Override
-  public Class<? extends CraftingRecipe> getRecipeClass() {
-    return CraftingRecipe.class;
-  }
-
-  @Override
-  public ResourceLocation getUid() {
-    return ID;
-  }
-
-  @Override
   public RecipeType<CraftingRecipe> getRecipeType() {
     return TYPE;
   }

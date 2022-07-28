@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
-import java.util.function.Consumer;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.render.ShieldBlockEntityWithoutLevelRenderer;
@@ -26,7 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
@@ -104,18 +103,29 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-    consumer.accept(new IItemRenderProperties() {
+  public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
+    consumer.accept(new IClientItemExtensions() {
 
       @Override
-      public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+      public BlockEntityWithoutLevelRenderer getCustomRenderer() {
         return ShieldBlockEntityWithoutLevelRenderer.instance;
       }
     });
   }
+  //1.18.2 below, changed above 
+  //  @Override
+  //  public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+  //    consumer.accept(new IItemRenderProperties() {
+  //
+  //      @Override
+  //      public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+  //        return ShieldBlockEntityWithoutLevelRenderer.instance;
+  //      }
+  //    });
+  //  }
 
   public void onShieldBlock(ShieldBlockEvent event, Player playerIn) {
-    LivingEntity shieldHolder = event.getEntityLiving();
+    LivingEntity shieldHolder = event.getEntity();
     ItemStack shield = shieldHolder.getUseItem();
     DamageSource dmgSource = event.getDamageSource();
     int thornsDmg = 0;

@@ -20,6 +20,7 @@ import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -33,7 +34,7 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -95,7 +96,7 @@ public class CyclicPluginJEI implements IModPlugin {
     for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {
-        registry.addIngredientInfo(st, VanillaTypes.ITEM_STACK, new TranslatableComponent(item.get().getDescriptionId() + ".guide"));
+        registry.addIngredientInfo(st, VanillaTypes.ITEM_STACK, Component.translatable(item.get().getDescriptionId() + ".guide"));
       }
     }
   }
@@ -124,28 +125,28 @@ public class CyclicPluginJEI implements IModPlugin {
 
   @Override
   public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
-    registry.addRecipeTransferHandler(ContainerMelter.class, MelterRecipeCategory.TYPE,
+    registry.addRecipeTransferHandler(ContainerMelter.class, MenuTypeRegistry.MELTER.get(), MelterRecipeCategory.TYPE,
         0, 2, //recipeSLotStart, recipeSlotCount
         2, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(ContainerSolidifier.class, SolidifierRecipeCategory.TYPE,
+    registry.addRecipeTransferHandler(ContainerSolidifier.class, MenuTypeRegistry.SOLIDIFIER.get(), SolidifierRecipeCategory.TYPE,
         0, 3, //recipeSLotStart, recipeSlotCount
         4, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(CraftingBagContainer.class, RecipeTypes.CRAFTING,
+    registry.addRecipeTransferHandler(CraftingBagContainer.class, MenuTypeRegistry.CRAFTING_BAG.get(), RecipeTypes.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
         10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(CraftingStickContainer.class, RecipeTypes.CRAFTING,
+    registry.addRecipeTransferHandler(CraftingStickContainer.class, MenuTypeRegistry.CRAFTING_STICK.get(), RecipeTypes.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
         10, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(ContainerWorkbench.class, RecipeTypes.CRAFTING,
+    registry.addRecipeTransferHandler(ContainerWorkbench.class, MenuTypeRegistry.WORKBENCH.get(), RecipeTypes.CRAFTING,
         1, 9, //recipeSLotStart, recipeSlotCount
         10, PLAYER_INV_SIZE);
-    registry.addRecipeTransferHandler(ContainerGeneratorDrops.class, GenitemRecipeCategory.TYPE,
+    registry.addRecipeTransferHandler(ContainerGeneratorDrops.class, MenuTypeRegistry.GENERATOR_DROPS.get(), GenitemRecipeCategory.TYPE,
         0, 1, //recipeSLotStart, recipeSlotCount
         1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(ContainerCrusher.class, CrusherRecipeCategory.TYPE,
+    registry.addRecipeTransferHandler(ContainerCrusher.class, MenuTypeRegistry.CRUSHER.get(), CrusherRecipeCategory.TYPE,
         0, 1, //recipeSLotStart, recipeSlotCount
         1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
-    registry.addRecipeTransferHandler(ContainerPackager.class, PackagerRecipeCategory.TYPE,
+    registry.addRecipeTransferHandler(ContainerPackager.class, MenuTypeRegistry.PACKAGER.get(), PackagerRecipeCategory.TYPE,
         0, 1, //recipeSLotStart, recipeSlotCount
         1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount 
   }

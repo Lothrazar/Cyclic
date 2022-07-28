@@ -8,13 +8,14 @@ import java.util.stream.Stream;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,6 +36,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -134,7 +136,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.UNCRAFTER.get().getName();
   }
 
   @Override
@@ -177,8 +179,9 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private boolean uncraftRecipe(Recipe<?> match) {
+    // hasContainerItem() ->  hasCraftingRemainingItem()
     List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())
-        .filter(stack -> !stack.hasContainerItem())
+        .filter(stack -> !stack.hasCraftingRemainingItem())
         .findAny()
         .map(Stream::of)
         .orElseGet(Stream::empty))
@@ -246,7 +249,8 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       this.status = UncraftStatusEnum.CONFIG;
       return false;
     }
-    if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
+    ResourceLocation stackKey = ForgeRegistries.ITEMS.getKey(stack.getItem());
+    if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORELIST.get(), stackKey)) {
       //checked the ITEM id list
       this.status = UncraftStatusEnum.CONFIG;
       return false;

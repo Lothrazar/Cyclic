@@ -20,7 +20,7 @@ public class PacketItemGui extends PacketBaseCyclic {
     ctx.get().enqueueWork(() -> {
       ServerPlayer player = ctx.get().getSender();
       if ((player.containerMenu instanceof ContainerStorageBag) == false) {
-        NetworkHooks.openGui(player, new StorageBagContainerProvider(), player.blockPosition());
+        NetworkHooks.openScreen(player, new StorageBagContainerProvider(), player.blockPosition());
       }
     });
     message.done(ctx);

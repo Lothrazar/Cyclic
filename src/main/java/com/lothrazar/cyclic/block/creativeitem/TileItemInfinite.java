@@ -6,8 +6,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -63,12 +61,6 @@ public class TileItemInfinite extends TileBlockEntityCyclic {
     super.saveAdditional(tag);
   }
 
-  //  @Override
-  public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
-  }
-
-  //  @Override
   public void tick() {
     ItemStack stackHere = inputSlots.getStackInSlot(0);
     if (!stackHere.isEmpty()) {

@@ -5,15 +5,15 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -39,20 +39,20 @@ public class LocationGpsCard extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     BlockPosDim dim = getPosition(stack);
     if (dim != null) {
-      tooltip.add(new TranslatableComponent(dim.toString()).withStyle(ChatFormatting.GRAY));
+      tooltip.add(Component.translatable(dim.toString()).withStyle(ChatFormatting.GRAY));
       if (Screen.hasShiftDown()) {
         String side = "S: " + dim.getSide().toString().toUpperCase();
-        tooltip.add(new TranslatableComponent(side).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable(side).withStyle(ChatFormatting.GRAY));
         if (!dim.getHitVec().equals(Vec3.ZERO)) {
-          tooltip.add(new TranslatableComponent("H: " + dim.getHitVec().toString()).withStyle(ChatFormatting.GRAY));
+          tooltip.add(Component.translatable("H: " + dim.getHitVec().toString()).withStyle(ChatFormatting.GRAY));
         }
       }
       else {
-        tooltip.add(new TranslatableComponent("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
       }
     }
     else {
-      TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".tooltip");
+      MutableComponent t = Component.translatable(getDescriptionId() + ".tooltip");
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }

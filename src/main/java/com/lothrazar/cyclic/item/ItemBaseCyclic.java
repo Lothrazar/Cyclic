@@ -10,7 +10,6 @@ import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BowItem;
@@ -112,7 +111,7 @@ public class ItemBaseCyclic extends Item {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
+    tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
     if (this.hasEnergy) {
       int current = 0;
       int energyttmax = 0;
@@ -120,7 +119,7 @@ public class ItemBaseCyclic extends Item {
       if (storage != null) {
         current = storage.getEnergyStored();
         energyttmax = storage.getMaxEnergyStored();
-        tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
+        tooltip.add(Component.translatable(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
       }
     }
   }

@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.gui;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
 import com.lothrazar.cyclic.render.RenderUtils;
-import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,7 +12,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -72,7 +71,7 @@ public class FluidBar {
     float amount = fluid.getAmount();
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-    TextureAtlasSprite icon = FluidHelpers.getBaseFluidTexture(fluid.getFluid(), FluidType.STILL);
+    TextureAtlasSprite icon = FluidHelpers.getBaseFluidTexture(fluid.getFluid(), FluidFlow.STILL);
     if (fluid.getFluid() == Fluids.WATER) {
       //hack in the blue because water is grey and is filled in by the biome when in-world
       RenderSystem.setShaderColor(0, 0, 1, 1);
@@ -116,7 +115,7 @@ public class FluidBar {
       tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
     }
     List<Component> list = new ArrayList<>();
-    list.add(new TranslatableComponent(tt));
+    list.add(Component.translatable(tt));
     parent.renderComponentTooltip(ms, list, mouseX, mouseY);
   }
 }

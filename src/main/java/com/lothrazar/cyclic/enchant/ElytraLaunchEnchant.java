@@ -27,8 +27,8 @@ import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.EntityUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
 import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -39,7 +39,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ElytraLaunchEnchant extends EnchantmentCyclic {
@@ -92,9 +92,9 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    if (event.getEntity() instanceof Player) {
-      Player p = (Player) event.getEntity();
+  public void onEntityUpdate(LivingTickEvent event) {
+    if (event.getEntity() instanceof Player p) {
+      //      Player p = (Player) event.getEntity();
       ItemStack armorStack = getFirstArmorStackWithEnchant(p);
       if (armorStack.isEmpty()) {
         return;

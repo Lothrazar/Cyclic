@@ -23,26 +23,13 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import com.google.gson.JsonObject;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 public class AutoSmeltEnchant extends EnchantmentCyclic {
 
@@ -96,46 +83,45 @@ public class AutoSmeltEnchant extends EnchantmentCyclic {
   public boolean checkCompatibility(Enchantment ench) {
     return ench != Enchantments.SILK_TOUCH && ench != Enchantments.BLOCK_FORTUNE && super.checkCompatibility(ench);
   }
-
-  public static class EnchantAutoSmeltModifier extends LootModifier {
-
-    public EnchantAutoSmeltModifier(LootItemCondition[] conditionsIn) {
-      super(conditionsIn);
-    }
-
-    @Override
-    public List<ItemStack> doApply(List<ItemStack> originalLoot, LootContext context) {
-      List<ItemStack> newLoot = new ArrayList<>();
-      originalLoot.forEach((stack) -> {
-        Optional<SmeltingRecipe> optional = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel());
-        if (optional.isPresent()) {
-          ItemStack smeltedItemStack = optional.get().getResultItem();
-          if (!smeltedItemStack.isEmpty()) {
-            smeltedItemStack = ItemHandlerHelper.copyStackWithSize(smeltedItemStack, stack.getCount() * smeltedItemStack.getCount());
-            newLoot.add(smeltedItemStack);
-          }
-          else {
-            newLoot.add(stack);
-          }
-        }
-        else {
-          newLoot.add(stack);
-        }
-      });
-      return newLoot;
-    }
-  }
-
-  public static class Serializer extends GlobalLootModifierSerializer<EnchantAutoSmeltModifier> {
-
-    @Override
-    public EnchantAutoSmeltModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn) {
-      return new EnchantAutoSmeltModifier(conditionsIn);
-    }
-
-    @Override
-    public JsonObject write(EnchantAutoSmeltModifier instance) {
-      return null; //not sure what to do with this
-    }
-  }
+  //  public static class EnchantAutoSmeltModifier extends LootModifier {
+  //
+  //    public EnchantAutoSmeltModifier(LootItemCondition[] conditionsIn) {
+  //      super(conditionsIn);
+  //    }
+  //
+  //    @Override
+  //    public List<ItemStack> doApply(List<ItemStack> originalLoot, LootContext context) {
+  //      List<ItemStack> newLoot = new ArrayList<>();
+  //      originalLoot.forEach((stack) -> {
+  //        Optional<SmeltingRecipe> optional = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel());
+  //        if (optional.isPresent()) {
+  //          ItemStack smeltedItemStack = optional.get().getResultItem();
+  //          if (!smeltedItemStack.isEmpty()) {
+  //            smeltedItemStack = ItemHandlerHelper.copyStackWithSize(smeltedItemStack, stack.getCount() * smeltedItemStack.getCount());
+  //            newLoot.add(smeltedItemStack);
+  //          }
+  //          else {
+  //            newLoot.add(stack);
+  //          }
+  //        }
+  //        else {
+  //          newLoot.add(stack);
+  //        }
+  //      });
+  //      return newLoot;
+  //    }
+  //  }
+  //
+  //  public static class Serializer extends Codec<LootModifier><EnchantAutoSmeltModifier> {
+  //
+  //    @Override
+  //    public EnchantAutoSmeltModifier read(ResourceLocation name, JsonObject json, LootItemCondition[] conditionsIn) {
+  //      return new EnchantAutoSmeltModifier(conditionsIn);
+  //    }
+  //
+  //    @Override
+  //    public JsonObject write(EnchantAutoSmeltModifier instance) {
+  //      return null; //not sure what to do with this
+  //    }
+  //  }
 }

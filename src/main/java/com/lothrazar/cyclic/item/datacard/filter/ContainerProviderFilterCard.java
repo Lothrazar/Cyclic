@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +10,7 @@ public class ContainerProviderFilterCard implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TranslatableComponent("item.cyclic.filter_data");
+    return Component.translatable("item.cyclic.filter_data");
   }
 
   @Override

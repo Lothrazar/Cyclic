@@ -5,14 +5,14 @@ import java.util.Locale;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.lothrazar.cyclic.util.ShapeUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionResult;
@@ -125,10 +125,10 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     super.onCraftedBy(stack, worldIn, playerIn);
   }
 
-  private static TranslatableComponent getModeTooltip(ItemStack stack) {
+  private static MutableComponent getModeTooltip(ItemStack stack) {
     EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
-    return new TranslatableComponent("item.cyclic.antimatter_wand.tooltip0",
-        new TranslatableComponent(String.format("item.cyclic.antimatter_wand.mode.%s",
+    return Component.translatable("item.cyclic.antimatter_wand.tooltip0",
+        Component.translatable(String.format("item.cyclic.antimatter_wand.mode.%s",
             mode.getSerializedName())));
   }
 

@@ -15,8 +15,6 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 
 public class GuiSliderInteger extends AbstractSliderButton implements IHasTooltip {
@@ -33,7 +31,7 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   public GuiSliderInteger(int x, int y, int width, int height, int field,
       BlockPos pos, int min, int max,
       double initialVal) {
-    super(x, y, width, height, TextComponent.EMPTY, 0);
+    super(x, y, width, height, Component.empty(), 0);
     this.field = field;
     this.pos = pos;
     this.min = min;
@@ -79,12 +77,12 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   public void setTooltip(String tt) {
     tooltip = new ArrayList<>();
     addTooltip(tt);
-    this.tooltip.add(new TranslatableComponent("cyclic.gui.sliderkeys").withStyle(ChatFormatting.DARK_GRAY));
+    this.tooltip.add(Component.translatable("cyclic.gui.sliderkeys").withStyle(ChatFormatting.DARK_GRAY));
   }
 
   @Override
   public void addTooltip(String ttIn) {
-    tooltip.add(new TranslatableComponent(ttIn));
+    tooltip.add(Component.translatable(ttIn));
   }
 
   /**
@@ -135,7 +133,7 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   @Override
   protected void updateMessage() {
     int val = getSliderValueActual();
-    this.setMessage(new TranslatableComponent("" + val));
+    this.setMessage(Component.translatable("" + val));
   }
 
   /**

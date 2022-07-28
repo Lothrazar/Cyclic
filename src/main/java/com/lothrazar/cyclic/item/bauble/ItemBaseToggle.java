@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -34,7 +34,7 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    TranslatableComponent t = new TranslatableComponent("item.cyclic.bauble.on." + this.isOn(stack));
+    MutableComponent t = Component.translatable("item.cyclic.bauble.on." + this.isOn(stack));
     t.withStyle(ChatFormatting.DARK_GRAY);
     tooltip.add(t);
   }

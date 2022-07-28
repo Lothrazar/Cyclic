@@ -32,7 +32,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class MagnetEnchant extends EnchantmentCyclic {
@@ -84,11 +84,11 @@ public class MagnetEnchant extends EnchantmentCyclic {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
+  public void onEntityUpdate(LivingTickEvent event) {
     if (!isEnabled()) {
       return;
     }
-    LivingEntity entity = event.getEntityLiving();
+    LivingEntity entity = event.getEntity();
     if (entity instanceof Player) {
       Player p = (Player) entity;
       if (p.isSpectator()) {

@@ -9,19 +9,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.ConfiguredStructureTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.StructureTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 
 public class EnderEyeReuseItem extends ItemBaseCyclic {
 
   private static final int MAX_RANGE = 100;
-  private static final TagKey<ConfiguredStructureFeature<?, ?>> STRONGHOLD = ConfiguredStructureTags.EYE_OF_ENDER_LOCATED;
 
   public EnderEyeReuseItem(Properties properties) {
     super(properties.durability(256));
@@ -32,7 +29,7 @@ public class EnderEyeReuseItem extends ItemBaseCyclic {
     ItemStack stack = player.getItemInHand(hand);
     if (!worldIn.isClientSide && worldIn instanceof ServerLevel) {
       ServerLevel sw = (ServerLevel) worldIn;
-      BlockPos closestBlockPos = sw.findNearestMapFeature(STRONGHOLD, player.blockPosition(), MAX_RANGE, false);
+      BlockPos closestBlockPos = sw.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, player.blockPosition(), MAX_RANGE, false);
       if (closestBlockPos != null) {
         double posX = player.getX();
         double posY = player.getY();

@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -40,9 +39,9 @@ public class BlockstateCard extends ItemBaseCyclic {
         BlockState st = m.getState();
         ChatFormatting c = m.isExactProperties() ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.DARK_PURPLE;
         String extra = m.isExactProperties() ? " [state]" : " [block]"; // star for not exact
-        tooltip.add(new TranslatableComponent(st.getBlock().getDescriptionId()).append(extra).withStyle(c));
+        tooltip.add(Component.translatable(st.getBlock().getDescriptionId()).append(extra).withStyle(c));
         if (m.isExactProperties() && Screen.hasShiftDown()) {
-          tooltip.add(new TranslatableComponent(st.toString()).withStyle(ChatFormatting.DARK_GRAY));
+          tooltip.add(Component.translatable(st.toString()).withStyle(ChatFormatting.DARK_GRAY));
         }
       }
     }

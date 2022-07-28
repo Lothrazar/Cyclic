@@ -93,7 +93,7 @@ public class VenomEnchant extends EnchantmentCyclic {
       return;
     }
     LivingEntity target = (LivingEntity) event.getTarget();
-    Player attacker = event.getPlayer();
+    Player attacker = event.getEntity();
     ItemStack main = attacker.getMainHandItem();
     ItemStack off = attacker.getOffhandItem();
     int mainLevel = -1, offLevel = -1;

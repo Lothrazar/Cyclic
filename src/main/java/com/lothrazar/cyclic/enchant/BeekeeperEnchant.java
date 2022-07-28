@@ -88,10 +88,10 @@ public class BeekeeperEnchant extends EnchantmentCyclic {
     if (!isEnabled()) {
       return;
     }
-    if (event.getTarget() instanceof Player && event.getEntityLiving().getType() == EntityType.BEE) {
+    if (event.getTarget() instanceof Player && event.getEntity().getType() == EntityType.BEE) {
       int level = this.getCurrentArmorLevel(event.getTarget());
       if (level > 0) {
-        Bee bee = (Bee) event.getEntityLiving();
+        Bee bee = (Bee) event.getEntity();
         bee.setAggressive(false);
         bee.setRemainingPersistentAngerTime(0);
         bee.setPersistentAngerTarget(null);
@@ -105,7 +105,7 @@ public class BeekeeperEnchant extends EnchantmentCyclic {
     if (!isEnabled()) {
       return;
     }
-    int level = this.getCurrentArmorLevel(event.getEntityLiving());
+    int level = this.getCurrentArmorLevel(event.getEntity());
     if (level >= 1 && event.getSource() != null
         && event.getSource().getDirectEntity() != null) {
       // Beekeeper I+

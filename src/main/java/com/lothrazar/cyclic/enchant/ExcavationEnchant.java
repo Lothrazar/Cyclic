@@ -49,7 +49,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -112,7 +112,7 @@ public class ExcavationEnchant extends EnchantmentCyclic {
     if (!isEnabled()) {
       return;
     }
-    LevelAccessor world = event.getWorld();
+    LevelAccessor world = event.getLevel();
     Player player = event.getPlayer();
     if (player.swingingArm == null || world.isClientSide()) {
       return;
@@ -167,7 +167,7 @@ public class ExcavationEnchant extends EnchantmentCyclic {
       }
       int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
       int silklevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
-      int exp = targetState.getExpDrop(world, targetPos, bonusLevel, silklevel);
+      int exp = targetState.getExpDrop(world, world.random, targetPos, bonusLevel, silklevel);
       if (exp > 0 && world instanceof ServerLevel) {
         block.popExperience((ServerLevel) world, targetPos, exp);
       }

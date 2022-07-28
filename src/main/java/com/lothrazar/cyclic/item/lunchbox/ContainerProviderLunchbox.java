@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.lunchbox;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +10,7 @@ public class ContainerProviderLunchbox implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TranslatableComponent("item.cyclic.lunchbox");
+    return Component.translatable("item.cyclic.lunchbox");
   }
 
   @Override

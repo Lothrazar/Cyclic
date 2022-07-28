@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.util.PlayerUtil;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -25,7 +25,7 @@ public class CommandHome {
       ModCyclic.LOGGER.info("[home]" + bedLocation + " | " + player.getUUID());
     }
     else {
-      ChatUtil.addServerChatMessage(player, new TranslatableComponent("command.cyclic.gethome.bed"));
+      ChatUtil.addServerChatMessage(player, Component.translatable("command.cyclic.gethome.bed"));
       //      ModCyclic.LOGGER.error(ChatUtil.lang("command.cyclic.gethome.bed"));
     }
   }

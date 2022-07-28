@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.potion.CyclicMobEffect;
 import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 
 public class MagneticEffect extends CyclicMobEffect {
 
@@ -13,8 +13,8 @@ public class MagneticEffect extends CyclicMobEffect {
   }
 
   @Override
-  public void tick(LivingUpdateEvent event) {
-    LivingEntity living = event.getEntityLiving();
+  public void tick(LivingTickEvent event) {
+    LivingEntity living = event.getEntity();
     int amp = living.getEffect(this).getAmplifier();
     EntityUtil.moveEntityItemsInRegion(living.level, living.blockPosition(), 8 * amp, 1 + amp);
   }

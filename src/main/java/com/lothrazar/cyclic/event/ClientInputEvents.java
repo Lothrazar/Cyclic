@@ -17,23 +17,22 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ClientInputEvents {
 
-  @SubscribeEvent
-  public void onKeyInput(KeyInputEvent event) {
+  @SubscribeEvent // KeyInputEvent -> KeyPressed
+  public void onKeyInput(ScreenEvent.KeyPressed.Post event) {
     EnchantRegistry.LAUNCH.onKeyInput(Minecraft.getInstance().player);
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
     }
   }
 
-  @SubscribeEvent
-  public void onMouseEvent(InputEvent.MouseScrollEvent event) {
+  @SubscribeEvent // MouseScrollEvent -> MouseScrollingEvent
+  public void onMouseEvent(InputEvent.MouseScrollingEvent event) {
     //    PlayerEvent.Visibility
     LocalPlayer player = Minecraft.getInstance().player;
     if (player.isCrouching() && player.getMainHandItem().getItem() == ItemRegistry.ENDER_BOOK.get()) {
@@ -46,8 +45,8 @@ public class ClientInputEvents {
     }
   }
 
-  @SubscribeEvent(priority = EventPriority.HIGH)
-  public void onMouseEvent(ScreenEvent.MouseClickedEvent.Pre event) {
+  @SubscribeEvent(priority = EventPriority.HIGH) // WAS MouseClickedEvent
+  public void onMouseEvent(ScreenEvent.MouseButtonPressed.Pre event) {
     if (event.getScreen() == null || !(event.getScreen() instanceof AbstractContainerScreen<?>)) {
       return;
     }

@@ -1,14 +1,15 @@
 package com.lothrazar.cyclic.block.placerfluid;
 
+import java.awt.TextComponent;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -19,14 +20,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
+  public static final int CAPACITY = 8 * FluidType.BUCKET_VOLUME;
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());;
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 

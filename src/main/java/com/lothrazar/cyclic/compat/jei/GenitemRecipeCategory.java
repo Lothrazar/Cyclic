@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -47,22 +48,12 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
   }
 
   @Override
-  public Class<? extends RecipeGeneratorItem> getRecipeClass() {
-    return RecipeGeneratorItem.class;
-  }
-
-  @Override
-  public ResourceLocation getUid() {
-    return ID;
-  }
-
-  @Override
   public RecipeType<RecipeGeneratorItem> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeGeneratorItem recipe, PoseStack ms, double mouseX, double mouseY) {
+  public void draw(RecipeGeneratorItem recipe, IRecipeSlotsView recipeSlotsView, PoseStack ms, double mouseX, double mouseY) {
     Minecraft.getInstance().font.draw(ms, recipe.getTicks() + " t", 60, 0, FONT);
     Minecraft.getInstance().font.draw(ms, recipe.getRfPertick() + " RF/t", 60, 10, FONT);
     Minecraft.getInstance().font.draw(ms, recipe.getEnergyTotal() + " RF", 60, 20, FONT);

@@ -17,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -52,7 +51,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayer) playerIn, new StorageBagContainerProvider(), playerIn.blockPosition());
+      NetworkHooks.openScreen((ServerPlayer) playerIn, new StorageBagContainerProvider(), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
   }
@@ -114,22 +113,22 @@ public class ItemStorageBag extends ItemBaseCyclic {
     String depositMode = nbt.getString("deposit_mode");
     String refillMode = nbt.getString("refill_mode");
     if (!pickupMode.equals("")) {
-      tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
-          new TranslatableComponent(String.format(
+      tooltip.add(Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
+          Component.translatable(String.format(
               pickupMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.pickup.%s", pickupMode)))
-                  .withStyle(ChatFormatting.GREEN));
+          .withStyle(ChatFormatting.GREEN));
     }
     if (!depositMode.equals("")) {
-      tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
-          new TranslatableComponent(String.format(
+      tooltip.add(Component.translatable("item.cyclic.storage_bag.tooltip.deposit",
+          Component.translatable(String.format(
               depositMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.deposit.%s", depositMode)))
-                  .withStyle(ChatFormatting.BLUE));
+          .withStyle(ChatFormatting.BLUE));
     }
     if (!refillMode.equals("")) {
-      tooltip.add(new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
-          new TranslatableComponent(String.format(
+      tooltip.add(Component.translatable("item.cyclic.storage_bag.tooltip.refill",
+          Component.translatable(String.format(
               refillMode.equals("nothing") ? "item.cyclic.storage_bag.disabled" : "item.cyclic.storage_bag.refill.%s", refillMode)))
-                  .withStyle(ChatFormatting.RED));
+          .withStyle(ChatFormatting.RED));
     }
   }
 

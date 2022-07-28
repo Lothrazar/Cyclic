@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.storagebag;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +10,7 @@ public class StorageBagContainerProvider implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TranslatableComponent("cyclic.items.storage_bag");
+    return Component.translatable("cyclic.items.storage_bag");
   }
 
   @Override

@@ -10,7 +10,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class TextBoxAutosave extends EditBox {
 
@@ -70,6 +69,6 @@ public class TextBoxAutosave extends EditBox {
     if (tooltip == null) {
       tooltip = new ArrayList<>();
     }
-    this.tooltip.add(new TranslatableComponent(tt));
+    this.tooltip.add(Component.translatable(tt));
   }
 }

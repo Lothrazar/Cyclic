@@ -22,9 +22,9 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.render.RenderMiningLaser;
 import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.lothrazar.cyclic.util.PlayerUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -41,8 +41,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -51,53 +50,54 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class EventRender {
 
   @SubscribeEvent
-  public void overlay(RenderGameOverlayEvent.Post event) {
+  //  public void overlay(RenderGameOverlayEvent.Post event) {
+  public static void onCustomizeDebugText(CustomizeGuiOverlayEvent.DebugText event) {
     //Build scepter feature : render selected blockstate in cross hair
     Player player = Minecraft.getInstance().player;
     Minecraft mc = Minecraft.getInstance();
     // ModCyclic.LOGGER.info("TESTME : ElementType.CROSSHAIRS is gone deleted");
-    if (event.getType() == ElementType.ALL) {
-      ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
-      if (itemStackHeld.getItem() instanceof BuilderItem) {
-        //
-        BlockState targetState = BuilderActionType.getBlockState(itemStackHeld);
-        if (targetState != null) {
-          //ok still 
-          drawStack(new ItemStack(targetState.getBlock()));
-          int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
-          if (slot < 0) {
-            //nothing found
-            int width = mc.getWindow().getGuiScaledWidth();
-            int height = mc.getWindow().getGuiScaledHeight();
-            drawString(event.getMatrixStack(), "" + 0, width / 2 + 16, height / 2 + 12);
-          }
+    //    if (event.getType() == ElementType.ALL) {
+    ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
+    if (itemStackHeld.getItem() instanceof BuilderItem) {
+      //
+      BlockState targetState = BuilderActionType.getBlockState(itemStackHeld);
+      if (targetState != null) {
+        //ok still 
+        drawStack(new ItemStack(targetState.getBlock()));
+        int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
+        if (slot < 0) {
+          //nothing found
+          int width = mc.getWindow().getGuiScaledWidth();
+          int height = mc.getWindow().getGuiScaledHeight();
+          drawString(event.getPoseStack(), "" + 0, width / 2 + 16, height / 2 + 12);
         }
       }
     }
-    else if (event.getType() == ElementType.TEXT) {
-      int height = mc.getWindow().getGuiScaledHeight();
-      //      int width = mc.getMainWindow().getScaledWidth();
-      //      //
-      //      // 
-      //      int seconds = (int) (player.world.getDayTime() / 20);
-      //      int minutes = seconds / 60;
-      //      int hours = minutes / 60;
-      //      //8pm = 20000
-      //      //noon = 12000
-      //      //8am = 8000
-      //      drawString(event.getMatrixStack(), "" + player.getPosition().toString(), width - 50, height - 30);
-      //      drawString(event.getMatrixStack(), "" + player.world.getDayTime(), width - 50, height - 60);
-      // now files
-      CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
-      if (datFile.flyTicks > 0) {
-        int sec = datFile.flyTicks / 20;
-        drawString(event.getMatrixStack(), "flight " + sec, 10, height - 30);
-      }
-      if (datFile.spectatorTicks > 0) {
-        int sec = datFile.spectatorTicks / 20;
-        drawString(event.getMatrixStack(), "noClip " + sec, 10, height - 10);
-      }
+    //    }
+    //    else if (event.getType() == ElementType.TEXT) {
+    int height = mc.getWindow().getGuiScaledHeight();
+    //      int width = mc.getMainWindow().getScaledWidth();
+    //      //
+    //      // 
+    //      int seconds = (int) (player.world.getDayTime() / 20);
+    //      int minutes = seconds / 60;
+    //      int hours = minutes / 60;
+    //      //8pm = 20000
+    //      //noon = 12000
+    //      //8am = 8000
+    //      drawString(event.getMatrixStack(), "" + player.getPosition().toString(), width - 50, height - 30);
+    //      drawString(event.getMatrixStack(), "" + player.world.getDayTime(), width - 50, height - 60);
+    // now files
+    CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
+    if (datFile.flyTicks > 0) {
+      int sec = datFile.flyTicks / 20;
+      drawString(event.getPoseStack(), "flight " + sec, 10, height - 30);
     }
+    if (datFile.spectatorTicks > 0) {
+      int sec = datFile.spectatorTicks / 20;
+      drawString(event.getPoseStack(), "noClip " + sec, 10, height - 10);
+    }
+    //    }
   }
 
   public static void drawString(PoseStack ms, String str, int x, int y) {

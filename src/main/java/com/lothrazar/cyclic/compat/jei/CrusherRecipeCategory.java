@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -47,22 +48,12 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   }
 
   @Override
-  public Class<? extends RecipeCrusher> getRecipeClass() {
-    return RecipeCrusher.class;
-  }
-
-  @Override
-  public ResourceLocation getUid() {
-    return ID;
-  }
-
-  @Override
   public RecipeType<RecipeCrusher> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeCrusher recipe, PoseStack ms, double mouseX, double mouseY) {
+  public void draw(RecipeCrusher recipe, IRecipeSlotsView recipeSlotsView, PoseStack ms, double mouseX, double mouseY) {
     int x = 78;
     if (recipe.energy.getTicks() < 40) {
       Minecraft.getInstance().font.draw(ms, recipe.energy.getTicks() + " t", x, 6, FONT);

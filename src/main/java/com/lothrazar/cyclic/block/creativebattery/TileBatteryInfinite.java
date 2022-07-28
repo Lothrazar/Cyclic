@@ -12,8 +12,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -84,11 +82,6 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
     }
     tag.put(NBTENERGY, energy.serializeNBT());
     super.saveAdditional(tag);
-  }
-
-  //  @Override
-  public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileBatteryInfinite e) {

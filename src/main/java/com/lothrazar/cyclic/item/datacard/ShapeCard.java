@@ -11,7 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -40,7 +40,7 @@ public class ShapeCard extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
-      TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".count");
+      MutableComponent t = Component.translatable(getDescriptionId() + ".count");
       t.append(shape.getCount() + "");
       tooltip.add(t);
       BlockState target = BuilderActionType.getBlockState(stack);
@@ -48,7 +48,7 @@ public class ShapeCard extends ItemBaseCyclic {
       if (target != null) {
         block = target.getBlock().getDescriptionId();
       }
-      tooltip.add(new TranslatableComponent(ChatFormatting.AQUA + ChatUtil.lang(block)));
+      tooltip.add(Component.translatable(ChatFormatting.AQUA + ChatUtil.lang(block)));
       if (flagIn.isAdvanced()) {
         //        String side = "S: " + dim.getSide().toString().toUpperCase();
         //        tooltip.add(new TranslationTextComponent(side));
@@ -57,7 +57,7 @@ public class ShapeCard extends ItemBaseCyclic {
         //        tooltip.add(new TranslationTextComponent("H: " + dim.getHitVec().toString()));
       }
     }
-    TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".tooltip");
+    MutableComponent t = Component.translatable(getDescriptionId() + ".tooltip");
     t.withStyle(ChatFormatting.GRAY);
     tooltip.add(t);
     //    }

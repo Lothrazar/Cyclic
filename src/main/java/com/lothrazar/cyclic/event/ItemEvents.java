@@ -61,9 +61,9 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.living.PotionEvent.PotionAddedEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -82,9 +82,9 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onShieldBlock(ShieldBlockEvent event) {
-    ItemStack shield = event.getEntityLiving().getUseItem();
+    ItemStack shield = event.getEntity().getUseItem();
     if (shield.getItem() instanceof ShieldCyclicItem shieldItem) {
-      if (event.getEntityLiving() instanceof Player playerIn) {
+      if (event.getEntity() instanceof Player playerIn) {
         if (playerIn.getCooldowns().isOnCooldown(shield.getItem())) {
           SoundUtil.playSound(playerIn, SoundEvents.SHIELD_BREAK);
           event.setCanceled(true);
@@ -100,10 +100,10 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onLivingJumpEvent(LivingJumpEvent event) {
-    if (!(event.getEntityLiving() instanceof Player)) {
+    if (!(event.getEntity() instanceof Player)) {
       return;
     }
-    Player player = (Player) event.getEntityLiving();
+    Player player = (Player) event.getEntity();
     if (player.getMainHandItem().getItem() == ItemRegistry.ENDER_BOOK.get()) {
       EnderBookItem.cancelTeleport(player.getMainHandItem());
     }
@@ -114,8 +114,8 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onCriticalHitEvent(CriticalHitEvent event) {
-    if (event.getEntityLiving() instanceof Player) {
-      Player ply = (Player) event.getEntityLiving();
+    if (event.getEntity() instanceof Player) {
+      Player ply = event.getEntity();
       //      ply.getAttribute(Attributes.)
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_CRIT.get());
       if (!find.isEmpty()) {
@@ -133,7 +133,7 @@ public class ItemEvents {
       return;
     }
     ItemStack stackBow = event.getBow();
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     Level worldIn = player.level;
     if (worldIn.isClientSide == false) {
       int level = EnchantRegistry.MULTISHOT.getCurrentLevelTool(stackBow);
@@ -151,8 +151,8 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
-    if (event.getEntityLiving() instanceof Player) {
-      Player ply = (Player) event.getEntityLiving();
+    if (event.getEntity() instanceof Player) {
+      Player ply = (Player) event.getEntity();
       if (ply.isBlocking()) {
         ItemStack held = ply.getItemInHand(ply.getUsedItemHand());
         if (held.getItem() instanceof ShieldCyclicItem shieldType) {
@@ -205,25 +205,25 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onPotionAddedEvent(PotionAddedEvent event) {
-    if (event.getEntityLiving() instanceof Player) {
-      Player ply = (Player) event.getEntityLiving();
+  public void onPotionAddedEvent(MobEffectEvent.Added event) {
+    if (event.getEntity() instanceof Player) {
+      Player ply = (Player) event.getEntity();
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_ANTIPOTION.get());
       if (!find.isEmpty()) {
-        event.getPotionEffect().duration = 0;
+        event.getEffectInstance().duration = 0;
         ItemStackUtil.damageItem(ply, find);
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_STEALTHPOTION.get());
       if (!find.isEmpty()) {
-        if (event.getOldPotionEffect() != null) {
-          event.getOldPotionEffect().visible = false;
+        if (event.getOldEffectInstance() != null) {
+          event.getOldEffectInstance().visible = false;
         }
-        event.getPotionEffect().visible = false;
+        event.getEffectInstance().visible = false;
       }
       find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_BOOSTPOTION.get());
       if (!find.isEmpty()) {
-        int boost = event.getPotionEffect().duration / 2;
-        event.getPotionEffect().duration += boost;
+        int boost = event.getEffectInstance().duration / 2;
+        event.getEffectInstance().duration += boost;
         ItemStackUtil.damageItem(ply, find);
       }
     }
@@ -232,8 +232,8 @@ public class ItemEvents {
   @SubscribeEvent
   public void onEntityDamage(LivingDamageEvent event) {
     DamageSource src = event.getSource();
-    if (event.getEntityLiving() instanceof Player) {
-      Player player = (Player) event.getEntityLiving();
+    if (event.getEntity() instanceof Player) {
+      Player player = (Player) event.getEntity();
       if (src.isExplosion()) {
         //explosion thingy
         this.damageFinder(event, player, ItemRegistry.CHARM_CREEPER.get(), 0);
@@ -274,7 +274,7 @@ public class ItemEvents {
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_VENOM.get());
       if (!find.isEmpty() && ply.level.random.nextDouble() < 0.25F) {
         int seconds = 2 + ply.level.random.nextInt(4);
-        event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.POISON, 20 * seconds, 0));
+        event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 20 * seconds, 0));
         ItemStackUtil.damageItem(ply, find);
       }
       if (ply.getUsedItemHand() != null && ply.getItemInHand(ply.getUsedItemHand()).isEmpty()) {
@@ -300,8 +300,8 @@ public class ItemEvents {
   @SubscribeEvent
   public void onPlayerDeath(LivingDeathEvent event) {
     //
-    if (event.getEntityLiving() instanceof Player) {
-      Player player = (Player) event.getEntityLiving();
+    if (event.getEntity() instanceof Player) {
+      Player player = (Player) event.getEntity();
       //      Items.TOTEM_OF_UNDYING
       ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.SOULSTONE.get());
       if (SoulstoneCharm.checkTotemDeathProtection(event.getSource(), player, charmStack)) {
@@ -316,14 +316,14 @@ public class ItemEvents {
     if (original != null) {
       AttributeModifier healthModifier = original.getModifier(AttributesUtil.DEFAULT_ID);
       if (healthModifier != null) {
-        event.getPlayer().getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(healthModifier);
+        event.getEntity().getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(healthModifier);
       }
     }
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    LivingEntity liv = event.getEntityLiving();
+  public void onEntityUpdate(LivingTickEvent event) {
+    LivingEntity liv = event.getEntity();
     tryItemHorseEnder(liv);
     if (liv instanceof Player player) {
       CharmBase.onEntityUpdate(player);
@@ -335,7 +335,7 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onXpPickup(PlayerXpEvent.PickupXp event) {
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSTOPPER.get());
     if (!charmStack.isEmpty()) {
       event.setCanceled(true);
@@ -379,7 +379,7 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onBonemealEvent(BonemealEvent event) {
-    Level world = event.getWorld();
+    Level world = event.getLevel();
     BlockPos pos = event.getPos();
     BlockState state = world.getBlockState(pos);
     if (ConfigRegistry.CYAN_PODZOL_LEGACY.get()) {
@@ -430,16 +430,16 @@ public class ItemEvents {
     if (event.getItemStack().isEmpty()) {
       return;
     }
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     if (event.getItemStack().getItem() instanceof ItemScaffolding && player.isCrouching()) {
       scaffoldHit(event);
     }
     if (player.isCrouching() && event.getItemStack().is(DataTags.WRENCH)) {
-      if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof CableBase) {
+      if (event.getLevel().getBlockState(event.getPos()).getBlock() instanceof CableBase) {
         //cyclic cable
         //test? maybe config disable? 
         player.swing(event.getHand());
-        event.getWorld().destroyBlock(event.getPos(), true);
+        event.getLevel().destroyBlock(event.getPos(), true);
         event.setCanceled(true);
       }
     }
@@ -448,11 +448,11 @@ public class ItemEvents {
   private void scaffoldHit(RightClickBlock event) {
     ItemScaffolding item = (ItemScaffolding) event.getItemStack().getItem();
     Direction opp = event.getFace().getOpposite();
-    BlockPos dest = LevelWorldUtil.nextReplaceableInDirection(event.getWorld(), event.getPos(), opp, 16, item.getBlock());
-    if (event.getWorld().isEmptyBlock(dest)) {
-      event.getWorld().setBlockAndUpdate(dest, item.getBlock().defaultBlockState());
-      ItemStack stac = event.getPlayer().getItemInHand(event.getHand());
-      ItemStackUtil.shrink(event.getPlayer(), stac);
+    BlockPos dest = LevelWorldUtil.nextReplaceableInDirection(event.getLevel(), event.getPos(), opp, 16, item.getBlock());
+    if (event.getLevel().isEmptyBlock(dest)) {
+      event.getLevel().setBlockAndUpdate(dest, item.getBlock().defaultBlockState());
+      ItemStack stac = event.getEntity().getItemInHand(event.getHand());
+      ItemStackUtil.shrink(event.getEntity(), stac);
       event.setCanceled(true);
     }
   }
@@ -467,7 +467,7 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     ItemStack held = player.getItemInHand(event.getHand());
     if (held.isEmpty()) {
       return;
@@ -512,8 +512,8 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onPlayerPickup(EntityItemPickupEvent event) {
-    if (event.getEntityLiving() instanceof Player) {
-      Player player = (Player) event.getEntityLiving();
+    if (event.getEntity() instanceof Player) {
+      Player player = event.getEntity();
       ItemEntity itemEntity = event.getItem();
       ItemStack resultStack = itemEntity.getItem();
       int origCount = resultStack.getCount();

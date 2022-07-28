@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +31,7 @@ public class CarbonPaperItem extends ItemBaseCyclic {
     if (stack.hasTag()) {
       SignBlockEntity fakeSign = new SignBlockEntity(BlockPos.ZERO, Blocks.OAK_SIGN.defaultBlockState());
       fakeSign.load(stack.getTag());
-      tooltip.add(new TranslatableComponent("[" + fakeSign.getColor().getSerializedName() + "]"));
+      tooltip.add(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
       for (int i = 0; i <= 3; i++) {
         //        fakeSign.setText(line, p_212365_2_);
         Component t = fakeSign.messages[i];

@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeMelter implements Recipe<TileMelter> {
 
@@ -116,7 +115,7 @@ public class RecipeMelter implements Recipe<TileMelter> {
     return width <= 2 && height <= 1;
   }
 
-  public static class SerializeMelter extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeMelter> {
+  public static class SerializeMelter implements RecipeSerializer<RecipeMelter> {
 
     public SerializeMelter() {}
 

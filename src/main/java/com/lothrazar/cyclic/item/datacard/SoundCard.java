@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +47,7 @@ public class SoundCard extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag() && stack.getTag().contains(SOUND_ID)) {
-      tooltip.add(new TextComponent(stack.getTag().getString(SOUND_ID)).withStyle(ChatFormatting.GOLD));
+      tooltip.add(Component.translatable(stack.getTag().getString(SOUND_ID)).withStyle(ChatFormatting.GOLD));
     }
   }
 

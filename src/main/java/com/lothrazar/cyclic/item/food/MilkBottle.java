@@ -46,7 +46,7 @@ public class MilkBottle extends ItemBaseCyclic {
         player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
       }
     }
-    world.gameEvent(entity, GameEvent.DRINKING_FINISH, entity.eyeBlockPosition());
+    world.gameEvent(entity, GameEvent.DRINK, entity.blockPosition());
     return drink;
   }
 

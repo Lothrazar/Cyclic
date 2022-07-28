@@ -11,7 +11,7 @@ import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 
 public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
@@ -49,9 +49,9 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   @Override
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    tooltip.add(new TranslatableComponent(ChatUtil.lang(this.getDescriptionId() + ".tooltip")).withStyle(ChatFormatting.GRAY));
+    tooltip.add(Component.translatable(ChatUtil.lang(this.getDescriptionId() + ".tooltip")).withStyle(ChatFormatting.GRAY));
     String onoff = this.isOn(stack) ? "on" : "off";
-    TranslatableComponent t = new TranslatableComponent(ChatUtil.lang("item.cantoggle.tooltip.info") + " " + ChatUtil.lang("item.cantoggle.tooltip." + onoff));
+    MutableComponent t = Component.translatable(ChatUtil.lang("item.cantoggle.tooltip.info") + " " + ChatUtil.lang("item.cantoggle.tooltip." + onoff));
     t.withStyle(ChatFormatting.DARK_GRAY);
     tooltip.add(t);
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
@@ -96,12 +96,12 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   //from ItemEvents- curios slot
-  public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
+  public static void onEntityUpdate(LivingTickEvent event) {
     //reduce check to only once per second instead  of per tick
     //<<<<<<< HEAD
     if (event.getEntity().level.getGameTime() % 20 == 0 &&
-        event.getEntityLiving() != null) { //some of the items need an off switch
-      Player player = (Player) event.getEntityLiving();
+        event.getEntity() != null) { //some of the items need an off switch
+      Player player = (Player) event.getEntity();
       //=======
       //    if (event.getEntity().world.getGameTime() % 20 == 0 &&
       //        event.getEntityLiving() instanceof PlayerEntity) { //some of the items need an off switch

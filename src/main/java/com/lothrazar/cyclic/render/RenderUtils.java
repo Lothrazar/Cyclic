@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import com.lothrazar.cyclic.data.Model3D;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -29,6 +28,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +39,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
-import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -295,7 +294,7 @@ public class RenderUtils {
         int combinedOverlay = 655360;
         for (Direction direction : Direction.values()) {
           RenderUtils.renderModelBrightnessColorQuads(matrix.last(), builder, red, green, blue, alpha,
-              ibakedmodel.getQuads(renderBlockState, direction, new Random(Mth.getSeed(coordinate)), EmptyModelData.INSTANCE),
+              ibakedmodel.getQuads(renderBlockState, direction, RandomSource.create(Mth.getSeed(coordinate))), // EmptyModelData.INSTANCE 
               combinedLights, combinedOverlay);
         }
         //        UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,

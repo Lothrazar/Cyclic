@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.peatfarm;
 
+import java.awt.TextComponent;
 import java.util.List;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
@@ -31,12 +32,12 @@ import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import com.lothrazar.cyclic.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -53,8 +54,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -231,8 +232,8 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   private boolean tryPlaceWater(BlockPos target) {
     if (level.getBlockState(target).canBeReplaced(Fluids.WATER)
         && level.getBlockState(target).getBlock() != Blocks.WATER
-        && tank.getFluidAmount() >= FluidAttributes.BUCKET_VOLUME
-        && tank.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE) != null) {
+        && tank.getFluidAmount() >= FluidType.BUCKET_VOLUME
+        && tank.drain(FluidType.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE) != null) {
       level.setBlockAndUpdate(target, Blocks.WATER.defaultBlockState());
       return true;
     }

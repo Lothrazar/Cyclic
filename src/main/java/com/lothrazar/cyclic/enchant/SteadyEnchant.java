@@ -78,7 +78,7 @@ public class SteadyEnchant extends EnchantmentCyclic {
 
   @SubscribeEvent
   public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
-    if (this.getCurrentArmorLevel(event.getEntityLiving()) > 0) {
+    if (this.getCurrentArmorLevel(event.getEntity()) > 0) {
       event.setCanceled(true);
     }
   }

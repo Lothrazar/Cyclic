@@ -32,7 +32,6 @@ import com.lothrazar.cyclic.util.EntityUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -88,14 +87,14 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag() && stack.getTag().contains(FLUTENAME)) {
-      tooltip.add(new TranslatableComponent(stack.getTag().getString(FLUTENAME)).withStyle(ChatFormatting.LIGHT_PURPLE));
+      tooltip.add(Component.translatable(stack.getTag().getString(FLUTENAME)).withStyle(ChatFormatting.LIGHT_PURPLE));
     }
   }
 
   @Override
   public void interactWith(EntityInteract event) {
     Entity target = event.getTarget();
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     if (event.getItemStack().getItem() == this
         && !player.getCooldowns().isOnCooldown(this)
         && EntityUtil.haveSameDimension(target, player)) {

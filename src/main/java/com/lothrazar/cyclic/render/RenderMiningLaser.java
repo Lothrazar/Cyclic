@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
@@ -99,9 +98,9 @@ public class RenderMiningLaser {
     vector3f.transform(matrixNormalIn);
     LocalPlayer player = Minecraft.getInstance().player;
     // Support for hand sides remembering to take into account of Skin options
-    if (Minecraft.getInstance().options.mainHand != HumanoidArm.RIGHT) {
-      hand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
-    }
+    //    if (Minecraft.getInstance().options.mainHand != HumanoidArm.RIGHT) {
+    //      hand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+    //    }
     float startXOffset = -0.20f;
     float startYOffset = -.108f;
     float startZOffset = 0.60f;

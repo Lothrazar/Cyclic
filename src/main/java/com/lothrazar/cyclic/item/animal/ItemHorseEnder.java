@@ -62,7 +62,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof AbstractHorse
-        && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
+        && !event.getEntity().getCooldowns().isOnCooldown(this)) {
       // lets go 
       AbstractHorse ahorse = (AbstractHorse) event.getTarget();
       if (event.getTarget() instanceof AbstractChestedHorse
@@ -74,10 +74,10 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
       increment(ahorse, 1);
       event.setCanceled(true);
       event.setCancellationResult(InteractionResult.SUCCESS);
-      event.getPlayer().getCooldowns().addCooldown(this, 1);
+      event.getEntity().getCooldowns().addCooldown(this, 1);
       event.getItemStack().shrink(1);
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
-      ChatUtil.addChatMessage(event.getPlayer(), ChatUtil.lang("item.cyclic.carrot_ender.count") + current);
+      ChatUtil.addChatMessage(event.getEntity(), ChatUtil.lang("item.cyclic.carrot_ender.count") + current);
       //
       //test
       //      if (ahorse.getType() == EntityType.ZOMBIE_HORSE) {

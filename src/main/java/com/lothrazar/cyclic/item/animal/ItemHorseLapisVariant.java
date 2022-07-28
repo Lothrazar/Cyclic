@@ -41,16 +41,16 @@ public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInte
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof Horse
         //        && event.getWorld().isRemote == false
-        && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
+        && !event.getEntity().getCooldowns().isOnCooldown(this)) {
       // lets go 
       Horse ahorse = (Horse) event.getTarget();
-      int seed = event.getWorld().random.nextInt(7);
+      int seed = event.getLevel().random.nextInt(7);
       //setHorseVariant
       //  access transformers
-      ahorse.getEntityData().set(Horse.DATA_ID_TYPE_VARIANT, (seed | event.getWorld().random.nextInt(5) << 8));
+      ahorse.getEntityData().set(Horse.DATA_ID_TYPE_VARIANT, (seed | event.getLevel().random.nextInt(5) << 8));
       event.setCanceled(true);
       event.setCancellationResult(InteractionResult.SUCCESS);
-      event.getPlayer().getCooldowns().addCooldown(this, 10);
+      event.getEntity().getCooldowns().addCooldown(this, 10);
       event.getItemStack().shrink(1);
       EntityUtil.eatingHorse(ahorse);
     }

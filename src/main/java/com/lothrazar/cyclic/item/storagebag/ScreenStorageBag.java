@@ -15,7 +15,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
@@ -34,43 +33,43 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     CompoundTag nbt = this.menu.bag.getOrCreateTag();
     ToggleButton pickup = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y,
         nbt, StringTag.valueOf("pickup_mode"), StringTag.valueOf("nothing"),
-        new TranslatableComponent("item.cyclic.storage_bag.disabled.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
-            new TranslatableComponent("item.cyclic.storage_bag.disabled")));
+        Component.translatable("item.cyclic.storage_bag.disabled.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
+            Component.translatable("item.cyclic.storage_bag.disabled")));
     pickup.addState(
-        new TranslatableComponent("item.cyclic.storage_bag.pickup.everything.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
-            new TranslatableComponent("item.cyclic.storage_bag.pickup.everything")),
+        Component.translatable("item.cyclic.storage_bag.pickup.everything.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
+            Component.translatable("item.cyclic.storage_bag.pickup.everything")),
         StringTag.valueOf("everything"));
     pickup.addState(
-        new TranslatableComponent("item.cyclic.storage_bag.pickup.filter.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.pickup",
-            new TranslatableComponent("item.cyclic.storage_bag.pickup.filter")),
+        Component.translatable("item.cyclic.storage_bag.pickup.filter.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.pickup",
+            Component.translatable("item.cyclic.storage_bag.pickup.filter")),
         StringTag.valueOf("filter"));
     ToggleButton dump = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y + BUTTON_GAP,
         nbt, StringTag.valueOf("deposit_mode"), StringTag.valueOf("nothing"),
-        new TranslatableComponent("item.cyclic.storage_bag.disabled.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
-            new TranslatableComponent("item.cyclic.storage_bag.disabled")));
+        Component.translatable("item.cyclic.storage_bag.disabled.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.deposit",
+            Component.translatable("item.cyclic.storage_bag.disabled")));
     dump.addState(
-        new TranslatableComponent("item.cyclic.storage_bag.deposit.dump.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
-            new TranslatableComponent("item.cyclic.storage_bag.deposit.dump")),
+        Component.translatable("item.cyclic.storage_bag.deposit.dump.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.deposit",
+            Component.translatable("item.cyclic.storage_bag.deposit.dump")),
         StringTag.valueOf("dump"));
     dump.addState(
-        new TranslatableComponent("item.cyclic.storage_bag.deposit.merge.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.deposit",
-            new TranslatableComponent("item.cyclic.storage_bag.deposit.merge")),
+        Component.translatable("item.cyclic.storage_bag.deposit.merge.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.deposit",
+            Component.translatable("item.cyclic.storage_bag.deposit.merge")),
         StringTag.valueOf("merge"));
     ToggleButton refill = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y + BUTTON_GAP * 2,
         nbt, StringTag.valueOf("refill_mode"), StringTag.valueOf("nothing"),
-        new TranslatableComponent("item.cyclic.storage_bag.disabled.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
-            new TranslatableComponent("item.cyclic.storage_bag.disabled")));
+        Component.translatable("item.cyclic.storage_bag.disabled.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.refill",
+            Component.translatable("item.cyclic.storage_bag.disabled")));
     refill.addState(
-        new TranslatableComponent("item.cyclic.storage_bag.refill.hotbar.button"),
-        new TranslatableComponent("item.cyclic.storage_bag.tooltip.refill",
-            new TranslatableComponent("item.cyclic.storage_bag.refill.hotbar")),
+        Component.translatable("item.cyclic.storage_bag.refill.hotbar.button"),
+        Component.translatable("item.cyclic.storage_bag.tooltip.refill",
+            Component.translatable("item.cyclic.storage_bag.refill.hotbar")),
         StringTag.valueOf("hotbar"));
     this.addRenderableWidget(pickup);
     this.addRenderableWidget(dump);

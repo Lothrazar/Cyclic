@@ -145,7 +145,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
     //    ItemStack itemstack = player.getItemInHand(handIn);
     if (player.isCrouching()) {
       if (!worldIn.isClientSide) {
-        NetworkHooks.openGui((ServerPlayer) player, new ContainerProviderLunchbox(), player.blockPosition());
+        NetworkHooks.openScreen((ServerPlayer) player, new ContainerProviderLunchbox(), player.blockPosition());
       }
       return super.use(worldIn, player, handIn);
     }

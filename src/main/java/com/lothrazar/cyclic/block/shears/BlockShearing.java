@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.block.shears;
 
 import java.util.List;
-import java.util.Random;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +49,7 @@ public class BlockShearing extends BlockCyclic {
       if (sheep.isShearable(ItemStack.EMPTY, entityIn.level, pos)) {
         List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, entityIn.level, pos, entityIn.level.random.nextInt(3));
         drops.forEach(d -> {
-          Random rand = entityIn.level.random;
+          RandomSource rand = entityIn.level.random;
           ItemEntity ent = entityIn.spawnAtLocation(d, 1.0F);
           ent.setDeltaMovement(ent.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
         });

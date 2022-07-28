@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.ender;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.SoundUtil;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -49,7 +49,7 @@ public class EnderBagItem extends ItemBaseCyclic {
     enderchestinventory.setActiveChest(null);
     player.openMenu(new SimpleMenuProvider((id, pl, b) -> {
       return ChestMenu.threeRows(id, pl, enderchestinventory);
-    }, new TranslatableComponent("container.enderchest")));
+    }, Component.translatable("container.enderchest")));
     // EnderChestBlock.CONTAINER_NAME));//stupid mojang makes things private for no reason becasue  they hate modders
     //..
     player.awardStat(Stats.OPEN_ENDERCHEST);

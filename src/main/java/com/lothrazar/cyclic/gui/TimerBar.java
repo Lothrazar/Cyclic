@@ -11,7 +11,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class TimerBar {
 
@@ -75,7 +74,7 @@ public class TimerBar {
         display = curr + "";
       }
       List<Component> list = new ArrayList<>();
-      list.add(new TranslatableComponent(display));
+      list.add(Component.translatable(display));
       parent.renderComponentTooltip(ms, list, mouseX, mouseY);
     }
   }

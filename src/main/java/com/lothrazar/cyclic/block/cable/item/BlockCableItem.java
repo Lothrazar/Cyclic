@@ -5,10 +5,11 @@ import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -52,7 +53,7 @@ public class BlockCableItem extends CableBase {
         if (handlerHere != null) {
           ItemStack current = handlerHere.getStackInSlot(0);
           if (!current.isEmpty()) {
-            player.sendMessage(new TranslatableComponent(d.toString() + " " + current.getHoverName().getString()), player.getUUID());
+            ChatUtil.addChatMessage(player, Component.translatable(d.toString() + " " + current.getHoverName().getString()));
           }
         }
       }

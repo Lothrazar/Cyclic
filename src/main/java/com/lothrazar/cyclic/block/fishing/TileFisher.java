@@ -1,18 +1,18 @@
 package com.lothrazar.cyclic.block.fishing;
 
 import java.util.List;
-import java.util.Random;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -69,7 +69,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.FISHER.get().getName();
   }
 
   @Override
@@ -131,7 +131,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
 
   private void doFishing(ItemStack fishingRod, BlockPos center) {
     Level world = this.getLevel();
-    Random rand = world.random;
+    RandomSource rand = world.random;
     if (rand.nextDouble() < CHANCE && world instanceof ServerLevel) {
       LootTables manager = world.getServer().getLootTables();
       if (manager == null) {

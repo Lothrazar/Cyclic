@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.render.FluidRenderMap;
-import com.lothrazar.cyclic.render.FluidRenderMap.FluidType;
+import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
@@ -27,7 +27,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -61,9 +60,9 @@ public class FluidHelpers {
       else if (fstack.getFluid() == FluidXpJuiceHolder.STILL.get()) {
         return FluidXpJuiceHolder.COLOR;
       } //now check if the fluid has a color
-      else if (fstack.getFluid().getAttributes().getColor() > 0) {
-        return fstack.getFluid().getAttributes().getColor();
-      }
+      //      else if (fstack.getFluid().getAttributes().getColor() > 0) { 
+      //        return fstack.getFluid().getAttributes().getColor();
+      //      }
       else if (fstack.getFluid() == ForgeMod.MILK.get()) {
         return COLOUR_MILK;
       }
@@ -72,6 +71,11 @@ public class FluidHelpers {
       }
     }
     return COLOUR_DEFAULT;
+  }
+
+  public static class FluidAttributes {
+
+    public static final int BUCKET_VOLUME = net.minecraftforge.fluids.FluidType.BUCKET_VOLUME;
   }
 
   public static void extractSourceWaterloggedCauldron(Level level, BlockPos posTarget, IFluidHandler tank) {
@@ -119,9 +123,10 @@ public class FluidHelpers {
    * @param type
    * @return
    */
-  public static TextureAtlasSprite getBaseFluidTexture(Fluid fluid, FluidType type) {
+  public static TextureAtlasSprite getBaseFluidTexture(Fluid fluid, FluidFlow type) {
     ResourceLocation spriteLocation;
-    if (type == FluidType.STILL) {
+    if (type == FluidFlow.STILL) {
+      //      RenderProperties.get(type);
       spriteLocation = fluid.getAttributes().getStillTexture();
     }
     else {
@@ -139,7 +144,7 @@ public class FluidHelpers {
       return CACHED_FLUIDS.get(fluid).get(stage);
     }
     Model3D model = new Model3D();
-    model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidType.STILL));
+    model.setTexture(FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL));
     if (fluid.getFluid().getAttributes().getStillTexture(fluid) != null) {
       double sideSpacing = 0.00625;
       double belowSpacing = 0.0625 / 4;

@@ -65,7 +65,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class MenuTypeRegistry {
 
-  public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ModCyclic.MODID);
+  public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ModCyclic.MODID);
   public static final RegistryObject<MenuType<ContainerItemCollector>> COLLECTOR = CONTAINERS.register("collector", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerItemCollector(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerPeatFarm>> PEAT_FARM = CONTAINERS.register("peat_farm", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerPeatFarm(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));
   public static final RegistryObject<MenuType<ContainerBattery>> BATTERY = CONTAINERS.register("battery", () -> IForgeMenuType.create((windowId, inv, data) -> new ContainerBattery(windowId, inv.player.level, data.readBlockPos(), inv, inv.player)));

@@ -27,7 +27,7 @@ public class ItemCakeInventory extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayer) playerIn, new ContainerProviderCake(), playerIn.blockPosition());
+      NetworkHooks.openScreen((ServerPlayer) playerIn, new ContainerProviderCake(), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
   }

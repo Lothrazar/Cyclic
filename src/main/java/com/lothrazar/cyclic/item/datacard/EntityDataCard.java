@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -32,7 +32,7 @@ public class EntityDataCard extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
-      TranslatableComponent t = new TranslatableComponent(stack.getTag().getString(ENTITY_KEY));
+      MutableComponent t = Component.translatable(stack.getTag().getString(ENTITY_KEY));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }

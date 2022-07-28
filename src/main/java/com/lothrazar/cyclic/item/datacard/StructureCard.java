@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -43,7 +43,7 @@ public class StructureCard extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (stack.hasTag()) {
-      TranslatableComponent t = new TranslatableComponent(
+      MutableComponent t = Component.translatable(
           stack.getTag().getString(NBTSTRUCTURE));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);

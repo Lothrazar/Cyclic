@@ -3,12 +3,11 @@ package com.lothrazar.cyclic.item.redstone;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -35,9 +34,7 @@ public class LeverRemote extends ItemBaseCyclic {
     BlockPos pointer = TagDataUtil.getItemStackBlockPos(stack);
     if (pointer != null) {
       int dimensionTarget = stack.getOrCreateTag().getInt("LeverDim");
-      tooltip.add(
-          new TranslatableComponent(
-              ChatFormatting.RED + ChatUtil.blockPosToString(pointer) + " [" + dimensionTarget + "]"));
+      tooltip.add(Component.translatable(ChatFormatting.RED + ChatUtil.blockPosToString(pointer) + " [" + dimensionTarget + "]"));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }

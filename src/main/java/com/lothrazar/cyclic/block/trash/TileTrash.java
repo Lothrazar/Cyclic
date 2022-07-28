@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,7 +21,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileTrash extends TileBlockEntityCyclic {
 
-  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
+  public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override

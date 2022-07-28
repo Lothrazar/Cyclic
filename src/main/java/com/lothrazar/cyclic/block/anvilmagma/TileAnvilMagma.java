@@ -6,13 +6,13 @@ import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,8 +25,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -39,7 +39,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
     TIMER, REDSTONE;
   }
 
-  public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
+  public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
   public static IntValue FLUIDCOST;
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
@@ -125,7 +125,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.ANVIL_MAGMA.get().getName();
   }
 
   @Override

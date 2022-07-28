@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
 import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
 import com.lothrazar.cyclic.enchant.BeheadingEnchant;
 import com.lothrazar.cyclic.enchant.CurseEnchant;
@@ -61,7 +60,7 @@ public class EnchantRegistry {
     register(r, new StepEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS).setRegistryName(StepEnchant.ID));
     register(r, TRAVELLER);
     register(r, new VenomEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(VenomEnchant.ID));
-    register(r, new AutoSmeltEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(AutoSmeltEnchant.ID));
+    //    register(r, new AutoSmeltEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND).setRegistryName(AutoSmeltEnchant.ID));
     register(r, new DisarmEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(DisarmEnchant.ID));
     register(r, new CurseEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlot.CHEST).setRegistryName(CurseEnchant.ID));
     register(r, new EnderPearlEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND).setRegistryName(EnderPearlEnchant.ID));

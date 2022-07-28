@@ -17,7 +17,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeCrusher implements Recipe<TileCrusher> {
 
@@ -95,7 +94,7 @@ public class RecipeCrusher implements Recipe<TileCrusher> {
     return CyclicRecipeType.CRUSHER_S.get();
   }
 
-  public static class SerializeCrusher extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeCrusher> {
+  public static class SerializeCrusher implements RecipeSerializer<RecipeCrusher> {
 
     public SerializeCrusher() {}
 

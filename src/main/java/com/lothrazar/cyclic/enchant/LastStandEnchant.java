@@ -104,8 +104,8 @@ public class LastStandEnchant extends EnchantmentCyclic {
     if (!isEnabled()) {
       return;
     }
-    final int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
-    if (level > 0 && event.getEntityLiving().getHealth() - event.getAmount() <= 0 && event.getEntityLiving() instanceof ServerPlayer player) {
+    final int level = getCurrentArmorLevelSlot(event.getEntity(), EquipmentSlot.LEGS);
+    if (level > 0 && event.getEntity().getHealth() - event.getAmount() <= 0 && event.getEntity() instanceof ServerPlayer player) {
       //if enchanted and it would cause death, then we go on
       if (COOLDOWN.get() > 0 &&
           player.getCooldowns().isOnCooldown(player.getItemBySlot(EquipmentSlot.LEGS).getItem())) {
@@ -116,7 +116,7 @@ public class LastStandEnchant extends EnchantmentCyclic {
         return; // POOR
       }
       //survive
-      float toSurvive = event.getEntityLiving().getHealth() - 1;
+      float toSurvive = event.getEntity().getHealth() - 1;
       event.setAmount(toSurvive);
       player.giveExperiencePoints(-1 * xpCost);
       //now the fluff

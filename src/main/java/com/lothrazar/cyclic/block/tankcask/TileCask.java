@@ -18,14 +18,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileCask extends TileBlockEntityCyclic {
 
   private Map<Direction, Boolean> poweredSides;
-  public static final int CAPACITY = 8 * FluidAttributes.BUCKET_VOLUME;
+  public static final int CAPACITY = 8 * FluidType.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = CAPACITY / 2;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);

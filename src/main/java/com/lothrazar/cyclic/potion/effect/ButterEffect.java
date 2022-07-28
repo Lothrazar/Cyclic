@@ -9,7 +9,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 
 public class ButterEffect extends CyclicMobEffect {
 
@@ -20,9 +20,9 @@ public class ButterEffect extends CyclicMobEffect {
   }
 
   @Override
-  public void tick(LivingUpdateEvent event) {
+  public void tick(LivingTickEvent event) {
     // delete me i guess 
-    LivingEntity living = event.getEntityLiving();
+    LivingEntity living = event.getEntity();
     if (living.level.random.nextDouble() > DROP_CHANCE) {
       return;
     }

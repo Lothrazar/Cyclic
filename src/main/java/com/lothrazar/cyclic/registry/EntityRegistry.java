@@ -25,7 +25,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class EntityRegistry {
 
-  public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, ModCyclic.MODID);
+  public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ModCyclic.MODID);
   public static final RegistryObject<EntityType<EntityMagicNetEmpty>> MAGIC_NET = ENTITIES.register("magic_net", () -> EntityType.Builder.<EntityMagicNetEmpty> of(EntityMagicNetEmpty::new, MobCategory.MISC)
       .setShouldReceiveVelocityUpdates(true)
       .setUpdateInterval(1)

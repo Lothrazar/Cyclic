@@ -20,7 +20,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeSolidifier implements Recipe<TileSolidifier> {
 
@@ -146,7 +145,7 @@ public class RecipeSolidifier implements Recipe<TileSolidifier> {
     return CyclicRecipeType.SOLID_S.get();
   }
 
-  public static class SerializeSolidifier extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeSolidifier> {
+  public static class SerializeSolidifier implements RecipeSerializer<RecipeSolidifier> {
 
     @Override
     public RecipeSolidifier fromJson(ResourceLocation recipeId, JsonObject json) {

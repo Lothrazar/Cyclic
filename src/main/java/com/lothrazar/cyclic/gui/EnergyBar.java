@@ -8,7 +8,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class EnergyBar {
 
@@ -52,7 +51,7 @@ public class EnergyBar {
     if (visible && this.isMouseover(mouseX, mouseY)) {
       String tt = energ + "/" + this.capacity;
       List<Component> list = new ArrayList<>();
-      list.add(new TranslatableComponent(tt));
+      list.add(Component.translatable(tt));
       parent.renderComponentTooltip(ms, list, mouseX, mouseY);
     }
   }

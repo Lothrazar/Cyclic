@@ -7,7 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 
 public class SnowwalkEffect extends CyclicMobEffect {
 
@@ -16,9 +16,9 @@ public class SnowwalkEffect extends CyclicMobEffect {
   }
 
   @Override
-  public void tick(LivingUpdateEvent event) {
+  public void tick(LivingTickEvent event) {
     // delete me i guess 
-    LivingEntity living = event.getEntityLiving();
+    LivingEntity living = event.getEntity();
     Level world = living.getLevel();
     BlockPos blockpos = living.blockPosition();
     BlockState blockstate = Blocks.SNOW.defaultBlockState();

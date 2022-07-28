@@ -71,7 +71,7 @@ public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInter
         event.setCanceled(true);
         event.getItemStack().shrink(1);
         EntityUtil.eatingHorse(ahorse);
-        ChatUtil.sendStatusMessage(event.getPlayer(), "" + (mainAttribute.getValue() + newAdded));
+        ChatUtil.sendStatusMessage(event.getEntity(), "" + (mainAttribute.getValue() + newAdded));
       }
     }
   }

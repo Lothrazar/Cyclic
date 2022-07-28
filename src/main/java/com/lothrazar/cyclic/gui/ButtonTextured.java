@@ -9,7 +9,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 
 /**
@@ -24,11 +23,11 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
 
   public ButtonTextured(int xPos, int yPos, int width, int height, String displayString, OnPress handler) {
     super(xPos, yPos, width, height,
-        new TranslatableComponent(displayString), handler);
+        Component.translatable(displayString), handler);
   }
 
   public ButtonTextured(int xPos, int yPos, int width, int height, TextureEnum tid, String tooltip, OnPress handler) {
-    super(xPos, yPos, width, height, new TranslatableComponent(""), handler);
+    super(xPos, yPos, width, height, Component.translatable(""), handler);
     this.setTooltip(tooltip);
     this.setTextureId(tid);
   }
@@ -69,6 +68,6 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
 
   @Override
   public void addTooltip(String ttIn) {
-    tooltip.add(new TranslatableComponent(ttIn));
+    tooltip.add(Component.translatable(ttIn));
   }
 }

@@ -12,7 +12,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -47,10 +46,10 @@ public class BlockCableFluid extends CableBase {
   public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (Screen.hasShiftDown()) {
-      tooltip.add(new TranslatableComponent("block.cyclic.fluid_pipe.tooltip0").withStyle(ChatFormatting.GRAY));
+      tooltip.add(Component.translatable("block.cyclic.fluid_pipe.tooltip0").withStyle(ChatFormatting.GRAY));
     }
     else {
-      tooltip.add(new TranslatableComponent("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
+      tooltip.add(Component.translatable("item.cyclic.shift").withStyle(ChatFormatting.DARK_GRAY));
     }
   }
 
@@ -69,7 +68,7 @@ public class BlockCableFluid extends CableBase {
         FluidStack fluid = handlerHere.getFluidInTank(0);
         int st = fluid.getAmount();
         if (st > 0) {
-          player.displayClientMessage(new TranslatableComponent(st + " " + fluid.getDisplayName()), true);
+          player.displayClientMessage(Component.translatable(st + " " + fluid.getDisplayName()), true);
         }
       }
     }

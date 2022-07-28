@@ -9,7 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -38,7 +38,7 @@ public class SettingsCard extends ItemBaseCyclic {
     CompoundTag stackdata = stack.getOrCreateTag();
     if (stackdata.contains(NBT_ID)) {
       String tiledataID = stackdata.getString(NBT_ID);
-      TranslatableComponent t = new TranslatableComponent("[" + tiledataID + "]");
+      MutableComponent t = Component.translatable("[" + tiledataID + "]");
       t.withStyle(ChatFormatting.DARK_GRAY);
       tooltip.add(t);
     }

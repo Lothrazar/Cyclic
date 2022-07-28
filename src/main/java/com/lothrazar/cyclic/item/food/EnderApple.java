@@ -8,19 +8,17 @@ import java.util.Map;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.IdMap;
 import net.minecraft.core.Registry;
+import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class EnderApple extends ItemBaseCyclic {
 
@@ -60,23 +58,29 @@ public class EnderApple extends ItemBaseCyclic {
       //
       ServerLevel serverWorld = (ServerLevel) worldIn;
       Map<String, Integer> distanceStructNames = new HashMap<>();
-      Registry<ConfiguredStructureFeature<?, ?>> registry = worldIn.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
+      Registry<Structure> registry = worldIn.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
       //      registry.getho
-      IdMap<Holder<ConfiguredStructureFeature<?, ?>>> idmap = registry.asHolderIdMap();
+      IdMap<Holder<Structure>> idmap = registry.asHolderIdMap();
       idmap.forEach(structureFeature -> { // is of type  Holder<ConfiguredStructureFeature<?, ?>>
         try {
-          String name = structureFeature.value().feature.getRegistryName().toString();
+          //
+          //          structureFeature
+          Structure s = structureFeature.value();
+          String name = s.toString(); // ForgeRegistries.FEATURES.getKey(s).toString();
+          //s.feature.getRegistryName().toString();
           if (!structIgnoreList.contains(name)) {
             //then we are allowed to look fori t, we are not in ignore list
             BlockPos targetPos = entityLiving.blockPosition();
             //            LocateCommand y;
-            HolderSet<ConfiguredStructureFeature<?, ?>> holderSetOfFeature = HolderSet.direct(structureFeature);
-            Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> searchResult = serverWorld.getChunkSource().getGenerator().findNearestMapFeature(serverWorld,
-                holderSetOfFeature, targetPos, 100, false);
-            if (searchResult != null && searchResult.getFirst() != null) {
-              double distance = LevelWorldUtil.distanceBetweenHorizontal(searchResult.getFirst(), targetPos);
-              distanceStructNames.put(name, (int) distance);
-            }
+            //TODO:
+            LocateCommand y;
+            //            HolderSet<ConfiguredStructureFeature<?, ?>> holderSetOfFeature = HolderSet.direct(structureFeature);
+            //            Pair<BlockPos, Holder<ConfiguredStructureFeature<?, ?>>> searchResult = serverWorld.getChunkSource().getGenerator().findNearestMapFeature(serverWorld,
+            //                holderSetOfFeature, targetPos, 100, false);
+            //            if (searchResult != null && searchResult.getFirst() != null) {
+            //              double distance = LevelWorldUtil.distanceBetweenHorizontal(searchResult.getFirst(), targetPos);
+            //              distanceStructNames.put(name, (int) distance);
+            //            }
           }
         }
         catch (Exception e) {

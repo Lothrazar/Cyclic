@@ -92,7 +92,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class TileRegistry {
 
-  public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ModCyclic.MODID);
+  public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ModCyclic.MODID);
   public static final RegistryObject<BlockEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> BlockEntityType.Builder.of(TileFluidHopper::new, BlockRegistry.FLUIDHOPPER.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> BlockEntityType.Builder.of(TileSimpleHopper::new, BlockRegistry.HOPPER.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> BlockEntityType.Builder.of(TileGoldHopper::new, BlockRegistry.HOPPERGOLD.get()).build(null));

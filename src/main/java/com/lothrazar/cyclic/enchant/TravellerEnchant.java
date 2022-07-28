@@ -111,23 +111,23 @@ public class TravellerEnchant extends EnchantmentCyclic {
     if (!isEnabled()) {
       return;
     }
-    int level = getCurrentArmorLevelSlot(event.getEntityLiving(), EquipmentSlot.LEGS);
+    int level = getCurrentArmorLevelSlot(event.getEntity(), EquipmentSlot.LEGS);
     if (level > 0 && PROTS.contains(event.getSource().msgId)) {
       event.setAmount(0.1F);
     }
     if (level > 0 && event.getSource() == DamageSource.FALL) {
       //normal is zero damage up to 3 distance. 1 damage (half heart) at 4 distance. and each distance up goes up by that
       // so 8 fall damage would be 5 damage
-      if (event.getEntityLiving().fallDistance <= 8) {
+      if (event.getEntity().fallDistance <= 8) {
         //flatten damage up to 8 instead of default 3
         event.setAmount(0.1F);
         //but then 9 and onward falls back to original formula 
       }
-      else if (event.getEntityLiving().getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ElytraItem) { //== Items.ELYTRA
+      else if (event.getEntity().getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ElytraItem) { //== Items.ELYTRA
         //this leg enchant combos with any elytra, so never die from any fall damage, at worst it maxes out at leaving you alive at 1/2 heart
-        if (event.getAmount() > event.getEntityLiving().getHealth() - 0.5F) {
+        if (event.getAmount() > event.getEntity().getHealth() - 0.5F) {
           //either you crashed flying straight into the ground, or just fell while wearing elytra (you still die to void tho)
-          event.setAmount(event.getEntityLiving().getHealth() - 1F);
+          event.setAmount(event.getEntity().getHealth() - 1F);
           ParticleUtil.spawnParticle(event.getEntity().level, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().blockPosition(), 4);
         }
       }

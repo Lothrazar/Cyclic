@@ -4,7 +4,8 @@ import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -60,13 +61,13 @@ public class SpawnInspectorTool extends ItemBaseCyclic {
       //lop on abobe 
       for (MobSpawnSettings.SpawnerData spawnerInfo : list.unwrap()) {
         //        int weight = mobspawninfo$spawners.itemWeight;
-        TextComponent str = new TextComponent("[" + classif.getName() + "] ");
+        MutableComponent str = Component.literal("[" + classif.getName() + "] ");
         BlockPos top = getTopSolidOrLiquidBlock(world, spawnerInfo.type, pos.getX(), pos.getZ());
         if (spawnerInfo.type.canSummon() && NaturalSpawner.isSpawnPositionOk(SpawnPlacements.getPlacementType(spawnerInfo.type), world, top, spawnerInfo.type)) {
-          str.append(new TextComponent(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.BLUE));
+          str.append(Component.translatable(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.BLUE));
         }
         else {
-          str.append(new TextComponent(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.RED));
+          str.append(Component.translatable(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.RED));
         }
         ChatUtil.addServerChatMessage(context.getPlayer(), str);
       }

@@ -10,6 +10,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -50,22 +51,12 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   }
 
   @Override
-  public Class<? extends RecipeSolidifier> getRecipeClass() {
-    return RecipeSolidifier.class;
-  }
-
-  @Override
-  public ResourceLocation getUid() {
-    return ID;
-  }
-
-  @Override
   public RecipeType<RecipeSolidifier> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeSolidifier recipe, PoseStack ms, double mouseX, double mouseY) {
+  public void draw(RecipeSolidifier recipe, IRecipeSlotsView recipeSlotsView, PoseStack ms, double mouseX, double mouseY) {
     Minecraft.getInstance().font.draw(ms, recipe.getEnergy().getTicks() + " t", 60, 0, FONT);
     Minecraft.getInstance().font.draw(ms, recipe.getEnergy().getRfPertick() + " RF/t", 60, 10, FONT);
     Minecraft.getInstance().font.draw(ms, recipe.getEnergy().getEnergyTotal() + " RF", 60, 20, FONT);

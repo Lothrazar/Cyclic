@@ -8,7 +8,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -33,13 +32,13 @@ public class BuilderItem extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
-    tooltip.add(new TranslatableComponent(msg));
+    tooltip.add(Component.translatable(msg));
     BlockState target = BuilderActionType.getBlockState(stack);
     String block = "scepter.cyclic.nothing";
     if (target != null) {
       block = target.getBlock().getDescriptionId();
     }
-    tooltip.add(new TranslatableComponent(ChatFormatting.AQUA + ChatUtil.lang(block)));
+    tooltip.add(Component.translatable(ChatFormatting.AQUA + ChatUtil.lang(block)));
   }
 
   @Override

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.crafting.simple;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,7 +17,7 @@ public class CraftingStickContainerProvider implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TranslatableComponent("item.cyclic.crafting_stick");
+    return Component.translatable("item.cyclic.crafting_stick");
   }
 
   @Override

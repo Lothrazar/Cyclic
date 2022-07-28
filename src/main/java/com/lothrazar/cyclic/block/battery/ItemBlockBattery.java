@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -61,13 +60,13 @@ public class ItemBlockBattery extends BlockItem {
     if (storage != null) {
       current = storage.getEnergyStored();
       energyttmax = storage.getMaxEnergyStored();
-      tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
+      tooltip.add(Component.translatable(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
     }
     else if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
       //TODO 1.19 port  delete this branch
       current = stack.getTag().getInt(ENERGYTT);
       energyttmax = stack.getTag().getInt(ENERGYTTMAX);
-      tooltip.add(new TranslatableComponent(current + "/" + energyttmax).withStyle(ChatFormatting.BLUE));
+      tooltip.add(Component.translatable(current + "/" + energyttmax).withStyle(ChatFormatting.BLUE));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }

@@ -12,7 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -20,7 +20,7 @@ public class BlockSpawnEvents {
 
   @SubscribeEvent
   public void onExplosionEvent(ExplosionEvent.Start event) {
-    Level world = event.getWorld();
+    Level world = event.getLevel();
     //    Entity exploder = event.getExplosion().getExploder();
     Integer radius = BlockDestruction.RADIUS.get();
     Integer height = BlockDestruction.HEIGHT.get();
@@ -39,7 +39,7 @@ public class BlockSpawnEvents {
       //for these event types only
       Integer radius = CandlePeaceBlock.RADIUS.get();
       Integer height = CandlePeaceBlock.HEIGHT.get();
-      LivingEntity mob = event.getEntityLiving();
+      LivingEntity mob = event.getEntity();
       if (CandlePeaceBlock.isBad(mob, res)
           && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(),
               BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),

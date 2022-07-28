@@ -30,7 +30,7 @@ public class PlayerDataEvents {
 
   @SubscribeEvent
   public void onSaveFile(PlayerEvent.SaveToFile event) {
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     //if we have datas queued up to be saved
     if (DATA_QUEUE.containsKey(player.getUUID())) {
       //yes i have data to save 
@@ -54,7 +54,7 @@ public class PlayerDataEvents {
 
   @SubscribeEvent
   public void onLoadFile(PlayerEvent.LoadFromFile event) {
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     File mctomb = new File(event.getPlayerDirectory(), getPlayerFile(player));
     if (mctomb.exists()) {
       try {

@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 @SuppressWarnings("serial")
 public class FluidRenderMap<V> extends Object2ObjectOpenCustomHashMap<FluidStack, V> {
 
-  public enum FluidType {
+  public enum FluidFlow {
     STILL, FLOWING
   }
 
@@ -27,10 +27,10 @@ public class FluidRenderMap<V> extends Object2ObjectOpenCustomHashMap<FluidStack
     super(FluidHashStrategy.INSTANCE);
   }
 
-  public static TextureAtlasSprite getFluidTexture(FluidStack fluidStack, FluidType type) {
+  public static TextureAtlasSprite getFluidTexture(FluidStack fluidStack, FluidFlow type) {
     Fluid fluid = fluidStack.getFluid();
     ResourceLocation spriteLocation;
-    if (type == FluidType.STILL) {
+    if (type == FluidFlow.STILL) {
       spriteLocation = fluid.getAttributes().getStillTexture(fluidStack);
     }
     else {

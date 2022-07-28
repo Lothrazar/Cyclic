@@ -31,12 +31,12 @@ import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -198,12 +198,13 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
           for (int i = 0; i < this.craftMatrix.getContainerSize(); i++) {
             ItemStack recipeLeftover = this.craftMatrix.getItem(i);
             if (!recipeLeftover.isEmpty()) {
-              if (recipeLeftover.getContainerItem().isEmpty() == false) {
+              //              recipeLeftover.()
+              if (recipeLeftover.getCraftingRemainingItem().isEmpty() == false) {
                 //   ModCyclic.LOGGER.info(i + " recipe leftovers " + recipeLeftover + " ||| itemStacksInGridBackup " + itemStacksInGridBackup.get(i));
-                boolean leftoverEqual = (recipeLeftover.getItem() == recipeLeftover.getContainerItem().getItem());
+                boolean leftoverEqual = (recipeLeftover.getItem() == recipeLeftover.getCraftingRemainingItem().getItem());
                 if (leftoverEqual) {
                   //  ModCyclic.LOGGER.info(i + "leftoverEqual TRUE  " + recipeLeftover.getContainerItem());
-                  ItemStack result = recipeLeftover.getContainerItem().copy();
+                  ItemStack result = recipeLeftover.getCraftingRemainingItem().copy();
                   for (int j = 0; j < inputHandler.getSlots(); j++) {
                     //test it
                     result = inputHandler.insertItem(j, result, false);
@@ -213,7 +214,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
                   }
                 }
                 else {
-                  ItemStack result = recipeLeftover.getContainerItem().copy();
+                  ItemStack result = recipeLeftover.getCraftingRemainingItem().copy();
                   for (int j = 0; j < outHandler.getSlots(); j++) {
                     //test it
                     result = outHandler.insertItem(j, result, false);
@@ -382,6 +383,11 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     public boolean stillValid(Player playerIn) {
       return true;
     }
+
+    @Override
+    public ItemStack quickMoveStack(Player p_38941_, int p_38942_) {
+      return ItemStack.EMPTY;
+    }
   }
 
   private final CraftingContainer craftMatrix = new CraftingContainer(new FakeContainer(MenuType.CRAFTING, 18291238), 3, 3);
@@ -445,7 +451,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public Component getDisplayName() {
-    return new TextComponent(getType().getRegistryName().getPath());
+    return BlockRegistry.CRAFTER.get().getName();
   }
 
   @Override

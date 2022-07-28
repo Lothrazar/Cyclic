@@ -8,7 +8,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Containers;
@@ -129,7 +128,7 @@ public class BlockCyclic extends BaseEntityBlock {
       if (!world.isClientSide) {
         BlockEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity instanceof MenuProvider) {
-          NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
+          NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
         }
         else {
           throw new IllegalStateException("Our named container provider is missing!");
@@ -142,7 +141,7 @@ public class BlockCyclic extends BaseEntityBlock {
 
   private void displayClientFluidMessage(Player player, IFluidHandler handler) {
     if (ClientConfigCyclic.FLUID_BLOCK_STATUS.get()) {
-      player.displayClientMessage(new TranslatableComponent(getFluidRatioName(handler)), true);
+      player.displayClientMessage(Component.translatable(getFluidRatioName(handler)), true);
     }
   }
 
@@ -175,7 +174,7 @@ public class BlockCyclic extends BaseEntityBlock {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
+    tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
   }
 
   /**

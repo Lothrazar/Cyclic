@@ -47,7 +47,6 @@ import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
-import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
 import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
 import com.lothrazar.cyclic.enchant.BeheadingEnchant;
 import com.lothrazar.cyclic.enchant.CurseEnchant;
@@ -186,7 +185,7 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
         .push("enchantment");
     ////////////////////////////////////////////////////////////////// enchantment
-    AutoSmeltEnchant.CFG = CFG.comment("Set false to disable enchantment").define(AutoSmeltEnchant.ID + ".enabled", true);
+    //    AutoSmeltEnchant.CFG = CFG.comment("Set false to disable enchantment").define(AutoSmeltEnchant.ID + ".enabled", true);
     BeekeeperEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeekeeperEnchant.ID + ".enabled", true);
     BeheadingEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeheadingEnchant.ID + ".enabled", true);
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING,

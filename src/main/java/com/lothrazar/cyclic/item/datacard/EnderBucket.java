@@ -5,15 +5,12 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
+import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -38,21 +35,21 @@ public class EnderBucket extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     BlockPosDim dim = getPosition(stack);
-    if (dim != null) {
-      tooltip.add(new TranslatableComponent(dim.toString()).withStyle(ChatFormatting.GRAY));
-      if (flagIn.isAdvanced() || Screen.hasShiftDown()) {
-        String side = "S: " + dim.getSide().toString().toUpperCase();
-        tooltip.add(new TranslatableComponent(side).withStyle(ChatFormatting.GRAY));
-        String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
-        tooltip.add(new TranslatableComponent(sideF).withStyle(ChatFormatting.GRAY));
-        tooltip.add(new TranslatableComponent("H: " + dim.getHitVec().toString()).withStyle(ChatFormatting.GRAY));
-      }
-    }
-    else {
-      TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".tooltip");
-      t.withStyle(ChatFormatting.GRAY);
-      tooltip.add(t);
-    }
+    //    if (dim != null) {
+    //      tooltip.add(new TranslatableComponent(dim.toString()).withStyle(ChatFormatting.GRAY));
+    //      if (flagIn.isAdvanced() || Screen.hasShiftDown()) {
+    //        String side = "S: " + dim.getSide().toString().toUpperCase();
+    //        tooltip.add(new TranslatableComponent(side).withStyle(ChatFormatting.GRAY));
+    //        String sideF = "F: " + dim.getSidePlayerFacing().toString().toUpperCase();
+    //        tooltip.add(new TranslatableComponent(sideF).withStyle(ChatFormatting.GRAY));
+    //        tooltip.add(new TranslatableComponent("H: " + dim.getHitVec().toString()).withStyle(ChatFormatting.GRAY));
+    //      }
+    //    }
+    //    else {
+    //      TranslatableComponent t = new TranslatableComponent(getDescriptionId() + ".tooltip");
+    //      t.withStyle(ChatFormatting.GRAY);
+    //      tooltip.add(t);
+    //    }
   }
 
   @Override

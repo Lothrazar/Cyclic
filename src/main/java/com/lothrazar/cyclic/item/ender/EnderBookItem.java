@@ -13,8 +13,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -54,7 +53,7 @@ public class EnderBookItem extends ItemBaseCyclic {
       CompoundTag stackTag = stack.getOrCreateTag();
       if (stackTag.contains(ITEMCOUNT)) {
         int itemCount = stackTag.getInt(ITEMCOUNT);
-        TranslatableComponent t = new TranslatableComponent("cyclic.screen.filter.item.count");
+        MutableComponent t = Component.translatable("cyclic.screen.filter.item.count");
         t.append("" + itemCount);
         t.withStyle(ChatFormatting.GRAY);
         tooltip.add(t);
@@ -73,7 +72,7 @@ public class EnderBookItem extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayer) playerIn, new EnderBookContainerProvider(), playerIn.blockPosition());
+      NetworkHooks.openScreen((ServerPlayer) playerIn, new EnderBookContainerProvider(), playerIn.blockPosition());
     }
     if (!worldIn.isClientSide && playerIn.isCrouching()) {
       //any damage?
@@ -82,7 +81,7 @@ public class EnderBookItem extends ItemBaseCyclic {
         int enderslot = stack.getTag().getInt(ENDERSLOT);
         BlockPosDim loc = EnderBookItem.getLocation(stack, enderslot);
         if (loc != null) {
-          ChatUtil.addServerChatMessage(playerIn, new TranslatableComponent("item.cyclic.ender_book.start").append(loc.toString()));
+          ChatUtil.addServerChatMessage(playerIn, Component.translatable("item.cyclic.ender_book.start").append(loc.toString()));
           stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, TP_COUNTDOWN);
         }
       }
@@ -118,7 +117,7 @@ public class EnderBookItem extends ItemBaseCyclic {
         }
       }
       else if (ct % 20 == 0 && entityIn instanceof Player) {
-        ChatUtil.sendStatusMessage((Player) entityIn, new TranslatableComponent("item.cyclic.ender_book.countdown").append("" + (ct / 20)));
+        ChatUtil.sendStatusMessage((Player) entityIn, Component.translatable("item.cyclic.ender_book.countdown").append("" + (ct / 20)));
       }
       ct--;
       stack.getOrCreateTag().putInt(TELEPORT_COUNTDOWN, ct);
@@ -197,7 +196,7 @@ public class EnderBookItem extends ItemBaseCyclic {
       if (loc != null) {
         msg = loc.getDisplayString();
       }
-      ChatUtil.addServerChatMessage(player, new TextComponent(book.getTag().getInt(ENDERSLOT) + " : ").append(msg));
+      ChatUtil.addServerChatMessage(player, Component.translatable(book.getTag().getInt(ENDERSLOT) + " : ").append(msg));
     }
   }
 

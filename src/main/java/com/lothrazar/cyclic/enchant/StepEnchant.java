@@ -33,7 +33,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class StepEnchant extends EnchantmentCyclic {
@@ -87,15 +87,15 @@ public class StepEnchant extends EnchantmentCyclic {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
+  public void onEntityUpdate(LivingTickEvent event) {
     if (!isEnabled()) {
       return;
     }
     //check if NOT holding this harm
-    if (event.getEntityLiving() instanceof Player == false) {
+    if (event.getEntity() instanceof Player == false) {
       return;
     }
-    Player player = (Player) event.getEntityLiving();
+    Player player = (Player) event.getEntity();
     //Ticking
     ItemStack armor = player.getItemBySlot(EquipmentSlot.LEGS);
     int level = 0;

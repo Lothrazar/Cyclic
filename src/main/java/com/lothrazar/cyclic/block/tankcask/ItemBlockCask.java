@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -65,7 +65,7 @@ public class ItemBlockCask extends BlockItem {
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null && !fs.isEmpty()) {
-        TranslatableComponent t = new TranslatableComponent(
+        MutableComponent t = Component.translatable(
             fs.getDisplayName().getString()
                 + " " + fs.getAmount()
                 + "/" + storage.getTankCapacity(0));

@@ -48,15 +48,15 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
   public void interactWith(EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof Horse
-        && event.getWorld() instanceof ServerLevel
-        && !event.getPlayer().getCooldowns().isOnCooldown(this)) {
+        && event.getLevel() instanceof ServerLevel
+        && !event.getEntity().getCooldowns().isOnCooldown(this)) {
       // lets go 
       Horse horseOldEntity = (Horse) event.getTarget();
-      ZombieHorse zombieNewEntity = EntityType.ZOMBIE_HORSE.spawn((ServerLevel) event.getWorld(), null, null, event.getPlayer(), event.getPos(), MobSpawnType.NATURAL, false, false);
-      event.getWorld().addFreshEntity(zombieNewEntity);
-      if (horseOldEntity.isTamed() && horseOldEntity.getOwnerUUID() == event.getPlayer().getUUID()) {
+      ZombieHorse zombieNewEntity = EntityType.ZOMBIE_HORSE.spawn((ServerLevel) event.getLevel(), null, null, event.getEntity(), event.getPos(), MobSpawnType.NATURAL, false, false);
+      event.getLevel().addFreshEntity(zombieNewEntity);
+      if (horseOldEntity.isTamed() && horseOldEntity.getOwnerUUID() == event.getEntity().getUUID()) {
         // you still tamed it
-        zombieNewEntity.tameWithName(event.getPlayer());
+        zombieNewEntity.tameWithName(event.getEntity());
       }
       if (horseOldEntity.isSaddled()) {
         zombieNewEntity.equipSaddle(SoundSource.PLAYERS);
@@ -64,14 +64,14 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
       IItemHandler horseChest = horseOldEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
       if (horseChest != null && horseChest.getSlots() >= 2) {
         //dont drop saddle since i re-saddle. drop horse arm
-        ItemStackUtil.drop(event.getWorld(), event.getPos(), horseChest.getStackInSlot(1));
+        ItemStackUtil.drop(event.getLevel(), event.getPos(), horseChest.getStackInSlot(1));
       }
       if (horseOldEntity.hasCustomName()) {
         zombieNewEntity.setCustomName(horseOldEntity.getCustomName());
       }
       //remove the horse    
       horseOldEntity.remove(Entity.RemovalReason.DISCARDED);
-      event.getPlayer().getCooldowns().addCooldown(this, 10);
+      event.getEntity().getCooldowns().addCooldown(this, 10);
       event.getItemStack().shrink(1);
       event.setCanceled(true);
       event.setCancellationResult(InteractionResult.SUCCESS);

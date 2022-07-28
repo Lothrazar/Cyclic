@@ -16,7 +16,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
 
@@ -115,7 +114,7 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
     return this.getRfpertick() * this.getTicks();
   }
 
-  public static class SerializeGenerateFluid extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecipeGeneratorFluid> {
+  public static class SerializeGenerateFluid implements RecipeSerializer<RecipeGeneratorFluid> {
 
     public SerializeGenerateFluid() {}
 

@@ -1,12 +1,6 @@
 package com.lothrazar.cyclic.event;
 
-import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.world.WorldGenPlacements;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /**
  * https://github.com/MatrexsVigil/phc2crops/blob/e9790425f59c3094acef00feb2a1d0ea2b9e7e93/src/main/java/pam/pamhc2crops/worldgen/WindyGardenFeature.java
@@ -15,26 +9,25 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class BiomeEvents {
 
   private GenerationStep.Decoration step = GenerationStep.Decoration.VEGETAL_DECORATION;
-
-  @SubscribeEvent
-  public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
-    if (!ConfigRegistry.GENERATE_FLOWERS.get()) {
-      return;
-    }
-    BiomeGenerationSettingsBuilder generation = event.getGeneration();
-    Biome.BiomeCategory category = event.getCategory();
-    if (category == Biome.BiomeCategory.FOREST || category == Biome.BiomeCategory.SWAMP) {
-      generation.addFeature(step, WorldGenPlacements.PF_FLOWER_CYAN);
-    }
-    if (category == Biome.BiomeCategory.SAVANNA || category == Biome.BiomeCategory.MESA) {
-      generation.addFeature(step, WorldGenPlacements.PF_FLOWER_TULIP); // brown absalon and purple
-    }
-    if (category == Biome.BiomeCategory.ICY
-        || category == Biome.BiomeCategory.PLAINS
-        || category == Biome.BiomeCategory.OCEAN
-        || category == Biome.BiomeCategory.UNDERGROUND
-        || category == Biome.BiomeCategory.JUNGLE) {
-      generation.addFeature(step, WorldGenPlacements.PF_FLOWER_LIME);
-    }
-  }
+  //  @SubscribeEvent
+  //  public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
+  //    if (!ConfigRegistry.GENERATE_FLOWERS.get()) {
+  //      return;
+  //    }
+  //    BiomeGenerationSettingsBuilder generation = event.getGeneration();
+  //    Biome.BiomeCategory category = event.getCategory();
+  //    if (category == Biome.BiomeCategory.FOREST || category == Biome.BiomeCategory.SWAMP) {
+  //      generation.addFeature(step, WorldGenPlacements.PF_FLOWER_CYAN);
+  //    }
+  //    if (category == Biome.BiomeCategory.SAVANNA || category == Biome.BiomeCategory.MESA) {
+  //      generation.addFeature(step, WorldGenPlacements.PF_FLOWER_TULIP); // brown absalon and purple
+  //    }
+  //    if (category == Biome.BiomeCategory.ICY
+  //        || category == Biome.BiomeCategory.PLAINS
+  //        || category == Biome.BiomeCategory.OCEAN
+  //        || category == Biome.BiomeCategory.UNDERGROUND
+  //        || category == Biome.BiomeCategory.JUNGLE) {
+  //      generation.addFeature(step, WorldGenPlacements.PF_FLOWER_LIME);
+  //    }
+  //  }
 }
