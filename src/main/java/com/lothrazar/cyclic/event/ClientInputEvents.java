@@ -25,7 +25,7 @@ public class ClientInputEvents {
 
   @SubscribeEvent // KeyInputEvent -> KeyPressed
   public void onKeyInput(ScreenEvent.KeyPressed.Post event) {
-    EnchantRegistry.LAUNCH.onKeyInput(Minecraft.getInstance().player);
+    EnchantRegistry.LAUNCH.get().onKeyInput(Minecraft.getInstance().player);
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
     }

@@ -136,7 +136,7 @@ public class ItemEvents {
     Player player = event.getEntity();
     Level worldIn = player.level;
     if (worldIn.isClientSide == false) {
-      int level = EnchantRegistry.MULTISHOT.getCurrentLevelTool(stackBow);
+      int level = EnchantRegistry.MULTIBOW.get().getCurrentLevelTool(stackBow);
       if (level <= 0) {
         return;
       }

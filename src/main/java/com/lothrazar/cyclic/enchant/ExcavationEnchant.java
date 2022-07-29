@@ -100,7 +100,7 @@ public class ExcavationEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean checkCompatibility(Enchantment ench) {
-    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST;
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.EXPERIENCE_BOOST.get();
   }
 
   private int getHarvestMax(int level) {

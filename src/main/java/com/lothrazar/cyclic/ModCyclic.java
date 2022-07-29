@@ -56,16 +56,5 @@ public class ModCyclic {
     EnchantRegistry.ENCHANTMENTS.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
     ForgeMod.enableMilkFluid();
-    //TODO: 1.18 new content 
-    //anti beacon
-    //poison cleansing magic aura
-    //    Lothrazar
-    //    : what if i made a milk sponge that cleared everything and then a sponge altar with a config or recipe that says X item clears out Y potion effects
-    //    Ava751
-    //    : Wouldn't work if the beacon has a white or blacklist for which debuffs it affects
-    //    LUL
-    //
-    //    Lothrazar
-    //    : for your base you would want at least 16 or 32 blocks i assume
   }
 }

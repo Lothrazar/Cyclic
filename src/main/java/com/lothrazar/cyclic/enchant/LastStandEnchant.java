@@ -58,8 +58,8 @@ public class LastStandEnchant extends EnchantmentCyclic {
 
   @Override
   public boolean checkCompatibility(Enchantment ench) {
-    return super.checkCompatibility(ench) && ench != EnchantRegistry.LAUNCH
-        && ench != EnchantRegistry.EXPERIENCE_BOOST
+    return super.checkCompatibility(ench) && ench != EnchantRegistry.LAUNCH.get()
+        && ench != EnchantRegistry.EXPERIENCE_BOOST.get()
         && ench != Enchantments.MENDING
         && ench != Enchantments.THORNS;
   }

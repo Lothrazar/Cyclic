@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.collectfluid;
 
-import java.awt.TextComponent;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
