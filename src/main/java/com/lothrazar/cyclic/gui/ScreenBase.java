@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.gui;
 
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
@@ -80,7 +79,6 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
    * @param name
    */
   protected void drawName(PoseStack ms, String name) {
-    name = ChatUtil.lang("block." + ModCyclic.MODID + "." + name);
     drawString(ms, name,
         (this.getXSize() - this.font.width(name)) / 2,
         6.0F);
