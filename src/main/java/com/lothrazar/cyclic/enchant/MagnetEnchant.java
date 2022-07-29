@@ -45,7 +45,7 @@ public class MagnetEnchant extends EnchantmentCyclic {
 
   public MagnetEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override

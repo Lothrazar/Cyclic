@@ -23,17 +23,17 @@ import net.minecraftforge.registries.RegistryObject;
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java
 public class FluidXpJuiceHolder {
 
-  private static final String id = "xpjuice";
-  private static final ResourceLocation FLUID_FLOWING = new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow");
-  private static final ResourceLocation FLUID_STILL = new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_still");
+  private static final String ID = "xpjuice";
+  private static final ResourceLocation FLUID_FLOWING = new ResourceLocation(ModCyclic.MODID + ":fluid/" + ID + "_flow");
+  private static final ResourceLocation FLUID_STILL = new ResourceLocation(ModCyclic.MODID + ":fluid/" + ID + "_still");
   //  public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation("minecraft:block/obsidian"); // wtf
   public static final int COLOR = 0x22FF43;
-  public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(makeProperties()));
-  public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));
+  public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(ID, () -> new ForgeFlowingFluid.Source(makeProperties()));
+  public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(ID + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));
   // .noDrops() became noLootTable()
-  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new XpJuiceFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().lightLevel(s -> 8).strength(100.0F).noLootTable()));
-  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(id + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(MaterialRegistry.ITEM_GROUP)));
-  public static RegistryObject<FluidType> test_fluid_type = FluidRegistry.FLUID_TYPES.register(id, () -> new FluidType(FluidType.Properties.create()) {
+  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block", () -> new XpJuiceFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().lightLevel(s -> 8).strength(100.0F).noLootTable()));
+  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(MaterialRegistry.ITEM_GROUP)));
+  public static RegistryObject<FluidType> test_fluid_type = FluidRegistry.FLUID_TYPES.register(ID, () -> new FluidType(FluidType.Properties.create()) {
 
     @Override
     public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {

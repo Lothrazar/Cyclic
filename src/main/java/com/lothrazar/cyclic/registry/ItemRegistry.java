@@ -89,6 +89,7 @@ import com.lothrazar.cyclic.item.food.AppleBuffs;
 import com.lothrazar.cyclic.item.food.AppleChocolate;
 import com.lothrazar.cyclic.item.food.EdibleFlightItem;
 import com.lothrazar.cyclic.item.food.EdibleSpecItem;
+import com.lothrazar.cyclic.item.food.EnderApple;
 import com.lothrazar.cyclic.item.food.HeartItem;
 import com.lothrazar.cyclic.item.food.HeartToxicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;
@@ -137,7 +138,7 @@ public class ItemRegistry {
   static final int SMALLPOTIONDUR = 20 * 90; // 1:30
   static final int LARGEPOTIONDUR = 3 * 20 * 60; // 3:00 
   static final float APPLESATUR = Foods.APPLE.getSaturationModifier();
-  //  public static final RegistryObject<Item> APPLE_ENDER = ITEMS.register("apple_ender", () -> new EnderApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(0).alwaysEat()      .build())));
+  public static final RegistryObject<Item> APPLE_ENDER = ITEMS.register("apple_ender", () -> new EnderApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(0).alwaysEat().build())));
   public static final RegistryObject<Item> APPLE_LOFTY_STATURE = ITEMS.register("apple_lofty_stature", () -> new LoftyStatureApple(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition()).saturationMod(0).alwaysEat()
       .build())));
   public static final RegistryObject<Item> APPLE_HONEY = ITEMS.register("apple_honey", () -> new ItemBaseCyclic(new Item.Properties().tab(MaterialRegistry.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(Foods.APPLE.getNutrition() * 4).saturationMod(APPLESATUR * 4)

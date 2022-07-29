@@ -47,6 +47,7 @@ import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
+import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
 import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
 import com.lothrazar.cyclic.enchant.BeheadingEnchant;
 import com.lothrazar.cyclic.enchant.CurseEnchant;
@@ -185,39 +186,39 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
         .push("enchantment");
     ////////////////////////////////////////////////////////////////// enchantment
-    //    AutoSmeltEnchant.CFG = CFG.comment("Set false to disable enchantment").define(AutoSmeltEnchant.ID + ".enabled", true);
-    BeekeeperEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeekeeperEnchant.ID + ".enabled", true);
-    BeheadingEnchant.CFG = CFG.comment("Set false to disable enchantment").define(BeheadingEnchant.ID + ".enabled", true);
+    AutoSmeltEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", false);
+    BeekeeperEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
+    BeheadingEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(BeheadingEnchant.ID + ".enabled", true);
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING,
         it -> it instanceof String);
     BeheadingEnchant.PERCDROP = CFG.comment("Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
     BeheadingEnchant.PERCPERLEVEL = CFG.comment("Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
-    CurseEnchant.CFG = CFG.comment("Set false to disable enchantment").define(CurseEnchant.ID + ".enabled", true);
-    DisarmEnchant.CFG = CFG.comment("Set false to disable enchantment").define(DisarmEnchant.ID + ".enabled", true);
-    ExcavationEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ExcavationEnchant.ID + ".enabled", true);
-    GrowthEnchant.CFG = CFG.comment("Set false to disable enchantment").define(GrowthEnchant.ID + ".enabled", true);
+    CurseEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(CurseEnchant.ID + ".enabled", true);
+    DisarmEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
+    ExcavationEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
+    GrowthEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
     ElytraLaunchEnchant.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(ElytraLaunchEnchant.ID + ".enabled", true);
-    LifeLeechEnchant.CFG = CFG.comment("Set false to disable enchantment").define(LifeLeechEnchant.ID + ".enabled", true);
-    MagnetEnchant.CFG = CFG.comment("Set false to disable enchantment").define(MagnetEnchant.ID + ".enabled", true);
-    MultishotEnchant.CFG = CFG.comment("Set false to disable enchantment").define(MultishotEnchant.ID + ".enabled", true);
-    EnderPearlEnchant.CFG = CFG.comment("Set false to disable enchantment").define(EnderPearlEnchant.ID + ".enabled", true);
-    QuickdrawEnchant.CFG = CFG.comment("Set false to disable enchantment").define(QuickdrawEnchant.ID + ".enabled", true);
-    ReachEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ReachEnchant.ID + ".enabled", true);
-    StepEnchant.CFG = CFG.comment("Set false to disable enchantment").define(StepEnchant.ID + ".enabled", true);
-    SteadyEnchant.CFG = CFG.comment("Set false to disable enchantment").define(SteadyEnchant.ID + ".enabled", true);
-    LastStandEnchant.CFG = CFG.comment("Set false to disable enchantment").define(LastStandEnchant.ID + ".enabled", true);
+    LifeLeechEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
+    MagnetEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
+    MultishotEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(MultishotEnchant.ID + ".enabled", true);
+    EnderPearlEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(EnderPearlEnchant.ID + ".enabled", true);
+    QuickdrawEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(QuickdrawEnchant.ID + ".enabled", true);
+    ReachEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(ReachEnchant.ID + ".enabled", true);
+    StepEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(StepEnchant.ID + ".enabled", true);
+    SteadyEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(SteadyEnchant.ID + ".enabled", true);
+    LastStandEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(LastStandEnchant.ID + ".enabled", true);
     LastStandEnchant.COST = CFG.comment("Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
     LastStandEnchant.ABS = CFG.comment("How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);
     LastStandEnchant.COOLDOWN = CFG.comment("How many ticks of cooldown, 0 to disable").defineInRange(LastStandEnchant.ID + ".cooldown", 20, 0, 99999);
-    TravellerEnchant.CFG = CFG.comment("Set false to disable enchantment").define(TravellerEnchant.ID + ".enabled", true);
-    VenomEnchant.CFG = CFG.comment("Set false to disable enchantment").define(VenomEnchant.ID + ".enabled", true);
-    XpEnchant.CFG = CFG.comment("Set false to disable enchantment").define(XpEnchant.ID + ".enabled", true);
+    TravellerEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(TravellerEnchant.ID + ".enabled", true);
+    VenomEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(VenomEnchant.ID + ".enabled", true);
+    XpEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(XpEnchant.ID + ".enabled", true);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     GENERATE_FLOWERS = CFG.comment("Do the four generate in the world. "
         + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "
         + "but the mod will not use the features to generate/place flowers in world-generation")
-        .define("flowers.enabled", true);
+        .define("flowers.enabled", false); // TODO: ad recipes for flowers
     CYAN_PODZOL_LEGACY = CFG.comment("Enable the legacy feature that will spawn a Cyan flower when bonemeal is used on Podzol")
         .define("cyan_podzol_legacy.enabled", false);
     CFG.pop();

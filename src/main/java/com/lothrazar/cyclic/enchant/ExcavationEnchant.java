@@ -60,7 +60,7 @@ public class ExcavationEnchant extends EnchantmentCyclic {
 
   public ExcavationEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override

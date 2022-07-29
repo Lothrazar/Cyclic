@@ -53,7 +53,7 @@ public class LastStandEnchant extends EnchantmentCyclic {
 
   public LastStandEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override

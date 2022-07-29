@@ -33,6 +33,6 @@
 		,"1.7.6":"Allow Home Command and others to Run in Functions #2138 . See examples in changelog"
 	},
 	"1.19":{
-		"":"Worldgen of the 4 flowers disabled to be ported later.  Ender Apple disabled (for now due to structure changes)."
+		"":"Most features ported except for a few that are coming later. (Worldgen for the 4 flowers is not implemented in this release)"
 	}
 }

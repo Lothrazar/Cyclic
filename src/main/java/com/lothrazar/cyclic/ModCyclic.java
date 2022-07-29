@@ -46,6 +46,7 @@ public class ModCyclic {
     BlockRegistry.BLOCKS.register(bus);
     ItemRegistry.ITEMS.register(bus);
     TileRegistry.TILES.register(bus);
+    FluidRegistry.FLUID_TYPES.register(bus);
     FluidRegistry.FLUIDS.register(bus);
     MenuTypeRegistry.CONTAINERS.register(bus);
     CyclicRecipeType.RECIPE_TYPES.register(bus);

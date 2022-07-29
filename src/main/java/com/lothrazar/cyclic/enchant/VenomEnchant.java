@@ -46,7 +46,7 @@ public class VenomEnchant extends EnchantmentCyclic {
 
   public VenomEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
-    if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
+    MinecraftForge.EVENT_BUS.register(this);
   }
 
   @Override
