@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.scaffolding;
 
-import java.util.Random;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.EntityUtil;
@@ -8,6 +7,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -49,8 +49,8 @@ public class BlockScaffolding extends BlockCyclic {
   }
 
   @Override
-  public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-    if (doesAutobreak && worldIn.random.nextDouble() < CHANCE_CRUMBLE) {
+  public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
+    if (doesAutobreak && random.nextDouble() < CHANCE_CRUMBLE) {
       worldIn.destroyBlock(pos, true);
     }
   }

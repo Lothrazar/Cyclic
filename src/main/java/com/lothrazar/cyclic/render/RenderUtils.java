@@ -7,7 +7,6 @@ import java.util.Map;
 import com.lothrazar.cyclic.data.Model3D;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -110,7 +109,7 @@ public class RenderUtils {
       }
     }
     vertexBuffer.end();
-    BufferUploader.end(vertexBuffer);
+    //    BufferUploader.end(vertexBuffer);
     //    RenderSystem.disableAlphaTest();
     RenderSystem.disableBlend();
   }
@@ -169,8 +168,9 @@ public class RenderUtils {
         g = 1f;
         b = 1f;
       }
-      //      addVertexData
-      builder.putBulkData(matrixEntry, bakedquad, r, g, b, alpha, combinedLights, combinedOverlay);
+      //      addVertexData 
+      boolean readExistingColor = false;
+      builder.putBulkData(matrixEntry, bakedquad, r, g, b, alpha, combinedLights, combinedOverlay, readExistingColor);
     }
   }
 

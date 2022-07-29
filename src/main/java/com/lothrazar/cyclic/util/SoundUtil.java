@@ -44,7 +44,7 @@ public class SoundUtil {
         soundIn,
         SoundSource.BLOCKS,
         pos.getX(), pos.getY(), pos.getZ(),
-        p, v));
+        p, v, 0));
   }
 
   public static void playSoundFromServer(ServerPlayer entityIn, SoundEvent soundIn, float p, float v) {
@@ -55,7 +55,7 @@ public class SoundUtil {
         soundIn,
         SoundSource.BLOCKS,
         entityIn.xOld, entityIn.yOld, entityIn.zOld,
-        p, v));
+        p, v, 0));
   }
 
   public static void playSoundFromServer(ServerLevel world, BlockPos pos, SoundEvent soundIn) {

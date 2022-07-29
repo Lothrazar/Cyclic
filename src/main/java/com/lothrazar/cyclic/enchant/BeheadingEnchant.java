@@ -24,11 +24,13 @@
 package com.lothrazar.cyclic.enchant;
 
 import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.ItemStackUtil;
 import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -44,6 +46,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BeheadingEnchant extends EnchantmentCyclic {
 
@@ -111,7 +114,7 @@ public class BeheadingEnchant extends EnchantmentCyclic {
       if (Mth.nextInt(world.random, 0, 100) > percentForLevel(level)) {
         return;
       }
-      LivingEntity target = (LivingEntity) event.getEntity();
+      LivingEntity target = event.getEntity();
       if (target == null) {
         return;
       } //probably wont happen just extra safe
@@ -122,7 +125,9 @@ public class BeheadingEnchant extends EnchantmentCyclic {
         return;
       }
       //else the random number was less than 10, so it passed the 10% chance req
-      String key = target.getType().getRegistryName().toString();
+      @Nullable
+      ResourceLocation type = ForgeRegistries.ENTITY_TYPES.getKey(target.getType());
+      String key = type == null ? "" : type.toString();
       ////we allow all these, which include config, to override the vanilla skulls below 
       Map<String, String> mappedBeheading = ConfigRegistry.getMappedBeheading();
       if (target.getType() == EntityType.ENDER_DRAGON) {

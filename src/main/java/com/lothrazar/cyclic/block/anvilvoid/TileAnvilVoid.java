@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
@@ -73,7 +74,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public Component getDisplayName() {
-    return Component.translatable(getType().getRegistryName().getPath());
+    return BlockRegistry.ANVILVOID.get().getName();
   }
 
   @Override

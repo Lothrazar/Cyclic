@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block;
 
-import java.util.Random;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -9,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -75,7 +75,7 @@ public class BlockNoTraders extends BlockCyclic implements SimpleWaterloggedBloc
 
   //copy campfire
   @Override
-  public void animateTick(BlockState bs, Level world, BlockPos pos, Random rand) {
+  public void animateTick(BlockState bs, Level world, BlockPos pos, RandomSource rand) {
     if (bs.getValue(LIT)) {
       if (rand.nextInt(10) == 0) {
         world.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);

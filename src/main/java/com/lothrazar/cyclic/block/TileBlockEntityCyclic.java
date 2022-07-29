@@ -186,7 +186,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
     try {
       fakePlayer.get().gameMode.handleBlockBreakAction(targetPos, ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,
-          facing, world.getMaxBuildHeight());
+          facing, world.getMaxBuildHeight(), 0); // 0 == getSequence?
       ModCyclic.LOGGER.info("handle handleBlockBreakAction rightclick i guess");
       return InteractionResult.SUCCESS;
     }
