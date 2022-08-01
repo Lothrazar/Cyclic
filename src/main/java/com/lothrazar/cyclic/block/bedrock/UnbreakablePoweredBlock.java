@@ -2,9 +2,7 @@ package com.lothrazar.cyclic.block.bedrock;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -34,13 +32,11 @@ public class UnbreakablePoweredBlock extends BlockCyclic {
     return createTickerHelper(type, TileRegistry.UNBREAKABLE_REACTIVE.get(), world.isClientSide ? UnbreakablePoweredTile::clientTick : UnbreakablePoweredTile::serverTick);
   }
 
-  public static void setBreakable(Level world, BlockPos pos, boolean isBreakable) {
-    BlockState state = world.getBlockState(pos);
-    boolean oldBreakable = state.getValue(BREAKABLE);
-    if (oldBreakable != isBreakable) {
-      world.setBlockAndUpdate(pos, state.setValue(BREAKABLE, isBreakable));
-      if (world.isClientSide) {
-        ParticleUtil.spawnParticle(world, DustParticleOptions.REDSTONE, pos, 5);
+  public static void setBreakable(BlockState blockState, Level world, BlockPos pos, boolean isBreakable) {
+    if (blockState.hasProperty(BREAKABLE)) {
+      boolean oldBreakable = blockState.getValue(BREAKABLE);
+      if (oldBreakable != isBreakable) {
+        world.setBlockAndUpdate(pos, blockState.setValue(BREAKABLE, isBreakable));
       }
     }
   }
