@@ -34,13 +34,14 @@ public class UnbreakablePoweredBlock extends BlockCyclic {
     return createTickerHelper(type, TileRegistry.UNBREAKABLE_REACTIVE.get(), world.isClientSide ? UnbreakablePoweredTile::clientTick : UnbreakablePoweredTile::serverTick);
   }
 
-  public static void setBreakable(Level world, BlockPos pos, boolean isBreakable) {
-    BlockState state = world.getBlockState(pos);
-    boolean oldBreakable = state.getValue(BREAKABLE);
-    if (oldBreakable != isBreakable) {
-      world.setBlockAndUpdate(pos, state.setValue(BREAKABLE, isBreakable));
-      if (world.isClientSide) {
-        ParticleUtil.spawnParticle(world, DustParticleOptions.REDSTONE, pos, 5);
+  public static void setBreakable(BlockState state, Level world, BlockPos pos, boolean isBreakable) {
+    if (state.hasProperty(BREAKABLE)) {
+      boolean oldBreakable = state.getValue(BREAKABLE);
+      if (oldBreakable != isBreakable) {
+        world.setBlockAndUpdate(pos, state.setValue(BREAKABLE, isBreakable));
+        if (world.isClientSide) {
+          ParticleUtil.spawnParticle(world, DustParticleOptions.REDSTONE, pos, 5);
+        }
       }
     }
   }

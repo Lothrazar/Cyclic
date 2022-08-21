@@ -31,5 +31,6 @@
 		,"1.7.4":"Ported from minecraft-1.10.2: Alluring Fishhook (cyclic:ender_torch).  Ported from minecraft-1.12.2: Throwing Torch (cyclic:ender_torch).  Added new potion effect cyclic:flight. Added: Bone Shield, Obsidian Shield.  Added item tag forge:shields.  The following blocks can now be disabled with redstone power (only run when not powered): Sound Muffler, Sound Recorder, Artemis Beacon.  "
 		,"1.7.5":"Redstone clock can now be disabled with incoming redstone (has a Requires redstone button - feature ported from mc1.12.2).  Removed some log spam statements from 1.7.4"
 		,"1.7.6":"Allow Home Command and others to Run in Functions #2138 . See examples in changelog"
+		,"1.7.7":"Merge pull request #2157 from zhyupe/refactor/uncraft-recipe-matching . Fix Game crashing when teleporting or going through nether portal (UnbreakablePoweredBlock) #2142"
 	}
 }
