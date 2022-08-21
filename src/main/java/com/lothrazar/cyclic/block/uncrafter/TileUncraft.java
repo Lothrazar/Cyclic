@@ -112,8 +112,10 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     }
     Recipe<?> match = this.findMatchingRecipe(level, dropMe);
     if (match != null) {
-      if (uncraftRecipe(match)) {
-        this.status = UncraftStatusEnum.MATCH;
+      var status = uncraftRecipe(match);
+      this.status = status;
+
+      if (status == UncraftStatusEnum.MATCH) {
         //pay cost
         // ModCyclic.LOGGER.info("before extract cost" + inputSlots.getStackInSlot(0));
         inputSlots.extractItem(0, match.getResultItem().getCount(), false);
@@ -176,7 +178,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     super.saveAdditional(tag);
   }
 
-  private boolean uncraftRecipe(Recipe<?> match) {
+  private UncraftStatusEnum uncraftRecipe(Recipe<?> match) {
     List<ItemStack> result = match.getIngredients().stream().flatMap(ingredient -> Arrays.stream(ingredient.getItems())
         .filter(stack -> !stack.hasContainerItem())
         .findAny()
@@ -184,8 +186,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
         .orElseGet(Stream::empty))
         .collect(Collectors.toList());
     if (result.isEmpty()) {
-      this.status = UncraftStatusEnum.NORECIPE;
-      return false;
+      return UncraftStatusEnum.NORECIPE;
     }
     //do we have space for out?
     boolean simulate = true;
@@ -197,8 +198,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
         }
       }
       if (!rOut.isEmpty()) { //This doesn't actually work - it will succeed if there is so much as 1 open slot. But idk how to fix it without being lag-inducing.
-        this.status = UncraftStatusEnum.NOROOM;
-        return false;
+        return UncraftStatusEnum.NOROOM;
       }
     }
     //we have room for sure
@@ -213,7 +213,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
         forTesting = outputSlots.insertItem(i, forTesting, simulate);
       }
     }
-    return true;
+    return UncraftStatusEnum.MATCH;
   }
 
   public Recipe<?> findMatchingRecipe(Level world, ItemStack dropMe) {
@@ -232,37 +232,35 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   // matches count and has enough
   @SuppressWarnings("unchecked")
   private boolean recipeMatches(ItemStack stack, Recipe<?> recipe) {
-    if (stack.isEmpty() ||
-        recipe == null ||
-        recipe.getResultItem().isEmpty() ||
-        recipe.getResultItem().getCount() > stack.getCount()) {
-      this.status = UncraftStatusEnum.NORECIPE;
+    if (recipe == null) {
       return false;
     }
+
+    var recipeResultItem = recipe.getResultItem();
+    if (recipeResultItem.isEmpty() ||
+        recipeResultItem.getItem() != stack.getItem() ||
+        recipeResultItem.getCount() > stack.getCount()) {
+      return false;
+    }
+
     //check config
     List<String> recipes = (List<String>) TileUncraft.IGNORELIST_RECIPES.get();
     if (StringParseUtil.isInList(recipes, recipe.getId())) {
       //check the RECIPE id list
-      this.status = UncraftStatusEnum.CONFIG;
       return false;
     }
     if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORELIST.get(), stack.getItem().getRegistryName())) {
       //checked the ITEM id list
-      this.status = UncraftStatusEnum.CONFIG;
       return false;
     }
+
     //both itemstacks are non-empty, and we have enough quantity
-    boolean matches = false;
     if (TileUncraft.IGNORE_NBT.get()) {
-      matches = stack.getItem() == recipe.getResultItem().getItem();
+      return true;
     }
     else {
-      matches = stack.getItem() == recipe.getResultItem().getItem() && ItemStack.tagMatches(stack, recipe.getResultItem());
+      return ItemStack.tagMatches(stack, recipeResultItem);
     }
-    if (!matches) {
-      this.status = UncraftStatusEnum.NORECIPE;
-    }
-    return matches;
   }
 
   @Override
