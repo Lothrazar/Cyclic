@@ -84,6 +84,12 @@ dependencies {
 	
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
+    
+    
+ //   runtimeOnly fg.deobf("curse.maven:libnonymous-357557:3677573")
+ //   runtimeOnly fg.deobf("curse.maven:bonsai-trees-278993:3677571")
+ //   runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3641681")
+  //  runtimeOnly fg.deobf("curse.maven:pipez-443900:3694227")
 
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3693704")
   //  implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
@@ -110,9 +116,13 @@ dependencies {
 repositories {
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
-    // flatDir {
-    //     dir 'libs'
-    // }
+   flatDir {
+        dir 'libs'
+   }
+   maven { // TOP
+        name 'tterrag maven'
+        url "https://maven.tterrag.com/"
+   }
   maven {
     name = "mappings"
     url 'https://dogforce-games.com/maven'
