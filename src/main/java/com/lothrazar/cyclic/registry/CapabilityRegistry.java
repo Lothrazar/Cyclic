@@ -20,7 +20,6 @@ public class CapabilityRegistry {
       if (!event.getObject().getCapability(PlayerCapProvider.CYCLIC_PLAYER).isPresent()) {
         // The player does not already have this capability so we need to add the capability provider here
         event.addCapability(new ResourceLocation(ModCyclic.MODID, "data"), new PlayerCapProvider());
-        System.out.println("CapabilityRegistry success for data");
       }
     }
   }
@@ -28,7 +27,6 @@ public class CapabilityRegistry {
   @SubscribeEvent
   public void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
     event.register(PlayerCapabilityStorage.class);
-    System.out.println("registry success for ManaManager");
   }
   // Finally we need to register our capability in a RegisterCapabilitiesEvent 
 }
