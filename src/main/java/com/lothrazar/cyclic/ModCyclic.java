@@ -18,6 +18,7 @@ import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.world.BiomeTweaker;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,5 +58,7 @@ public class ModCyclic {
     EnchantRegistry.ENCHANTMENTS.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
     ForgeMod.enableMilkFluid();
+    //new worldgen way
+    BiomeTweaker.init(bus);
   }
 }

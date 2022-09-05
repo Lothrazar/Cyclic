@@ -38,6 +38,6 @@
 		"1.7.6":"First port to 1.19.  Most features ported except for a few that are coming later. (Worldgen for the 4 flowers is not implemented in this release)"
 		,"1.7.7":"Fix keybinding menu crashing game #2140"
 		,"1.7.8":"Game crashing when teleporting or going through nether portal (UnbreakablePoweredBlock)  #2142"
-		,"1.7.9":"Merge pull request #2157 from zhyupe/refactor/uncraft-recipe-matching . Fix Game crashing when teleporting or going through nether portal (UnbreakablePoweredBlock) #2142"
+		,"1.7.9":"Merge pull request #2157 from zhyupe/refactor/uncraft-recipe-matching .  Remove debug logs "
 	}
 }
