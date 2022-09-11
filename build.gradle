@@ -97,18 +97,21 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
     
     
- //   runtimeOnly fg.deobf("curse.maven:libnonymous-357557:3677573")
- //   runtimeOnly fg.deobf("curse.maven:bonsai-trees-278993:3677571")
+    runtimeOnly fg.deobf("curse.maven:libnonymous-357557:3677573")
+    runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3820697")
+  //  https://www.curseforge.com/minecraft/mc-mods/brutal-bosses-dungeon/files/3916875
+  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3693704")
  //   runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3641681")
   //  runtimeOnly fg.deobf("curse.maven:pipez-443900:3694227")
 
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3693704")
-  //  implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
-  //  implementation fg.deobf("curse.maven:cobblestoney-582368:3692841")
-  //  implementation fg.deobf("curse.maven:the-one-probe-245211:3671753")
+    implementation fg.deobf("curse.maven:plain-grinder-452000:3653027")
+    implementation fg.deobf("curse.maven:cobblestoney-582368:3692841")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3671753")
+    implementation fg.deobf("curse.maven:construction-wand-399558:3712396")
   //  implementation fg.deobf("curse.maven:roots-classic-295780:3703952")
 
-//    implementation fg.deobf("curse.maven:gardening-tools-351990:3694027")
+    implementation fg.deobf("curse.maven:gardening-tools-351990:3694027")
 //   implementation fg.deobf("curse.maven:cucumber-272335:3686400")
 //   implementation fg.deobf("curse.maven:pickle-tweaks-238761:3686404")
 //   implementation fg.deobf("curse.maven:mystical-agriculture-246640:3686412")
@@ -138,7 +141,7 @@ repositories {
     name = "mappings"
     url 'https://dogforce-games.com/maven'
   }
-  //maven { url 'https://www.cursemaven.com'  }
+  maven { url 'https://www.cursemaven.com'  }
   maven { url 'https://dvs1.progwml6.com/files/maven/'  }
   maven { url 'https://maven.theillusivec4.top/'    }
   maven { url 'https://maven.blamejared.com' }    

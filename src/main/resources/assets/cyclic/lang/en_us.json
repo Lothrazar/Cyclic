@@ -1358,6 +1358,7 @@
   
   
   "effect.cyclic.butter": "Butterfingers",
+  "effect.cyclic.butter.description": "Chance to drop items while moving or attacking",
   "item.minecraft.potion.effect.cyclic_butter": "Potion of Butterfingers",
   "splash_potion.effect.butter": "Splash Potion of Butterfingers",
   "lingering_potion.effect.butter": "Lingering Potion of Butterfingers",
@@ -1365,6 +1366,7 @@
    
    
   "effect.cyclic.waterwalk": "Waterwalking",
+  "effect.cyclic.waterwalk.description": "Prevents you from sinking down through the waters surface",
   "item.minecraft.potion.effect.cyclic_waterwalk": "Potion of Waterwalking",
   "item.minecraft.splash_potion.effect.cyclic_waterwalk": "Splash Potion of Waterwalking",
   "item.minecraft.lingering_potion.effect.cyclic_waterwalk": "Lingering Potion of Waterwalking",
@@ -1372,6 +1374,7 @@
   
   
   "effect.cyclic.magnetic": "Magnetism",
+  "effect.cyclic.magnetic.description": "Pull items and XP towards you with range of 8 blocks per level",
   "item.minecraft.potion.effect.cyclic_magnetic": "Potion of Magnetism",
   "item.minecraft.splash_potion.effect.cyclic_magnetic": "Splash Potion of Magnetism",
   "item.minecraft.lingering_potion.effect.cyclic_magnetic": "Lingering Potion of Magnetism",
@@ -1379,6 +1382,7 @@
 
 
   "effect.cyclic.snowwalk":"Snow-walker",
+  "effect.cyclic.snowwalk.description":"Leave a tralk of snow when you walk",
   "item.minecraft.potion.effect.cyclic_snow": "Potion of Snow-Walker",
   "item.minecraft.splash_potion.effect.cyclic_snow": "Splash Potion of Snow-Walker",
   "item.minecraft.lingering_potion.effect.cyclic_snow": "Lingering Potion of Snow-Walker",
@@ -1392,31 +1396,37 @@
   "item.minecraft.tipped_arrow.effect.cyclic_frost_walker": "Arrow of Frost Walker",
 
   "effect.cyclic.swimspeed": "Swim Speed",
+  "effect.cyclic.swimspeed.description": "Double your current swim speed",
   "item.minecraft.potion.effect.cyclic_swimspeed": "Potion of Swim Speed",
   "item.minecraft.splash_potion.effect.cyclic_swimspeed": "Splash Potion of Swim Speed",
   "item.minecraft.lingering_potion.effect.cyclic_swimspeed": "Lingering Potion of Swim Speed",
   "item.minecraft.tipped_arrow.effect.cyclic_swimspeed": "Arrow of Swim Speed",
   
+  "effect.cyclic.flight": "Flight",
+  "effect.cyclic.flight.description": "Players can fly using this effect",
   "effect.cyclic.bounce": "Bouncing",
   "effect.cyclic.ender": "Ender Aura",
   "effect.cyclic.slowfall": "Slowfall",
-  "effect.cyclic.snow": "Snow",
   "effect.cyclic.antigravity": "Anti-gravity",
+  "effect.cyclic.antigravity.description": "You partially resist the force of gravity.  Low levels feel like the moon, higher levels get dangerous",
   "item.minecraft.potion.effect.cyclic_antigravity": "Potion of Anti-Gravity",
   "item.minecraft.splash_potion.effect.cyclic_antigravity": "Splash Potion of Anti-Gravity",
   "item.minecraft.lingering_potion.effect.cyclic_antigravity": "Lingering Potion of Anti-Gravity",
   "item.minecraft.tipped_arrow.effect.cyclic_antigravity": "Arrow of Anti-Gravity",
   "effect.cyclic.gravity": "Gravity",
+  "effect.cyclic.gravity.description": "Increases the force of gravity you feel",
   "item.minecraft.potion.effect.cyclic_gravity": "Potion of Gravity",
   "item.minecraft.splash_potion.effect.cyclic_gravity": "Splash Potion of Gravity",
   "item.minecraft.lingering_potion.effect.cyclic_gravity": "Lingering Potion of Gravity",
   "item.minecraft.tipped_arrow.effect.cyclic_gravity": "Arrow of Gravity",
   "effect.cyclic.attack_range": "Attack Range",
+  "effect.cyclic.attack_range.description": "Increases your melee attack range by factor of two",
   "item.minecraft.potion.effect.cyclic_attack_range": "Potion of Attack Range",
   "item.minecraft.splash_potion.effect.cyclic_attack_range": "Splash Potion of Attack Range",
   "item.minecraft.lingering_potion.effect.cyclic_attack_range": "Lingering Potion of Attack Range",
   "item.minecraft.tipped_arrow.effect.cyclic_attack_range": "Arrow of Attack Range",
   "effect.cyclic.reach_distance": "Reach Distance",
+  "effect.cyclic.reach_distance.description": "Increase block placement and mining reach by factor of two",
   "item.minecraft.potion.effect.cyclic_reach_distance": "Potion of Reach Distance",
   "item.minecraft.splash_potion.effect.cyclic_reach_distance": "Splash Potion of Reach Distance",
   "item.minecraft.lingering_potion.effect.cyclic_reach_distance": "Lingering Potion of Reach Distance",
@@ -1437,6 +1447,7 @@
   
   
   "effect.cyclic.stun": "Paralyze",
+  "effect.cyclic.stun.description": "Stun the entity so it cannot move for a time",
   "item.minecraft.potion.effect.cyclic_stun": "Potion of Paralyze",
   "item.minecraft.splash_potion.effect.cyclic_stun": "Splash Potion of Paralyze",
   "item.minecraft.lingering_potion.effect.cyclic_stun": "Lingering Potion of Paralyze",

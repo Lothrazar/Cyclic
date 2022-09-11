@@ -2,7 +2,7 @@
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
 		"1.18.1-latest": "1.6.15",
-		"1.18.2-latest": "1.7.6"
+		"1.18.2-latest": "1.7.8"
 	},
 	"1.18.2": {
 		"1.6.0": "Ported Cyclic[1.16.5]-1.5.8 to Minecraft [1.17.1] & forge-37.0.85+.  Altered a few crafting recipes to use new items.  Removed Peat Generator (Use Peat items in Material Generator).  Removed 5 Mason blocks, replaced with Compressed Cobblestone, Flint Block.  Added Peace Candle, Translocation Platform, Stone Mattock, Crushing Macerator, and Lava Sponge.  Added Copper Tools and Amethyst Tools, Copper Lantern, Copper Chain, Copper Bars, Gold Chain, Gold Bars, Gold Lantern (Art by @shynieke).  Added Copper Nuggets and Netherite Nuggets.  Added Netherite Lanterns, chains, and bars.  Added 3 Pressure Plates: Copper Netherite and Obsidian. ",
@@ -32,5 +32,6 @@
 		,"1.7.5":"Redstone clock can now be disabled with incoming redstone (has a Requires redstone button - feature ported from mc1.12.2).  Removed some log spam statements from 1.7.4"
 		,"1.7.6":"Allow Home Command and others to Run in Functions #2138 . See examples in changelog"
 		,"1.7.7":"Merge pull request #2157 from zhyupe/refactor/uncraft-recipe-matching . Fix Game crashing when teleporting or going through nether portal (UnbreakablePoweredBlock) #2142"
+		,"1.7.8":"Fix Combustion Generator consumes Empty Bucket #2146.  Add #2167 JEED potion compatibility added https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed .  "
 	}
 }
