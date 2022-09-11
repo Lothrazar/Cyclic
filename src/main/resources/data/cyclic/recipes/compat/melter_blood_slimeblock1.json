@@ -1,0 +1,24 @@
+{
+  "type": "cyclic:melter",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "tconstruct:blood_slime"
+    }
+  ],
+  "energy":
+  {
+    "rfpertick": 100,
+    "ticks": 160
+  },
+  "result":
+  {
+    "fluid": "tconstruct:blood",
+    "count": 2250
+  }
+}

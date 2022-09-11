@@ -12,5 +12,14 @@
 	"result": {
 		"fluid": "cyclic:slime",
 		"count": 250
-	}
+	},
+	"conditions": [
+		{
+			"value": {
+				"modid": "tconstruct",
+				"type": "forge:mod_loaded"
+			},
+			"type": "forge:not"
+		}
+	]
 }

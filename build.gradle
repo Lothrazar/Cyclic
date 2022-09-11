@@ -99,7 +99,9 @@ dependencies {
     
     runtimeOnly fg.deobf("curse.maven:libnonymous-357557:3677573")
     runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3820697")
-  //  https://www.curseforge.com/minecraft/mc-mods/brutal-bosses-dungeon/files/3916875
+
+
+    implementation fg.deobf("curse.maven:brutal-bosses-dungeon-557999:3916875")
   //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3693704")
  //   runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3641681")
   //  runtimeOnly fg.deobf("curse.maven:pipez-443900:3694227")
