@@ -32,6 +32,6 @@
 		,"1.7.5":"Redstone clock can now be disabled with incoming redstone (has a Requires redstone button - feature ported from mc1.12.2).  Removed some log spam statements from 1.7.4"
 		,"1.7.6":"Allow Home Command and others to Run in Functions #2138 . See examples in changelog"
 		,"1.7.7":"Merge pull request #2157 from zhyupe/refactor/uncraft-recipe-matching . Fix Game crashing when teleporting or going through nether portal (UnbreakablePoweredBlock) #2142"
-		,"1.7.8":"Fix Combustion Generator consumes Empty Bucket #2146. Added Default Tinkers construct slime recipes to melter using forge conditionals (recipes by Darkosto).  Add #2167 JEED potion compatibility added https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed .  "
+		,"1.7.8":"Increase block hardness of Connected Glass to 0.3F matching Glass Block. Fix Combustion Generator consumes Empty Bucket #2146. Added Default Tinkers construct slime recipes to melter using forge conditionals (recipes by Darkosto).  Add #2167 JEED potion compatibility added https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed .  "
 	}
 }
