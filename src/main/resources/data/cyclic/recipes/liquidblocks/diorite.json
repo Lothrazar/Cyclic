@@ -1,8 +1,8 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [ {
     "item": "minecraft:diorite"
-  },
+  }],
   "result": {
     "fluid": "liquidblocks:liquid_diorite",
     "count": 1000

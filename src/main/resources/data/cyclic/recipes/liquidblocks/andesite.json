@@ -1,12 +1,14 @@
 {
-  "type": "cyclic:melter",
-  "inputFirst": {
-    "item": "minecraft:andesite"
-  },
-  "result": {
-    "fluid": "liquidblocks:liquid_andesite",
-    "count": 1000
-  },
+	"type": "cyclic:melter",
+	"ingredients": [
+		{
+			"item": "minecraft:andesite"
+		}
+	],
+	"result": {
+		"fluid": "liquidblocks:liquid_andesite",
+		"count": 1000
+	},
 	"conditions": [
 		{
 			"values": [

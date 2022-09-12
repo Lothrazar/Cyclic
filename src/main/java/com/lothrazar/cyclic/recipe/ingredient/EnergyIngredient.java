@@ -22,7 +22,7 @@ public class EnergyIngredient {
 
   private void parseData(final JsonObject recipeJson) {
     if (!recipeJson.has(KEY_ENERGY)) {
-      ModCyclic.LOGGER.error("  Missing JSON 'energy', setting default values" + recipeJson);
+      ModCyclic.LOGGER.info("  Missing JSON 'energy', setting default values" + recipeJson);
       setRf(RFPT_DEFAULT);
       setTicks(TICKS_DEFAULT);
     }

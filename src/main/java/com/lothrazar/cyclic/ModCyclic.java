@@ -57,8 +57,7 @@ public class ModCyclic {
     PotionEffectRegistry.MOB_EFFECTS.register(bus);
     EnchantRegistry.ENCHANTMENTS.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
-    ForgeMod.enableMilkFluid();
-    //new worldgen way
     BiomeTweaker.init(bus);
+    ForgeMod.enableMilkFluid();
   }
 }

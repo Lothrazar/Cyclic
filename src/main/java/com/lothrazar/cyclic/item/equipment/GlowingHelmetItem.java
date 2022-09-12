@@ -98,15 +98,9 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   //from ItemEvents- curios slot
   public static void onEntityUpdate(LivingTickEvent event) {
     //reduce check to only once per second instead  of per tick
-    //<<<<<<< HEAD
     if (event.getEntity().level.getGameTime() % 20 == 0 &&
         event.getEntity() != null) { //some of the items need an off switch
       Player player = (Player) event.getEntity();
-      //=======
-      //    if (event.getEntity().world.getGameTime() % 20 == 0 &&
-      //        event.getEntityLiving() instanceof PlayerEntity) { //some of the items need an off switch
-      //      PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-      //>>>>>>> 9f4791a4f5c1dbc36e417a790d13312fb60c6528
       checkIfHelmOff(player);
       // get helm
       ItemStack helm = CharmUtil.getCurio(player, ItemRegistry.GLOWING_HELMET.get());

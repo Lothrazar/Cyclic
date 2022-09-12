@@ -1,8 +1,8 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [ {
     "item": "minecraft:dirt"
-  },
+  }],
   "result": {
     "fluid": "liquidblocks:liquid_coarse_dirt",
     "count": 1000

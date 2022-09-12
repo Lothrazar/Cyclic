@@ -1,0 +1,27 @@
+{
+  "type": "cyclic:melter",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "tconstruct:sky_slime"
+    },
+    {
+      "item": "tconstruct:sky_slime"
+    }
+  ],
+  "energy":
+  {
+    "rfpertick": 100,
+    "ticks": 160
+  },
+  "result":
+  {
+    "fluid": "tconstruct:sky_slime",
+    "count": 4500
+  }
+}

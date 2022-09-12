@@ -1,14 +1,11 @@
 package com.lothrazar.cyclic.event;
 
-import net.minecraft.world.level.levelgen.GenerationStep;
-
 /**
  * https://github.com/MatrexsVigil/phc2crops/blob/e9790425f59c3094acef00feb2a1d0ea2b9e7e93/src/main/java/pam/pamhc2crops/worldgen/WindyGardenFeature.java
  * https://twitter.com/matrexsvigil/status/1317432186002427905
  */
 public class BiomeEvents {
-
-  private GenerationStep.Decoration step = GenerationStep.Decoration.VEGETAL_DECORATION;
+  //  private GenerationStep.Decoration step = GenerationStep.Decoration.VEGETAL_DECORATION;
   //  @SubscribeEvent
   //  public void onBiomeLoadingEvent(BiomeLoadingEvent event) {
   //    if (!ConfigRegistry.GENERATE_FLOWERS.get()) {

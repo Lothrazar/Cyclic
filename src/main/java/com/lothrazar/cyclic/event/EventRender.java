@@ -47,6 +47,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@SuppressWarnings("removal") // fix in 1.19
 public class EventRender {
 
   @SubscribeEvent

@@ -25,6 +25,7 @@ import net.minecraftforge.client.event.RenderLevelLastEvent;
  * https://github.com/Direwolf20-MC/MiningGadgets
  *
  */
+@SuppressWarnings("removal") // fix in 1.19
 public class RenderMiningLaser {
 
   private static float calculateLaserFlickerModifier(long gameTime) {

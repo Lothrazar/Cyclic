@@ -1,0 +1,27 @@
+{
+  "type": "cyclic:melter",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "tconstruct:ender_slime_ball"
+    },
+    {
+      "item": "tconstruct:ender_slime_ball"
+    }
+  ],
+  "energy":
+  {
+    "rfpertick": 100,
+    "ticks": 160
+  },
+  "result":
+  {
+    "fluid": "tconstruct:ender_slime",
+    "count": 500
+  }
+}

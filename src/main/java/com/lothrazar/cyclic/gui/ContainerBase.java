@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.gui;
 
+import org.jetbrains.annotations.NotNull;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -7,6 +8,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -120,5 +122,26 @@ public abstract class ContainerBase extends AbstractContainerMenu {
     // Hotbar
     topRow += 58;
     addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+  }
+
+  public ItemStack findBag(@NotNull Item item) {
+    Player player = this.playerEntity;
+    if (player.getMainHandItem().getItem() == item) {
+      return player.getMainHandItem();
+      //      this.slot = player.getInventory().selected;
+    }
+    else if (player.getOffhandItem().getItem() == item) {
+      return player.getOffhandItem();
+      //      this.slot = 40;
+    }
+    else {
+      for (int x = 0; x < playerInventory.getContainerSize(); x++) {
+        ItemStack stack = playerInventory.getItem(x);
+        if (stack.getItem() == item) {
+          return stack;
+        }
+      }
+    }
+    return ItemStack.EMPTY;
   }
 }

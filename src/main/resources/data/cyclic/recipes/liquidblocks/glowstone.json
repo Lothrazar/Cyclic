@@ -1,8 +1,8 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [ {
     "item": "minecraft:glowstone"
-  },
+  }],
   "result": {
     "fluid": "liquidblocks:liquid_glowstone",
     "count": 1000
