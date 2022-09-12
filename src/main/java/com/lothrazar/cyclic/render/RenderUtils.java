@@ -45,6 +45,7 @@ import net.minecraftforge.fluids.FluidStack;
 /**
  * legacy ref https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
  */
+@SuppressWarnings("removal") // fix in 1.19
 public class RenderUtils {
 
   /**

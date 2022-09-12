@@ -22,9 +22,9 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.render.RenderMiningLaser;
 import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.lothrazar.cyclic.util.PlayerUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -48,6 +48,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@SuppressWarnings("removal") // fix in 1.19
 public class EventRender {
 
   @SubscribeEvent
