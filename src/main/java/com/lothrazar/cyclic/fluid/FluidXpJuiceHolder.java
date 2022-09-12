@@ -54,11 +54,6 @@ public class FluidXpJuiceHolder {
         public ResourceLocation getOverlayTexture() {
           return null;
         }
-
-        @Override
-        public int getTintColor() {
-          return COLOR;
-        }
       });
     }
   });

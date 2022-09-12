@@ -51,11 +51,6 @@ public class FluidWaxHolder {
         public ResourceLocation getOverlayTexture() {
           return null;
         }
-
-        @Override
-        public int getTintColor() {
-          return COLOR;
-        }
         //        .luminosity(3).density(3000).viscosity(4000).temperature(1300)
       });
     }

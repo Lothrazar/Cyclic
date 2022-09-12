@@ -52,11 +52,6 @@ public class FluidMagmaHolder {
         public ResourceLocation getOverlayTexture() {
           return null;
         }
-
-        @Override
-        public int getTintColor() {
-          return COLOR;
-        }
       });
     }
   });

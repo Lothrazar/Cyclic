@@ -13,7 +13,7 @@
 		,"1.7.9":"Merge pull request #2157 from zhyupe/refactor/uncraft-recipe-matching .  Remove debug logs "
 
 
-		,"1.7.10":"New feature: right-click the Crafting Stick anywhere in your inventory screen, even while not holding it, to open it. Fix 'unused frames [7]' error logs.  Added cyclic:milk_bottle to forge:milk item data tag (compatibility with FarmersDelight and other mods).  Fix #2171 Rich Soil acting translucent and blocksounds.  Reduce TerraGlass hardness to 0.5 from 1.8 Increase block hardness of Connected Glass to 0.3 matching Glass Block. Fix Combustion Generator consumes Empty Bucket #2146. Added Default Tinkers construct slime recipes to melter using forge conditionals (recipes by Darkosto).  Add #2167 JEED potion compatibility added https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed .  "
+		,"1.7.10":"Fix 1.19 fluid rendering.  New feature: right-click the Crafting Stick anywhere in your inventory screen, even while not holding it, to open it. Fix 'unused frames [7]' error logs.  Added cyclic:milk_bottle to forge:milk item data tag (compatibility with FarmersDelight and other mods).  Fix #2171 Rich Soil acting translucent and blocksounds.  Reduce TerraGlass hardness to 0.5 from 1.8 Increase block hardness of Connected Glass to 0.3 matching Glass Block. Fix Combustion Generator consumes Empty Bucket #2146. Added Default Tinkers construct slime recipes to melter using forge conditionals (recipes by Darkosto).  Add #2167 JEED potion compatibility added https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed .  "
 
 	}
 }
