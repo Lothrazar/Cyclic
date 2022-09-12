@@ -1,8 +1,8 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [ {
     "item": "minecraft:podzol"
-  },
+  }],
   "result": {
     "fluid": "liquidblocks:liquid_podzol",
     "count": 1000

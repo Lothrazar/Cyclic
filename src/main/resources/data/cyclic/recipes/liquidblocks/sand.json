@@ -1,8 +1,8 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [ {
     "item": "minecraft:sand"
-  },
+  }],
   "result": {
     "fluid": "liquidblocks:liquid_sand",
     "count": 1000

@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item.crafting.simple;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -10,10 +9,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class CraftingStickContainerProvider implements MenuProvider {
 
-  private InteractionHand hand;
+  private int slot;
 
-  public CraftingStickContainerProvider(InteractionHand handIn) {
-    this.hand = handIn;
+  public CraftingStickContainerProvider(int s) {
+    this.slot = s;
   }
 
   @Override
@@ -23,6 +22,8 @@ public class CraftingStickContainerProvider implements MenuProvider {
 
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player player) {
-    return new CraftingStickContainer(i, playerInventory, player, hand);
+    //    FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+    //    buf.writeInt(this.slot);
+    return new CraftingStickContainer(i, playerInventory, player, this.slot);
   }
 }

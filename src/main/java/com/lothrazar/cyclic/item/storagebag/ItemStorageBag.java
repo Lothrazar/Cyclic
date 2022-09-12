@@ -52,7 +52,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayer) playerIn, new StorageBagContainerProvider(), playerIn.blockPosition());
+      int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
+      NetworkHooks.openGui((ServerPlayer) playerIn, new StorageBagContainerProvider(slot), buf -> buf.writeInt(slot));
     }
     return super.use(worldIn, playerIn, handIn);
   }

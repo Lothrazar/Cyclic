@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  	"ingredients": [ {
     "tag": "forge:stone"
-  },
+  }],
   "mix": {
     "fluid": "liquidblocks:liquid_granite",
     "count": 1000

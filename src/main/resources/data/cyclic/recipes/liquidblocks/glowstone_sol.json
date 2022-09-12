@@ -1,8 +1,8 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  	"ingredients": [ {
     "tag": "forge:netherrack"
-  },
+  }],
   "mix": {
     "fluid": "liquidblocks:liquid_glowstone",
     "count": 1000

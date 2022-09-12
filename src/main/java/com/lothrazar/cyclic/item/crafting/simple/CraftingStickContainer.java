@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -24,12 +23,10 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   private final CraftingContainer craftMatrix = new CraftingContainer(this, 3, 3);
   final ResultContainer craftResult = new ResultContainer();
-  private InteractionHand hand;
 
   //does NOT save inventory into the stack, very simple and plain
-  public CraftingStickContainer(int id, Inventory playerInventory, Player player, InteractionHand hand) {
+  public CraftingStickContainer(int id, Inventory playerInventory, Player player, int slot) {
     super(MenuTypeRegistry.CRAFTING_STICK.get(), id);
-    this.hand = hand;
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;
@@ -74,8 +71,9 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return hand == null
-        || playerIn.getItemInHand(hand).getItem() instanceof CraftingStickItem;
+    return true;
+    //    return hand == null
+    //        || playerIn.getItemInHand(hand).getItem() instanceof CraftingStickItem;
   }
 
   @Override

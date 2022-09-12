@@ -9,6 +9,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class StorageBagContainerProvider implements MenuProvider {
 
+  private int slot;
+
+  public StorageBagContainerProvider(int s) {
+    this.slot = s;
+  }
+
   @Override
   public Component getDisplayName() {
     return new TranslatableComponent("cyclic.items.storage_bag");
@@ -16,6 +22,6 @@ public class StorageBagContainerProvider implements MenuProvider {
 
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player player) {
-    return new ContainerStorageBag(i, playerInventory, player);
+    return new ContainerStorageBag(i, playerInventory, player, slot);
   }
 }

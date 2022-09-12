@@ -1,8 +1,9 @@
 {
   "type": "cyclic:solidifier",
-  "inputTop": {
+  
+	"ingredients": [ {
     "item": "minecraft:dirt"
-  },
+  }],
   "mix": {
     "fluid": "liquidblocks:liquid_coarse_dirt",
     "count": 1000

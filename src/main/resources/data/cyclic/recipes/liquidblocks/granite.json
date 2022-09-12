@@ -1,8 +1,8 @@
 {
   "type": "cyclic:melter",
-  "inputFirst": {
+  "ingredients": [ {
     "item": "minecraft:granite"
-  },
+  }],
   "result": {
     "fluid": "liquidblocks:liquid_granite",
     "count": 1000
