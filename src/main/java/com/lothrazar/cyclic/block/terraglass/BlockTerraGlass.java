@@ -21,7 +21,7 @@ public class BlockTerraGlass extends BlockCyclic {
 
   public BlockTerraGlass(Properties properties) {
     //https://en.wikipedia.org/wiki/Terra_preta
-    super(properties.strength(1.8F).noOcclusion().lightLevel(state -> {
+    super(properties.strength(0.5F).noOcclusion().lightLevel(state -> {
       return state.getValue(LIT) ? 6 : 0;
     }));
   }
