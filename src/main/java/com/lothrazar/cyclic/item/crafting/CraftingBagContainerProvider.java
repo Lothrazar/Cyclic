@@ -9,6 +9,12 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class CraftingBagContainerProvider implements INamedContainerProvider {
 
+  private int slot;
+
+  public CraftingBagContainerProvider(int s) {
+    this.slot = s;
+  }
+
   @Override
   public ITextComponent getDisplayName() {
     return new TranslationTextComponent("item.cyclic.crafting_bag");
@@ -16,6 +22,6 @@ public class CraftingBagContainerProvider implements INamedContainerProvider {
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
-    return new CraftingBagContainer(i, playerInventory, player);
+    return new CraftingBagContainer(i, playerInventory, player, slot);
   }
 }

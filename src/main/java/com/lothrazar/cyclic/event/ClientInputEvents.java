@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.IHasClickToggle;
+import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
+import com.lothrazar.cyclic.item.craftingsimple.CraftingStickItem;
 import com.lothrazar.cyclic.item.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.PacketItemGui;
@@ -63,10 +65,12 @@ public class ClientInputEvents {
             event.setCanceled(true);
             //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
           }
-          else if (maybeCharm.getItem() instanceof ItemStorageBag) {
-            PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.slotNumber));
-            event.setCanceled(true);
-          }
+          else if (maybeCharm.getItem() instanceof ItemStorageBag
+              || maybeCharm.getItem() instanceof CraftingStickItem
+              || maybeCharm.getItem() instanceof CraftingBagItem) {
+                PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.slotNumber, maybeCharm.getItem()));
+                event.setCanceled(true);
+              }
         }
       }
     }

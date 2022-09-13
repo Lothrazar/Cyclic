@@ -106,6 +106,7 @@ dependencies {
 
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
 	 	
+    runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3323640")
   //  implementation fg.deobf("curse.maven:openblocks-elevator-250832:3238352")
   //  implementation fg.deobf("curse.maven:mantle-74924:3482897")
   //  implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")

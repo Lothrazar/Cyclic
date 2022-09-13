@@ -17,19 +17,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public class CraftingStickContainer extends ContainerBase implements IContainerCraftingAction {
 
   private final CraftingInventory craftMatrix = new CraftingInventory(this, 3, 3);
   final CraftResultInventory craftResult = new CraftResultInventory();
-  private Hand hand;
 
   //does NOT save inventory into the stack, very simple and plain
-  public CraftingStickContainer(int id, PlayerInventory playerInventory, PlayerEntity player, Hand hand) {
+  public CraftingStickContainer(int id, PlayerInventory playerInventory, PlayerEntity player) {
     super(ContainerScreenRegistry.CRAFTING_STICK, id);
-    this.hand = hand;
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;
@@ -74,19 +71,8 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public boolean canInteractWith(PlayerEntity playerIn) {
-    return hand != null && playerIn.getHeldItem(hand).getItem() instanceof CraftingStickItem;
+    return true; // hand != null && playerIn.getHeldItem(hand).getItem() instanceof CraftingStickItem;
   }
-  //  @Override
-  //  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-  //    if (!(slotId < 0 || slotId >= this.inventorySlots.size())) {
-  //      ItemStack myBag = this.inventorySlots.get(slotId).getStack();
-  //      if (myBag.getItem() instanceof CraftingStickItem) {
-  //        //lock the bag in place by returning empty
-  //        return ItemStack.EMPTY;
-  //      }
-  //    }
-  //    return super.slotClick(slotId, dragType, clickTypeIn, player);
-  //  }
 
   @Override
   public ItemStack transferStack(PlayerEntity playerIn, int index) {

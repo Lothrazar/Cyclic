@@ -45,6 +45,11 @@ public abstract class CyclicRecipe implements IRecipe<TileEntityBase> {
   }
 
   @Override
+  public boolean isDynamic() {
+    return true;
+  }
+
+  @Override
   public ItemStack getCraftingResult(TileEntityBase inv) {
     return ItemStack.EMPTY;
   }

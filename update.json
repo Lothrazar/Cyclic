@@ -1,7 +1,7 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.16.5-latest": "1.5.17"
+		"1.16.5-latest": "1.5.19"
 	},
 	"1.16.5": {
 		"0.6.1": "Ported ",
@@ -75,5 +75,6 @@
 		,"1.5.16":" Fix Workbench deletes items inside when mined #2121"
 		,"1.5.17":" Fix Workbench deletes items inside when mined #2121. Fix Fluid cable crashing game #2118 fluid pipe server crash #2090 using ConcurrentHashMap for smp issues (ConcurrentModificationException)."
 		,"1.5.18":"Added 'Always On / Requires Redstone' button to the Redstone Clock so it can be controlled (feature ported from mc 1.12.2 & 1.18.2)"
+		,"1.5.19":"Backport feature from mc1.18.2: right-click the Crafting Stick anywhere in your inventory screen, even while not holding it, to open it.  Fix logs about 'unused frames'.  Fixed logs about ' Unknown recipe category: cyclic:'"
 	}
  }

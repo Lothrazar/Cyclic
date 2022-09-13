@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -119,5 +120,26 @@ public abstract class ContainerBase extends Container {
     // Hotbar
     topRow += 58;
     addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+  }
+
+  public ItemStack findBag(Item item) {
+    PlayerEntity player = this.playerEntity;
+    if (player.getHeldItemMainhand().getItem() == item) {
+      return player.getHeldItemMainhand();
+      //      this.slot = player.getInventory().selected;
+    }
+    else if (player.getHeldItemOffhand().getItem() == item) {
+      return player.getHeldItemOffhand();
+      //      this.slot = 40;
+    }
+    else {
+      for (int x = 0; x < playerInventory.getSizeInventory(); x++) {
+        ItemStack stack = playerInventory.getStackInSlot(x);
+        if (stack.getItem() == item) {
+          return stack;
+        }
+      }
+    }
+    return ItemStack.EMPTY;
   }
 }

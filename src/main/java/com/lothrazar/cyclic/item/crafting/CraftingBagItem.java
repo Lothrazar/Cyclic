@@ -22,7 +22,8 @@ public class CraftingBagItem extends ItemBase {
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
     if (!worldIn.isRemote && !playerIn.isCrouching()) {
-      NetworkHooks.openGui((ServerPlayerEntity) playerIn, new CraftingBagContainerProvider(), playerIn.getPosition());
+      int slot = handIn == Hand.MAIN_HAND ? playerIn.inventory.currentItem : 40;
+      NetworkHooks.openGui((ServerPlayerEntity) playerIn, new CraftingBagContainerProvider(slot), playerIn.getPosition());
     }
     return super.onItemRightClick(worldIn, playerIn, handIn);
   }

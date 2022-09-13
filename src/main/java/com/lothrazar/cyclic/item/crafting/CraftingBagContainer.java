@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.item.crafting;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import java.util.Optional;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,25 +30,22 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   //
   public ItemStack bag;
   public int slot;
-  public int slots;
-  //  public CompoundNBT nbt;
-  private IItemHandler handler;
 
-  public CraftingBagContainer(int id, PlayerInventory playerInventory, PlayerEntity player) {
+  public CraftingBagContainer(int id, PlayerInventory playerInventory, PlayerEntity player, int slot) {
     super(ContainerScreenRegistry.CRAFTING_BAG, id);
+    this.slot = slot;
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;
     //result first
     this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     //
-    if (player.getHeldItemMainhand().getItem() instanceof CraftingBagItem) {
-      this.bag = player.getHeldItemMainhand();
-      this.slot = player.inventory.currentItem;
+    if (slot > -1) {
+      this.bag = playerInventory.getStackInSlot(slot);
+      ModCyclic.LOGGER.info("bag   " + bag);
     }
-    else if (player.getHeldItemOffhand().getItem() instanceof CraftingBagItem) {
-      this.bag = player.getHeldItemOffhand();
-      this.slot = 40;
+    if (bag.isEmpty()) {
+      this.bag = super.findBag(ItemRegistry.crafting_bag);
     }
     //grid
     for (int i = 0; i < 3; i++) {
@@ -63,8 +62,8 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     //
     //    this.nbt = bag.getOrCreateTag();
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      this.handler = h;
-      this.slots = h.getSlots();
+      //      this.handler = h;
+      //      this.slots = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {
@@ -81,12 +80,12 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     //this is not the saving version 
     if (playerIn.world.isRemote == false) {
-      if (this.handler == null) {
-        this.handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-        if (this.handler == null) {
-          return;
-        }
+      //      if (this.handler == null) {
+      IItemHandler handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      if (handler == null) {
+        return;
       }
+      //      }
       for (int i = 0; i < 9; i++) {
         ItemStack crafty = this.craftMatrix.getStackInSlot(i);
         //        if (crafty.isEmpty()) {
