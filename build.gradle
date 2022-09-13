@@ -105,7 +105,8 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
-	 	
+	  
+	// 	runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3521011")
     runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3323640")
   //  implementation fg.deobf("curse.maven:openblocks-elevator-250832:3238352")
   //  implementation fg.deobf("curse.maven:mantle-74924:3482897")
@@ -119,7 +120,7 @@ dependencies {
   //	implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")
   //	implementation fg.deobf("curse.maven:simple-generators-246010:3464413")
   //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
-  //  implementation fg.deobf("curse.maven:quark-243121:3394265")
+  //  implementation fg.deobf("curse.maven:quark-243121:3394265") 
   // 	implementation fg.deobf("curse.maven:titanium-287342:3346366")
   //  implementation fg.deobf("curse.maven:industrial-foregoing-266515:3446262")
   //  implementation fg.deobf("curse.maven:forcecraft-454802:3495606")

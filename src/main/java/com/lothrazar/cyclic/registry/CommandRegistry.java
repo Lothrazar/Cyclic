@@ -30,6 +30,8 @@ public class CommandRegistry {
 
   private static final String ARG_VALUE = "value";
   private static final String ARG_PLAYER = "player";
+  private static final int PERM_EVERYONE = 0; // no restrictions
+  private static final int PERM_ELEVATED = 2; // player with perms/creative OR function OR command block
 
   public enum CyclicCommands {
 
@@ -47,21 +49,21 @@ public class CommandRegistry {
     r.register(LiteralArgumentBuilder.<CommandSource> literal(ModCyclic.MODID)
         .then(Commands.literal(CyclicCommands.HOME.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHOME.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDHOME.get() ? PERM_ELEVATED : PERM_EVERYONE);
             })
             .executes(x -> {
               return CommandHome.execute(x);
             }))
         .then(Commands.literal(CyclicCommands.GETHOME.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDGETHOME.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDGETHOME.get() ? PERM_ELEVATED : PERM_EVERYONE);
             })
             .executes(x -> {
               return CommandGetHome.execute(x);
             }))
         .then(Commands.literal(CyclicCommands.HEALTH.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? PERM_ELEVATED : PERM_EVERYONE);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, FloatArgumentType.floatArg(0, 100F))
@@ -70,7 +72,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.HEARTS.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDHEALTH.get() ? PERM_ELEVATED : PERM_EVERYONE);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(1, 100))
@@ -79,7 +81,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.GAMEMODE.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(3); // 3 for gamemode
+              return p.hasPermissionLevel(PERM_ELEVATED);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 3))
@@ -88,7 +90,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.GRAVITY.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(3); // 3 for  
+              return p.hasPermissionLevel(PERM_ELEVATED);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, BoolArgumentType.bool())
@@ -97,7 +99,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.GLOWING.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(3); // 3 for  
+              return p.hasPermissionLevel(PERM_ELEVATED);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, BoolArgumentType.bool())
@@ -106,7 +108,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.HUNGER.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDHUNGER.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDHUNGER.get() ? PERM_ELEVATED : PERM_EVERYONE);
             })
             .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                 .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(0, 20))
@@ -115,7 +117,7 @@ public class CommandRegistry {
                     }))))
         .then(Commands.literal(CyclicCommands.DEV.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDDEV.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDDEV.get() ? PERM_ELEVATED : PERM_EVERYONE);
             })
             //TODO: copy version. send network packet to client for clipboard
             .then(Commands.literal("nbt")
@@ -128,7 +130,7 @@ public class CommandRegistry {
                 })))
         .then(Commands.literal(CyclicCommands.PING.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(ConfigRegistry.COMMANDPING.get() ? 3 : 0);
+              return p.hasPermissionLevel(ConfigRegistry.COMMANDPING.get() ? PERM_ELEVATED : PERM_EVERYONE);
             })
             .then(Commands.literal("nether")
                 .executes(x -> {
@@ -140,7 +142,7 @@ public class CommandRegistry {
                 })))
         .then(Commands.literal(CyclicCommands.TODO.toString())
             .requires((p) -> {
-              return p.hasPermissionLevel(0);
+              return p.hasPermissionLevel(PERM_EVERYONE);
             })
             .then(Commands.literal("add")
                 .then(Commands.argument("arguments", StringArgumentType.greedyString())

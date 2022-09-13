@@ -33,11 +33,13 @@ public class UnbreakablePoweredBlock extends BlockBase {
 
   public static void setBreakable(World world, BlockPos pos, boolean isBreakable) {
     BlockState state = world.getBlockState(pos);
-    boolean oldBreakable = state.get(BREAKABLE);
-    if (oldBreakable != isBreakable) {
-      world.setBlockState(pos, state.with(BREAKABLE, isBreakable));
-      if (world.isRemote) {
-        UtilParticle.spawnParticle(world, RedstoneParticleData.REDSTONE_DUST, pos, 5);
+    if (state.hasProperty(BREAKABLE)) {
+      boolean oldBreakable = state.get(BREAKABLE);
+      if (oldBreakable != isBreakable) {
+        world.setBlockState(pos, state.with(BREAKABLE, isBreakable));
+        if (world.isRemote) {
+          UtilParticle.spawnParticle(world, RedstoneParticleData.REDSTONE_DUST, pos, 5);
+        }
       }
     }
   }

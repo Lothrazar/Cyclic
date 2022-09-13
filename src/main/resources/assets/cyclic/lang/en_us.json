@@ -1352,6 +1352,11 @@
     "energy.button.top": "Fuel Bar Above",
     "energy.button.side": "Fuel Bar Side",
 
+"effect.cyclic.waterwalk.description": "Prevents you from sinking down through the waters surface",
+
+  "effect.cyclic.magnetic.description": "Pull items and XP towards you with range of 8 blocks per level",
+
+
 
     "potion.butter.oops": "Butterfingers!  Dropped something when you moved.",
     "potion.effect.slowfall": "Potion of Slowfall",

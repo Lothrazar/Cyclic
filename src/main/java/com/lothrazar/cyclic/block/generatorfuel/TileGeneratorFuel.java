@@ -91,7 +91,12 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;
-      stack.shrink(1);
+      if (stack.getCount() == 1 && stack.hasContainerItem()) {
+        inputSlots.setStackInSlot(0, stack.getContainerItem().copy());
+      }
+      else {
+        stack.shrink(1);
+      }
     }
   }
 
