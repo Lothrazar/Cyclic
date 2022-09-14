@@ -177,7 +177,7 @@ public class ContainerCrafter extends ContainerBase {
       ItemStack ghostStack = player.containerMenu.getCarried().copy();
       ghostStack.setCount(1);
       slots.get(slotId).set(ghostStack);
-      tile.shouldSearch = true;
+      //      tile.shouldSearch = true;
       return; //ItemStack.EMPTY;
     }
     super.clicked(slotId, dragType, clickTypeIn, player);
