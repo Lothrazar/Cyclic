@@ -24,9 +24,7 @@
 package com.lothrazar.cyclic.block.crafter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
@@ -44,10 +42,11 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -92,7 +91,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   private boolean hasValidRecipe = false;
   public boolean shouldSearch = true;
   private ArrayList<ItemStack> lastRecipeGrid = null;
-  private Recipe<?> lastValidRecipe = null;
+  private Recipe<CraftingContainer> lastValidRecipe = null;
   private ItemStack recipeOutput = ItemStack.EMPTY;
 
   public enum ItemHandlers {
@@ -116,31 +115,56 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     return false;
   }
 
-  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter e) {
-    e.tick();
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter tile) {
+    tile.serverTick();
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter e) {
-    e.tick();
+  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter tile) {
+    tile.syncEnergy();
   }
 
-  public void tick() {
-    this.syncEnergy();
-    if (level == null || level.getServer() == null) {
+  public void serverTick() {
+    //    this.syncEnergy();
+    //    if (level == null || level.getServer() == null) {
+    //      return;
+    //    }
+    //    if (level.isClientSide) {
+    //      return;
+    //    }
+    //redstone phase
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
       return;
     }
-    if (level.isClientSide) {
+    //i am running
+    setLitProperty(true);
+    //do i have enough power phase
+    IEnergyStorage cap = this.energyCap.orElse(null);
+    if (cap == null) {
       return;
     }
-    IItemHandler previewHandler = this.preview.orElse(null);
+    final int cost = POWERCONF.get();
+    if (cap.getEnergyStored() < cost && cost > 0) {
+      return;
+    }
+    if (timer < 0) {
+      timer = 0;
+    }
+    //timer phase
+    if (--timer > 0) {
+      return;
+    }
+    //timer is out
+    //processing
     ArrayList<ItemStack> itemStacksInGrid = getItemsInCraftingGrid();
     if (lastRecipeGrid == null) {
       lastRecipeGrid = itemStacksInGrid;
     }
-    if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0) {
+    if (itemStacksInGrid == null || countNonEmptyStacks(itemStacksInGrid) == 0
+        || itemStacksInGrid.size() != lastRecipeGrid.size()) {
       //Nothing in Crafting grid, so don't do anything
-      setPreviewSlot(previewHandler, ItemStack.EMPTY);
-      this.timer = TIMER_FULL;
+      reset();
+      setPreviewSlot(ItemStack.EMPTY);
       return;
     }
     else if (!itemStacksInGrid.equals(lastRecipeGrid)) {
@@ -150,43 +174,27 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
       shouldSearch = true;
     }
     if (!hasValidRecipe && shouldSearch) {
-      Recipe<?> recipe = tryRecipes(itemStacksInGrid);
+      Recipe<CraftingContainer> recipe = tryRecipes(itemStacksInGrid);
       if (recipe != null) {
         hasValidRecipe = true;
         lastValidRecipe = recipe;
         lastRecipeGrid = itemStacksInGrid;
         recipeOutput = lastValidRecipe.getResultItem();
         shouldSearch = false;
-        setPreviewSlot(previewHandler, lastValidRecipe.getResultItem());
-        this.timer = TIMER_FULL;
+        setPreviewSlot(lastValidRecipe.getResultItem());
+        //t.println("ok we JUST found a recipe. you should probably process it now. if you have the goods");
       }
       else {
         reset();
         shouldSearch = false; //Went through all recipes, didn't find match. Don't search again (until crafting grid changes)
       }
     }
-    if (this.requiresRedstone() && !this.isPowered()) {
-      setLitProperty(false);
-      return;
-    }
-    setLitProperty(true);
-    IEnergyStorage cap = this.energyCap.orElse(null);
-    if (cap == null) {
-      return;
-    }
-    final int cost = POWERCONF.get();
-    if (cap.getEnergyStored() < cost && cost > 0) {
-      return;
-    }
     if (hasValidRecipe) {
-      if (--timer > 0) {
-        return;
-      }
-      timer = TIMER_FULL;
       //      ModCyclic.LOGGER.info("tick down valid recipe output " + recipeOutput + " readyToCraft = " + readyToCraft);
       if (doCraft(inputHandler, true)) {
+        this.timer = TIMER_FULL;
         // docraft in simulate mode
-        ItemStack output = recipeOutput.copy();
+        ItemStack recipeOutputCopy = recipeOutput.copy();
         if (hasFreeSpace(outHandler, recipeOutput) && doCraft(inputHandler, false)) {
           if (lastValidRecipe != null && lastValidRecipe instanceof ShapedRecipe) {
             ShapedRecipe r = (ShapedRecipe) lastValidRecipe;
@@ -223,18 +231,11 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
                   }
                 }
               }
-              //its not empty
-              //              ItemStack actualLeftovers = itemStacksInGridBackup.get(i);
-              //              if (!recipeLeftover.equals(actualLeftovers, true)) {
-              //                ModCyclic.LOGGER.info("mismatch post craft:"
-              //                    + " recipeLeftover = " + recipeLeftover + " " + recipeLeftover.getTag()
-              //                    + " ; itemStacksInGridBackup.get(i) = " + actualLeftovers + " " + actualLeftovers.getTag());
-              //              }
             }
           }
           for (int slotId = 0; slotId < IO_SIZE; slotId++) {
-            output = outHandler.insertItem(slotId, output, false);
-            if (output == ItemStack.EMPTY || output.getCount() == 0) {
+            recipeOutputCopy = outHandler.insertItem(slotId, recipeOutputCopy, false);
+            if (recipeOutputCopy == ItemStack.EMPTY || recipeOutputCopy.getCount() == 0) {
               break;
             }
           }
@@ -255,9 +256,12 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     return itemStacks;
   }
 
-  private void setPreviewSlot(IItemHandler previewHandler, ItemStack itemStack) {
-    previewHandler.extractItem(0, 64, false);
-    previewHandler.insertItem(0, itemStack, false);
+  private void setPreviewSlot(ItemStack itemStack) {
+    IItemHandler previewHandler = this.preview.orElse(null);
+    if (previewHandler != null) {
+      previewHandler.extractItem(0, 64, false);
+      previewHandler.insertItem(0, itemStack, false);
+    }
   }
 
   private boolean hasFreeSpace(IItemHandler inv, ItemStack output) {
@@ -316,61 +320,67 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
-  private Recipe<?> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
-    if (level == null || level.getServer() == null) {
-      return null;
+  private Recipe<CraftingContainer> tryRecipes(ArrayList<ItemStack> itemStacksInGrid) {
+    //TODO: when found //    timer = TIMER_FULL;
+    IItemHandler gridHandler = this.gridCap.orElse(null);
+    for (int i = 0; i < gridHandler.getSlots(); i++) {
+      craftMatrix.setItem(i, gridHandler.getStackInSlot(i).copy());//fake items anyway. but also jus do a copy
     }
-    Collection<Recipe<?>> recipes = level.getServer().getRecipeManager().getRecipes();
-    for (Recipe<?> recipe : recipes) {
-      if (recipe instanceof ShapelessRecipe) {
-        ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
-        if (tryMatchShapelessRecipe(itemStacksInGrid, shapelessRecipe)) {
-          return shapelessRecipe;
-        }
-      }
-      else if (recipe instanceof ShapedRecipe) {
-        ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-        if (!doSizesMatch(shapedRecipe, itemStacksInGrid)) {
-          continue;
-        }
-        if (tryMatchShapedRecipe(itemStacksInGrid, shapedRecipe)) {
-          return shapedRecipe;
-        }
+    List<CraftingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
+    for (CraftingRecipe rec : recipes) {
+      //  
+      if (rec.matches(craftMatrix, level)) {
+        return rec;
       }
     }
+    //      if (recipe instanceof ShapelessRecipe) {
+    //        ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
+    //        if (tryMatchShapelessRecipe(itemStacksInGrid, shapelessRecipe)) {
+    //          return shapelessRecipe;
+    //        }
+    //      }
+    //      else if (recipe instanceof ShapedRecipe) {
+    //        ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
+    //        if (!doSizesMatch(shapedRecipe, itemStacksInGrid)) {
+    //          continue;
+    //        }
+    //        if (tryMatchShapedRecipe(itemStacksInGrid, shapedRecipe)) {
+    //          return shapedRecipe;
+    //        }
+    //      }
     return null;
   }
-
-  private boolean tryMatchShapedRecipe(ArrayList<ItemStack> itemStacks, ShapedRecipe recipe) {
-    for (int i = 0; i <= 3 - recipe.getWidth(); ++i) {
-      for (int j = 0; j <= 3 - recipe.getHeight(); ++j) {
-        if (this.tryMatchShapedRecipeRegion(itemStacks, recipe, i, j)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  private boolean tryMatchShapelessRecipe(ArrayList<ItemStack> itemStacks, ShapelessRecipe recipe) {
-    ArrayList<ItemStack> itemStacksCopy = (ArrayList<ItemStack>) itemStacks.clone();
-    for (Ingredient ingredient : recipe.getIngredients()) {
-      Iterator<ItemStack> iter = itemStacksCopy.iterator();
-      boolean matched = false;
-      while (iter.hasNext()) {
-        ItemStack itemStack = iter.next();
-        if (ingredient.test(itemStack)) {
-          iter.remove();
-          matched = true;
-          break;
-        }
-      }
-      if (!matched) {
-        return false;
-      }
-    }
-    return countNonEmptyStacks(itemStacksCopy) == 0;
-  }
+  //
+  //  private boolean tryMatchShapedRecipe(ArrayList<ItemStack> itemStacks, ShapedRecipe recipe) {
+  //    for (int i = 0; i <= 3 - recipe.getWidth(); ++i) {
+  //      for (int j = 0; j <= 3 - recipe.getHeight(); ++j) {
+  //        if (this.tryMatchShapedRecipeRegion(itemStacks, recipe, i, j)) {
+  //          return true;
+  //        }
+  //      }
+  //    }
+  //    return false;
+  //  }
+  //
+  //  private boolean tryMatchShapelessRecipe(ArrayList<ItemStack> itemStacks, ShapelessRecipe recipe) {
+  //    ArrayList<ItemStack> itemStacksCopy = (ArrayList<ItemStack>) itemStacks.clone();
+  //    for (Ingredient ingredient : recipe.getIngredients()) {
+  //      Iterator<ItemStack> iter = itemStacksCopy.iterator();
+  //      boolean matched = false;
+  //      while (iter.hasNext()) {
+  //        ItemStack itemStack = iter.next();
+  //        if (ingredient.test(itemStack)) {
+  //          iter.remove();
+  //          matched = true;
+  //          break;
+  //        }
+  //      }
+  //      if (!matched) {
+  //        return false;
+  //      }
+  //    }
+  //    return countNonEmptyStacks(itemStacksCopy) == 0;
+  //  }
 
   public static class FakeContainer extends AbstractContainerMenu {
 
@@ -411,10 +421,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     this.lastValidRecipe = null;
     this.shouldSearch = true;
     this.timer = 0;
-    IItemHandler previewHandler = this.preview.orElse(null);
-    if (previewHandler != null) {
-      setPreviewSlot(previewHandler, ItemStack.EMPTY);
-    }
+    setPreviewSlot(ItemStack.EMPTY);
   }
 
   private int countNonEmptyStacks(ArrayList<ItemStack> itemStacks) {
@@ -426,22 +433,21 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     }
     return count;
   }
-
-  private boolean doSizesMatch(ShapedRecipe recipe, ArrayList<ItemStack> itemStacks) {
-    int ingredientCount = 0;
-    int itemStackCount = 0;
-    for (Ingredient ingredient : recipe.getIngredients()) {
-      if (!ingredient.test(ItemStack.EMPTY)) {
-        ingredientCount++;
-      }
-    }
-    for (ItemStack itemStack : itemStacks) {
-      if (itemStack != ItemStack.EMPTY) {
-        itemStackCount++;
-      }
-    }
-    return ingredientCount == itemStackCount;
-  }
+  //  private boolean doSizesMatch(ShapedRecipe recipe, ArrayList<ItemStack> itemStacks) {
+  //    int ingredientCount = 0;
+  //    int itemStackCount = 0;
+  //    for (Ingredient ingredient : recipe.getIngredients()) {
+  //      if (!ingredient.test(ItemStack.EMPTY)) {
+  //        ingredientCount++;
+  //      }
+  //    }
+  //    for (ItemStack itemStack : itemStacks) {
+  //      if (itemStack != ItemStack.EMPTY) {
+  //        itemStackCount++;
+  //      }
+  //    }
+  //    return ingredientCount == itemStackCount;
+  //  }
 
   @Override
   public Component getDisplayName() {
