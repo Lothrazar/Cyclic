@@ -210,21 +210,19 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     return false;
   }
 
+  //TODO:? re-write this whole thing using ASSEMBLE?
+  //big change
+  //  for (int i = 0; i < 9; i++) {
+  //    Ingredient ingredient = lastValidRecipe.getIngredients().get(i);
+  //    String s = ingredient.isEmpty() ? "empty" : "" + ingredient.getItems()[0].getDisplayName().getString();
+  //    System.out.println(i + " => " + s + "   matrix " + craftMatrix.getItem(i));
+  //    //for this ingredient. the mapping and grid lineup is correct
+  //    //find ingredients for each and use recipe.assemble(craftMatrixCopy);
+  //    //to solve the durability issue?
+  //    // https://github.com/Lothrazar/Cyclic/issues/1947
+  //  }
   private boolean doCraft(IItemHandler input, boolean simulate, Recipe<CraftingContainer> lastValidRecipe) {
-    for (int i = 0; i < 9; i++) {
-      //lastValidRecipe.getIngredients().size()
-      //    for (Ingredient ingredient : lastValidRecipe.getIngredients()) {
-      Ingredient ingredient = lastValidRecipe.getIngredients().get(i);
-      String s = ingredient.isEmpty() ? "empty" : "" + ingredient.getItems()[0].getDisplayName().getString();
-      System.out.println(i + " => " + s + "   matrix " + craftMatrix.getItem(i));
-      //for this ingredient.
-      //      find SOMETHING that matches?
-      //
-    }
-    //TODO:? ASSEMBLE?
     HashMap<Integer, List<ItemStack>> putbackStacks = new HashMap<>();
-    //    for (int i = 0; i < 9; i++) {
-    //lastValidRecipe.getIngredients().size()
     for (Ingredient ingredient : lastValidRecipe.getIngredients()) {
       if (ingredient == Ingredient.EMPTY) {
         continue;
@@ -293,7 +291,6 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
 
   private final CraftingContainer craftMatrix = new CraftingContainer(new FakeContainer(MenuType.CRAFTING, 18291238), 3, 3);
 
-  //Craft assemblerMatrix
   @Override
   public Component getDisplayName() {
     return new TextComponent(getType().getRegistryName().getPath());
