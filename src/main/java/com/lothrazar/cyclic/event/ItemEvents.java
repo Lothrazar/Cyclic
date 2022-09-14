@@ -439,8 +439,10 @@ public class ItemEvents {
         //cyclic cable
         //test? maybe config disable? 
         player.swing(event.getHand());
-        event.getWorld().destroyBlock(event.getPos(), true);
+        CableBase.crouchClick(event, event.getWorld().getBlockState(event.getPos()));
+        //        event.getWorld().destroyBlock(event.getPos(), true);
         event.setCanceled(true);
+        SoundUtil.playSound(player, SoundRegistry.THUNK.get(), 0.2F, 1F);
       }
     }
   }

@@ -32,6 +32,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.network.NetworkHooks;
 
 public abstract class CableBase extends BlockCyclic implements SimpleWaterloggedBlock {
@@ -154,6 +155,35 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
       //ex
       return super.use(state, world, pos, player, handIn, hit);
     }
+    rotateFromWrench(state, world, pos, player, hit);
+    player.swing(handIn);
+    return super.use(state, world, pos, player, handIn, hit);
+  }
+
+  public static void crouchClick(RightClickBlock event, BlockState state) {
+    //    Direction sideToToggle = event.getFace(); // no
+    rotateFromWrench(state, event.getWorld(), event.getPos(), event.getPlayer(), event.getHitVec());
+    //    EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
+    //    if (state.hasProperty(prop)) {
+    //      EnumConnectType status = state.getValue(prop);
+    //      BlockState newState = state;
+    //      switch (status) {
+    //        case BLOCKED: 
+    //          newState = state.setValue(prop, EnumConnectType.NONE);
+    //        break;
+    //        case NONE: // no connection
+    //        case INVENTORY: // inventory connection or
+    //        case CABLE: // extract
+    //          // extract to blocked 
+    //          newState = state.setValue(prop, EnumConnectType.BLOCKED);
+    //        break;
+    //      }
+    //      event.getWorld().setBlock(event.getPos(), newState, 3);
+    //      //      newState.updateShape(sideToToggle, world.getBlockState(pos.relative(sideToToggle)), world, pos, pos.relative(sideToToggle));
+    //    }
+  }
+
+  private static void rotateFromWrench(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
     //now must be wrench
     final float hitLimit = 0.28F;
     Direction sideToToggle = hit.getDirection();
@@ -187,32 +217,46 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
       BlockState newState = state;
       // INVENTORY// NONE -> CABLE(extract) -> BLOCKED -> and back to none again
       boolean updatePost = false;
-      switch (status) {
-        case BLOCKED:
-          //unblock it go back to none (dont know where connection would be if any)
-          newState = state.setValue(prop, EnumConnectType.NONE);
-          updatePost = true;
-        break;
-        case INVENTORY: // inventory connection or
-        case NONE: // no connection
-          newState = state.setValue(prop, EnumConnectType.CABLE);
-        break;
-        case CABLE: // extract
-          // extract to blocked 
-          newState = state.setValue(prop, EnumConnectType.BLOCKED);
-        break;
+      if (player.isCrouching()) {
+        switch (status) {
+          case BLOCKED:
+            newState = state.setValue(prop, EnumConnectType.NONE);
+            updatePost = true;
+          break;
+          default: //anything to blocked
+            newState = state.setValue(prop, EnumConnectType.BLOCKED);
+          break;
+        }
       }
-      if (world.getBlockState(pos).getBlock() == this && world.setBlockAndUpdate(pos, newState)) {
+      else {
+        switch (status) {
+          case BLOCKED:
+            newState = state.setValue(prop, EnumConnectType.NONE);
+            updatePost = true;
+          break;
+          case INVENTORY: // inventory normal
+            newState = state.setValue(prop, EnumConnectType.CABLE);//to extract
+            updatePost = true;
+          break;
+          case NONE: // no connection
+          //if its none stay teh same 
+          break;
+          case CABLE: // extract 
+            newState = state.setValue(prop, EnumConnectType.INVENTORY);
+          break;
+        }
+      }
+      //
+      //
+      if (world.getBlockState(pos).getBlock() instanceof CableBase && world.setBlockAndUpdate(pos, newState)) {
         if (updatePost) {
           newState.updateShape(sideToToggle, world.getBlockState(pos.relative(sideToToggle)), world, pos, pos.relative(sideToToggle));
         }
-        player.swing(handIn);
         if (world.isClientSide) {
           SoundUtil.playSound(player, SoundRegistry.THUNK.get(), 0.2F, 1F);
         }
       }
     }
-    return super.use(state, world, pos, player, handIn, hit);
   }
 
   /**
