@@ -154,6 +154,9 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
       //recipes not null and it matches 
       ItemStack recipeOutput = lastValidRecipe.getResultItem().copy();
       setPreviewSlot(recipeOutput);
+      //?
+      //
+      //
       if (doCraft(inputHandler, true, lastValidRecipe)) {
         // docraft in simulate mode 
         if (hasFreeSpace(outHandler, recipeOutput) && doCraft(inputHandler, false, lastValidRecipe)) {
@@ -208,8 +211,20 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private boolean doCraft(IItemHandler input, boolean simulate, Recipe<CraftingContainer> lastValidRecipe) {
+    for (int i = 0; i < 9; i++) {
+      //lastValidRecipe.getIngredients().size()
+      //    for (Ingredient ingredient : lastValidRecipe.getIngredients()) {
+      Ingredient ingredient = lastValidRecipe.getIngredients().get(i);
+      String s = ingredient.isEmpty() ? "empty" : "" + ingredient.getItems()[0].getDisplayName().getString();
+      System.out.println(i + " => " + s + "   matrix " + craftMatrix.getItem(i));
+      //for this ingredient.
+      //      find SOMETHING that matches?
+      //
+    }
     //TODO:? ASSEMBLE?
     HashMap<Integer, List<ItemStack>> putbackStacks = new HashMap<>();
+    //    for (int i = 0; i < 9; i++) {
+    //lastValidRecipe.getIngredients().size()
     for (Ingredient ingredient : lastValidRecipe.getIngredients()) {
       if (ingredient == Ingredient.EMPTY) {
         continue;
@@ -219,11 +234,11 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
         ItemStack itemStack = input.getStackInSlot(index);
         if (ingredient.test(itemStack)) {
           if (putbackStacks.containsKey(index)) {
-            putbackStacks.get(index).add(new ItemStack(input.getStackInSlot(index).getItem(), 1));
+            putbackStacks.get(index).add(input.getStackInSlot(index).copy());
           }
           else {
             List<ItemStack> list = new ArrayList<>();
-            list.add(new ItemStack(input.getStackInSlot(index).getItem(), 1));
+            list.add(input.getStackInSlot(index).copy());
             putbackStacks.put(index, list);
           }
           matched = true;
