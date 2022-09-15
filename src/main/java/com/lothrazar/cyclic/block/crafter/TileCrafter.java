@@ -26,13 +26,13 @@ package com.lothrazar.cyclic.block.crafter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -126,6 +126,9 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     }
     //i am running
     setLitProperty(true);
+    if (this.level.isClientSide) {
+      return;
+    }
     //do i have enough power phase
     IEnergyStorage cap = this.energyCap.orElse(null);
     if (cap == null) {
@@ -154,38 +157,41 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
       //recipes not null and it matches 
       ItemStack recipeOutput = lastValidRecipe.getResultItem().copy();
       setPreviewSlot(recipeOutput);
-      //?
-      //
-      //
-      if (doCraft(inputHandler, true, lastValidRecipe)) {
-        // docraft in simulate mode 
-        if (hasFreeSpace(outHandler, recipeOutput) && doCraft(inputHandler, false, lastValidRecipe)) {
+      //if we have space for the output, then go ahead
+      if (hasFreeSpace(outHandler, recipeOutput)) {
+        if (doCraft(lastValidRecipe)) {
           //reset the timer
           this.timer = TIMER_FULL;
           //pay energy cost
-          energy.extractEnergy(cost, false);
-          //move items
-          depositOutput(recipeOutput);
-          //compare to what it was 
-          for (ItemStack s : lastValidRecipe.getRemainingItems(craftMatrix)) {
-            ModCyclic.LOGGER.info("craft Remains? " + s + " tagprint " + s.getTag());//found the three buckets
-            depositOutput(s);
+          this.energy.extractEnergy(cost, false);
+          //get the result item
+          depositOutput(recipeOutput, outHandler);
+          //stuff like empty buckets happen down here
+          NonNullList<ItemStack> rem = lastValidRecipe.getRemainingItems(craftMatrix);
+          for (int i = 0; i < rem.size(); ++i) {
+            ItemStack s = rem.get(i);
+            if (!s.isEmpty() && s.getItem() == craftMatrix.getItem(i).getItem()) {
+              s = depositOutput(s, this.inputHandler);
+            }
+            //otherwise its something like bucket->empty bucket, so different item, so right side 
+            depositOutput(s, this.outHandler);
           }
         }
       }
     }
   }
 
-  private void depositOutput(ItemStack recipeOutput) {
+  private ItemStack depositOutput(ItemStack recipeOutput, ItemStackHandler dest) {
     if (recipeOutput.isEmpty()) {
-      return;
+      return recipeOutput;
     }
-    for (int slotId = 0; slotId < outHandler.getSlots(); slotId++) {
-      recipeOutput = outHandler.insertItem(slotId, recipeOutput, false);
+    for (int slotId = 0; slotId < dest.getSlots(); slotId++) {
+      recipeOutput = dest.insertItem(slotId, recipeOutput, false);
       if (recipeOutput.isEmpty()) {
         break;
       }
     }
+    return recipeOutput;
   }
 
   private void setPreviewSlot(ItemStack itemStack) {
@@ -197,17 +203,11 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private boolean hasFreeSpace(IItemHandler inv, ItemStack output) {
-    for (int slotId = 0; slotId < IO_SIZE; slotId++) {
-      if (inv.getStackInSlot(slotId) == ItemStack.EMPTY
-          || (inv.getStackInSlot(slotId).sameItem(output)
-              && inv.getStackInSlot(slotId).getCount() + output.getCount() <= output.getMaxStackSize())) {
-        return true;
-      }
-      if (output == ItemStack.EMPTY || output.getCount() == 0) {
-        return true;
-      }
+    ItemStack test = output.copy();
+    for (int slotId = 0; slotId < inv.getSlots(); slotId++) {
+      test = inv.insertItem(slotId, test, true); // simulated
     }
-    return false;
+    return test.isEmpty(); //empty means all of it was allowed to go in
   }
 
   //TODO:? re-write this whole thing using ASSEMBLE?
@@ -215,42 +215,39 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   //  for (int i = 0; i < 9; i++) {
   //    Ingredient ingredient = lastValidRecipe.getIngredients().get(i);
   //    String s = ingredient.isEmpty() ? "empty" : "" + ingredient.getItems()[0].getDisplayName().getString();
-  //    System.out.println(i + " => " + s + "   matrix " + craftMatrix.getItem(i));
+  //   println(i + " => " + s + "   matrix " + craftMatrix.getItem(i));
   //    //for this ingredient. the mapping and grid lineup is correct
   //    //find ingredients for each and use recipe.assemble(craftMatrixCopy);
   //    //to solve the durability issue?
   //    // https://github.com/Lothrazar/Cyclic/issues/1947
   //  }
-  private boolean doCraft(IItemHandler input, boolean simulate, Recipe<CraftingContainer> lastValidRecipe) {
+  private boolean doCraft(Recipe<CraftingContainer> lastValidRecipe) {
     HashMap<Integer, List<ItemStack>> putbackStacks = new HashMap<>();
     for (Ingredient ingredient : lastValidRecipe.getIngredients()) {
-      if (ingredient == Ingredient.EMPTY) {
+      if (ingredient.isEmpty()) {
         continue;
       }
       boolean matched = false;
-      for (int index = 0; index < input.getSlots(); index++) {
-        ItemStack itemStack = input.getStackInSlot(index);
+      for (int index = 0; index < inputHandler.getSlots(); index++) {
+        ItemStack itemStack = inputHandler.getStackInSlot(index);
         if (ingredient.test(itemStack)) {
           if (putbackStacks.containsKey(index)) {
-            putbackStacks.get(index).add(input.getStackInSlot(index).copy());
+            putbackStacks.get(index).add(inputHandler.getStackInSlot(index).copy());
           }
           else {
             List<ItemStack> list = new ArrayList<>();
-            list.add(input.getStackInSlot(index).copy());
+            list.add(inputHandler.getStackInSlot(index).copy());
             putbackStacks.put(index, list);
           }
           matched = true;
-          input.extractItem(index, 1, false);
+          inputHandler.extractItem(index, 1, false);
           break;
         }
       }
       if (!matched) {
-        putbackStacks(putbackStacks, input);
+        putbackStacks(putbackStacks, inputHandler);
         return false;
       }
-    }
-    if (simulate) {
-      putbackStacks(putbackStacks, input);
     }
     return true;
   }
