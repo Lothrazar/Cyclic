@@ -5,16 +5,11 @@ import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.ChatUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -26,7 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -41,24 +35,6 @@ public class BlockCableItem extends CableBase {
   @Override
   public void registerClient() {
     MenuScreens.register(MenuTypeRegistry.ITEM_PIPE.get(), ScreenCableItem::new);
-  }
-
-  @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    if (world.isClientSide) {
-      BlockEntity ent = world.getBlockEntity(pos);
-      for (Direction d : Direction.values()) {
-        IItemHandler handlerHere = ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d).orElse(null);
-        //show current
-        if (handlerHere != null) {
-          ItemStack current = handlerHere.getStackInSlot(0);
-          if (!current.isEmpty()) {
-            ChatUtil.addChatMessage(player, Component.translatable(d.toString() + " " + current.getHoverName().getString()));
-          }
-        }
-      }
-    }
-    return super.use(state, world, pos, player, hand, hit);
   }
 
   @Override

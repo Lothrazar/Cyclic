@@ -13,10 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -29,10 +26,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
@@ -56,23 +51,6 @@ public class BlockCableFluid extends CableBase {
   @Override
   public void registerClient() {
     MenuScreens.register(MenuTypeRegistry.FLUID_PIPE.get(), ScreenCableFluid::new);
-  }
-
-  @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    if (!world.isClientSide) {
-      BlockEntity ent = world.getBlockEntity(pos);
-      IFluidHandler handlerHere = ent.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
-      //show current 
-      if (handlerHere != null && handlerHere.getFluidInTank(0) != null) {
-        FluidStack fluid = handlerHere.getFluidInTank(0);
-        int st = fluid.getAmount();
-        if (st > 0) {
-          player.displayClientMessage(Component.translatable(st + " " + fluid.getDisplayName()), true);
-        }
-      }
-    }
-    return super.use(state, world, pos, player, hand, hit);
   }
 
   @Override
