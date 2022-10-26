@@ -11,6 +11,10 @@
     "item": "minecraft:dirt",
 	  "count": 4
   },
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
 	"conditions": [
 		{
 			"values": [

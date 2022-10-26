@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.BlockNoTraders;
-import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
+import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
+import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.cyclic.world.cache.ServerCacheHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -40,38 +40,29 @@ public class BlockSpawnEvents {
       Integer radius = CandlePeaceBlock.RADIUS.get();
       Integer height = CandlePeaceBlock.HEIGHT.get();
       LivingEntity mob = event.getEntityLiving();
-      if (CandlePeaceBlock.isBad(mob, res)
-          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true),
-              radius, height)) {
+      //first block candle peace 
+      if (radius > 0
+          && height > 0
+          && CandlePeaceBlock.isBad(mob, res)
+          && ServerCacheHolder.PEACE_CANDLE.hasCollision(mob.level, mob.blockPosition(), radius.intValue(), height.intValue())
+      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), radius, height)
+      ) {
         //default range 32 and filtered
-        ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by candle " + mob.getType());
+        ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by CacheCandle " + mob.getType());
         event.setResult(Result.DENY);
       }
-      //
-      radius = BlockNoTraders.RADIUS.get();
-      height = BlockNoTraders.HEIGHT.get();
-      if (BlockNoTraders.isSpawnDenied(mob, res)
-          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(),
-              BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockNoTraders.LIT, true),
-              radius, height)) {
-        //ModCyclic.LOGGER.info("Spawn cancelled by altar " + mob.getType());
+      //next block 
+      radius = BlockAltarNoTraders.RADIUS.get();
+      height = BlockAltarNoTraders.HEIGHT.get();
+      if (radius > 0
+          && height > 0
+          && BlockAltarNoTraders.isSpawnDenied(mob, res)
+          && ServerCacheHolder.NO_SOLICITING.hasCollision(mob.level, mob.blockPosition(), radius.intValue(), height.intValue())
+      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
+      ) {
+        ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by cache-altar " + mob.getType());
         event.setResult(Result.DENY);
       }
-      //      if (BlockAltarSol.isFlight(mob, res)
-      //          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-      //              BlockRegistry.ALTAR_FLIGHT.get().defaultBlockState().setValue(BlockAltarSol.LIT, true),
-      //              radius, height)) {
-      //        ModCyclic.LOGGER.info("Spawn cancelled by FLIGHT altar " + mob.getType());
-      //        event.setResult(Result.DENY);
-      //      }
-      //      if (BlockAltarSol.isExplosive(mob, res)
-      //          && UtilWorld.doesBlockExist(mob.level, mob.blockPosition(),
-      //              BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState().setValue(BlockAltarSol.LIT, true),
-      //              radius, height)) {
-      //        ModCyclic.LOGGER.info("Spawn cancelled by DESTRUCTION altar " + mob.getType());
-      //        event.setResult(Result.DENY);
-      //      }
     }
   }
 }

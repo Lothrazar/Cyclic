@@ -9,7 +9,7 @@
     },
     {
       "type": "smelting",
-      "recipe": "cyclic:fireball"
+      "recipe": "cyclic:smelting/fireball"
     }
   ]
 }

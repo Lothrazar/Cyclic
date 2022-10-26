@@ -12,6 +12,10 @@
     "item": "minecraft:coarse_dirt",
 	  "count": 2
   },
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
 	"conditions": [
 		{
 			"values": [

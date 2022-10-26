@@ -21,9 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.spawntriggers;
 
 import java.util.Random;
+import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
@@ -42,6 +44,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
@@ -61,6 +66,16 @@ public class CandlePeaceBlock extends BlockCyclic {
   public CandlePeaceBlock(Properties properties) {
     super(properties.strength(1.8F).noOcclusion().randomTicks());
     this.registerDefaultState(this.defaultBlockState().setValue(LIT, true));
+  }
+
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.PEACE_CANDLE.get(), world.isClientSide ? TilePeace::clientTick : TilePeace::serverTick);
+  }
+
+  @Override
+  public BlockEntity newBlockEntity(BlockPos p, BlockState st) {
+    return new TilePeace(p, st);
   }
 
   /**

@@ -7,6 +7,10 @@
     "fluid": "liquidblocks:liquid_podzol",
     "count": 1000
   },
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
 	"conditions": [
 		{
 			"values": [

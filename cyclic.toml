@@ -123,23 +123,23 @@
 	# Block specific configs
 	#####################################################################################
 	[cyclic.blocks]
-		#if true this cures any harmful potion effect (regardless of potion list)
+		#If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).
 		harmful_potions = true
 
 		[cyclic.blocks.peace_candle]
 			#Reach of the candle for spawn prevention
-			#Range: 1 ~ 128
+			#Range: 0 ~ 64
 			radius = 32
 			#Height reach of the candle for spawn prevention
-			#Range: 1 ~ 128
-			height = 8
+			#Range: 0 ~ 512
+			height = 4
 
 		[cyclic.blocks.altar_destruction]
 			#Reach for explosion prevention
 			#Range: 1 ~ 128
 			radius = 32
 			#Height for explosion prevention
-			#Range: 1 ~ 128
+			#Range: 1 ~ 512
 			height = 8
 
 		#Ender Anchor settings
@@ -252,11 +252,11 @@
 
 		[cyclic.blocks.no_soliciting]
 			#Reach of the no_soliciting for spawn prevention
-			#Range: 1 ~ 128
+			#Range: 0 ~ 64
 			radius = 32
 			#Height reach of the no_soliciting for spawn prevention
-			#Range: 1 ~ 128
-			height = 32
+			#Range: 0 ~ 512
+			height = 4
 
 		[cyclic.blocks.sprinkler]
 			#Tick rate.  20 will fire one block per second
@@ -265,6 +265,11 @@
 			#Water consumption
 			#Range: 0 ~ 1000
 			water = 5
+
+		[cyclic.blocks.soundproofing]
+			#Radius to find and muffle sounds. 
+			#Range: 1 ~ 128
+			radius = 6
 
 		[cyclic.blocks.cables]
 
@@ -363,12 +368,12 @@
 			ignore_recipes = ["botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*", "cyclic:fireball", "cyclic:shapeless/spark"]
 
 		[cyclic.blocks.anti_beacon]
-			#List of extra effects to clear. supports wildcard such as 'cyclic:*'
-			potion_list = ["minecraft:poison", "minecraft:*_poison", "minecraft:wither", "cyclic:gravity", "cyclic:antigravity", "minecraft:night_vision", "minecraft:invisibility", "minecraft:weakness", "minecraft:slowness"]
-			#Ticks to fire anti beacon and remove effects from entities (20 = 1 second)
-			#Range: 1 ~ 9999
-			ticks = 30
-			#Radius to clear effects from living entities, used by sponge and anti beacon
+			#List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)
+			potion_list = ["minecraft:poison", "minecraft:*_poison", "minecraft:wither", "cyclic:gravity", "minecraft:weakness", "minecraft:slowness"]
+			#Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.
+			#Range: 20 ~ 9999
+			ticks = 200
+			#Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). 
 			#Range: 1 ~ 128
 			radius = 16
 
@@ -382,7 +387,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
+		info = false
 
 	#####################################################################################
 	# Item specific configs
