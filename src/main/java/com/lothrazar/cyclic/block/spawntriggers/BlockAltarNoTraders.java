@@ -1,5 +1,7 @@
-package com.lothrazar.cyclic.block;
+package com.lothrazar.cyclic.block.spawntriggers;
 
+import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -20,6 +22,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -31,7 +36,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class BlockNoTraders extends BlockCyclic implements SimpleWaterloggedBlock {
+public class BlockAltarNoTraders extends BlockCyclic implements SimpleWaterloggedBlock {
 
   public static IntValue HEIGHT;
   public static IntValue RADIUS;
@@ -40,9 +45,19 @@ public class BlockNoTraders extends BlockCyclic implements SimpleWaterloggedBloc
   public static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,
       16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
 
-  public BlockNoTraders(Properties properties) {
+  public BlockAltarNoTraders(Properties properties) {
     super(properties.strength(1.2F).noOcclusion());
     this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+  }
+
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+    return createTickerHelper(type, TileRegistry.NO_SOLICITING.get(), world.isClientSide ? TileAltar::clientTick : TileAltar::serverTick);
+  }
+
+  @Override
+  public BlockEntity newBlockEntity(BlockPos p, BlockState st) {
+    return new TileAltar(p, st);
   }
 
   @Override

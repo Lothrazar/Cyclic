@@ -69,6 +69,8 @@ import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmuffTile;
 import com.lothrazar.cyclic.block.soundplay.TileSoundPlayer;
 import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
+import com.lothrazar.cyclic.block.spawntriggers.TileAltar;
+import com.lothrazar.cyclic.block.spawntriggers.TilePeace;
 import com.lothrazar.cyclic.block.spikes.TileDiamondSpikes;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.tank.TileTank;
@@ -179,5 +181,6 @@ public class TileRegistry {
   //
   public static final RegistryObject<BlockEntityType<TileAntiBeacon>> ANTI_BEACON = TILES.register("anti_beacon", () -> BlockEntityType.Builder.of(TileAntiBeacon::new, BlockRegistry.ANTI_BEACON.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileBeaconRedstone>> BEACON_REDSTONE = TILES.register("beacon_redstone", () -> BlockEntityType.Builder.of(TileBeaconRedstone::new, BlockRegistry.BEACON_REDSTONE.get()).build(null));
-  //  public static final RegistryObject<BlockEntityType<TilePedestal>> PEDESTAL = TILES.register("pedestal", () -> BlockEntityType.Builder.of(TilePedestal::new, BlockRegistry.PEDESTAL.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TilePeace>> PEACE_CANDLE = TILES.register("peace_candle", () -> BlockEntityType.Builder.of(TilePeace::new, BlockRegistry.PEACE_CANDLE.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileAltar>> NO_SOLICITING = TILES.register("no_soliciting", () -> BlockEntityType.Builder.of(TileAltar::new, BlockRegistry.NO_SOLICITING.get()).build(null));
 }

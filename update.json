@@ -1,10 +1,9 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 	"promos": {
-		"1.18.1-latest": "1.6.15",
-		"1.18.2-latest": "1.7.8",
+		"1.18.2-latest": "1.7.10",
 		"1.19":"1.7.8",
-		"1.19.2":"1.7.11"
+		"1.19.2":"1.7.12"
 	},
 	"1.19.2":{
 		"1.7.6":"First port to 1.19.  Most features ported except for a few that are coming later. (Worldgen for the 4 flowers is not implemented in this release)"
@@ -13,6 +12,6 @@
 		,"1.7.9":"Merge pull request #2157 from zhyupe/refactor/uncraft-recipe-matching .  Remove debug logs "
 		,"1.7.10":"Fix 1.19 fluid rendering.  New feature: right-click the Crafting Stick anywhere in your inventory screen, even while not holding it, to open it. Fix 'unused frames [7]' error logs.  Added cyclic:milk_bottle to forge:milk item data tag (compatibility with FarmersDelight and other mods).  Fix #2171 Rich Soil acting translucent and blocksounds.  Reduce TerraGlass hardness to 0.5 from 1.8 Increase block hardness of Connected Glass to 0.3 matching Glass Block. Fix Combustion Generator consumes Empty Bucket #2146. Added Default Tinkers construct slime recipes to melter using forge conditionals (recipes by Darkosto).  Add #2167 JEED potion compatibility added https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed .  "
 		,"1.7.11:":"AutoCrafter overhaul: no longer gets stuck partway through crafting, no longer scans extra recipes.  Cables now respond better to wrenches: the yellow Blocked state only shows up while crouching, use a wrench while not crouching to toggle between normal->import->normal again."
-
+		,"1.7.12":"Two blocks cyclic:peace_candle and cyclic:no_soliciting have large changes to prevent problems in large worlds or worlds with many mob spawns happening causing 'major issues where ticks would freeze in newly generated worlds' #2187, and causing memory stack traces (spark etc) to point out heavy load in 'BlockSpawnEvents.onLivingSpawnEvent()'. As a result players need to break and replace any existing instances of these two blocks before they start functioning (blocks each now have tile entity that refreshes a small cache when active; as a result each BlockSpawnEvents scans zero blocks in the world down from a 32x32x8 by default area or more instead checking the cache difference to spawn or not. as always you can set logging info=true in config for more debug spam in logs).  Some default configs updated and log warnings cleaned up.  "
 	}
 }

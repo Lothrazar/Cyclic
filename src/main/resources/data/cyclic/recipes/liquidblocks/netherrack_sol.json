@@ -11,6 +11,10 @@
     "item": "minecraft:netherrack",
 	  "count": 3
   },
+	"energy": {
+		"rfpertick": 80,
+		"ticks": 60
+	},
 	"conditions": [
 		{
 			"values": [

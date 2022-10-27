@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.BlockNoTraders;
 import com.lothrazar.cyclic.block.BlockSimple;
 import com.lothrazar.cyclic.block.BlockWaxedRedstone;
 import com.lothrazar.cyclic.block.ButtonBlockMat;
-import com.lothrazar.cyclic.block.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.DoorbellButton;
 import com.lothrazar.cyclic.block.FireplaceBlock;
@@ -103,6 +101,8 @@ import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
 import com.lothrazar.cyclic.block.soundmuff.ghost.SoundmufflerBlockGhost;
 import com.lothrazar.cyclic.block.soundplay.BlockSoundPlayer;
 import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
+import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
+import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.spikes.EnumSpikeType;
 import com.lothrazar.cyclic.block.spikes.SpikesBlock;
 import com.lothrazar.cyclic.block.spikes.SpikesDiamond;
@@ -296,7 +296,8 @@ public class BlockRegistry {
   public static final RegistryObject<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(Material.STONE), 8));
   public static final RegistryObject<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of(Material.STONE)));// NOGUI
   public static final RegistryObject<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of(Material.STONE))); // NOGUI
-  public static final RegistryObject<Block> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockNoTraders(Block.Properties.of(Material.STONE)));
+  public static final RegistryObject<Block> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockAltarNoTraders(Block.Properties.of(Material.STONE)
+      .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 3 : 0)));
   public static final RegistryObject<Block> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockDestruction(Block.Properties.of(Material.STONE)));
   public static final RegistryObject<Block> WAXED_REDSTONE = BLOCKS.register("waxed_redstone", () -> new BlockWaxedRedstone(Block.Properties.of(Material.METAL, MaterialColor.FIRE)));
   //
