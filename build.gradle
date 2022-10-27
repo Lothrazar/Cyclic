@@ -8,18 +8,11 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 import net.minecraftforge.gradle.common.tasks.SignJar
 
 version = "${mc_version}-${mod_version}"
-group = 'com.lothrazar.cyclic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.lothrazar.cyclic'
 archivesBaseName = 'Cyclic'
-
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    // The mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   Snapshot are built nightly.
-    // stable_#            Stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
-    
 	mappings channel: 'official', version: '1.19.2'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -86,8 +79,8 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
     
     // mods that have optional/soft integration
-    runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3873025")
-    runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3944903")
+   // runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3873025")
+   // runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3944903")
   //  runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027")
 
   //  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3834150")
@@ -139,10 +132,10 @@ repositories {
     url 'https://dogforce-games.com/maven'
   }
   maven { url = "https://maven.theillusivec4.top/"    }
-  maven { url 'https://www.cursemaven.com'  }
   maven { url 'https://dvs1.progwml6.com/files/maven/'  }
   maven { url 'https://maven.blamejared.com' }    
-  maven { url = "https://modmaven.dev"  }    
+//  maven { url = "https://modmaven.dev"  }    
+//  maven { url 'https://www.cursemaven.com'  }
 }
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
