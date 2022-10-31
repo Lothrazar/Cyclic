@@ -134,8 +134,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
         return;
       }
       //got it
-      int luck = EnchantmentHelper.getEnchantmentLevel(
-          Enchantments.LUCK_OF_THE_SEA, fishingRod) + 1;
+      int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, fishingRod) + 1;
       Vector3d fffffffffff = new Vector3d(center.getX(), center.getY(), center.getZ());
       LootContext lootContext = new LootContext.Builder((ServerWorld) world)
           .withLuck(luck).withRandom(rand).withParameter(LootParameters.field_237457_g_, fffffffffff)
@@ -143,8 +142,30 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
           .build(LootParameterSets.FISHING);
       List<ItemStack> lootDrops = table.generate(lootContext);
       if (lootDrops != null && lootDrops.size() > 0) {
-        UtilItemStack.damageItem(null, fishingRod);
+        // give loot
         UtilItemStack.drop(world, center, lootDrops);
+        //damage and mending repair
+        //
+        //FishingBobberEntity.java does 
+        // playerentity.world.addEntity(new ExperienceOrbEntity(playerentity.world, playerentity.getPosX(), playerentity.getPosY() + 0.5D, playerentity.getPosZ() + 0.5D, this.rand.nextInt(6) + 1));
+        if (fishingRod.isDamageable()) {
+          int mending = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, fishingRod);
+          if (mending == 0) {
+            UtilItemStack.damageItem(null, fishingRod);
+          }
+          else { // https://github.com/Lothrazar/Cyclic/blob/trunk/1.12/src/main/java/com/lothrazar/cyclicmagic/block/fishing/TileEntityFishing.java#L209
+            //copy alg from MC 1.12.2 version 
+            if (rand.nextDouble() < 0.25) { //25% chance damage
+              UtilItemStack.damageItem(null, fishingRod);
+            }
+            else if (rand.nextDouble() < 0.60) { //60-25 = 40 chance repair
+              if (fishingRod.getDamage() > 0) {
+                fishingRod.setDamage(fishingRod.getDamage() - 1);
+              }
+            }
+            //else do nothing, leave it flat. mimics getting damaged and repaired right away
+          }
+        } // else fishing rod cannot be damaged (supreme/diamond/other mods)
       }
     }
   }

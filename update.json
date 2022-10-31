@@ -76,6 +76,6 @@
 		,"1.5.17":" Fix Workbench deletes items inside when mined #2121. Fix Fluid cable crashing game #2118 fluid pipe server crash #2090 using ConcurrentHashMap for smp issues (ConcurrentModificationException)."
 		,"1.5.18":"Added 'Always On / Requires Redstone' button to the Redstone Clock so it can be controlled (feature ported from mc 1.12.2 & 1.18.2)"
 		,"1.5.19":"Backports  from mc1.18.2: right-click the Crafting Stick anywhere in your inventory screen, even while not holding it, to open it.  Fix logs about 'unused frames'.  Fixed logs about ' Unknown recipe category: cyclic:'. Fix Combustion Generator consumes Empty Bucket #2146. Fix #2171 Rich Soil acting translucent and blocksounds.  #2138 /cyclic commands can run in functions and command blocks"
-		,"1.5.20":"JEED compatibility.  Ender Apple now sends a message if nothing is found (void/flatworlds/etc). Growth enchant now skips IGrowable blocks that return false for 'canGrow();'.    "	
+		,"1.5.20":"JEED compatibility added for some potion effects. Port Fishing Net and Mending Fishingrods compatibility from 1.12.2 #2067.  Ender Apple now sends a message if nothing is found (void/flatworlds/etc). Growth enchant now skips IGrowable blocks that return false for 'canGrow();'.    "	
 	}
  }
