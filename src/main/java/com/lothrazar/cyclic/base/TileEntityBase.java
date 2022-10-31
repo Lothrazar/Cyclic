@@ -46,7 +46,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class TileEntityBase extends TileEntity implements IInventory {
@@ -360,13 +359,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
   }
 
   public boolean moveItems(Direction myFacingDir, BlockPos posTarget, int max, IItemHandler handlerHere, int theslot) {
-    if (max <= 0) {
-      return false;
-    }
-    if (this.world.isRemote()) {
-      return false;
-    }
-    if (handlerHere == null) {
+    if (max <= 0 || this.world.isRemote() || handlerHere == null) {
       return false;
     }
     //first get the original ItemStack as creating new ones is expensive
@@ -379,61 +372,29 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (tileTarget == null) {
       return false;
     }
-    final IItemHandler handlerOutput = tileTarget
-        .getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe)
-        .orElse(null);
+    final IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
-    final int maxStackSize = originalItemStack.getMaxStackSize();
-    final int originalCount = originalItemStack.getCount();
-    int remainingItemCount = originalCount;
-    ItemStack itemStackToInsert = null;
-    //attempt to push into output
-    for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
-      //find the theoretical maximum we can insert
-      int limit = Math.min(handlerOutput.getSlotLimit(slot), maxStackSize);
-      int amountInOutputSlot = 0;
-      //reduce limit by amount already in the output slot
-      final ItemStack stackInOutputSlot = handlerOutput.getStackInSlot(slot);
-      if (!stackInOutputSlot.isEmpty()) {
-        //if the output slot is not compatible then skip this slot
-        if (!ItemHandlerHelper.canItemStacksStack(originalItemStack, stackInOutputSlot)) {
-          continue;
+    //backported 1.18.2 handler extract logic to 1.16.5 on 31/10/22
+    // https://github.com/Lothrazar/Cyclic/blob/7be4cf93b1684aced6f0d64d50fecff7605d29dc/src/main/java/com/lothrazar/cyclic/block/TileBlockEntityCyclic.java#L367
+    //first simulate 
+    ItemStack drain = handlerHere.extractItem(theslot, max, true);
+    int sizeStarted = drain.getCount();
+    if (!drain.isEmpty()) {
+      //now push it into output, but find out what was ACTUALLY taken
+      for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
+        drain = handlerOutput.insertItem(slot, drain, false);
+        if (drain.isEmpty()) {
+          break; //done draining
         }
-        amountInOutputSlot = stackInOutputSlot.getCount();
-        limit -= amountInOutputSlot;
-      }
-      limit = Math.min(limit, remainingItemCount);
-      limit = Math.min(limit, max);
-      //skip this output slot if we cannot insert more
-      if (limit <= 0) {
-        continue;
-      }
-      //lazily create an ItemStack for inserting and re-use it for future inserts
-      if (itemStackToInsert == null) {
-        itemStackToInsert = originalItemStack.copy();
-      }
-      itemStackToInsert.setCount(limit);
-      //only perform an insert (even simulated) if required as it creates at least one new ItemStack in the process
-      final ItemStack remainderItemStack = handlerOutput.insertItem(slot, itemStackToInsert, false);
-      //check the remainder to calculate how much was actually inserted
-      remainingItemCount -= (limit - remainderItemStack.getCount());
-      if (remainingItemCount <= 0) {
-        break;
       }
     }
-    final int insertedItemCount = originalCount - remainingItemCount;
-    final boolean didInsertItems = insertedItemCount > 0;
-    if (didInsertItems) {
-      //only perform an extraction if required as it creates a new ItemStack in the process
-      final ItemStack extractedItemStack = handlerHere.extractItem(theslot, insertedItemCount, false);
-      //sanity check
-      if (extractedItemStack.getCount() != insertedItemCount) {
-        ModCyclic.LOGGER.error("Imbalance moving items, extracted " + extractedItemStack + " inserted " + insertedItemCount);
-      }
+    int sizeAfter = sizeStarted - drain.getCount();
+    if (sizeAfter > 0) {
+      handlerHere.extractItem(theslot, sizeAfter, false);
     }
-    return didInsertItems;
+    return sizeAfter > 0;
   }
 
   protected boolean moveEnergy(Direction myFacingDir, int quantity) {
