@@ -54,6 +54,7 @@ public class FluidBar {
     this.width = width;
   }
 
+  @SuppressWarnings("deprecation")
   public void draw(MatrixStack ms, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
     parent.getMinecraft().getTextureManager().bindTexture(TextureRegistry.FLUID_WIDGET);

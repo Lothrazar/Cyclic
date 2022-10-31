@@ -46,6 +46,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * legacy ref https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
  */
+@SuppressWarnings("deprecation")
 public class UtilRender {
 
   /**

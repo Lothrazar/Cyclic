@@ -8,12 +8,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -64,18 +66,10 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     return 1;
   }
 
-  private int getRadius() {
-    return 1;
-  }
+  VoxelShape COLLECTION_AREA_SHAPE = VoxelShapes.or(INSIDE_BOWL_SHAPE, BLOCK_ABOVE_SHAPE);
 
   private void tryPullFromWorld(BlockPos center) {
-    int radius = getRadius();
-    AxisAlignedBB aabb = new AxisAlignedBB(
-        center.getX() - radius, center.getY(), center.getZ() - radius,
-        center.getX() + radius + 1, center.getY() + 1, center.getZ() + radius + 1);
-    List<ItemEntity> list = world.getEntitiesWithinAABB(ItemEntity.class, aabb, (entity) -> {
-      return entity.isAlive() && !entity.getItem().isEmpty(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
-    });
+    List<ItemEntity> list = HopperTileEntity.getCaptureItems(this);
     if (list.size() > 0) {
       ItemEntity stackEntity = list.get(world.rand.nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();
