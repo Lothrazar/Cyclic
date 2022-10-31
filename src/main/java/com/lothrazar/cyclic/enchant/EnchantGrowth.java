@@ -30,6 +30,7 @@ import com.lothrazar.cyclic.util.UtilShape;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IGrowable;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -91,6 +92,12 @@ public class EnchantGrowth extends EnchantBase {
         //do one
         BlockPos pos = shape.get(i);
         BlockState target = entity.world.getBlockState(pos);
+        if (target.getBlock() instanceof IGrowable) {
+          IGrowable igrowable = (IGrowable) target.getBlock();
+          if (!igrowable.canGrow(entity.world, pos, target, entity.world.isRemote)) {
+            continue; // not allowed to grow
+          }
+        }
         IntegerProperty propAge = HarvestUtil.getAgeProp(target);
         if (propAge == null) {
           continue;
@@ -107,6 +114,24 @@ public class EnchantGrowth extends EnchantBase {
       if (grown > 0) {
         UtilItemStack.damageItem(entity, entity.getHeldItem(Hand.MAIN_HAND));
       }
+      //      works but hits grass flowers and makes a mess 
+      //      for (int i = 0; i < shape.size(); i++) {
+      //        if (grown >= growthLimit) {
+      //          break;
+      //        }
+      //        //do one
+      //        BlockPos pos = shape.get(i);
+      //        BlockState blockstate = entity.world.getBlockState(pos);
+      //        if (blockstate.getBlock() instanceof IGrowable) {
+      //          IGrowable igrowable = (IGrowable) blockstate.getBlock();
+      //          if (igrowable.canGrow(worldIn, pos, blockstate, worldIn.isRemote)
+      //              && igrowable.canUseBonemeal(worldIn, worldIn.rand, pos, blockstate)) {
+      //            igrowable.grow((ServerWorld) worldIn, worldIn.rand, pos, blockstate);
+      //            grown++;
+      //            worldIn.markBlockRangeForRenderUpdate(pos, blockstate, worldIn.getBlockState(pos));
+      //          }
+      //        }
+      //      }
     }
   }
 }

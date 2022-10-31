@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.apple;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
@@ -68,6 +69,7 @@ public class EnderApple extends ItemBase {
           }
         }
         catch (Exception e) {
+          ModCyclic.LOGGER.error("Apple structure?", e);
           //third party non vanilla mods can crash, or cause ServerWatchdog errors. example:
           //          java.lang.Error: ServerHangWatchdog detected that a single server tick took 192.11 seconds (should be max 0.05)
           // ...
@@ -79,29 +81,24 @@ public class EnderApple extends ItemBase {
       //done loopiong on features
       //
       //SORT
-      LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-      distanceStructNames.entrySet()
-          .stream()
-          .sorted(Map.Entry.comparingByValue())
-          .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-      //
-      //      ModCyclic.LOGGER.info("Sorted Map   : " + sortedMap); 
-      int count = 0;
-      //      UtilChat.addServerChatMessage(player, "STARRT");
-      for (Map.Entry<String, Integer> e : sortedMap.entrySet()) {
-        UtilChat.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());
-        count++;
-        //?? is it sorted
-        if (count >= NUM_PRINTED) {
-          break;
+      if (distanceStructNames.isEmpty()) {
+        UtilChat.addServerChatMessage(player, "item.cyclic.apple_ender.empty");
+      }
+      else {
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+        distanceStructNames.entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByValue())
+            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+        int count = 0;
+        for (Map.Entry<String, Integer> e : sortedMap.entrySet()) {
+          UtilChat.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());
+          count++;
+          if (count >= NUM_PRINTED) {
+            break;
+          }
         }
       }
-      //
-      //      String name = regName.replace("minecraft:", "");
-      //      literalargumentbuilder = literalargumentbuilder.then(Commands.literal(name)
-      //            .executes(ctx -> func_241053_a_(ctx.getSource(), structureFeature)));
-      //collections CUSTOM SORT by distance 
-      //
     }
     return super.onItemUseFinish(stack, worldIn, entityLiving);
   }

@@ -106,8 +106,10 @@ dependencies {
 
 	  implementation fg.deobf("curse.maven:crafttweaker-239197:3433252")
 	  
-	// 	runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3521011")
+	// 	runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3541185")
     runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3323640")
+    runtimeOnly fg.deobf("curse.maven:caelus-308989:3522094")
+    runtimeOnly fg.deobf("curse.maven:elytra-slot-317716:3522097")
   //  implementation fg.deobf("curse.maven:openblocks-elevator-250832:3238352")
   //  implementation fg.deobf("curse.maven:mantle-74924:3482897")
   //  implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
@@ -177,7 +179,6 @@ repositories {
   }
   maven { url 'https://www.cursemaven.com'  }
   maven { url = "https://dvs1.progwml6.com/files/maven/"  }
-  maven { url = "https://modmaven.k-4u.nl"  }    
   maven { url = "https://maven.theillusivec4.top/"    }
   maven { url 'https://maven.blamejared.com' }    
 }

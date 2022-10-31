@@ -687,7 +687,7 @@
     "item.cyclic.ender_pearl_reuse": "Ender Orb",
     "item.cyclic.ender_pearl_reuse.tooltip": "Reuseable ender pearl",
     "item.cyclic.ender_pearl_reuse.guide": "An Ender Pearl that can be thrown, picked up, and thrown again.",
- 	"item.cyclic.ice_scepter": "Frost Bringer",
+ 	  "item.cyclic.ice_scepter": "Frost Bringer",
     "item.cyclic.ice_scepter.tooltip": "Shoot ice that will stun enemies",
     "item.cyclic.ice_scepter.guide": "Launch three frozen projectiles that applies the paralyze  potion effect to all enemies",
     "item.cyclic.ender_tnt_1.guide": "Throw these to make explosions.  There are six different levels of power.  These are standard normal explosions with no special properties.",
@@ -757,6 +757,7 @@
  
     "item.cyclic.apple_ender": "Ender Apple",
     "item.cyclic.apple_ender.tooltip": "Detect ancient structures",
+    "item.cyclic.apple_ender.empty": "Nothing found",
     "item.cyclic.apple_ender.guide": "Eat will show the names a few nearby structures, and their horizontal straight-line distance to your position",
  
     "potion.potency.0": "I",
@@ -1352,11 +1353,14 @@
     "energy.button.top": "Fuel Bar Above",
     "energy.button.side": "Fuel Bar Side",
 
-"effect.cyclic.waterwalk.description": "Prevents you from sinking down through the waters surface",
-
-  "effect.cyclic.magnetic.description": "Pull items and XP towards you with range of 8 blocks per level",
-
-
+    "effect.cyclic.waterwalk.description": "Prevents you from sinking down through the waters surface",
+    "effect.cyclic.magnetic.description": "Pull items and XP towards you with range of 8 blocks per level",
+    "effect.cyclic.butter.description": "Chance to drop items while moving or attacking",
+    "effect.cyclic.snowwalk.description":"Leave a tralk of snow when you walk",
+    "effect.cyclic.attack_range.description": "Increases your melee attack range by factor of two",
+    "effect.cyclic.swimspeed.description": "Double your current swim speed",
+    "effect.cyclic.reach_distance.description": "Increase block placement and mining reach by factor of two",
+    "effect.cyclic.stun.description": "Stun the entity so it cannot move for a time",
 
     "potion.butter.oops": "Butterfingers!  Dropped something when you moved.",
     "potion.effect.slowfall": "Potion of Slowfall",
