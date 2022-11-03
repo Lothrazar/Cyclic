@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
 import com.lothrazar.cyclic.util.UtilChat;
 import com.lothrazar.cyclic.util.UtilWorld;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,23 +15,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnderApple extends ItemBase {
 
-  final String[] ignoreMe = new String[] {
-      "minecraft:shipwreck",
-      "minecraft:mineshaft",
-      "minecraft:stronghold",
-      "minecraft:buried_treasure",
-      "minecraft:pillager_outpost",
-      "minecraft:village",
-      "minecraft:nether_fossil"
-  };
-  private static final int NUM_PRINTED = 5;
   private static final int COOLDOWN = 60;
+  public static ConfigValue<List<? extends String>> IGNORELIST;
+  public static IntValue PRINTED;
 
   public EnderApple(Properties properties) {
-    super(properties); // .food(new Food.Builder().hunger(h).saturation(0)
+    super(properties);
   }
 
   @Override
@@ -40,6 +34,7 @@ public class EnderApple extends ItemBase {
     return true;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
     if (entityLiving instanceof PlayerEntity == false) {
@@ -51,11 +46,10 @@ public class EnderApple extends ItemBase {
     }
     player.getCooldownTracker().setCooldown(this, COOLDOWN);
     if (worldIn instanceof ServerWorld) {
-      final List<String> structIgnoreList = Arrays.asList(ignoreMe);
-      //
+      final List<String> structIgnoreList = (List<String>) IGNORELIST.get();
       ServerWorld serverWorld = (ServerWorld) worldIn;
       Map<String, Integer> distanceStructNames = new HashMap<>();
-      for (Structure<?> structureFeature : net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
+      for (Structure<?> structureFeature : ForgeRegistries.STRUCTURE_FEATURES) {
         try {
           String name = structureFeature.getRegistryName().toString();
           if (!structIgnoreList.contains(name)) {
@@ -69,7 +63,7 @@ public class EnderApple extends ItemBase {
           }
         }
         catch (Exception e) {
-          ModCyclic.LOGGER.error("Apple structure?", e);
+          ModCyclic.LOGGER.error("Apple forge registry structure exception", e);
           //third party non vanilla mods can crash, or cause ServerWatchdog errors. example:
           //          java.lang.Error: ServerHangWatchdog detected that a single server tick took 192.11 seconds (should be max 0.05)
           // ...
@@ -78,23 +72,19 @@ public class EnderApple extends ItemBase {
           //          
         }
       }
-      //done loopiong on features
-      //
-      //SORT
       if (distanceStructNames.isEmpty()) {
         UtilChat.addServerChatMessage(player, "item.cyclic.apple_ender.empty");
       }
       else {
         LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-        distanceStructNames.entrySet()
-            .stream()
+        distanceStructNames.entrySet().stream()
             .sorted(Map.Entry.comparingByValue())
             .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
         int count = 0;
         for (Map.Entry<String, Integer> e : sortedMap.entrySet()) {
           UtilChat.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());
           count++;
-          if (count >= NUM_PRINTED) {
+          if (count >= PRINTED.get()) {
             break;
           }
         }

@@ -342,6 +342,7 @@ public class ItemRegistry {
     r.register(new ScytheBrush(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_brush"));
     r.register(new ScytheForage(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_forage"));
     r.register(new ScytheLeaves(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("scythe_leaves"));
+    r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024)).setRegistryName("scythe_harvest"));
     r.register(new StirrupsItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("stirrups"));
     r.register(new StirrupsReverseItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(256)).setRegistryName("stirrups_reverse"));
     r.register(new LeverRemote(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1)).setRegistryName("lever_remote"));
@@ -373,7 +374,6 @@ public class ItemRegistry {
     r.register(new SettingsCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("settings_data"));
     r.register(new ShapeCard(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("shape_data"));
     r.register(new FilterCardItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)).setRegistryName("filter_data"));
-    r.register(new ScytheHarvest(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxDamage(1024)).setRegistryName("scythe_harvest"));
     r.register(new ItemStorageBag(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("storage_bag"));
     r.register(new CraftingBagItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("crafting_bag"));
     r.register(new CraftingStickItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP).maxStackSize(1).setNoRepair()).setRegistryName("crafting_stick"));

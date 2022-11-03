@@ -39,6 +39,7 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,6 +55,7 @@ public class EnchantGrowth extends EnchantBase {
 
   public static BooleanValue CFG;
   public static final String ID = "growth";
+  public static IntValue RADIUSFACTOR;
 
   @Override
   public boolean isEnabled() {
@@ -82,7 +84,7 @@ public class EnchantGrowth extends EnchantBase {
       }
       final int growthLimit = level * 2 + (entity.world.isRaining() ? 4 : 1); //faster when raining too 
       int grown = 0;
-      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level + 2);
+      List<BlockPos> shape = UtilShape.squareHorizontalFull(entity.getPosition().down(), level * RADIUSFACTOR.get());
       shape = UtilShape.repeatShapeByHeight(shape, 2);
       Collections.shuffle(shape);
       for (int i = 0; i < shape.size(); i++) {

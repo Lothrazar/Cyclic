@@ -36,14 +36,15 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class IceWand extends ItemBase {
+
+  public static IntValue RADIUS;
 
   public IceWand(Properties properties) {
     super(properties);
   }
-
-  private static final int RADIUS = 2;
 
   @Override
   public ActionResultType onItemUse(ItemUseContext context) {
@@ -63,7 +64,7 @@ public class IceWand extends ItemBase {
 
   private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
     int count = 0;
-    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
+    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS.get());
     for (BlockPos pos : water) {
       FluidState fluidState = world.getBlockState(pos).getFluidState();
       if (fluidState != null &&

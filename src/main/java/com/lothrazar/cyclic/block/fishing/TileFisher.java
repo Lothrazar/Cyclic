@@ -31,6 +31,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -39,8 +41,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileFisher extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
-  private static final int RADIUS = 12;
-  private static final double CHANCE = 0.1;
+  public static IntValue RADIUS;
+  public static DoubleValue CHANCE;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
@@ -100,11 +102,12 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
+    final int radius = RADIUS.get();
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.getItem().isIn(DataTags.FISHING_RODS)) {
-      int x = pos.getX() + world.rand.nextInt(RADIUS * 2) - RADIUS;
+      int x = pos.getX() + world.rand.nextInt(radius * 2) - radius;
       int y = pos.getY();
-      int z = pos.getZ() + world.rand.nextInt(RADIUS * 2) - RADIUS;
+      int z = pos.getZ() + world.rand.nextInt(radius * 2) - radius;
       BlockPos center = new BlockPos(x, y, z);
       if (this.isWater(center)) {
         try {
@@ -124,7 +127,7 @@ public class TileFisher extends TileEntityBase implements ITickableTileEntity, I
   private void doFishing(ItemStack fishingRod, BlockPos center) {
     World world = this.getWorld();
     Random rand = world.rand;
-    if (rand.nextDouble() < CHANCE && world instanceof ServerWorld) {
+    if (rand.nextDouble() < CHANCE.get() && world instanceof ServerWorld) {
       LootTableManager manager = world.getServer().getLootTableManager();
       if (manager == null) {
         return;

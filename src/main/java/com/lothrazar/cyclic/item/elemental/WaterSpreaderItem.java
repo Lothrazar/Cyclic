@@ -35,11 +35,12 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class WaterSpreaderItem extends ItemBase {
 
   private static final int COOLDOWN = 28;
-  private static final int RADIUS = 3;
+  public static IntValue RADIUS;
 
   public WaterSpreaderItem(Properties properties) {
     super(properties);
@@ -61,7 +62,7 @@ public class WaterSpreaderItem extends ItemBase {
 
   private boolean spreadWaterFromCenter(World world, PlayerEntity player, BlockPos posCenter) {
     int count = 0;
-    for (BlockPos pos : UtilShape.squareHorizontalFull(posCenter, RADIUS)) {
+    for (BlockPos pos : UtilShape.squareHorizontalFull(posCenter, RADIUS.get())) {
       if (world.hasWater(pos) && world.getBlockState(pos).getBlock() == Blocks.WATER) {
         world.setBlockState(pos, Blocks.WATER.getDefaultState());
         count++;

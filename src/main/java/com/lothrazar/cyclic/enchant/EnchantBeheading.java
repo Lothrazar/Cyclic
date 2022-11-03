@@ -41,6 +41,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -53,8 +54,8 @@ public class EnchantBeheading extends EnchantBase {
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  private static final int percentDrop = 20;
-  private static final int percentPerLevel = 25;
+  public static IntValue PERCENTDROP;
+  public static IntValue PERCENTPERLEVEL;
   public static final String ID = "beheading";
   public static BooleanValue CFG;
 
@@ -69,7 +70,7 @@ public class EnchantBeheading extends EnchantBase {
   }
 
   private int percentForLevel(int level) {
-    return percentDrop + (level - 1) * percentPerLevel;
+    return PERCENTDROP.get() + (level - 1) * PERCENTPERLEVEL.get();
   }
 
   @SubscribeEvent

@@ -22,6 +22,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -40,7 +41,7 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   public static final int FLUID_PER_EXP = 20;
   public static final int DRAIN_PLAYER_EXP = 20;
   public static final int EXP_PER_BOTTLE = 11;
-  private static final int RADIUS = 16;
+  public static IntValue RADIUS;
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
@@ -143,9 +144,10 @@ public class TileExpPylon extends TileEntityBase implements ITickableTileEntity,
   }
 
   private void collectLocalExperience() {
+    final int radius = RADIUS.get();
     List<ExperienceOrbEntity> list = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(
-        pos.getX() - RADIUS, pos.getY() - 1, pos.getZ() - RADIUS,
-        pos.getX() + RADIUS, pos.getY() + 2, pos.getZ() + RADIUS), (entity) -> {
+        pos.getX() - radius, pos.getY() - 1, pos.getZ() - radius,
+        pos.getX() + radius, pos.getY() + 2, pos.getZ() + radius), (entity) -> {
           return entity.isAlive() && entity.getXpValue() > 0;
           //entity != null && entity.getHorizontalFacing() == facing;
         });

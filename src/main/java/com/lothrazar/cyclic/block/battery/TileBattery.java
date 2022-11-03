@@ -17,6 +17,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -25,11 +26,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileBattery extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
-  private static final int SLOT_CHARGING_RATE = 8000;
+  public static final int MAX = 6400000;
+  public static IntValue SLOT_CHARGING_RATE;
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  public static final int MAX = 6400000;
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
@@ -79,7 +80,7 @@ public class TileBattery extends TileEntityBase implements INamedContainerProvid
     IEnergyStorage storage = targ.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     if (storage != null) {
       //
-      int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE, true);
+      int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE.get(), true);
       if (extracted > 0 && storage.getEnergyStored() + extracted <= storage.getMaxEnergyStored()) {
         // no sim, fo real
         energy.extractEnergy(extracted, false);

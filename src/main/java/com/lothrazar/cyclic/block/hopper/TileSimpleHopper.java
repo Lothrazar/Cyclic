@@ -14,8 +14,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -65,8 +63,6 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
   public int getFlow() {
     return 1;
   }
-
-  VoxelShape COLLECTION_AREA_SHAPE = VoxelShapes.or(INSIDE_BOWL_SHAPE, BLOCK_ABOVE_SHAPE);
 
   private void tryPullFromWorld(BlockPos center) {
     List<ItemEntity> list = HopperTileEntity.getCaptureItems(this);

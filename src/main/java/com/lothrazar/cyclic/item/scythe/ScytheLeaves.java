@@ -33,6 +33,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ScytheLeaves extends ItemBase {
 
@@ -40,8 +41,7 @@ public class ScytheLeaves extends ItemBase {
     super(properties);
   }
 
-  private static final int RADIUS = 6; //13x13
-  private static final int RADIUS_SNEAKING = 2; //2x2
+  public static IntValue RADIUS;
 
   @Override
   public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
@@ -55,7 +55,7 @@ public class ScytheLeaves extends ItemBase {
     if (side != null) {
       pos = pos.offset(side);
     }
-    int radius = (context.getPlayer().isCrouching()) ? RADIUS_SNEAKING : RADIUS;
+    int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
     if (context.getWorld().isRemote) {
       PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.LEAVES, radius));
     }

@@ -31,7 +31,7 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
   public static final int CAPACITY = FluidAttributes.BUCKET_VOLUME;
   public static IntValue TIMER_FULL;
   public static IntValue WATERCOST;
-  private static final int RAD = 4;
+  public static IntValue RADIUS;
   public final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
   private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
   private int shapeIndex = 0;
@@ -51,7 +51,7 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     if (WATERCOST.get() > 0 && tank.getFluidAmount() < WATERCOST.get()) {
       return;
     }
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(pos, RAD);
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(pos, RADIUS.get());
     shapeIndex++;
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
