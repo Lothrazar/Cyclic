@@ -15,8 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.Hopper;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -76,18 +76,8 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
     return 1;
   }
 
-  private int getRadius() {
-    return 1;
-  }
-
   private void tryPullFromWorld(BlockPos center) {
-    int radius = getRadius();
-    AABB aabb = new AABB(
-        center.getX() - radius, center.getY(), center.getZ() - radius,
-        center.getX() + radius + 1, center.getY(), center.getZ() + radius + 1);
-    List<ItemEntity> list = level.getEntitiesOfClass(ItemEntity.class, aabb, (entity) -> {
-      return entity.isAlive() && !entity.getItem().isEmpty(); //  && entity.getXpValue() > 0;//entity != null && entity.getHorizontalFacing() == facing;
-    });
+    List<ItemEntity> list = HopperBlockEntity.getItemsAtAndAbove(level, this);
     if (list.size() > 0) {
       ItemEntity stackEntity = list.get(level.random.nextInt(list.size()));
       ItemStack remainder = stackEntity.getItem();

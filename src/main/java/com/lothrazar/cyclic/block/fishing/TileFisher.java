@@ -31,6 +31,8 @@ import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -39,8 +41,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
 
-  private static final int RADIUS = 12;
-  private static final double CHANCE = 0.1;
+  public static IntValue RADIUS;
+  public static DoubleValue CHANCE;
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
     @Override
@@ -110,9 +112,9 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
     }
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.is(DataTags.FISHING_RODS)) {
-      int x = worldPosition.getX() + level.random.nextInt(RADIUS * 2) - RADIUS;
+      int x = worldPosition.getX() + level.random.nextInt(RADIUS.get() * 2) - RADIUS.get();
       int y = worldPosition.getY();
-      int z = worldPosition.getZ() + level.random.nextInt(RADIUS * 2) - RADIUS;
+      int z = worldPosition.getZ() + level.random.nextInt(RADIUS.get() * 2) - RADIUS.get();
       BlockPos center = new BlockPos(x, y, z);
       if (isWater(this.level, center)) {
         try {
@@ -132,7 +134,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   private void doFishing(ItemStack fishingRod, BlockPos center) {
     Level world = this.getLevel();
     RandomSource rand = world.random;
-    if (rand.nextDouble() < CHANCE && world instanceof ServerLevel) {
+    if (rand.nextDouble() < CHANCE.get() && world instanceof ServerLevel) {
       LootTables manager = world.getServer().getLootTables();
       if (manager == null) {
         return;
@@ -143,15 +145,34 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
       }
       //got it
       int luck = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FISHING_LUCK, fishingRod) + 1;
-      Vec3 fffffffffff = new Vec3(center.getX(), center.getY(), center.getZ());
       LootContext lootContext = new LootContext.Builder((ServerLevel) world)
-          .withLuck(luck).withRandom(rand).withParameter(LootContextParams.ORIGIN, fffffffffff)
+          .withLuck(luck).withRandom(rand).withParameter(LootContextParams.ORIGIN,
+              new Vec3(center.getX(), center.getY(), center.getZ()))
           .withParameter(LootContextParams.TOOL, fishingRod)
           .create(LootContextParamSets.FISHING);
       List<ItemStack> lootDrops = table.getRandomItems(lootContext);
       if (lootDrops != null && lootDrops.size() > 0) {
         ItemStackUtil.damageItem(null, fishingRod);
         ItemStackUtil.drop(world, center, lootDrops);
+        //        fishingRod.isDamageableItem()
+        if (fishingRod.isDamageableItem()) {
+          int mending = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, fishingRod);
+          if (mending == 0) {
+            ItemStackUtil.damageItem(null, fishingRod);
+          }
+          else { // https://github.com/Lothrazar/Cyclic/blob/trunk/1.12/src/main/java/com/lothrazar/cyclicmagic/block/fishing/TileEntityFishing.java#L209
+            //copy alg from MC 1.12.2 version 
+            if (rand.nextDouble() < 0.25) { //25% chance damage
+              ItemStackUtil.damageItem(null, fishingRod);
+            }
+            else if (rand.nextDouble() < 0.66) { //66-25 = chance repair
+              if (fishingRod.getDamageValue() > 0) {
+                fishingRod.setDamageValue(fishingRod.getDamageValue() - rand.nextInt(2, 5));
+              }
+            }
+            //else do nothing, leave it flat. mimics getting damaged and repaired right away
+          }
+        } // else fishing rod cannot be damaged (supreme/diamond/other mods)
       }
     }
   }

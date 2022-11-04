@@ -32,9 +32,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -83,19 +82,23 @@ public class BeekeeperEnchant extends EnchantmentCyclic {
     return 2;
   }
 
+  /**
+   * was @net.minecraftforge.event.entity.LivingSetAttackTargetEvent
+   */
   @SubscribeEvent
-  public void onLivingSetAttackTargetEvent(LivingSetAttackTargetEvent event) {
+  public void onLivingChangeTargetEvent(LivingChangeTargetEvent event) {
     if (!isEnabled()) {
       return;
     }
-    if (event.getTarget() instanceof Player && event.getEntity().getType() == EntityType.BEE) {
-      int level = this.getCurrentArmorLevel(event.getTarget());
+    if (event.getOriginalTarget() instanceof Player && event.getEntity().getType() == EntityType.BEE && event.getEntity() instanceof Bee bee) {
+      int level = this.getCurrentArmorLevel(event.getOriginalTarget());
       if (level > 0) {
-        Bee bee = (Bee) event.getEntity();
+        event.setCanceled(true);
+        //        event.setNewTarget(null);
         bee.setAggressive(false);
         bee.setRemainingPersistentAngerTime(0);
         bee.setPersistentAngerTarget(null);
-        event.setResult(Result.DENY);
+        //        event.setResult(Result.DENY);
       }
     }
   }

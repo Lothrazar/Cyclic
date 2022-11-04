@@ -36,9 +36,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,6 +50,7 @@ public class GrowthEnchant extends EnchantmentCyclic {
   public static final double ODDS_ROTATE = 0.04;
   public static final String ID = "growth";
   public static BooleanValue CFG;
+  public static IntValue RADIUSFACTOR;
 
   public GrowthEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
@@ -109,7 +112,7 @@ public class GrowthEnchant extends EnchantmentCyclic {
       }
       final int growthLimit = level * 2 + (entity.level.isRaining() ? 4 : 1); //faster when raining too 
       int grown = 0;
-      List<BlockPos> shape = ShapeUtil.squareHorizontalFull(entity.blockPosition().below(), level + 2);
+      List<BlockPos> shape = ShapeUtil.squareHorizontalFull(entity.blockPosition().below(), level + RADIUSFACTOR.get());
       shape = ShapeUtil.repeatShapeByHeight(shape, 2);
       Collections.shuffle(shape);
       for (int i = 0; i < shape.size(); i++) {
@@ -119,16 +122,21 @@ public class GrowthEnchant extends EnchantmentCyclic {
         //do one
         BlockPos pos = shape.get(i);
         BlockState target = entity.level.getBlockState(pos);
-        IntegerProperty propAge = HarvestUtil.getAgeProp(target);
-        if (propAge == null) {
-          continue;
+        if (target.getBlock() instanceof CropBlock igrowable) { // IGrowable gone, dont use BonemealableBlock 
+          igrowable.growCrops(entity.level, pos, target);
+          grown++; // allow mods to override growCrops() for custom behavior
         }
-        int maxAge = Collections.max(propAge.getPossibleValues());
-        Integer currentAge = target.getValue(propAge);
-        if (currentAge < maxAge) {
-          //TODO: 1.19 trigger bonemeal instead https://github.com/Lothrazar/Cyclic/issues/2117
-          if (entity.level.setBlockAndUpdate(pos, target.setValue(propAge, currentAge + 1))) {
-            grown++;
+        else { //still use same old age logic as always unchanged
+          IntegerProperty propAge = HarvestUtil.getAgeProp(target);
+          if (propAge == null) {
+            continue;
+          }
+          int maxAge = Collections.max(propAge.getPossibleValues());
+          Integer currentAge = target.getValue(propAge);
+          if (currentAge < maxAge) {
+            if (entity.level.setBlockAndUpdate(pos, target.setValue(propAge, currentAge + 1))) {
+              grown++;
+            }
           }
         }
       }

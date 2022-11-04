@@ -35,11 +35,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class WaterSpreaderItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = 28;
-  private static final int RADIUS = 3;
+  public static IntValue RADIUS;
 
   public WaterSpreaderItem(Properties properties) {
     super(properties);
@@ -61,7 +62,7 @@ public class WaterSpreaderItem extends ItemBaseCyclic {
 
   private boolean spreadWaterFromCenter(Level world, Player player, BlockPos posCenter) {
     int count = 0;
-    for (BlockPos pos : ShapeUtil.squareHorizontalFull(posCenter, RADIUS)) {
+    for (BlockPos pos : ShapeUtil.squareHorizontalFull(posCenter, RADIUS.get())) {
       if (world.isWaterAt(pos) && world.getBlockState(pos).getBlock() == Blocks.WATER) {
         world.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
         count++;

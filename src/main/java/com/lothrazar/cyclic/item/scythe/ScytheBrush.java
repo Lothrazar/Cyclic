@@ -33,11 +33,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ScytheBrush extends ItemBaseCyclic {
 
-  private static final int RADIUS = 6; //13x13
-  private static final int RADIUS_SNEAKING = 2; //2x2
+  public static IntValue RADIUS;// = 6; //13x13
 
   public ScytheBrush(Properties properties) {
     super(properties);
@@ -56,7 +56,7 @@ public class ScytheBrush extends ItemBaseCyclic {
       pos = pos.relative(side);
     }
     // send work packet
-    int radius = (context.getPlayer().isCrouching()) ? RADIUS_SNEAKING : RADIUS;
+    int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
     if (context.getLevel().isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
     }

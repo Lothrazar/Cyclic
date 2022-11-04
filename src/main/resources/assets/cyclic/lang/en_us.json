@@ -807,6 +807,7 @@
   "item.cyclic.apple_ender": "Ender Apple",
   "item.cyclic.apple_ender.tooltip": "Detect ancient structures",
   "item.cyclic.apple_ender.guide": "Eat will show the names a few nearby structures, and their horizontal straight-line distance to your position",
+  "item.cyclic.apple_ender.empty": "Nothing found",
   "potion.potency.0": "I",
   "potion.potency.1": "II",
   "potion.potency.2": "III",

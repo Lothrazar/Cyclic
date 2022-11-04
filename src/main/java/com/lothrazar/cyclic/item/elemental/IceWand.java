@@ -26,8 +26,8 @@ package com.lothrazar.cyclic.item.elemental;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -36,6 +36,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class IceWand extends ItemBaseCyclic {
 
@@ -43,7 +44,7 @@ public class IceWand extends ItemBaseCyclic {
     super(properties);
   }
 
-  private static final int RADIUS = 2;
+  public static IntValue RADIUS;
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
@@ -63,7 +64,7 @@ public class IceWand extends ItemBaseCyclic {
 
   private boolean spreadWaterFromCenter(Level world, BlockPos posCenter) {
     int count = 0;
-    List<BlockPos> water = LevelWorldUtil.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
+    List<BlockPos> water = LevelWorldUtil.findBlocks(world, posCenter, Blocks.WATER, RADIUS.get());
     for (BlockPos pos : water) {
       FluidState fluidState = world.getBlockState(pos).getFluidState();
       if (fluidState != null &&

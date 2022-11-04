@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class ScytheHarvest extends ItemBaseCyclic {
 
@@ -18,8 +19,7 @@ public class ScytheHarvest extends ItemBaseCyclic {
     super(properties);
   }
 
-  private static final int RADIUS = 6; //13x13
-  private static final int RADIUS_SNEAKING = 2; //2x2
+  public static IntValue RADIUS;
 
   public List<BlockPos> getShape(BlockPos pos, int radius) {
     return ShapeUtil.squareHorizontalFull(pos, radius);
@@ -34,7 +34,7 @@ public class ScytheHarvest extends ItemBaseCyclic {
     }
     Player player = context.getPlayer();
     if (player.level.isClientSide) {
-      int radius = (player.isCrouching()) ? RADIUS_SNEAKING : RADIUS;
+      int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
       PacketRegistry.INSTANCE.sendToServer(new PacketHarvesting(pos, radius));
     }
     player.swing(context.getHand());

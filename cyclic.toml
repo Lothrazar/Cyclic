@@ -34,11 +34,11 @@
 			enabled = true
 
 		[cyclic.enchantment.disarm]
-			#Set false to stop enchantment from working
+			#Set false to disable enchantment
 			enabled = true
 
 		[cyclic.enchantment.excavate]
-			#Set false to stop enchantment from working
+			#Set false to disable enchantment
 			enabled = true
 
 		[cyclic.enchantment.magnet]
@@ -74,7 +74,7 @@
 			enabled = true
 
 		[cyclic.enchantment.curse]
-			#Set false to stop enchantment from working
+			#Set false to disable enchantment
 			enabled = true
 
 		[cyclic.enchantment.auto_smelt]
@@ -82,6 +82,9 @@
 			enabled = false
 
 		[cyclic.enchantment.growth]
+			#Radius per level.  size around player to perform growth logic
+			#Range: 1 ~ 16
+			radius = 2
 			#Set false to stop enchantment from working
 			enabled = true
 
@@ -196,6 +199,12 @@
 			#Range: 1 ~ 64
 			radius = 8
 
+		#battery settings
+		[cyclic.blocks.battery]
+			#RF/t charging rate for the battery item slot
+			#Range: 1 ~ 6400000
+			charge = 8000
+
 		[cyclic.blocks.generator_fuel]
 			#RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks
 			#Range: 1 ~ 6400
@@ -210,6 +219,15 @@
 			#Power per use miner
 			#Range: 0 ~ 64000
 			energy_cost = 10
+
+		#fisher settings
+		[cyclic.blocks.fisher]
+			#Chance to Fish from nearby water.  Smaller values is slower fish
+			#Range: 1.0E-6 ~ 0.999
+			chance = 0.01
+			#Radius to Fish from nearby water
+			#Range: 1 ~ 32
+			radius = 12
 
 		[cyclic.blocks.harvester]
 			#Power per use harvester
@@ -262,9 +280,18 @@
 			#Tick rate.  20 will fire one block per second
 			#Range: 1 ~ 20
 			ticks = 20
+			#Radius
+			#Range: 1 ~ 32
+			radius = 4
 			#Water consumption
 			#Range: 0 ~ 1000
 			water = 5
+
+		#experience_pylon settings
+		[cyclic.blocks.experience_pylon]
+			#Radius to pickup xp orbs
+			#Range: 1 ~ 64
+			radius = 16
 
 		[cyclic.blocks.soundproofing]
 			#Radius to find and muffle sounds. 
@@ -394,6 +421,72 @@
 	#####################################################################################
 	[cyclic.items]
 
+		# scythe_harvest settings. radius is halved while player is sneaking
+		[cyclic.items.scythe_harvest]
+			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
+			#Range: 0 ~ 32
+			radius = 6
+
+		#apple_ender settings
+		[cyclic.items.apple_ender]
+			#How many results the client will see
+			#Range: 1 ~ 60
+			printed = 5
+			#Ignored Structures
+			ignore = ["minecraft:shipwreck", "minecraft:mineshaft", "minecraft:stronghold", "minecraft:buried_treasure", "minecraft:pillager_outpost", "minecraft:village", "minecraft:nether_fossil"]
+
+		[cyclic.items.spawner_seeker]
+			#Range in all directions to search for spawner
+			#Range: 1 ~ 256
+			range = 64
+
+		[cyclic.items.wand_hypno]
+			#Range to search out enemies for this multi-target attack
+			#Range: 1 ~ 256
+			range = 16
+			#Energy cost per item use
+			#Range: 1 ~ 50000
+			energy = 500
+
+		[cyclic.items.shield_leather]
+			#How much weaker than the regular shield is this item (used to calculate damage blocked)
+			#Range: 0 ~ 100
+			blocked_damage_percent = 20
+
+		# spell_water settings
+		[cyclic.items.spell_water]
+			#Radius defines how far it reaches
+			#Range: 0 ~ 32
+			radius = 3
+
+		# scythe_leaves settings.  radius is halved while player is sneaking
+		[cyclic.items.scythe_leaves]
+			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
+			#Range: 0 ~ 32
+			radius = 6
+
+		# Caving Torch Charm settings
+		[cyclic.items.caving_torch]
+			#Light level at which to start placing down a torch
+			#Range: 0 ~ 13
+			light_limit = 7
+			#Light level of the current block after placing down a torch. Must be greater than light_limit
+			#Higher values means torches will be placed closer to you. Lower values means torches will overlap less,
+			#but might result in small dark spots between torches
+			#Range: 1 ~ 14
+			light_target = 10
+			#Whether to prioritise placing torches on walls
+			prefer_walls = true
+			#Which wall to place torches on when digging a 1-wide tunnel
+			#True means left, False means right
+			prefer_left_wall = false
+
+		# scythe_brush settings. note radius is halved while player is sneaking
+		[cyclic.items.scythe_brush]
+			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
+			#Range: 0 ~ 32
+			radius = 6
+
 		[cyclic.items.charm_torch]
 			#Light level limit for placing torches
 			#Range: 0 ~ 15
@@ -455,33 +548,27 @@
 			#Range: 0 ~ 99999
 			experience = 500
 
-		[cyclic.items.spawner_seeker]
-			#Range in all directions to search for spawner
-			#Range: 1 ~ 256
-			range = 64
+		# scythe_forage settings. note radius is halved while player is sneaking
+		[cyclic.items.scythe_forage]
+			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
+			#Range: 0 ~ 32
+			radius = 6
 
 		[cyclic.items.shield_wood]
 			#How much weaker than the regular shield is this item (used to calculate damage blocked)
 			#Range: 0 ~ 100
 			blocked_damage_percent = 60
 
-		[cyclic.items.wand_hypno]
-			#Range to search out enemies for this multi-target attack
-			#Range: 1 ~ 256
-			range = 16
-			#Energy cost per item use
-			#Range: 1 ~ 50000
-			energy = 500
-
 		[cyclic.items.chorus_spectral]
 			#Seconds of noClip per chorus_spectral
 			#Range: 1 ~ 20000
 			ticks = 600
 
-		[cyclic.items.shield_leather]
-			#How much weaker than the regular shield is this item (used to calculate damage blocked)
-			#Range: 0 ~ 100
-			blocked_damage_percent = 20
+		# spell_ice settings
+		[cyclic.items.spell_ice]
+			#Radius defines how far it reaches
+			#Range: 0 ~ 32
+			radius = 3
 
 		[cyclic.items.wand_missile]
 			#Range to search out enemies for this attack
@@ -500,22 +587,6 @@
 			#Boost given by item charm_speed
 			#Range: 0.0 ~ 2.0
 			boost = 0.5
-
-		# Caving Torch Charm settings
-		[cyclic.items.caving_torch]
-			#Light level at which to start placing down a torch
-			#Range: 0 ~ 13
-			light_limit = 7
-			#Light level of the current block after placing down a torch. Must be greater than light_limit
-			#Higher values means torches will be placed closer to you. Lower values means torches will overlap less,
-			#but might result in small dark spots between torches
-			#Range: 1 ~ 14
-			light_target = 10
-			#Whether to prioritise placing torches on walls
-			prefer_walls = true
-			#Which wall to place torches on when digging a 1-wide tunnel
-			#True means left, False means right
-			prefer_left_wall = false
 
 		[cyclic.items.shield_flint]
 			#What % chance does this have to apply thorns damage against ranged non-explosive attackers

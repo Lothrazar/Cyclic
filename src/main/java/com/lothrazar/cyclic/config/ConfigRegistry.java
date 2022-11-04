@@ -16,6 +16,7 @@ import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
+import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotionBeacon;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
@@ -25,8 +26,10 @@ import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
 import com.lothrazar.cyclic.block.dropper.TileDropper;
 import com.lothrazar.cyclic.block.enderctrl.EnderShelfHelper;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
+import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.block.eye.TileEye;
 import com.lothrazar.cyclic.block.eyetp.TileEyeTp;
+import com.lothrazar.cyclic.block.fishing.TileFisher;
 import com.lothrazar.cyclic.block.forester.TileForester;
 import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
 import com.lothrazar.cyclic.block.generatorfood.TileGeneratorFood;
@@ -72,14 +75,21 @@ import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
+import com.lothrazar.cyclic.item.elemental.IceWand;
+import com.lothrazar.cyclic.item.elemental.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.ender.ItemProjectileDungeon;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.food.EdibleFlightItem;
 import com.lothrazar.cyclic.item.food.EdibleSpecItem;
+import com.lothrazar.cyclic.item.food.EnderApple;
 import com.lothrazar.cyclic.item.food.HeartItem;
 import com.lothrazar.cyclic.item.food.HeartToxicItem;
 import com.lothrazar.cyclic.item.rf.WandHypnoItem;
 import com.lothrazar.cyclic.item.rf.WandMissileItem;
+import com.lothrazar.cyclic.item.scythe.ScytheBrush;
+import com.lothrazar.cyclic.item.scythe.ScytheForage;
+import com.lothrazar.cyclic.item.scythe.ScytheHarvest;
+import com.lothrazar.cyclic.item.scythe.ScytheLeaves;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
@@ -101,6 +111,7 @@ public class ConfigRegistry {
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
   private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
+  private static final List<String> ENDERAPPLE = new ArrayList<>();
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
@@ -179,6 +190,14 @@ public class ConfigRegistry {
     // 
     MBALL_IGNORE.add("minecraft:ender_dragon");
     MBALL_IGNORE.add("minecraft:wither");
+    ENDERAPPLE.addAll(Arrays.asList(
+        "minecraft:shipwreck",
+        "minecraft:mineshaft",
+        "minecraft:stronghold",
+        "minecraft:buried_treasure",
+        "minecraft:pillager_outpost",
+        "minecraft:village",
+        "minecraft:nether_fossil"));
   }
 
   private static void initConfig() {
@@ -197,6 +216,10 @@ public class ConfigRegistry {
     DisarmEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
     ExcavationEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
     GrowthEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
+    GrowthEnchant.RADIUSFACTOR = CFG.comment("Radius per level.  size around player to perform growth logic").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
+    CurseEnchant.CFG = CFG.comment("Set false to disable enchantment").define(CurseEnchant.ID + ".enabled", true);
+    DisarmEnchant.CFG = CFG.comment("Set false to disable enchantment").define(DisarmEnchant.ID + ".enabled", true);
+    ExcavationEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ExcavationEnchant.ID + ".enabled", true);
     ElytraLaunchEnchant.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(ElytraLaunchEnchant.ID + ".enabled", true);
     LifeLeechEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
     MagnetEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
@@ -236,6 +259,34 @@ public class ConfigRegistry {
     CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
     CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
+    //
+    CFG.comment(" scythe_brush settings. note radius is halved while player is sneaking").push("scythe_brush");
+    ScytheBrush.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
+    CFG.pop();
+    CFG.comment(" scythe_forage settings. note radius is halved while player is sneaking").push("scythe_forage");
+    ScytheForage.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
+    CFG.pop();
+    CFG.comment(" scythe_leaves settings.  radius is halved while player is sneaking").push("scythe_leaves");
+    ScytheLeaves.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
+    CFG.pop();
+    CFG.comment(" scythe_harvest settings. radius is halved while player is sneaking").push("scythe_harvest");
+    ScytheHarvest.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
+    CFG.pop();
+    //
+    CFG.comment(" spell_water settings").push("spell_water");
+    WaterSpreaderItem.RADIUS = CFG.comment("Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
+    CFG.pop();
+    //
+    CFG.comment(" spell_ice settings").push("spell_ice");
+    IceWand.RADIUS = CFG.comment("Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
+    CFG.pop();
+    //
+    CFG.comment("apple_ender settings").push("apple_ender");
+    EnderApple.IGNORELIST = CFG.comment("Ignored Structures").defineList("ignore", ENDERAPPLE, it -> it instanceof String);
+    EnderApple.PRINTED = CFG.comment("How many results the client will see").defineInRange("printed", 5, 1, 60);
+    CFG.pop();
+    //
+    //
     ShieldCyclicItem.LEATHER_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_leather.blocked_damage_percent", 20, 0, 100);
     ShieldCyclicItem.WOOD_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_wood.blocked_damage_percent", 60, 0, 100);
     ShieldCyclicItem.FLINT_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_flint.blocked_damage_percent", 30, 0, 100);
@@ -262,10 +313,10 @@ public class ConfigRegistry {
     MaterialRegistry.OBS_LEG = CFG.comment("Damage Reduction").defineInRange("leg", 10, 1, 99);
     CFG.pop();
     ItemProjectileDungeon.RANGE = CFG.comment("Range in all directions to search for spawner").defineInRange("spawner_seeker.range", 64, 1, 256);
-    AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
     CharmBase.CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
     CharmBase.CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
     CharmBase.CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
+    AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
     CFG.comment(" Caving Torch Charm settings").push("caving_torch");
     AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 13);
     AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
@@ -375,6 +426,7 @@ public class ConfigRegistry {
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
     CFG.push("sprinkler");
+    TileSprinkler.RADIUS = CFG.comment("Radius").defineInRange("radius", 4, 1, 32);
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
     TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);
     CFG.pop(); // sprinkler
@@ -385,6 +437,22 @@ public class ConfigRegistry {
     TileEyeTp.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")
         .defineInRange("frequency", 5, 1, 20);
     CFG.pop(); // eye_teleport
+    //
+    //
+    CFG.comment("battery settings").push("battery");
+    TileBattery.SLOT_CHARGING_RATE = CFG.comment("RF/t charging rate for the battery item slot").defineInRange("charge", 8000, 1, TileBattery.MAX);
+    CFG.pop();
+    //
+    //
+    CFG.comment("experience_pylon settings").push("experience_pylon");
+    TileExpPylon.RADIUS = CFG.comment("Radius to pickup xp orbs").defineInRange("radius", 16, 1, 64);
+    CFG.pop();
+    //
+    CFG.comment("fisher settings").push("fisher");
+    TileFisher.RADIUS = CFG.comment("Radius to Fish from nearby water").defineInRange("radius", 12, 1, 32);
+    TileFisher.CHANCE = CFG.comment("Chance to Fish from nearby water.  Smaller values is slower fish").defineInRange("chance", 0.01, 0.000001, 0.999);
+    CFG.pop();
+    //
     CFG.comment("Ender Trigger settings").push("eye_redstone");
     TileEye.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 32, 2, 256);
     TileEye.FREQUENCY = CFG.comment("Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")

@@ -30,7 +30,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
   public static final int CAPACITY = FluidType.BUCKET_VOLUME;
   public static IntValue TIMER_FULL;
   public static IntValue WATERCOST;
-  private static final int RAD = 4;
+  public static IntValue RADIUS;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   private int shapeIndex = 0;
@@ -58,7 +58,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     if (WATERCOST.get() > 0 && tank.getFluidAmount() < WATERCOST.get()) {
       return;
     }
-    List<BlockPos> shape = ShapeUtil.squareHorizontalFull(worldPosition, RAD);
+    List<BlockPos> shape = ShapeUtil.squareHorizontalFull(worldPosition, RADIUS.get());
     shapeIndex++;
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
