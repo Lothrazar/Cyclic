@@ -114,7 +114,6 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     if (match != null) {
       var status = uncraftRecipe(match);
       this.status = status;
-
       if (status == UncraftStatusEnum.MATCH) {
         //pay cost
         // ModCyclic.LOGGER.info("before extract cost" + inputSlots.getStackInSlot(0));
@@ -235,14 +234,12 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     if (recipe == null) {
       return false;
     }
-
     var recipeResultItem = recipe.getResultItem();
     if (recipeResultItem.isEmpty() ||
         recipeResultItem.getItem() != stack.getItem() ||
         recipeResultItem.getCount() > stack.getCount()) {
       return false;
     }
-
     //check config
     List<String> recipes = (List<String>) TileUncraft.IGNORELIST_RECIPES.get();
     if (StringParseUtil.isInList(recipes, recipe.getId())) {
@@ -253,7 +250,6 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       //checked the ITEM id list
       return false;
     }
-
     //both itemstacks are non-empty, and we have enough quantity
     if (TileUncraft.IGNORE_NBT.get()) {
       return true;

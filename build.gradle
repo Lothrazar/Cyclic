@@ -11,16 +11,14 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-//apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
-//apply plugin: 'checkstyle'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 import net.minecraftforge.gradle.common.tasks.SignJar
 
 version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic'
 archivesBaseName = 'Cyclic'
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -67,9 +65,9 @@ minecraft {
                 }
             }
         }
+        
     }
 }
-
 
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed

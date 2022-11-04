@@ -362,26 +362,23 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (handlerOutput == null) {
       return false;
     }
-    if (handlerHere != null && handlerOutput != null) {
-      //first simulate 
-      ItemStack drain = handlerHere.extractItem(theslot, max, true); // handlerHere.getStackInSlot(theslot).copy();
-      int sizeStarted = drain.getCount();
-      if (!drain.isEmpty()) {
-        //now push it into output, but find out what was ACTUALLY taken
-        for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
-          drain = handlerOutput.insertItem(slot, drain, false);
-          if (drain.isEmpty()) {
-            break; //done draining
-          }
+    //first simulate 
+    ItemStack drain = handlerHere.extractItem(theslot, max, true); // handlerHere.getStackInSlot(theslot).copy();
+    int sizeStarted = drain.getCount();
+    if (!drain.isEmpty()) {
+      //now push it into output, but find out what was ACTUALLY taken
+      for (int slot = 0; slot < handlerOutput.getSlots(); slot++) {
+        drain = handlerOutput.insertItem(slot, drain, false);
+        if (drain.isEmpty()) {
+          break; //done draining
         }
       }
-      int sizeAfter = sizeStarted - drain.getCount();
-      if (sizeAfter > 0) {
-        handlerHere.extractItem(theslot, sizeAfter, false);
-      }
-      return sizeAfter > 0;
     }
-    return false;
+    int sizeAfter = sizeStarted - drain.getCount();
+    if (sizeAfter > 0) {
+      handlerHere.extractItem(theslot, sizeAfter, false);
+    }
+    return sizeAfter > 0;
   }
 
   protected boolean moveEnergy(Direction myFacingDir, int quantity) {

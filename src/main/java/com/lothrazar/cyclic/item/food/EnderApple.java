@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.food;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,23 +20,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class EnderApple extends ItemBaseCyclic {
 
-  final String[] ignoreMe = new String[] {
-      "minecraft:shipwreck",
-      "minecraft:mineshaft",
-      "minecraft:stronghold",
-      "minecraft:buried_treasure",
-      "minecraft:pillager_outpost",
-      "minecraft:village",
-      "minecraft:nether_fossil"
-  };
-  private static final int NUM_PRINTED = 5;
+  public static ConfigValue<List<? extends String>> IGNORELIST;
+  public static IntValue PRINTED;
   private static final int COOLDOWN = 60;
 
   public EnderApple(Properties properties) {
-    super(properties); // .food(new Food.Builder().hunger(h).saturation(0)
+    super(properties);
   }
 
   @Override
@@ -45,6 +38,7 @@ public class EnderApple extends ItemBaseCyclic {
     return true;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
     if (entityLiving instanceof Player == false) {
@@ -56,8 +50,7 @@ public class EnderApple extends ItemBaseCyclic {
     }
     player.getCooldowns().addCooldown(this, COOLDOWN);
     if (worldIn instanceof ServerLevel) {
-      final List<String> structIgnoreList = Arrays.asList(ignoreMe);
-      //
+      final List<String> structIgnoreList = (List<String>) IGNORELIST.get();
       ServerLevel serverWorld = (ServerLevel) worldIn;
       Map<String, Integer> distanceStructNames = new HashMap<>();
       Registry<ConfiguredStructureFeature<?, ?>> registry = worldIn.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
@@ -80,7 +73,7 @@ public class EnderApple extends ItemBaseCyclic {
           }
         }
         catch (Exception e) {
-          ModCyclic.LOGGER.error("", e);
+          ModCyclic.LOGGER.error("Apple structure?", e);
         }
       });
       //      for(int i=0;i<registry.asHolderIdMap().size();i++){
@@ -89,24 +82,26 @@ public class EnderApple extends ItemBaseCyclic {
       //      for (ConfiguredStructureFeature<?,?> structureFeature : registry){  //net.minecraftforge.registries.ForgeRegistries.STRUCTURE_FEATURES) {
       //
       //      }
-      //done loopiong on features
-      //
-      //SORT
-      LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-      distanceStructNames.entrySet()
-          .stream()
-          .sorted(Map.Entry.comparingByValue())
-          .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-      //
-      //      ModCyclic.LOGGER.info("Sorted Map   : " + sortedMap); 
-      int count = 0;
-      //      UtilChat.addServerChatMessage(player, "STARRT");
-      for (Map.Entry<String, Integer> e : sortedMap.entrySet()) {
-        ChatUtil.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());
-        count++;
-        //?? is it sorted
-        if (count >= NUM_PRINTED) {
-          break;
+      if (distanceStructNames.isEmpty()) {
+        ChatUtil.addServerChatMessage(player, "item.cyclic.apple_ender.empty");
+      }
+      else {
+        //
+        //SORT
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+        distanceStructNames.entrySet().stream()
+            .sorted(Map.Entry.comparingByValue())
+            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+        //
+        //      ModCyclic.LOGGER.info("Sorted Map   : " + sortedMap); 
+        int count = 0;
+        for (Map.Entry<String, Integer> e : sortedMap.entrySet()) {
+          ChatUtil.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());
+          count++;
+          //?? is it sorted
+          if (count >= PRINTED.get()) {
+            break;
+          }
         }
       }
     }

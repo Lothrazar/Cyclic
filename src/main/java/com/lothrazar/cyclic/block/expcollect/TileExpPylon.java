@@ -26,6 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -42,7 +43,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
   public static final int FLUID_PER_EXP = 20;
   public static final int EXP_PER_BOTTLE = 11;
-  private static final int RADIUS = 16;
+  public static IntValue RADIUS;
   public static final int CAPACITY = 64000 * FluidAttributes.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
@@ -152,9 +153,10 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   private void collectLocalExperience() {
+    final int radius = RADIUS.get();
     List<ExperienceOrb> list = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(
-        worldPosition.getX() - RADIUS, worldPosition.getY() - 1, worldPosition.getZ() - RADIUS,
-        worldPosition.getX() + RADIUS, worldPosition.getY() + 2, worldPosition.getZ() + RADIUS), (entity) -> {
+        worldPosition.getX() - radius, worldPosition.getY() - 1, worldPosition.getZ() - radius,
+        worldPosition.getX() + radius, worldPosition.getY() + 2, worldPosition.getZ() + radius), (entity) -> {
           return entity.isAlive() && entity.getValue() > 0;
           //entity != null && entity.getHorizontalFacing() == facing;
         });

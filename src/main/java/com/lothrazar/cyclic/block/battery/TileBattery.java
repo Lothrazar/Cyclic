@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -30,11 +31,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
-  private static final int SLOT_CHARGING_RATE = 8000;
+  public static final int MAX = 6400000;
+  public static IntValue SLOT_CHARGING_RATE;
   private Map<Direction, Boolean> poweredSides;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  public static final int MAX = 6400000;
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
@@ -87,7 +88,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     ItemStack slotItem = this.batterySlots.getStackInSlot(0);
     IEnergyStorage itemStackStorage = slotItem.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
     if (itemStackStorage != null) {
-      int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE, true);
+      int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE.get(), true);
       int accepted = itemStackStorage.receiveEnergy(extracted, true);
       if (accepted > 0) {
         // no sim, fo real
