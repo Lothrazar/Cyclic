@@ -105,7 +105,6 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
     super.saveAdditional(tag);
   }
 
-  //  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
@@ -134,7 +133,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   private void doFishing(ItemStack fishingRod, BlockPos center) {
     Level world = this.getLevel();
     Random rand = world.random;
-    if (rand.nextDouble() < 0.4 + CHANCE.get() && world instanceof ServerLevel) {
+    if (rand.nextDouble() < CHANCE.get() && world instanceof ServerLevel) {
       LootTables manager = world.getServer().getLootTables();
       if (manager == null) {
         return;
@@ -152,9 +151,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
           .create(LootContextParamSets.FISHING);
       List<ItemStack> lootDrops = table.getRandomItems(lootContext);
       if (lootDrops != null && lootDrops.size() > 0) {
-        ItemStackUtil.damageItem(null, fishingRod);
         ItemStackUtil.drop(world, center, lootDrops);
-        //        fishingRod.isDamageableItem()
         if (fishingRod.isDamageableItem()) {
           int mending = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, fishingRod);
           if (mending == 0) {
@@ -167,10 +164,10 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
             }
             else if (rand.nextDouble() < 0.66) { //66-25 = chance repair
               if (fishingRod.getDamageValue() > 0) {
+                // mimics getting damaged and repaired right away
                 fishingRod.setDamageValue(fishingRod.getDamageValue() - rand.nextInt(2, 5));
               }
             }
-            //else do nothing, leave it flat. mimics getting damaged and repaired right away
           }
         } // else fishing rod cannot be damaged (supreme/diamond/other mods)
       }

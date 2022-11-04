@@ -449,7 +449,7 @@ public class ConfigRegistry {
     //
     CFG.comment("fisher settings").push("fisher");
     TileFisher.RADIUS = CFG.comment("Radius to Fish from nearby water").defineInRange("radius", 12, 1, 32);
-    TileFisher.CHANCE = CFG.comment("Chance to Fish from nearby water.  Smaller values is slower fish").defineInRange("chance", 0.01, 0.000001, 0.999);
+    TileFisher.CHANCE = CFG.comment("Chance to Fish from nearby water.  Smaller values is slower fish").defineInRange("chance", 0.06, 0.000001, 0.999);
     CFG.pop();
     //
     CFG.comment("Ender Trigger settings").push("eye_redstone");
