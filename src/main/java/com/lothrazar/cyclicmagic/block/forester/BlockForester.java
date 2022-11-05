@@ -48,7 +48,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe, IContent, IBlockHasTESR {//, IBlockHasTESR 
+public class BlockForester extends BlockBaseFacingInventory implements IHasRecipe, IContent, IBlockHasTESR {
 
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static int FUEL_COST;
@@ -105,5 +105,15 @@ public class BlockForester extends BlockBaseFacingInventory implements IHasRecip
   public void syncConfig(Configuration config) {
     enabled = config.getBoolean(getContentName(), Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     FUEL_COST = config.getInt(getContentName(), Const.ConfigCategory.fuelCost, 50, 0, 500000, Const.ConfigText.fuelCost);
+    String[] deflist = new String[] {
+        "logWood", "woodRubber", "treeLeaves"
+    };
+    TileEntityForester.validTargetsOreDict = config.getStringList("logTags", Const.ConfigCategory.modpackMisc + ".forester", deflist,
+        "Forester machine will harvest blocks with these ore dictionary tags ");
+    deflist = new String[] {
+        "treeSapling"
+    };
+    TileEntityForester.validSaplingsOreDict = config.getStringList("saplingTags", Const.ConfigCategory.modpackMisc + ".forester", deflist,
+        "Forester machine will accept items & plant saplings itemswith these ore dictionary tags ");
   }
 }

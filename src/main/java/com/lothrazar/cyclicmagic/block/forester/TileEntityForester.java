@@ -60,8 +60,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityForester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITilePreviewToggle, ITickable {
 
-  private static final String[] validTargetsOreDict = new String[] { "logWood", "treeLeaves" };
-  private static final String[] validSaplingsOreDict = new String[] { "treeSapling" };
+  public static String[] validTargetsOreDict;
+  public static String[] validSaplingsOreDict;
   private static final String NBT_REDST = "redstone";
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";

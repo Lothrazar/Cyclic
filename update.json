@@ -348,5 +348,6 @@
 	,"1.20.10":"PR merged from embeddedt: Prevent milk bucket from removing flight when player is in creative mode.  Catch more errors from Excavation enchant, in case game runs out of memory, StackOverflow, similar errors (errors will now just stop digging instead of crash).  Ender Shelf no longer renders the enchanted book (was causing tps/fps lag).  "
 	,"1.20.11":"Fix Peat Farm block not working if the config is set to not require power (specifically setting I:peat_farm=0 )"
   	,"1.20.12":"Prevent bad/invalid entity NBT data from crashing while mob is being captured by an empty Monster Ball.  Fix excavate enchant errors on high max levels, and reduced size calculation to mc1.16.5 formula (26 + 8*LEVEL). Excavate is no longer compatible with Efficiency. Changed Structure Builder Tunnel (Circle Vertical) renamed and updated to match modern minecraft versions. Remove Saturation potion use logspam. Fix Xp Pylon server->client desync display"
+  	,"1.20.13":"#2189 new forester configs to control which logs, leaves, and saplings are used by the machine, see the bottom of cyclicmagic.cfg"
   }
 }
