@@ -69,7 +69,7 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
 	compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
 	// at runtime, use the full JEI
-	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
+//	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
 	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 	  
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
@@ -133,7 +133,7 @@ repositories {
   maven { url = "https://maven.theillusivec4.top/"    }
   maven { url 'https://dvs1.progwml6.com/files/maven/'  }
   maven { url 'https://maven.blamejared.com' }    
-//  maven { url = "https://modmaven.dev"  }    
+  maven { url = "https://modmaven.dev"  }    
 //  maven { url 'https://www.cursemaven.com'  }
 }
 // Example for how to get properties into the manifest for reading by the runtime..
