@@ -429,11 +429,11 @@
 
 		#apple_ender settings
 		[cyclic.items.apple_ender]
+			#Which structure tags are looked for
+			structure_tags = ["minecraft:eye_of_ender_located", "minecraft:on_woodland_explorer_maps", "minecraft:on_ocean_explorer_maps", "minecraft:village"]
 			#How many results the client will see
 			#Range: 1 ~ 60
 			printed = 5
-			#Ignored Structures
-			ignore = ["minecraft:shipwreck", "minecraft:mineshaft", "minecraft:stronghold", "minecraft:buried_treasure", "minecraft:pillager_outpost", "minecraft:village", "minecraft:nether_fossil"]
 
 		[cyclic.items.spawner_seeker]
 			#Range in all directions to search for spawner

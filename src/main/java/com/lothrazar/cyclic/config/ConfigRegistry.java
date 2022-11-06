@@ -191,13 +191,10 @@ public class ConfigRegistry {
     MBALL_IGNORE.add("minecraft:ender_dragon");
     MBALL_IGNORE.add("minecraft:wither");
     ENDERAPPLE.addAll(Arrays.asList(
-        "minecraft:shipwreck",
-        "minecraft:mineshaft",
-        "minecraft:stronghold",
-        "minecraft:buried_treasure",
-        "minecraft:pillager_outpost",
-        "minecraft:village",
-        "minecraft:nether_fossil"));
+        "minecraft:eye_of_ender_located",
+        "minecraft:on_woodland_explorer_maps",
+        "minecraft:on_ocean_explorer_maps",
+        "minecraft:village"));
   }
 
   private static void initConfig() {
@@ -282,7 +279,7 @@ public class ConfigRegistry {
     CFG.pop();
     //
     CFG.comment("apple_ender settings").push("apple_ender");
-    EnderApple.IGNORELIST = CFG.comment("Ignored Structures").defineList("ignore", ENDERAPPLE, it -> it instanceof String);
+    EnderApple.STRUCTURE_TAGS = CFG.comment("Which structure tags are looked for").defineList("structure_tags", ENDERAPPLE, it -> it instanceof String);
     EnderApple.PRINTED = CFG.comment("How many results the client will see").defineInRange("printed", 5, 1, 60);
     CFG.pop();
     //
