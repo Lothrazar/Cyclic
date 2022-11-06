@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "modid": "quark",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "pattern": [
+    "scs",
+    "c c",
+    "scs"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stone"
+    },
+    "c": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "cyclic:compressed_cobblestone",
+    "count": 4
+  }
+}
