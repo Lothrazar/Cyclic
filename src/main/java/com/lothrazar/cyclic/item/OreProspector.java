@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.cyclic.util.ChatUtil;
 import com.lothrazar.cyclic.util.ItemStackUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.lothrazar.cyclic.util.ShapeUtil;
@@ -73,7 +74,7 @@ public class OreProspector extends ItemBaseCyclic {
     held.getTag().putInt(ORESIZE, i);
     player.swing(hand);
     ItemStackUtil.damageItem(player, held);
-    //    UtilChat.sendStatusMessage(player, UtilChat.lang("item.location.saved")      + UtilChat.blockPosToString(pos));
+    ChatUtil.sendStatusMessage(player, "" + i);
     return InteractionResult.SUCCESS;
   }
 
