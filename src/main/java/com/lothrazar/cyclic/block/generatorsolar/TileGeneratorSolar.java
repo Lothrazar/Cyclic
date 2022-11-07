@@ -61,7 +61,7 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic {
   }
 
   private void tryConsumeFuel() {
-    if (this.level.isDay() && this.level.canSeeSkyFromBelowWater(this.getBlockPos())) {
+    if (this.level.isDay() && this.level.canSeeSkyFromBelowWater(this.getBlockPos().above())) {
       setLitProperty(true);
       int receive = BlockGeneratorSolar.ENERGY_GENERATE.get();
       if (this.level.isThundering()) {

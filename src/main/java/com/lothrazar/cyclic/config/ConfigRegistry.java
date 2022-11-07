@@ -202,7 +202,7 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
         .push("enchantment");
     ////////////////////////////////////////////////////////////////// enchantment
-    AutoSmeltEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", false);
+    AutoSmeltEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", true);
     BeekeeperEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
     BeheadingEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(BeheadingEnchant.ID + ".enabled", true);
     BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING,
@@ -293,6 +293,7 @@ public class ConfigRegistry {
     WandMissileItem.COST = CFG.comment("Energy cost per item use").defineInRange("wand_missile.energy", 150, 1, 50000);
     WandMissileItem.RANGE = CFG.comment("Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
+    OreProspector.HEIGHT = CFG.comment("Ore Prospector height around player to search for ores").defineInRange("prospector.height", 8, 1, 128);
     CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
     MaterialRegistry.EMERALD_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 3.0F, 0.1F, 99F);
     MaterialRegistry.EMERALD_DMG = CFG.comment("Weapon damage").defineInRange("damage", 4.5F, 0.1F, 99F);
@@ -447,7 +448,7 @@ public class ConfigRegistry {
     //
     CFG.comment("fisher settings").push("fisher");
     TileFisher.RADIUS = CFG.comment("Radius to Fish from nearby water").defineInRange("radius", 12, 1, 32);
-    TileFisher.CHANCE = CFG.comment("Chance to Fish from nearby water.  Smaller values is slower fish").defineInRange("chance", 0.01, 0.000001, 0.999);
+    TileFisher.CHANCE = CFG.comment("Chance to Fish from nearby water.  Smaller values is slower fish").defineInRange("chance", 0.06, 0.000001, 0.999);
     CFG.pop();
     //
     CFG.comment("Ender Trigger settings").push("eye_redstone");

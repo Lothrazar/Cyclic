@@ -191,6 +191,7 @@ public class ClientRegistryCyclic {
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.NETHERITE_LANTERN.get(), RenderType.cutoutMipped());
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GOLD_SOUL_LANTERN.get(), RenderType.cutoutMipped());
     ItemBlockRenderTypes.setRenderLayer(BlockRegistry.COPPER_SOUL_LANTERN.get(), RenderType.cutoutMipped());
+    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GENERATOR_SOLAR.get(), RenderType.cutoutMipped());
   }
 
   //    OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "data", HUD_MANA);

@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.EventRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.LootModifierRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
@@ -57,6 +58,7 @@ public class ModCyclic {
     PotionEffectRegistry.MOB_EFFECTS.register(bus);
     EnchantRegistry.ENCHANTMENTS.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
+    LootModifierRegistry.LOOT.register(bus);
     BiomeTweaker.init(bus);
     ForgeMod.enableMilkFluid();
   }

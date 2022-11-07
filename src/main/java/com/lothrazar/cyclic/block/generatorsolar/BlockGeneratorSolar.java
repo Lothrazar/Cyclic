@@ -24,7 +24,7 @@ public class BlockGeneratorSolar extends BlockCyclic {
   public static IntValue TIMEOUT;
 
   public BlockGeneratorSolar(Properties properties) {
-    super(properties.strength(1.2F));
+    super(properties.strength(1.2F).noOcclusion());
     registerDefaultState(defaultBlockState().setValue(LIT, false));
   }
 

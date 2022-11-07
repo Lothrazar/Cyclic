@@ -83,36 +83,6 @@ dependencies {
   //  runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027")
 
   //  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3834150")
-    
-    //TODO: add soft ?
-  //  runtimeOnly fg.deobf("curse.maven:roots-classic-295780:3939973")
-
-
-
-	//added for testing
-  //  runtimeOnly fg.deobf("curse.maven:brutal-bosses-dungeon-557999:3916875")
-
-  //  runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3641681")
-  //  runtimeOnly fg.deobf("curse.maven:simple-storage-network-268495:3868680")
-  //  runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3671753")
-  //  runtimeOnly fg.deobf("curse.maven:construction-wand-399558:3712396")
-  //  runtimeOnly fg.deobf("curse.maven:gardening-tools-351990:3694027")
-  //  runtimeOnly fg.deobf("curse.maven:cucumber-272335:3686400")
-  //  runtimeOnly fg.deobf("curse.maven:pickle-tweaks-238761:3793199")
-  //  runtimeOnly fg.deobf("curse.maven:libnonymous-357557:3677573")
-  //  runtimeOnly fg.deobf("curse.maven:bonsai-trees-278993:3677571")
-  //  runtimeOnly fg.deobf("curse.maven:pipez-443900:3694227")
- 
-//   implementation fg.deobf("curse.maven:mystical-agriculture-246640:3686412")
-
-//   implementation fg.deobf("curse.maven:absent-by-design-305840:3686851")
-//   implementation fg.deobf("curse.maven:selene-499980:3687411")
-//   implementation fg.deobf("curse.maven:supplementaries-412082:3687458")
-//   implementation fg.deobf("curse.maven:construction-wand-399558:3562331")
-//   implementation fg.deobf("curse.maven:ato-405593:3638255")
-//   implementation fg.deobf("curse.maven:botania-225643:3664223")
-//   implementation fg.deobf("curse.maven:autoreglib-250363:3642382")
-//   implementation fg.deobf("curse.maven:quark-243121:3687633")
 
 }
 

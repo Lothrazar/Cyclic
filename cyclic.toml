@@ -79,7 +79,7 @@
 
 		[cyclic.enchantment.auto_smelt]
 			#Set false to stop enchantment from working
-			enabled = false
+			enabled = true
 
 		[cyclic.enchantment.growth]
 			#Radius per level.  size around player to perform growth logic
@@ -224,7 +224,7 @@
 		[cyclic.blocks.fisher]
 			#Chance to Fish from nearby water.  Smaller values is slower fish
 			#Range: 1.0E-6 ~ 0.999
-			chance = 0.01
+			chance = 0.06
 			#Radius to Fish from nearby water
 			#Range: 1 ~ 32
 			radius = 12
@@ -529,6 +529,9 @@
 			#Ore Prospector radius around player to search for ores
 			#Range: 1 ~ 256
 			range = 32
+			#Ore Prospector height around player to search for ores
+			#Range: 1 ~ 128
+			height = 8
 
 		[cyclic.items.chorus_flight]
 			#Seconds of flight per chorus_flight
