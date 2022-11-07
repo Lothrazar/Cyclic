@@ -295,6 +295,7 @@ public class ConfigRegistry {
     WandMissileItem.COST = CFG.comment("Energy cost per item use").defineInRange("wand_missile.energy", 150, 1, 50000);
     WandMissileItem.RANGE = CFG.comment("Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
+    OreProspector.HEIGHT = CFG.comment("Ore Prospector height around player to search for ores").defineInRange("prospector.height", 8, 1, 128);
     CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
     MaterialRegistry.EMERALD_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 3.0F, 0.1F, 99F);
     MaterialRegistry.EMERALD_DMG = CFG.comment("Weapon damage").defineInRange("damage", 4.5F, 0.1F, 99F);

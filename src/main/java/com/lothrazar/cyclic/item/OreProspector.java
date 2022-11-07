@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
-import com.lothrazar.cyclic.util.ShapeUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.cyclic.util.ShapeUtil;
+import com.lothrazar.cyclic.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -21,9 +21,11 @@ import net.minecraftforge.common.Tags;
 
 public class OreProspector extends ItemBaseCyclic {
 
+  private static final int CD = 10;
   private static final String ORESIZE = "oresize";
   private static final String NBT_DIM = "dim";
   public static IntValue RANGE;
+  public static IntValue HEIGHT;
 
   public OreProspector(Properties properties) {
     super(properties);
@@ -47,11 +49,11 @@ public class OreProspector extends ItemBaseCyclic {
     if (player.getCooldowns().isOnCooldown(held.getItem())) {
       return InteractionResult.PASS;
     }
-    player.getCooldowns().addCooldown(held.getItem(), 10);
+    player.getCooldowns().addCooldown(held.getItem(), CD);
     //first delete old pos
     held.setTag(null);
     BlockPos pos = context.getClickedPos();
-    List<BlockPos> shape = ShapeUtil.cubeSquareBase(pos.below(), RANGE.get(), 2);
+    List<BlockPos> shape = ShapeUtil.cubeSquareBase(pos.below(), RANGE.get(), HEIGHT.get());
     List<BlockPos> ores = new ArrayList<>();
     Level world = context.getLevel();
     for (BlockPos p : shape) {
