@@ -90,10 +90,10 @@ public class EventRender {
       //      drawString(event.getMatrixStack(), "" + player.world.getDayTime(), width - 50, height - 60);
       // now files
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
-      if (datFile.flyTicks > 0) {
-        int sec = datFile.flyTicks / 20;
-        drawString(event.getMatrixStack(), "flight " + sec, 10, height - 30);
-      }
+      //      if (datFile.flyTicks > 0) {
+      //        int sec = datFile.flyTicks / 20;
+      //        drawString(event.getMatrixStack(), "flight " + sec, 10, height - 30);
+      //      }
       if (datFile.spectatorTicks > 0) {
         int sec = datFile.spectatorTicks / 20;
         drawString(event.getMatrixStack(), "noClip " + sec, 10, height - 10);

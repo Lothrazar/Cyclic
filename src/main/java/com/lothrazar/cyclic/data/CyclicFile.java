@@ -16,7 +16,6 @@ public class CyclicFile {
   public boolean todoVisible = false;
   public boolean stepHeight = false;
   public List<String> todoTasks = new ArrayList<>();
-  public int flyTicks = 0;
   public int spectatorTicks = 0;
   // first 27 slots are for inventory cake storage. remaining unused
   public ItemStackHandler inventory = new ItemStackHandler(5 * 9);
@@ -25,7 +24,7 @@ public class CyclicFile {
   @Override
   public String toString() {
     return "CyclicFile [playerId=" + playerId + ", storageVisible=" + storageVisible + ", todoVisible=" + todoVisible + ", stepHeight=" + stepHeight +
-        ", todoTasks=" + todoTasks + ", flyTicks=" + flyTicks + ", spectatorTicks=" + spectatorTicks + ", inventory=" + inventory + ", stepHeightForceOff=" + stepHeightForceOff + "]";
+        ", todoTasks=" + todoTasks + ", spectatorTicks=" + spectatorTicks + ", inventory=" + inventory + ", stepHeightForceOff=" + stepHeightForceOff + "]";
   }
 
   public CyclicFile(UUID playerId) {
@@ -34,7 +33,6 @@ public class CyclicFile {
 
   public void read(CompoundTag tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
-    flyTicks = tag.getInt("flyTicks");
     spectatorTicks = tag.getInt("spectatorTicks");
     storageVisible = tag.getBoolean("storageVisible");
     stepHeightForceOff = tag.getBoolean("stepHeightForceOff");
@@ -51,7 +49,6 @@ public class CyclicFile {
   public CompoundTag write() {
     CompoundTag tag = new CompoundTag();
     tag.put(NBTINV, inventory.serializeNBT());
-    tag.putInt("flyTicks", flyTicks);
     tag.putInt("spectatorTicks", spectatorTicks);
     tag.putBoolean("stepHeight", stepHeight);
     tag.putBoolean("stepHeightForceOff", stepHeightForceOff);
