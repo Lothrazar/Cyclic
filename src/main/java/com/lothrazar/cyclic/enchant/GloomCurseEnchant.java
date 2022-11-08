@@ -15,7 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 
-public class CurseEnchant extends EnchantmentCyclic {
+public class GloomCurseEnchant extends EnchantmentCyclic {
 
   public static final double BASE_ACTIVATION_CHANCE = 0.1;
   public static final double BASE_APPLY_CHANCE = 0.3;
@@ -23,7 +23,7 @@ public class CurseEnchant extends EnchantmentCyclic {
   public static final double MAX_EFFECTS = 3;
   public static final int EFFECT_DURATION = 20 * 5;
 
-  public CurseEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
+  public GloomCurseEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     if (isEnabled()) MinecraftForge.EVENT_BUS.register(this);
   }
