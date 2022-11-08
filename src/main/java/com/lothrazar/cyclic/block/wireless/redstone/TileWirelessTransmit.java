@@ -1,14 +1,15 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -65,14 +66,25 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     super.saveAdditional(tag);
   }
 
-  private void toggleTarget(BlockPos targetPos) {
-    BlockState target = level.getBlockState(targetPos);
+  private void toggleTarget(BlockPosDim dimPos) {
+    BlockPos targetPos = dimPos.getPos();
+    ServerLevel serverLevel = dimPos.getTargetLevel(level);
+    if (serverLevel == null) {
+      ModCyclic.LOGGER.info("Dimension not found " + dimPos.getDimension());
+      return;
+    }
+    if (!serverLevel.isLoaded(targetPos)) {
+      ModCyclic.LOGGER.info("DimPos is unloaded" + dimPos);
+      return;
+    }
+    //getstate should be valid now, 
+    BlockState target = serverLevel.getBlockState(targetPos);
     if (target.hasProperty(BlockStateProperties.POWERED)) {
       boolean targetPowered = target.getValue(BlockStateProperties.POWERED);
       //update target based on my state
       boolean isPowered = level.hasNeighborSignal(worldPosition);
       if (targetPowered != isPowered) {
-        level.setBlockAndUpdate(targetPos, target.setValue(BlockStateProperties.POWERED, isPowered));
+        serverLevel.setBlockAndUpdate(targetPos, target.setValue(BlockStateProperties.POWERED, isPowered));
         //and update myself too
         if (level.isLoaded(worldPosition) && level.getBlockState(worldPosition).getBlock() == this.getBlockState().getBlock()) {
           level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
@@ -86,17 +98,19 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessTransmit e) {
-    e.tick();
+    //    e.tick();
   }
 
   public void tick() {
     for (int s = 0; s < inventory.getSlots(); s++) {
       BlockPosDim targetPos = getTargetInSlot(s);
-      if (targetPos == null ||
-          LevelWorldUtil.dimensionIsEqual(targetPos, level) == false) {
-        continue;
+      //      if (targetPos == null ||
+      //          LevelWorldUtil.dimensionIsEqual(targetPos, level) == false) {
+      //        continue;
+      //      }
+      if (targetPos != null) {
+        toggleTarget(targetPos);
       }
-      toggleTarget(targetPos.getPos());
     }
   }
 

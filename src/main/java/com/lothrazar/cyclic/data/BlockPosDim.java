@@ -1,10 +1,13 @@
 package com.lothrazar.cyclic.data;
 
 import java.util.Objects;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class BlockPosDim {
@@ -70,6 +73,13 @@ public class BlockPosDim {
 
   public void setDimension(String dimension) {
     this.dimension = dimension;
+  }
+
+  public ServerLevel getTargetLevel(Level world) {
+    if (world == null || world.getServer() == null || dimension == null) {
+      return null;
+    }
+    return world.getServer().getLevel(LevelWorldUtil.stringToDimension(getDimension()));
   }
 
   public double getZ() {

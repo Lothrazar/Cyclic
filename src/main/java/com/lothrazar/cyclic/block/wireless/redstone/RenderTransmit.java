@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
+import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -49,6 +50,9 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit>
     BlockPosDim posPosTarget = tile.getTargetInSlot(slot);
     if (posPosTarget == null) {
       return;
+    }
+    if (!LevelWorldUtil.dimensionIsEqual(posPosTarget, tile.getLevel())) {
+      return;//its crossing dimensions, skip renderono
     }
     BlockPos posTarget = posPosTarget.getPos();
     if (posTarget == null || posTarget.equals(BlockPos.ZERO)) {
