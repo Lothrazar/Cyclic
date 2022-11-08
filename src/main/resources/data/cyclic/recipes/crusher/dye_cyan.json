@@ -1,20 +1,20 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"item": "minecraft:wither_rose"
+		"item": "cyclic:flower_cyan"
 	},
 	"energy": {
 		"ticks": 100,
 		"rfpertick": 10
 	},
 	"result": {
-		"item": "minecraft:black_dye",
+		"item": "minecraft:cyan_dye",
 		"count": 2
 	},
 	"percent": 50,
 	"bonus": {
-		"item": "minecraft:black_dye",
-		"count": 5
+		"item": "minecraft:blue_dye",
+		"count": 1
 	},
 	"conditions": [
 		{

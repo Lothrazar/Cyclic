@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
+import com.lothrazar.cyclic.block.batteryclay.ItemBlockClayBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
 import com.lothrazar.cyclic.block.expcollect.ExpItemGain;
 import com.lothrazar.cyclic.block.expcollect.ItemBlockPylon;
@@ -353,7 +354,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> COMPUTER_SHAPE = ITEMS.register("computer_shape", () -> new BlockItem(BlockRegistry.COMPUTER_SHAPE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> EYE_REDSTONE = ITEMS.register("eye_redstone", () -> new BlockItem(BlockRegistry.EYE_REDSTONE.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> EYE_TELEPORT = ITEMS.register("eye_teleport", () -> new BlockItem(BlockRegistry.EYE_TELEPORT.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
-  public static final RegistryObject<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new BlockItem(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
+  public static final RegistryObject<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new ItemBlockClayBattery(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BATTERY = ITEMS.register("battery", () -> new ItemBlockBattery(BlockRegistry.BATTERY.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> PEAT_UNBAKED = ITEMS.register("peat_unbaked", () -> new BlockItem(BlockRegistry.PEAT_UNBAKED.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> PEAT_BAKED = ITEMS.register("peat_baked", () -> new BlockItem(BlockRegistry.PEAT_BAKED.get(), new Item.Properties().tab(MaterialRegistry.BLOCK_GROUP)));

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.battery;
+package com.lothrazar.cyclic.block.batteryclay;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
@@ -6,6 +6,12 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,7 +20,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileClayBattery extends TileBlockEntityCyclic {
+public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   public static final int MAX = 16000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
@@ -24,12 +30,22 @@ public class TileClayBattery extends TileBlockEntityCyclic {
     super(TileRegistry.BATTERY_CLAY.get(), pos, state);
   }
 
+  @Override
+  public Component getDisplayName() {
+    return new TextComponent(getType().getRegistryName().getPath());
+  }
+
+  @Override
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerClayBattery(i, level, worldPosition, playerInventory, playerEntity);
+  }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileClayBattery e) {
     e.tick();
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileClayBattery e) {
-    //    e.tick();
+    e.tick();
   }
 
   public void tick() {

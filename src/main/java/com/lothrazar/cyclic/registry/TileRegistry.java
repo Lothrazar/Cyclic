@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
 import com.lothrazar.cyclic.block.battery.TileBattery;
-import com.lothrazar.cyclic.block.battery.TileClayBattery;
+import com.lothrazar.cyclic.block.batteryclay.TileClayBattery;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotionBeacon;
 import com.lothrazar.cyclic.block.beaconredstone.TileBeaconRedstone;
 import com.lothrazar.cyclic.block.bedrock.UnbreakablePoweredTile;

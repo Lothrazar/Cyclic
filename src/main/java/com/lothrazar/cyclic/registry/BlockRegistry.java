@@ -24,7 +24,7 @@ import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
 import com.lothrazar.cyclic.block.apple.AppleCropBlock;
 import com.lothrazar.cyclic.block.battery.BlockBattery;
-import com.lothrazar.cyclic.block.battery.ClayBattery;
+import com.lothrazar.cyclic.block.batteryclay.ClayBattery;
 import com.lothrazar.cyclic.block.beaconpotion.BlockPotion;
 import com.lothrazar.cyclic.block.beaconredstone.BlockBeaconRedstone;
 import com.lothrazar.cyclic.block.bedrock.UnbreakableBlock;

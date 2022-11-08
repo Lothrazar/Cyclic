@@ -1,7 +1,11 @@
 package com.lothrazar.cyclic.block.generatorsolar;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -26,6 +30,13 @@ public class BlockGeneratorSolar extends BlockCyclic {
   public BlockGeneratorSolar(Properties properties) {
     super(properties.strength(1.2F).noOcclusion());
     registerDefaultState(defaultBlockState().setValue(LIT, false));
+    this.setHasGui();
+  }
+
+  @Override
+  public void registerClient() {
+    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
+    MenuScreens.register(MenuTypeRegistry.GENERATOR_SOLAR.get(), ScreenGeneratorSolar::new);
   }
 
   @Override

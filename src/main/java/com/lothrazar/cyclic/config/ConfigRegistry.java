@@ -107,9 +107,9 @@ public class ConfigRegistry {
   private static ForgeConfigSpec CLIENT_CONFIG;
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
-  private static final List<String> UNCRAFT_IGNORE_ITEMS = new ArrayList<>();
+  private static final List<String> IGNORE_LIST_UNCRAFTER = new ArrayList<>();
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
-  private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
+  private static final List<String> IGNORE_RECIPES_UNCRAFTER = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final List<String> ENDERAPPLE = new ArrayList<>();
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
@@ -154,27 +154,50 @@ public class ConfigRegistry {
     BEHEADING.add("minecraft:endermite:MHF_Endermite");
     //
     //most of these are ported direct from 1.12 defaults, idk if these mods or items exist anymore
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:elytra");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:tipped_arrow");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:magma_block");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:stick");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:*_dye"); //getting flowers etc feels bad 
-    UNCRAFT_IGNORE_ITEMS.add("spectrite:spectrite_arrow");
-    UNCRAFT_IGNORE_ITEMS.add("spectrite:spectrite_arrow_special");
-    UNCRAFT_IGNORE_ITEMS.add("techreborn:uumatter");
-    UNCRAFT_IGNORE_ITEMS.add("projecte:*");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:elytra");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:tipped_arrow");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:magma_block");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:stick");
+    IGNORE_LIST_UNCRAFTER.add("spectrite:spectrite_arrow");
+    IGNORE_LIST_UNCRAFTER.add("spectrite:spectrite_arrow_special");
+    IGNORE_LIST_UNCRAFTER.add("techreborn:uumatter");
+    IGNORE_LIST_UNCRAFTER.add("projecte:*");
     //a
-    UNCRAFT_RECIPE_IDS.add("botania:cobweb");
-    UNCRAFT_RECIPE_IDS.add("minecraft:magma_cream");
-    UNCRAFT_RECIPE_IDS.add("minecraft:beacon");
-    UNCRAFT_RECIPE_IDS.add("minecraft:stick_from_bamboo_item");
-    UNCRAFT_RECIPE_IDS.add("minecraft:netherite_ingot_from_netherite_block");
-    UNCRAFT_RECIPE_IDS.add("mysticalagriculture:essence*");
-    UNCRAFT_RECIPE_IDS.add("mysticalagriculture:farmland_till");
-    UNCRAFT_RECIPE_IDS.add("refinedstorage:coloring_recipes*");
-    UNCRAFT_RECIPE_IDS.add("forcecraft:transmutation*");
-    UNCRAFT_RECIPE_IDS.add("cyclic:fireball");
-    UNCRAFT_RECIPE_IDS.add("cyclic:shapeless/spark");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:white_dye_from_lily_of_the_valley");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:orange_dye_from_orange_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:magenta_dye_from_allium");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:magenta_dye_from_lilac");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_blue_dye_from_blue_orchid");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:yellow_dye_from_sunflower");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:yellow_dye_from_dandelion");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:pink_dye_from_peony");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:pink_dye_from_pink_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_gray_dye_from_oxeye_daisy");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_gray_dye_from_azure_bluet");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_gray_dye_from_white_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:blue_dye_from_cornflower");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:red_dye_from_poppy");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:red_dye_from_rose_bush");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:red_dye_from_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:black_dye_from_wither_rose");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:blue_dye");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:black_dye");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:brown_dye");
+    IGNORE_RECIPES_UNCRAFTER.add("botania:cobweb");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:magma_cream");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:beacon");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:stick_from_bamboo_item");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:netherite_ingot_from_netherite_block");
+    IGNORE_RECIPES_UNCRAFTER.add("mysticalagriculture:essence*");
+    IGNORE_RECIPES_UNCRAFTER.add("mysticalagriculture:farmland_till");
+    IGNORE_RECIPES_UNCRAFTER.add("refinedstorage:coloring_recipes*");
+    IGNORE_RECIPES_UNCRAFTER.add("forcecraft:transmutation*");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_purple_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_absalon_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_cyan");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_lime_carnation");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:fireball");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:shapeless/spark");
     //
     TRANSPORTBAG.addAll(Arrays.asList(
         //legacy
@@ -459,12 +482,12 @@ public class ConfigRegistry {
         .defineInRange("frequency", 5, 1, 20);
     CFG.pop();
     CFG.push("uncrafter");
-    TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
+    TileUncraft.NBT_IGNORED = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
         + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", false);
-    TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT_IGNORE_ITEMS, it -> it instanceof String);
-    TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
-        .defineList("ignore_recipes", UNCRAFT_RECIPE_IDS, it -> it instanceof String);
+    TileUncraft.IGNORE_LIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", IGNORE_LIST_UNCRAFTER, it -> it instanceof String);
+    TileUncraft.IGNORE_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
+        .defineList("ignore_recipes", IGNORE_RECIPES_UNCRAFTER, it -> it instanceof String);
     TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);
     CFG.pop(); //uncrafter
     CFG.pop(); //blocks

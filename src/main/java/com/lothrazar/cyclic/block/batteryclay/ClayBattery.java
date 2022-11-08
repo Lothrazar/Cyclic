@@ -1,10 +1,12 @@
-package com.lothrazar.cyclic.block.battery;
+package com.lothrazar.cyclic.block.batteryclay;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -22,6 +24,12 @@ public class ClayBattery extends BlockCyclic {
 
   public ClayBattery(Properties properties) {
     super(properties.strength(1.8F));
+    this.setHasGui();
+  }
+
+  @Override
+  public void registerClient() {
+    MenuScreens.register(MenuTypeRegistry.BATTERY_CLAY.get(), ScreenClayBattery::new);
   }
 
   @Override
@@ -34,7 +42,7 @@ public class ClayBattery extends BlockCyclic {
   public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity ent, ItemStack stack) {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
-    if (ent instanceof TileBattery battery) {
+    if (ent instanceof TileClayBattery battery) {
       IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
       if (newStackCap instanceof CustomEnergyStorage) {
         ((CustomEnergyStorage) newStackCap).setEnergy(battery.energy.getEnergyStored());
@@ -43,8 +51,8 @@ public class ClayBattery extends BlockCyclic {
         newStackCap.receiveEnergy(battery.energy.getEnergyStored(), false);
       }
       if (battery.energy.getEnergyStored() > 0) {
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, battery.energy.getEnergyStored());
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, battery.energy.getMaxEnergyStored());
+        newStackBattery.getOrCreateTag().putInt(ItemBlockClayBattery.ENERGYTT, battery.energy.getEnergyStored());
+        newStackBattery.getOrCreateTag().putInt(ItemBlockClayBattery.ENERGYTTMAX, battery.energy.getMaxEnergyStored());
       }
     }
     //even if energy fails 
