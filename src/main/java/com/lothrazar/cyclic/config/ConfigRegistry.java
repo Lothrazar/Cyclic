@@ -53,16 +53,16 @@ import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
 import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
 import com.lothrazar.cyclic.enchant.BeheadingEnchant;
-import com.lothrazar.cyclic.enchant.CurseEnchant;
 import com.lothrazar.cyclic.enchant.DisarmEnchant;
-import com.lothrazar.cyclic.enchant.ElytraLaunchEnchant;
 import com.lothrazar.cyclic.enchant.EnderPearlEnchant;
 import com.lothrazar.cyclic.enchant.ExcavationEnchant;
+import com.lothrazar.cyclic.enchant.GloomCurseEnchant;
 import com.lothrazar.cyclic.enchant.GrowthEnchant;
 import com.lothrazar.cyclic.enchant.LastStandEnchant;
 import com.lothrazar.cyclic.enchant.LifeLeechEnchant;
 import com.lothrazar.cyclic.enchant.MagnetEnchant;
-import com.lothrazar.cyclic.enchant.MultishotEnchant;
+import com.lothrazar.cyclic.enchant.MultiBowEnchant;
+import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
 import com.lothrazar.cyclic.enchant.SteadyEnchant;
@@ -107,9 +107,9 @@ public class ConfigRegistry {
   private static ForgeConfigSpec CLIENT_CONFIG;
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
-  private static final List<String> UNCRAFT_IGNORE_ITEMS = new ArrayList<>();
+  private static final List<String> IGNORE_LIST_UNCRAFTER = new ArrayList<>();
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
-  private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
+  private static final List<String> IGNORE_RECIPES_UNCRAFTER = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final List<String> ENDERAPPLE = new ArrayList<>();
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
@@ -154,27 +154,50 @@ public class ConfigRegistry {
     BEHEADING.add("minecraft:endermite:MHF_Endermite");
     //
     //most of these are ported direct from 1.12 defaults, idk if these mods or items exist anymore
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:elytra");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:tipped_arrow");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:magma_block");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:stick");
-    UNCRAFT_IGNORE_ITEMS.add("minecraft:*_dye"); //getting flowers etc feels bad 
-    UNCRAFT_IGNORE_ITEMS.add("spectrite:spectrite_arrow");
-    UNCRAFT_IGNORE_ITEMS.add("spectrite:spectrite_arrow_special");
-    UNCRAFT_IGNORE_ITEMS.add("techreborn:uumatter");
-    UNCRAFT_IGNORE_ITEMS.add("projecte:*");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:elytra");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:tipped_arrow");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:magma_block");
+    IGNORE_LIST_UNCRAFTER.add("minecraft:stick");
+    IGNORE_LIST_UNCRAFTER.add("spectrite:spectrite_arrow");
+    IGNORE_LIST_UNCRAFTER.add("spectrite:spectrite_arrow_special");
+    IGNORE_LIST_UNCRAFTER.add("techreborn:uumatter");
+    IGNORE_LIST_UNCRAFTER.add("projecte:*");
     //a
-    UNCRAFT_RECIPE_IDS.add("botania:cobweb");
-    UNCRAFT_RECIPE_IDS.add("minecraft:magma_cream");
-    UNCRAFT_RECIPE_IDS.add("minecraft:beacon");
-    UNCRAFT_RECIPE_IDS.add("minecraft:stick_from_bamboo_item");
-    UNCRAFT_RECIPE_IDS.add("minecraft:netherite_ingot_from_netherite_block");
-    UNCRAFT_RECIPE_IDS.add("mysticalagriculture:essence*");
-    UNCRAFT_RECIPE_IDS.add("mysticalagriculture:farmland_till");
-    UNCRAFT_RECIPE_IDS.add("refinedstorage:coloring_recipes*");
-    UNCRAFT_RECIPE_IDS.add("forcecraft:transmutation*");
-    UNCRAFT_RECIPE_IDS.add("cyclic:fireball");
-    UNCRAFT_RECIPE_IDS.add("cyclic:shapeless/spark");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:white_dye_from_lily_of_the_valley");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:orange_dye_from_orange_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:magenta_dye_from_allium");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:magenta_dye_from_lilac");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_blue_dye_from_blue_orchid");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:yellow_dye_from_sunflower");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:yellow_dye_from_dandelion");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:pink_dye_from_peony");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:pink_dye_from_pink_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_gray_dye_from_oxeye_daisy");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_gray_dye_from_azure_bluet");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:light_gray_dye_from_white_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:blue_dye_from_cornflower");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:red_dye_from_poppy");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:red_dye_from_rose_bush");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:red_dye_from_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:black_dye_from_wither_rose");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:blue_dye");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:black_dye");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:brown_dye");
+    IGNORE_RECIPES_UNCRAFTER.add("botania:cobweb");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:magma_cream");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:beacon");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:stick_from_bamboo_item");
+    IGNORE_RECIPES_UNCRAFTER.add("minecraft:netherite_ingot_from_netherite_block");
+    IGNORE_RECIPES_UNCRAFTER.add("mysticalagriculture:essence*");
+    IGNORE_RECIPES_UNCRAFTER.add("mysticalagriculture:farmland_till");
+    IGNORE_RECIPES_UNCRAFTER.add("refinedstorage:coloring_recipes*");
+    IGNORE_RECIPES_UNCRAFTER.add("forcecraft:transmutation*");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_purple_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_absalon_tulip");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_cyan");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:flower_lime_carnation");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:fireball");
+    IGNORE_RECIPES_UNCRAFTER.add("cyclic:shapeless/spark");
     //
     TRANSPORTBAG.addAll(Arrays.asList(
         //legacy
@@ -209,18 +232,17 @@ public class ConfigRegistry {
         it -> it instanceof String);
     BeheadingEnchant.PERCDROP = CFG.comment("Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
     BeheadingEnchant.PERCPERLEVEL = CFG.comment("Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
-    CurseEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(CurseEnchant.ID + ".enabled", true);
+    GloomCurseEnchant.CFG = CFG.comment("(Gloom) Set false to stop enchantment from working").define(GloomCurseEnchant.ID + ".enabled", true);
     DisarmEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
     ExcavationEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
     GrowthEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
     GrowthEnchant.RADIUSFACTOR = CFG.comment("Radius per level.  size around player to perform growth logic").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
-    CurseEnchant.CFG = CFG.comment("Set false to disable enchantment").define(CurseEnchant.ID + ".enabled", true);
     DisarmEnchant.CFG = CFG.comment("Set false to disable enchantment").define(DisarmEnchant.ID + ".enabled", true);
     ExcavationEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ExcavationEnchant.ID + ".enabled", true);
-    ElytraLaunchEnchant.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(ElytraLaunchEnchant.ID + ".enabled", true);
+    MultiJumpEnchant.CFG = CFG.comment("(Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
     LifeLeechEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
     MagnetEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
-    MultishotEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(MultishotEnchant.ID + ".enabled", true);
+    MultiBowEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(MultiBowEnchant.ID + ".enabled", true);
     EnderPearlEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(EnderPearlEnchant.ID + ".enabled", true);
     QuickdrawEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(QuickdrawEnchant.ID + ".enabled", true);
     ReachEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(ReachEnchant.ID + ".enabled", true);
@@ -420,7 +442,7 @@ public class ConfigRegistry {
     BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
     CFG.push("ender_shelf");
-    EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
+    EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 256, 1, 1024);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
     CFG.push("sprinkler");
@@ -457,12 +479,12 @@ public class ConfigRegistry {
         .defineInRange("frequency", 5, 1, 20);
     CFG.pop();
     CFG.push("uncrafter");
-    TileUncraft.IGNORE_NBT = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
+    TileUncraft.NBT_IGNORED = CFG.comment("When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  "
         + "For example, if false it will not uncraft damaged or enchanted items")
         .define("nbt_ignored", false);
-    TileUncraft.IGNORELIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", UNCRAFT_IGNORE_ITEMS, it -> it instanceof String);
-    TileUncraft.IGNORELIST_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
-        .defineList("ignore_recipes", UNCRAFT_RECIPE_IDS, it -> it instanceof String);
+    TileUncraft.IGNORE_LIST = CFG.comment("ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use").defineList("ignore_list", IGNORE_LIST_UNCRAFTER, it -> it instanceof String);
+    TileUncraft.IGNORE_RECIPES = CFG.comment("RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item")
+        .defineList("ignore_recipes", IGNORE_RECIPES_UNCRAFTER, it -> it instanceof String);
     TileUncraft.TIMER = CFG.comment("Ticks used for each uncraft").defineInRange("ticks", 60, 1, 9999);
     CFG.pop(); //uncrafter
     CFG.pop(); //blocks

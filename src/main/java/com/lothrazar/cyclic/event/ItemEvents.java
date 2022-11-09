@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.enchant.MultishotEnchant;
+import com.lothrazar.cyclic.enchant.MultiBowEnchant;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.animal.ItemHorseEnder;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
@@ -129,7 +129,7 @@ public class ItemEvents {
   @SubscribeEvent
   public void onArrowLooseEvent(ArrowLooseEvent event) {
     //this event is only used for multishot enchantment 
-    if (!MultishotEnchant.CFG.get()) {
+    if (!MultiBowEnchant.CFG.get()) {
       return;
     }
     ItemStack stackBow = event.getBow();
@@ -144,8 +144,8 @@ public class ItemEvents {
       Vec3 playerDirection = EntityUtil.lookVector(player.getYRot(), player.getXRot());
       Vec3 left = playerDirection.cross(new Vec3(0, 1, 0));
       Vec3 right = playerDirection.cross(new Vec3(0, -1, 0));
-      MultishotEnchant.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
-      MultishotEnchant.spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
+      MultiBowEnchant.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
+      MultiBowEnchant.spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
     }
   }
 

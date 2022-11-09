@@ -46,10 +46,10 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
 
   static final int MAX = 64000;
   public static IntValue POWERCONF;
-  public static BooleanValue IGNORE_NBT;
+  public static BooleanValue NBT_IGNORED;
   public static ConfigValue<Integer> TIMER;
-  public static ConfigValue<List<? extends String>> IGNORELIST;
-  public static ConfigValue<List<? extends String>> IGNORELIST_RECIPES;
+  public static ConfigValue<List<? extends String>> IGNORE_LIST;
+  public static ConfigValue<List<? extends String>> IGNORE_RECIPES;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
@@ -243,18 +243,18 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       return false;
     }
     //check config
-    List<String> recipes = (List<String>) TileUncraft.IGNORELIST_RECIPES.get();
+    List<String> recipes = (List<String>) TileUncraft.IGNORE_RECIPES.get();
     if (StringParseUtil.isInList(recipes, recipe.getId())) {
       //check the RECIPE id list
       return false;
     }
     ResourceLocation stackKey = ForgeRegistries.ITEMS.getKey(stack.getItem());
-    if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORELIST.get(), stackKey)) {
+    if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORE_LIST.get(), stackKey)) {
       //checked the ITEM id list
       return false;
     }
     //both itemstacks are non-empty, and we have enough quantity
-    if (TileUncraft.IGNORE_NBT.get()) {
+    if (TileUncraft.NBT_IGNORED.get()) {
       return true;
     }
     else {

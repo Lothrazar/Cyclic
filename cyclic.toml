@@ -26,7 +26,7 @@
 			enabled = true
 
 		[cyclic.enchantment.launch]
-			#Set false to disable Multi Jump enchantment
+			#(Multijump) Set false to disable Multi Jump enchantment
 			enabled = true
 
 		[cyclic.enchantment.ender]
@@ -74,7 +74,7 @@
 			enabled = true
 
 		[cyclic.enchantment.curse]
-			#Set false to disable enchantment
+			#(Gloom) Set false to stop enchantment from working
 			enabled = true
 
 		[cyclic.enchantment.auto_smelt]
@@ -349,7 +349,7 @@
 			#Range: 1 ~ 256
 			controller_distance = 64
 			#Each shelf has five rows.  Set the number of books stored per row here
-			#Range: 1 ~ 64
+			#Range: 1 ~ 1024
 			books_per_row = 64
 
 		[cyclic.blocks.uncraft]

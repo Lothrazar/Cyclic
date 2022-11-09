@@ -42,7 +42,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ElytraLaunchEnchant extends EnchantmentCyclic {
+public class MultiJumpEnchant extends EnchantmentCyclic {
 
   public static final String ID = "launch";
   public static final int COOLDOWN = 7 * Const.TPS;
@@ -51,7 +51,7 @@ public class ElytraLaunchEnchant extends EnchantmentCyclic {
   public static BooleanValue CFG;
   private static final String NBT_USES = "launchuses";
 
-  public ElytraLaunchEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
+  public MultiJumpEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
   }

@@ -37,12 +37,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
-public class MultishotEnchant extends EnchantmentCyclic {
+public class MultiBowEnchant extends EnchantmentCyclic {
 
   public static final String ID = "multishot";
   public static BooleanValue CFG;
 
-  public MultishotEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
+  public MultiBowEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
   }
 

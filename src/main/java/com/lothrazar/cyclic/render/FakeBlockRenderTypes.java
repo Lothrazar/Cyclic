@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.render;
 
 import java.util.OptionalDouble;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -12,6 +13,8 @@ import net.minecraft.client.renderer.RenderType;
  */
 public class FakeBlockRenderTypes extends RenderType {
 
+  private static final boolean MIPMAP = false;
+  private static final boolean BLUR = false;
   private static final boolean SORT = false;
   private static final boolean CRUMBLING = false;
   private static final int BUFFERSIZE = 256;
@@ -20,20 +23,13 @@ public class FakeBlockRenderTypes extends RenderType {
     super(nameIn, formatIn, drawModeIn, bufferSizeIn, useDelegateIn, needsSortingIn, setupTaskIn, clearTaskIn);
   }
 
-  /**
-   * laser rendering from this MIT project https://github.com/Direwolf20-MC/DireGoo2/blob/master/LICENSE.md
-   * <p>
-   * 1.17 BOOLS are this.affectsCrumbling = p_173182_; this.sortOnUpload = p_173183_;
-   * 
-   * Used by laser and wireless redstone TESR blocks
-   */
   public static final RenderType LASER_MAIN_BEAM = create(ModCyclic.MODID + ":mininglasermainbeam",
       DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
-          .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) //1.17 new
+          .setTextureState(new TextureStateShard(TextureRegistry.BEAM, BLUR, MIPMAP)).setShaderState(ShaderStateShard.POSITION_COLOR_TEX_SHADER)
           .setLayeringState(VIEW_OFFSET_Z_LAYERING)
           .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-          .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+          .setDepthTestState(NO_DEPTH_TEST)
           .setCullState(NO_CULL)
           .setLightmapState(NO_LIGHTMAP)
           .setWriteMaskState(COLOR_WRITE)
