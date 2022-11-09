@@ -1,0 +1,21 @@
+{
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:grass"
+		}
+	],
+	"mix": {
+		"fluid": "cyclic:biomass",
+		"tag": "forge:biomass",
+		"count": 100
+	},
+	"energy": {
+		"rfpertick": 400,
+		"ticks": 160
+	},
+	"result": {
+		"item": "minecraft:tall_grass",
+		"count": 1
+	}
+}

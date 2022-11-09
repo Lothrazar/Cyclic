@@ -1,0 +1,27 @@
+{
+	"type": "cyclic:solidifier",
+	"ingredients": [
+		{
+			"item": "minecraft:dirt"
+		},
+		{
+			"item": "minecraft:dirt"
+		},
+		{
+			"item": "minecraft:dirt"
+		}
+	],
+	"mix": {
+		"fluid": "cyclic:biomass",
+		"tag": "forge:biomass",
+		"count": 1000
+	},
+	"energy": {
+		"rfpertick": 100,
+		"ticks": 300
+	},
+	"result": {
+		"item": "minecraft:moss_block",
+		"count": 3
+	}
+}

@@ -26,7 +26,7 @@
 			enabled = true
 
 		[cyclic.enchantment.launch]
-			#Set false to disable Multi Jump enchantment
+			#(Multi-Jump) Set false to disable Multi Jump enchantment
 			enabled = true
 
 		[cyclic.enchantment.ender]
@@ -46,7 +46,7 @@
 			enabled = true
 
 		[cyclic.enchantment.multishot]
-			#Set false to disable enchantment
+			#(Multi-bow) Set false to disable enchantment
 			enabled = true
 
 		[cyclic.enchantment.beheading]
@@ -74,7 +74,7 @@
 			enabled = true
 
 		[cyclic.enchantment.curse]
-			#Set false to disable enchantment
+			#(Gloom) Set false to disable enchantment
 			enabled = true
 
 		[cyclic.enchantment.auto_smelt]
@@ -349,8 +349,8 @@
 			#Range: 1 ~ 256
 			controller_distance = 64
 			#Each shelf has five rows.  Set the number of books stored per row here
-			#Range: 1 ~ 64
-			books_per_row = 64
+			#Range: 1 ~ 1024
+			books_per_row = 256
 
 		[cyclic.blocks.uncraft]
 			#Power per use uncraft
@@ -390,9 +390,9 @@
 			#Range: 1 ~ 9999
 			ticks = 60
 			#ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use
-			ignore_list = ["minecraft:elytra", "minecraft:tipped_arrow", "minecraft:magma_block", "minecraft:stick", "minecraft:*_dye", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
+			ignore_list = ["minecraft:elytra", "minecraft:tipped_arrow", "minecraft:magma_block", "minecraft:stick", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
 			#RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item
-			ignore_recipes = ["botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*", "cyclic:fireball", "cyclic:shapeless/spark"]
+			ignore_recipes = ["minecraft:white_dye_from_lily_of_the_valley", "minecraft:orange_dye_from_orange_tulip", "minecraft:magenta_dye_from_allium", "minecraft:magenta_dye_from_lilac", "minecraft:light_blue_dye_from_blue_orchid", "minecraft:yellow_dye_from_sunflower", "minecraft:yellow_dye_from_dandelion", "minecraft:pink_dye_from_peony", "minecraft:pink_dye_from_pink_tulip", "minecraft:light_gray_dye_from_oxeye_daisy", "minecraft:light_gray_dye_from_azure_bluet", "minecraft:light_gray_dye_from_white_tulip", "minecraft:blue_dye_from_cornflower", "minecraft:red_dye_from_poppy", "minecraft:red_dye_from_rose_bush", "minecraft:red_dye_from_tulip", "minecraft:black_dye_from_wither_rose", "minecraft:blue_dye", "minecraft:black_dye", "minecraft:brown_dye", "botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*", "cyclic:flower_purple_tulip", "cyclic:flower_absalon_tulip", "cyclic:flower_cyan", "cyclic:flower_lime_carnation", "cyclic:fireball", "cyclic:shapeless/spark"]
 
 		[cyclic.blocks.anti_beacon]
 			#List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)

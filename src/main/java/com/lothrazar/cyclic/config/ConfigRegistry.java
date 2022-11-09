@@ -53,16 +53,16 @@ import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
 import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
 import com.lothrazar.cyclic.enchant.BeheadingEnchant;
-import com.lothrazar.cyclic.enchant.GloomCurseEnchant;
 import com.lothrazar.cyclic.enchant.DisarmEnchant;
-import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
 import com.lothrazar.cyclic.enchant.EnderPearlEnchant;
 import com.lothrazar.cyclic.enchant.ExcavationEnchant;
+import com.lothrazar.cyclic.enchant.GloomCurseEnchant;
 import com.lothrazar.cyclic.enchant.GrowthEnchant;
 import com.lothrazar.cyclic.enchant.LastStandEnchant;
 import com.lothrazar.cyclic.enchant.LifeLeechEnchant;
 import com.lothrazar.cyclic.enchant.MagnetEnchant;
 import com.lothrazar.cyclic.enchant.MultiBowEnchant;
+import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
 import com.lothrazar.cyclic.enchant.SteadyEnchant;
@@ -445,7 +445,7 @@ public class ConfigRegistry {
     BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
     CFG.push("ender_shelf");
-    EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
+    EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 256, 1, 1024);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
     CFG.push("sprinkler");
