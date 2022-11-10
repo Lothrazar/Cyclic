@@ -120,6 +120,7 @@ import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmVoid;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemCharmWater;
 import com.lothrazar.cyclicmagic.item.equipbauble.ItemGloveClimb;
 import com.lothrazar.cyclicmagic.item.findspawner.ItemProjectileDungeon;
+import com.lothrazar.cyclicmagic.item.fishing.ItemProjectileFishing;
 import com.lothrazar.cyclicmagic.item.homingmissile.ItemMagicMissile;
 import com.lothrazar.cyclicmagic.item.lightningmagic.ItemProjectileLightning;
 import com.lothrazar.cyclicmagic.item.locationgps.ItemLocationGps;
@@ -203,6 +204,7 @@ public class CyclicContent {
     content.add(new ItemPaperCarbon());
     content.add(new ItemCaveFinder());
     content.add(new ItemProjectileDungeon());
+    content.add(new ItemProjectileFishing());
     content.add(new ItemProjectileLightning());
     content.add(new ItemCyclicWand());
     content.add(new ItemObsShears());

@@ -23,26 +23,29 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.item.fishing;
 
+import com.lothrazar.cyclicmagic.IContent;
 import com.lothrazar.cyclicmagic.data.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.guide.GuideCategory;
 import com.lothrazar.cyclicmagic.item.core.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class ItemProjectileFishing extends BaseItemProjectile implements IHasRecipe {
+public class ItemProjectileFishing extends BaseItemProjectile implements IHasRecipe, IContent {
 
   public ItemProjectileFishing() {
     super();
-    this.setMaxDamage(300);
-    this.setMaxStackSize(1);
   }
 
   @Override
@@ -52,24 +55,43 @@ public class ItemProjectileFishing extends BaseItemProjectile implements IHasRec
 
   @Override
   public IRecipe addRecipe() {
-    return RecipeRegistry.addShapedOreRecipe(new ItemStack(this),
-        "ggg",
-        "qfg",
-        "fqg",
-        'q', "gemQuartz",
-        'f', Items.FISHING_ROD,
-        'g', "gunpowder");
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32),
+        "enderpearl",
+        "string",
+        "gunpowder");
   }
 
   @Override
   public void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     this.doThrow(world, player, hand, new EntityFishingBolt(world, player));
-    UtilItemStack.damageItem(player, held);
+    UtilPlayer.decrStackSize(player, hand);
   }
 
   @Override
   public SoundEvent getSound() {
-    // TODO Auto-generated method stub
     return SoundEvents.ENTITY_EGG_THROW;
+  }
+
+  @Override
+  public void syncConfig(Configuration config) {
+    enabled = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, getContentName() + Const.ConfigCategory.contentDefaultText);
+  }
+
+  @Override
+  public String getContentName() {
+    return "ender_fishing";
+  }
+
+  @Override
+  public void register() {
+    ItemRegistry.register(this, getContentName(), GuideCategory.ITEMTHROW);
+    EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
+  }
+
+  private boolean enabled;
+
+  @Override
+  public boolean enabled() {
+    return enabled;
   }
 }

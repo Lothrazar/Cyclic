@@ -9,8 +9,8 @@
     "1.10.2-recommended": "1.10.30",
     "1.11.2-latest": "1.5.11",
     "1.11.2-recommended": "1.5.11",
-    "1.12.2-latest": "1.20.12",
-    "1.12.2-recommended": "1.20.12"
+    "1.12.2-latest": "1.20.14",
+    "1.12.2-recommended": "1.20.14"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -349,5 +349,6 @@
 	,"1.20.11":"Fix Peat Farm block not working if the config is set to not require power (specifically setting I:peat_farm=0 )"
   	,"1.20.12":"Prevent bad/invalid entity NBT data from crashing while mob is being captured by an empty Monster Ball.  Fix excavate enchant errors on high max levels, and reduced size calculation to mc1.16.5 formula (26 + 8*LEVEL). Excavate is no longer compatible with Efficiency. Changed Structure Builder Tunnel (Circle Vertical) renamed and updated to match modern minecraft versions. Remove Saturation potion use logspam. Fix Xp Pylon server->client desync display"
   	,"1.20.13":"#2189 new forester configs to control which logs, leaves, and saplings are used by the machine, see the bottom of cyclicmagic.cfg"
+  	,"1.20.14":"#2135 Port Alluring Fishhook item (cyclic:ender_fishing) from 1.10.2 to 1.12.2"
   }
 }
