@@ -49,7 +49,9 @@ public class PotionRegistry {
     final ItemStack awkwardPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD);
     final ItemStack thickPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.THICK);
     // Potion recipes 
+    //    if (PotionRecipeConfig.haste()) {
     basicBrewing(awkwardPotion.copy(), PotionRegistry.HASTE.get(), Items.EMERALD);
+    //    }
     basicBrewing(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.HASTE.get()), PotionRegistry.STRONG_HASTE.get(), Items.REDSTONE);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.STUN.get(), Items.CLAY);
     basicBrewing(awkwardPotion.copy(), PotionRegistry.SWIMSPEED.get(), Items.DRIED_KELP_BLOCK);
@@ -74,5 +76,13 @@ public class PotionRegistry {
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {
     BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(inputPot, Ingredient.of(item), PotionUtils.setPotion(new ItemStack(Items.POTION), pot)));
+  }
+
+  public static class PotionRecipeConfig {
+
+    public static boolean haste() {
+      // TODO Auto-generated method stub
+      return false;
+    }
   }
 }
