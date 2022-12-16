@@ -94,6 +94,7 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
+import com.lothrazar.cyclic.registry.PotionRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -225,6 +226,28 @@ public class ConfigRegistry {
 
   private static void initConfig() {
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
+    CFG.comment(WALL, " Configs make sure players will not be able to craft any in survival "
+        + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
+        .push("potion");
+    PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment("Set false to disable the base recipe").define("antigravity.enabled", true);
+    PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment("Set false to disable the base recipe").define("attack_range.enabled", true);
+    PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment("Set false to disable the base recipe").define("blind.enabled", true);
+    PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment("Set false to disable the base recipe").define("butterfingers.enabled", true);
+    PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment("Set false to disable the base recipe").define("flight.enabled", true);
+    PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment("Set false to disable the base recipe").define("frost_walker.enabled", true);
+    PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment("Set false to disable the base recipe").define("gravity.enabled", true);
+    PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment("Set false to disable the base recipe").define("haste.enabled", true);
+    PotionRegistry.PotionRecipeConfig.HUNGER = CFG.comment("Set false to disable the base recipe").define("hunger.enabled", true);
+    PotionRegistry.PotionRecipeConfig.LEVITATION = CFG.comment("Set false to disable the base recipe").define("levitation.enabled", true);
+    PotionRegistry.PotionRecipeConfig.MAGNETIC = CFG.comment("Set false to disable the base recipe").define("magnetic.enabled", true);
+    PotionRegistry.PotionRecipeConfig.REACH_DISTANCE = CFG.comment("Set false to disable the base recipe").define("reach_distance.enabled", true);
+    PotionRegistry.PotionRecipeConfig.RESISTANCE = CFG.comment("Set false to disable the base recipe").define("resistance.enabled", true);
+    PotionRegistry.PotionRecipeConfig.STUN = CFG.comment("Set false to disable the base recipe").define("stun.enabled", true);
+    PotionRegistry.PotionRecipeConfig.SWIMSPEED = CFG.comment("Set false to disable the base recipe").define("swimspeed.enabled", true);
+    PotionRegistry.PotionRecipeConfig.SNOWWALK = CFG.comment("Set false to disable the base recipe").define("snowwalk.enabled", true);
+    PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment("Set false to disable the base recipe").define("waterwalk.enabled", true);
+    PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment("Set false to disable the base recipe").define("wither.enabled", true);
+    CFG.pop();
     CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
         .push("enchantment");
     ////////////////////////////////////////////////////////////////// enchantment

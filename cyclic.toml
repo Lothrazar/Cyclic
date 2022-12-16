@@ -5,6 +5,83 @@
 [cyclic]
 
 	#####################################################################################
+	# Configs make sure players will not be able to craft any in survival  (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)
+	#####################################################################################
+	[cyclic.potion]
+
+		[cyclic.potion.antigravity]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.flight]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.blind]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.attack_range]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.reach_distance]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.butterfingers]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.waterwalk]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.haste]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.stun]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.resistance]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.hunger]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.snowwalk]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.gravity]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.frost_walker]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.magnetic]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.wither]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.levitation]
+			#Set false to disable the base recipe
+			enabled = true
+
+		[cyclic.potion.swimspeed]
+			#Set false to disable the base recipe
+			enabled = true
+
+	#####################################################################################
 	# Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)
 	#####################################################################################
 	[cyclic.enchantment]
