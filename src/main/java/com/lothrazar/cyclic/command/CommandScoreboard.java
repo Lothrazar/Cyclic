@@ -34,6 +34,32 @@ public class CommandScoreboard {
     return i;
   }
 
+  // orandom for darkosto
+  // /cyclic scoreboard orandom @p testmin testmax abc 
+  // use scoreboard setup and /cyclic scoreboard test to debug
+  public static int scoreboardObjectiveRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, Objective omin, Objective omax) {
+    Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
+    int i = 0;
+    for (String s : scoreHolderTargets) {
+      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
+      Score scoreMin = scoreboard.getOrCreatePlayerScore(s, omin);
+      Score scoreMax = scoreboard.getOrCreatePlayerScore(s, omax);
+      int min = scoreMin.getScore();
+      int max = scoreMax.getScore();
+      ModCyclic.LOGGER.info("objective dependency detected: " + min + " ?<? " + max);
+      if (min < max) {
+        score.setScore(CommandRegistry.RAND.nextInt(min, max));
+      }
+      else {
+        //either equal, or max is lower than min
+        score.setScore(min);
+      }
+      ModCyclic.LOGGER.info("objective rng " + score.getScore());
+      i += score.getScore();
+    }
+    return i;
+  }
+
   public static int scoreboardRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int min, int max) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
     int i = 0;

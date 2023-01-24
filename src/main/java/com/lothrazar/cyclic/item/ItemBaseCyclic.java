@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.capabilities.item.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -60,7 +61,7 @@ public class ItemBaseCyclic extends Item {
     world.addFreshEntity(ball);
   }
 
-  protected ItemStack findAmmo(Player player, Item item) {
+  public static ItemStack findAmmo(Player player, Item item) {
     for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
       ItemStack itemstack = player.getInventory().getItem(i);
       if (itemstack.getItem() == item) {
@@ -70,12 +71,31 @@ public class ItemBaseCyclic extends Item {
     return ItemStack.EMPTY;
   }
 
+  public static List<ItemStack> findAmmos(Player player, Item item) {
+    List<ItemStack> list = new ArrayList<>();
+    for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
+      ItemStack itemstack = player.getInventory().getItem(i);
+      if (itemstack.getItem() == item) {
+        list.add(itemstack);
+      }
+    }
+    return list;
+  }
+
+  /**
+   * 1 item(torch) per durability default, override for higher
+   *
+   */
+  public int getRepairPerItem() {
+    return 1;
+  }
+
   public void tryRepairWith(ItemStack stackToRepair, Player player, Item target) {
     if (stackToRepair.isDamaged()) {
-      ItemStack torches = this.findAmmo(player, target);
+      ItemStack torches = findAmmo(player, target);
       if (!torches.isEmpty()) {
         torches.shrink(1);
-        ItemStackUtil.repairItem(stackToRepair);
+        ItemStackUtil.repairItem(stackToRepair, getRepairPerItem());
       }
     }
   }

@@ -75,22 +75,24 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     
+    // optional compat: jei plugin for custom recipes
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+    
+    // optional compat: many items useable in curios slots
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 	
+	// optional compat: guidebook
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
     
-    // mods that have optional/soft integration
-  //  runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3671594")
-  //  runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3820697")
-  //  runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027")
-  //  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3999153")
-    
-    //TODO: add soft ?
-  //  runtimeOnly fg.deobf("curse.maven:roots-classic-295780:3939973")
-
-
+    // other optional integration
+    runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3671594") // recipes
+    runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3820697") // lang file 
+    runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027") // recipes and datatags
+    runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3999153") // recipes and datatags
+    runtimeOnly fg.deobf("curse.maven:roots-classic-295780:3939973") //
+    runtimeOnly fg.deobf("curse.maven:expandability-465066:3678612")
+    runtimeOnly fg.deobf("curse.maven:artifacts-312353:3984105") // everlasting beef compat
 
 	//added for testing
   //  runtimeOnly fg.deobf("curse.maven:brutal-bosses-dungeon-557999:3916875")
@@ -134,8 +136,8 @@ repositories {
   maven { url 'https://dvs1.progwml6.com/files/maven/'  }
   maven { url 'https://maven.theillusivec4.top/'    }
   maven { url 'https://maven.blamejared.com' }    
-  maven { url = "https://modmaven.dev"  }    
- // maven { url 'https://www.cursemaven.com'  }
+  maven { url 'https://modmaven.dev'  }    
+  maven { url 'https://www.cursemaven.com'  }
 }
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {

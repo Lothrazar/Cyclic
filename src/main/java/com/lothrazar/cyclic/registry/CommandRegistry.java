@@ -199,6 +199,19 @@ public class CommandRegistry {
                                       IntegerArgumentType.getInteger(x, ARG_MIN),
                                       IntegerArgumentType.getInteger(x, ARG_MAX));
                                 }))))))
+            //test:
+            // scoreboard 
+            .then(Commands.literal("orandom")
+                .then(Commands.argument(ARG_TARGETS, ScoreHolderArgument.scoreHolders())
+                    .then(Commands.argument("omin", StringArgumentType.string())
+                        .then(Commands.argument("omax", StringArgumentType.string())
+                            .then(Commands.argument(ARG_OBJECTIVE, StringArgumentType.string())
+                                .executes(x -> {
+                                  return CommandScoreboard.scoreboardObjectiveRng(x, ScoreHolderArgument.getNamesWithDefaultWildcard(x, ARG_TARGETS),
+                                      ObjectiveArgument.getObjective(x, ARG_OBJECTIVE),
+                                      ObjectiveArgument.getObjective(x, "omin"),
+                                      ObjectiveArgument.getObjective(x, "omax"));
+                                }))))))
             .then(Commands.literal(FORK_ADD)
                 .then(Commands.argument(ARG_TARGETS, ScoreHolderArgument.scoreHolders())
                     .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer())
