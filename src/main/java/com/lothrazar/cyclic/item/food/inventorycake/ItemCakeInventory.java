@@ -50,8 +50,10 @@ public class ItemCakeInventory extends ItemBaseCyclic {
     Player player = (Player) entityLiving;
     if (!worldIn.isClientSide) {
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
-      datFile.storageVisible = !datFile.storageVisible;
-      ChatUtil.addServerChatMessage(player, "cyclic.unlocks.extended");
+      if (!datFile.storageVisible) {
+        datFile.storageVisible = true;
+        ChatUtil.addServerChatMessage(player, "cyclic.unlocks.extended");
+      }
     }
     return super.finishUsingItem(stack, worldIn, entityLiving);
   }
