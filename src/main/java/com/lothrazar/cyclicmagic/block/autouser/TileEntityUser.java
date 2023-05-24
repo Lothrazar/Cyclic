@@ -451,7 +451,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
 
   private void verifyUuid(World world) {
     if (uuid == null) {
-      uuid = UUID.randomUUID();
+      // uuid = UUID.randomUUID();
+      uuid = UUID.fromString("9cebd559-0e72-46b4-8e26-7729cf864315");
       IBlockState state = world.getBlockState(this.pos);
       world.notifyBlockUpdate(pos, state, state, 3);
     }

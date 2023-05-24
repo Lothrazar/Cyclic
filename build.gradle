@@ -1,7 +1,8 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
+        maven { url = "https://files.minecraftforge.net/maven" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
@@ -61,7 +62,7 @@ repositories {
     maven { url "https://maven.theillusivec4.top/"    }
     maven { url "https://maven.blamejared.com" }
     maven { url "https://maven.blamejared.com/vazkii" }
-    maven { url "http://minecraft.curseforge.com/api/maven/"    }
+    maven { url "https://minecraft.curseforge.com/api/maven/"    }
     maven { url 'https://www.cursemaven.com'  }
     maven { url "https://maven.thiakil.com/"    } 
 	maven {	url "https://maven.mcmoddev.com"	}
@@ -70,10 +71,10 @@ repositories {
 	//	url "http://tehnut.info/maven/"
 	//}
 
-	maven { url "http://maven.amadornes.com/" }
+	maven { url "https://maven.amadornes.com/" }
 	ivy {
 		name 'asie dependency mirror'
-		artifactPattern "http://asie.pl/javadeps/[module]-[revision](-[classifier]).[ext]"
+		artifactPattern "https://asie.pl/javadeps/[module]-[revision](-[classifier]).[ext]"
 	}
 }
 
@@ -110,16 +111,4 @@ processResources {
     }
 }
 
-
 build.dependsOn signJar
-
-task copyJar(type: Copy) {
-    from jar
-    into "${dist_folder}"
-}
-
-build.finalizedBy copyJar
-
-cleanJar {
-  delete 'build/libs'
-}
