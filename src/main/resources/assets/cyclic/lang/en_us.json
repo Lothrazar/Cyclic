@@ -612,7 +612,7 @@
   "guide.category.consume": "Consumables",
   "guide.category.consume.desc": "These are single use items; either consumed by the player or a targeted creature.",
   "guide.category.machines": "Machines",
-  "guide.category.machines.desc": "Machines are active tile-entity blocks.  They usually have an inventory screen, and consume consume energy or fluids.  ",
+  "guide.category.machines.desc": "Machines are active tile-entity blocks.  They usually have an inventory screen, and consume energy or fluids.  ",
   "guide.category.enchantments": "Enchantments",
   "guide.category.enchantments.desc": "Enchantments can all be applied normally through anvils or enchanting tables.  ",
   "guide.category.gear": "Gear",
