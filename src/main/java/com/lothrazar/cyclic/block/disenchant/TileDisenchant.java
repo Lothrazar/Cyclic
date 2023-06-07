@@ -31,8 +31,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
@@ -184,7 +184,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public int getEnergy() {
-    return this.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return this.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override
@@ -210,7 +210,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
+    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {

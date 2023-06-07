@@ -23,8 +23,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
@@ -118,14 +118,12 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
     }
   }
 
-  private ArrayList<Fluid> indexFluidsFromRecipes(){
+  private ArrayList<Fluid> indexFluidsFromRecipes() {
     List<RecipeGeneratorFluid> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
     ArrayList<Fluid> fluids = new ArrayList<>();
-
-    for (RecipeGeneratorFluid recipe : recipes){
+    for (RecipeGeneratorFluid recipe : recipes) {
       fluids.add(recipe.getRecipeFluid().getFluid());
     }
-
     return fluids;
   }
 
@@ -167,7 +165,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == ForgeCapabilities.ENERGY) {
       return energyCap.cast();
     }
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {

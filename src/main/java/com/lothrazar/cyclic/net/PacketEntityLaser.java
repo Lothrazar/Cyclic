@@ -31,7 +31,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -56,7 +56,7 @@ public class PacketEntityLaser extends PacketBaseCyclic {
       //validate also covers delay
       ItemStack stack = LaserItem.getIfHeld(sender);
       if (PacketEntityLaser.canShoot(sender, target, stack)) {
-        IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
         if (storage != null) {
           float dmg = message.crosshair ? LaserItem.DMG_CLOSE : LaserItem.DMG_FAR;
           if (target.hurt(DamageSource.indirectMagic(sender, sender), dmg)) {
@@ -79,7 +79,7 @@ public class PacketEntityLaser extends PacketBaseCyclic {
     if (stack.isEmpty()) {
       return false;
     }
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     return (storage != null && storage.extractEnergy(LaserItem.COST, true) == LaserItem.COST);
     //    int dmgCooldown = LaserItem.getDamageCooldown(lasercannon);
     //    //past time plus interval equals now

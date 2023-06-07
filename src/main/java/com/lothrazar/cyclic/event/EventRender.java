@@ -43,7 +43,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -182,7 +182,7 @@ public class EventRender {
     /****************** end rendering cubes. start laser beam render ********************/
     stack = LaserItem.getIfHeld(player);
     if (!stack.isEmpty() && player.isUsingItem()) {
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       if (storage == null || storage.getEnergyStored() < LaserItem.COST) {
         return;
       }

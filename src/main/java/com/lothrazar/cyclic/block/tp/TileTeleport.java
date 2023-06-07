@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -75,7 +75,7 @@ public class TileTeleport extends TileBlockEntityCyclic implements MenuProvider 
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == ForgeCapabilities.ENERGY) {
       return energyCap.cast();
     }
     return super.getCapability(cap, side);

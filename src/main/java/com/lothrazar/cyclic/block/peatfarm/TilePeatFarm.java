@@ -51,7 +51,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
@@ -255,7 +255,7 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return fluidCap.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == ForgeCapabilities.ENERGY) {
       return energyCap.cast();
     }
     return super.getCapability(cap, side);

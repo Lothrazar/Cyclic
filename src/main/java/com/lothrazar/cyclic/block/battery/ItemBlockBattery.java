@@ -11,8 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class ItemBlockBattery extends BlockItem {
@@ -26,7 +26,7 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public boolean isBarVisible(ItemStack stack) {
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     return storage != null && storage.getEnergyStored() > 0;
   }
 
@@ -34,7 +34,7 @@ public class ItemBlockBattery extends BlockItem {
   public int getBarWidth(ItemStack stack) {
     float current = 0;
     float max = 0;
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (storage != null) {
       current = storage.getEnergyStored();
       max = storage.getMaxEnergyStored();
@@ -56,7 +56,7 @@ public class ItemBlockBattery extends BlockItem {
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     int current = 0;
     int energyttmax = 0;
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (storage != null) {
       current = storage.getEnergyStored();
       energyttmax = storage.getMaxEnergyStored();
@@ -80,7 +80,7 @@ public class ItemBlockBattery extends BlockItem {
   @Override
   public CompoundTag getShareTag(ItemStack stack) {
     CompoundTag nbt = stack.getOrCreateTag();
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     //on server  this runs . also has correct values.
     //set data for sync to client
     if (storage != null) {

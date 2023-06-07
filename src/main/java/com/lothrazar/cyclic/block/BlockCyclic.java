@@ -31,7 +31,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -191,7 +191,7 @@ public class BlockCyclic extends BaseEntityBlock {
   }
 
   public static boolean isEnergy(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-    return hasCapabilityDir(facing, world, facingPos, CapabilityEnergy.ENERGY);
+    return hasCapabilityDir(facing, world, facingPos, ForgeCapabilities.ENERGY);
   }
 
   private static boolean hasCapabilityDir(Direction facing, LevelAccessor world, BlockPos facingPos, Capability<?> cap) {

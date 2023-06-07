@@ -17,7 +17,7 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class WandMissileItem extends ItemBaseCyclic {
@@ -56,7 +56,7 @@ public class WandMissileItem extends ItemBaseCyclic {
       }
     }
     if (!world.isClientSide) {
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {
         //we can afford it

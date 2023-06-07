@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -40,7 +40,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
+      return stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     ItemStack slotItem = this.batterySlots.getStackInSlot(0);
-    IEnergyStorage itemStackStorage = slotItem.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    IEnergyStorage itemStackStorage = slotItem.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (itemStackStorage != null) {
       int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE.get(), true);
       int accepted = itemStackStorage.receiveEnergy(extracted, true);
@@ -153,7 +153,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == ForgeCapabilities.ENERGY) {
       return energyCap.cast();
     }
     return super.getCapability(cap, side);

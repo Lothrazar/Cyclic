@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockBattery extends BlockCyclic {
@@ -55,7 +55,7 @@ public class BlockBattery extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
     if (ent instanceof TileBattery battery) {
-      IEnergyStorage newStackCap = newStackBattery.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      IEnergyStorage newStackCap = newStackBattery.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       if (newStackCap instanceof CustomEnergyStorage) {
         ((CustomEnergyStorage) newStackCap).setEnergy(battery.energy.getEnergyStored());
       }
@@ -86,7 +86,7 @@ public class BlockBattery extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
-    IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
       current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
     }
@@ -94,7 +94,7 @@ public class BlockBattery extends BlockCyclic {
       current = storage.getEnergyStored();
     }
     TileBattery container = (TileBattery) world.getBlockEntity(pos);
-    CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+    CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (storageTile != null) {
       storageTile.setEnergy(current);
     }

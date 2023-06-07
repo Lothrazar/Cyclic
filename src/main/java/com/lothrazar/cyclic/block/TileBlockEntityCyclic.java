@@ -49,7 +49,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -389,7 +389,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (this.level.isClientSide) {
       return false; //important to not desync cables
     }
-    IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
+    IEnergyStorage handlerHere = this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
     if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
       return false;
     }
@@ -401,7 +401,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (tileTarget == null) {
       return false;
     }
-    IEnergyStorage handlerOutput = tileTarget.getCapability(CapabilityEnergy.ENERGY, themFacingMe).orElse(null);
+    IEnergyStorage handlerOutput = tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
@@ -512,11 +512,11 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   public int getEnergy() {
-    return this.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return this.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   public void setEnergy(int value) {
-    IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+    IEnergyStorage energ = this.getCapability(ForgeCapabilities.ENERGY).orElse(null);
     if (energ != null && energ instanceof CustomEnergyStorage) {
       ((CustomEnergyStorage) energ).setEnergy(value);
     }
@@ -525,7 +525,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
     if (level.isClientSide == false && level.getGameTime() % 20 == 0) { //if serverside then 
-      IEnergyStorage energ = this.getCapability(CapabilityEnergy.ENERGY).orElse(null);
+      IEnergyStorage energ = this.getCapability(ForgeCapabilities.ENERGY).orElse(null);
       if (energ != null) {
         PacketRegistry.sendToAllClients(this.getLevel(), new PacketEnergySync(this.getBlockPos(), energ.getEnergyStored()));
       }

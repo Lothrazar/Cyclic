@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class ItemBaseCyclic extends Item {
@@ -122,7 +122,7 @@ public class ItemBaseCyclic extends Item {
   @Override
   public boolean isBarVisible(ItemStack stack) {
     if (hasEnergy) {
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       return storage != null; // && storage.getEnergyStored() > 0;
     }
     return super.isBarVisible(stack);
@@ -135,7 +135,7 @@ public class ItemBaseCyclic extends Item {
     if (this.hasEnergy) {
       int current = 0;
       int energyttmax = 0;
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       if (storage != null) {
         current = storage.getEnergyStored();
         energyttmax = storage.getMaxEnergyStored();
@@ -149,7 +149,7 @@ public class ItemBaseCyclic extends Item {
     if (hasEnergy) {
       float current = 0;
       float max = 0;
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       if (storage != null) {
         current = storage.getEnergyStored();
         max = storage.getMaxEnergyStored();
@@ -175,7 +175,7 @@ public class ItemBaseCyclic extends Item {
   public CompoundTag getShareTag(ItemStack stack) {
     if (hasEnergy) {
       CompoundTag nbt = stack.getOrCreateTag();
-      IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       //on server  this runs . also has correct values.
       //set data for sync to client
       if (storage != null) {

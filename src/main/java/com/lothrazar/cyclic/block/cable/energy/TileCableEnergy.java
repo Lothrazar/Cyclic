@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergy extends TileBlockEntityCyclic {
@@ -70,7 +70,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
     BlockPos posTarget = this.worldPosition.relative(extractSide);
     BlockEntity tile = level.getBlockEntity(posTarget);
     if (tile != null) {
-      IEnergyStorage itemHandlerFrom = tile.getCapability(CapabilityEnergy.ENERGY, extractSide.getOpposite()).orElse(null);
+      IEnergyStorage itemHandlerFrom = tile.getCapability(ForgeCapabilities.ENERGY, extractSide.getOpposite()).orElse(null);
       if (itemHandlerFrom != null) {
         //ok go
         //
@@ -114,7 +114,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == ForgeCapabilities.ENERGY) {
       if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
         return energyCap.cast();
       }
