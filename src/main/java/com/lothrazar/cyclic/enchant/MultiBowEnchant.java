@@ -91,15 +91,15 @@ public class MultiBowEnchant extends EnchantmentCyclic {
     if (f == 1.0F) {
       abstractarrowentity.setCritArrow(true);
     }
-    int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, stackBow);
+    int j = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.POWER_ARROWS, stackBow);
     if (j > 0) {
       abstractarrowentity.setBaseDamage(abstractarrowentity.getBaseDamage() + j * 0.5D + 0.5D);
     }
-    int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, stackBow);
+    int k = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PUNCH_ARROWS, stackBow);
     if (k > 0) {
       abstractarrowentity.setKnockback(k);
     }
-    if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, stackBow) > 0) {
+    if (EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FLAMING_ARROWS, stackBow) > 0) {
       abstractarrowentity.setSecondsOnFire(100);
     }
     worldIn.addFreshEntity(abstractarrowentity);

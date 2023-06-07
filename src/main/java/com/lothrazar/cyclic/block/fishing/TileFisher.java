@@ -153,7 +153,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
       if (lootDrops != null && lootDrops.size() > 0) {
         ItemStackUtil.drop(world, center, lootDrops);
         if (fishingRod.isDamageableItem()) {
-          int mending = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, fishingRod);
+          int mending = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.MENDING, fishingRod);
           if (mending == 0) {
             ItemStackUtil.damageItem(null, fishingRod);
           }

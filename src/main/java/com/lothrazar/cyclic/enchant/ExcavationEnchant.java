@@ -165,8 +165,8 @@ public class ExcavationEnchant extends EnchantmentCyclic {
         //and since now loot tables are used, fortune and similar things will be respected
         Block.dropResources(targetState, world, targetPos, world.getBlockEntity(targetPos), player, player.getItemInHand(player.swingingArm));
       }
-      int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
-      int silklevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
+      int bonusLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
+      int silklevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
       int exp = targetState.getExpDrop(world, world.random, targetPos, bonusLevel, silklevel);
       if (exp > 0 && world instanceof ServerLevel) {
         block.popExperience((ServerLevel) world, targetPos, exp);

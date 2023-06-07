@@ -73,7 +73,7 @@ public class EnderPearlEnchant extends EnchantmentCyclic {
     }
     Level world = event.getLevel();
     if (!world.isClientSide && event.getResult() != Result.DENY) {
-      int level = EnchantmentHelper.getItemEnchantmentLevel(this, event.getItemStack());
+      int level = EnchantmentHelper.getTagEnchantmentLevel(this, event.getItemStack());
       if (level > 0) {
         int adjustedCooldown = COOLDOWN / level;
         Player player = event.getEntity();
