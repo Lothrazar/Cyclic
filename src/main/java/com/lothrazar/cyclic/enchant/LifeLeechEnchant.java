@@ -95,13 +95,9 @@ public class LifeLeechEnchant extends EnchantmentCyclic {
         int min = level; //so if restore starts at 4 the rand will be [min,restore]
         restore = attacker.getCommandSenderWorld().random.nextInt(restore + 1) + min;
         if (restore > 0) {
-          //hunger
-          attacker.getFoodData().eat(restore, 0.5F);
           //hearts
           if (attacker.getHealth() < attacker.getMaxHealth()) {
             attacker.heal(restore);
-            //            UtilParticle.spawnParticle(target.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(1));
-            //            UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(1));
           }
         }
       }
