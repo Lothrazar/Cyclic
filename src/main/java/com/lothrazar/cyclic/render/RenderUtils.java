@@ -253,6 +253,9 @@ public class RenderUtils {
 
   /**
    * Render this BLOCK right here in the world, start with alpha and scale near 1. Call from TESR perspective
+   * 
+   * used by cyclic:light_camo
+   * 
    */
   public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, BlockState renderBlockState, float alpha, float scale) {
     Level world = Minecraft.getInstance().level;
@@ -300,7 +303,8 @@ public class RenderUtils {
         int combinedOverlay = 655360;
         for (Direction direction : Direction.values()) {
           RenderUtils.renderModelBrightnessColorQuads(matrix.last(), builder, red, green, blue, alpha,
-              ibakedmodel.getQuads(renderBlockState, direction, RandomSource.create(Mth.getSeed(coordinate))), // EmptyModelData.INSTANCE 
+              ibakedmodel.getQuads(renderBlockState, direction, RandomSource.create(Mth.getSeed(coordinate)),
+                  ibakedmodel.getModelData(world, centerPos, renderBlockState, null), FakeBlockRenderTypes.FAKE_BLOCK), // EmptyModelData.INSTANCE 
               combinedLights, combinedOverlay);
         }
         //        UtilRender.renderModelBrightnessColorQuads(matrix.getLast(), builder, red, green, blue, alpha,

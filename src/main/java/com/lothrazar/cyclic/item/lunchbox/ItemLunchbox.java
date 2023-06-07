@@ -176,7 +176,6 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   public static int getColour(ItemStack stack) {
     if (stack.hasTag() && stack.getTag().getBoolean("holding")) {
-      //      System.out.println("00boxr!ender overla!y!");
       // green? return 0x00AAAAFF;
       return 0x000000FF; //  0xFFFF0011;
     }

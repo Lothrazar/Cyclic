@@ -46,7 +46,7 @@ public class FakeBlockRenderTypes extends RenderType {
           .setLightmapState(NO_LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
-          .setDepthTestState(LEQUAL_DEPTH_TEST)
+          .setDepthTestState(NO_DEPTH_TEST)
           .setCullState(CULL)
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .createCompositeState(false));
