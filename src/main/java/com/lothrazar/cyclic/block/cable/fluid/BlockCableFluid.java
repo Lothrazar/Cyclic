@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class BlockCableFluid extends CableBase {
@@ -78,7 +78,7 @@ public class BlockCableFluid extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
+      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.FLUID_HANDLER, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);

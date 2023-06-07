@@ -16,7 +16,7 @@ import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
 
@@ -26,7 +26,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
   public void render(TileEnderShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
     Direction side = tile.getCurrentFacing();
     UtilRenderText.alignRendering(ms, side);
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
         renderSlot(tile, i, h.getStackInSlot(i), ms, buffer, combinedLightIn, combinedOverlayIn);
       }

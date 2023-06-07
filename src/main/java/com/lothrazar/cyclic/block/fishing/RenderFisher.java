@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 public class RenderFisher implements BlockEntityRenderer<TileFisher> {
@@ -18,7 +18,7 @@ public class RenderFisher implements BlockEntityRenderer<TileFisher> {
   @Override
   public void render(TileFisher tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
-    IItemHandler itemHandler = tankHere.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).orElse(null);
+    IItemHandler itemHandler = tankHere.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
     if (itemHandler != null) {
       ItemStack stack = itemHandler.getStackInSlot(0);
       if (!stack.isEmpty()) {

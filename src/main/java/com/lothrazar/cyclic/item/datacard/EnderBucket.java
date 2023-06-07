@@ -34,7 +34,7 @@ public class EnderBucket extends ItemBaseCyclic {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    BlockPosDim dim = getPosition(stack);
+    //    BlockPosDim dim = getPosition(stack);
     //    if (dim != null) {
     //      tooltip.add(new TranslatableComponent(dim.toString()).withStyle(ChatFormatting.GRAY));
     //      if (flagIn.isAdvanced() || Screen.hasShiftDown()) {

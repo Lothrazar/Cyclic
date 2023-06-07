@@ -21,14 +21,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -164,13 +162,13 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+    if (cap == ForgeCapabilities.FLUID_HANDLER) {
       return fluidCap.cast();
     }
     if (cap == ForgeCapabilities.ENERGY) {
       return energyCap.cast();
     }
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+    if (cap == ForgeCapabilities.ITEM_HANDLER) {
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);

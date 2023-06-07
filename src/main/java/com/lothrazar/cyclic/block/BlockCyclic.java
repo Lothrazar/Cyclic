@@ -33,9 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -103,7 +101,7 @@ public class BlockCyclic extends BaseEntityBlock {
       if (!world.isClientSide) {
         BlockEntity tankHere = world.getBlockEntity(pos);
         if (tankHere != null) {
-          IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, hit.getDirection()).orElse(null);
+          IFluidHandler handler = tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, hit.getDirection()).orElse(null);
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               if (player instanceof ServerPlayer) {
@@ -159,7 +157,7 @@ public class BlockCyclic extends BaseEntityBlock {
     if (state.getBlock() != newState.getBlock()) {
       BlockEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity != null) {
-        IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        IItemHandler items = tileentity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         if (items != null) {
           for (int i = 0; i < items.getSlots(); ++i) {
             Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
@@ -183,11 +181,11 @@ public class BlockCyclic extends BaseEntityBlock {
   public void registerClient() {}
 
   public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-    return hasCapabilityDir(facing, world, facingPos, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+    return hasCapabilityDir(facing, world, facingPos, ForgeCapabilities.ITEM_HANDLER);
   }
 
   public static boolean isFluid(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-    return hasCapabilityDir(facing, world, facingPos, CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    return hasCapabilityDir(facing, world, facingPos, ForgeCapabilities.FLUID_HANDLER);
   }
 
   public static boolean isEnergy(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {

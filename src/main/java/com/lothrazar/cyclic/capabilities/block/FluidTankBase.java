@@ -4,8 +4,8 @@ import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -21,7 +21,7 @@ public class FluidTankBase extends FluidTank {
   @Override
   public void onContentsChanged() {
     //send to client
-    IFluidHandler handler = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
+    IFluidHandler handler = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

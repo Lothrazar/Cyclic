@@ -18,11 +18,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -93,10 +92,10 @@ public class FilterCardItem extends ItemBaseCyclic {
     if (filterStack.getItem() instanceof FilterCardItem == false) {
       return FluidStack.EMPTY; //filter is air, everything allowed
     }
-    IItemHandler myFilter = filterStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler myFilter = filterStack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (myFilter != null) {
       ItemStack bucket = myFilter.getStackInSlot(SLOT_FLUID);
-      IFluidHandler fluidInStack = bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
+      IFluidHandler fluidInStack = bucket.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
       if (fluidInStack != null && fluidInStack.getFluidInTank(0) != null) {
         return fluidInStack.getFluidInTank(0);
       }
@@ -112,7 +111,7 @@ public class FilterCardItem extends ItemBaseCyclic {
     boolean isEmpty = false;
     boolean isMatchingList = false;
     boolean isIgnoreList = getIsIgnoreList(filterStack);
-    IItemHandler myFilter = filterStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler myFilter = filterStack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (myFilter != null) {
       for (int i = 0; i < myFilter.getSlots(); i++) {
         ItemStack filterPtr = myFilter.getStackInSlot(i);
@@ -165,7 +164,7 @@ public class FilterCardItem extends ItemBaseCyclic {
     if (!fluidStack.isEmpty()) {
       nbt.putString("fluidTooltip", fluidStack.getDisplayName().getString());
     }
-    IItemHandler cap = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler cap = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     //on server  this runs . also has correct values.
     //set data for sync to client
     if (cap != null) {

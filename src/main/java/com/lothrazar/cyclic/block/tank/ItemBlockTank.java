@@ -13,9 +13,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class ItemBlockTank extends BlockItem {
@@ -27,7 +27,7 @@ public class ItemBlockTank extends BlockItem {
   @Override
   public boolean isBarVisible(ItemStack stack) {
     FluidStack fstack = copyFluidFromStack(stack);
-    return fstack != null && fstack.getAmount() > 0; //  stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+    return fstack != null && fstack.getAmount() > 0; //  stack.hasCapability(ForgeCapabilities.FLUID_HANDLER, null);
   }
 
   /**
@@ -68,7 +68,7 @@ public class ItemBlockTank extends BlockItem {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    IFluidHandler storage = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
+    IFluidHandler storage = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null && !fs.isEmpty()) {

@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 public class RenderShapedata implements BlockEntityRenderer<TileShapedata> {
@@ -16,7 +16,7 @@ public class RenderShapedata implements BlockEntityRenderer<TileShapedata> {
   @Override
   public void render(TileShapedata te, float v, PoseStack matrixStack,
       MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
-    IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler inv = te.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (inv == null) {
       return;
     }

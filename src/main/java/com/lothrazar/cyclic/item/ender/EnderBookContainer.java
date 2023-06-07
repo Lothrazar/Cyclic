@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class EnderBookContainer extends ContainerBase {
@@ -35,7 +35,7 @@ public class EnderBookContainer extends ContainerBase {
     }
     //
     this.nbt = bag.getOrCreateTag();
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         int row = j / 9;

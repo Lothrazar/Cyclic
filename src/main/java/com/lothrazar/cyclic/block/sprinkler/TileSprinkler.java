@@ -19,10 +19,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileSprinkler extends TileBlockEntityCyclic {
@@ -89,7 +89,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     BlockEntity below = this.level.getBlockEntity(this.worldPosition.below());
     if (below != null) {
       //from below, fill this.pos 
-      FluidHelpers.tryFillPositionFromTank(level, this.worldPosition, Direction.DOWN, below.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null), CAPACITY);
+      FluidHelpers.tryFillPositionFromTank(level, this.worldPosition, Direction.DOWN, below.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null), CAPACITY);
     }
   }
 
@@ -118,7 +118,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+    if (cap == ForgeCapabilities.FLUID_HANDLER) {
       return fluidCap.cast();
     }
     return super.getCapability(cap, side);

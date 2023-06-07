@@ -12,10 +12,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
@@ -25,7 +24,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
   @Override
   public void render(TileSolidifier tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
-    IItemHandler itemHandler = tankHere.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).orElse(null);
+    IItemHandler itemHandler = tankHere.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
     if (itemHandler != null) {
       ItemStack stack = itemHandler.getStackInSlot(0);
       if (!stack.isEmpty()) {
@@ -51,7 +50,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
         matrixStack.popPose();
       }
     }
-    IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
+    IFluidHandler handler = tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

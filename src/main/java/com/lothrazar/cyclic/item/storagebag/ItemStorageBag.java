@@ -30,8 +30,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
@@ -82,8 +82,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
       return InteractionResult.PASS;
     }
     ItemStackHandler handler = getInventory(bag);
-    if (handler != null && te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
-      IItemHandler teHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).orElse(null);
+    if (handler != null && te != null && te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).isPresent()) {
+      IItemHandler teHandler = te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).orElse(null);
       Set<Item> itemsInTargetInventory = new HashSet<>();
       if (teHandler != null) {
         for (int j = 0; j < teHandler.getSlots(); j++) {
@@ -189,22 +189,22 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private static ItemStackHandler getInventory(ItemStack bag) {
-    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent()) {
-      return (ItemStackHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().get();
+    if (bag.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
+      return (ItemStackHandler) bag.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
     }
     return null;
   }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack stack) {
     AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(stack, stack.getCount()));
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       returnStack.set(ItemHandlerHelper.insertItem(h, stack, false));
     });
     return returnStack.get();
   }
 
   public static ItemStack tryFilteredInsert(ItemStack bag, ItemStack stack) {
-    if (bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent() && bagHasItem(bag, stack)) {
+    if (bag.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent() && bagHasItem(bag, stack)) {
       return tryInsert(bag, stack);
     }
     return stack;
@@ -212,7 +212,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   private static boolean bagHasItem(ItemStack bag, ItemStack stack) {
     AtomicBoolean hasItem = new AtomicBoolean(false);
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           hasItem.set(true);
@@ -225,7 +225,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   //unused but possibly useful
   public static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);
@@ -237,7 +237,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   private static int getLastSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       for (int i = h.getSlots() - 1; i >= 0; i--) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);

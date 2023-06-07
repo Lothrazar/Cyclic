@@ -12,7 +12,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
@@ -40,7 +40,7 @@ public class PacketItemGui extends PacketBaseCyclic {
           return; //its not food
         }
         ItemStack lunchbox = player.getInventory().getItem(message.slot);//why is it air
-        IItemHandler boxCap = lunchbox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        IItemHandler boxCap = lunchbox.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         if (boxCap == null) {
           return;
         }

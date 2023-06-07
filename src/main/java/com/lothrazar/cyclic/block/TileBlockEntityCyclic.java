@@ -47,13 +47,12 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -296,7 +295,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     BlockPos posTarget = worldPosition.relative(extractSide);
     BlockEntity tile = level.getBlockEntity(posTarget);
     if (tile != null) {
-      IItemHandler itemHandlerFrom = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, extractSide.getOpposite()).orElse(null);
+      IItemHandler itemHandlerFrom = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, extractSide.getOpposite()).orElse(null);
       //
       ItemStack itemTarget;
       if (itemHandlerFrom != null) {
@@ -358,7 +357,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (tileTarget == null) {
       return false;
     }
-    IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
+    IItemHandler handlerOutput = tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }

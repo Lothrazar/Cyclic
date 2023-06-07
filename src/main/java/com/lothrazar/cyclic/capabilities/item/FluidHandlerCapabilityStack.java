@@ -4,10 +4,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
@@ -148,7 +148,7 @@ public class FluidHandlerCapabilityStack implements IFluidHandlerItem, ICapabili
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-    if (CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY == capability) {
+    if (ForgeCapabilities.FLUID_HANDLER_ITEM == capability) {
       return holder.cast();
     }
     return LazyOptional.empty();

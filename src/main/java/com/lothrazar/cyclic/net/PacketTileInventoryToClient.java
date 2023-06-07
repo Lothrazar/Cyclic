@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkEvent;
 
 public class PacketTileInventoryToClient extends PacketBaseCyclic {
@@ -40,7 +40,7 @@ public class PacketTileInventoryToClient extends PacketBaseCyclic {
       }
       BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(message.blockPos);
       if (tile != null) {
-        tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+        tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
           if (message.type == SyncPacketType.SET) {
             if (h instanceof EnderShelfItemHandler) {
               ItemStack extracted = ((EnderShelfItemHandler) h).emptySlot(message.slot);

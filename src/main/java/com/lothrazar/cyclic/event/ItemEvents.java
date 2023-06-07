@@ -57,6 +57,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -347,7 +348,7 @@ public class ItemEvents {
         && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
       // 
       if (liv.isInWater()
-          && liv.canBreatheUnderwater() == false
+          && liv.canDrownInFluidType(ForgeMod.WATER_TYPE.get()) == false
           && liv.getAirSupply() < liv.getMaxAirSupply()
           && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
         liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60, 4));

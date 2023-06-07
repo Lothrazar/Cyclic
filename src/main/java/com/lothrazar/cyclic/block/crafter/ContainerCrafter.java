@@ -35,7 +35,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerCrafter extends ContainerBase {
@@ -74,7 +74,7 @@ public class ContainerCrafter extends ContainerBase {
       }
     }
     //add grid
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
+    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
       int index = 0;
       for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
         for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
@@ -107,7 +107,7 @@ public class ContainerCrafter extends ContainerBase {
         indexx++;
       }
     }
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
+    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
       addSlot(new CrafterGridSlot(h, 0,
           PREVIEW_START_X,
           PREVIEW_START_Y) {

@@ -39,8 +39,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -94,7 +94,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
   @Override
   public CompoundTag getShareTag(ItemStack stack) {
     CompoundTag nbt = stack.getOrCreateTag();
-    IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     //on server  this runs . also has correct values.
     //set data for sync to client
     if (handler != null) {
@@ -119,7 +119,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
     if (!worldIn.isClientSide && entityLiving instanceof Player player) {
-      IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
       if (handler != null) {
         ItemStack found = ItemStack.EMPTY;
         //just go left to right and eat in order

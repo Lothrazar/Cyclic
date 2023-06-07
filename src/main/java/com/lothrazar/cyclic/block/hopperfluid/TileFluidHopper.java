@@ -12,10 +12,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileFluidHopper extends TileBlockEntityCyclic {
@@ -47,7 +47,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+    if (cap == ForgeCapabilities.FLUID_HANDLER) {
       return fluidCap.cast();
     }
     return super.getCapability(cap, side);

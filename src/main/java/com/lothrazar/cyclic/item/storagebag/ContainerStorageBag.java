@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerStorageBag extends ContainerBase {
@@ -32,7 +32,7 @@ public class ContainerStorageBag extends ContainerBase {
     if (bag.isEmpty()) {
       this.bag = super.findBag(ItemRegistry.STORAGE_BAG.get());
     }
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       this.slotCount = h.getSlots();
       this.endInv = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {

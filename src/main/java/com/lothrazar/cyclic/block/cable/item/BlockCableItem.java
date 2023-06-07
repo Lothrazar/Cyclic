@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 public class BlockCableItem extends CableBase {
@@ -51,7 +51,7 @@ public class BlockCableItem extends CableBase {
           Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
         }
         for (Direction dir : Direction.values()) {
-          IItemHandler items = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir).orElse(null);
+          IItemHandler items = tileentity.getCapability(ForgeCapabilities.ITEM_HANDLER, dir).orElse(null);
           if (items != null) {
             for (int i = 0; i < items.getSlots(); ++i) {
               Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
@@ -84,7 +84,7 @@ public class BlockCableItem extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IItemHandler cap = facingTile == null ? null : facingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, d.getOpposite()).orElse(null);
+      IItemHandler cap = facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.ITEM_HANDLER, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);

@@ -22,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java
 public class FluidWaxHolder {
 
-  private static final int COLOR = 0xEEEEEEEE;
+  //  private static final int COLOR = 0xEEEEEEEE;
   private static final ResourceLocation FLUID_FLOWING = new ResourceLocation("minecraft:block/water_flow");
   private static final ResourceLocation FLUID_STILL = new ResourceLocation("minecraft:block/water_still");
   private static final String ID = "wax";

@@ -30,9 +30,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -125,7 +125,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (side != null && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+    if (side != null && cap == ForgeCapabilities.FLUID_HANDLER) {
       if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
         return flow.get(side).cast();
       }

@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 public class BlockEnderCtrl extends BlockCyclic {
@@ -94,7 +94,7 @@ public class BlockEnderCtrl extends BlockCyclic {
       return InteractionResult.PASS;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+      world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
         insertIntoController(player, hand, heldItem, h);
       });
     }

@@ -19,7 +19,7 @@ public class ContainerCableItem extends ContainerBase {
     tile = (TileCableItem) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    //    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    //    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
     this.endInv = tile.filter.getSlots();
     //dont show 0 thats the actual thing in the slot
     addSlot(new SlotItemHandler(tile.filter, 0, 80, 29) {

@@ -27,8 +27,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -139,7 +139,7 @@ public class EnderBookItem extends ItemBaseCyclic {
   }
 
   private static BlockPosDim getLocation(ItemStack stack, int enderSlot) {
-    IItemHandler cap = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler cap = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (cap != null) {
       return LocationGpsCard.getPosition(cap.getStackInSlot(enderSlot));
     }
@@ -160,7 +160,7 @@ public class EnderBookItem extends ItemBaseCyclic {
   @Override
   public CompoundTag getShareTag(ItemStack stack) {
     CompoundTag nbt = stack.getOrCreateTag();
-    IItemHandler cap = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+    IItemHandler cap = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     //on server  this runs . also has correct values.
     //set data for sync to client
     if (cap != null) {

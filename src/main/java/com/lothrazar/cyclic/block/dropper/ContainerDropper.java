@@ -10,7 +10,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerDropper extends ContainerBase {
@@ -22,7 +21,7 @@ public class ContainerDropper extends ContainerBase {
     tile = (TileDropper) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 89, 59) {
 

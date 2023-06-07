@@ -34,7 +34,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerPeatFarm extends ContainerBase {
@@ -50,7 +49,7 @@ public class ContainerPeatFarm extends ContainerBase {
     tile = (TilePeatFarm) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       this.endInv = h.getSlots();
       int rowSize = 6;
       for (int i = 0; i < rowSize; i++) {

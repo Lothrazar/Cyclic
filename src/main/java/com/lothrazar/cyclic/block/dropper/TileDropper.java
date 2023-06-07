@@ -28,7 +28,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -128,7 +127,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+    if (cap == ForgeCapabilities.ITEM_HANDLER) {
       return inventoryCap.cast();
     }
     return super.getCapability(cap, side);

@@ -8,8 +8,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class RenderTank implements BlockEntityRenderer<TileTank> {
@@ -19,7 +19,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
   @Override
   public void render(TileTank tankHere, float v, PoseStack matrix,
       MultiBufferSource renderer, int light, int overlayLight) {
-    IFluidHandler handler = tankHere.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null).orElse(null);
+    IFluidHandler handler = tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

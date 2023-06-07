@@ -34,8 +34,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractable {
@@ -61,7 +61,7 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
       if (horseOldEntity.isSaddled()) {
         zombieNewEntity.equipSaddle(SoundSource.PLAYERS);
       }
-      IItemHandler horseChest = horseOldEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      IItemHandler horseChest = horseOldEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
       if (horseChest != null && horseChest.getSlots() >= 2) {
         //dont drop saddle since i re-saddle. drop horse arm
         ItemStackUtil.drop(event.getLevel(), event.getPos(), horseChest.getStackInSlot(1));

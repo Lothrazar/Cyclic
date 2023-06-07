@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 public class CraftingBagContainer extends ContainerBase implements IContainerCraftingAction {
@@ -59,7 +59,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
         });
       }
     }
-    bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {
@@ -75,7 +75,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     super.removed(playerIn);
     this.craftResult.setItem(0, ItemStack.EMPTY);
     if (playerIn.level.isClientSide == false) {
-      IItemHandler handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+      IItemHandler handler = bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
       if (handler != null)
         for (int i = 0; i < 9; i++) {
           ItemStack crafty = this.craftMatrix.getItem(i);
