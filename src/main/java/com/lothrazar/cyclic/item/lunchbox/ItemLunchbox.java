@@ -118,22 +118,25 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    if (!worldIn.isClientSide) {
+    if (!worldIn.isClientSide && entityLiving instanceof Player player) {
       IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
       if (handler != null) {
         ItemStack found = ItemStack.EMPTY;
         //just go left to right and eat in order
         for (int i = 0; i < handler.getSlots(); i++) {
-          if (handler.getStackInSlot(i).isEdible()) {
-            found = handler.getStackInSlot(i);
+          ItemStack test = handler.getStackInSlot(i);
+          if (test.isEdible() && !player.getCooldowns().isOnCooldown(test.getItem())) {
+            found = test;
             break;
           }
         }
         if (!found.isEmpty()) {
-          if (entityLiving instanceof Player player) {
-            ChatUtil.addServerChatMessage(player, found.getDisplayName());
-          }
-          entityLiving.eat(worldIn, found);
+          ChatUtil.addServerChatMessage(player, found.getDisplayName());
+          //          entityLiving.eat(worldIn, found); 
+          //moved from. eat() to forwarding the .finishUsingItem call
+          //allow mods to override finishUsingItem on their own
+          //for exmaple artifiacts everlasting beef calls .eat with found.copy() essentially
+          found.getItem().finishUsingItem(found, worldIn, entityLiving);
         }
       }
     }
@@ -165,5 +168,18 @@ public class ItemLunchbox extends ItemBaseCyclic {
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
     return new CapabilityLunchbox(stack, nbt);
+  }
+
+  public static void setHoldingEdible(ItemStack box, boolean edible) {
+    box.getOrCreateTag().putBoolean("holding", edible);
+  }
+
+  public static int getColour(ItemStack stack) {
+    if (stack.hasTag() && stack.getTag().getBoolean("holding")) {
+      //      System.out.println("00boxr!ender overla!y!");
+      // green? return 0x00AAAAFF;
+      return 0x000000FF; //  0xFFFF0011;
+    }
+    return 0xFFFFFFFF;
   }
 }

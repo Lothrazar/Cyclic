@@ -35,6 +35,7 @@ import com.lothrazar.cyclic.event.ClientInputEvents;
 import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
+import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -209,6 +210,15 @@ public class ClientRegistryCyclic {
   @OnlyIn(Dist.CLIENT)
   private static void initColours() {
     Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> {
+      if (stack.getItem() == ItemRegistry.LUNCHBOX.get()) {
+        // ok
+        if (tintIndex == 0) { //layer zero is outline, ignore this 
+          return 0xFFFFFFFF;
+        }
+        //layer 1 is overlay  
+        int c = ItemLunchbox.getColour(stack);
+        return c;
+      }
       if (stack.getItem() == ItemRegistry.STORAGE_BAG.get()) {
         // ok
         if (tintIndex == 0) { //layer zero is outline, ignore this 
@@ -231,7 +241,7 @@ public class ClientRegistryCyclic {
         }
       }
       return -1;
-    }, ItemRegistry.MOB_CONTAINER.get(), ItemRegistry.STORAGE_BAG.get());
+    }, ItemRegistry.MOB_CONTAINER.get(), ItemRegistry.STORAGE_BAG.get(), ItemRegistry.LUNCHBOX.get());
   }
 
   @OnlyIn(Dist.CLIENT)

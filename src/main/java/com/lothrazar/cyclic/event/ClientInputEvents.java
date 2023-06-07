@@ -57,20 +57,18 @@ public class ClientInputEvents {
     try {
       if (rightClickDown && gui.getSlotUnderMouse() != null) {
         Slot slotHit = gui.getSlotUnderMouse();
-        if (!slotHit.getItem().isEmpty()) {
-          ItemStack maybeCharm = slotHit.getItem();
-          if (maybeCharm.getItem() instanceof IHasClickToggle) {
-            PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.index));
-            event.setCanceled(true);
-            //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
-          }
-          else if (maybeCharm.getItem() instanceof ItemStorageBag
-              || maybeCharm.getItem() instanceof CraftingStickItem
-              || maybeCharm.getItem() instanceof CraftingBagItem) {
-                PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
-                event.setCanceled(true);
-              }
+        ItemStack maybeCharm = slotHit.getItem();
+        if (maybeCharm.getItem() instanceof IHasClickToggle) {
+          PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.index));
+          event.setCanceled(true);
+          //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
         }
+        else if (maybeCharm.getItem() instanceof ItemStorageBag
+            || maybeCharm.getItem() instanceof CraftingStickItem
+            || maybeCharm.getItem() instanceof CraftingBagItem) {
+              PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
+              event.setCanceled(true);
+            }
       }
     }
     catch (Exception e) { //array out of bounds, or we are in a strange third party GUI that doesnt have slots like this

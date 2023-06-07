@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
@@ -20,6 +21,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -43,7 +45,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(0);
-  protected final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
+  protected final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> indexFluidsFromRecipes().contains(p.getFluid()));
   private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
@@ -114,6 +116,17 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
         return;
       }
     }
+  }
+
+  private ArrayList<Fluid> indexFluidsFromRecipes(){
+    List<RecipeGeneratorFluid> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
+    ArrayList<Fluid> fluids = new ArrayList<>();
+
+    for (RecipeGeneratorFluid recipe : recipes){
+      fluids.add(recipe.getRecipeFluid().getFluid());
+    }
+
+    return fluids;
   }
 
   private void findMatchingRecipe() {

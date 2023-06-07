@@ -6,14 +6,14 @@ plugins {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 import net.minecraftforge.gradle.common.tasks.SignJar
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic'
 archivesBaseName = 'Cyclic'
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-	mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: "${mc_version}"
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -63,17 +63,16 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-	
-	
     // https://github.com/mezz/JustEnoughItems/wiki/Getting-Started-%5BJEI-10-or-higher-for-Forge-or-Fabric%5D#repositories
 	compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
 	compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
 	// at runtime, use the full JEI
 //	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
 	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
-	  
+
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 	
+	// optional compat: guidebook
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
     
@@ -88,14 +87,14 @@ dependencies {
 
 repositories {
 
-    // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
-   flatDir {
-        dir 'libs'
-   }
-   maven { // TOP
+  // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
+  flatDir {
+    dir 'libs'
+  }
+  maven { // TOP
         name 'tterrag maven'
         url "https://maven.tterrag.com/"
-   }
+  }
   maven {
     name = "mappings"
     url 'https://dogforce-games.com/maven'
@@ -120,9 +119,6 @@ jar {
         ])
     }
 }
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
 
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file
@@ -143,6 +139,11 @@ publishing {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+
 task signJar(type: SignJar, dependsOn: jar) {
 
     onlyIf {
@@ -160,12 +161,10 @@ task signJar(type: SignJar, dependsOn: jar) {
 }
 
 
-
 task copyJar(type: Copy) {
     from jar
     into "${dist_folder}"
 }
-
 
 task cleanJar {
   delete 'build/libs'
