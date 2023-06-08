@@ -43,7 +43,6 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -51,6 +50,7 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -112,7 +112,6 @@ public class ClientRegistryCyclic {
     for (ItemBaseCyclic i : ItemRegistry.ITEMSFIXME) {
       i.registerClient();
     }
-    initColours();
     initShields();
   }
 
@@ -165,7 +164,7 @@ public class ClientRegistryCyclic {
   @SuppressWarnings("deprecation") //shield itemproperty
   private static void initShields() {
     //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
-    ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
+    net.minecraft.client.renderer.item.ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
     ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
@@ -184,42 +183,46 @@ public class ClientRegistryCyclic {
     //    net.minecraftforge.client.ClientRegistry.registerKeyBinding(CAKE);
     event.register(CAKE);
   }
+  //  @OnlyIn(Dist.CLIENT)
+  //  @SubscribeEvent
+  //  public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+  //    List<Block> blocks = new ArrayList<>();
+  //    event.register((state, worldIn, pos, tintIndex) -> {
+  //      return 0;
+  //    }, blocks.toArray(new Block[0]));
+  //  }
 
   @OnlyIn(Dist.CLIENT)
-  private static void initColours() {
-    Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> {
-      if (stack.getItem() == ItemRegistry.LUNCHBOX.get()) {
-        // ok
-        if (tintIndex == 0) { //layer zero is outline, ignore this 
-          return 0xFFFFFFFF;
-        }
-        //layer 1 is overlay  
-        int c = ItemLunchbox.getColour(stack);
-        return c;
+  @SubscribeEvent
+  public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+    event.register((stack, tintIndex) -> {
+      if (tintIndex == 0) { //layer zero is outline, ignore this 
+        return 0xFFFFFFFF;
       }
-      if (stack.getItem() == ItemRegistry.STORAGE_BAG.get()) {
-        // ok
-        if (tintIndex == 0) { //layer zero is outline, ignore this 
-          return 0xFFFFFFFF;
-        }
-        //layer 1 is overlay  
-        int c = ItemStorageBag.getColour(stack);
-        return c;
+      //layer 1 is overlay  
+      return ItemLunchbox.getColour(stack);
+    }, ItemRegistry.LUNCHBOX.get());
+    //
+    event.register((stack, tintIndex) -> {
+      if (tintIndex == 0) { //layer zero is outline, ignore this 
+        return 0xFFFFFFFF;
       }
-      else if (stack.getItem() == ItemRegistry.MOB_CONTAINER.get()) {
-        if (stack.hasTag() && tintIndex > 0) {
-          //what entity is inside
-          EntityType<?> thing = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
-          //pull the colours from the egg
-          for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
-            if (spawneggitem.getType(null) == thing) {
-              return spawneggitem.getColor(tintIndex - 1);
-            }
+      return ItemStorageBag.getColour(stack);
+    }, ItemRegistry.STORAGE_BAG.get());
+    //
+    event.register((stack, tintIndex) -> {
+      if (stack.hasTag() && tintIndex > 0) {
+        //what entity is inside
+        EntityType<?> thing = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
+        //pull the colours from the egg
+        for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
+          if (spawneggitem.getType(null) == thing) {
+            return spawneggitem.getColor(tintIndex - 1);
           }
         }
       }
-      return -1;
-    }, ItemRegistry.MOB_CONTAINER.get(), ItemRegistry.STORAGE_BAG.get(), ItemRegistry.LUNCHBOX.get());
+      return 0xFFFFFFFF;
+    }, ItemRegistry.MOB_CONTAINER.get());
   }
 
   @OnlyIn(Dist.CLIENT)
