@@ -1,5 +1,6 @@
 {
 	"parent": "cyclic:parent/pylon",
+  "render_type": "cutout_mipped",
     "textures": {
 		"particle":"cyclic:blocks/pylon"
     }

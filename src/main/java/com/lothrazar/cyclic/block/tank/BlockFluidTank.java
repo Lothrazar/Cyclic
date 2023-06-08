@@ -6,8 +6,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -98,11 +96,6 @@ public class BlockFluidTank extends BlockCyclic {
   @Override
   public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 
   @Override

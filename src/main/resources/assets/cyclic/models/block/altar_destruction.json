@@ -1,5 +1,6 @@
 {
     "parent": "cyclic:parent/pedestal",
+  "render_type": "cutout_mipped",
     "textures": {
         "particle": "minecraft:block/blackstone_top",
         "side": "minecraft:block/tnt_top",

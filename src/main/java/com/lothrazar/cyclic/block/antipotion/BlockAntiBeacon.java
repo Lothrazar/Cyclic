@@ -8,8 +8,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.BlockstatesUtil;
 import com.lothrazar.cyclic.util.EntityUtil;
 import com.lothrazar.cyclic.util.StringParseUtil;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -49,11 +47,6 @@ public class BlockAntiBeacon extends BlockCyclic {
   @Override
   public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @Override

@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
     "parent":"cyclic:parent/dice",
+  "render_type": "cutout_mipped",
 	"textures": {
 		"all": "cyclic:blocks/dice/two"
 	}

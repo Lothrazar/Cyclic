@@ -4,8 +4,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.util.BlockstatesUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +31,6 @@ public class BlockScreentext extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     MenuScreens.register(MenuTypeRegistry.SCREEN.get(), ScreenScreentext::new);
   }
 
@@ -42,10 +39,6 @@ public class BlockScreentext extends BlockCyclic {
     return new TileScreentext(pos, state);
   }
 
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.screen, world.isClientSide ? TileScreentext::clientTick : TileScreentext::serverTick);
-  //  }
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {

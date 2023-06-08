@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.block.generatorexpl;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -53,10 +51,5 @@ public class BlockDestruction extends BlockCyclic implements SimpleWaterloggedBl
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     super.createBlockStateDefinition(builder);
     builder.add(WATERLOGGED);
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 }

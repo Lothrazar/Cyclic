@@ -1,5 +1,6 @@
 {
     "parent": "minecraft:block/block",
+  "render_type": "cutout_mipped",
     "textures": {
      	"0":"minecraft:block/redstone_block",
     	"1":"minecraft:block/quartz_block_top",

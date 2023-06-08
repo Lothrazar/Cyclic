@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.block.apple;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -47,11 +45,6 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(AGE);
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @Override

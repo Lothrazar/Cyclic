@@ -2,8 +2,6 @@ package com.lothrazar.cyclic.block.fanslab;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -111,11 +109,6 @@ public class BlockFanSlab extends BlockCyclic implements SimpleWaterloggedBlock 
   @Override
   public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @Override

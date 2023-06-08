@@ -8,8 +8,6 @@ import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -44,7 +42,6 @@ public class BlockExpPylon extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     MenuScreens.register(MenuTypeRegistry.EXPERIENCE_PYLON.get(), ScreenExpPylon::new);
   }
 

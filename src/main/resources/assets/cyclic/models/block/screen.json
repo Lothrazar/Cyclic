@@ -1,3 +1,4 @@
 {
-	"parent": "cyclic:parent/screen"
+  "parent": "cyclic:parent/screen",
+  "render_type": "cutout_mipped"
 }

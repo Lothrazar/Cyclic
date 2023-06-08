@@ -1,5 +1,6 @@
 {
    "parent": "cyclic:parent/anvil",
+  "render_type": "cutout_mipped",
    "textures": {
         "particle": "cyclic:blocks/anvil/hopper",
         "body": "cyclic:blocks/anvil/iron",

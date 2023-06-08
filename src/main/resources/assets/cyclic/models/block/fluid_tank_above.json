@@ -1,5 +1,6 @@
 {
     "parent": "block/cube_directional",
+  "render_type": "cutout_mipped",
     "textures": {
         "particle": "cyclic:blocks/tank/tank_top",
         "down": "cyclic:blocks/tank/tank_top",

@@ -4,8 +4,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -107,11 +105,6 @@ public class BlockAltarNoTraders extends BlockCyclic implements SimpleWaterlogge
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     super.createBlockStateDefinition(builder);
     builder.add(LIT).add(WATERLOGGED);
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   public static boolean isSpawnDenied(LivingEntity mob, MobSpawnType res) {

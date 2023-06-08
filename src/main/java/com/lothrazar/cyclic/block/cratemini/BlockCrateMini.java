@@ -3,8 +3,6 @@ package com.lothrazar.cyclic.block.cratemini;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -71,6 +69,5 @@ public class BlockCrateMini extends BlockCyclic implements SimpleWaterloggedBloc
   @Override
   public void registerClient() {
     MenuScreens.register(MenuTypeRegistry.CRATE_MINI.get(), ScreenCrateMini::new);
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 }

@@ -6,8 +6,6 @@ import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.BlockstatesUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,7 +40,6 @@ public class BlockAnvilVoid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
     MenuScreens.register(MenuTypeRegistry.ANVIL_VOID.get(), ScreenAnvilVoid::new);
   }
 
