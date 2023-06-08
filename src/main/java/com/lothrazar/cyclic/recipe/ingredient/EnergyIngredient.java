@@ -57,4 +57,9 @@ public class EnergyIngredient {
   public int getRfPertick() {
     return this.rfPertick;
   }
+
+  @Override
+  public String toString() {
+    return "EnergyIngredient [rfPertick=" + rfPertick + ", ticks=" + ticks + ", seconds =" + (ticks / 20) + "]";
+  }
 }

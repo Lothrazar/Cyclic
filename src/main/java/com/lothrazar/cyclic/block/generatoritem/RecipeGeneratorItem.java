@@ -28,6 +28,11 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
   }
 
   @Override
+  public String toString() {
+    return "RecipeGeneratorItem [ingredients=" + ingredients.get(0) + ", energy=" + energy + "]";
+  }
+
+  @Override
   public ResourceLocation getId() {
     return id;
   }
