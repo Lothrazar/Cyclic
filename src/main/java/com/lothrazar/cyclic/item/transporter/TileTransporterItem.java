@@ -111,7 +111,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
         tile.load(tileData); // can cause errors in 3rd party mod
         //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
         tile.setChanged();
-        world.blockEntityChanged(pos);
+        world.blockEntityChangedWithoutNeighborUpdates(pos);
       }
     }
     catch (Exception e) {

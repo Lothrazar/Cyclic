@@ -115,29 +115,6 @@ public class ClientInputEvents {
     }
   }
 
-  /**
-   * EXPERIMENTAL: render layer for lunchbox , flag to be used in ClientRegistryCyclic
-   * 
-   * @param event
-   */
-  @SubscribeEvent
-  public void onMouseReleasedPost(ScreenEvent.MouseReleasedEvent.Post event) {
-    Minecraft mc = Minecraft.getInstance();
-    //    Screen screen = mc.screen;
-    if (event.getScreen() instanceof AbstractContainerScreen<?> gui) {
-      //      if (gui.getSlotUnderMouse() != null) {
-      //        Slot slotHit = gui.getSlotUnderMouse();
-      //        ItemStack held = slotHit.getItem();
-      //        List<ItemStack> boxes = ItemBaseCyclic.findAmmos(mc.player, ItemRegistry.LUNCHBOX.get());
-      //        //        if (held.isEdible()) {
-      //        for (ItemStack box : boxes) {
-      //          ItemLunchbox.setHoldingEdible(box, held.isEdible());
-      //          if (held.isEdible()) System.out.println("set edible " + box.getTag());
-      //        }
-      //      }
-    }
-  }
-
   @SubscribeEvent(priority = EventPriority.HIGH)
   public void onMouseEvent(ScreenEvent.MouseClickedEvent.Pre event) {
     if (event.getScreen() == null || !(event.getScreen() instanceof AbstractContainerScreen<?>)) {
