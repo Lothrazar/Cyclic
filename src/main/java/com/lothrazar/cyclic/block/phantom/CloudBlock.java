@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,11 +20,6 @@ public class CloudBlock extends BlockCyclic {
 
   public CloudBlock(Properties properties) {
     super(properties.strength(1.2F, 1.0F).noOcclusion());
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 
   @Override

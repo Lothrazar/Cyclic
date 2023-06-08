@@ -4,8 +4,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -49,8 +47,6 @@ public class BlockWirelessEnergy extends BlockCyclic {
   @Override
   public void registerClient() {
     MenuScreens.register(MenuTypeRegistry.WIRELESS_ENERGY.get(), ScreenWirelessEnergy::new);
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    //    ClientRegistry.bindTileEntityRenderer(TileRegistry.wireless_transmitter, RenderTransmit::new);
   }
 
   @Override

@@ -41,8 +41,6 @@ import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
@@ -66,7 +64,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@SuppressWarnings("deprecation") //shield itemproperty
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistryCyclic {
 
@@ -115,7 +112,6 @@ public class ClientRegistryCyclic {
     for (ItemBaseCyclic i : ItemRegistry.ITEMSFIXME) {
       i.registerClient();
     }
-    initRenderLayers();
     initColours();
     initShields();
   }
@@ -166,6 +162,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
   }
 
+  @SuppressWarnings("deprecation") //shield itemproperty
   private static void initShields() {
     //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
     ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
@@ -174,25 +171,6 @@ public class ClientRegistryCyclic {
     ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_BONE.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_OBSIDIAN.get(), ShieldCyclicItem.BLOCKING, blockFn);
-  }
-
-  private static void initRenderLayers() {
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_LIME_CARNATION.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_PURPLE_TULIP.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_ABSALON_TULIP.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.FLOWER_CYAN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GOLD_BARS.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.COPPER_BARS.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.NETHERITE_BARS.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GOLD_CHAIN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.COPPER_CHAIN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.NETHERTIE_CHAIN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GOLD_LANTERN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.COPPER_LANTERN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.NETHERITE_LANTERN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GOLD_SOUL_LANTERN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.COPPER_SOUL_LANTERN.get(), RenderType.cutoutMipped());
-    ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GENERATOR_SOLAR.get(), RenderType.cutoutMipped());
   }
 
   //    OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "data", HUD_MANA);

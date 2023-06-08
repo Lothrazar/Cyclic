@@ -3,8 +3,6 @@ package com.lothrazar.cyclic.block.spikes;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.SoundUtil;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -49,11 +47,6 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
     super(properties.strength(1.1F).noOcclusion().noCollission());
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     this.type = type;
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @Override

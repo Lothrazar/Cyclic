@@ -1,5 +1,6 @@
 {
 	"parent": "minecraft:block/cube",
+  "render_type": "cutout_mipped",
 	"textures": {
 		"particle": "cyclic:blocks/machine/back",
 		"down": "cyclic:blocks/machine/iron",

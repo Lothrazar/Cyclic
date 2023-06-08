@@ -1,5 +1,6 @@
 {
 	"parent": "block/cube",
+    "render_type:": "translucent",
     "textures": {
         "down": "cyclic:blocks/solidifier_top",
         "up": "cyclic:blocks/solidifier_top",

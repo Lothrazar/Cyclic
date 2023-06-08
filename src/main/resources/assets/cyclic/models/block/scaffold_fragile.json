@@ -1,6 +1,6 @@
 {
 	"parent": "cyclic:parent/scaffold",
-
+  "render_type": "cutout",
 	"textures": {
 		"all": "cyclic:blocks/scaffold_fragile",
 		"particle": "cyclic:blocks/scaffold_fragile"

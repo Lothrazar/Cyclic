@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:block/cross",
-    "textures": {
+  "render_type": "cutout_mipped",
+      "textures": {
         "cross": "cyclic:blocks/flower_absalon_tulip"
     }
 }

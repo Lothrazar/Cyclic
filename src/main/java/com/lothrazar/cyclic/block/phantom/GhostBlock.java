@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -21,12 +19,6 @@ public class GhostBlock extends BlockCyclic {
   public GhostBlock(Properties properties, boolean isInvisible) {
     super(properties.strength(2.0F, 1200.0F).noOcclusion());
     this.isInvisible = isInvisible;
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 
   @Override

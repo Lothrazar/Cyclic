@@ -1,5 +1,6 @@
 {
     "parent": "minecraft:block/cube",
+  "render_type": "cutout",
     "textures": {
         "particle": "cyclic:blocks/shearing",
         "down": "cyclic:blocks/ender_shelf_side",

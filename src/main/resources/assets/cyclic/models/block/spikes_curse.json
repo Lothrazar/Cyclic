@@ -1,6 +1,6 @@
 {
 	"parent": "cyclic:parent/spikes_off",
-
+  "render_type": "cutout_mipped",
 	"textures": {
 		"side": "cyclic:blocks/spike/spikes_iron_side",
 		"base_up": "cyclic:blocks/spike/spikes_iron_base_up",

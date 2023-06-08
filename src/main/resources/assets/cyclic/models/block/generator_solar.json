@@ -1,5 +1,6 @@
 {
     "parent": "cyclic:parent/plate_horizontal",
+  "render_type": "cutout_mipped",
     "textures": {
         "0": "cyclic:blocks/machine/generator_solar"
     }

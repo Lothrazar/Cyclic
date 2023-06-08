@@ -1,5 +1,6 @@
 {
 	"parent":"cyclic:parent/node_lit",
+  "render_type": "cutout_mipped",
 	"textures": {
 		"main": "cyclic:blocks/node/main_energy",
 		"particle": "cyclic:blocks/node/main_energy",

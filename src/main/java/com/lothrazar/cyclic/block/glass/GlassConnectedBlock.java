@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.block.glass;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -46,12 +44,6 @@ public class GlassConnectedBlock extends BlockCyclic {
   @Override
   public boolean propagatesSkylightDown(BlockState p_48740_, BlockGetter p_48741_, BlockPos p_48742_) {
     return true;
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @SuppressWarnings("deprecation")

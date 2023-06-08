@@ -1,5 +1,6 @@
 {
     "parent": "minecraft:block/block",
+      "render_type": "cutout_mipped",
     "textures": {
         "particle": "cyclic:blocks/copper_chain",
         "all": "cyclic:blocks/copper_chain"

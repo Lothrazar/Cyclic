@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/pressure_plate_down",
+  "render_type": "cutout_mipped",
   "textures": {
     "texture": "minecraft:block/copper_block"
   }

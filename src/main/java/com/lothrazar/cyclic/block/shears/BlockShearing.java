@@ -3,8 +3,6 @@ package com.lothrazar.cyclic.block.shears;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.scaffolding.BlockScaffolding;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -24,11 +22,6 @@ public class BlockShearing extends BlockCyclic {
 
   public BlockShearing(Properties properties) {
     super(properties.strength(1.1F).randomTicks().noOcclusion().sound(SoundType.CHAIN));
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutout());
   }
 
   @Override

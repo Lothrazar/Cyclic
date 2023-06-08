@@ -4,8 +4,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -59,8 +57,6 @@ public class BlockMelter extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    //    "render_type:": "translucent",
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
     MenuScreens.register(MenuTypeRegistry.MELTER.get(), ScreenMelter::new);
   }
 

@@ -2,8 +2,6 @@ package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -42,11 +40,6 @@ public class MembraneLamp extends BlockCyclic {
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.LAMP.get(), world.isClientSide ? MembraneLampTile::clientTick : MembraneLampTile::serverTick);
-  }
-
-  @Override
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.translucent());
   }
 
   @Override

@@ -1,5 +1,6 @@
 {
 	"parent":"cyclic:parent/node",
+  "render_type": "cutout_mipped",
 	"textures": {
 		"main": "cyclic:blocks/node/main_fluid",
 		"particle": "cyclic:blocks/node/main_fluid",

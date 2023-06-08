@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/template_lantern",
+  "render_type": "cutout_mipped",
   "textures": {
     "lantern": "cyclic:blocks/copper_lantern"
   }

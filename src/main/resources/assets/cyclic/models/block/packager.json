@@ -1,6 +1,8 @@
 {
     "parent": "minecraft:block/cube",
-    "textures": {
+    
+  "render_type": "cutout_mipped",
+  "textures": {
         "particle": "cyclic:blocks/packager",
         "down": "cyclic:blocks/packager",
         "up": "cyclic:blocks/packager",

@@ -1,5 +1,6 @@
 {
     "parent": "minecraft:block/block",
+  "render_type": "cutout_mipped",
     "textures": {
         "particle": "cyclic:blocks/gold_chain",
         "all": "cyclic:blocks/gold_chain"

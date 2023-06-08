@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.glass;
 
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -26,12 +24,6 @@ public class DarkGlassConnectedBlock extends DarkGlassBlock {
   public DarkGlassConnectedBlock(Properties properties) {
     super(properties);
     this.registerDefaultState(stateDefinition.any().setValue(CONNECTED_DOWN, Boolean.FALSE).setValue(CONNECTED_EAST, Boolean.FALSE).setValue(CONNECTED_NORTH, Boolean.FALSE).setValue(CONNECTED_SOUTH, Boolean.FALSE).setValue(CONNECTED_UP, Boolean.FALSE).setValue(CONNECTED_WEST, Boolean.FALSE));
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void registerClient() {
-    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
   @SuppressWarnings("deprecation")
