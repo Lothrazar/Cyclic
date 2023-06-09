@@ -4,8 +4,8 @@
 		"item": "minecraft:nether_star"
 	},
 	"energy": {
-		"rfpertick": 1250,
-		"ticks": 100000
+		"rfpertick": 4000,
+		"ticks": 2400
 	},
 	"conditions": [
 		{
