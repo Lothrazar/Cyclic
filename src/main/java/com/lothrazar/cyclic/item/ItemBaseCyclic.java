@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.item.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -192,9 +193,14 @@ public class ItemBaseCyclic extends Item {
   @Override
   public void readShareTag(ItemStack stack, CompoundTag nbt) {
     if (hasEnergy && nbt != null) {
-      CompoundTag stackTag = stack.getOrCreateTag();
-      stackTag.putInt(ENERGYTT, nbt.getInt(ENERGYTT));
+      final CompoundTag stackTag = stack.getOrCreateTag();
+      final int serverEnergyValue = nbt.getInt(ENERGYTT);
+      stackTag.putInt(ENERGYTT, serverEnergyValue);
       stackTag.putInt(ENERGYTTMAX, nbt.getInt(ENERGYTTMAX));
+      final IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (storage instanceof CustomEnergyStorage energy) {
+        energy.setEnergy(serverEnergyValue);
+      }
     }
     super.readShareTag(stack, nbt);
   }

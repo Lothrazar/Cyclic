@@ -34,4 +34,9 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
     CompoundTag real = (CompoundTag) nbt;
     setEnergy(real.getInt(NBTENERGY));
   }
+
+  @Override
+  public String toString() {
+    return "CustomEnergyStorage [energy=" + energy + ", capacity=" + capacity + ", maxReceive=" + maxReceive + ", maxExtract=" + maxExtract + "]";
+  }
 }

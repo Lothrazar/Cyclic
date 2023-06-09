@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.batteryclay;
 
 import java.util.List;
+import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.item.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
@@ -96,8 +97,13 @@ public class ItemBlockClayBattery extends BlockItem {
   public void readShareTag(ItemStack stack, CompoundTag nbt) {
     if (nbt != null) {
       CompoundTag stackTag = stack.getOrCreateTag();
-      stackTag.putInt(ENERGYTT, nbt.getInt(ENERGYTT));
+      final int serverEnergyValue = nbt.getInt(ENERGYTT);
+      stackTag.putInt(ENERGYTT, serverEnergyValue);
       stackTag.putInt(ENERGYTTMAX, nbt.getInt(ENERGYTTMAX));
+      final IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+      if (storage instanceof CustomEnergyStorage energy) {
+        energy.setEnergy(serverEnergyValue);
+      }
     }
     super.readShareTag(stack, nbt);
   }

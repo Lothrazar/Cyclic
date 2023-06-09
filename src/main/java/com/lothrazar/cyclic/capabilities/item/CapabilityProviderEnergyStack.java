@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.capabilities.item;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,8 +12,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class CapabilityProviderEnergyStack implements ICapabilitySerializable<CompoundTag> {
 
-  CustomEnergyStorage energy = new CustomEnergyStorage(TileBattery.MAX, TileBattery.MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  private final CustomEnergyStorage energy;
+  private final LazyOptional<IEnergyStorage> energyCap;
 
   public CapabilityProviderEnergyStack(int max) {
     energy = new CustomEnergyStorage(max, max);
@@ -39,5 +38,10 @@ public class CapabilityProviderEnergyStack implements ICapabilitySerializable<Co
   @Override
   public void deserializeNBT(CompoundTag nbt) {
     energy.deserializeNBT(nbt.getCompound(TileBlockEntityCyclic.NBTENERGY));
+  }
+
+  @Override
+  public String toString() {
+    return "CapabilityProviderEnergyStack [energy=" + energy + "]";
   }
 }
