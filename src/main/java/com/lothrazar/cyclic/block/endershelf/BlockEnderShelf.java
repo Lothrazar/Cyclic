@@ -158,6 +158,6 @@ public class BlockEnderShelf extends BlockCyclic {
         newStack.setTag(tileData);
       }
     }
-    ItemStackUtil.drop(world, pos, newStack);
+    ItemStackUtil.dropItemStackMotionless(world, pos, newStack);
   }
 }

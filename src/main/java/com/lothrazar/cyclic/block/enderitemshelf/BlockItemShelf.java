@@ -151,6 +151,6 @@ public class BlockItemShelf extends BlockCyclic {
       //read from tile, write to itemstack 
       newStack.setTag(tileData);
     }
-    ItemStackUtil.drop(world, pos, newStack);
+    ItemStackUtil.dropItemStackMotionless(world, pos, newStack);
   }
 }

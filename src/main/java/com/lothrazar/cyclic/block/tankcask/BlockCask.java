@@ -5,9 +5,9 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -62,15 +62,12 @@ public class BlockCask extends BlockCyclic {
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {
       IFluidHandler fluidInStack = tankStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
-      if (fluidInStack != null && ent instanceof TileCask) {
-        // push fluid from dying tank to itemstack
-        TileCask ttank = (TileCask) ent;
+      if (fluidInStack != null && ent instanceof TileCask ttank) {
+        // push fluid from dying tank to itemstack 
         FluidStack fs = ttank.tank.getFluid();
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
-    if (world.isClientSide == false) {
-      world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
-    }
+    ItemStackUtil.dropItemStackMotionless(world, pos, tankStack);
   }
 }
