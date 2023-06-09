@@ -34,7 +34,6 @@ public class DarkGlassConnectedBlock extends DarkGlassBlock {
     ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   @OnlyIn(Dist.CLIENT)
   public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
