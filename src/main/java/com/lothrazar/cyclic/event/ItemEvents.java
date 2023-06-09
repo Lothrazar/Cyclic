@@ -266,6 +266,7 @@ public class ItemEvents {
       }
       else if (src == DamageSource.LAVA || src == DamageSource.IN_FIRE || src == DamageSource.ON_FIRE) {
         this.damageFinder(event, player, ItemRegistry.CHARM_FIRE.get(), 0);
+        this.damageFinder(event, player, ItemRegistry.CHARM_ULTIMATE.get(), 0);
       }
     }
     else if (src.getEntity() instanceof Player) {

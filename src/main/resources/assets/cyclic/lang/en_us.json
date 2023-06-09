@@ -652,7 +652,7 @@
   "item.cyclic.charm_wither.tooltip": "Wither protection",
   "item.cyclic.charm_wither.guide": "When in your inventory or worn as an accessory, protects you from the Wither status effect at the expense of durability.",
   "item.cyclic.charm_ultimate": "Charm Talisman",
-  "item.cyclic.charm_ultimate.tooltip": "Poison, wither, fire, and void protection",
+  "item.cyclic.charm_ultimate.tooltip": "Poison, wither, fire, lava, and void protection",
   "item.cyclic.charm_ultimate.guide": "When in your inventory or worn as an accessory, combines the protection effects of the Antidote Charm, Wither Charm, Fire Charm, and Void Charm.",
   "item.charm_boat.guide": "Increases your rowing speed in a boat.  Right click in your inventory to turn it off.  Compatible with baubles API.",
   "item.charm_boat": "Sailor Charm",
