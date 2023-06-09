@@ -1363,16 +1363,16 @@
   "effect.cyclic.flight.description": "Players can fly using this effect",
   "item.minecraft.potion.effect.cyclic_flight": "Potion of Flight",
   "item.minecraft.splash_potion.effect.cyclic_flight": "Splash Potion of Flight",
-  "lingering_potion.effect.flight": "Lingering Potion of Flight",
-  "tipped_arrow.effect.flight": "Arrow of Flight",
+  "item.minecraft.lingering_potion.effect.cyclic_flight": "Lingering Potion of Flight",
+  "item.minecraft.tipped_arrow.effect.cyclic_flight": "Arrow of Flight",
    
   
   "effect.cyclic.butter": "Butterfingers",
   "effect.cyclic.butter.description": "Chance to drop items while moving or attacking",
   "item.minecraft.potion.effect.cyclic_butter": "Potion of Butterfingers",
   "item.minecraft.splash_potion.effect.cyclic_butter": "Splash Potion of Butterfingers",
-  "lingering_potion.effect.butter": "Lingering Potion of Butterfingers",
-  "tipped_arrow.effect.butter": "Arrow of Butterfingers",
+  "item.minecraft.lingering_potion.effect.cyclic_butter": "Lingering Potion of Butterfingers",
+  "item.minecraft.tipped_arrow.effect.cyclic_butter": "Arrow of Butterfingers",
    
    
   "effect.cyclic.waterwalk": "Waterwalking",
