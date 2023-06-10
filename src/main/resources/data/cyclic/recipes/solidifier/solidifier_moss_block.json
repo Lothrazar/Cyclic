@@ -2,13 +2,7 @@
 	"type": "cyclic:solidifier",
 	"ingredients": [
 		{
-			"item": "minecraft:dirt"
-		},
-		{
-			"item": "minecraft:dirt"
-		},
-		{
-			"item": "minecraft:dirt"
+			"item": "minecraft:coarse_dirt"
 		}
 	],
 	"mix": {
@@ -22,6 +16,6 @@
 	},
 	"result": {
 		"item": "minecraft:moss_block",
-		"count": 3
+		"count": 1
 	}
 }
