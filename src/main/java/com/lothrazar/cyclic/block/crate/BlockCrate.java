@@ -67,8 +67,7 @@ public class BlockCrate extends BlockCyclic {
   public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity tileentity, ItemStack stackToolUsed) {
     super.playerDestroy(world, player, pos, state, tileentity, stackToolUsed);
     ItemStack newStack = new ItemStack(this);
-    if (tileentity instanceof TileCrate) {
-      TileCrate crate = (TileCrate) tileentity;
+    if (tileentity instanceof TileCrate crate) {
       //read from tile, write to itemstack
       for (int i = 0; i < crate.inventory.getSlots(); i++) {
         CompoundTag nbt = new CompoundTag();
@@ -76,6 +75,6 @@ public class BlockCrate extends BlockCyclic {
         newStack.getOrCreateTag().put(NBTCRATE + i, nbt);
       }
     }
-    ItemStackUtil.drop(world, pos, newStack);
+    ItemStackUtil.dropItemStackMotionless(world, pos, newStack);
   }
 }

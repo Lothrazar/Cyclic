@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "minecraft:glass"
+    "item": "cyclic:glass_connected"
   },
-  "result": "cyclic:glass_connected",
+  "result": "minecraft:glass",
   "experience": 0.38,
   "cookingtime": 400
 }

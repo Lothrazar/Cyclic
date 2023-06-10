@@ -7,10 +7,10 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -94,8 +94,6 @@ public class BlockExpPylon extends BlockCyclic {
         ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
-    if (world.isClientSide == false) {
-      world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), tankStack));
-    }
+    ItemStackUtil.dropItemStackMotionless(world, pos, tankStack);
   }
 }
