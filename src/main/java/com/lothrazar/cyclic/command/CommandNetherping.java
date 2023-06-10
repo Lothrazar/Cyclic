@@ -30,7 +30,7 @@ public class CommandNetherping {
     BlockPos pos = player.blockPosition();
     double x = pos.getX();
     double z = pos.getZ();
-    BlockPos netherpos = new BlockPos(x * factor, pos.getY(), z * factor);
+    BlockPos netherpos = new BlockPos((int) (x * factor), pos.getY(), (int) (z * factor));
     ChatUtil.sendFeedback(ctx,
         ChatUtil.blockPosToString(pos)
             + " -> " +

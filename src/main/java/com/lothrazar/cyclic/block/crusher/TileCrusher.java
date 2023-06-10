@@ -116,8 +116,8 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
       this.burnTime = 0;
       // FIRE AWAY
       //      ModCyclic.LOGGER.info("result " + currentRecipe.getId());
-      if (!currentRecipe.getResultItem().isEmpty()) {
-        this.outputSlots.insertItem(0, currentRecipe.getResultItem().copy(), false);
+      if (!currentRecipe.getResultItem(level.registryAccess()).isEmpty()) {
+        this.outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()).copy(), false);
       }
       if (!currentRecipe.randOutput.bonus.isEmpty() && currentRecipe.randOutput.percent > 0) {
         // 1 is always, 0 is never so yeah

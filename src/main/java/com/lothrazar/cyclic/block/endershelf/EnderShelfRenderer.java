@@ -8,11 +8,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -56,7 +56,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
       ms.translate(xf, yf, 0);
       ms.scale(size, size, size);
       // 0xF000F0
-      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.NONE, combinedLightIn, combinedOverlayIn, ms, buffer, combinedLightIn);
+      Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.NONE, combinedLightIn, combinedOverlayIn, ms, buffer, tile.getLevel(), combinedLightIn);
       ms.popPose();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
@@ -75,7 +75,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
       ms.pushPose();
       ms.translate(x - 0.02, y + 0.06, z);
       ms.scale(1 / sh * scaleName, -1 / sh * scaleName, 0.00005F);
-      fontRenderer.drawInBatch(displayName, 0, 0, color, false, ms.last().pose(), buffer, false, 0, combinedLightIn);
+      fontRenderer.drawInBatch(displayName, 0, 0, color, false, ms.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, combinedLightIn);
       ms.popPose();
     }
     if (tile.renderStyle != RenderTextType.NONE) {
@@ -84,7 +84,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
       ms.translate(x + 0.081F, y, z);
       ms.scale(1 / sh * scaleNum, -1 / sh * scaleNum, 0.00005F);
       String displayCount = "x" + stack.getCount();
-      fontRenderer.drawInBatch(displayCount, 110, 0, color, false, ms.last().pose(), buffer, false, 0, combinedLightIn);
+      fontRenderer.drawInBatch(displayCount, 110, 0, color, false, ms.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, combinedLightIn);
       ms.popPose();
     }
   }

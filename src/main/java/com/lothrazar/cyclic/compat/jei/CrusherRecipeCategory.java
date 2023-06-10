@@ -72,7 +72,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeCrusher recipe, IFocusGroup focuses) {
     builder.addSlot(RecipeIngredientRole.INPUT, 3, 14).addIngredients(recipe.at(0));
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 35, 6).addItemStack(recipe.getResultItem());
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 35, 6).addItemStack(recipe.result);
     if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
       builder.addSlot(RecipeIngredientRole.OUTPUT, 34, 31).addItemStack(recipe.randOutput.bonus);
     }

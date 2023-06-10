@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
@@ -22,7 +23,8 @@ public class ButtonBlockMat extends ButtonBlock implements SimpleWaterloggedBloc
   private final int powerLevel;
 
   public ButtonBlockMat(Properties properties, int ticksToStayPressed, boolean arrowsCanPress, int powerLevel) {
-    super(properties.strength(0.5F), 20, false, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON); // sensitive true false. true is like WOOD ; false is like STONE
+    super(properties.strength(0.5F), BlockSetType.STONE, 20, false); // sensitive true false. true is like WOOD ; false is like STONE
+    //, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     this.powerLevel = powerLevel;
   }

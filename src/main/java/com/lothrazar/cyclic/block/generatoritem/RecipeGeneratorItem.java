@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -38,7 +39,7 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
   }
 
   @Override
-  public ItemStack assemble(TileGeneratorDrops inv) {
+  public ItemStack assemble(TileGeneratorDrops inv, RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 
@@ -89,7 +90,7 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
   }
 
   @Override
-  public ItemStack getResultItem() {
+  public ItemStack getResultItem(RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 

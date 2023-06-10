@@ -20,7 +20,8 @@ public class CommandHome {
   public static void teleport(ServerPlayer player) {
     Optional<Vec3> optional = PlayerUtil.getPlayerHome(player);
     if (optional.isPresent()) {
-      BlockPos bedLocation = new BlockPos(optional.get());
+      Vec3 thanksMojang = optional.get();
+      BlockPos bedLocation = new BlockPos((int) thanksMojang.x, (int) thanksMojang.y, (int) thanksMojang.z);
       EntityUtil.enderTeleportEvent(player, player.level, bedLocation);
       ModCyclic.LOGGER.info("[home]" + bedLocation + " | " + player.getUUID());
     }

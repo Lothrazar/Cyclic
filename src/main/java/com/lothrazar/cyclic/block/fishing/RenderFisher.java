@@ -3,10 +3,10 @@ package com.lothrazar.cyclic.block.fishing;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
@@ -25,7 +25,7 @@ public class RenderFisher implements BlockEntityRenderer<TileFisher> {
         matrixStack.pushPose();
         //        matrixStack.scale(0.5f, 0.5f, 0.5f);
         matrixStack.translate(0.4, 0.45, 0.4);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x910911, 0, matrixStack, buffer, light);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, 0x910911, 0, matrixStack, buffer, tankHere.getLevel(), light);
         matrixStack.popPose();
       }
     }

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -67,39 +66,5 @@ public class ConveyorItemEntity extends ItemEntity {
   @Override
   public Packet<ClientGamePacketListener> getAddEntityPacket() {
     return new ClientboundAddEntityPacket(this);
-  }
-
-  @Override
-  public void addAdditionalSaveData(CompoundTag compound) {
-    compound.putInt("Lifespan", lifespan);
-    if (this.getThrower() != null) {
-      compound.putUUID("Thrower", this.getThrower());
-    }
-    if (this.getOwner() != null) {
-      compound.putUUID("Owner", this.getOwner());
-    }
-    if (!this.getItem().isEmpty()) {
-      compound.put("Item", this.getItem().save(new CompoundTag()));
-    }
-  }
-
-  @Override
-  public void readAdditionalSaveData(CompoundTag compound) {
-    this.setExtendedLifetime();
-    this.setNeverPickUp();
-    if (compound.contains("Lifespan")) {
-      lifespan = compound.getInt("Lifespan");
-    }
-    if (compound.hasUUID("Owner")) {
-      this.setOwner(compound.getUUID("Owner"));
-    }
-    if (compound.hasUUID("Thrower")) {
-      this.setThrower(compound.getUUID("Thrower"));
-    }
-    CompoundTag compoundnbt = compound.getCompound("Item");
-    this.setItem(ItemStack.of(compoundnbt));
-    if (this.getItem().isEmpty()) {
-      this.remove(RemovalReason.KILLED);
-    }
   }
 }

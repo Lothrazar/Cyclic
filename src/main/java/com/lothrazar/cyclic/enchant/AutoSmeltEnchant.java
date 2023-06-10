@@ -112,7 +112,7 @@ public class AutoSmeltEnchant extends EnchantmentCyclic {
       originalLoot.forEach((stack) -> {
         Optional<SmeltingRecipe> optional = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel());
         if (optional.isPresent()) {
-          ItemStack smeltedItemStack = optional.get().getResultItem();
+          ItemStack smeltedItemStack = optional.get().getResultItem(context.getLevel().registryAccess());
           if (!smeltedItemStack.isEmpty()) {
             ItemStack copy = ItemHandlerHelper.copyStackWithSize(smeltedItemStack, stack.getCount() * smeltedItemStack.getCount());
             newLoot.add(copy);

@@ -7,10 +7,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
@@ -25,19 +25,20 @@ public class RenderMelter implements BlockEntityRenderer<TileMelter> {
   public void render(TileMelter tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
     IItemHandler itemHandler = tankHere.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
+    var level = tankHere.getLevel();
     if (itemHandler != null) {
       ItemStack stack = itemHandler.getStackInSlot(0);
       if (!stack.isEmpty()) {
         matrixStack.pushPose();
         matrixStack.translate(0.5, 0.60, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x111111, 200, matrixStack, buffer, light);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, 0x111111, 200, matrixStack, buffer, level, light);
         matrixStack.popPose();
       }
       stack = itemHandler.getStackInSlot(1);
       if (!stack.isEmpty()) {
         matrixStack.pushPose();
         matrixStack.translate(0.5, 0.10, 0.5);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.GROUND, 0x999999, 0, matrixStack, buffer, light);
+        Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, 0x999999, 0, matrixStack, buffer, level, light);
         matrixStack.popPose();
       }
     }

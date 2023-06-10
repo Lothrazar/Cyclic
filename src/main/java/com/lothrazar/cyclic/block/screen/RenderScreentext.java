@@ -48,8 +48,9 @@ public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
     matrix.scale(scaleX * fontSize, scaleY * fontSize, 1);
     //then draw it
     Font fontRenderer = Minecraft.getInstance().font; //this.renderer.getFont();
+    // the Font.DisplayMode.NORMAL was 'false'
     fontRenderer.drawInBatch(text, 0, 0, tile.getColor(),
-        tile.getDropShadow(), matrix.last().pose(), buffer, false, 0, light); // 15728880
+        tile.getDropShadow(), matrix.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, light); // 15728880
     matrix.popPose();
   }
 }

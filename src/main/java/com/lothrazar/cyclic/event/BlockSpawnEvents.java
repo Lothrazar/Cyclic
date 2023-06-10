@@ -11,7 +11,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,15 +25,16 @@ public class BlockSpawnEvents {
     //    Entity exploder = event.getExplosion().getExploder();
     Integer radius = BlockDestruction.RADIUS.get();
     Integer height = BlockDestruction.HEIGHT.get();
-    if (LevelWorldUtil.doesBlockExist(world, new BlockPos(event.getExplosion().getPosition()), BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
+    Vec3 thanksMojang = event.getExplosion().getPosition();
+    if (LevelWorldUtil.doesBlockExist(world, new BlockPos((int) thanksMojang.x, (int) thanksMojang.y, (int) thanksMojang.z), BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
       ModCyclic.LOGGER.info(world.isClientSide + " =clinet;Explosion cancelled " + event.getExplosion());
       event.setCanceled(true);
     }
   }
 
   @SubscribeEvent
-  public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-    MobSpawnType res = event.getSpawnReason();
+  public void onLivingSpawnEvent(MobSpawnEvent.FinalizeSpawn event) {
+    MobSpawnType res = event.getSpawnType();
     if (res == MobSpawnType.NATURAL ||
         res == MobSpawnType.REINFORCEMENT ||
         res == MobSpawnType.EVENT) {

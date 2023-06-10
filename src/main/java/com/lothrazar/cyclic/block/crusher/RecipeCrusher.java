@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.recipe.ingredient.RandomizedOutputIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 public class RecipeCrusher implements Recipe<TileCrusher> {
 
   private final ResourceLocation id;
-  private ItemStack result = ItemStack.EMPTY;
+  public ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   public final EnergyIngredient energy;
   public RandomizedOutputIngredient randOutput;
@@ -80,7 +81,7 @@ public class RecipeCrusher implements Recipe<TileCrusher> {
   }
 
   @Override
-  public ItemStack getResultItem() {
+  public ItemStack getResultItem(RegistryAccess ra) {
     return result;
   }
 
@@ -131,7 +132,7 @@ public class RecipeCrusher implements Recipe<TileCrusher> {
       buffer.writeInt(recipe.energy.getRfPertick());
       buffer.writeInt(recipe.energy.getTicks());
       //
-      buffer.writeItem(recipe.getResultItem());
+      buffer.writeItem(recipe.result);
       buffer.writeInt(recipe.randOutput.percent);
       buffer.writeItem(recipe.randOutput.bonus);
     }
@@ -150,7 +151,7 @@ public class RecipeCrusher implements Recipe<TileCrusher> {
   }
 
   @Override
-  public ItemStack assemble(TileCrusher t) {
+  public ItemStack assemble(TileCrusher t, RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 

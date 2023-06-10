@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.util.RecipeUtil;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -87,7 +88,7 @@ public class RecipeMelter implements Recipe<TileMelter> {
   }
 
   @Override
-  public ItemStack getResultItem() {
+  public ItemStack getResultItem(RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 
@@ -106,7 +107,7 @@ public class RecipeMelter implements Recipe<TileMelter> {
   }
 
   @Override
-  public ItemStack assemble(TileMelter t) {
+  public ItemStack assemble(TileMelter t, RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 

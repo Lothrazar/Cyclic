@@ -39,7 +39,7 @@ public class SoundmufflerBlock extends BlockCyclic {
     //      return; // redstone power = not running
     //    }
     final boolean isPowered = false; // if im NOT powered, im running
-    List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this,
+    List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld, new BlockPos((int) sound.getX(), (int) sound.getY(), (int) sound.getZ()), this,
         RADIUS.get(),
         isPowered);
     if (blocks == null || blocks.size() == 0) {

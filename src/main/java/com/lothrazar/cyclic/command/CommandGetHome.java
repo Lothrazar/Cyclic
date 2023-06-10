@@ -27,7 +27,8 @@ public class CommandGetHome {
       optional = Player.findRespawnPositionAndUseSpawnBlock(player.getLevel(), respawnPos, 0.0F, true, true);
     }
     if (optional.isPresent()) {
-      BlockPos bedLocation = new BlockPos(optional.get());
+      Vec3 thanksMojang = optional.get();
+      BlockPos bedLocation = new BlockPos((int) thanksMojang.x, (int) thanksMojang.y, (int) thanksMojang.z);
       ChatUtil.sendFeedback(ctx, ChatUtil.lang("command.cyclic.gethome.yours") + " " + ChatUtil.blockPosToString(bedLocation));
     }
     else {

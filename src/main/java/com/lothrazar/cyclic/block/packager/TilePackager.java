@@ -85,21 +85,21 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
     //shapeless recipes / shaped check either
     List<CraftingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
     for (CraftingRecipe rec : recipes) {
-      if (!isRecipeValid(rec)) {
+      if (!isRecipeValid(rec, level)) {
         continue;
       }
       //test matching recipe and its size
       int total = getCostIfMatched(stack, rec);
-      if (total > 0 && outputSlots.insertItem(0, rec.getResultItem().copy(), true).isEmpty()) {
+      if (total > 0 && outputSlots.insertItem(0, rec.getResultItem(level.registryAccess()).copy(), true).isEmpty()) {
         //consume items, produce output
         inputSlots.extractItem(0, total, false);
-        outputSlots.insertItem(0, rec.getResultItem().copy(), false);
+        outputSlots.insertItem(0, rec.getResultItem(level.registryAccess()).copy(), false);
         energy.extractEnergy(POWERCONF.get(), false);
       }
     }
   }
 
-  public static boolean isRecipeValid(CraftingRecipe recipe) {
+  public static boolean isRecipeValid(CraftingRecipe recipe, Level level) {
     int total = 0, matched = 0;
     Ingredient first = null;
     ItemStack[] firstItems = null;
@@ -122,7 +122,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
     if (first == null || firstItems == null || firstItems.length == 0) {
       return false; //nothing here
     }
-    boolean outIsStorage = recipe.getResultItem().is(Tags.Items.STORAGE_BLOCKS);
+    boolean outIsStorage = recipe.getResultItem(level.registryAccess()).is(Tags.Items.STORAGE_BLOCKS);
     boolean inIsIngot = firstItems[0].is(Tags.Items.INGOTS);
     if (!outIsStorage && inIsIngot) {
       //ingots can only go to storage blocks, nothing else
@@ -130,10 +130,10 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
       return false;
     }
     if (total > 0 && total == matched &&
-        recipe.getResultItem().getMaxStackSize() > 1 && //aka not tools/boots/etc
+        recipe.getResultItem(level.registryAccess()).getMaxStackSize() > 1 && //aka not tools/boots/etc
         //        stack.getCount() >= total &&
         (total == 4 || total == 9) &&
-        (recipe.getResultItem().getCount() == 1 || recipe.getResultItem().getCount() == total)) {
+        (recipe.getResultItem(level.registryAccess()).getCount() == 1 || recipe.getResultItem(level.registryAccess()).getCount() == total)) {
       return true;
     }
     return false;
@@ -153,7 +153,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
     if (total == matched &&
         stack.getCount() >= total &&
         (total == 4 || total == 9) &&
-        (recipe.getResultItem().getCount() == 1 || recipe.getResultItem().getCount() == total)) {
+        (recipe.getResultItem(level.registryAccess()).getCount() == 1 || recipe.getResultItem(level.registryAccess()).getCount() == total)) {
       return total;
     }
     return -1;

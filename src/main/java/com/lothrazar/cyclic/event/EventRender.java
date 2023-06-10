@@ -64,7 +64,7 @@ public class EventRender {
       BlockState targetState = BuilderActionType.getBlockState(player.level, itemStackHeld);
       if (targetState != null) {
         //ok still 
-        drawStack(new ItemStack(targetState.getBlock()));
+        drawStack(event.getPoseStack(), new ItemStack(targetState.getBlock()));
         int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
         if (slot < 0) {
           //nothing found
@@ -91,11 +91,11 @@ public class EventRender {
     mc.font.draw(ms, str, x, y, 0xFFFFFF);
   }
 
-  public static void drawStack(ItemStack stack) {
+  public static void drawStack(PoseStack poseStack, ItemStack stack) {
     Minecraft mc = Minecraft.getInstance();
     int width = mc.getWindow().getGuiScaledWidth();
     int height = mc.getWindow().getGuiScaledHeight();
-    mc.getItemRenderer().renderAndDecorateItem(stack, width / 2, height / 2);
+    mc.getItemRenderer().renderAndDecorateItem(poseStack, stack, width / 2, height / 2);
   }
 
   @SubscribeEvent

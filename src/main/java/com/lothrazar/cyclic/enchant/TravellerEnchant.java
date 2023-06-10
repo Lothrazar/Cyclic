@@ -23,11 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import java.util.Arrays;
-import java.util.List;
 import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -42,11 +41,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class TravellerEnchant extends EnchantmentCyclic {
 
-  public static final List<String> PROTS = Arrays.asList(new String[] {
-      "sting", DamageSource.FLY_INTO_WALL.msgId,
-      DamageSource.CACTUS.msgId,
-      DamageSource.SWEET_BERRY_BUSH.msgId
-  });
   public static final String ID = "traveler";
   public static BooleanValue CFG;
 
@@ -79,7 +73,7 @@ public class TravellerEnchant extends EnchantmentCyclic {
   public boolean canEnchant(ItemStack stack) {
     boolean yes = isEnabled()
         && (stack.getItem() instanceof ArmorItem)
-        && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.LEGS;
+        && ((ArmorItem) stack.getItem()).getType() == ArmorItem.Type.LEGGINGS;
     return yes;
   }
 
@@ -106,16 +100,26 @@ public class TravellerEnchant extends EnchantmentCyclic {
     }
   }
 
+  //  public static final List<String> PROTS = Arrays.asList(new String[] {
+  //      "sting", DamageSource.FLY_INTO_WALL.msgId,
+  //      DamageSource.CACTUS.msgId,
+  //      DamageSource.SWEET_BERRY_BUSH.msgId
+  //  });
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent event) {
     if (!isEnabled()) {
       return;
     }
     int level = getCurrentArmorLevelSlot(event.getEntity(), EquipmentSlot.LEGS);
-    if (level > 0 && PROTS.contains(event.getSource().msgId)) {
+    DamageSource source = event.getSource(); // .type();
+    DamageSources bullshit = event.getEntity().getLevel().damageSources();
+    if (level > 0 && (source == bullshit.cactus()
+        || source == bullshit.flyIntoWall()
+        || source == bullshit.sweetBerryBush()
+        || source == bullshit.sting(null))) {
       event.setAmount(0.1F);
     }
-    if (level > 0 && event.getSource() == DamageSource.FALL) {
+    if (level > 0 && source == bullshit.fall()) {
       //normal is zero damage up to 3 distance. 1 damage (half heart) at 4 distance. and each distance up goes up by that
       // so 8 fall damage would be 5 damage
       if (event.getEntity().fallDistance <= 8) {

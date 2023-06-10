@@ -27,7 +27,6 @@ import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.slingshot.LaserItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -59,7 +58,7 @@ public class PacketEntityLaser extends PacketBaseCyclic {
         IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
         if (storage != null) {
           float dmg = message.crosshair ? LaserItem.DMG_CLOSE : LaserItem.DMG_FAR;
-          if (target.hurt(DamageSource.indirectMagic(sender, sender), dmg)) {
+          if (target.hurt(level.damageSources().indirectMagic(sender, sender), dmg)) {
             //DRAIN RF ETC 
             LaserItem.resetStackDamageCool(stack, level.getGameTime());
             storage.extractEnergy(LaserItem.COST, false);

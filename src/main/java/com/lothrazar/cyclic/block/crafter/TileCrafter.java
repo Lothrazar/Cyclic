@@ -153,8 +153,8 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
       setPreviewSlot(ItemStack.EMPTY);
     }
     else {
-      //recipes not null and it matches 
-      ItemStack recipeOutput = lastValidRecipe.getResultItem().copy();
+      //recipes not null and it matches  
+      ItemStack recipeOutput = lastValidRecipe.getResultItem(level.registryAccess()).copy();
       setPreviewSlot(recipeOutput);
       //if we have space for the output, then go ahead
       if (hasFreeSpace(outHandler, recipeOutput)) {

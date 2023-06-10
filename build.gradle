@@ -73,8 +73,9 @@ dependencies {
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 	
 	// optional compat: guidebook
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
+	//RIP patchouli i will miss you please stop being dead soon 
+  //  compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
+  //  runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
     
     // mods that have optional/soft integration
    // runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3873025")

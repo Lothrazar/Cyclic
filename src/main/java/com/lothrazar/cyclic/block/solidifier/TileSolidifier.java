@@ -210,7 +210,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid().getAmount(), FluidAction.SIMULATE);
     if (test.getAmount() >= this.currentRecipe.getRecipeFluid().getAmount()) {
       // wait is output slot compatible
-      if (!outputSlots.insertItem(0, currentRecipe.getResultItem(), true).isEmpty()) {
+      if (!outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), true).isEmpty()) {
         return false;
         // there was non-empty left after this, so no room for all
       }
@@ -219,7 +219,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
       tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
-      outputSlots.insertItem(0, currentRecipe.getResultItem(), false);
+      outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), false);
       return true;
     }
     return false;

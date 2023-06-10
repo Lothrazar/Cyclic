@@ -118,7 +118,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       if (status == UncraftStatusEnum.MATCH) {
         //pay cost
         // ModCyclic.LOGGER.info("before extract cost" + inputSlots.getStackInSlot(0));
-        inputSlots.extractItem(0, match.getResultItem().getCount(), false);
+        inputSlots.extractItem(0, match.getResultItem(level.registryAccess()).getCount(), false);
         // ModCyclic.LOGGER.info("AFTER  extract cost" + inputSlots.getStackInSlot(0));
         energy.extractEnergy(cost, false);
       }
@@ -235,7 +235,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     if (recipe == null) {
       return false;
     }
-    var recipeResultItem = recipe.getResultItem();
+    var recipeResultItem = recipe.getResultItem(level.registryAccess());
     if (recipeResultItem.isEmpty() ||
         recipeResultItem.getItem() != stack.getItem() ||
         recipeResultItem.getCount() > stack.getCount()) {

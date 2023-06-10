@@ -12,7 +12,6 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
@@ -36,7 +35,7 @@ public class BiomeTweaker {
     bus.addListener(BiomeTweaker::onGatherData);
   }
 
-  public record TestModifier(HolderSet<Biome> biomes, Precipitation precipitation, int waterColor) implements BiomeModifier {
+  public record TestModifier(HolderSet<Biome> biomes, int waterColor) implements BiomeModifier {
 
     private static final RegistryObject<Codec<? extends BiomeModifier>> SERIALIZER = RegistryObject.create(MODIFY_BIOMES_RL, ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, ModCyclic.MODID);
 
@@ -60,7 +59,6 @@ public class BiomeTweaker {
     private static Codec<TestModifier> makeCodec() {
       return RecordCodecBuilder.create(builder -> builder.group(
           Biome.LIST_CODEC.fieldOf("biomes").forGetter(TestModifier::biomes),
-          Precipitation.CODEC.fieldOf("precipitation").forGetter(TestModifier::precipitation),
           Codec.INT.fieldOf("water_color").forGetter(TestModifier::waterColor)).apply(builder, TestModifier::new));
     }
   }

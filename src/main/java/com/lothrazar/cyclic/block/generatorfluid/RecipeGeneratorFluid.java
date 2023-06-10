@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.util.RecipeUtil;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +37,7 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
   }
 
   @Override
-  public ItemStack assemble(TileGeneratorFluid inv) {
+  public ItemStack assemble(TileGeneratorFluid inv, RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 
@@ -46,7 +47,7 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
   }
 
   @Override
-  public ItemStack getResultItem() {
+  public ItemStack getResultItem(RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 

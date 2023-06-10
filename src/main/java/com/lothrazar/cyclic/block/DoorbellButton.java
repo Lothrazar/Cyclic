@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -12,6 +11,7 @@ import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
@@ -24,7 +24,7 @@ public class DoorbellButton extends ButtonBlock implements SimpleWaterloggedBloc
   public static final int POWERLVL = 1;
 
   public DoorbellButton(Properties properties) {
-    super(properties.strength(0.5F).lightLevel(s -> s.getValue(POWERED) ? LIGHTLVL : 0), 30, true, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON);
+    super(properties.strength(0.5F).lightLevel(s -> s.getValue(POWERED) ? LIGHTLVL : 0), BlockSetType.STONE, 30, true);
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
 

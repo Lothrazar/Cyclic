@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -82,7 +81,7 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
           entity.setSecondsOnFire(FIRE_TIME);
         break;
         case PLAIN:
-          entity.hurt(DamageSource.CACTUS, 1);
+          entity.hurt(worldIn.damageSources().cactus(), 1);
         break;
         default:
         case NONE:
@@ -116,7 +115,7 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
           }
         break;
         case 4:
-          entity.hurt(DamageSource.MAGIC, 1);
+          entity.hurt(worldIn.damageSources().magic(), 1);
         break;
         case 5:
           if (!living.hasEffect(MobEffects.BLINDNESS)) {

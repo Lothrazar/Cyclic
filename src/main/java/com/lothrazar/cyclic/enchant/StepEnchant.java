@@ -82,7 +82,7 @@ public class StepEnchant extends EnchantmentCyclic {
     //anything that goes on your feet
     boolean yes = isEnabled()
         && (stack.getItem() instanceof ArmorItem)
-        && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.LEGS;
+        && ((ArmorItem) stack.getItem()).getType() == ArmorItem.Type.LEGGINGS;
     return yes;
   }
 

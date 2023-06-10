@@ -42,7 +42,7 @@ A small mod by Lothrazar
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[44.1,)" #mandatory
+    versionRange="[45.1,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -51,6 +51,6 @@ A small mod by Lothrazar
 [[dependencies.cyclic]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.3,)"
+    versionRange="[1.19.4,)"
     ordering="NONE"
     side="BOTH"

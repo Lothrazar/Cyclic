@@ -35,6 +35,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -233,14 +235,19 @@ public class ItemEvents {
   @SubscribeEvent
   public void onEntityDamage(LivingDamageEvent event) {
     DamageSource src = event.getSource();
-    if (event.getEntity() instanceof Player) {
-      Player player = (Player) event.getEntity();
+    if (event.getEntity() instanceof Player player) {
+      DamageType type = src.type();
+      //lol waht
+      //      DamageTypes.EXPLOSION.cast(null)
       if (src.isExplosion()) {
         //explosion thingy
         this.damageFinder(event, player, ItemRegistry.CHARM_CREEPER.get(), 0);
       }
       //check all cases
       //SB switch 
+      if (src.is(DamageTypes.FALL)) {
+        //oh shit its this easy lol
+      }
       if (src == DamageSource.FALL || src == DamageSource.CACTUS || src == DamageSource.SWEET_BERRY_BUSH) {
         this.damageFinder(event, player, ItemRegistry.CHARM_LONGFALL.get(), 0);
       }

@@ -2,13 +2,12 @@ package com.lothrazar.cyclic.registry;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.material.EmeraldArmorMaterial;
+import com.lothrazar.cyclic.material.GemArmorMaterial;
+import com.lothrazar.cyclic.material.GlowingArmorMaterial;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
@@ -52,165 +51,9 @@ public class MaterialRegistry {
 
   public static class ArmorMats {
 
-    private static final String EMERALDID = ModCyclic.MODID + ":emerald";
-    private static final String CRYSTALID = ModCyclic.MODID + ":crystal";
-    private static final String GLOWINGID = ModCyclic.MODID + ":glowing";
-    public static final ArmorMaterial EMERALD = new ArmorMaterial() {
-
-      @Override
-      public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return (ArmorMaterials.DIAMOND.getDurabilityForSlot(slotIn) + ArmorMaterials.NETHERITE.getDurabilityForSlot(slotIn)) / 2;
-      }
-
-      @Override
-      public int getDefenseForSlot(EquipmentSlot slot) {
-        switch (slot) {
-          case CHEST:
-            return EMERALD_CHEST.get();
-          case FEET:
-            return EMERALD_BOOTS.get();
-          case HEAD:
-            return EMERALD_HELM.get();
-          case LEGS:
-            return EMERALD_LEG.get();
-          case MAINHAND:
-          case OFFHAND:
-          default:
-          break;
-        }
-        return 0;
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return ArmorMaterials.GOLD.getEnchantmentValue();
-      }
-
-      @Override
-      public SoundEvent getEquipSound() {
-        return SoundRegistry.EQUIP_EMERALD.get();
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(Items.EMERALD));
-      }
-
-      @Override
-      public String getName() {
-        return EMERALDID;
-      }
-
-      @Override
-      public float getToughness() {
-        return EMERALD_TOUGH.get().floatValue();
-      }
-
-      @Override
-      public float getKnockbackResistance() {
-        return (ArmorMaterials.DIAMOND.getKnockbackResistance() + ArmorMaterials.NETHERITE.getKnockbackResistance()) / 2;
-      }
-    };
-    public static final ArmorMaterial GEMOBSIDIAN = new ArmorMaterial() {
-
-      @Override
-      public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return ArmorMaterials.DIAMOND.getDurabilityForSlot(slotIn) * 4;
-      }
-
-      @Override
-      public int getDefenseForSlot(EquipmentSlot slot) {
-        switch (slot) {
-          case CHEST:
-            return OBS_CHEST.get();
-          case FEET:
-            return OBS_BOOTS.get();
-          case HEAD:
-            return OBS_HELM.get();
-          case LEGS:
-            return OBS_LEG.get();
-          case MAINHAND:
-          case OFFHAND:
-          default:
-          break;
-        }
-        return 0;
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return ArmorMaterials.GOLD.getEnchantmentValue() + 3;
-      }
-
-      @Override
-      public SoundEvent getEquipSound() {
-        return SoundRegistry.EQUIP_EMERALD.get();
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(ItemRegistry.GEM_OBSIDIAN.get()));
-      }
-
-      @Override
-      public String getName() {
-        return CRYSTALID;
-      }
-
-      @Override
-      public float getToughness() {
-        return OBS_TOUGH.get().floatValue();
-      }
-
-      @Override
-      public float getKnockbackResistance() {
-        return ArmorMaterials.NETHERITE.getKnockbackResistance();
-      }
-    };
-    public static final ArmorMaterial GLOWING = new ArmorMaterial() {
-
-      ArmorMaterials mimicArmor = ArmorMaterials.IRON;
-
-      @Override
-      public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return mimicArmor.getDurabilityForSlot(slotIn);
-      }
-
-      @Override
-      public int getDefenseForSlot(EquipmentSlot slotIn) {
-        return mimicArmor.getDefenseForSlot(slotIn);
-      }
-
-      @Override
-      public int getEnchantmentValue() {
-        return mimicArmor.getEnchantmentValue() + 1;
-      }
-
-      @Override
-      public SoundEvent getEquipSound() {
-        return SoundRegistry.EQUIP_EMERALD.get();
-      }
-
-      @Override
-      public Ingredient getRepairIngredient() {
-        return Ingredient.of(new ItemStack(ItemRegistry.GEM_AMBER.get()));
-      }
-
-      @Override
-      public String getName() {
-        return GLOWINGID;
-      }
-
-      @Override
-      public float getToughness() {
-        return mimicArmor.getToughness();
-      }
-
-      @Override
-      public float getKnockbackResistance() {
-        return mimicArmor.getKnockbackResistance();
-      }
-    };
+    public static final ArmorMaterial EMERALD = new EmeraldArmorMaterial();
+    public static final ArmorMaterial GEMOBSIDIAN = new GemArmorMaterial();
+    public static final ArmorMaterial GLOWING = new GlowingArmorMaterial();
   }
 
   public static class ToolMats {

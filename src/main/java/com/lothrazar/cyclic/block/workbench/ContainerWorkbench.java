@@ -188,7 +188,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
       if (optional.isPresent()) {
         CraftingRecipe recipe = optional.get();
         if (inventoryResult.setRecipeUsed(world, sp, recipe)) {
-          itemstack = recipe.assemble(inventory);
+          itemstack = recipe.assemble(inventory, world.registryAccess());
         }
       }
       inventoryResult.setItem(0, itemstack);

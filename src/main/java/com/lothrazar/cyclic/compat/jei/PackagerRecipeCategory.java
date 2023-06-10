@@ -14,6 +14,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +55,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   @Override
   public boolean isHandled(CraftingRecipe recipe) {
-    return TilePackager.isRecipeValid(recipe);
+    return TilePackager.isRecipeValid(recipe, Minecraft.getInstance().level);
   }
 
   @Override
@@ -79,7 +80,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
       haxor.add(cpy);
     }
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(VanillaTypes.ITEM_STACK, haxor);
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.getResultItem());
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
   }
   //  @Override
   //  public void setIngredients(CraftingRecipe recipe, IIngredients ingredients) {

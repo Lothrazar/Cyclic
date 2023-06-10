@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.util.RecipeUtil;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -24,7 +25,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class RecipeSolidifier implements Recipe<TileSolidifier> {
 
   private final ResourceLocation id;
-  private ItemStack result = ItemStack.EMPTY;
+  public ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private final EnergyIngredient energy;
   public final FluidTagIngredient fluidIngredient;
@@ -59,7 +60,7 @@ public class RecipeSolidifier implements Recipe<TileSolidifier> {
   }
 
   @Override
-  public ItemStack assemble(TileSolidifier inv) {
+  public ItemStack assemble(TileSolidifier inv, RegistryAccess ra) {
     return ItemStack.EMPTY;
   }
 
@@ -131,7 +132,7 @@ public class RecipeSolidifier implements Recipe<TileSolidifier> {
   }
 
   @Override
-  public ItemStack getResultItem() {
+  public ItemStack getResultItem(RegistryAccess ra) {
     return result.copy();
   }
 
@@ -186,7 +187,7 @@ public class RecipeSolidifier implements Recipe<TileSolidifier> {
       one.toNetwork(buf);
       two.toNetwork(buf);
       recipe.fluidIngredient.writeToPacket(buf);
-      buf.writeItem(recipe.getResultItem());
+      buf.writeItem(recipe.result);
       buf.writeInt(recipe.energy.getRfPertick());
       buf.writeInt(recipe.energy.getTicks());
     }

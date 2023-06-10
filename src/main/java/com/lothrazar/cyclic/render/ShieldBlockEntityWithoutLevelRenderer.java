@@ -9,11 +9,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
@@ -36,7 +36,7 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
   }
 
   @Override
-  public void renderByItem(ItemStack stackIn, ItemTransforms.TransformType type, PoseStack ps, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+  public void renderByItem(ItemStack stackIn, ItemDisplayContext type, PoseStack ps, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
     //copied from superclass
     ps.pushPose();
     ps.scale(1, -1, -1);

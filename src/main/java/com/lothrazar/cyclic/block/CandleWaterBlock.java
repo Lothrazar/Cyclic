@@ -29,6 +29,7 @@ import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -40,6 +41,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -52,7 +54,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.eventbus.api.Event;
 
 public class CandleWaterBlock extends BlockCyclic {
 
@@ -103,8 +104,8 @@ public class CandleWaterBlock extends BlockCyclic {
 
   private void triggerUpdate(Level world, BlockPos pos, RandomSource rand) {
     try {
-      if (!world.isClientSide && world.getBlockState(pos).getValue(LIT)) {
-        trySpawn(world, pos, rand);
+      if (world instanceof ServerLevel sl && !world.isClientSide && world.getBlockState(pos).getValue(LIT)) {
+        trySpawn(sl, pos, rand);
       }
     }
     catch (Exception exception) {
@@ -112,20 +113,22 @@ public class CandleWaterBlock extends BlockCyclic {
     }
   }
 
-  private void trySpawn(Level world, BlockPos pos, RandomSource rand) throws Exception {
+  private void trySpawn(ServerLevel world, BlockPos pos, RandomSource rand) throws Exception {
     //if radius is 3, then go be
     float x = pos.getX() + Mth.nextInt(rand, -1 * RADIUS.get(), RADIUS.get());
     float y = pos.getY();
     float z = pos.getZ() + Mth.nextInt(rand, -1 * RADIUS.get(), RADIUS.get());
-    BlockPos posTarget = new BlockPos(x, y, z);
+    BlockPos posTarget = new BlockPos((int) x, (int) y, (int) z);
     Mob monster = findMonsterToSpawn(world, posTarget, rand);
     if (monster == null || !world.isEmptyBlock(posTarget)) {
       return;
     }
     monster.moveTo(x, y, z, world.random.nextFloat() * 360.0F, 0.0F);
-    //null means not from a spawner
-    Event.Result canSpawn = ForgeEventFactory.canEntitySpawn(monster, world, x, y, z, null, MobSpawnType.SPAWNER);
-    if (canSpawn == Event.Result.DENY || !monster.checkSpawnRules(world, MobSpawnType.SPAWNER)) {
+    //null means not from a spawner 
+    ///https://gist.github.com/ChampionAsh5357/163a75e87599d19ee6b4b879821953e8
+    // null means cancelled
+    SpawnGroupData canSpawn = ForgeEventFactory.onFinalizeSpawn(monster, world, world.getCurrentDifficultyAt(posTarget), MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
+    if (canSpawn == null || !monster.checkSpawnRules(world, MobSpawnType.SPAWNER)) {
       afterSpawnFailure(world, pos);
     }
     else if (world.addFreshEntity(monster)) {

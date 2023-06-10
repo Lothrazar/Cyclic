@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
@@ -47,7 +48,7 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
     //    GL11.glEnable(GL11.GL_BLEND);
     //    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     if (textureId != null) {
-      this.blit(ms,
+      GuiComponent.blit(ms,
           this.getX() + textureId.getOffsetX(), this.getY() + textureId.getOffsetY(),
           textureId.getX() + xOffset, textureId.getY() + yOffset,
           textureId.getWidth() - yOffset, textureId.getHeight() - yOffset);
