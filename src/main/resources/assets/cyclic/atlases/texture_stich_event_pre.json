@@ -1,0 +1,9 @@
+{
+    "sources": [
+        {
+            "type": "directory",
+            "source": "cyclic:entity/shield",
+            "prefix": "cyclic:entity/shield/"
+        }
+    ]
+}

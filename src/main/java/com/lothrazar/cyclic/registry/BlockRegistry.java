@@ -122,8 +122,10 @@ import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -137,11 +139,41 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
+
+  @SubscribeEvent
+  public static void buildContents(CreativeModeTabEvent.Register event) {
+    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "cyclicitems"), builder -> builder
+        .title(Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
+        .icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
+        .displayItems((enabledFlags, populator, perms) -> {
+          for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
+            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+              populator.accept(stupidForgeFiringEventsOutOfOrder);
+          }
+        }));
+    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "tab"), builder -> builder
+        .title(Component.translatable("itemGroup." + ModCyclic.MODID))
+        .icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem(), 1))
+        .displayItems((enabledFlags, populator, perms) -> {
+          for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {
+            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+              populator.accept(stupidForgeFiringEventsOutOfOrder);
+          }
+        }));
+    // build ITEM_GROUP tab
+    //    buildTab(event, ModCyclic.MODID, new ItemStack(ItemRegistry.GEM_AMBER.asItem()), ITEMS);
+  }
 
   public static List<BlockCyclic> BLOCKSCLIENTREGISTRY = new ArrayList<>(); // TODO: 1.19 ? refactor this 
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
