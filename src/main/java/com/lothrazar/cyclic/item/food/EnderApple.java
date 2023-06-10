@@ -13,7 +13,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -43,11 +43,12 @@ public class EnderApple extends ItemBaseCyclic {
   //does pos exist in biome
   //    RegistryAccess.BUILTIN.get().registryOrThrow(Registry.BIOME_REGISTRY).getOrCreateTag(yourBiomeTagKey).contains(level.getBiome(pos))
   public Pair<BlockPos, Holder<Structure>> findNearestPair(ServerLevel sl, TagKey<Structure> p_215012_, BlockPos p_215013_, int p_215014_, boolean p_215015_) {
-    if (!sl.getServer().getWorldData().worldGenSettings().generateStructures()) {
+    //getLevelSettings() -> worldGenOptions
+    if (!sl.getServer().getWorldData().worldGenOptions().generateStructures()) {
       return null;
     }
     else {
-      Optional<HolderSet.Named<Structure>> optional = sl.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(p_215012_);
+      Optional<HolderSet.Named<Structure>> optional = sl.registryAccess().registryOrThrow(Registries.STRUCTURE).getTag(p_215012_);
       if (optional.isEmpty()) {
         return null;
       }
@@ -76,7 +77,7 @@ public class EnderApple extends ItemBaseCyclic {
         for (String conf : structIgnoreList) {
           //EXAMPLE    test = StructureTags.EYE_OF_ENDER_LOCATED;
           Pair<BlockPos, Holder<Structure>> blockpos = findNearestPair(serverlevel,
-              TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(conf)),
+              TagKey.create(Registries.STRUCTURE, new ResourceLocation(conf)),
               entityLiving.blockPosition(), 100, false);
           if (blockpos != null) {
             //add to ze frekni map yo 

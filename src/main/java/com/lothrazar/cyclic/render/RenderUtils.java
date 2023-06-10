@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.joml.Matrix4f;
 import com.lothrazar.cyclic.data.Model3D;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -12,8 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.player.LocalPlayer;
@@ -347,7 +347,7 @@ public class RenderUtils {
       //      matrix.translate(e.getX() + .5F, e.getY() + .5F, e.getZ() + .5F);
       matrix.translate(-0.005f, -0.005f, -0.005f);
       matrix.scale(scale, scale, scale);
-      matrix.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+      matrix.mulPose(Axis.YP.rotationDegrees(-90.0F));
       Matrix4f positionMatrix = matrix.last().pose();
       RenderUtils.renderCube(positionMatrix, builder, e, color, .125F);
       matrix.popPose();
@@ -386,7 +386,7 @@ public class RenderUtils {
       matrix.translate(posCurr.getX(), posCurr.getY(), posCurr.getZ());
       matrix.translate(-0.005f, -0.005f, -0.005f);
       matrix.scale(scale, scale, scale);
-      matrix.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+      matrix.mulPose(Axis.YP.rotationDegrees(-90.0F));
       RenderUtils.renderCube(matrix.last().pose(), builder, posCurr, coords.get(posCurr), alpha);
       matrix.popPose();
     }

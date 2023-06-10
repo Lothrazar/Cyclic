@@ -232,7 +232,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     if (filter.isEmpty()) {
       return true; //ya go
     }
-    for (BlockStateMatcher m : BlockstateCard.getSavedStates(filter)) {
+    for (BlockStateMatcher m : BlockstateCard.getSavedStates(level, filter)) {
       BlockState st = m.getState();
       if (targetState.getBlock() == st.getBlock()) {
         if (m.isExactProperties() == false) {

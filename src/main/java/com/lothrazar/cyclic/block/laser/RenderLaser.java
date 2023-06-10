@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.laser;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -41,11 +41,11 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
     //This method takes the player's position into account, and adjusts the beam so that its rendered properly whereever you stand
     Player player = Minecraft.getInstance().player;
     Vector3f vectP = new Vector3f((float) player.getX() - tile.getX(), (float) player.getEyeY() - tile.getY(), (float) player.getZ() - tile.getZ());
-    Vector3f vectS = from.copy();
+    Vector3f vectS = new Vector3f(from); // .copy()
     vectS.sub(vectP);
-    Vector3f vectE = to.copy();
+    Vector3f vectE = new Vector3f(to);//.copy()
     vectE.sub(from);
-    Vector3f adjustedVec = vectS.copy();
+    Vector3f adjustedVec = new Vector3f(vectS);//.copy();
     adjustedVec.cross(vectE);
     adjustedVec.normalize();
     return adjustedVec;
@@ -77,13 +77,13 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
     final float v = 1;
     Vector3f adjustedVec = adjustBeamToEyes(from, to, tilePos);
     adjustedVec.mul(thickness); //Determines how thick the beam is
-    Vector3f p1 = from.copy();
+    Vector3f p1 = new Vector3f(from);
     p1.add(adjustedVec);
-    Vector3f p2 = from.copy();
+    Vector3f p2 = new Vector3f(from);
     p2.sub(adjustedVec);
-    Vector3f p3 = to.copy();
+    Vector3f p3 = new Vector3f(to);
     p3.add(adjustedVec);
-    Vector3f p4 = to.copy();
+    Vector3f p4 = new Vector3f(to);
     p4.sub(adjustedVec);
     builder.vertex(positionMatrix, p1.x(), p1.y(), p1.z())
         .color(r, g, b, alpha)

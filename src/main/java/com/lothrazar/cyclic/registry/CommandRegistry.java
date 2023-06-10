@@ -25,10 +25,11 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ObjectiveArgument;
+import net.minecraft.commands.arguments.ResourceArgument;
 import net.minecraft.commands.arguments.ResourceKeyArgument;
 import net.minecraft.commands.arguments.ScoreHolderArgument;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -234,30 +235,30 @@ public class CommandRegistry {
             .requires((p) -> {
               return p.hasPermission(PERM_ELEVATED);
             })
-            .then(Commands.argument(ARG_ATTR, ResourceKeyArgument.key(Registry.ATTRIBUTE_REGISTRY))
+            .then(Commands.argument(ARG_ATTR, ResourceKeyArgument.key(Registries.ATTRIBUTE))
                 .then(Commands.literal(FORK_ADD)
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(-10000, 10000))
                             .executes(x -> {
-                              return AttributesUtil.add(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                              return AttributesUtil.add(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                             }))))
                 .then(Commands.literal(FORK_RANDOM)
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_MIN, IntegerArgumentType.integer(-10000, 10000))
                             .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer(-10000, 10000))
                                 .executes(x -> {
-                                  return AttributesUtil.addRandom(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_MIN), IntegerArgumentType.getInteger(x, ARG_MAX));
+                                  return AttributesUtil.addRandom(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_MIN), IntegerArgumentType.getInteger(x, ARG_MAX));
                                 })))))
                 .then(Commands.literal(FORK_FACTOR)
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_VALUE, DoubleArgumentType.doubleArg(0, 100))
                             .executes(x -> {
-                              return AttributesUtil.multiply(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER), DoubleArgumentType.getDouble(x, ARG_VALUE));
+                              return AttributesUtil.multiply(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER), DoubleArgumentType.getDouble(x, ARG_VALUE));
                             }))))
                 .then(Commands.literal(FORK_RESET)
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .executes(x -> {
-                          return AttributesUtil.reset(ResourceKeyArgument.getAttribute(x, ARG_ATTR), EntityArgument.getPlayers(x, ARG_PLAYER));
+                          return AttributesUtil.reset(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER));
                         })))))
         // cyclic gamemode @p 1
         .then(Commands.literal(CyclicCommands.GAMEMODE.toString())

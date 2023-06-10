@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -35,7 +36,7 @@ public class BlockstateCard extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack held, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
-      for (BlockStateMatcher m : getSavedStates(held)) {
+      for (BlockStateMatcher m : getSavedStates(worldIn, held)) {
         BlockState st = m.getState();
         ChatFormatting c = m.isExactProperties() ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.DARK_PURPLE;
         String extra = m.isExactProperties() ? " [state]" : " [block]"; // star for not exact
@@ -50,14 +51,14 @@ public class BlockstateCard extends ItemBaseCyclic {
     }
   }
 
-  public static List<BlockStateMatcher> getSavedStates(ItemStack held) {
+  public static List<BlockStateMatcher> getSavedStates(Level worldIn, ItemStack held) {
     List<BlockStateMatcher> st = new ArrayList<>();
     if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
       //get it
       ListTag stateTags = held.getTag().getList(STATESTAG, 10);
       for (int i = 0; i < stateTags.size(); ++i) {
         CompoundTag currTag = stateTags.getCompound(i);
-        BlockState stateFound = NbtUtils.readBlockState(currTag);
+        BlockState stateFound = NbtUtils.readBlockState(worldIn.holderLookup(Registries.BLOCK), currTag);
         if (stateFound != null && !stateFound.isAir()) {
           BlockStateMatcher matcher = new BlockStateMatcher();
           matcher.setState(stateFound);
@@ -93,7 +94,7 @@ public class BlockstateCard extends ItemBaseCyclic {
     }
     //wait wait wait does it exist
     for (int i = 0; i < stateTags.size(); ++i) {
-      BlockState stateFound = NbtUtils.readBlockState(stateTags.getCompound(i));
+      BlockState stateFound = NbtUtils.readBlockState(player.level.holderLookup(Registries.BLOCK), stateTags.getCompound(i));
       if (stateFound.equals(state)) {
         return InteractionResult.PASS;
       }

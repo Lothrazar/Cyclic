@@ -48,7 +48,7 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
     //    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     if (textureId != null) {
       this.blit(ms,
-          this.x + textureId.getOffsetX(), this.y + textureId.getOffsetY(),
+          this.getX() + textureId.getOffsetX(), this.getY() + textureId.getOffsetY(),
           textureId.getX() + xOffset, textureId.getY() + yOffset,
           textureId.getWidth() - yOffset, textureId.getHeight() - yOffset);
     }

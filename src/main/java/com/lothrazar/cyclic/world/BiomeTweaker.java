@@ -1,23 +1,20 @@
 package com.lothrazar.cyclic.world;
 
-import java.util.Map;
-import com.google.gson.JsonElement;
+import java.util.Set;
 import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.resources.RegistryOps;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.JsonCodecProvider;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo;
@@ -69,19 +66,35 @@ public class BiomeTweaker {
   }
 
   private static void onGatherData(GatherDataEvent event) {
-    final DataGenerator generator = event.getGenerator();
-    final ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-    final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy());
     //
-    //
-    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
-        generator, existingFileHelper, ModCyclic.MODID, ops, Registry.PLACED_FEATURE_REGISTRY, Map.of(
-            new ResourceLocation(ModCyclic.MODID, "cyan"), WorldGenPlacements.PF_FLOWER_CYAN.get())));
-    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
-        generator, existingFileHelper, ModCyclic.MODID, ops, Registry.PLACED_FEATURE_REGISTRY, Map.of(
-            new ResourceLocation(ModCyclic.MODID, "lime"), WorldGenPlacements.PF_FLOWER_LIME.get())));
-    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
-        generator, existingFileHelper, ModCyclic.MODID, ops, Registry.PLACED_FEATURE_REGISTRY, Map.of(
-            new ResourceLocation(ModCyclic.MODID, "tulip"), WorldGenPlacements.PF_FLOWER_TULIP.get())));
+    DataProvider.Factory<DatapackBuiltinEntriesProvider> butts = output -> new DatapackBuiltinEntriesProvider(
+        output,
+        event.getLookupProvider(),
+        // The objects to generate
+        new RegistrySetBuilder()
+            .add(Registries.PLACED_FEATURE, context -> {
+              // Generate noise generator settings
+              context.register(
+                  ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(ModCyclic.MODID, "cyan")),
+                  WorldGenPlacements.PF_FLOWER_CYAN.get());
+            }),
+        // Generate dynamic registry objects for this mod
+        Set.of(ModCyclic.MODID));
+    event.getGenerator().addProvider(
+        // Tell generator to run only when server data are generating
+        event.includeServer(),
+        butts);
+    ///
+    //thanks you FUCKED this all up again
+    //    final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, event.getLookupProvider().get());
+    //    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
+    //        generator, existingFileHelper, ModCyclic.MODID, ops, Registries.PLACED_FEATURE, Map.of(
+    //            new ResourceLocation(ModCyclic.MODID, "cyan"), WorldGenPlacements.PF_FLOWER_CYAN.get())));
+    //    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
+    //        generator, existingFileHelper, ModCyclic.MODID, ops, Registries.PLACED_FEATURE, Map.of(
+    //            new ResourceLocation(ModCyclic.MODID, "lime"), WorldGenPlacements.PF_FLOWER_LIME.get())));
+    //    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
+    //        generator, existingFileHelper, ModCyclic.MODID, ops, Registries.PLACED_FEATURE, Map.of(
+    //            new ResourceLocation(ModCyclic.MODID, "tulip"), WorldGenPlacements.PF_FLOWER_TULIP.get())));
   }
 }

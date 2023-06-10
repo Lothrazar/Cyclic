@@ -1,8 +1,10 @@
 package com.lothrazar.cyclic.item.builder;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public enum BuilderActionType {
@@ -63,10 +65,10 @@ public enum BuilderActionType {
     wand.getOrCreateTag().put(NBTBLOCKSTATE, encoded);
   }
 
-  public static BlockState getBlockState(ItemStack wand) {
+  public static BlockState getBlockState(Level level, ItemStack wand) {
     if (!wand.getOrCreateTag().contains(NBTBLOCKSTATE)) {
       return null;
     }
-    return NbtUtils.readBlockState(wand.getOrCreateTag().getCompound(NBTBLOCKSTATE));
+    return NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), wand.getOrCreateTag().getCompound(NBTBLOCKSTATE));
   }
 }

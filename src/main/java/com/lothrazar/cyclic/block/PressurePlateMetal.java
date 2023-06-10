@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block;
 
 import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -13,7 +14,7 @@ public class PressurePlateMetal extends PressurePlateBlock {
   boolean playersOnly = false;
 
   public PressurePlateMetal(Properties properties) {
-    super(PressurePlateBlock.Sensitivity.EVERYTHING, properties);
+    super(PressurePlateBlock.Sensitivity.EVERYTHING, properties, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON);
     playersOnly = true;
   }
 

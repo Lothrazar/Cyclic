@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.data.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -62,7 +62,7 @@ public class LevelWorldUtil {
   }
 
   public static ResourceKey<Level> stringToDimension(String key) {
-    return ResourceKey.create(Registry.DIMENSION_REGISTRY, ResourceLocation.tryParse(key));
+    return ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(key));
   }
 
   public static double distanceBetweenHorizontal(BlockPos start, BlockPos end) {

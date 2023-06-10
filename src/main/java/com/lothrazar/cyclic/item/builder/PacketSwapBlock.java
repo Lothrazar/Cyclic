@@ -56,7 +56,7 @@ public class PacketSwapBlock extends PacketBaseCyclic {
     ctx.get().enqueueWork(() -> {
       ServerPlayer player = ctx.get().getSender();
       ItemStack itemStackHeld = player.getItemInHand(message.hand);
-      BlockState targetState = BuilderActionType.getBlockState(itemStackHeld);
+      BlockState targetState = BuilderActionType.getBlockState(player.level, itemStackHeld);
       if (targetState == null || itemStackHeld.getItem() instanceof BuilderItem == false) {
         return;
       }

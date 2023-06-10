@@ -50,15 +50,15 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     int i = (this.isHovered ? 2 : 1) * 20;
     if (this.height != 20) {
-      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i + 20 - this.height, 4, this.height);
-      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i + 20 - this.height, 4, this.height);
+      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i + 20 - this.height, 4, this.height);
+      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i + 20 - this.height, 4, this.height);
       int height = this.height - 2;
-      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i, 4, height);
-      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, height);
+      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i, 4, height);
+      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i, 4, height);
     }
     else {
-      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)), this.y, 0, 46 + i, 4, this.height);
-      this.blit(matrixStack, this.x + (int) (this.value * (this.width - 8)) + 4, this.y, 196, 46 + i, 4, this.height);
+      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i, 4, this.height);
+      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i, 4, this.height);
     }
   }
 

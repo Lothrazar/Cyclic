@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +15,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.client.gui.widget.ExtendedButton;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
@@ -94,7 +94,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     Screen.blit(ms, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
   }
 
-  private class ToggleButton extends Button {
+  private class ToggleButton extends ExtendedButton {
 
     List<Component> titles;
     List<Component> tooltips;
@@ -104,9 +104,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     int index;
 
     public ToggleButton(int x, int y, CompoundTag nbt, StringTag key, Tag defaultValue, Component defaultTitle, Component defaultTooltip) {
-      super(x, y, 0, 20, defaultTitle, (p -> {
-        //do nothing
-      }), Button::renderToolTip);
+      super(x, y, 0, 20, defaultTitle, (p -> {}));
       this.width = ScreenStorageBag.this.font.width(defaultTitle.getString()) + 8;
       index = 0;
       titles = new LinkedList<>();
@@ -118,11 +116,11 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
       tooltips.add(defaultTooltip);
       nbtValues.add(defaultValue);
     }
-
-    @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
-      ScreenStorageBag.this.renderTooltip(matrixStack, tooltips.get(index), mouseX, mouseY);
-    }
+    //
+    //    @Override
+    //    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    //      ScreenStorageBag.this.renderTooltip(matrixStack, tooltips.get(index), mouseX, mouseY);
+    //    }
 
     @Override
     public void onPress() {

@@ -34,6 +34,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.items.IItemHandler;
@@ -52,7 +53,7 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
         && !event.getEntity().getCooldowns().isOnCooldown(this)) {
       // lets go 
       Horse horseOldEntity = (Horse) event.getTarget();
-      ZombieHorse zombieNewEntity = EntityType.ZOMBIE_HORSE.spawn((ServerLevel) event.getLevel(), null, null, event.getEntity(), event.getPos(), MobSpawnType.NATURAL, false, false);
+      ZombieHorse zombieNewEntity = EntityType.ZOMBIE_HORSE.spawn((ServerLevel) event.getLevel(), (ItemStack) null, null, event.getPos(), MobSpawnType.NATURAL, false, false);
       event.getLevel().addFreshEntity(zombieNewEntity);
       if (horseOldEntity.isTamed() && horseOldEntity.getOwnerUUID() == event.getEntity().getUUID()) {
         // you still tamed it

@@ -40,12 +40,12 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, 120, h, f, menu.tile.getBlockPos(), 1, 64, menu.tile.getField(f)));
     slider.setTooltip("block.cyclic.user.delay");
     h = 14;
-    x = btnRedstone.x + 4;
-    y = btnRedstone.y + h + 16;
+    x = btnRedstone.getX() + 4;
+    y = btnRedstone.getY() + h + 16;
     f = TileUser.Fields.INTERACTTYPE.ordinal();
     btnType = addRenderableWidget(new ButtonMachineField(x, y, f,
         menu.tile.getBlockPos(), TextureEnum.SQUARE_ENDER, TextureEnum.SQUARE_RED, "block.cyclic.user.type")).setSize(h);
-    y = btnType.y + h + 4;
+    y = btnType.getY() + h + 4;
     f = TileUser.Fields.ENTITIES.ordinal();
     btnEntities = addRenderableWidget(new ButtonMachineField(x, y, f,
         menu.tile.getBlockPos(), TextureEnum.CRAFT_EMPTY, TextureEnum.CRAFT_MATCH, "block.cyclic.user.entities")).setSize(h);

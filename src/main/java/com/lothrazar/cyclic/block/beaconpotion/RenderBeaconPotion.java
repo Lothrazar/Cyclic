@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.block.beaconpotion;
 
 import java.util.List;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
@@ -52,7 +52,7 @@ public class RenderBeaconPotion implements BlockEntityRenderer<TilePotionBeacon>
     float f4 = p_112193_[1];
     float f5 = p_112193_[2];
     ms.pushPose();
-    ms.mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
+    ms.mulPose(Axis.YP.rotationDegrees(f * 2.25F - 45.0F));
     float f6 = 0.0F;
     float f8 = 0.0F;
     float f9 = -p_112194_;

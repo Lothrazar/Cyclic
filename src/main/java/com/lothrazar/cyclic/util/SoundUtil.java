@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -41,7 +42,7 @@ public class SoundUtil {
       return;
     }
     entityIn.connection.send(new ClientboundSoundPacket(
-        soundIn,
+        Holder.direct(soundIn),
         SoundSource.BLOCKS,
         pos.getX(), pos.getY(), pos.getZ(),
         p, v, 0));
@@ -52,7 +53,7 @@ public class SoundUtil {
       return;
     }
     entityIn.connection.send(new ClientboundSoundPacket(
-        soundIn,
+        Holder.direct(soundIn),
         SoundSource.BLOCKS,
         entityIn.xOld, entityIn.yOld, entityIn.zOld,
         p, v, 0));

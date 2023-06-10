@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

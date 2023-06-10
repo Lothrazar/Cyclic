@@ -61,7 +61,7 @@ public class EventRender {
     ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
     if (itemStackHeld.getItem() instanceof BuilderItem) {
       //
-      BlockState targetState = BuilderActionType.getBlockState(itemStackHeld);
+      BlockState targetState = BuilderActionType.getBlockState(player.level, itemStackHeld);
       if (targetState != null) {
         //ok still 
         drawStack(new ItemStack(targetState.getBlock()));

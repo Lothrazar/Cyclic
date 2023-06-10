@@ -21,8 +21,8 @@ public class ButtonBlockMat extends ButtonBlock implements SimpleWaterloggedBloc
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   private final int powerLevel;
 
-  public ButtonBlockMat(Properties properties, int powerLevel) {
-    super(false, properties.strength(0.5F)); // sensitive true false. true is like WOOD ; false is like STONE
+  public ButtonBlockMat(Properties properties, int ticksToStayPressed, boolean arrowsCanPress, int powerLevel) {
+    super(properties.strength(0.5F), 20, false, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON); // sensitive true false. true is like WOOD ; false is like STONE
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     this.powerLevel = powerLevel;
   }

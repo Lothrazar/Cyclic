@@ -99,8 +99,7 @@ public class ClientInputEvents {
             //
             if (maybeFood.isEdible()) {
               int slotId = gui.getSlotUnderMouse().getContainerSlot();
-              SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK);
-              //              System.out.println("item Gui ");
+              SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.get());
               PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotId, stackTarget.getItem()));
               event.setCanceled(true);
               return;

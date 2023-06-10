@@ -33,10 +33,4 @@ public class WorldGenFeatures {
           BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(),
           List.of(BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState()),
           List.of(BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(), Blocks.ALLIUM.defaultBlockState()))));
-  //  public static final ConfiguredFeature<?, ?> FEAT_FLOWER_LIME = Feature.FLOWER.configured(new RandomPatchConfiguration(32, 8, 6, () -> {
-  //    return Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(new NoiseThresholdProvider(2345L, new NormalNoise.NoiseParameters(0, 1.0D), 0.005F, -0.8F, 0.33333334F,
-  //        BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(),
-  //        List.of(BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState()),
-  //        List.of(BlockRegistry.FLOWER_LIME_CARNATION.get().defaultBlockState(), Blocks.ALLIUM.defaultBlockState())))).onlyWhenEmpty();
-  //  }));
 }
