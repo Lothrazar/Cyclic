@@ -3,7 +3,7 @@
 	"promos": {
 		"1.18-latest": "1.6.7",
 		"1.18.1-latest": "1.6.15",
-		"1.18.2-latest": "1.7.15"
+		"1.18.2-latest": "1.7.16"
 	},
 	"1.18.2": {
 		"1.6.0": "Ported Cyclic[1.16.5]-1.5.8 to Minecraft [1.17.1] & forge-37.0.85+.  Altered a few crafting recipes to use new items.  Removed Peat Generator (Use Peat items in Material Generator).  Removed 5 Mason blocks, replaced with Compressed Cobblestone, Flint Block.  Added Peace Candle, Translocation Platform, Stone Mattock, Crushing Macerator, and Lava Sponge.  Added Copper Tools and Amethyst Tools, Copper Lantern, Copper Chain, Copper Bars, Gold Chain, Gold Bars, Gold Lantern (Art by @shynieke).  Added Copper Nuggets and Netherite Nuggets.  Added Netherite Lanterns, chains, and bars.  Added 3 Pressure Plates: Copper Netherite and Obsidian. ",
@@ -42,5 +42,10 @@
 		,"1.7.14":"Added new config section [cyclic.potion] to disable BASE potion recipes.  Marked minimum forge version of 40.1.84+ to prevent conflicts and errors. Fix lunchbox eating 'endless' items like Everlasting Beef.  Lunchbox now can be inserted into while hovering with a food item, without opening gui-screen (texture shifts to indicate).  New command /cyclic scoreboard orandom; works the same as /cyclic scoreboard random except it takes objectives as arguments for min and max values.     Merge pull request #2219 from nexonerr/fluid_gen_fluid_filter    Fixed issue #2096  "
 		,"1.7.15":"Life Leech no longer refills hunger (#2241).  Merged  Typo: double 'consume' (#2275)@Pifanjr.  Update Simplified Chinese Transaction (#2277)@UraraChiya.   "
 		,"1.7.16":"Fix #2243 User output buffer (milk and other tranforming outputs from entity interactions). fix #2236 recipe conflict for moss block in solidifier_moss_block.json.  fix #2247 Charm Talisman Missing lava protection. Fix #2259: crates and other heavy blocks that keep their contents now drop motionless to avoid bouncing away for small base situations.  #2261 Smooth glass can be reverse-smelted back into plain glass.  Fix items that use RF not charging items on servers #2274 #2169. fix #2272 #2260 typos.  Fix #2268 material generator recipe. update candle models from #2182.  Fix  Smooth Glass looks incorrect underwater #2263. Fix  Tempered dark glass does not cull against itself #2262  "
+	
+	
+	
+	
+	
 	}
 }
