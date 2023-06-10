@@ -101,6 +101,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       var cooldowns = fakePlayer.get().getCooldowns();
       TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
       var item = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem();
+      var oldItem = item.asItem();
       if (cooldowns.isOnCooldown(item)) {
         cooldowns.removeCooldown(item);
       }
@@ -119,29 +120,56 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
           TileBlockEntityCyclic.interactUseOnBlock(fakePlayer, level, target, InteractionHand.MAIN_HAND, null);
         }
       }
+      boolean mainhandChanged = oldItem != userSlots.getStackInSlot(0).getItem();
+      if (mainhandChanged) {
+        ModCyclic.LOGGER.error("mainhandChangedmainhandChangedmainhandChangedmainhandChangedr");
+        this.depositOutputMainhand();
+      }
       TileBlockEntityCyclic.syncEquippedItem(this.userSlots, fakePlayer, 0, InteractionHand.MAIN_HAND);
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
     }
-    tryDumpFakePlayerInvo(fakePlayer, this.outputSlots, true);
+    tryDumpFakePlayerInvo(fakePlayer, this.outputSlots, false);
+  }
+
+  private void depositOutputMainhand() {
+    var usedItem = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND);
+    for (int slotId = 0; slotId < outputSlots.getSlots(); slotId++) {
+      if (!usedItem.isEmpty()) {
+        ModCyclic.LOGGER.info("inserting ?milk" + usedItem);
+        //        usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);
+        if (outputSlots.insertItem(slotId, usedItem.copy(), true).isEmpty()) {
+          usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);
+          //          userSlots.setStackInSlot(0, usedItem);
+          TileBlockEntityCyclic.tryEquipItem(usedItem, fakePlayer, InteractionHand.MAIN_HAND);
+        }
+      }
+    }
   }
 
   private void interactEntities(BlockPos target) {
+    AABB ab = getEntityRange(target);
+    this.level.getEntities(fakePlayer.get(), ab, EntitySelector.NO_SPECTATORS).forEach((entityFound) -> {
+      //      ModCyclic.LOGGER.info(worldPosition + "| ??   " + fakePlayer.get().getMainHandItem());
+      if (doHitBreak) {
+        fakePlayer.get().attack(entityFound);
+        //        ModCyclic.LOGGER.info(worldPosition + "| interactEntities ATTACK  " + e);
+      }
+      else { // interact 
+        InteractionResult res = fakePlayer.get().interactOn(entityFound, InteractionHand.MAIN_HAND);
+        if (res.consumesAction()) {
+          ModCyclic.LOGGER.info(worldPosition + "| entity consume result detected " + res);
+        }
+      }
+    });
+  }
+
+  private AABB getEntityRange(BlockPos target) {
     final int r = 1; // TODO radius controls in GUI
     AABB ab = new AABB(target.getX() + r, target.getY(), target.getZ() + r,
         target.getX() - r, target.getY() + 1, target.getZ() - r);
-    this.level.getEntities(fakePlayer.get(), ab, EntitySelector.NO_SPECTATORS).forEach((e) -> {
-      //      ModCyclic.LOGGER.info(worldPosition + "| ??   " + fakePlayer.get().getMainHandItem());
-      if (doHitBreak) {
-        fakePlayer.get().attack(e);
-        ModCyclic.LOGGER.info(worldPosition + "| interactEntities ATTACK  " + e);
-      }
-      else { // interact
-        InteractionResult res = fakePlayer.get().interactOn(e, InteractionHand.MAIN_HAND);
-        ModCyclic.LOGGER.info(worldPosition + "| interactEntities result " + res);
-      }
-    });
+    return ab;
   }
 
   @Override

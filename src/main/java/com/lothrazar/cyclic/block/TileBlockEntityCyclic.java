@@ -100,30 +100,35 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, ItemStackHandler out, boolean onGround) {
+    if (out == null) {
+      return;
+    }
     int start = 1;
     ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
     for (int i = start; i < fp.get().getInventory().items.size(); i++) {
-      ItemStack s = fp.get().getInventory().items.get(i);
-      if (s.isEmpty()) {
+      ItemStack fpItem = fp.get().getInventory().items.get(i);
+      if (fpItem.isEmpty()) {
         continue;
       }
-      if (s == fp.get().getMainHandItem()) {
+      ModCyclic.LOGGER.info("NONEMPTY itemstack found what do we do");
+      if (fpItem == fp.get().getMainHandItem()) {
         ModCyclic.LOGGER.info("aha continue main hand item dont doump it");
         continue;
       }
-      if (out != null) {
-        for (int j = 0; j < out.getSlots(); j++) {
-          ModCyclic.LOGGER.info(s + "insert itit" + j);
-          s = out.insertItem(j, s, false);
-        }
+      for (int j = 0; j < out.getSlots(); j++) {
+        ModCyclic.LOGGER.info(fpItem + "insert itit here" + j);
+        fpItem = out.insertItem(j, fpItem, false);
       }
-      if (onGround)
-        toDrop.add(s);
-      else
-        fp.get().getInventory().items.set(i, s);
+      if (onGround) {
+        toDrop.add(fpItem);
+      }
+      else {
+        fp.get().getInventory().items.set(i, fpItem);
+      }
     }
-    if (onGround)
+    if (onGround) {
       ItemStackUtil.drop(this.level, this.worldPosition.above(), toDrop);
+    }
   }
 
   public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, InteractionHand hand) {
