@@ -34,6 +34,7 @@ import com.lothrazar.cyclic.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
@@ -97,7 +98,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
       ChatUtil.addChatMessage(player, "Invalid block id " + res);
       return false;
     }
-    BlockState toPlace = NbtUtils.readBlockState(itemData.getCompound(KEY_BLOCKSTATE));
+    BlockState toPlace = NbtUtils.readBlockState(player.level.holderLookup(Registries.BLOCK), itemData.getCompound(KEY_BLOCKSTATE));
     //maybe get from player direction or offset face, but instead rely on that from saved data
     Level world = player.getCommandSenderWorld();
     try {

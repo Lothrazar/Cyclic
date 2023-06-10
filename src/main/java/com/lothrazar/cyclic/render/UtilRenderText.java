@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.core.Direction;
 
 /**
@@ -17,7 +16,8 @@ public class UtilRenderText {
   public static void alignRendering(PoseStack matrix, Direction side) {
     // Rotate to face the correct direction for the drawer's orientation.
     matrix.translate(.5f, .5f, .5f);
-    matrix.mulPose(new Quaternion(Vector3f.YP, getRotationYForSide2D(side), true));
+    matrix.mulPose(Axis.YP.rotationDegrees(getRotationYForSide2D(side)));
+    //    matrix.mulPose(new Quaternion(Axis.YP, getRotationYForSide2D(side), true));
     matrix.translate(-.5f, -.5f, -.5f);
   }
 

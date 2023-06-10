@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.fluid.block.WaxFluidBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.MaterialRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -29,7 +28,7 @@ public class FluidWaxHolder {
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(ID, () -> new ForgeFlowingFluid.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(ID + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));
   public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block", () -> new WaxFluidBlock(STILL, Block.Properties.of(Material.WATER).noCollission().strength(100.0F).noLootTable()));
-  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(MaterialRegistry.ITEM_GROUP)));
+  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
   public static RegistryObject<FluidType> test_fluid_type = FluidRegistry.FLUID_TYPES.register(ID, () -> new FluidType(FluidType.Properties.create()) {
 
     @Override

@@ -2,39 +2,69 @@ package com.lothrazar.cyclic.registry;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ForgeTier;
 import net.minecraftforge.common.TierSortingRegistry;
+import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.RegistryObject;
 
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MaterialRegistry {
 
-  public static final CreativeModeTab BLOCK_GROUP = new CreativeModeTab(ModCyclic.MODID) {
+  @SubscribeEvent
+  public static void buildContents(CreativeModeTabEvent.Register event) {
+    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "cyclicitems"), builder -> builder
+        .title(Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
+        .icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
+        .displayItems((enabledFlags, populator, perms) -> {
+          for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
+            populator.accept(new ItemStack(b.get()));
+          }
+        }));
+    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "tab"), builder -> builder
+        .title(Component.translatable("itemGroup." + ModCyclic.MODID))
+        .icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem()))
+        .displayItems((enabledFlags, populator, perms) -> {
+          for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {
+            populator.accept(new ItemStack(b.get()));
+          }
+        }));
+    // build ITEM_GROUP tab
+    //    buildTab(event, ModCyclic.MODID, new ItemStack(ItemRegistry.GEM_AMBER.asItem()), ITEMS);
+  }
 
-    @Override
-    public ItemStack makeIcon() {
-      return new ItemStack(BlockRegistry.TRASH.get());
-    }
-  };
-  public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(ModCyclic.MODID + "items") {
-
-    @Override
-    public ItemStack makeIcon() {
-      return new ItemStack(ItemRegistry.GEM_AMBER.get());
-    }
-  };
+  //
+  //  public static final CreativeModeTab BLOCK_GROUP = new CreativeModeTab(ModCyclic.MODID) {
+  //
+  //    @Override
+  //    public ItemStack makeIcon() {
+  //      return new ItemStack(BlockRegistry.TRASH.get());
+  //    }
+  //  };
+  //  public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(ModCyclic.MODID + "items") {
+  //
+  //    @Override
+  //    public ItemStack makeIcon() {
+  //      return new ItemStack(ItemRegistry.GEM_AMBER.get());
+  //    }
+  //  };
   public static IntValue EMERALD_BOOTS;
   public static IntValue EMERALD_LEG;
   public static IntValue EMERALD_CHEST;

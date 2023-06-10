@@ -1,11 +1,11 @@
 package com.lothrazar.cyclic.render;
 
 import java.util.Arrays;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import com.lothrazar.cyclic.data.Model3D;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -68,7 +68,7 @@ public class RenderResizableCuboid {
     Vec3 size = new Vec3(cube.sizeX(), cube.sizeY(), cube.sizeZ());
     matrix.pushPose();
     matrix.translate(cube.minX, cube.minY, cube.minZ);
-    com.mojang.math.Matrix4f matrix4f = matrix.last().pose();
+    Matrix4f matrix4f = matrix.last().pose();
     for (Direction face : Direction.values()) {
       if (cube.shouldSideRender(face)) {
         int ordinal = face.ordinal();
