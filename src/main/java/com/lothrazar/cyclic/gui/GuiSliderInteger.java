@@ -5,14 +5,11 @@ import java.util.List;
 import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -38,29 +35,28 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
     this.max = max;
     setSliderValueActual((int) initialVal);
   }
-
   /**
    * exact copy of super() but replaced hardcoded 20 with this.height
    */
-  @Override
-  protected void renderBg(PoseStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
-    //    minecraft.getTextureManager().bind(WIDGETS_LOCATION);
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
-    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-    int i = (this.isHovered ? 2 : 1) * 20;
-    if (this.height != 20) {
-      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i + 20 - this.height, 4, this.height);
-      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i + 20 - this.height, 4, this.height);
-      int height = this.height - 2;
-      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i, 4, height);
-      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i, 4, height);
-    }
-    else {
-      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i, 4, this.height);
-      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i, 4, this.height);
-    }
-  }
+  //  @Override
+  //  protected void renderWidget(PoseStack matrixStack, Minecraft minecraft, int mouseX, int mouseY) {
+  //    //    minecraft.getTextureManager().bind(WIDGETS_LOCATION);
+  //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+  //    RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
+  //    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+  //    int i = (this.isHovered ? 2 : 1) * 20;
+  //    if (this.height != 20) {
+  //      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i + 20 - this.height, 4, this.height);
+  //      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i + 20 - this.height, 4, this.height);
+  //      int height = this.height - 2;
+  //      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i, 4, height);
+  //      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i, 4, height);
+  //    }
+  //    else {
+  //      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 0, 46 + i, 4, this.height);
+  //      this.blit(matrixStack, this.getX() + (int) (this.value * (this.width - 8)) + 4, this.getY(), 196, 46 + i, 4, this.height);
+  //    }
+  //  }
 
   /**
    * Call from Screen class to render tooltip during mouseover

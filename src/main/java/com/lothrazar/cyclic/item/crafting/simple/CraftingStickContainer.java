@@ -56,7 +56,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
       if (optional.isPresent()) {
         CraftingRecipe icraftingrecipe = optional.get();
         if (craftResult.setRecipeUsed(world, player, icraftingrecipe)) {
-          itemstack = icraftingrecipe.assemble(craftMatrix);
+          itemstack = icraftingrecipe.assemble(craftMatrix, world.registryAccess());
         }
       }
       craftResult.setItem(0, itemstack);

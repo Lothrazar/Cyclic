@@ -25,19 +25,19 @@ public class SoulstoneCharm extends ItemBaseToggle {
     if (itemstack.getItem() != ItemRegistry.SOULSTONE.get()) {
       return false;
     }
-    if (damageSourceIn.isBypassInvul()) {
-      // /kill command and other OP sources can bypass
-      return false;
-    }
-    else {
-      player.setHealth(1.0F);
-      player.removeAllEffects();
-      player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
-      player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
-      player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
-      player.level.broadcastEntityEvent(player, (byte) 35);
-      ItemStackUtil.damageItem(player, itemstack);
-      return true;
-    }
+    //    if (damageSourceIn.isBypassInvul()) {
+    // /kill command and other OP sources can bypass
+    //    return false;
+    //    }
+    //    else {
+    player.setHealth(1.0F);
+    player.removeAllEffects();
+    player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
+    player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
+    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
+    player.level.broadcastEntityEvent(player, (byte) 35);
+    ItemStackUtil.damageItem(player, itemstack);
+    return true;
+    //    }
   }
 }

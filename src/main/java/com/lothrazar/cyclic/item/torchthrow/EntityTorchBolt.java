@@ -7,7 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -51,7 +50,7 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.hurt(DamageSource.thrown(this, this.getOwner()), 0);
+        target.hurt(level.damageSources().thrown(this, this.getOwner()), 0);
       }
       ItemStackUtil.drop(level, target.blockPosition(), new ItemStack(Items.TORCH));
     }

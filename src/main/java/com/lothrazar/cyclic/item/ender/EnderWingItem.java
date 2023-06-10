@@ -73,7 +73,7 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
         BlockPos pos;
         boolean needsTeleport = false;
         if (optional.isPresent()) {
-          pos = new BlockPos(optional.get().x(), optional.get().y(), optional.get().z());
+          pos = new BlockPos((int) optional.get().x(), (int) optional.get().y(), (int) optional.get().z());
           ResourceKey<Level> spawnWorldKey = serverPlayerEntity.getRespawnDimension();
           ServerLevel spawnWorld = worldIn.getServer().getLevel(spawnWorldKey);
           if (spawnWorld != null && spawnWorldKey == Level.NETHER) {

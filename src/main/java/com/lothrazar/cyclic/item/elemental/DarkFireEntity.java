@@ -8,7 +8,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -46,10 +45,11 @@ public class DarkFireEntity extends ThrowableItemProjectile {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.hurt(DamageSource.thrown(this, this.getOwner()), Mth.nextInt(level.random, 4, 8));
-        if (!target.level.isClientSide && target.isOnFire() == false
+        //DamageSource.thrown(this, this.getOwner())
+        target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 4, 8));
+        if (!level.isClientSide && target.isOnFire() == false
             && target instanceof LivingEntity living) {
-          living.hurt(DamageSource.MAGIC, Mth.nextInt(level.random, 3, 5));
+          living.hurt(level.damageSources().magic(), Mth.nextInt(level.random, 3, 5));
           living.addEffect(new MobEffectInstance(MobEffects.WITHER, Const.TICKS_PER_SEC * 5, 1));
         }
       }
@@ -65,7 +65,7 @@ public class DarkFireEntity extends ThrowableItemProjectile {
           || blockHere == Blocks.SNOW_BLOCK
           || blockHere == Blocks.SNOW
           || blockHere == Blocks.ICE) {
-        this.level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
       }
     }
     this.remove(RemovalReason.DISCARDED);

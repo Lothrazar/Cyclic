@@ -6,7 +6,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -44,8 +43,8 @@ public class SnowEntity extends ThrowableItemProjectile {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive() && target instanceof LivingEntity) {
-        target.hurt(DamageSource.thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 5));
-        target.hurt(DamageSource.DRY_OUT, Mth.nextInt(level.random, 2, 3));
+        target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 5));
+        target.hurt(level.damageSources().dryOut(), Mth.nextInt(level.random, 2, 3));
         LivingEntity living = (LivingEntity) target;
         living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN.get(), 60, 1));
         //        if (world.isAirBlock(living.getPosition()))

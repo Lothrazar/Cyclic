@@ -237,33 +237,26 @@ public class ItemEvents {
     DamageSource src = event.getSource();
     if (event.getEntity() instanceof Player player) {
       DamageType type = src.type();
-      //lol waht
-      //      DamageTypes.EXPLOSION.cast(null)
-      if (src.isExplosion()) {
+      if (src.is(DamageTypes.EXPLOSION)) {
         //explosion thingy
         this.damageFinder(event, player, ItemRegistry.CHARM_CREEPER.get(), 0);
       }
-      //check all cases
-      //SB switch 
-      if (src.is(DamageTypes.FALL)) {
-        //oh shit its this easy lol
-      }
-      if (src == DamageSource.FALL || src == DamageSource.CACTUS || src == DamageSource.SWEET_BERRY_BUSH) {
+      if (src.is(DamageTypes.FALL) || src.is(DamageTypes.CACTUS) || src.is(DamageTypes.SWEET_BERRY_BUSH)) {
         this.damageFinder(event, player, ItemRegistry.CHARM_LONGFALL.get(), 0);
       }
-      else if (src == DamageSource.FLY_INTO_WALL || src == DamageSource.IN_WALL) {
+      else if (src.is(DamageTypes.FLY_INTO_WALL) || src.is(DamageTypes.IN_WALL)) {
         //stone lung
         this.damageFinder(event, player, ItemRegistry.CHARM_STONE.get(), 0);
       }
-      else if (src == DamageSource.MAGIC || src == DamageSource.DRAGON_BREATH) {
+      else if (src.is(DamageTypes.MAGIC) || src.is(DamageTypes.DRAGON_BREATH)) {
         this.damageFinder(event, player, ItemRegistry.CHARM_MAGICDEF.get(), 0.5F);
       }
-      else if (src == DamageSource.STARVE) {
+      else if (src.is(DamageTypes.STARVE)) {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_STARVATION.get(), 0)) {
           player.getFoodData().eat(0, 0.2F);
         }
       }
-      else if (src == DamageSource.DROWN) {
+      else if (src.is(DamageTypes.DROWN)) {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_WATER.get(), 0)) {
           //and a holdover bonus
           MobEffectInstance eff = new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 10, 1);
@@ -272,7 +265,7 @@ public class ItemEvents {
           player.addEffect(eff);
         }
       }
-      else if (src == DamageSource.LAVA || src == DamageSource.IN_FIRE || src == DamageSource.ON_FIRE) {
+      else if (src.is(DamageTypes.LAVA) || src.is(DamageTypes.IN_FIRE) || src.is(DamageTypes.ON_FIRE)) {
         this.damageFinder(event, player, ItemRegistry.CHARM_FIRE.get(), 0);
         this.damageFinder(event, player, ItemRegistry.CHARM_ULTIMATE.get(), 0);
       }

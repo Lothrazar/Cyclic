@@ -20,7 +20,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -276,7 +275,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
           float damage = Mth.nextFloat(level.random, DAMAGE_MIN, DAMAGE_MAX);
-          boolean attackSucc = live.hurt(DamageSource.thrown(this, owner), damage);
+          boolean attackSucc = live.hurt(level.damageSources().thrown(this, owner), damage);
           if (attackSucc && live.isAlive() == false) {
             //           ("killed one");
           }

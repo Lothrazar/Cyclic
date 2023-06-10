@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -56,7 +55,7 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive() && target instanceof LivingEntity alive) {
         alive.addEffect(new MobEffectInstance(PotionEffectRegistry.SWIMSPEED.get(), 60, 2));
-        target.hurt(DamageSource.thrown(this, this.getOwner()), 0);// zero damage for visuals and knockback 
+        target.hurt(level.damageSources().thrown(this, this.getOwner()), 0);// zero damage for visuals and knockback 
       }
     }
     else if (type == HitResult.Type.BLOCK) {

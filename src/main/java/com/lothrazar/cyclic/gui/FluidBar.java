@@ -83,7 +83,8 @@ public class FluidBar {
   }
 
   protected void drawTiledSprite(PoseStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
+    //32 stack.getBlitOffset() ?
+    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, 32);
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {

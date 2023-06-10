@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.util.EntityUtil;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -96,7 +95,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
       Entity target = entityRayTrace.getEntity();
       Entity owner = getOwner();
       if (target.isAlive()) {
-        target.hurt(DamageSource.thrown(this, owner), Mth.nextInt(level.random, 1, 6));
+        target.hurt(level.damageSources().thrown(this, owner), Mth.nextInt(level.random, 1, 6));
       }
     }
     this.remove(RemovalReason.DISCARDED);

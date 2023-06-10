@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.registry.EntityRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -40,7 +39,7 @@ public class LightningEntity extends ThrowableItemProjectile {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.hurt(DamageSource.thrown(this, this.getOwner()), 0);
+        target.hurt(level.damageSources().thrown(this, this.getOwner()), 0);
         //        LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, target.getPosX(), target.getPosY(), target.getPosZ(), false);
         LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level);
         lightningboltentity.moveTo(target.getX(), target.getY(), target.getZ());

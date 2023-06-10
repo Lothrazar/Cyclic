@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.render.ShieldBlockEntityWithoutLevelRenderer;
+import com.lothrazar.cyclic.util.ItemStackUtil;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +12,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -139,26 +140,26 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
         cooldown = 6;
         reduceBlockedDamagePct = LEATHER_PCT.get() / 100F; // 0.25F means so 25% weaker than normal shield  
         //reduce by 50% so its weaker than vanilla shield // 0.50F means 50% weaker than shield
-        if (dmgSource.isExplosion()) {
+        if (dmgSource.is(DamageTypes.EXPLOSION)) {
           immuneToDamage = true;
         }
       break;
       case WOOD:
         cooldown = 10;
         reduceBlockedDamagePct = WOOD_PCT.get() / 100F; //50% so half as effectve as normal 
-        if (dmgSource.isExplosion()) {
+        if (dmgSource.is(DamageTypes.EXPLOSION)) {
           isDestroyed = true;
         }
       break;
       case FLINT:
         cooldown = 4;
         reduceBlockedDamagePct = FLINT_PCT.get() / 100F;
-        if (dmgSource.isProjectile()) {
+        if (dmgSource.is(DamageTypes.MOB_PROJECTILE)) {
           //50% chance to not take durability from arrows 
           immuneToDamage = playerIn.level.random.nextDouble() < 0.5; // 50% chance  TODO config and hardcoded in lang
         }
-        if (!dmgSource.isExplosion()
-            && dmgSource.isProjectile()
+        if (!dmgSource.is(DamageTypes.EXPLOSION)
+            && dmgSource.is(DamageTypes.MOB_PROJECTILE)
             && playerIn.level.random.nextDouble() < (FLINT_THORNS_PCT.get() / 100F)) {
           //ranged thorns
           thornsDmg = 1;
@@ -169,17 +170,18 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
         cooldown = 2;
         //bone has no damage reduction
         //immune to all arrow/projectile damage damage
-        if (!dmgSource.isBypassArmor() && dmgSource.isProjectile()) {
+        //
+        if (dmgSource.is(DamageTypes.MOB_PROJECTILE)) {//!dmgSource.isBypassArmor() &&
           immuneToDamage = true;
         }
       break;
       case OBSIDIAN:
         reduceBlockedDamagePct = 0; // important!
         cooldown = 0;
-        if (!dmgSource.isBypassArmor() && dmgSource.isProjectile()) {
+        if (dmgSource.is(DamageTypes.MOB_PROJECTILE)) {//!dmgSource.isBypassArmor() && 
           immuneToDamage = true;
         }
-        if (!dmgSource.isBypassArmor() && dmgSource.isExplosion()) {
+        if (dmgSource.is(DamageTypes.EXPLOSION)) {//!dmgSource.isBypassArmor() &&
           immuneToDamage = true;
         }
       break;
@@ -189,9 +191,10 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       event.setShieldTakesDamage(false);
     }
     if (isDestroyed && playerIn != null) {
-      shield.hurtAndBreak(shield.getMaxDamage(), playerIn, (p) -> {
-        p.broadcastBreakEvent(playerIn.getUsedItemHand());
-      });
+      ItemStackUtil.damageItem(playerIn, shield);
+      //      shield.hurtAndBreak(shield.getMaxDamage(), playerIn, (p) -> {
+      //        p.broadcastBreakEvent(playerIn.getUsedItemHand());
+      //      });
     }
     event.setBlockedDamage(event.getBlockedDamage() * reduceBlockedDamagePct);
     ModCyclic.LOGGER.info(this + " original damage " + event.getOriginalBlockedDamage() + " :set Blocked Damage " + event.getBlockedDamage());
@@ -199,10 +202,10 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
       playerIn.getCooldowns().addCooldown(shield.getItem(), cooldown);
     }
     if (thornsDmg > 0
-        && event.getDamageSource() instanceof EntityDamageSource eds) {
-      Entity enemy = eds.getEntity();
+        && event.getDamageSource().getDirectEntity() != null) { // instanceof EntityDamageSource eds
+      Entity enemy = event.getDamageSource().getDirectEntity();
       if (enemy instanceof LivingEntity liv) {
-        enemy.hurt(DamageSource.thorns(shieldHolder), thornsDmg);
+        enemy.hurt(playerIn.level.damageSources().thorns(shieldHolder), thornsDmg);
       }
     }
     //make some not take damage

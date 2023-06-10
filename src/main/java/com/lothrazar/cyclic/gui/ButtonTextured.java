@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -38,9 +37,9 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   }
 
   @Override
-  public void renderButton(PoseStack ms, int mouseX, int mouseY, float partial) {
-    super.renderButton(ms, mouseX, mouseY, partial);
-    Minecraft minecraft = Minecraft.getInstance();
+  public void renderWidget(PoseStack ms, int mouseX, int mouseY, float partial) {
+    super.renderWidget(ms, mouseX, mouseY, partial);
+    //    Minecraft minecraft = Minecraft.getInstance();
     //    minecraft.getTextureManager().bind(TextureRegistry.WIDGETS);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, TextureRegistry.WIDGETS);
@@ -53,7 +52,7 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
           textureId.getX() + xOffset, textureId.getY() + yOffset,
           textureId.getWidth() - yOffset, textureId.getHeight() - yOffset);
     }
-    this.renderBg(ms, minecraft, mouseX, mouseY);
+    //    this.renderBg(ms, minecraft, mouseX, mouseY);
   }
 
   @Override

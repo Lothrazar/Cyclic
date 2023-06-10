@@ -29,7 +29,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   public static final String NBT_STATUS = "onoff";
 
-  public GlowingHelmetItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
+  public GlowingHelmetItem(ArmorMaterial materialIn, ArmorItem.Type slot, Properties builderIn) {
     super(materialIn, slot, builderIn);
   }
 
