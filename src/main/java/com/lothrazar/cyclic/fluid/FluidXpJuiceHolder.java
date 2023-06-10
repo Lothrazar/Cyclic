@@ -23,8 +23,8 @@ import net.minecraftforge.registries.RegistryObject;
 public class FluidXpJuiceHolder {
 
   private static final String ID = "xpjuice";
-  private static final ResourceLocation FLUID_FLOWING = new ResourceLocation(ModCyclic.MODID + ":fluid/" + ID + "_flow");
-  private static final ResourceLocation FLUID_STILL = new ResourceLocation(ModCyclic.MODID + ":fluid/" + ID + "_still");
+  private static final ResourceLocation FLUID_FLOWING = new ResourceLocation(ModCyclic.MODID + ":block/fluid/" + ID + "_flow");
+  private static final ResourceLocation FLUID_STILL = new ResourceLocation(ModCyclic.MODID + ":block/fluid/" + ID + "_still");
   //  public static final ResourceLocation FLUID_OVERLAY = new ResourceLocation("minecraft:block/obsidian"); // wtf
   public static final int COLOR = 0x22FF43;
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(ID, () -> new ForgeFlowingFluid.Source(makeProperties()));

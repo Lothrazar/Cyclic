@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "cyclic:items/gear/sandstone_pickaxe"
+        "layer0": "cyclic:item/gear/sandstone_pickaxe"
     }
 }

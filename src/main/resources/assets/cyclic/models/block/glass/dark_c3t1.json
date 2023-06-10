@@ -2,12 +2,12 @@
   "render_type": "cutout_mipped",
 	"parent": "block/cube",
 	"textures": {
-		"particle": "cyclic:blocks/glass/dark_island",
-		"down": "cyclic:blocks/glass/dark_news",
-		"up": "cyclic:blocks/glass/dark_news",
-		"north": "cyclic:blocks/glass/dark_nes",
-		"south": "cyclic:blocks/glass/dark_nws",
-		"west": "cyclic:blocks/glass/dark_news",
-		"east": "cyclic:blocks/glass/dark_ns"
+		"particle": "cyclic:block/glass/dark_island",
+		"down": "cyclic:block/glass/dark_news",
+		"up": "cyclic:block/glass/dark_news",
+		"north": "cyclic:block/glass/dark_nes",
+		"south": "cyclic:block/glass/dark_nws",
+		"west": "cyclic:block/glass/dark_news",
+		"east": "cyclic:block/glass/dark_ns"
 	}
 }

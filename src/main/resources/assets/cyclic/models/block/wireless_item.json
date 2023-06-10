@@ -2,9 +2,9 @@
 	"parent":"cyclic:parent/node",
   "render_type": "cutout_mipped",
 	"textures": {
-		"main": "cyclic:blocks/node/main_item",
-		"particle": "cyclic:blocks/node/main_item",
-		"plate_front": "cyclic:blocks/node/back_item",
-		"plate_back": "cyclic:blocks/node/back_item"
+		"main": "cyclic:block/node/main_item",
+		"particle": "cyclic:block/node/main_item",
+		"plate_front": "cyclic:block/node/back_item",
+		"plate_back": "cyclic:block/node/back_item"
 	}
 }

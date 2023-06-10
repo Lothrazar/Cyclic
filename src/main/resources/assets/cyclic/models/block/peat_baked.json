@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "cyclic:blocks/peat_baked"
+        "all": "cyclic:block/peat_baked"
     }
 }

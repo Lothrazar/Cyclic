@@ -2,14 +2,14 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/cube",
 	"textures": {
-		"particle": "cyclic:blocks/machine/front",
-		"left": "cyclic:blocks/machine/left",
-		"right": "cyclic:blocks/machine/right",
-		"back": "cyclic:blocks/machine/back",
-		"front": "cyclic:blocks/machine/front",
-		"bottom": "cyclic:blocks/machine/bottom",
-		"side_flipped": "cyclic:blocks/machine/side_flipped",
-		"inner": "cyclic:blocks/machine/inner"
+		"particle": "cyclic:block/machine/front",
+		"left": "cyclic:block/machine/left",
+		"right": "cyclic:block/machine/right",
+		"back": "cyclic:block/machine/back",
+		"front": "cyclic:block/machine/front",
+		"bottom": "cyclic:block/machine/bottom",
+		"side_flipped": "cyclic:block/machine/side_flipped",
+		"inner": "cyclic:block/machine/inner"
 	},
 	"elements": [
 		{

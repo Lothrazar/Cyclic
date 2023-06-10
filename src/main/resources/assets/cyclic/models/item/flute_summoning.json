@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "cyclic:items/flute_summoning"
+        "layer0": "cyclic:item/flute_summoning"
     }
 }

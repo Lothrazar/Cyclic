@@ -1,9 +1,9 @@
 {
  	"parent": "cyclic:parent/machine_simple",
     "textures": {
-        "side": "cyclic:blocks/machine/back",
-        "base": "cyclic:blocks/machine/peat",
-        "inner": "cyclic:blocks/machine/peat",
-        "particle": "cyclic:blocks/machine/peat"
+        "side": "cyclic:block/machine/back",
+        "base": "cyclic:block/machine/peat",
+        "inner": "cyclic:block/machine/peat",
+        "particle": "cyclic:block/machine/peat"
     }
 }

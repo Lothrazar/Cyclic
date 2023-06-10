@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "cyclic:blocks/crate",
-        "down": "cyclic:blocks/crate",
-        "up": "cyclic:blocks/crate",
-        "north": "cyclic:blocks/crate",
-        "south": "cyclic:blocks/crate",
-        "west": "cyclic:blocks/crate",
-        "east": "cyclic:blocks/crate"
+        "particle": "cyclic:block/crate",
+        "down": "cyclic:block/crate",
+        "up": "cyclic:block/crate",
+        "north": "cyclic:block/crate",
+        "south": "cyclic:block/crate",
+        "west": "cyclic:block/crate",
+        "east": "cyclic:block/crate"
     }
 }

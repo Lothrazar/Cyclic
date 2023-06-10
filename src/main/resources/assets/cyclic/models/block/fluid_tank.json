@@ -2,12 +2,12 @@
 	"parent": "minecraft:block/cube_directional",
   "render_type": "cutout_mipped",
 	"textures": {
-		"particle": "cyclic:blocks/tank/tank_top",
-		"down": "cyclic:blocks/tank/tank_top",
-		"up": "cyclic:blocks/tank/tank_top",
-		"north": "cyclic:blocks/tank/tank_base",
-		"east": "cyclic:blocks/tank/tank_base_flip",
-		"south": "cyclic:blocks/tank/tank_base",
-		"west": "cyclic:blocks/tank/tank_base_flip_hack"
+		"particle": "cyclic:block/tank/tank_top",
+		"down": "cyclic:block/tank/tank_top",
+		"up": "cyclic:block/tank/tank_top",
+		"north": "cyclic:block/tank/tank_base",
+		"east": "cyclic:block/tank/tank_base_flip",
+		"south": "cyclic:block/tank/tank_base",
+		"west": "cyclic:block/tank/tank_base_flip_hack"
 	}
 }

@@ -2,12 +2,12 @@
     "parent": "block/cube_directional",
   "render_type": "cutout_mipped",
     "textures": {
-        "particle": "cyclic:blocks/tank/tank_top",
-        "down": "cyclic:blocks/tank/tank_nothing",
-        "up": "cyclic:blocks/tank/tank_top",
-        "north": "cyclic:blocks/tank/tank_open",
-        "east": "cyclic:blocks/tank/tank_open_flip",
-        "south": "cyclic:blocks/tank/tank_open",
-        "west": "cyclic:blocks/tank/tank_open_flip_hack"
+        "particle": "cyclic:block/tank/tank_top",
+        "down": "cyclic:block/tank/tank_nothing",
+        "up": "cyclic:block/tank/tank_top",
+        "north": "cyclic:block/tank/tank_open",
+        "east": "cyclic:block/tank/tank_open_flip",
+        "south": "cyclic:block/tank/tank_open",
+        "west": "cyclic:block/tank/tank_open_flip_hack"
     }
 }

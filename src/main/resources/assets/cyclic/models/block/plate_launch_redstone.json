@@ -1,6 +1,6 @@
 {
     "parent": "cyclic:parent/plate_horizontal",
     "textures": {
-        "0": "cyclic:blocks/plate_launch_redstone"
+        "0": "cyclic:block/plate_launch_redstone"
     }
 } 

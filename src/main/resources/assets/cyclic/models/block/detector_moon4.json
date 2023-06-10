@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "cyclic:blocks/moon/4",
-        "down": "cyclic:blocks/moon/4",
-        "up": "cyclic:blocks/moon/4",
-        "north": "cyclic:blocks/moon/4",
-        "south": "cyclic:blocks/moon/4",
-        "west": "cyclic:blocks/moon/4",
-        "east": "cyclic:blocks/moon/4"
+        "particle": "cyclic:block/moon/4",
+        "down": "cyclic:block/moon/4",
+        "up": "cyclic:block/moon/4",
+        "north": "cyclic:block/moon/4",
+        "south": "cyclic:block/moon/4",
+        "west": "cyclic:block/moon/4",
+        "east": "cyclic:block/moon/4"
     }
 }

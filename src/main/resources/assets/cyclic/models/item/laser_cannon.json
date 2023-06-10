@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
-		"beam": "cyclic:items/rainbow/beam",
-		"side": "cyclic:items/rainbow/side",
-		"top": "cyclic:items/rainbow/top",
-		"br": "cyclic:items/rainbow/smallcart",
-		"bx": "cyclic:items/rainbow/bigcart",
-		"casing": "cyclic:items/rainbow/beamcasing",
-		"frame": "cyclic:items/rainbow/frame"
+		"beam": "cyclic:item/rainbow/beam",
+		"side": "cyclic:item/rainbow/side",
+		"top": "cyclic:item/rainbow/top",
+		"br": "cyclic:item/rainbow/smallcart",
+		"bx": "cyclic:item/rainbow/bigcart",
+		"casing": "cyclic:item/rainbow/beamcasing",
+		"frame": "cyclic:item/rainbow/frame"
 	},
 	"elements": [
 		{

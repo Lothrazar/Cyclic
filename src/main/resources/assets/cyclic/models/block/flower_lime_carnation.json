@@ -2,6 +2,6 @@
     "parent": "minecraft:block/cross",
   "render_type": "cutout_mipped",
     "textures": {
-        "cross": "cyclic:blocks/flower_lime_carnation"
+        "cross": "cyclic:block/flower_lime_carnation"
     }
 }

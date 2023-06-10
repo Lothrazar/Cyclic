@@ -2,9 +2,9 @@
 	"parent": "minecraft:block/cube",
   "render_type": "cutout_mipped",
 	"textures": {
-		"side": "cyclic:blocks/trash_side",
-		"end": "cyclic:blocks/trash_end",
-		"particle": "cyclic:blocks/trash_side"
+		"side": "cyclic:block/trash_side",
+		"end": "cyclic:block/trash_end",
+		"particle": "cyclic:block/trash_side"
 	},
 	"elements": [
 		{

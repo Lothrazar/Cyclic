@@ -1,13 +1,13 @@
 {
 	"parent": "block/cube",
-    "render_type:": "translucent",
+  "render_type": "cutout_mipped",
     "textures": {
-        "down": "cyclic:blocks/solidifier_top",
-        "up": "cyclic:blocks/solidifier_top",
-        "north": "cyclic:blocks/solidifier",
-        "south": "cyclic:blocks/solidifier",
-        "east": "cyclic:blocks/solidifier",
-        "west": "cyclic:blocks/solidifier",
-        "particle": "cyclic:blocks/solidifier"
+        "down": "cyclic:block/solidifier_top",
+        "up": "cyclic:block/solidifier_top",
+        "north": "cyclic:block/solidifier",
+        "south": "cyclic:block/solidifier",
+        "east": "cyclic:block/solidifier",
+        "west": "cyclic:block/solidifier",
+        "particle": "cyclic:block/solidifier"
     }
 }

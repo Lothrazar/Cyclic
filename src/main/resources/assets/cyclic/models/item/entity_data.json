@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/entity_data"
+        "layer0": "cyclic:item/entity_data"
     }
 }

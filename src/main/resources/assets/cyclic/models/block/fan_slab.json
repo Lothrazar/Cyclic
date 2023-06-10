@@ -2,7 +2,7 @@
   "parent": "cyclic:parent/plate_fan",
   "render_type": "cutout_mipped",
   "textures": {
-    "texture": "cyclic:blocks/machine/bottom"
+    "texture": "cyclic:block/machine/bottom"
   },
       "gui_light": "side",
     "display": {

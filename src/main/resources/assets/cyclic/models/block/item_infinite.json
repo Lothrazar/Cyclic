@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "cyclic:blocks/item_infinite",
-        "down": "cyclic:blocks/item_infinite",
-        "up": "cyclic:blocks/item_infinite",
-        "north": "cyclic:blocks/item_infinite",
-        "south": "cyclic:blocks/item_infinite",
-        "west": "cyclic:blocks/item_infinite",
-        "east": "cyclic:blocks/item_infinite"
+        "particle": "cyclic:block/item_infinite",
+        "down": "cyclic:block/item_infinite",
+        "up": "cyclic:block/item_infinite",
+        "north": "cyclic:block/item_infinite",
+        "south": "cyclic:block/item_infinite",
+        "west": "cyclic:block/item_infinite",
+        "east": "cyclic:block/item_infinite"
     }
 }

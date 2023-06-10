@@ -2,8 +2,8 @@
 	"parent": "minecraft:block/block",
   "render_type": "cutout_mipped",
 	"textures": {
-		"particle": "cyclic:blocks/crate",
-		"side": "cyclic:blocks/crate"
+		"particle": "cyclic:block/crate",
+		"side": "cyclic:block/crate"
 	},
 	"elements": [
 		{

@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench @INooBTooMuch https://github.com/Lothrazar/Cyclic/issues/2182",
 	"parent": "block/block",
 	"textures": {
-		"holder": "cyclic:blocks/machine/water_candle_holder",
-		"2": "cyclic:blocks/machine/water_candle",
-		"sides": "cyclic:blocks/machine/water_candle_sides"
+		"holder": "cyclic:block/machine/water_candle_holder",
+		"2": "cyclic:block/machine/water_candle",
+		"sides": "cyclic:block/machine/water_candle_sides"
 	},
 	"elements": [
 		{

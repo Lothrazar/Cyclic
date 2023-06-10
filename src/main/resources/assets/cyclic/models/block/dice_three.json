@@ -3,6 +3,6 @@
     "parent":"cyclic:parent/dice",
   "render_type": "cutout_mipped",
 	"textures": {
-		"all": "cyclic:blocks/dice/three"
+		"all": "cyclic:block/dice/three"
 	}
 }

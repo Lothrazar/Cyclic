@@ -2,10 +2,10 @@
 	"parent": "block/cube",
     "render_type:": "translucent",
 	"textures": {
-		"0": "cyclic:blocks/machine/steel",
-		"1": "cyclic:blocks/machine/lapis",
-		"2": "cyclic:blocks/machine/iron",
-		"particle": "cyclic:blocks/machine/steel"
+		"0": "cyclic:block/machine/steel",
+		"1": "cyclic:block/machine/lapis",
+		"2": "cyclic:block/machine/iron",
+		"particle": "cyclic:block/machine/steel"
 	},
 	"elements": [
 		{

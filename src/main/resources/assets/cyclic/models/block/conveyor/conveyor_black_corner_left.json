@@ -1,6 +1,6 @@
 {
   "parent": "cyclic:parent/conveyor_corner_left",
   "textures": {
-    "texture": "cyclic:blocks/conveyor/conveyor_black_corner"
+    "texture": "cyclic:block/conveyor/conveyor_black_corner"
   }
 }

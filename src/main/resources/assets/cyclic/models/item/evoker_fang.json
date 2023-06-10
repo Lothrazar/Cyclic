@@ -1,16 +1,16 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "cyclic:items/evoker_fang/handle",
-		"1": "cyclic:items/evoker_fang/grip",
-		"2": "cyclic:items/evoker_fang/evoker-yellow",
-		"3": "cyclic:items/evoker_fang/fangs",
-		"4": "cyclic:items/evoker_fang/mouth",
-		"5": "cyclic:items/evoker_fang/teeth",
-		"6": "cyclic:items/evoker_fang/lips",
-		"7": "cyclic:items/evoker_fang/teeth2",
-		"8": "cyclic:items/evoker_fang/crystal",
-		"particle": "cyclic:items/evoker_fang/handle"
+		"0": "cyclic:item/evoker_fang/handle",
+		"1": "cyclic:item/evoker_fang/grip",
+		"2": "cyclic:item/evoker_fang/evoker-yellow",
+		"3": "cyclic:item/evoker_fang/fangs",
+		"4": "cyclic:item/evoker_fang/mouth",
+		"5": "cyclic:item/evoker_fang/teeth",
+		"6": "cyclic:item/evoker_fang/lips",
+		"7": "cyclic:item/evoker_fang/teeth2",
+		"8": "cyclic:item/evoker_fang/crystal",
+		"particle": "cyclic:item/evoker_fang/handle"
 	},
 	"elements": [
 		{

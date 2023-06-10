@@ -3,12 +3,12 @@
     
   "render_type": "cutout_mipped",
   "textures": {
-        "particle": "cyclic:blocks/packager",
-        "down": "cyclic:blocks/packager",
-        "up": "cyclic:blocks/packager",
-        "north": "cyclic:blocks/packager",
-        "south": "cyclic:blocks/packager",
-        "west": "cyclic:blocks/packager",
-        "east": "cyclic:blocks/packager"
+        "particle": "cyclic:block/packager",
+        "down": "cyclic:block/packager",
+        "up": "cyclic:block/packager",
+        "north": "cyclic:block/packager",
+        "south": "cyclic:block/packager",
+        "west": "cyclic:block/packager",
+        "east": "cyclic:block/packager"
     }
 }

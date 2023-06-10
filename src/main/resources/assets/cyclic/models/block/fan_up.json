@@ -1,13 +1,13 @@
 {
   "render_type": "cutout_mipped",
 	"textures": {
-		"body_front": "cyclic:blocks/fan/fan_body_front",
-		"body_side": "cyclic:blocks/fan/fan_body_side",
-		"body_up": "cyclic:blocks/fan/fan_body_up",
-		"body_down": "cyclic:blocks/fan/fan_body_down",
-		"misc": "cyclic:blocks/fan/fan_misc",
-		"blades": "cyclic:blocks/fan/fan_blades_off",
-		"particle": "cyclic:blocks/fan/fan_body_side"
+		"body_front": "cyclic:block/fan/fan_body_front",
+		"body_side": "cyclic:block/fan/fan_body_side",
+		"body_up": "cyclic:block/fan/fan_body_up",
+		"body_down": "cyclic:block/fan/fan_body_down",
+		"misc": "cyclic:block/fan/fan_misc",
+		"blades": "cyclic:block/fan/fan_blades_off",
+		"particle": "cyclic:block/fan/fan_body_side"
 	},
 
 	"elements": [

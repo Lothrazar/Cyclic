@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/blockstate_data"
+        "layer0": "cyclic:item/blockstate_data"
     }
 }

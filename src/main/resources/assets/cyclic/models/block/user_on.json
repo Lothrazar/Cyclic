@@ -1,7 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic_on",
     "textures": { 
-        "base": "cyclic:blocks/machine/gold",
-        "stem": "cyclic:blocks/machine/obsidian"
+        "base": "cyclic:block/machine/gold",
+        "stem": "cyclic:block/machine/obsidian"
     }
 }

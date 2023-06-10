@@ -2,12 +2,12 @@
     "parent": "minecraft:block/cube",
   "render_type": "cutout",
     "textures": {
-        "particle": "cyclic:blocks/shearing",
-        "down": "cyclic:blocks/ender_shelf_side",
-        "up": "cyclic:blocks/ender_shelf_side",
-        "north": "cyclic:blocks/shearing",
-        "south": "cyclic:blocks/shearing",
-        "west": "cyclic:blocks/shearing",
-        "east": "cyclic:blocks/shearing"
+        "particle": "cyclic:block/shearing",
+        "down": "cyclic:block/ender_shelf_side",
+        "up": "cyclic:block/ender_shelf_side",
+        "north": "cyclic:block/shearing",
+        "south": "cyclic:block/shearing",
+        "west": "cyclic:block/shearing",
+        "east": "cyclic:block/shearing"
     }
 }

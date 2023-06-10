@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "cyclic:blocks/beacon",
-        "down": "cyclic:blocks/beacon",
-        "up": "cyclic:blocks/beacon",
-        "north": "cyclic:blocks/beacon",
-        "south": "cyclic:blocks/beacon",
-        "west": "cyclic:blocks/beacon",
-        "east": "cyclic:blocks/beacon"
+        "particle": "cyclic:block/beacon",
+        "down": "cyclic:block/beacon",
+        "up": "cyclic:block/beacon",
+        "north": "cyclic:block/beacon",
+        "south": "cyclic:block/beacon",
+        "west": "cyclic:block/beacon",
+        "east": "cyclic:block/beacon"
     }
 }

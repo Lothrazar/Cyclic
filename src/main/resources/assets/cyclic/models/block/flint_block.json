@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cube_all",
 	"textures": {
-		"all": "cyclic:blocks/flint_block"
+		"all": "cyclic:block/flint_block"
 	}
 }

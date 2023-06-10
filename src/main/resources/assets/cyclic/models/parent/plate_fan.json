@@ -1,7 +1,7 @@
 {
 	"textures": {
 		"particle": "#texture",
-		"fan":"cyclic:blocks/fan/fan_blades_off"
+		"fan":"cyclic:block/fan/fan_blades_off"
 	},
 	"elements": [
 		{

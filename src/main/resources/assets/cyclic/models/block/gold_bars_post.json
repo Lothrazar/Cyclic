@@ -2,8 +2,8 @@
 
     "ambientocclusion": false,
     "textures": {
-        "particle": "cyclic:blocks/gold_bars",
-        "bars": "cyclic:blocks/gold_bars"
+        "particle": "cyclic:block/gold_bars",
+        "bars": "cyclic:block/gold_bars"
     },
     "elements": [
         {   "from": [ 8, 0, 7 ],

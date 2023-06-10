@@ -2,8 +2,8 @@
   "render_type": "cutout_mipped",
     "ambientocclusion": false,
     "textures": {
-        "particle": "cyclic:blocks/copper_bars",
-        "bars": "cyclic:blocks/copper_bars"
+        "particle": "cyclic:block/copper_bars",
+        "bars": "cyclic:block/copper_bars"
     },
     "elements": [
         {   "from": [ 8, 0, 7 ],

@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"all": "cyclic:items/ice_scepter"
+		"all": "cyclic:item/ice_scepter"
 	},
 
 	"elements": [

@@ -4,8 +4,8 @@
     "textures": {
         "particle": "minecraft:block/obsidian",
         "bottom": "minecraft:block/obsidian",
-        "top": "cyclic:blocks/disenchanter",
-        "side": "cyclic:blocks/disenchanter_side"
+        "top": "cyclic:block/disenchanter",
+        "side": "cyclic:block/disenchanter_side"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

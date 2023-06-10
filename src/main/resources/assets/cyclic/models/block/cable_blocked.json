@@ -1,8 +1,8 @@
 {
     "__comment": "Copyright © InsomniaKitten 2017 and Lothrazar 2018",
     "textures": {
-        "particle": "cyclic:blocks/cable/cable_blocked",
-        "texture": "cyclic:blocks/cable/cable_blocked"
+        "particle": "cyclic:block/cable/cable_blocked",
+        "texture": "cyclic:block/cable/cable_blocked"
     },
     "elements": [
         {

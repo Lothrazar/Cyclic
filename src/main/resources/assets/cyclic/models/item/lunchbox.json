@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/lunchbox",
-        "layer1": "cyclic:items/lunchbox_overlay"
+        "layer0": "cyclic:item/lunchbox",
+        "layer1": "cyclic:item/lunchbox_overlay"
     }
 }

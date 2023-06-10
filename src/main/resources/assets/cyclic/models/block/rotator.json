@@ -1,12 +1,12 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
     "textures": { 
-        "base": "cyclic:blocks/machine/wood",
-        "stem": "cyclic:blocks/machine/wood",
-			"left": "cyclic:blocks/machine/stone",
-			"right": "cyclic:blocks/machine/stone",
-			"back": "cyclic:blocks/machine/stone",
-		"side_flipped": "cyclic:blocks/machine/stone",
-			"front": "cyclic:blocks/machine/smooth_on"
+        "base": "cyclic:block/machine/wood",
+        "stem": "cyclic:block/machine/wood",
+			"left": "cyclic:block/machine/stone",
+			"right": "cyclic:block/machine/stone",
+			"back": "cyclic:block/machine/stone",
+		"side_flipped": "cyclic:block/machine/stone",
+			"front": "cyclic:block/machine/smooth_on"
     }
 }

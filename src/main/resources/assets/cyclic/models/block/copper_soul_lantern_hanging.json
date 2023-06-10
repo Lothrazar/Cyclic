@@ -2,6 +2,6 @@
   "parent": "minecraft:block/template_hanging_lantern",
   "render_type": "cutout_mipped",
   "textures": {
-    "lantern": "cyclic:blocks/copper_soul_lantern"
+    "lantern": "cyclic:block/copper_soul_lantern"
   }
 }

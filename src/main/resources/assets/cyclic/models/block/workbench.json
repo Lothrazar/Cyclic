@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "cyclic:blocks/workbench_top",
-        "down": "cyclic:blocks/workbench_top",
-        "up": "cyclic:blocks/workbench_top",
-        "north": "cyclic:blocks/workbench_front",
-        "south": "cyclic:blocks/workbench_front",
-        "west": "cyclic:blocks/workbench_side",
-        "east": "cyclic:blocks/workbench_side"
+        "particle": "cyclic:block/workbench_top",
+        "down": "cyclic:block/workbench_top",
+        "up": "cyclic:block/workbench_top",
+        "north": "cyclic:block/workbench_front",
+        "south": "cyclic:block/workbench_front",
+        "west": "cyclic:block/workbench_side",
+        "east": "cyclic:block/workbench_side"
     }
 }

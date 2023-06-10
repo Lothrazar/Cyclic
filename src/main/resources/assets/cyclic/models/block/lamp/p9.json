@@ -2,6 +2,6 @@
     "parent": "block/cube_all",
   "render_type": "translucent",
     "textures": {
-        "all": "cyclic:blocks/lamp/p15"
+        "all": "cyclic:block/lamp/p15"
     }
 }

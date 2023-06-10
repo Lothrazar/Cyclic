@@ -1,12 +1,12 @@
 {
     "parent": "minecraft:block/cube",
     "textures": {
-        "particle": "cyclic:blocks/weather/none",
-        "down": "cyclic:blocks/weather/none",
-        "up": "cyclic:blocks/weather/none",
-        "north": "cyclic:blocks/weather/none",
-        "south": "cyclic:blocks/weather/none",
-        "west": "cyclic:blocks/weather/none",
-        "east": "cyclic:blocks/weather/none"
+        "particle": "cyclic:block/weather/none",
+        "down": "cyclic:block/weather/none",
+        "up": "cyclic:block/weather/none",
+        "north": "cyclic:block/weather/none",
+        "south": "cyclic:block/weather/none",
+        "west": "cyclic:block/weather/none",
+        "east": "cyclic:block/weather/none"
     }
 }

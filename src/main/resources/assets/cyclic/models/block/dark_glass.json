@@ -2,6 +2,6 @@
     "parent": "minecraft:block/cube_all",
   "render_type": "cutout_mipped",
     "textures": {
-        "all": "cyclic:blocks/dark_glass"
+        "all": "cyclic:block/dark_glass"
     }
 }

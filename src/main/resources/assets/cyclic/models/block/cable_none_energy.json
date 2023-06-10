@@ -2,7 +2,7 @@
     "__comment": "Copyright © InsomniaKitten 2017",
 	"parent":"cyclic:parent/cable_none",
     "textures": {
-        "particle": "cyclic:blocks/cable/cable_energy",
-        "texture": "cyclic:blocks/cable/cable_energy"
+        "particle": "cyclic:block/cable/cable_energy",
+        "texture": "cyclic:block/cable/cable_energy"
     } 
 }

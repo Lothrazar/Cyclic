@@ -3,8 +3,8 @@
   "textures": {
     "particle": "blocks/obsidian",
     "bottom": "blocks/obsidian",
-    "top": "cyclic:blocks/enchanter",
-    "side": "cyclic:blocks/enchanter_side"
+    "top": "cyclic:block/enchanter",
+    "side": "cyclic:block/enchanter_side"
   },
   "elements": [
     {   "from": [ 0, 0, 0 ],

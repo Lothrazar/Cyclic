@@ -2,12 +2,12 @@
 	"parent": "minecraft:block/cube",
   "render_type": "cutout_mipped",
 	"textures": {
-		"particle": "cyclic:blocks/cask_bottom",
-		"down": "cyclic:blocks/machine/cobble",
-		"up": "cyclic:blocks/machine/stonecutter",
-		"north": "cyclic:blocks/machine/fuel_on",
-		"south": "cyclic:blocks/machine/fuel_on",
-		"west": "cyclic:blocks/machine/fuel_on",
-		"east": "cyclic:blocks/machine/fuel_on"
+		"particle": "cyclic:block/cask_bottom",
+		"down": "cyclic:block/machine/cobble",
+		"up": "cyclic:block/machine/stonecutter",
+		"north": "cyclic:block/machine/fuel_on",
+		"south": "cyclic:block/machine/fuel_on",
+		"west": "cyclic:block/machine/fuel_on",
+		"east": "cyclic:block/machine/fuel_on"
 	}
 }

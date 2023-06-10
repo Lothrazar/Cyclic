@@ -1,8 +1,8 @@
 {
 	"parent": "minecraft:block/cube",
     "textures": {
-		"particle":"cyclic:blocks/pylon",
-        "side": "cyclic:blocks/pylon"
+		"particle":"cyclic:block/pylon",
+        "side": "cyclic:block/pylon"
     },
     "elements": [
         {

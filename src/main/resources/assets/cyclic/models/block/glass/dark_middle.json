@@ -2,6 +2,6 @@
   "render_type": "cutout_mipped",
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "cyclic:blocks/glass/dark_news"
+		"all": "cyclic:block/glass/dark_news"
 	}
 }

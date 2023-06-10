@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/sleeping_mat"
+        "layer0": "cyclic:item/sleeping_mat"
     }
 }

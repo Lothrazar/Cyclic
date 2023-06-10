@@ -1,7 +1,7 @@
 { 
  	"parent": "cyclic:parent/machine_classic_on",
     "textures": { 
-        "base": "cyclic:blocks/machine/green",
-        "stem": "cyclic:blocks/machine/obsidian"
+        "base": "cyclic:block/machine/green",
+        "stem": "cyclic:block/machine/obsidian"
     }
 }

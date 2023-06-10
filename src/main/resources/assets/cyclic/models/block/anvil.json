@@ -2,9 +2,9 @@
    "parent": "cyclic:parent/anvil",
   "render_type": "cutout_mipped",
    "textures": {
-        "particle": "cyclic:blocks/anvil/diamond",
-        "body": "cyclic:blocks/anvil/diamond",
-        "base": "cyclic:blocks/anvil/iron",
-        "pillar": "cyclic:blocks/anvil/iron"
+        "particle": "cyclic:block/anvil/diamond",
+        "body": "cyclic:block/anvil/diamond",
+        "base": "cyclic:block/anvil/iron",
+        "pillar": "cyclic:block/anvil/iron"
     }
 }

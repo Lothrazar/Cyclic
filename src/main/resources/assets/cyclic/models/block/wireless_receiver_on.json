@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cube_all",
     "textures": {
-        "all": "cyclic:blocks/wireless_receiver_on"
+        "all": "cyclic:block/wireless_receiver_on"
     }
 }

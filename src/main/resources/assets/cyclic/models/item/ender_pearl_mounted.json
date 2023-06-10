@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/ender_pearl_mounted"
+        "layer0": "cyclic:item/ender_pearl_mounted"
     }
 }

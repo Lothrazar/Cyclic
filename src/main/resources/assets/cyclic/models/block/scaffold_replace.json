@@ -2,7 +2,7 @@
 	"parent": "cyclic:parent/scaffold",
   "render_type": "cutout",
 	"textures": {
-		"all": "cyclic:blocks/scaffold_replace",
-		"particle": "cyclic:blocks/scaffold_replace"
+		"all": "cyclic:block/scaffold_replace",
+		"particle": "cyclic:block/scaffold_replace"
 	}
 }

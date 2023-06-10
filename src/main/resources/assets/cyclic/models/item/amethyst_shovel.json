@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "cyclic:items/gear/amethyst_shovel"
+        "layer0": "cyclic:item/gear/amethyst_shovel"
     }
 }

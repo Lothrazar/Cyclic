@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"particle":"cyclic:blocks/dice/five"
+		"particle":"cyclic:block/dice/five"
 	},
 	"elements": [
 		{

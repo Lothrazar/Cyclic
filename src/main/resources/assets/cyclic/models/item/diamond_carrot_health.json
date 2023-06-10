@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/carrot_diamond"
+        "layer0": "cyclic:item/carrot_diamond"
     }
 }

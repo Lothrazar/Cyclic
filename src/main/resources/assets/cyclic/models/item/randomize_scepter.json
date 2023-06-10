@@ -3,14 +3,14 @@
 	"textures": {
 		"1": "minecraft:block/obsidian",
 		"2": "minecraft:block/cobblestone",
-		"wa": "cyclic:items/wand/wa",
-		"wb": "cyclic:items/wand/wb",
-		"na": "cyclic:items/wand/na",
-		"nb": "cyclic:items/wand/nb",
-		"ea": "cyclic:items/wand/ea",
-		"eb": "cyclic:items/wand/eb",
-		"sa": "cyclic:items/wand/sa",
-		"sb": "cyclic:items/wand/sb"
+		"wa": "cyclic:item/wand/wa",
+		"wb": "cyclic:item/wand/wb",
+		"na": "cyclic:item/wand/na",
+		"nb": "cyclic:item/wand/nb",
+		"ea": "cyclic:item/wand/ea",
+		"eb": "cyclic:item/wand/eb",
+		"sa": "cyclic:item/wand/sa",
+		"sb": "cyclic:item/wand/sb"
 	},
 	"elements": [
 		{

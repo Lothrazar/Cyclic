@@ -1,13 +1,13 @@
 {
 	"parent": "block/cube",
-    "render_type:": "translucent",
+  "render_type": "cutout_mipped",
     "textures": {
-        "down": "cyclic:blocks/melter_top",
-        "up": "cyclic:blocks/melter_top",
-        "north": "cyclic:blocks/melter",
-        "south": "cyclic:blocks/melter",
-        "east": "cyclic:blocks/melter",
-        "west": "cyclic:blocks/melter",
-        "particle": "cyclic:blocks/melter_top"
+        "down": "cyclic:block/melter_top",
+        "up": "cyclic:block/melter_top",
+        "north": "cyclic:block/melter",
+        "south": "cyclic:block/melter",
+        "east": "cyclic:block/melter",
+        "west": "cyclic:block/melter",
+        "particle": "cyclic:block/melter_top"
     }
 }

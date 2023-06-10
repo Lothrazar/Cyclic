@@ -1,8 +1,8 @@
 {
  	"parent": "cyclic:parent/machine_vertical",
 	"textures":{
-        "front": "cyclic:blocks/breaker/front",
-        "side": "cyclic:blocks/breaker/side",
+        "front": "cyclic:block/breaker/front",
+        "side": "cyclic:block/breaker/side",
         "base": "minecraft:block/quartz_block_bottom",
         "stem": "minecraft:block/mossy_cobblestone",
         "particle": "minecraft:block/iron_block"

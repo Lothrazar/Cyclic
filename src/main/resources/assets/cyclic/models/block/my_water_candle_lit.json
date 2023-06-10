@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench @INooBTooMuch https://github.com/Lothrazar/Cyclic/issues/2182",
 	"parent": "block/block",
 	"textures": {
-		"holder": "cyclic:blocks/machine/water_candle_holder",
-		"2": "cyclic:blocks/machine/water_candle",
-  	  "centerwater": "cyclic:blocks/water_fake",
-		"sides": "cyclic:blocks/machine/water_candle_sides",
-   	 "flame": "cyclic:blocks/machine/gold"
+		"holder": "cyclic:block/machine/water_candle_holder",
+		"2": "cyclic:block/machine/water_candle",
+  	  "centerwater": "cyclic:block/water_fake",
+		"sides": "cyclic:block/machine/water_candle_sides",
+   	 "flame": "cyclic:block/machine/gold"
 	},
 	"elements": [
 	    {

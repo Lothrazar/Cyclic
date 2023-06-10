@@ -4,6 +4,46 @@
             "type": "directory",
             "source": "cyclic:entity/shield",
             "prefix": "cyclic:entity/shield/"
+        },
+        {
+            "type": "directory",
+            "source": "cyclic:block/fluid",
+            "prefix": "cyclic:block/fluid/"
+        },
+        {
+            "type": "directory",
+            "source": "cyclic:block/machine",
+            "prefix": "cyclic:block/machine/"
+        },
+        {
+            "type": "directory",
+            "source": "cyclic:item/charm",
+            "prefix": "cyclic:item/charm/"
+        },
+        {
+            "type": "directory",
+            "source": "cyclic:item/apple",
+            "prefix": "cyclic:item/apple/"
+        },
+        {
+            "type": "directory",
+            "source": "cyclic:block/machine",
+            "prefix": "cyclic:block/machine/"
+        },
+        {
+            "type": "directory",
+            "source": "block/hoppers",
+            "prefix": "block/hoppers/"
+        },
+        {
+            "type": "directory",
+            "source": "cyclic:block/glass",
+            "prefix": "cyclic:block/glass/"
+        },
+        {
+            "type": "directory",
+            "source": "cyclic:items",
+            "prefix": "cyclic:item/"
         }
     ]
 }

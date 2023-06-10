@@ -2,12 +2,12 @@
     "parent": "minecraft:block/cube",
     "render_type:": "translucent",
     "textures": {
-        "particle": "cyclic:blocks/terra_glass",
-        "down": "cyclic:blocks/terra_glass",
-        "up": "cyclic:blocks/terra_glass",
-        "north": "cyclic:blocks/terra_glass",
-        "south": "cyclic:blocks/terra_glass",
-        "west": "cyclic:blocks/terra_glass",
-        "east": "cyclic:blocks/terra_glass"
+        "particle": "cyclic:block/terra_glass",
+        "down": "cyclic:block/terra_glass",
+        "up": "cyclic:block/terra_glass",
+        "north": "cyclic:block/terra_glass",
+        "south": "cyclic:block/terra_glass",
+        "west": "cyclic:block/terra_glass",
+        "east": "cyclic:block/terra_glass"
     }
 }

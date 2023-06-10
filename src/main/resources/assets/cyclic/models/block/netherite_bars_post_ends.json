@@ -2,8 +2,8 @@
   "render_type": "cutout_mipped",
     "ambientocclusion": false,
     "textures": {
-        "particle": "cyclic:blocks/netherite_bars",
-        "edge": "cyclic:blocks/netherite_bars"
+        "particle": "cyclic:block/netherite_bars",
+        "edge": "cyclic:block/netherite_bars"
     },
     "elements": [
         {   "from": [ 7, 0.001, 7 ],

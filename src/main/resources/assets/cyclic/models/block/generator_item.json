@@ -2,12 +2,12 @@
 	"parent": "minecraft:block/cube",
   "render_type": "cutout_mipped",
 	"textures": {
-		"particle": "cyclic:blocks/machine/back",
-		"down": "cyclic:blocks/machine/iron",
-		"up": "cyclic:blocks/machine/back",
-		"north": "cyclic:blocks/machine/fuel_item",
-		"south": "cyclic:blocks/machine/fuel_item",
-		"west": "cyclic:blocks/machine/fuel_item",
-		"east": "cyclic:blocks/machine/fuel_item"
+		"particle": "cyclic:block/machine/back",
+		"down": "cyclic:block/machine/iron",
+		"up": "cyclic:block/machine/back",
+		"north": "cyclic:block/machine/fuel_item",
+		"south": "cyclic:block/machine/fuel_item",
+		"west": "cyclic:block/machine/fuel_item",
+		"east": "cyclic:block/machine/fuel_item"
 	}
 }

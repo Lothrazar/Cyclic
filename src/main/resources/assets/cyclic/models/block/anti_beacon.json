@@ -5,7 +5,7 @@
         "particle": "block/glass",
         "glass": "block/glass",
         "obsidian": "block/obsidian",
-        "beacon": "cyclic:blocks/beacon"
+        "beacon": "cyclic:block/beacon"
     },
     "elements": [
         {   "__comment": "Glass shell",

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:blocks/copper_bars"
+        "layer0": "cyclic:block/copper_bars"
     }
 }

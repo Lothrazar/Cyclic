@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "cyclic:items/gear/crystal_sword"
+        "layer0": "cyclic:item/gear/crystal_sword"
     }
 }

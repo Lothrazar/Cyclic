@@ -1,11 +1,11 @@
 {
    "parent": "minecraft:block/cube",
   "textures": {
-    "0": "cyclic:blocks/conveyor/conveyor_bottom",
-    "1": "cyclic:blocks/conveyor/conveyor_end",
+    "0": "cyclic:block/conveyor/conveyor_bottom",
+    "1": "cyclic:block/conveyor/conveyor_end",
     "2": "#texture",
-    "3": "cyclic:blocks/conveyor/conveyor_side",
+    "3": "cyclic:block/conveyor/conveyor_side",
     "4": "#texture",
-    "particle": "cyclic:blocks/conveyor/conveyor_bottom"
+    "particle": "cyclic:block/conveyor/conveyor_bottom"
   }
 }

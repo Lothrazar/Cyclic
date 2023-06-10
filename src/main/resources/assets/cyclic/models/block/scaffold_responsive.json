@@ -3,7 +3,7 @@
 
   "render_type": "cutout",
 	"textures": {
-		"all": "cyclic:blocks/scaffold_responsive",
-		"particle": "cyclic:blocks/scaffold_responsive"
+		"all": "cyclic:block/scaffold_responsive",
+		"particle": "cyclic:block/scaffold_responsive"
 	}
 }

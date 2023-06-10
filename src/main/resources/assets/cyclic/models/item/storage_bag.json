@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/storage_bag",
-        "layer1": "cyclic:items/storage_bag_overlay"
+        "layer0": "cyclic:item/storage_bag",
+        "layer1": "cyclic:item/storage_bag_overlay"
     }
 }

@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"all": "cyclic:items/fire_scepter"
+		"all": "cyclic:item/fire_scepter"
 	},
 
 	"elements": [

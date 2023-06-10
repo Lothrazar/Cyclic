@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "cyclic:items/scythe_leaves"
+        "layer0": "cyclic:item/scythe_leaves"
     }
 }

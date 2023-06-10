@@ -2,9 +2,9 @@
 	"parent": "cyclic:parent/spikes_off",
   "render_type": "cutout_mipped",
 	"textures": {
-		"side": "cyclic:blocks/spike/spikes_diamond_side",
-		"base_up": "cyclic:blocks/spike/spikes_diamond_base_up",
-		"down": "cyclic:blocks/spike/spikes_diamond_base_down",
-		"particle": "cyclic:blocks/spike/spikes_diamond_side"
+		"side": "cyclic:block/spike/spikes_diamond_side",
+		"base_up": "cyclic:block/spike/spikes_diamond_base_up",
+		"down": "cyclic:block/spike/spikes_diamond_base_down",
+		"particle": "cyclic:block/spike/spikes_diamond_side"
 	}
 }

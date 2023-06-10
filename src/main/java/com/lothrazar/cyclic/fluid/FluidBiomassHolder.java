@@ -24,8 +24,8 @@ import net.minecraftforge.registries.RegistryObject;
 public class FluidBiomassHolder {
 
   private static final String id = "biomass";
-  private static final ResourceLocation FLUID_FLOWING = new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_flow");
-  private static final ResourceLocation FLUID_STILL = new ResourceLocation(ModCyclic.MODID + ":fluid/" + id + "_still");
+  private static final ResourceLocation FLUID_FLOWING = new ResourceLocation(ModCyclic.MODID + ":block/fluid/" + id + "_flow");
+  private static final ResourceLocation FLUID_STILL = new ResourceLocation(ModCyclic.MODID + ":block/fluid/" + id + "_still");
   public static final int COLOR = 0x725D3C;
   public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(makeProperties()));
   public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));

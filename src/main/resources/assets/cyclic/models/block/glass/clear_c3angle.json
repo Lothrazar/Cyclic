@@ -2,12 +2,12 @@
   "render_type": "cutout_mipped",
 	"parent": "block/cube",
 	"textures": {
-		"particle": "cyclic:blocks/glass/clear_island",
-		"down": "cyclic:blocks/glass/clear_ne",
-		"up": "cyclic:blocks/glass/clear_news",
-		"north": "cyclic:blocks/glass/clear_nw",
-		"south": "cyclic:blocks/glass/clear_news",
-		"west": "cyclic:blocks/glass/clear_ne",
-		"east": "cyclic:blocks/glass/clear_news"
+		"particle": "cyclic:block/glass/clear_island",
+		"down": "cyclic:block/glass/clear_ne",
+		"up": "cyclic:block/glass/clear_news",
+		"north": "cyclic:block/glass/clear_nw",
+		"south": "cyclic:block/glass/clear_news",
+		"west": "cyclic:block/glass/clear_ne",
+		"east": "cyclic:block/glass/clear_news"
 	}
 }
