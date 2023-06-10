@@ -46,9 +46,9 @@ public class BiomeTweaker {
         BiomeGenerationSettingsBuilder generation = builder.getGenerationSettings();
         GenerationStep.Decoration step = GenerationStep.Decoration.VEGETAL_DECORATION;
         //
-        generation.addFeature(step, WorldGenPlacements.PF_FLOWER_CYAN);
-        generation.addFeature(step, WorldGenPlacements.PF_FLOWER_LIME);
-        generation.addFeature(step, WorldGenPlacements.PF_FLOWER_TULIP);
+        generation.addFeature(step, Holder.direct(WorldGenPlacements.PF_FLOWER_CYAN.get()));
+        generation.addFeature(step, Holder.direct(WorldGenPlacements.PF_FLOWER_LIME.get()));
+        generation.addFeature(step, Holder.direct(WorldGenPlacements.PF_FLOWER_TULIP.get()));
       }
     }
 
@@ -85,7 +85,7 @@ public class BiomeTweaker {
         event.includeServer(),
         butts);
     ///
-    //thanks you FUCKED this all up again
+    //old shit
     //    final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, event.getLookupProvider().get());
     //    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
     //        generator, existingFileHelper, ModCyclic.MODID, ops, Registries.PLACED_FEATURE, Map.of(
