@@ -15,12 +15,12 @@ public class ScreenPlacerFluid extends ScreenBase<ContainerPlacerFluid> {
 
   public ScreenPlacerFluid(ContainerPlacerFluid screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this.font, 152, 14, TilePlacerFluid.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
+    fluid = new FluidBar(this.font, 152, 14, TilePlacerFluid.CAPACITY);
     fluid.guiLeft = leftPos;
     fluid.guiTop = topPos;
     int x, y;

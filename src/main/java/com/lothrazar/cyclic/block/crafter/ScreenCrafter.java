@@ -42,16 +42,16 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   public ScreenCrafter(ContainerCrafter screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.imageHeight = 256;
-    this.energy = new EnergyBar(this.font, TileCrafter.MAX);
-    this.energy.setHeight(120);
-    this.progress = new TexturedProgress(this.font, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ, 24, 17, TextureRegistry.ARROW);
-    this.progress.max = TileCrafter.TIMER_FULL;
-    this.progress.setTopDown(false);
   }
 
   @Override
   protected void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileCrafter.MAX);
+    this.energy.setHeight(120);
+    this.progress = new TexturedProgress(this.font, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ, 24, 17, TextureRegistry.ARROW);
+    this.progress.max = TileCrafter.TIMER_FULL;
+    this.progress.setTopDown(false);
     int x, y;
     energy.guiLeft = progress.guiLeft = leftPos;
     energy.guiTop = progress.guiTop = topPos;

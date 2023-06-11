@@ -20,13 +20,13 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
 
   public ScreenPeatFarm(ContainerPeatFarm screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this.font, 132, 8, TilePeatFarm.CAPACITY);
-    energy = new EnergyBar(this.font, TilePeatFarm.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    fluid = new FluidBar(this.font, 132, 8, TilePeatFarm.CAPACITY);
+    energy = new EnergyBar(this.font, TilePeatFarm.MAX);
     fluid.guiLeft = energy.guiLeft = leftPos;
     fluid.guiTop = energy.guiTop = topPos;
     energy.visible = TilePeatFarm.POWERCONF.get() > 0;

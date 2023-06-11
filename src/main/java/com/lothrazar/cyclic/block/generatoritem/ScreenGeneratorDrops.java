@@ -23,13 +23,13 @@ public class ScreenGeneratorDrops extends ScreenBase<ContainerGeneratorDrops> {
 
   public ScreenGeneratorDrops(ContainerGeneratorDrops screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileGeneratorDrops.MAX);
-    this.progress = new TexturedProgress(this.font, 76, 60, TextureRegistry.MAT_PROG);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileGeneratorDrops.MAX);
+    this.progress = new TexturedProgress(this.font, 76, 60, TextureRegistry.MAT_PROG);
     energy.visible = true; //TileGeneratorFuel.POWERCONF.get() > 0;
     progress.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = energy.guiTop = topPos;

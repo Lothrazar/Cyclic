@@ -34,7 +34,7 @@ public class ClayBattery extends BlockCyclic {
   }
 
   @Override
-  public List<ItemStack> getDrops(BlockState state,LootParams.Builder builder) {
+  public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
     //because harvestBlock manually forces a drop  
     return new ArrayList<>();
   }

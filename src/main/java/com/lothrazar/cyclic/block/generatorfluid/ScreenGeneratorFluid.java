@@ -27,14 +27,14 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
 
   public ScreenGeneratorFluid(ContainerGeneratorFluid screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileGeneratorFluid.MAX);
-    this.progress = new TexturedProgress(this.font, 76, 60, TextureRegistry.LAVA_PROG);
-    fluid = new FluidBar(this.font, 39, 57, TileGeneratorFluid.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
+    energy = new EnergyBar(this.font, TileGeneratorFluid.MAX);
+    progress = new TexturedProgress(this.font, 76, 60, TextureRegistry.LAVA_PROG);
+    fluid = new FluidBar(this.font, 39, 57, TileGeneratorFluid.CAPACITY);
     energy.visible = true;
     fluid.guiLeft = progress.guiLeft = energy.guiLeft = leftPos;
     fluid.guiTop = progress.guiTop = energy.guiTop = topPos;
@@ -60,7 +60,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     progress.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
     fluid.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getFluid());
     btnRedstone.onValueUpdate(menu.tile);
-    var pose=gg.pose();
+    var pose = gg.pose();
     pose.pushPose();
     pose.translate(this.width / 2, this.height / 2, 0);
     pose.mulPose(Axis.ZP.rotationDegrees(-90));
@@ -90,7 +90,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     energy.draw(gg, menu.tile.getEnergy());
     progress.max = menu.tile.getField(TileGeneratorFluid.Fields.BURNMAX.ordinal());
     progress.draw(gg, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
-    var pose=gg.pose();
+    var pose = gg.pose();
     pose.pushPose();
     pose.translate(this.width / 2, this.height / 2, 0);
     pose.mulPose(Axis.ZP.rotationDegrees(90));

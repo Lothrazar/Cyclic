@@ -32,11 +32,10 @@ public class CarbonPaperItem extends ItemBaseCyclic {
     if (stack.hasTag()) {
       SignBlockEntity fakeSign = new SignBlockEntity(BlockPos.ZERO, Blocks.OAK_SIGN.defaultBlockState());
       fakeSign.load(stack.getTag());
-//      tooltip.add(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
+      //      tooltip.add(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
       for (int i = 0; i < SignText.LINES; i++) {
         //        fakeSign.setText(line, p_212365_2_);
         SignText front = fakeSign.getFrontText();
-  
         Component t = front.getMessages(false)[i];
         //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
         tooltip.add(t);
@@ -70,10 +69,9 @@ public class CarbonPaperItem extends ItemBaseCyclic {
         //write to fake sign to parse nbt internally
         SignBlockEntity fakeSign = new SignBlockEntity(context.getClickedPos(), Blocks.OAK_SIGN.defaultBlockState());
         fakeSign.load(held.getTag());
-//        sign.setColor(fakeSign.getColor());
+        //        sign.setColor(fakeSign.getColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());
-           
           sign.getFrontText().setMessage(i, fakeSign.getFrontText().getMessages(false)[i]);
         }
         ChatUtil.sendStatusMessage(player, "item.cyclic.carbon_paper.written");

@@ -17,15 +17,15 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
 
   public ScreenMelter(ContainerMelter screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    energy = new EnergyBar(this.font, TileMelter.MAX);
-    fluid = new FluidBar(this.font, 132, 8, TileMelter.CAPACITY);
-    this.progress = new TexturedProgress(this.font, 68, 37, 24, 17, TextureRegistry.ARROW);
-    this.progress.setTopDown(false);
   }
 
   @Override
   public void init() {
     super.init();
+    energy = new EnergyBar(this.font, TileMelter.MAX);
+    fluid = new FluidBar(this.font, 132, 8, TileMelter.CAPACITY);
+    this.progress = new TexturedProgress(this.font, 68, 37, 24, 17, TextureRegistry.ARROW);
+    this.progress.setTopDown(false);
     progress.guiLeft = fluid.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = fluid.guiTop = energy.guiTop = topPos;
   }

@@ -21,12 +21,12 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
 
   public ScreenHarvester(ContainerHarvester screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileHarvester.MAX_ENERGY);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileHarvester.MAX_ENERGY);
     int x, y;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

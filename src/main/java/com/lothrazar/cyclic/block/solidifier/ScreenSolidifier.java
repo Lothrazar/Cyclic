@@ -17,15 +17,15 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
 
   public ScreenSolidifier(ContainerSolidifier screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileSolidifier.MAX);
-    fluid = new FluidBar(this.font, 8, 8, TileSolidifier.CAPACITY);
-    this.progress = new TexturedProgress(this.font, 68, 37, 24, 17, TextureRegistry.ARROW);
-    this.progress.setTopDown(false);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileSolidifier.MAX);
+    fluid = new FluidBar(this.font, 8, 8, TileSolidifier.CAPACITY);
+    this.progress = new TexturedProgress(this.font, 68, 37, 24, 17, TextureRegistry.ARROW);
+    this.progress.setTopDown(false);
     progress.guiLeft = fluid.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = fluid.guiTop = energy.guiTop = topPos;
     //    energy.visible = TileSolidifier.POWERCONF.get() > 0;

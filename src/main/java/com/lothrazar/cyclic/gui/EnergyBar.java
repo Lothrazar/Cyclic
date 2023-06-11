@@ -21,7 +21,7 @@ public class EnergyBar {
 
   public EnergyBar(Font font, int cap) {
     this.capacity = cap;
-    this.font=font;
+    this.font = font;
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {
@@ -36,13 +36,13 @@ public class EnergyBar {
     int relX;
     int relY;
     //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.ENERGY_CTR);
-//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-//    RenderSystem.setShaderTexture(0, TextureRegistry.ENERGY_BAR);
+    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    //    RenderSystem.setShaderTexture(0, TextureRegistry.ENERGY_BAR);
     relX = guiLeft + x;
     relY = guiTop + y;
-    gg.blit( TextureRegistry.ENERGY_BAR, relX, relY, 16, 0, width, getHeight(), 32, getHeight());
+    gg.blit(TextureRegistry.ENERGY_BAR, relX, relY, 16, 0, width, getHeight(), 32, getHeight());
     float pct = Math.min(energ / capacity, 1.0F);
-    gg.blit( TextureRegistry.ENERGY_BAR, relX, relY, 0, 0, width, getHeight() - (int) (getHeight() * pct), 32, getHeight());
+    gg.blit(TextureRegistry.ENERGY_BAR, relX, relY, 0, 0, width, getHeight() - (int) (getHeight() * pct), 32, getHeight());
   }
 
   public void renderHoveredToolTip(GuiGraphics ms, int mouseX, int mouseY, int energ) {

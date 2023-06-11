@@ -160,8 +160,7 @@ public class HarvestUtil {
     if (blockState.getBlock() instanceof CropBlock) {
       CropBlock crops = (CropBlock) blockState.getBlock();
       //better mod compatibility if they dont use 'age'
-   
-      return  CropBlock.AGE; // protected :(  crops.getAgeProperty();
+      return CropBlock.AGE; // protected :(  crops.getAgeProperty();
     }
     String age = CropBlock.AGE.getName();
     ResourceLocation bid = ForgeRegistries.BLOCKS.getKey(blockState.getBlock());

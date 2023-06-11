@@ -21,13 +21,13 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
   public ScreenFluidCollect(ContainerFluidCollect screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this.font, TileFluidCollect.CAPACITY);
-    energy = new EnergyBar(this.font, TileFluidCollect.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    fluid = new FluidBar(this.font, TileFluidCollect.CAPACITY);
+    energy = new EnergyBar(this.font, TileFluidCollect.MAX);
     energy.guiLeft = fluid.guiLeft = leftPos;
     energy.guiTop = fluid.guiTop = topPos;
     energy.visible = TileFluidCollect.POWERCONF.get() > 0;

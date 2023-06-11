@@ -42,8 +42,8 @@ public class TexturedProgress {
   public void draw(GuiGraphics gg, float current) {
     int relX;
     int relY;
-//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-//    RenderSystem.setShaderTexture(0, this.texture);
+    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    //    RenderSystem.setShaderTexture(0, this.texture);
     relX = guiLeft + x;
     relY = guiTop + y;
     if (this.topDown) {

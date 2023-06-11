@@ -26,12 +26,12 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
 
   public ScreenBattery(ContainerBattery screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileBattery.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileBattery.MAX);
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     int x = leftPos + 132, y = topPos + 8;

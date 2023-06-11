@@ -17,13 +17,13 @@ public class ScreenCrusher extends ScreenBase<ContainerCrusher> {
 
   public ScreenCrusher(ContainerCrusher screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileCrusher.MAX);
-    this.progress = new TexturedProgress(this.font, 78, 40, TextureRegistry.SAW);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileCrusher.MAX);
+    this.progress = new TexturedProgress(this.font, 78, 40, TextureRegistry.SAW);
     progress.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = energy.guiTop = topPos;
     int x, y;

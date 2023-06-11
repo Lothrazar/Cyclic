@@ -55,7 +55,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   @Override
   public void draw(RecipeCrusher recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
     int x = 78;
-    var font=Minecraft.getInstance().font;
+    var font = Minecraft.getInstance().font;
     if (recipe.energy.getTicks() < 40) {
       ms.drawString(font, recipe.energy.getTicks() + " t", x, 6, FONT);
     }

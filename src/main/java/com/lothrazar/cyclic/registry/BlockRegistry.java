@@ -147,39 +147,38 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
-
-//  @SubscribeEvent
-//  public static void buildContents(CreativeModeTabEvent.Register event) {
-//    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "cyclicitems"), builder -> builder
-//        .title(Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
-//        .icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
-//        .displayItems((enabledFlags, populator) -> {
-//          for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
-//            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
-//            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
-//              populator.accept(stupidForgeFiringEventsOutOfOrder);
-//          }
-//        }));
-//    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "tab"), builder -> builder
-//        .title(Component.translatable("itemGroup." + ModCyclic.MODID))
-//        .icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem(), 1))
-//        .displayItems((enabledFlags, populator) -> {
-//          for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {
-//            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
-//            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
-//              populator.accept(stupidForgeFiringEventsOutOfOrder);
-//          }
-//        }));
-//    // build ITEM_GROUP tab
-//    //    buildTab(event, ModCyclic.MODID, new ItemStack(ItemRegistry.GEM_AMBER.asItem()), ITEMS);
-//  }
+  //  @SubscribeEvent
+  //  public static void buildContents(CreativeModeTabEvent.Register event) {
+  //    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "cyclicitems"), builder -> builder
+  //        .title(Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
+  //        .icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
+  //        .displayItems((enabledFlags, populator) -> {
+  //          for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
+  //            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+  //            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+  //              populator.accept(stupidForgeFiringEventsOutOfOrder);
+  //          }
+  //        }));
+  //    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "tab"), builder -> builder
+  //        .title(Component.translatable("itemGroup." + ModCyclic.MODID))
+  //        .icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem(), 1))
+  //        .displayItems((enabledFlags, populator) -> {
+  //          for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {
+  //            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+  //            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+  //              populator.accept(stupidForgeFiringEventsOutOfOrder);
+  //          }
+  //        }));
+  //    // build ITEM_GROUP tab
+  //    //    buildTab(event, ModCyclic.MODID, new ItemStack(ItemRegistry.GEM_AMBER.asItem()), ITEMS);
+  //  }
 
   @SubscribeEvent
   public static void onCreativeModeTabRegister(RegisterEvent event) {
     event.register(Registries.CREATIVE_MODE_TAB, helper -> {
       //
       helper.register(TAB_ITEMS, CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
-          .title( Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
+          .title(Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
           .withLabelColor(0x00FF00)
           .displayItems((enabledFlags, populator) -> {
             for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
@@ -190,7 +189,7 @@ public class BlockRegistry {
           }).build());
       //
       helper.register(TAB_BLOCKS, CreativeModeTab.builder().icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem()))
-          .title( Component.translatable("itemGroup." + ModCyclic.MODID))
+          .title(Component.translatable("itemGroup." + ModCyclic.MODID))
           .withLabelColor(0x00FF00)
           .displayItems((enabledFlags, populator) -> {
             for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {

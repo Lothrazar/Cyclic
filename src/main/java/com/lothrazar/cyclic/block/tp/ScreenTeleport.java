@@ -13,12 +13,12 @@ public class ScreenTeleport extends ScreenBase<ContainerTeleport> {
 
   public ScreenTeleport(ContainerTeleport screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font  , TileTeleport.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileTeleport.MAX);
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     //    btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileTeleport.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));

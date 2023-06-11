@@ -16,12 +16,12 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
 
   public ScreenExpPylon(ContainerExpPylon screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this.font, 150, 8, TileExpPylon.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
+    fluid = new FluidBar(this.font, 150, 8, TileExpPylon.CAPACITY);
     fluid.guiLeft = leftPos;
     fluid.guiTop = topPos;
     int x, y;

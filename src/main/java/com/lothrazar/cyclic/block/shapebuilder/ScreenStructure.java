@@ -25,13 +25,13 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
   public ScreenStructure(ContainerStructure screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileStructure.MAX);
     this.imageHeight = 256;
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileStructure.MAX);
     int x, y;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

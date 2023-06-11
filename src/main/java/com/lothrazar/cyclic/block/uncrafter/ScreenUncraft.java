@@ -20,14 +20,14 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
 
   public ScreenUncraft(ContainerUncraft screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileUncraft.MAX);
-    this.progress = new TexturedProgress(this.font, 58, 20, TextureRegistry.SAW);
-    this.progress.max = TileUncraft.TIMER.get();
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileUncraft.MAX);
+    this.progress = new TexturedProgress(this.font, 58, 20, TextureRegistry.SAW);
+    this.progress.max = TileUncraft.TIMER.get();
     energy.guiLeft = progress.guiLeft = leftPos;
     energy.guiTop = progress.guiTop = topPos;
     energy.visible = TileUncraft.POWERCONF.get() > 0;

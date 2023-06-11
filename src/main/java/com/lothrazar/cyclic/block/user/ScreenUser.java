@@ -19,12 +19,12 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
 
   public ScreenUser(ContainerUser screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font , TileUser.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileUser.MAX);
     energy.visible = TileUser.POWERCONF.get() > 0;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

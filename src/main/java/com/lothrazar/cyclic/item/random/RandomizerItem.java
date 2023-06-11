@@ -97,7 +97,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     }
     if (world.getBlockEntity(p) == null
         && world.isEmptyBlock(p) == false
-        && stateHere.liquid()== false) {
+        && stateHere.liquid() == false) {
       return true;
     }
     return false;

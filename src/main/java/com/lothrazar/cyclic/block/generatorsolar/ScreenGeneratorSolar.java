@@ -13,12 +13,12 @@ public class ScreenGeneratorSolar extends ScreenBase<ContainerGeneratorSolar> {
 
   public ScreenGeneratorSolar(ContainerGeneratorSolar screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileGeneratorSolar.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileGeneratorSolar.MAX);
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
   }

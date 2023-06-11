@@ -57,8 +57,8 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
 
   @Override
   public void draw(RecipeGeneratorFluid recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
-    var font= Minecraft.getInstance().font;
-   ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
+    var font = Minecraft.getInstance().font;
+    ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
     ms.drawString(font, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
     ms.drawString(font, recipe.getRfTotal() + " RF", 60, 20, FONT);
   }

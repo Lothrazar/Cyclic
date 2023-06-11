@@ -16,12 +16,12 @@ public class ScreenWirelessEnergy extends ScreenBase<ContainerWirelessEnergy> {
 
   public ScreenWirelessEnergy(ContainerWirelessEnergy screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font  , TileWirelessEnergy.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileWirelessEnergy.MAX);
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     int x, y;

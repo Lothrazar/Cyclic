@@ -20,12 +20,12 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
 
   public ScreenPotion(ContainerPotion screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    energy = new EnergyBar(this.font, TilePotionBeacon.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    energy = new EnergyBar(this.font, TilePotionBeacon.MAX);
     int x, y;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

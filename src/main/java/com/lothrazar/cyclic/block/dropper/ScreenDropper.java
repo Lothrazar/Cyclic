@@ -18,12 +18,12 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
 
   public ScreenDropper(ContainerDropper screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileDropper.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileDropper.MAX);
     int x, y, w, h;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

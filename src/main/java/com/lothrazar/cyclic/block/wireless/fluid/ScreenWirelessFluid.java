@@ -16,12 +16,12 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
 
   public ScreenWirelessFluid(ContainerWirelessFluid screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this.font  , 152, 8, TileMelter.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
+    fluid = new FluidBar(this.font, 152, 8, TileMelter.CAPACITY);
     fluid.guiLeft = leftPos;
     fluid.guiTop = topPos;
     int x, y;

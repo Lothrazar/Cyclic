@@ -15,12 +15,12 @@ public class ScreenAnvilMagma extends ScreenBase<ContainerAnvilMagma> {
 
   public ScreenAnvilMagma(ContainerAnvilMagma screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this.font, 152, 8, TileAnvilMagma.CAPACITY);
   }
 
   @Override
   public void init() {
     super.init();
+    fluid = new FluidBar(this.font, 152, 8, TileAnvilMagma.CAPACITY);
     int x, y;
     fluid.guiLeft = leftPos;
     fluid.guiTop = topPos;

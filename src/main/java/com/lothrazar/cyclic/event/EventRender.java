@@ -48,7 +48,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
- 
+
 public class EventRender {
 
   @SubscribeEvent
@@ -66,7 +66,6 @@ public class EventRender {
       BlockState targetState = BuilderActionType.getBlockState(level, itemStackHeld);
       if (targetState != null) {
         //ok still 
-        
         drawStack(event.getGuiGraphics(), new ItemStack(targetState.getBlock()));
         int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
         if (slot < 0) {
@@ -91,17 +90,17 @@ public class EventRender {
 
   public static void drawString(GuiGraphics gg, String str, int x, int y) {
     Minecraft mc = Minecraft.getInstance();
-   gg.drawString(mc.font, str, x, y, 0xFFFFFF);
+    gg.drawString(mc.font, str, x, y, 0xFFFFFF);
   }
 
   public static void drawStack(GuiGraphics poseStack, ItemStack stack) {
     Minecraft mc = Minecraft.getInstance();
     int width = mc.getWindow().getGuiScaledWidth();
     int height = mc.getWindow().getGuiScaledHeight();
-//    mc.getItemRenderer().render(stack, null, false, null, null, width, height, null);
-   var context = ItemDisplayContext.GUI;
-   var pose = poseStack.pose();
-   poseStack.renderItem(stack, width / 2, height / 2,0,10);
+    //    mc.getItemRenderer().render(stack, null, false, null, null, width, height, null);
+    var context = ItemDisplayContext.GUI;
+    var pose = poseStack.pose();
+    poseStack.renderItem(stack, width / 2, height / 2, 0, 10);
   }
 
   @SubscribeEvent
@@ -111,7 +110,7 @@ public class EventRender {
     if (player == null) {
       return;
     }
-    if(event.getStage() !=  Stage.AFTER_SOLID_BLOCKS) {
+    if (event.getStage() != Stage.AFTER_SOLID_BLOCKS) {
       return; //send it
     }
     Level world = player.level();

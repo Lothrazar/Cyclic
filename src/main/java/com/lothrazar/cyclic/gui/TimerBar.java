@@ -38,8 +38,8 @@ public class TimerBar {
       return;
     }
     //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.PROGRESS);
-//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-//    RenderSystem.setShaderTexture(0, TextureRegistry.PROGRESS);
+    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    //    RenderSystem.setShaderTexture(0, TextureRegistry.PROGRESS);
     float pct = Math.min(timer / capacity, 1.0F);
     gg.blit(TextureRegistry.PROGRESS, guiLeft + x, guiTop + y,
         0, 0,

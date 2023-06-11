@@ -15,12 +15,12 @@ public class ScreenAnvil extends ScreenBase<ContainerAnvil> {
 
   public ScreenAnvil(ContainerAnvil screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileAnvilAuto.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileAnvilAuto.MAX);
     energy.visible = TileAnvilAuto.POWERCONF.get() > 0;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

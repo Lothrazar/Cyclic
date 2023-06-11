@@ -20,12 +20,12 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
 
   public ScreenMiner(ContainerMiner screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileMiner.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileMiner.MAX);
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     energy.visible = TileMiner.POWERCONF.get() > 0;

@@ -56,8 +56,8 @@ public class FluidBar {
   public void draw(GuiGraphics ms, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
     //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.FLUID_WIDGET);
-//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-//    RenderSystem.setShaderTexture(0, TextureRegistry.FLUID_WIDGET);
+    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    //    RenderSystem.setShaderTexture(0, TextureRegistry.FLUID_WIDGET);
     ms.blit(TextureRegistry.FLUID_WIDGET,
         x, y, u, v,
         width, height,

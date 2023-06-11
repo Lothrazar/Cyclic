@@ -15,12 +15,12 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
 
   public ScreenPackager(ContainerPackager screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TilePackager.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TilePackager.MAX);
     energy.visible = TilePackager.POWERCONF.get() > 0;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

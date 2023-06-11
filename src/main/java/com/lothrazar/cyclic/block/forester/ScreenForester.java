@@ -20,12 +20,12 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
 
   public ScreenForester(ContainerForester screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this.font, TileForester.MAX);
   }
 
   @Override
   public void init() {
     super.init();
+    this.energy = new EnergyBar(this.font, TileForester.MAX);
     int x, y;
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;

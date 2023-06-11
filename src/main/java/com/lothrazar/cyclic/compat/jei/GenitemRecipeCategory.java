@@ -54,7 +54,7 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
 
   @Override
   public void draw(RecipeGeneratorItem recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
-    var font =     Minecraft.getInstance().font;
+    var font = Minecraft.getInstance().font;
     ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
     ms.drawString(font, recipe.getRfPertick() + " RF/t", 60, 10, FONT);
     ms.drawString(font, recipe.getEnergyTotal() + " RF", 60, 20, FONT);
