@@ -9,7 +9,7 @@ modLoader="javafml" #mandatory
 license="MIT"
 
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[26,)" #mandatory (26 is current forge version)
+loaderVersion="[46,)" #mandatory (26 is current forge version)
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://github.com/Lothrazar/cyclic/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
@@ -33,7 +33,7 @@ credits="Thanks for this example mod goes to Java" #optional
 authors="Lothrazar" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-A small mod by Lothrazar
+#{mod_id} A small mod by Lothrazar
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.cyclic]] #optional
