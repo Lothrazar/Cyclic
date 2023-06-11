@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -16,7 +15,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraftforge.client.gui.ScreenUtils;
 
 public abstract class ScreenBase<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 

@@ -121,15 +121,16 @@ import com.lothrazar.cyclic.block.wireless.item.BlockWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
@@ -137,50 +138,81 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
 
+//  @SubscribeEvent
+//  public static void buildContents(CreativeModeTabEvent.Register event) {
+//    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "cyclicitems"), builder -> builder
+//        .title(Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
+//        .icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
+//        .displayItems((enabledFlags, populator) -> {
+//          for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
+//            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+//            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+//              populator.accept(stupidForgeFiringEventsOutOfOrder);
+//          }
+//        }));
+//    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "tab"), builder -> builder
+//        .title(Component.translatable("itemGroup." + ModCyclic.MODID))
+//        .icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem(), 1))
+//        .displayItems((enabledFlags, populator) -> {
+//          for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {
+//            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+//            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+//              populator.accept(stupidForgeFiringEventsOutOfOrder);
+//          }
+//        }));
+//    // build ITEM_GROUP tab
+//    //    buildTab(event, ModCyclic.MODID, new ItemStack(ItemRegistry.GEM_AMBER.asItem()), ITEMS);
+//  }
+
   @SubscribeEvent
-  public static void buildContents(CreativeModeTabEvent.Register event) {
-    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "cyclicitems"), builder -> builder
-        .title(Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
-        .icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
-        .displayItems((enabledFlags, populator) -> {
-          for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
-            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
-            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
-              populator.accept(stupidForgeFiringEventsOutOfOrder);
-          }
-        }));
-    event.registerCreativeModeTab(new ResourceLocation(ModCyclic.MODID, "tab"), builder -> builder
-        .title(Component.translatable("itemGroup." + ModCyclic.MODID))
-        .icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem(), 1))
-        .displayItems((enabledFlags, populator) -> {
-          for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {
-            ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
-            if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
-              populator.accept(stupidForgeFiringEventsOutOfOrder);
-          }
-        }));
-    // build ITEM_GROUP tab
-    //    buildTab(event, ModCyclic.MODID, new ItemStack(ItemRegistry.GEM_AMBER.asItem()), ITEMS);
+  public static void onCreativeModeTabRegister(RegisterEvent event) {
+    event.register(Registries.CREATIVE_MODE_TAB, helper -> {
+      //
+      helper.register(TAB_ITEMS, CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.GEM_AMBER.get().asItem()))
+          .title( Component.translatable("itemGroup." + ModCyclic.MODID + "items"))
+          .withLabelColor(0x00FF00)
+          .displayItems((enabledFlags, populator) -> {
+            for (RegistryObject<Item> b : ItemRegistry.ITEMS.getEntries()) {
+              ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+              if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+                populator.accept(stupidForgeFiringEventsOutOfOrder);
+            }
+          }).build());
+      //
+      helper.register(TAB_BLOCKS, CreativeModeTab.builder().icon(() -> new ItemStack(BlockRegistry.TRASH.get().asItem()))
+          .title( Component.translatable("itemGroup." + ModCyclic.MODID))
+          .withLabelColor(0x00FF00)
+          .displayItems((enabledFlags, populator) -> {
+            for (RegistryObject<Block> b : BlockRegistry.BLOCKS.getEntries()) {
+              ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(b.get());
+              if (!stupidForgeFiringEventsOutOfOrder.isEmpty())
+                populator.accept(stupidForgeFiringEventsOutOfOrder);
+            }
+          }).build());
+    });
   }
 
   public static List<BlockCyclic> BLOCKSCLIENTREGISTRY = new ArrayList<>(); // TODO: 1.19 ? refactor this 
+  public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModCyclic.MODID);
+  private static final ResourceKey<CreativeModeTab> TAB_ITEMS = ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation(ModCyclic.MODID, "items"));
+  private static final ResourceKey<CreativeModeTab> TAB_BLOCKS = ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation(ModCyclic.MODID, "tab"));
   public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ModCyclic.MODID);
   public static final RegistryObject<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockSimple(Block.Properties.of().strength(1.0F, 7.0F)) {
 
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
   });
-  public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> new BlockSimple(Block.Properties.of( ).strength(1.3F, 5.0F)) {
+  public static final RegistryObject<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> new BlockSimple(Block.Properties.of().strength(1.3F, 5.0F)) {
 
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {}
@@ -217,38 +249,38 @@ public class BlockRegistry {
   public static final RegistryObject<Block> TERRA_PRETA = BLOCKS.register("terra_preta", () -> new BlockTerraPreta(Block.Properties.of().sound(SoundType.GRAVEL)));
   public static final RegistryObject<Block> LIGHT_CAMO = BLOCKS.register("light_camo", () -> new BlockLightCamo(Block.Properties.of()));
   public static final RegistryObject<Block> LASER = BLOCKS.register("laser", () -> new BlockLaser(Block.Properties.of()));
-  public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.of( )));
-  public static final RegistryObject<Block> FLOWER_PURPLE_TULIP = BLOCKS.register("flower_purple_tulip", () -> new FlowerSimpleBlock(Block.Properties.of( )));
-  public static final RegistryObject<Block> FLOWER_LIME_CARNATION = BLOCKS.register("flower_lime_carnation", () -> new FlowerSimpleBlock(Block.Properties.of( )));
-  public static final RegistryObject<Block> FLOWER_ABSALON_TULIP = BLOCKS.register("flower_absalon_tulip", () -> new FlowerSimpleBlock(Block.Properties.of( )));
+  public static final RegistryObject<Block> FLOWER_CYAN = BLOCKS.register("flower_cyan", () -> new FlowerSimpleBlock(Block.Properties.of()));
+  public static final RegistryObject<Block> FLOWER_PURPLE_TULIP = BLOCKS.register("flower_purple_tulip", () -> new FlowerSimpleBlock(Block.Properties.of()));
+  public static final RegistryObject<Block> FLOWER_LIME_CARNATION = BLOCKS.register("flower_lime_carnation", () -> new FlowerSimpleBlock(Block.Properties.of()));
+  public static final RegistryObject<Block> FLOWER_ABSALON_TULIP = BLOCKS.register("flower_absalon_tulip", () -> new FlowerSimpleBlock(Block.Properties.of()));
   public static final RegistryObject<Block> MEMBRANE = BLOCKS.register("membrane", () -> new MembraneBlock(Block.Properties.of()));
-  public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new MembraneLamp(Block.Properties.of( )));
+  public static final RegistryObject<Block> LAMP = BLOCKS.register("lamp", () -> new MembraneLamp(Block.Properties.of()));
   public static final RegistryObject<Block> SOIL = BLOCKS.register("soil", () -> new SoilBlock(Block.Properties.of().sound(SoundType.ROOTED_DIRT)));
   public static final RegistryObject<Block> CLOUD = BLOCKS.register("cloud", () -> new CloudBlock(Block.Properties.of()));
   public static final RegistryObject<Block> CLOUD_MEMBRANE = BLOCKS.register("cloud_membrane", () -> new CloudPlayerBlock(Block.Properties.of()));
   public static final RegistryObject<Block> GHOST = BLOCKS.register("ghost", () -> new GhostBlock(Block.Properties.of(), false));
   public static final RegistryObject<Block> GHOST_PHANTOM = BLOCKS.register("ghost_phantom", () -> new GhostBlock(Block.Properties.of(), true));
   public static final RegistryObject<Block> WORKBENCH = BLOCKS.register("workbench", () -> new BlockWorkbench(Block.Properties.of()));
-  public static final RegistryObject<Block> OBSIDIAN_PRESSURE_PLATE = BLOCKS.register("obsidian_pressure_plate", () -> new PressurePlateMetal(Block.Properties.of( ).noCollission().strength(0.5F)));
-  public static final RegistryObject<Block> GOLD_BARS = BLOCKS.register("gold_bars", () -> new MetalBarsBlock(Block.Properties.of( ).strength(3.0F, 6.0F)));
-  public static final RegistryObject<Block> GOLD_CHAIN = BLOCKS.register("gold_chain", () -> new ChainBlock(BlockBehaviour.Properties.of( ).strength(1).sound(SoundType.CHAIN).noOcclusion()));
-  public static final RegistryObject<Block> GOLD_LANTERN = BLOCKS.register("gold_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of( ).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 14)));
-  public static final RegistryObject<Block> GOLD_SOUL_LANTERN = BLOCKS.register("gold_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of( ).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 15)));
-  public static final RegistryObject<Block> COPPER_BARS = BLOCKS.register("copper_bars", () -> new MetalBarsBlock(Block.Properties.of( ).strength(3.0F, 6.0F)));
-  public static final RegistryObject<Block> COPPER_CHAIN = BLOCKS.register("copper_chain", () -> new ChainBlock(BlockBehaviour.Properties.of( ).strength(1.0F).sound(SoundType.CHAIN).noOcclusion()));
-  public static final RegistryObject<Block> COPPER_LANTERN = BLOCKS.register("copper_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of( ).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 12))); //soul_lantern=10
-  public static final RegistryObject<Block> COPPER_SOUL_LANTERN = BLOCKS.register("copper_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of( ).noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 13))); //soul_lantern=10
-  public static final RegistryObject<Block> COPPER_PRESSURE_PLATE = BLOCKS.register("copper_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(  ).noCollission().strength(0.5F), BlockSetType.STONE) {
+  public static final RegistryObject<Block> OBSIDIAN_PRESSURE_PLATE = BLOCKS.register("obsidian_pressure_plate", () -> new PressurePlateMetal(Block.Properties.of().noCollission().strength(0.5F)));
+  public static final RegistryObject<Block> GOLD_BARS = BLOCKS.register("gold_bars", () -> new MetalBarsBlock(Block.Properties.of().strength(3.0F, 6.0F)));
+  public static final RegistryObject<Block> GOLD_CHAIN = BLOCKS.register("gold_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(1).sound(SoundType.CHAIN).noOcclusion()));
+  public static final RegistryObject<Block> GOLD_LANTERN = BLOCKS.register("gold_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 14)));
+  public static final RegistryObject<Block> GOLD_SOUL_LANTERN = BLOCKS.register("gold_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 15)));
+  public static final RegistryObject<Block> COPPER_BARS = BLOCKS.register("copper_bars", () -> new MetalBarsBlock(Block.Properties.of().strength(3.0F, 6.0F)));
+  public static final RegistryObject<Block> COPPER_CHAIN = BLOCKS.register("copper_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.CHAIN).noOcclusion()));
+  public static final RegistryObject<Block> COPPER_LANTERN = BLOCKS.register("copper_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 12))); //soul_lantern=10
+  public static final RegistryObject<Block> COPPER_SOUL_LANTERN = BLOCKS.register("copper_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1.5F).sound(SoundType.LANTERN).lightLevel(p -> 13))); //soul_lantern=10
+  public static final RegistryObject<Block> COPPER_PRESSURE_PLATE = BLOCKS.register("copper_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of().noCollission().strength(0.5F), BlockSetType.STONE) {
 
     @Override
     protected int getSignalForState(BlockState st) {
       return st.getValue(POWERED) ? 8 : 0;
     }
   });
-  public static final RegistryObject<Block> NETHERITE_BARS = BLOCKS.register("netherite_bars", () -> new MetalBarsBlock(Block.Properties.of( ).strength(6.0F, 12.0F)));
-  public static final RegistryObject<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of( ).strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
-  public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of( ).noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
-  public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(  ).noCollission().strength(0.5F), BlockSetType.STONE));
+  public static final RegistryObject<Block> NETHERITE_BARS = BLOCKS.register("netherite_bars", () -> new MetalBarsBlock(Block.Properties.of().strength(6.0F, 12.0F)));
+  public static final RegistryObject<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
+  public static final RegistryObject<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
+  public static final RegistryObject<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of().noCollission().strength(0.5F), BlockSetType.STONE));
   public static final RegistryObject<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of().sound(SoundType.SPORE_BLOSSOM).lightLevel(p -> 2)));
   public static final RegistryObject<Block> SPONGE_MILK = BLOCKS.register("sponge_milk", () -> new MilkSpongeBlock(Block.Properties.of().lightLevel(p -> 1)));
   public static final RegistryObject<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of()));

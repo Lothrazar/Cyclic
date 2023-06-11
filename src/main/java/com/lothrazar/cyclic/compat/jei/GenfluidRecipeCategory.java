@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

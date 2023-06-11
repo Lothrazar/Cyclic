@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.cratemini;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;

@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 

@@ -75,8 +75,8 @@ dependencies {
 //	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
 	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-   // runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version}")
-   // compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version}:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
 	
 	// optional compat: guidebook
 	//RIP patchouli i will miss you please stop being dead soon 

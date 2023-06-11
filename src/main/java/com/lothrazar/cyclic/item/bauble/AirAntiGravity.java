@@ -19,7 +19,7 @@ public class AirAntiGravity extends ItemBaseToggle {
   }
 
   @Override
-  public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+  public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
     if (!this.canUse(stack)) {
       return;
     }
@@ -32,7 +32,7 @@ public class AirAntiGravity extends ItemBaseToggle {
     Player player = (Player) entity;
     BlockPos belowMe = player.blockPosition().below();
     //sneak on air, or a nonsolid block like a flower
-    boolean isAirBorne = (world.isEmptyBlock(belowMe) || world.loadedAndEntityCanStandOn(belowMe, player) == false);
+    boolean isAirBorne = (level.isEmptyBlock(belowMe) || level.loadedAndEntityCanStandOn(belowMe, player) == false);
     //
     if (isAirBorne && player.getDeltaMovement().y < 0) { //player.isSneaking() &&
       double y = (player.isCrouching()) ? DOWNWARD_SPEED_SNEAKING : 0;
@@ -41,11 +41,11 @@ public class AirAntiGravity extends ItemBaseToggle {
       //if we set onGround->true all the time, it blocks fwd movement anywya
       player.setOnGround(true);
       // (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
-      if (player.getCommandSenderWorld().random.nextDouble() < 0.1) {
+      if (level.random.nextDouble() < 0.1) {
         //        super.damageCharm(player, stack);
         ItemStackUtil.damageItem(player, stack);
       }
-      if (world.isClientSide && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
+      if (level.isClientSide && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
         PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
       }
     }
