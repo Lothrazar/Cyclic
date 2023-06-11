@@ -8,6 +8,8 @@ import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
 import com.lothrazar.cyclic.render.RenderUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -18,7 +20,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class FluidBar {
 
   public String emtpyTooltip = "0";
-  private Screen parent;
+  private Font font;
   private int x;
   private int y;
   private int capacity;
@@ -27,12 +29,12 @@ public class FluidBar {
   public int guiLeft;
   public int guiTop;
 
-  public FluidBar(Screen p, int cap) {
+  public FluidBar(Font p, int cap) {
     this(p, 132, 8, cap);
   }
 
-  public FluidBar(Screen p, int x, int y, int cap) {
-    parent = p;
+  public FluidBar(Font p, int x, int y, int cap) {
+    font = p;
     this.x = x;
     this.y = y;
     this.capacity = cap;
@@ -54,12 +56,12 @@ public class FluidBar {
     this.width = width;
   }
 
-  public void draw(PoseStack ms, FluidStack fluid) {
+  public void draw(GuiGraphics ms, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
     //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.FLUID_WIDGET);
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, TextureRegistry.FLUID_WIDGET);
-    Screen.blit(ms,
+//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+//    RenderSystem.setShaderTexture(0, TextureRegistry.FLUID_WIDGET);
+    ms.blit(TextureRegistry.FLUID_WIDGET,
         x, y, u, v,
         width, height,
         width, height);
@@ -82,9 +84,9 @@ public class FluidBar {
     }
   }
 
-  protected void drawTiledSprite(PoseStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
+  protected void drawTiledSprite(GuiGraphics stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
     //32 stack.getBlitOffset() ?
-    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, 32);
+    RenderUtils.drawTiledSprite(stack.pose().last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, 32);
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {
@@ -92,7 +94,7 @@ public class FluidBar {
         && guiTop + y <= mouseY && mouseY <= guiTop + y + height;
   }
 
-  public void renderHoveredToolTip(PoseStack ms, int mouseX, int mouseY, FluidStack current) {
+  public void renderHoveredToolTip(GuiGraphics ms, int mouseX, int mouseY, FluidStack current) {
     if (this.isMouseover(mouseX, mouseY)) {
       this.renderTooltip(ms, mouseX, mouseY, current);
     }
@@ -110,13 +112,13 @@ public class FluidBar {
     return capacity;
   }
 
-  public void renderTooltip(PoseStack ms, int mouseX, int mouseY, FluidStack current) {
+  public void renderTooltip(GuiGraphics gg, int mouseX, int mouseY, FluidStack current) {
     String tt = emtpyTooltip;
     if (current != null && !current.isEmpty()) {
       tt = current.getAmount() + "/" + getCapacity() + " " + current.getDisplayName().getString();
     }
     List<Component> list = new ArrayList<>();
     list.add(Component.translatable(tt));
-    parent.renderComponentTooltip(ms, list, mouseX, mouseY);
+    gg.renderComponentTooltip(font, list, mouseX, mouseY);
   }
 }

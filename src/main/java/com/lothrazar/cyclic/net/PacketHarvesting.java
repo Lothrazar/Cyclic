@@ -58,7 +58,7 @@ public class PacketHarvesting extends PacketBaseCyclic {
   public static void handle(PacketHarvesting message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayer sender = ctx.get().getSender();
-      HarvestUtil.harvestShape(sender.level, message.pos, message.radius);
+      HarvestUtil.harvestShape(sender.level(), message.pos, message.radius);
     });
     message.done(ctx);
   }

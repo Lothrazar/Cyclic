@@ -19,14 +19,14 @@ public class SnowwalkEffect extends CyclicMobEffect {
   public void tick(LivingTickEvent event) {
     // delete me i guess 
     LivingEntity living = event.getEntity();
-    Level world = living.getLevel();
+    Level level = living.level();
     BlockPos blockpos = living.blockPosition();
     BlockState blockstate = Blocks.SNOW.defaultBlockState();
     living.getEffect(this).getAmplifier(); // TODO: radius? 
-    if (world.isEmptyBlock(blockpos) && blockstate.canSurvive(world, blockpos)) {
+    if (level.isEmptyBlock(blockpos) && blockstate.canSurvive(level, blockpos)) {
       //world.getBlockState(blockpos).is(Blocks.AIR)) {
       //is air
-      world.setBlockAndUpdate(blockpos, blockstate);
+      level.setBlockAndUpdate(blockpos, blockstate);
     }
   }
 }

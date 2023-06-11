@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
@@ -17,7 +17,7 @@ import net.minecraftforge.client.gui.widget.ExtendedButton;
 public class ButtonTextured extends ExtendedButton implements IHasTooltip {
 
   private TextureEnum textureId;
-  private List<Component> tooltip;
+  private List<Component> tooltips;
   public int xOffset = 0;
   public int yOffset = 0;
 
@@ -37,17 +37,17 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   }
 
   @Override
-  public void renderWidget(PoseStack ms, int mouseX, int mouseY, float partial) {
-    super.renderWidget(ms, mouseX, mouseY, partial);
+  public void renderWidget(GuiGraphics gg, int mouseX, int mouseY, float partial) {
+    super.renderWidget(gg, mouseX, mouseY, partial);
     //    Minecraft minecraft = Minecraft.getInstance();
     //    minecraft.getTextureManager().bind(TextureRegistry.WIDGETS);
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, TextureRegistry.WIDGETS);
+    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    //    RenderSystem.setShaderTexture(0, TextureRegistry.WIDGETS);
     //    GL11.glColor4f(1.0F, 1.0F, 1.0F, this.alpha);
     //    GL11.glEnable(GL11.GL_BLEND);
     //    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     if (textureId != null) {
-      GuiComponent.blit(ms,
+      gg.blit(TextureRegistry.WIDGETS,
           this.getX() + textureId.getOffsetX(), this.getY() + textureId.getOffsetY(),
           textureId.getX() + xOffset, textureId.getY() + yOffset,
           textureId.getWidth() - yOffset, textureId.getHeight() - yOffset);
@@ -56,18 +56,18 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   }
 
   @Override
-  public List<Component> getTooltip() {
-    return tooltip;
+  public List<Component> getTooltips() {
+    return tooltips;
   }
 
   @Override
   public void setTooltip(String ttIn) {
-    tooltip = new ArrayList<>();
+    tooltips = new ArrayList<>();
     addTooltip(ttIn);
   }
 
   @Override
   public void addTooltip(String ttIn) {
-    tooltip.add(Component.translatable(ttIn));
+    tooltips.add(Component.translatable(ttIn));
   }
 }

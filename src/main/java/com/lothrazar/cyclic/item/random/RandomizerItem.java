@@ -44,7 +44,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     }
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
-    if (player.level.isClientSide) {
+    if (player.level().isClientSide) {
       PacketRegistry.INSTANCE.sendToServer(new PacketRandomize(pos, side, context.getHand()));
     }
     EntityUtil.setCooldownItem(player, this, COOLDOWN);
@@ -97,7 +97,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     }
     if (world.getBlockEntity(p) == null
         && world.isEmptyBlock(p) == false
-        && stateHere.getMaterial().isLiquid() == false) {
+        && stateHere.liquid()== false) {
       return true;
     }
     return false;

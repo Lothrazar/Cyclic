@@ -61,7 +61,7 @@ public class PacketRecordSound extends PacketBaseCyclic {
     ctx.get().enqueueWork(() -> {
       //rotate type
       ServerPlayer sender = ctx.get().getSender();
-      BlockEntity tile = sender.level.getBlockEntity(message.pos);
+      BlockEntity tile = sender.level().getBlockEntity(message.pos);
       if (tile instanceof TileSoundRecorder) {
         ((TileSoundRecorder) tile).onSoundHeard(message.sound);
       }

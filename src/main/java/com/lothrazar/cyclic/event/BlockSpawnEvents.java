@@ -46,7 +46,7 @@ public class BlockSpawnEvents {
       if (radius > 0
           && height > 0
           && CandlePeaceBlock.isBad(mob, res)
-          && ServerCacheHolder.PEACE_CANDLE.hasCollision(mob.level, mob.blockPosition(), radius.intValue(), height.intValue())
+          && ServerCacheHolder.PEACE_CANDLE.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
       //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), radius, height)
       ) {
         //default range 32 and filtered
@@ -59,7 +59,7 @@ public class BlockSpawnEvents {
       if (radius > 0
           && height > 0
           && BlockAltarNoTraders.isSpawnDenied(mob, res)
-          && ServerCacheHolder.NO_SOLICITING.hasCollision(mob.level, mob.blockPosition(), radius.intValue(), height.intValue())
+          && ServerCacheHolder.NO_SOLICITING.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
       //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
       ) {
         ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by cache-altar " + mob.getType());

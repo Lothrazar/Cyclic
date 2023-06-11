@@ -94,7 +94,7 @@ public class BlockstateCard extends ItemBaseCyclic {
     }
     //wait wait wait does it exist
     for (int i = 0; i < stateTags.size(); ++i) {
-      BlockState stateFound = NbtUtils.readBlockState(player.level.holderLookup(Registries.BLOCK), stateTags.getCompound(i));
+      BlockState stateFound = NbtUtils.readBlockState(player.level().holderLookup(Registries.BLOCK), stateTags.getCompound(i));
       if (stateFound.equals(state)) {
         return InteractionResult.PASS;
       }

@@ -19,6 +19,7 @@ import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -34,7 +35,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
   public static final int OUTPUT_START_X = 124;
   public static final int OUTPUT_START_Y = 35;
   public static final int GRID_NUM_ROWS = 3;
-  private final CraftingContainer craftMatrix = new CraftingContainer(this, GRID_NUM_ROWS, GRID_NUM_ROWS);
+  private final CraftingContainer craftMatrix = new TransientCraftingContainer(this, GRID_NUM_ROWS, GRID_NUM_ROWS);
   private final ResultContainer craftResult = new ResultContainer();
   private final Player player;
   private final ContainerLevelAccess worldPosCallable;
@@ -87,7 +88,7 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
 
   @Override
   public boolean recipeMatches(Recipe<? super CraftingContainer> recipeIn) {
-    return recipeIn.matches(this.craftMatrix, this.player.level);
+    return recipeIn.matches(this.craftMatrix, this.player.level());
   }
 
   @Override

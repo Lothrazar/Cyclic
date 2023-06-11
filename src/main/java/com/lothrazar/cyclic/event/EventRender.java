@@ -27,11 +27,13 @@ import com.lothrazar.cyclic.util.PlayerUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -41,13 +43,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent; 
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-@SuppressWarnings("removal") // fix in 1.19
+ 
 public class EventRender {
 
   @SubscribeEvent
@@ -55,22 +57,24 @@ public class EventRender {
   public static void onCustomizeDebugText(CustomizeGuiOverlayEvent.DebugText event) {
     //Build scepter feature : render selected blockstate in cross hair
     Player player = Minecraft.getInstance().player;
+    var level = player.level();
     Minecraft mc = Minecraft.getInstance();
     // ModCyclic.LOGGER.info("TESTME : ElementType.CROSSHAIRS is gone deleted");
     //    if (event.getType() == ElementType.ALL) {
     ItemStack itemStackHeld = BuilderItem.getIfHeld(player);
     if (itemStackHeld.getItem() instanceof BuilderItem) {
       //
-      BlockState targetState = BuilderActionType.getBlockState(player.level, itemStackHeld);
+      BlockState targetState = BuilderActionType.getBlockState(level, itemStackHeld);
       if (targetState != null) {
         //ok still 
-        drawStack(event.getPoseStack(), new ItemStack(targetState.getBlock()));
+        
+        drawStack(event.getGuiGraphics(), new ItemStack(targetState.getBlock()));
         int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
         if (slot < 0) {
           //nothing found
           int width = mc.getWindow().getGuiScaledWidth();
           int height = mc.getWindow().getGuiScaledHeight();
-          drawString(event.getPoseStack(), "" + 0, width / 2 + 16, height / 2 + 12);
+          drawString(event.getGuiGraphics(), "" + 0, width / 2 + 16, height / 2 + 12);
         }
       }
     }
@@ -82,30 +86,36 @@ public class EventRender {
     //    }
     if (datFile.spectatorTicks > 0) {
       int sec = datFile.spectatorTicks / 20;
-      drawString(event.getPoseStack(), "noClip " + sec, 10, height - 10);
+      drawString(event.getGuiGraphics(), "noClip " + sec, 10, height - 10);
     }
   }
 
-  public static void drawString(PoseStack ms, String str, int x, int y) {
+  public static void drawString(GuiGraphics gg, String str, int x, int y) {
     Minecraft mc = Minecraft.getInstance();
-    mc.font.draw(ms, str, x, y, 0xFFFFFF);
+   gg.drawString(mc.font, str, x, y, 0xFFFFFF);
   }
 
-  public static void drawStack(PoseStack poseStack, ItemStack stack) {
+  public static void drawStack(GuiGraphics poseStack, ItemStack stack) {
     Minecraft mc = Minecraft.getInstance();
     int width = mc.getWindow().getGuiScaledWidth();
     int height = mc.getWindow().getGuiScaledHeight();
-    mc.getItemRenderer().renderAndDecorateItem(poseStack, stack, width / 2, height / 2);
+//    mc.getItemRenderer().render(stack, null, false, null, null, width, height, null);
+   var context = ItemDisplayContext.GUI;
+   var pose = poseStack.pose();
+   poseStack.renderItem(stack, width / 2, height / 2,0,10);
   }
 
   @SubscribeEvent
-  public void onRenderWorldLast(RenderLevelLastEvent event) {
+  public void onRenderWorldLast(RenderLevelStageEvent event) {
     Minecraft mc = Minecraft.getInstance();
     Player player = mc.player;
     if (player == null) {
       return;
     }
-    Level world = player.level;
+    if(event.getStage() !=  Stage.AFTER_SOLID_BLOCKS) {
+      return; //send it
+    }
+    Level world = player.level();
     double range = 6F;
     float alpha = 0.125F * 2;
     Map<BlockPos, Color> renderCubes = new HashMap<>();

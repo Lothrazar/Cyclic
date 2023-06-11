@@ -40,7 +40,8 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
 
   @Override
   protected void onHit(HitResult result) {
-    if (this.level.isClientSide) {
+    Level level = this.level();
+    if (level.isClientSide) {
       return;
     }
     HitResult.Type type = result.getType();
@@ -50,16 +51,16 @@ public class EntityTorchBolt extends ThrowableItemProjectile {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.hurt(level.damageSources().thrown(this, this.getOwner()), 0);
+        target.hurt(level().damageSources().thrown(this, this.getOwner()), 0);
       }
-      ItemStackUtil.drop(level, target.blockPosition(), new ItemStack(Items.TORCH));
+      ItemStackUtil.drop(level(), target.blockPosition(), new ItemStack(Items.TORCH));
     }
     else if (type == HitResult.Type.BLOCK) {
       BlockHitResult bRayTrace = (BlockHitResult) result;
       Direction offset = bRayTrace.getDirection();
       BlockPos pos = bRayTrace.getBlockPos().relative(offset);
       boolean itPlaced = false;
-      if (level.isEmptyBlock(pos) || level.getBlockState(pos).getMaterial().isReplaceable()) {
+      if (level.isEmptyBlock(pos) || level.getBlockState(pos).canBeReplaced()) {
         BlockState newstate = null;
         if (offset == Direction.UP || offset == Direction.DOWN) {
           newstate = Blocks.TORCH.defaultBlockState();

@@ -41,7 +41,7 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType FAKE_BLOCK = create(ModCyclic.MODID + ":fakeblock",
       DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
-          .setShaderState(BLOCK_SHADER) //1.17 new - maybe BLOCK_SHADER
+          .setShaderState(RENDERTYPE_SOLID_SHADER) //1.17 was -   BLOCK_SHADER
           .setLayeringState(POLYGON_OFFSET_LAYERING) // VIEW_OFFSET_Z_LAYERING) //                    .setShadeModelState(SMOOTH_SHADE)
           .setLightmapState(NO_LIGHTMAP)
           .setTextureState(BLOCK_SHEET_MIPPED)
@@ -56,7 +56,7 @@ public class FakeBlockRenderTypes extends RenderType {
   public static final RenderType TRANSPARENT_COLOUR = create(ModCyclic.MODID + ":transparentcolour",
       DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, BUFFERSIZE, CRUMBLING, SORT,
       RenderType.CompositeState.builder()
-          .setShaderState(BLOCK_SHADER) //1.17 new
+          .setShaderState(RENDERTYPE_SOLID_SHADER) //1.17 was BLOCK_SHADER
           .setTransparencyState(ADDITIVE_TRANSPARENCY)
           .setTextureState(NO_TEXTURE)
           .setDepthTestState(NO_DEPTH_TEST)

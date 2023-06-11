@@ -10,7 +10,7 @@ public interface IHasTooltip {
    * 
    * @return tooltips as a list
    */
-  public List<Component> getTooltip();
+  public List<Component> getTooltips();
 
   /**
    * Override the tooltip and set it to a new list containing this string

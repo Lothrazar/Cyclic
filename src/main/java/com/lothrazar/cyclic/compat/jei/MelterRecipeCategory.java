@@ -17,6 +17,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -56,10 +57,11 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   }
 
   @Override
-  public void draw(RecipeMelter recipe, IRecipeSlotsView recipeSlotsView, PoseStack ms, double mouseX, double mouseY) {
-    Minecraft.getInstance().font.draw(ms, recipe.getEnergy().getTicks() + " t", 60, 0, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.getEnergy().getRfPertick() + " RF/t", 60, 10, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.getEnergy().getEnergyTotal() + " RF", 60, 20, FONT);
+  public void draw(RecipeMelter recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    var font = Minecraft.getInstance().font;
+    ms.drawString(font, recipe.getEnergy().getTicks() + " t", 60, 0, FONT);
+    ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 60, 10, FONT);
+    ms.drawString(font, recipe.getEnergy().getEnergyTotal() + " RF", 60, 20, FONT);
   }
 
   @Override

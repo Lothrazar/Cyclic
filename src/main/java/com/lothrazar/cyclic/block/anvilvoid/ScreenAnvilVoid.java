@@ -6,6 +6,8 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -16,7 +18,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
 
   public ScreenAnvilVoid(ContainerAnvilVoid screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this, 152, 8, TileAnvilVoid.CAPACITY);
+    fluid = new FluidBar(this.font, 152, 8, TileAnvilVoid.CAPACITY);
     fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid.cyclic.xpjuice");
   }
 
@@ -32,7 +34,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -41,13 +43,13 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 54, 34);
     this.drawSlotLarge(ms, 104, 30);

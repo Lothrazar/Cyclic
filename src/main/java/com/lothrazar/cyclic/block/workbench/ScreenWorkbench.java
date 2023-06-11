@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -15,13 +16,6 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
 
   public ScreenWorkbench(ContainerWorkbench screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-  }
-
-  @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
-    super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderTooltip(ms, mouseX, mouseY);
   }
 
   @Override
@@ -46,14 +40,20 @@ public class ScreenWorkbench extends ScreenBase<ContainerWorkbench> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(ms);
+    super.render(ms, mouseX, mouseY, partialTicks);
+    this.renderTooltip(ms, mouseX, mouseY);
+  }
+  @Override
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     //    super.drawGuiContainerForegroundLayer(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
     this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int x, int y) {
     //previous was fine, but this references exactly the 'minecraft:' vanilla crafting table
     this.drawBackground(ms, TextureRegistry.V_CRAFTING);
   }

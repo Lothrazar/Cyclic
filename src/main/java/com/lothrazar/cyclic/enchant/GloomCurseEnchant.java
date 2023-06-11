@@ -68,7 +68,7 @@ public class GloomCurseEnchant extends EnchantmentCyclic {
 
   @Override
   public void doPostHurt(LivingEntity user, Entity attacker, int level) {
-    if (user.level.isClientSide || !(attacker instanceof LivingEntity)
+    if (user.level().isClientSide || !(attacker instanceof LivingEntity)
         || FakePlayerUtil.isFakePlayer(attacker)) {
       //do nothing on clientside, server only
       //only trigger if attacker is alive and not a fakeplayer
@@ -82,7 +82,7 @@ public class GloomCurseEnchant extends EnchantmentCyclic {
         + getCurrentArmorLevelSlot(user, EquipmentSlot.FEET);
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
     //does it pass the chance
-    if (adjustedActivationChance > user.level.random.nextDouble()) {
+    if (adjustedActivationChance > user.level().random.nextDouble()) {
       List<MobEffect> negativeEffects = EnchantUtil.getNegativeEffects();
       Collections.shuffle(negativeEffects);
       int appliedEffects = 0;
@@ -92,7 +92,7 @@ public class GloomCurseEnchant extends EnchantmentCyclic {
           //should be impossible, but i had a random NPE crash log
         }
         if (appliedEffects < MIN_EFFECTS
-            || BASE_APPLY_CHANCE > user.level.random.nextDouble()) {
+            || BASE_APPLY_CHANCE > user.level().random.nextDouble()) {
           //the OR means, if we are under minimum, always go thru
           //if we are beyond minimum, check the random chance
           livingAttacker.addEffect(new MobEffectInstance(effect, EFFECT_DURATION));

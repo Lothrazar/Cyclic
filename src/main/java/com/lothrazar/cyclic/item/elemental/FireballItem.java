@@ -37,7 +37,7 @@ public class FireballItem extends ItemBaseCyclic {
       int fireProt = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_PROTECTION, player);
       if (fireProt == 0 &&
           !player.isOnFire() &&
-          player.level.random.nextDouble() < 0.03) {
+          player.level().random.nextDouble() < 0.03) {
         //i am holding fireball in my main hand
         //i am not on fire right now, i have no fire prot
         player.setRemainingFireTicks(30); // 20 ticks is one secondfireProt

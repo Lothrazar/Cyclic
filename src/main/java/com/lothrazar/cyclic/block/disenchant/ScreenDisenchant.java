@@ -7,6 +7,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -18,8 +19,8 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
 
   public ScreenDisenchant(ContainerDisenchant screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    energy = new EnergyBar(this, TileDisenchant.MAX);
-    fluid = new FluidBar(this, 134, 8, TileDisenchant.CAPACITY);
+    energy = new EnergyBar(this.font, TileDisenchant.MAX);
+    fluid = new FluidBar(this.font, 134, 8, TileDisenchant.CAPACITY);
     fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid.cyclic.xpjuice");
   }
 
@@ -36,7 +37,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -45,14 +46,14 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     int x = 23;
     int y = 39;

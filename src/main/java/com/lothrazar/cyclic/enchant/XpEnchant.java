@@ -65,7 +65,7 @@ public class XpEnchant extends EnchantmentCyclic {
     if (level <= 0) {
       return;
     }
-    event.setExpToDrop(event.getExpToDrop() + getRandomExpAmount(level, event.getPlayer().level));
+    event.setExpToDrop(event.getExpToDrop() + getRandomExpAmount(level, event.getPlayer().level()));
   }
 
   @SubscribeEvent
@@ -80,7 +80,7 @@ public class XpEnchant extends EnchantmentCyclic {
     if (level <= 0) {
       return;
     }
-    event.setDroppedExperience(event.getDroppedExperience() + getRandomExpAmount(level, event.getAttackingPlayer().level));
+    event.setDroppedExperience(event.getDroppedExperience() + getRandomExpAmount(level, event.getAttackingPlayer().level()));
   }
 
   private int getRandomExpAmount(int level, Level world) {

@@ -139,7 +139,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
     stack.getOrCreateTag().putInt(NBT_MODE, mode.getNext().ordinal());
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
-    if (player.level.isClientSide) {
+    if (player.level().isClientSide) {
       player.displayClientMessage(getModeTooltip(stack), true);
       SoundUtil.playSound(player, SoundRegistry.TOOL_MODE.get());
     }

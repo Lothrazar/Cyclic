@@ -10,6 +10,8 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -26,7 +28,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
 
   public ScreenBattery(ContainerBattery screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileBattery.MAX);
+    this.energy = new EnergyBar(this.font, TileBattery.MAX);
   }
 
   @Override
@@ -94,7 +96,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -102,7 +104,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     btnToggle.setTooltip(ChatUtil.lang("gui.cyclic.flowing" + menu.tile.getFlowing()));
     btnToggle.setTextureId(menu.tile.getFlowing() == 1 ? TextureEnum.POWER_MOVING : TextureEnum.POWER_STOP);
     btnU.setTextureId(getTextureId(Fields.U));
@@ -120,7 +122,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     this.drawSlot(ms, 133, 53, TextureRegistry.SLOT_CHARGE);
     energy.draw(ms, menu.getEnergy());

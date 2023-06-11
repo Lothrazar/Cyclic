@@ -257,7 +257,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       return true;
     }
     else {
-      return ItemStack.tagMatches(stack, recipeResultItem);
+      return ItemStack.isSameItemSameTags(stack, recipeResultItem);
     }
   }
 

@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.net.PacketFilterCard;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -23,7 +24,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -43,7 +44,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     super.renderLabels(ms, mouseX, mouseY);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     boolean filter = screenContainer.bag.getOrCreateTag().getBoolean("filter");
@@ -52,7 +53,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     for (int i = 0; i < 9; i++) {
       int y = 31;

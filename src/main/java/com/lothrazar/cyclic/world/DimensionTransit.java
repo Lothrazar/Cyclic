@@ -36,7 +36,7 @@ public class DimensionTransit implements ITeleporter {
     int tries = 10;
     while (tries > 0) {
       tries--;
-      if (world.getBlockState(pos).getMaterial().isSolid()) {
+      if (world.getBlockState(pos).isSolid()) {
         pos = pos.above();
       }
     }
@@ -54,7 +54,7 @@ public class DimensionTransit implements ITeleporter {
   }
 
   public void teleport(Player player) {
-    if (!player.isCreative() && !player.level.isClientSide) {
+    if (!player.isCreative() && !player.level().isClientSide) {
       player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 200, false, false));
     }
     if (this.world != null) {

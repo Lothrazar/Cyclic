@@ -126,8 +126,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tiers;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraft.world.item.Tiers; 
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -136,8 +135,7 @@ public class ItemRegistry {
 
   public static List<ItemBaseCyclic> ITEMSFIXME = new ArrayList<>();
   public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModCyclic.MODID);
-
-  public static void buildTab(CreativeModeTabEvent.Register event, String modid, Item icon, DeferredRegister<Item> items) {}
+ 
 
   static final int SMALLPOTIONDUR = 20 * 90; // 1:30
   static final int LARGEPOTIONDUR = 3 * 20 * 60; // 3:00 

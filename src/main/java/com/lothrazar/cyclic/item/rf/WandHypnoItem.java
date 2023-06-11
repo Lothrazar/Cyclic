@@ -44,7 +44,7 @@ public class WandHypnoItem extends ItemBaseCyclic {
   }
 
   private void doAction(ItemStack stack, Level world, Player player) {
-    if (!player.level.isClientSide) {
+    if (!world.isClientSide) {
       IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {

@@ -56,7 +56,7 @@ public class PacketSwapBlock extends PacketBaseCyclic {
     ctx.get().enqueueWork(() -> {
       ServerPlayer player = ctx.get().getSender();
       ItemStack itemStackHeld = player.getItemInHand(message.hand);
-      BlockState targetState = BuilderActionType.getBlockState(player.level, itemStackHeld);
+      BlockState targetState = BuilderActionType.getBlockState(player.level(), itemStackHeld);
       if (targetState == null || itemStackHeld.getItem() instanceof BuilderItem == false) {
         return;
       }
@@ -200,7 +200,7 @@ public class PacketSwapBlock extends PacketBaseCyclic {
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
     for (BlockPos p : places) {
-      if (!world.getBlockState(p).getMaterial().isReplaceable()) {
+      if (!world.getBlockState(p).canBeReplaced()) {
         //i am not replaceable. so i am a solid block or somethign
         if (!style.isReplaceable()) {
           continue;

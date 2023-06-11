@@ -92,7 +92,8 @@ public class ClientRegistryCyclic {
       int x = 10; // ManaConfig.MANA_HUD_X.get();
       int y = 10; // ManaConfig.MANA_HUD_Y.get(); //TODO: client-config
       if (x >= 0 && y >= 0) {
-        gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
+        poseStack.drawString(gui.getFont(), toDisplay, x, y, 0xFF0000);
+//        gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
       }
     }
   };

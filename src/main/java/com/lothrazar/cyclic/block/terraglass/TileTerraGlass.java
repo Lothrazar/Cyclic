@@ -63,7 +63,7 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
       }
       BlockState blockstate = world.getBlockState(blockpos1);
       int opa = blockstate.getLightBlock(world, blockpos1);
-      if (opa > 0 && !blockstate.getMaterial().isLiquid()) {
+      if (opa > 0 && !blockstate.liquid()) {
         return false;
       }
     }

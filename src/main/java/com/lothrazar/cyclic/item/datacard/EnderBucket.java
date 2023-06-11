@@ -61,7 +61,7 @@ public class EnderBucket extends ItemBaseCyclic {
     ItemStack held = player.getItemInHand(hand);
     player.swing(hand);
     TagDataUtil.setItemStackBlockPos(held, pos);
-    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level));
+    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level()));
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
     ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.location.saved")

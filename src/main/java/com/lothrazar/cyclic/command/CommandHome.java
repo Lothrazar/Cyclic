@@ -22,7 +22,7 @@ public class CommandHome {
     if (optional.isPresent()) {
       Vec3 thanksMojang = optional.get();
       BlockPos bedLocation = new BlockPos((int) thanksMojang.x, (int) thanksMojang.y, (int) thanksMojang.z);
-      EntityUtil.enderTeleportEvent(player, player.level, bedLocation);
+      EntityUtil.enderTeleportEvent(player, player.level(), bedLocation);
       ModCyclic.LOGGER.info("[home]" + bedLocation + " | " + player.getUUID());
     }
     else {

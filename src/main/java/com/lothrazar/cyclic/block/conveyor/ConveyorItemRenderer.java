@@ -30,7 +30,7 @@ public class ConveyorItemRenderer<T extends Entity & ItemSupplier> extends Entit
   public void render(ConveyorItemEntity entity, float entityYaw, float partialTicks, PoseStack ms, MultiBufferSource buffer, int packedLightIn) {
     ms.pushPose();
     ItemStack stack = entity.getItem();
-    BakedModel model = this.renderer.getModel(stack, entity.level, null, packedLightIn);
+    BakedModel model = this.renderer.getModel(stack, entity.level(), null, packedLightIn);
     this.renderer.render(stack, ItemDisplayContext.GROUND, false, ms, buffer, packedLightIn, OverlayTexture.NO_OVERLAY, model);
     ms.popPose();
     super.render(entity, entityYaw, partialTicks, ms, buffer, packedLightIn);

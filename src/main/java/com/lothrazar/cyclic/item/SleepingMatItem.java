@@ -41,7 +41,7 @@ public class SleepingMatItem extends ItemBaseCyclic {
     if (ret != null) {
       return Either.left(ret);
     }
-    Level world = player.level;
+    Level world = player.level();
     if (!world.isClientSide) {
       if (player.isSleeping() || !player.isAlive()) {
         return Either.left(Player.BedSleepingProblem.OTHER_PROBLEM);
@@ -57,8 +57,8 @@ public class SleepingMatItem extends ItemBaseCyclic {
       player.startSleeping(at);
       player.getPersistentData().putBoolean(SleepingMatItem.CYCLIC_SLEEPING, true);
       player.sleepCounter = 0; //    ObfuscationReflectionHelper.setPrivateValue(Player.class, player, 0, "sleepCounter");
-      if (player.level instanceof ServerLevel) {
-        ((ServerLevel) player.level).updateSleepingPlayerList();
+      if (player.level() instanceof ServerLevel sl) {
+        sl.updateSleepingPlayerList();
       }
       ItemStackUtil.damageItem(player, itemstack);
     }

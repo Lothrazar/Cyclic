@@ -62,8 +62,8 @@ public class EntityUtil {
   private static final int TICKS_FALLDIST_SYNC = 22; //tick every so often
 
   public static boolean haveSameDimension(Entity tamed, Entity owner) {
-    return LevelWorldUtil.dimensionToString(tamed.level).equalsIgnoreCase(
-        LevelWorldUtil.dimensionToString(owner.level));
+    return LevelWorldUtil.dimensionToString(tamed.level()).equalsIgnoreCase(
+        LevelWorldUtil.dimensionToString(owner.level()));
   }
 
   public static boolean isTamedByPlayer(Entity entity, Player player) {

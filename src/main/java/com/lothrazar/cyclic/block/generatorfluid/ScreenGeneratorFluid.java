@@ -14,6 +14,7 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -27,9 +28,9 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
 
   public ScreenGeneratorFluid(ContainerGeneratorFluid screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileGeneratorFluid.MAX);
-    this.progress = new TexturedProgress(this, 76, 60, TextureRegistry.LAVA_PROG);
-    fluid = new FluidBar(this, 39, 57, TileGeneratorFluid.CAPACITY);
+    this.energy = new EnergyBar(this.font, TileGeneratorFluid.MAX);
+    this.progress = new TexturedProgress(this.font, 76, 60, TextureRegistry.LAVA_PROG);
+    fluid = new FluidBar(this.font, 39, 57, TileGeneratorFluid.CAPACITY);
   }
 
   @Override
@@ -52,30 +53,31 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
-    super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderTooltip(ms, mouseX, mouseY);
-    energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
-    progress.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
-    fluid.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getFluid());
+  public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(gg);
+    super.render(gg, mouseX, mouseY, partialTicks);
+    this.renderTooltip(gg, mouseX, mouseY);
+    energy.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getEnergy());
+    progress.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
+    fluid.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getFluid());
     btnRedstone.onValueUpdate(menu.tile);
-    ms.pushPose();
-    ms.translate(this.width / 2, this.height / 2, 0);
-    ms.mulPose(Axis.ZP.rotationDegrees(-90));
-    ms.translate(-this.width / 2, -this.height / 2, 0);
+    var pose=gg.pose();
+    pose.pushPose();
+    pose.translate(this.width / 2, this.height / 2, 0);
+    pose.mulPose(Axis.ZP.rotationDegrees(-90));
+    pose.translate(-this.width / 2, -this.height / 2, 0);
     Vector4f vec = new Vector4f(mouseX, mouseY, 0, 1);
     // 
-    vec = ms.last().pose().transform(vec);
+    vec = pose.last().pose().transform(vec);
     //    vec.transform(ms.last().pose());
-    ms.popPose(); //Look, it's a bit hacky, but it gets the job done.  Rotation Math!
+    pose.popPose(); //Look, it's a bit hacky, but it gets the job done.  Rotation Math!
     if (fluid.isMouseover((int) vec.x(), (int) vec.y())) {
-      fluid.renderTooltip(ms, mouseX, mouseY, menu.tile.getFluid());
+      fluid.renderTooltip(gg, mouseX, mouseY, menu.tile.getFluid());
     }
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     int fld = TileGeneratorFluid.Fields.FLOWING.ordinal();
@@ -84,16 +86,17 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY);
-    energy.draw(ms, menu.tile.getEnergy());
+  protected void renderBg(GuiGraphics gg, float partialTicks, int mouseX, int mouseY) {
+    this.drawBackground(gg, TextureRegistry.INVENTORY);
+    energy.draw(gg, menu.tile.getEnergy());
     progress.max = menu.tile.getField(TileGeneratorFluid.Fields.BURNMAX.ordinal());
-    progress.draw(ms, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
-    ms.pushPose();
-    ms.translate(this.width / 2, this.height / 2, 0);
-    ms.mulPose(Axis.ZP.rotationDegrees(90));
-    ms.translate(-this.width / 2, -this.height / 2, 0);
-    fluid.draw(ms, menu.tile.getFluid());
-    ms.popPose();
+    progress.draw(gg, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
+    var pose=gg.pose();
+    pose.pushPose();
+    pose.translate(this.width / 2, this.height / 2, 0);
+    pose.mulPose(Axis.ZP.rotationDegrees(90));
+    pose.translate(-this.width / 2, -this.height / 2, 0);
+    fluid.draw(gg, menu.tile.getFluid());
+    pose.popPose();
   }
 }

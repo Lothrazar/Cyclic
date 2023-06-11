@@ -22,7 +22,7 @@ public class CommandNetherping {
   public static int exeNether(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     double factor = 1 / NETHER_RATIO; //overworld: use 1/8th
-    boolean isnether = player.level.dimension() == Level.NETHER;
+    boolean isnether = player.level().dimension() == Level.NETHER;
     if (isnether) {
       //you are nether, multiply by it
       factor = NETHER_RATIO;

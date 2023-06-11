@@ -20,10 +20,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables; 
+import net.minecraft.world.level.storage.loot.LootDataManager;
+import net.minecraft.world.level.storage.loot.LootDataType;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable; 
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
@@ -50,6 +51,7 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
   @Override
   protected void onHit(HitResult result) {
     HitResult.Type type = result.getType();
+    var level = level();
     if (type == HitResult.Type.ENTITY) {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
@@ -67,26 +69,29 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
       if (ray.getDirection() != null) {
         pos = pos.relative(ray.getDirection());
       }
-      if (TileFisher.isWater(this.level, pos)) {
+      if (TileFisher.isWater(level, pos)) {
         //fish!
-        if (!this.level.isClientSide) {
-          LootTables manager = level.getServer().getLootTables();
+        if (!level.isClientSide) {
+          LootDataManager manager = level.getServer().getLootData();
           if (manager == null) {
             return;
           }
           LootTable table = null;
-          if (level.random.nextDouble() < 0.10) // 10% junk, match current values unlike 1.10.2
-            table = manager.get(BuiltInLootTables.FISHING_JUNK);
-          else // remaining 90% fish. ignore the 5% for treasure , this item just dont get that too bad
-            table = manager.get(BuiltInLootTables.FISHING_FISH);
+          if (level.random.nextDouble() < 0.10) { // 10% junk, match current values unlike 1.10.2
+            table = manager.getElement(LootDataType.TABLE, BuiltInLootTables.FISHING_JUNK);
+            //            table = manager.get(BuiltInLootTables.FISHING_JUNK); 
+          }
+          else {// remaining 90% fish. ignore the 5% for treasure , this item just dont get that too bad
+            table = manager.getElement(LootDataType.TABLE, BuiltInLootTables.FISHING_FISH);
+          }
           if (table == null) {
             return;
           }
           final int luck = 2;
           final ItemStack fishingRod = new ItemStack(Items.FISHING_ROD);
           fishingRod.enchant(Enchantments.FISHING_LUCK, luck);
-          LootContext lootContext = new LootContext.Builder((ServerLevel) level)
-              .withLuck(luck).withRandom(level.random)
+          LootParams lootContext = new LootParams.Builder((ServerLevel) level)
+              .withLuck(luck)//.withRandom(level.random)
               .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
               .withParameter(LootContextParams.TOOL, fishingRod)
               .create(LootContextParamSets.FISHING);

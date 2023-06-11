@@ -15,6 +15,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -53,19 +54,20 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   }
 
   @Override
-  public void draw(RecipeCrusher recipe, IRecipeSlotsView recipeSlotsView, PoseStack ms, double mouseX, double mouseY) {
+  public void draw(RecipeCrusher recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
     int x = 78;
+    var font=Minecraft.getInstance().font;
     if (recipe.energy.getTicks() < 40) {
-      Minecraft.getInstance().font.draw(ms, recipe.energy.getTicks() + " t", x, 6, FONT);
+      ms.drawString(font, recipe.energy.getTicks() + " t", x, 6, FONT);
     }
     else {
       int sec = recipe.energy.getTicks() / 20;
-      Minecraft.getInstance().font.draw(ms, sec + " s", x, 6, FONT);
+      ms.drawString(font, sec + " s", x, 6, FONT);
     }
-    Minecraft.getInstance().font.draw(ms, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
-    Minecraft.getInstance().font.draw(ms, recipe.energy.getEnergyTotal() + " RF", x, 26, FONT);
+    ms.drawString(font, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
+    ms.drawString(font, recipe.energy.getEnergyTotal() + " RF", x, 26, FONT);
     if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
-      Minecraft.getInstance().font.draw(ms, recipe.randOutput.percent + "%", 56, 36, FONT);
+      ms.drawString(font, recipe.randOutput.percent + "%", 56, 36, FONT);
     }
   }
 

@@ -37,7 +37,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -368,7 +368,7 @@ public class RenderUtils {
    * @param coords
    * @param alpha
    */
-  public static void renderColourCubes(RenderLevelLastEvent evt, Map<BlockPos, Color> coords, float alpha) {
+  public static void renderColourCubes(RenderLevelStageEvent evt, Map<BlockPos, Color> coords, float alpha) {
     LocalPlayer player = Minecraft.getInstance().player;
     if (player == null) {
       return;

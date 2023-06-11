@@ -137,7 +137,7 @@ public class ItemEvents {
     }
     ItemStack stackBow = event.getBow();
     Player player = event.getEntity();
-    Level worldIn = player.level;
+    Level worldIn = player.level();
     if (worldIn.isClientSide == false) {
       int level = EnchantRegistry.MULTIBOW.get().getCurrentLevelTool(stackBow);
       if (level <= 0) {
@@ -176,7 +176,7 @@ public class ItemEvents {
     if (arrow == null || event.getRayTraceResult() == null) {
       return;
     }
-    Level world = arrow.level;
+    Level world = arrow.level();
     Type hit = event.getRayTraceResult().getType();
     Entity shooter = arrow.getOwner(); // getShooter
     if (shooter instanceof Player) {
@@ -274,8 +274,8 @@ public class ItemEvents {
       //player DEALING damage
       Player ply = (Player) src.getEntity();
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_VENOM.get());
-      if (!find.isEmpty() && ply.level.random.nextDouble() < 0.25F) {
-        int seconds = 2 + ply.level.random.nextInt(4);
+      if (!find.isEmpty() && ply.level().random.nextDouble() < 0.25F) {
+        int seconds = 2 + ply.level().random.nextInt(4);
         event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 20 * seconds, 0));
         ItemStackUtil.damageItem(ply, find);
       }

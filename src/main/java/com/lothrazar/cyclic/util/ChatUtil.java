@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 public class ChatUtil {
 
   public static void addChatMessage(Player player, MutableComponent message) {
-    if (player.level.isClientSide) {
+    if (player.level().isClientSide) {
       player.sendSystemMessage(message);
     }
   }
@@ -24,7 +24,7 @@ public class ChatUtil {
   }
 
   public static void addServerChatMessage(Player player, Component message) {
-    if (!player.level.isClientSide) {
+    if (!player.level().isClientSide) {
       player.sendSystemMessage(message);
     }
   }
@@ -38,7 +38,7 @@ public class ChatUtil {
   }
 
   public static void sendStatusMessage(Player player, Component nameTextComponent) {
-    if (player.level.isClientSide) {
+    if (player.level().isClientSide) {
       player.displayClientMessage(nameTextComponent, true);
     }
   }
@@ -53,6 +53,6 @@ public class ChatUtil {
   }
 
   public static void sendFeedback(CommandContext<CommandSourceStack> ctx, String string) {
-    ctx.getSource().sendSuccess(ilang(string), false);
+    ctx.getSource().sendSuccess(() -> ilang(string), false); // ilang(string)
   }
 }

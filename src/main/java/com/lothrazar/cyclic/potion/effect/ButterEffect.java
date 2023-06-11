@@ -23,11 +23,12 @@ public class ButterEffect extends CyclicMobEffect {
   public void tick(LivingTickEvent event) {
     // delete me i guess 
     LivingEntity living = event.getEntity();
-    if (living.level.random.nextDouble() > DROP_CHANCE) {
+    var level = living.level();
+    if (level.random.nextDouble() > DROP_CHANCE) {
       return;
     }
     List<EquipmentSlot> slots = null;
-    if (!living.isOnGround() || living.isSprinting()) {
+    if (!living.onGround() || living.isSprinting()) {
       int amplifier = living.getEffect(this).getAmplifier();
       //sprinting or jumping or something 
       if (amplifier == Const.Potions.I) {
@@ -40,9 +41,9 @@ public class ButterEffect extends CyclicMobEffect {
     if (slots == null) {
       return;
     }
-    int slotix = living.level.random.nextInt(slots.size());
+    int slotix = level.random.nextInt(slots.size());
     ItemStack dropMe = living.getItemBySlot(slots.get(slotix));
-    ItemStackUtil.drop(living.level, living.blockPosition(), dropMe);
+    ItemStackUtil.drop(level, living.blockPosition(), dropMe);
     living.setItemSlot(slots.get(slotix), ItemStack.EMPTY);
     //    for (EquipmentSlot slot : slots) {
     //      stack = entity.getItemStackFromSlot(slot);

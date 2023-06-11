@@ -100,7 +100,7 @@ public class MultiJumpEnchant extends EnchantmentCyclic {
         return;
       }
       //if you are on the ground or not airborne, should be same thing
-      if ((p.hasImpulse == false || p.isOnGround()) &&
+      if ((p.hasImpulse == false || p.onGround()) &&
           armorStack.getOrCreateTag().getInt(NBT_USES) > 0) {
         //you have landed on the ground, dont count previous jumps
         TagDataUtil.setItemStackNBTVal(armorStack, NBT_USES, 0);

@@ -52,9 +52,9 @@ public class SettingsCard extends ItemBaseCyclic {
     //    Direction side = context.getFace();
     ItemStack held = player.getItemInHand(hand);
     player.swing(hand);
-    BlockEntity tile = player.level.getBlockEntity(pos);
+    BlockEntity tile = player.level().getBlockEntity(pos);
     //am i doing a READ or a WRITE
-    if (player.level.getBlockState(pos).getBlock() == Blocks.BEDROCK) {
+    if (player.level().getBlockState(pos).getBlock() == Blocks.BEDROCK) {
       //      Blocks.BEDROCK.isu
       held.setTag(null); //clear
       ChatUtil.addChatMessage(player, getDescriptionId() + ".deleted");

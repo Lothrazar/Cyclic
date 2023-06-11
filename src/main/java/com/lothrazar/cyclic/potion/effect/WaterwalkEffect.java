@@ -17,7 +17,7 @@ public class WaterwalkEffect extends CyclicMobEffect {
   public void tick(LivingTickEvent event) {
     LivingEntity entity = event.getEntity();
     //    living.getEffect(this).getAmplifier()
-    if (entity.isInWater() || entity.getLevel().getBlockState(entity.blockPosition()).is(Blocks.WATER)) {
+    if (entity.isInWater() || entity.level().getBlockState(entity.blockPosition()).is(Blocks.WATER)) {
       if (entity instanceof Player p) {
         if (p.isCrouching()) {
           return;// let them slip down into it

@@ -63,14 +63,14 @@ public class PacketRotateBlock extends PacketBaseCyclic {
   public static void handle(PacketRotateBlock message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       //rotate type
-      Level world = ctx.get().getSender().level;
-      boolean succ = BlockUtil.rotateBlockValidState(world, message.pos, message.side);
+      Level level = ctx.get().getSender().level();
+      boolean succ = BlockUtil.rotateBlockValidState(level, message.pos, message.side);
       if (succ) {
         ServerPlayer player = ctx.get().getSender();
         ItemStack itemStackHeld = player.getItemInHand(message.hand);
         ItemStackUtil.damageItem(player, itemStackHeld);
-        if (world.getBlockState(message.pos).getSoundType() != null) {
-          SoundUtil.playSoundFromServer(player, world.getBlockState(message.pos).getSoundType().getPlaceSound(), 1F, 1F);
+        if (level.getBlockState(message.pos).getSoundType() != null) {
+          SoundUtil.playSoundFromServer(player, level.getBlockState(message.pos).getSoundType().getPlaceSound(), 1F, 1F);
         }
       }
     });

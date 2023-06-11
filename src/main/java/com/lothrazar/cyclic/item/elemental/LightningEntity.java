@@ -39,18 +39,18 @@ public class LightningEntity extends ThrowableItemProjectile {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
-        target.hurt(level.damageSources().thrown(this, this.getOwner()), 0);
+        target.hurt(level().damageSources().thrown(this, this.getOwner()), 0);
         //        LightningBoltEntity lightningboltentity = new LightningBoltEntity(world, target.getPosX(), target.getPosY(), target.getPosZ(), false);
-        LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level);
+        LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level());
         lightningboltentity.moveTo(target.getX(), target.getY(), target.getZ());
-        level.addFreshEntity(lightningboltentity);
+        level().addFreshEntity(lightningboltentity);
       }
     }
     else if (type == HitResult.Type.BLOCK) {
       //      BlockRayTraceResult bRayTrace = (BlockRayTraceResult) result;
-      LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level);
+      LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(level());
       lightningboltentity.moveTo(this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ());
-      level.addFreshEntity(lightningboltentity);
+      level().addFreshEntity(lightningboltentity);
     }
     this.remove(RemovalReason.DISCARDED);
   }

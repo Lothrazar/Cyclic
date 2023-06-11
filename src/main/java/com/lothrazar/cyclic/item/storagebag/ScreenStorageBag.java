@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.nbt.CompoundTag;
@@ -77,21 +78,21 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
-    super.render(ms, mouseX, mouseY, partialTicks);
-    this.renderTooltip(ms, mouseX, mouseY);
+  public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(gg);
+    super.render(gg, mouseX, mouseY, partialTicks);
+    this.renderTooltip(gg, mouseX, mouseY);
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int x, int y) {}
+  protected void renderLabels(GuiGraphics gg, int x, int y) {}
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE);
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, TextureRegistry.INVENTORY_SIDEBAR);
-    Screen.blit(ms, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
+  protected void renderBg(GuiGraphics gg, float partialTicks, int x, int y) {
+    this.drawBackground(gg, TextureRegistry.INVENTORY_LARGE);
+//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+//    RenderSystem.setShaderTexture(0, TextureRegistry.INVENTORY_SIDEBAR);
+    gg.blit(TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);//todo; use screenbase?
   }
 
   private class ToggleButton extends ExtendedButton {

@@ -90,7 +90,7 @@ public abstract class CharmBase extends ItemBaseToggle {
       living.addEffect(eff);
       ItemStackUtil.damageItem(living, stack);
       SoundUtil.playSound(living, SoundEvents.FIRE_EXTINGUISH);
-      ParticleUtil.spawnParticle(living.level, ParticleTypes.DRIPPING_WATER, living.blockPosition(), 9);
+      ParticleUtil.spawnParticle(living.level(), ParticleTypes.DRIPPING_WATER, living.blockPosition(), 9);
     }
   }
 

@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 /**
  * Citation/source/author
@@ -35,7 +35,7 @@ public class RenderMiningLaser {
 
   public static final int RANGE = 18;
 
-  public static void renderLaser(RenderLevelLastEvent event, Player player, float ticks,
+  public static void renderLaser(RenderLevelStageEvent event, Player player, float ticks,
       ItemStack stack, InteractionHand hand) {
     Vec3 playerPos = player.getEyePosition(ticks);
     HitResult trace = player.pick(RANGE, 0.0F, false);
@@ -52,10 +52,10 @@ public class RenderMiningLaser {
    * https://github.com/Direwolf20-MC/MiningGadgets
    *
    */
-  public static void drawLasers(InteractionHand activeHand, ItemStack stack, RenderLevelLastEvent event, Vec3 from, HitResult trace, double xOffset, double yOffset, double zOffset, float r, float g, float b, float thickness, Player player, float ticks, float speedModifier) {
+  public static void drawLasers(InteractionHand activeHand, ItemStack stack, RenderLevelStageEvent event, Vec3 from, HitResult trace, double xOffset, double yOffset, double zOffset, float r, float g, float b, float thickness, Player player, float ticks, float speedModifier) {
     VertexConsumer builder;
     double distance = Math.max(1, from.subtract(trace.getLocation()).length());
-    long gameTime = player.level.getGameTime();
+    long gameTime = player.level().getGameTime();
     double v = gameTime * speedModifier;
     float additiveThickness = (thickness * 3.5f) * calculateLaserFlickerModifier(gameTime);
     float beam2r = 100f / 255f;

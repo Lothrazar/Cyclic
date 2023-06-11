@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CauldronBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.SignText;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,10 +32,12 @@ public class CarbonPaperItem extends ItemBaseCyclic {
     if (stack.hasTag()) {
       SignBlockEntity fakeSign = new SignBlockEntity(BlockPos.ZERO, Blocks.OAK_SIGN.defaultBlockState());
       fakeSign.load(stack.getTag());
-      tooltip.add(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
-      for (int i = 0; i <= 3; i++) {
+//      tooltip.add(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
+      for (int i = 0; i < SignText.LINES; i++) {
         //        fakeSign.setText(line, p_212365_2_);
-        Component t = fakeSign.messages[i];
+        SignText front = fakeSign.getFrontText();
+  
+        Component t = front.getMessages(false)[i];
         //        t.applyTextStyle(TextFormatting.fromColorIndex(fakeSign.getTextColor().get));
         tooltip.add(t);
       }
@@ -51,7 +54,7 @@ public class CarbonPaperItem extends ItemBaseCyclic {
     //    Direction side = context.getFace();
     ItemStack held = player.getItemInHand(hand);
     BlockEntity tile = context.getLevel().getBlockEntity(pos);
-    if (player.level.getBlockState(pos).getBlock() instanceof CauldronBlock) {
+    if (player.level().getBlockState(pos).getBlock() instanceof CauldronBlock) {
       if (held.hasTag()) {
         //clean with cauldron
         held.setTag(null);
@@ -67,10 +70,11 @@ public class CarbonPaperItem extends ItemBaseCyclic {
         //write to fake sign to parse nbt internally
         SignBlockEntity fakeSign = new SignBlockEntity(context.getClickedPos(), Blocks.OAK_SIGN.defaultBlockState());
         fakeSign.load(held.getTag());
-        sign.setColor(fakeSign.getColor());
+//        sign.setColor(fakeSign.getColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());
-          sign.setMessage(i, fakeSign.messages[i]);
+           
+          sign.getFrontText().setMessage(i, fakeSign.getFrontText().getMessages(false)[i]);
         }
         ChatUtil.sendStatusMessage(player, "item.cyclic.carbon_paper.written");
       }

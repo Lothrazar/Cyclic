@@ -43,9 +43,10 @@ public class FireEntity extends ThrowableItemProjectile {
       //drop torch
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
+      var level = level();
       if (target.isAlive()) {
         target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 6));
-        if (!target.level.isClientSide && target.isOnFire() == false
+        if (!level.isClientSide && target.isOnFire() == false
             && target instanceof LivingEntity) {
           target.hurt(level.damageSources().inFire(), Mth.nextInt(level.random, 3, 5));
           LivingEntity living = (LivingEntity) target;

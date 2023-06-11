@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -20,8 +21,8 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
 
   public ScreenPeatFarm(ContainerPeatFarm screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this, 132, 8, TilePeatFarm.CAPACITY);
-    energy = new EnergyBar(this, TilePeatFarm.MAX);
+    fluid = new FluidBar(this.font, 132, 8, TilePeatFarm.CAPACITY);
+    energy = new EnergyBar(this.font, TilePeatFarm.MAX);
   }
 
   @Override
@@ -39,7 +40,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -48,7 +49,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
     btnRedstone.onValueUpdate(menu.tile);
@@ -56,7 +57,7 @@ public class ScreenPeatFarm extends ScreenBase<ContainerPeatFarm> {
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, menu.getEnergy());
     fluid.draw(ms, menu.tile.getFluid());

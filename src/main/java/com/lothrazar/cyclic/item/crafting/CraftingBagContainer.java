@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -25,7 +26,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class CraftingBagContainer extends ContainerBase implements IContainerCraftingAction {
 
-  private final CraftingContainer craftMatrix = new CraftingContainer(this, 3, 3);
+  private final TransientCraftingContainer craftMatrix = new TransientCraftingContainer(this, 3, 3);
   private final ResultContainer craftResult = new ResultContainer();
   //
   public int slot = -1;
@@ -74,7 +75,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   public void removed(Player playerIn) { // onContainerClosed
     super.removed(playerIn);
     this.craftResult.setItem(0, ItemStack.EMPTY);
-    if (playerIn.level.isClientSide == false) {
+    if (playerIn.level().isClientSide == false) {
       IItemHandler handler = bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
       if (handler != null)
         for (int i = 0; i < 9; i++) {
@@ -87,7 +88,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
 
   @Override
   public void slotsChanged(Container inventory) {
-    Level world = playerInventory.player.level;
+    Level world = playerInventory.player.level();
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;

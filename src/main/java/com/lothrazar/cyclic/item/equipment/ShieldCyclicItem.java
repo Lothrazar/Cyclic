@@ -156,11 +156,11 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
         reduceBlockedDamagePct = FLINT_PCT.get() / 100F;
         if (dmgSource.is(DamageTypes.MOB_PROJECTILE)) {
           //50% chance to not take durability from arrows 
-          immuneToDamage = playerIn.level.random.nextDouble() < 0.5; // 50% chance  TODO config and hardcoded in lang
+          immuneToDamage = playerIn.level().random.nextDouble() < 0.5; // 50% chance  TODO config and hardcoded in lang
         }
         if (!dmgSource.is(DamageTypes.EXPLOSION)
             && dmgSource.is(DamageTypes.MOB_PROJECTILE)
-            && playerIn.level.random.nextDouble() < (FLINT_THORNS_PCT.get() / 100F)) {
+            && playerIn.level().random.nextDouble() < (FLINT_THORNS_PCT.get() / 100F)) {
           //ranged thorns
           thornsDmg = 1;
         }
@@ -205,7 +205,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
         && event.getDamageSource().getDirectEntity() != null) { // instanceof EntityDamageSource eds
       Entity enemy = event.getDamageSource().getDirectEntity();
       if (enemy instanceof LivingEntity liv) {
-        enemy.hurt(playerIn.level.damageSources().thorns(shieldHolder), thornsDmg);
+        enemy.hurt(playerIn.level().damageSources().thorns(shieldHolder), thornsDmg);
       }
     }
     //make some not take damage

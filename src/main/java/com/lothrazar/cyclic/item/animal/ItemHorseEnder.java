@@ -47,7 +47,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
 
   public static void onSuccess(LivingEntity liv) {
     SoundUtil.playSound(liv, SoundEvents.GENERIC_DRINK);
-    ParticleUtil.spawnParticle(liv.level, ParticleTypes.CRIT, liv.blockPosition(), 3);
+    ParticleUtil.spawnParticle(liv.level(), ParticleTypes.CRIT, liv.blockPosition(), 3);
     increment(liv, -1);
     //    int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
     //    UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);

@@ -49,14 +49,15 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
   public void tick() {
     super.tick();
     lifetime--;
-    if (!this.level.isClientSide && lifetime <= 0) {
+    var level = level();
+    if (!level.isClientSide && lifetime <= 0) {
       this.kill();
       //no target found
       ModCyclic.LOGGER.info(" server side Self I took too long " + targetEntity);
       return;
     }
     //ModCyclic.logger.error("UPDATE ET  isclient==" + this.world.isRemote);
-    if (!this.level.isClientSide &&
+    if (!level.isClientSide &&
         (targetEntity == null || !targetEntity.isAlive())) {
       this.kill();
       //no target found
@@ -95,7 +96,7 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
       Entity target = entityRayTrace.getEntity();
       Entity owner = getOwner();
       if (target.isAlive()) {
-        target.hurt(level.damageSources().thrown(this, owner), Mth.nextInt(level.random, 1, 6));
+        target.hurt(level().damageSources().thrown(this, owner), Mth.nextInt(level().random, 1, 6));
       }
     }
     this.remove(RemovalReason.DISCARDED);

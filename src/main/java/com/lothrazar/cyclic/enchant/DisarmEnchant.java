@@ -74,7 +74,7 @@ public class DisarmEnchant extends EnchantmentCyclic {
     LivingEntity livingTarget = (LivingEntity) target;
     List<ItemStack> toDisarm = new ArrayList<>();
     target.getHandSlots().forEach(itemStack -> {
-      if (getChanceToDisarm(level) > user.level.random.nextDouble()) {
+      if (getChanceToDisarm(level) > user.level().random.nextDouble()) {
         toDisarm.add(itemStack);
       }
     });
@@ -89,7 +89,7 @@ public class DisarmEnchant extends EnchantmentCyclic {
         dropHeld = true;
       }
       if (dropHeld) {
-        user.level.addFreshEntity(new ItemEntity(user.level, livingTarget.getX(),
+        user.level().addFreshEntity(new ItemEntity(user.level(), livingTarget.getX(),
             livingTarget.getY(), livingTarget.getZ(), itemStack));
       }
     });

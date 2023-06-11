@@ -112,7 +112,7 @@ public class TravellerEnchant extends EnchantmentCyclic {
     }
     int level = getCurrentArmorLevelSlot(event.getEntity(), EquipmentSlot.LEGS);
     DamageSource source = event.getSource(); // .type();
-    DamageSources bullshit = event.getEntity().getLevel().damageSources();
+    DamageSources bullshit = event.getEntity().level().damageSources();
     if (level > 0 && (source == bullshit.cactus()
         || source == bullshit.flyIntoWall()
         || source == bullshit.sweetBerryBush()
@@ -132,7 +132,7 @@ public class TravellerEnchant extends EnchantmentCyclic {
         if (event.getAmount() > event.getEntity().getHealth() - 0.5F) {
           //either you crashed flying straight into the ground, or just fell while wearing elytra (you still die to void tho)
           event.setAmount(event.getEntity().getHealth() - 1F);
-          ParticleUtil.spawnParticle(event.getEntity().level, ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().blockPosition(), 4);
+          ParticleUtil.spawnParticle(event.getEntity().level(), ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, event.getEntity().blockPosition(), 4);
         }
       }
     }

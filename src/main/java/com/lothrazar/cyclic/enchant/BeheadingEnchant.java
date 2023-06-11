@@ -110,7 +110,7 @@ public class BeheadingEnchant extends EnchantmentCyclic {
       if (level <= 0) {
         return;
       }
-      Level world = attacker.level;
+      Level world = attacker.level();
       if (Mth.nextInt(world.random, 0, 100) > percentForLevel(level)) {
         return;
       }

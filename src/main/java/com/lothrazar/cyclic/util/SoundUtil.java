@@ -32,7 +32,7 @@ public class SoundUtil {
   }
 
   public static void playSound(Entity entityIn, SoundEvent soundIn, float volume, float pitch) {
-    if (entityIn != null && entityIn.level.isClientSide) {
+    if (entityIn != null && entityIn.level().isClientSide) {
       entityIn.playSound(soundIn, volume, pitch);
     }
   }
@@ -77,7 +77,7 @@ public class SoundUtil {
   public static void playSoundById(Player player, String sid) {
     //do the thing
     SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(sid));
-    if (sound != null && player.level.isClientSide) {
+    if (sound != null && player.level().isClientSide) {
       SoundUtil.playSound(player, sound);
     }
   }

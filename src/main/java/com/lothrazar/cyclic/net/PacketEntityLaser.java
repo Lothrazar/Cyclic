@@ -50,7 +50,7 @@ public class PacketEntityLaser extends PacketBaseCyclic {
   public static void handle(PacketEntityLaser message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayer sender = ctx.get().getSender();
-      Level level = sender.level;
+      Level level = sender.level();
       Entity target = level.getEntity(message.entityId);
       //validate also covers delay
       ItemStack stack = LaserItem.getIfHeld(sender);

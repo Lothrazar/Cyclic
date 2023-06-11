@@ -26,8 +26,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootDataManager;
+import net.minecraft.world.level.storage.loot.LootDataType;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
@@ -134,18 +136,19 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
     Level world = this.getLevel();
     RandomSource rand = world.random;
     if (rand.nextDouble() < CHANCE.get() && world instanceof ServerLevel) {
-      LootTables manager = world.getServer().getLootTables();
+      LootDataManager manager = level.getServer().getLootData();
       if (manager == null) {
         return;
       }
-      LootTable table = manager.get(BuiltInLootTables.FISHING);
+      LootTable table = manager.getElement(LootDataType.TABLE, BuiltInLootTables.FISHING);
       if (table == null) {
         return;
       }
       //got it
       int luck = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FISHING_LUCK, fishingRod) + 1;
-      LootContext lootContext = new LootContext.Builder((ServerLevel) world)
-          .withLuck(luck).withRandom(rand).withParameter(LootContextParams.ORIGIN,
+      LootParams lootContext = new LootParams.Builder((ServerLevel) world)
+          .withLuck(luck)//.withRandom(rand)
+          .withParameter(LootContextParams.ORIGIN,
               new Vec3(center.getX(), center.getY(), center.getZ()))
           .withParameter(LootContextParams.TOOL, fishingRod)
           .create(LootContextParamSets.FISHING);

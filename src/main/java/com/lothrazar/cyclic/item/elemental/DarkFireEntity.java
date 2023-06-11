@@ -46,10 +46,10 @@ public class DarkFireEntity extends ThrowableItemProjectile {
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive()) {
         //DamageSource.thrown(this, this.getOwner())
-        target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 4, 8));
-        if (!level.isClientSide && target.isOnFire() == false
+        target.hurt(level().damageSources().thrown(this, this.getOwner()), Mth.nextInt(level().random, 4, 8));
+        if (!level().isClientSide && target.isOnFire() == false
             && target instanceof LivingEntity living) {
-          living.hurt(level.damageSources().magic(), Mth.nextInt(level.random, 3, 5));
+          living.hurt(level().damageSources().magic(), Mth.nextInt(level().random, 3, 5));
           living.addEffect(new MobEffectInstance(MobEffects.WITHER, Const.TICKS_PER_SEC * 5, 1));
         }
       }
@@ -60,12 +60,12 @@ public class DarkFireEntity extends ThrowableItemProjectile {
         return;
       }
       final BlockPos pos = ray.getBlockPos();
-      final Block blockHere = this.level.getBlockState(pos).getBlock();
+      final Block blockHere = this.level().getBlockState(pos).getBlock();
       if (blockHere == Blocks.SNOW
           || blockHere == Blocks.SNOW_BLOCK
           || blockHere == Blocks.SNOW
           || blockHere == Blocks.ICE) {
-        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
       }
     }
     this.remove(RemovalReason.DISCARDED);

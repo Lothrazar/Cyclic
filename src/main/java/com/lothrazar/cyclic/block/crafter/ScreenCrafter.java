@@ -30,6 +30,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -42,9 +43,9 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   public ScreenCrafter(ContainerCrafter screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
     this.imageHeight = 256;
-    this.energy = new EnergyBar(this, TileCrafter.MAX);
+    this.energy = new EnergyBar(this.font, TileCrafter.MAX);
     this.energy.setHeight(120);
-    this.progress = new TexturedProgress(this, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ, 24, 17, TextureRegistry.ARROW);
+    this.progress = new TexturedProgress(this.font, ContainerCrafter.PREVIEW_START_X - 3, ContainerCrafter.PREVIEW_START_Y + Const.SQ, 24, 17, TextureRegistry.ARROW);
     this.progress.max = TileCrafter.TIMER_FULL;
     this.progress.setTopDown(false);
   }
@@ -62,7 +63,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     super.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -70,14 +71,14 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(menu.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY_LARGE_PLAIN);
     energy.draw(ms, menu.tile.getEnergy());
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {

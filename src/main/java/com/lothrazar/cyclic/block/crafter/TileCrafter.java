@@ -42,6 +42,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -290,7 +291,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
-  private final CraftingContainer craftMatrix = new CraftingContainer(new FakeContainer(MenuType.CRAFTING, 18291238), 3, 3);
+  private final TransientCraftingContainer craftMatrix = new TransientCraftingContainer(new FakeContainer(MenuType.CRAFTING, 18291238), 3, 3);
 
   @Override
   public Component getDisplayName() {

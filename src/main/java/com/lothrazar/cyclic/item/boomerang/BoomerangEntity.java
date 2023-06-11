@@ -123,12 +123,12 @@ public class BoomerangEntity extends ThrowableItemProjectile {
 
   private void tryPickupNearby() {
     Entity owner = getOwner();
-    if (owner == null || level.isClientSide) {
+    if (owner == null || level().isClientSide) {
       return;
     }
     //try to find entities to pick up
     int range = 1;
-    List<Entity> list = this.level.getEntities(this,
+    List<Entity> list = level().getEntities(this,
         this.getBoundingBox().move(this.getDeltaMovement()).inflate(range, range, range));
     for (Entity entityHit : list) {
       if (entityHit instanceof ItemEntity || entityHit instanceof ExperienceOrb) {
@@ -142,9 +142,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     Entity owner = getOwner();
     if (owner instanceof Player) {
       try {
-        BlockState blockState = level.getBlockState(pos);
+        BlockState blockState = level().getBlockState(pos);
         Block block = blockState.getBlock();
-        InteractionResult t = block.use(blockState, level, pos, (Player) owner, InteractionHand.MAIN_HAND, null);
+        InteractionResult t = block.use(blockState, level(), pos, (Player) owner, InteractionHand.MAIN_HAND, null);
         boolean hasTriggered = t == InteractionResult.SUCCESS; //block.onBlockActivated(world, pos, blockState,
         //            (PlayerEntity) this.owner, Hand.MAIN_HAND, Direction.UP, 0.5F, 0.5F, 0.5F);
         if (hasTriggered) {
@@ -190,7 +190,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         }
       }
       else {
-        ItemStackUtil.drop(level, this.blockPosition().above(), boomerangThrown);
+        ItemStackUtil.drop(level(), this.blockPosition().above(), boomerangThrown);
         boomerangThrown = ItemStack.EMPTY;
       }
     }
@@ -213,7 +213,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
       dropAsItem();
       return;
     }
-    if (hasTriggeredRedstoneAlready() == false && level.isEmptyBlock(pos) == false) {
+    if (hasTriggeredRedstoneAlready() == false && level().isEmptyBlock(pos) == false) {
       tryToggleRedstone(pos);
     }
     tryPickupNearby();
@@ -236,7 +236,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   private void onImpactBlock(BlockHitResult mop) {
-    BlockState block = level.getBlockState(mop.getBlockPos());
+    BlockState block = level().getBlockState(mop.getBlockPos());
     //crops are 0.0, farmland 0.6, leaves are 0.2  etc
     //    if (this.canHarvest(block, mop.getPos(), mop.getFace())) {
     //      if (this.owner instanceof PlayerEntity) {
@@ -267,15 +267,15 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     }
     switch (this.boomerangType) {
       case CARRY:
-        if (!entityHit.level.isClientSide) {
+        if (!entityHit.level().isClientSide) {
           entityHit.startRiding(this);
         }
       break;
       case DAMAGE:
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
-          float damage = Mth.nextFloat(level.random, DAMAGE_MIN, DAMAGE_MAX);
-          boolean attackSucc = live.hurt(level.damageSources().thrown(this, owner), damage);
+          float damage = Mth.nextFloat(level().random, DAMAGE_MIN, DAMAGE_MAX);
+          boolean attackSucc = live.hurt(level().damageSources().thrown(this, owner), damage);
           if (attackSucc && live.isAlive() == false) {
             //           ("killed one");
           }

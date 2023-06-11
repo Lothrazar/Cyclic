@@ -106,11 +106,11 @@ public class GrowthEnchant extends EnchantmentCyclic {
     }
     //Ticking
     int level = getCurrentLevelTool(entity.getItemInHand(InteractionHand.MAIN_HAND));
-    if (level > 0 && !entity.level.isClientSide) {
-      if (entity.level.random.nextDouble() > ODDS_ROTATE / level) {
+    if (level > 0 && !entity.level().isClientSide) {
+      if (entity.level().random.nextDouble() > ODDS_ROTATE / level) {
         return; //slow the dice down
       }
-      final int growthLimit = level * 2 + (entity.level.isRaining() ? 4 : 1); //faster when raining too 
+      final int growthLimit = level * 2 + (entity.level().isRaining() ? 4 : 1); //faster when raining too 
       int grown = 0;
       List<BlockPos> shape = ShapeUtil.squareHorizontalFull(entity.blockPosition().below(), level + RADIUSFACTOR.get());
       shape = ShapeUtil.repeatShapeByHeight(shape, 2);
@@ -121,9 +121,9 @@ public class GrowthEnchant extends EnchantmentCyclic {
         }
         //do one
         BlockPos pos = shape.get(i);
-        BlockState target = entity.level.getBlockState(pos);
+        BlockState target = entity.level().getBlockState(pos);
         if (target.getBlock() instanceof CropBlock igrowable) { // IGrowable gone, dont use BonemealableBlock 
-          igrowable.growCrops(entity.level, pos, target);
+          igrowable.growCrops(entity.level(), pos, target);
           grown++; // allow mods to override growCrops() for custom behavior
         }
         else { //still use same old age logic as always unchanged
@@ -134,7 +134,7 @@ public class GrowthEnchant extends EnchantmentCyclic {
           int maxAge = Collections.max(propAge.getPossibleValues());
           Integer currentAge = target.getValue(propAge);
           if (currentAge < maxAge) {
-            if (entity.level.setBlockAndUpdate(pos, target.setValue(propAge, currentAge + 1))) {
+            if (entity.level().setBlockAndUpdate(pos, target.setValue(propAge, currentAge + 1))) {
               grown++;
             }
           }

@@ -39,10 +39,10 @@ public class BlockShearing extends BlockCyclic {
     if (entityIn instanceof IForgeShearable) {
       //do it
       IForgeShearable sheep = (IForgeShearable) entityIn;
-      if (sheep.isShearable(ItemStack.EMPTY, entityIn.level, pos)) {
-        List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, entityIn.level, pos, entityIn.level.random.nextInt(3));
+      if (sheep.isShearable(ItemStack.EMPTY, worldIn, pos)) {
+        List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, worldIn, pos, worldIn.random.nextInt(3));
         drops.forEach(d -> {
-          RandomSource rand = entityIn.level.random;
+          RandomSource rand = worldIn.random;
           ItemEntity ent = entityIn.spawnAtLocation(d, 1.0F);
           ent.setDeltaMovement(ent.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
         });

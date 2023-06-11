@@ -51,8 +51,8 @@ public class EvokerFangItem extends ItemBaseCyclic {
   }
 
   private void summonFangSingle(Player caster, double x, double y, double z, float yaw, int delay) {
-    EvokerFangs entityevokerfangs = new EvokerFangs(caster.level, x, y, z, yaw, delay, caster);
-    caster.level.addFreshEntity(entityevokerfangs);
+    EvokerFangs entityevokerfangs = new EvokerFangs(caster.level(), x, y, z, yaw, delay, caster);
+    caster.level().addFreshEntity(entityevokerfangs);
     // so. WE are using this hack because the entity has a MAGIC NUMBER of 6.0F hardcoded in a few places deep inside methods and if statements
     //this number is the damage that it deals.  ( It should be a property )
     //    UtilNBT.setEntityBoolean(entityevokerfangs, NBT_FANG_FROMPLAYER);

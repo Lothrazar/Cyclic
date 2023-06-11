@@ -35,7 +35,7 @@ public class SoulstoneCharm extends ItemBaseToggle {
     player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
     player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
     player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
-    player.level.broadcastEntityEvent(player, (byte) 35);
+    player.level().broadcastEntityEvent(player, (byte) 35);
     ItemStackUtil.damageItem(player, itemstack);
     return true;
     //    }

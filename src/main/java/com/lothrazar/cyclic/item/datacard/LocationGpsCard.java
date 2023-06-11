@@ -63,14 +63,14 @@ public class LocationGpsCard extends ItemBaseCyclic {
     Player player = context.getPlayer();
     InteractionHand hand = context.getHand();
     player.swing(hand);
-    if (player.level.isClientSide) {
+    if (player.level().isClientSide) {
       return InteractionResult.PASS;
     }
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     ItemStack held = player.getItemInHand(hand);
     TagDataUtil.setItemStackBlockPos(held, pos);
-    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level));
+    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level()));
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
     ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.location.saved") + ChatUtil.blockPosToString(pos));

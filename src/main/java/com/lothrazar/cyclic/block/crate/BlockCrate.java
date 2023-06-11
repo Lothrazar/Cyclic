@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
 
 public class BlockCrate extends BlockCyclic {
 
@@ -44,7 +45,7 @@ public class BlockCrate extends BlockCyclic {
   }
 
   @Override
-  public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
+  public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
     // because harvestBlock manually forces a drop, we must do this to dodge that
     return new ArrayList<>();
   }

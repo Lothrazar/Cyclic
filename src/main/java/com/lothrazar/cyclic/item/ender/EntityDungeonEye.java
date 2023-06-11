@@ -68,7 +68,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
       return;
     }
     //  UtilParticle.spawnParticle(world, ParticleTypes.DRAGON_BREATH, this.getPosition(), 1);
-    if (!this.level.isClientSide) {
+    if (!this.level().isClientSide) {
       double posX = this.getX();
       double posY = this.getY();
       double posZ = this.getZ();

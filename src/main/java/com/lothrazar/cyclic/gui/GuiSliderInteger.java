@@ -62,7 +62,7 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
    * Call from Screen class to render tooltip during mouseover
    */
   @Override
-  public List<Component> getTooltip() {
+  public List<Component> getTooltips() {
     return tooltip;
   }
 

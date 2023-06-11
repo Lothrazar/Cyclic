@@ -8,6 +8,8 @@ import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -18,7 +20,7 @@ public class CraftingStickScreen extends ScreenBase<CraftingStickContainer> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -46,13 +48,13 @@ public class CraftingStickScreen extends ScreenBase<CraftingStickContainer> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     super.renderLabels(ms, mouseX, mouseY);
     this.drawButtonTooltips(ms, mouseX, mouseY);
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int x, int y) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int x, int y) {
     this.drawBackground(ms, TextureRegistry.V_CRAFTING);
   }
 }

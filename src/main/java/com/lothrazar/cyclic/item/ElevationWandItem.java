@@ -23,7 +23,7 @@ public class ElevationWandItem extends ItemBaseCyclic {
 
   @Override
   public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
-    return tryTeleport(playerIn.level, playerIn, target, stack) ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
+    return tryTeleport(playerIn.level(), playerIn, target, stack) ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
   }
 
   @Override

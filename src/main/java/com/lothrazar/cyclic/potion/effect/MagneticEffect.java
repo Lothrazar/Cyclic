@@ -16,6 +16,6 @@ public class MagneticEffect extends CyclicMobEffect {
   public void tick(LivingTickEvent event) {
     LivingEntity living = event.getEntity();
     int amp = living.getEffect(this).getAmplifier();
-    EntityUtil.moveEntityItemsInRegion(living.level, living.blockPosition(), 8 * amp, 1 + amp);
+    EntityUtil.moveEntityItemsInRegion(living.level(), living.blockPosition(), 8 * amp, 1 + amp);
   }
 }

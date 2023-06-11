@@ -1,7 +1,7 @@
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -12,10 +12,15 @@ version = "${mc_version}-${mod_version}"
 group = 'com.lothrazar.cyclic'
 archivesBaseName = 'Cyclic'
 
+base {
+    archivesName = mod_id
+}
+
 minecraft {
     mappings channel: 'official', version: "${mc_version}"
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    copyIdeResources = true
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -33,7 +38,7 @@ minecraft {
             property 'mixin.env.disableRefMap', 'true'
 		  
             mods {
-                cyclic {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -70,7 +75,8 @@ dependencies {
 //	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
 	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
+   // runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version}")
+   // compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version}:api")
 	
 	// optional compat: guidebook
 	//RIP patchouli i will miss you please stop being dead soon 
@@ -106,6 +112,26 @@ repositories {
   maven { url = "https://modmaven.dev"  }    
 //  maven { url 'https://www.cursemaven.com'  }
 }
+
+
+
+def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta']
+def replaceProperties = [
+        minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+        forge_version: forge_version, forge_version_range: forge_version_range,
+        loader_version_range: loader_version_range,
+        mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+        mod_authors: mod_authors, mod_description: mod_description
+]
+processResources {
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+}
+
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {

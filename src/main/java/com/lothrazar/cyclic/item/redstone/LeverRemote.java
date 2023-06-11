@@ -65,7 +65,7 @@ public class LeverRemote extends ItemBaseCyclic {
     if (world.getBlockState(pos).getBlock() instanceof LeverBlock) {
       TagDataUtil.setItemStackBlockPos(stack, pos);
       //and save dimension
-      stack.getOrCreateTag().putString("LeverDim", LevelWorldUtil.dimensionToString(player.level));
+      stack.getOrCreateTag().putString("LeverDim", LevelWorldUtil.dimensionToString(player.level()));
       //      UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
       if (world.isClientSide) {
         ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".saved");
@@ -97,7 +97,7 @@ public class LeverRemote extends ItemBaseCyclic {
     }
     String dimensionTarget = stack.getOrCreateTag().getString("LeverDim");
     //check if we can avoid crossing dimensions
-    String currentDim = LevelWorldUtil.dimensionToString(player.level);
+    String currentDim = LevelWorldUtil.dimensionToString(player.level());
     if (dimensionTarget.equalsIgnoreCase(currentDim)) { //same dim eh
       BlockState blockState = world.getBlockState(blockPos);
       if (blockState == null || blockState.getBlock() != Blocks.LEVER) {

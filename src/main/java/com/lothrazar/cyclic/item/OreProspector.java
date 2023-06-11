@@ -62,7 +62,7 @@ public class OreProspector extends ItemBaseCyclic {
         ores.add(p);
       }
     }
-    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level));
+    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level()));
     int i = 0;
     for (BlockPos p : ores) {
       CompoundTag tag = new CompoundTag();

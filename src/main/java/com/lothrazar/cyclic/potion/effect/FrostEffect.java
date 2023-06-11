@@ -17,6 +17,6 @@ public class FrostEffect extends CyclicMobEffect {
     // delete me i guess  
     LivingEntity living = event.getEntity();
     int amp = living.getEffect(this).getAmplifier();
-    FrostWalkerEnchantment.onEntityMoved(living, living.level, living.blockPosition(), amp);
+    FrostWalkerEnchantment.onEntityMoved(living, living.level(), living.blockPosition(), amp);
   }
 }

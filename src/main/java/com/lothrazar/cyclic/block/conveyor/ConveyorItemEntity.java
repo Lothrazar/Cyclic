@@ -42,18 +42,16 @@ public class ConveyorItemEntity extends ItemEntity {
 
   @Override
   public void tick() {
-    if (this.level == null) {
-      return;
-    }
-    if (!(this.level.getBlockState(this.blockPosition()).getBlock() instanceof BlockConveyor)) {
+
+    if (!(level().getBlockState(this.blockPosition()).getBlock() instanceof BlockConveyor)) {
       this.spawnRegularStack();
     }
     super.tick();
   }
 
   private void spawnRegularStack() {
-    ItemEntity e = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), this.getItem());
-    this.level.addFreshEntity(e);
+    ItemEntity e = new ItemEntity(this.level() ,this.getX(), this.getY(), this.getZ(), this.getItem());
+    this.level().addFreshEntity(e);
     this.setItem(ItemStack.EMPTY);
     this.remove(RemovalReason.DISCARDED);
   }

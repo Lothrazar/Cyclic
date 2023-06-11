@@ -134,7 +134,7 @@ public class BlockUtil {
         // ok its a soft (isReplaceable == true) block so try to break it first try to destroy it
         // unless it is liquid, don't try to destroy liquid
         //blockHere.getMaterial(stateHere)
-        if (stateHere.getMaterial().isLiquid() == false) {
+        if (stateHere.liquid() == false) {
           boolean dropBlock = true;
           if (world.isClientSide == false) {
             world.destroyBlock(placePos, dropBlock);

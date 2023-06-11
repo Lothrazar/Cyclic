@@ -7,6 +7,8 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -14,7 +16,7 @@ import net.minecraft.network.chat.Component;
 
 public class TimerBar {
 
-  private AbstractContainerScreen<?> parent;
+  private Font font;
   private int x = 20;
   private int y = 98;
   public int capacity;
@@ -25,8 +27,8 @@ public class TimerBar {
   public boolean showText = true;
   public boolean visible = true;
 
-  public TimerBar(AbstractContainerScreen<?> parent, int x, int y, int cap) {
-    this.parent = parent;
+  public TimerBar(Font parent, int x, int y, int cap) {
+    this.font = parent;
     this.x = x;
     this.y = y;
     this.capacity = cap;
@@ -37,26 +39,26 @@ public class TimerBar {
         && guiTop + y < mouseY && mouseY < guiTop + y + height;
   }
 
-  public void draw(PoseStack ms, float timer) {
+  public void draw(GuiGraphics gg, float timer) {
     if (!visible) {
       return;
     }
     //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.PROGRESS);
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, TextureRegistry.PROGRESS);
+//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+//    RenderSystem.setShaderTexture(0, TextureRegistry.PROGRESS);
     float pct = Math.min(timer / capacity, 1.0F);
-    Screen.blit(ms, guiLeft + x, guiTop + y,
+    gg.blit(TextureRegistry.PROGRESS, guiLeft + x, guiTop + y,
         0, 0,
         (int) (width * pct), height,
         width, height);
     if (showText) {
-      Minecraft.getInstance().font.draw(ms, "[" + ((int) timer) + "]",
+      gg.drawString(font, "[" + ((int) timer) + "]",
           guiLeft + x + 2,
           guiTop + y + 4, 4209792);
     }
   }
 
-  public void renderHoveredToolTip(PoseStack ms, int mouseX, int mouseY, int curr) {
+  public void renderHoveredToolTip(GuiGraphics gg, int mouseX, int mouseY, int curr) {
     if (this.isMouseover(mouseX, mouseY) && this.visible) {
       String display = "";
       int seconds = curr / Const.TICKS_PER_SEC;
@@ -75,7 +77,7 @@ public class TimerBar {
       }
       List<Component> list = new ArrayList<>();
       list.add(Component.translatable(display));
-      parent.renderComponentTooltip(ms, list, mouseX, mouseY);
+      gg.renderComponentTooltip(font, list, mouseX, mouseY);
     }
   }
 }

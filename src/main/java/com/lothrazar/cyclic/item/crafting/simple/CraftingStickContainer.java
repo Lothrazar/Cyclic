@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 
 public class CraftingStickContainer extends ContainerBase implements IContainerCraftingAction {
 
-  private final CraftingContainer craftMatrix = new CraftingContainer(this, 3, 3);
+  private final TransientCraftingContainer craftMatrix = new TransientCraftingContainer(this, 3, 3);
   final ResultContainer craftResult = new ResultContainer();
 
   //does NOT save inventory into the stack, very simple and plain
@@ -48,7 +49,7 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
 
   @Override
   public void slotsChanged(Container inventory) {
-    Level world = playerInventory.player.level;
+    Level world = playerInventory.player.level();
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;

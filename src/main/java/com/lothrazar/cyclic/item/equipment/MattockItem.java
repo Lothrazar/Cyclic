@@ -34,9 +34,9 @@ public class MattockItem extends DiggerItem {
 
   @Override
   public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
-    Level world = player.level;
+    Level level = player.level();
     //    this.getTier()
-    HitResult ray = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
+    HitResult ray = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
     int yoff = 0;
     if (radius == 2 && player.isCrouching()) {
       yoff = 1;
@@ -62,7 +62,7 @@ public class MattockItem extends DiggerItem {
         shape = ShapeUtil.squareVerticalX(pos, x, y);
       }
       for (BlockPos posCurrent : shape) {
-        BlockState bsCurrent = world.getBlockState(posCurrent);
+        BlockState bsCurrent = level.getBlockState(posCurrent);
         if (bsCurrent.isAir()) {
           continue;
         }
@@ -70,34 +70,34 @@ public class MattockItem extends DiggerItem {
             && player.mayUseItemAt(posCurrent, sideHit, stack)
             && ForgeEventFactory.doPlayerHarvestCheck(player, bsCurrent, true)
             && this.getDestroySpeed(stack, bsCurrent) > 1
-            && (bsCurrent.canHarvestBlock(world, pos, player)
+            && (bsCurrent.canHarvestBlock(level, pos, player)
                 || bsCurrent.is(this.getTier().getTag())
             //this.getTier().getTag().contains(bsCurrent.getBlock())
             )
         //end of OR
         ) {
-          stack.mineBlock(world, bsCurrent, posCurrent, player);
+          stack.mineBlock(level, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
-          if (world.isClientSide) {
-            world.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
+          if (level.isClientSide) {
+            level.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
             //removedByPlayer
-            if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
-              blockCurrent.destroy(world, posCurrent, bsCurrent);
+            if (blockCurrent.onDestroyedByPlayer(bsCurrent, level, posCurrent, player, true, bsCurrent.getFluidState())) {
+              blockCurrent.destroy(level, posCurrent, bsCurrent);
             }
             //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
           }
           else if (player instanceof ServerPlayer) { //Server side, so this works
             ServerPlayer mp = (ServerPlayer) player;
-            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
+            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
             if (xpGivenOnDrop >= 0) {
-              if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())
-                  && world instanceof ServerLevel) {
-                BlockEntity tile = world.getBlockEntity(posCurrent);
-                blockCurrent.destroy(world, posCurrent, bsCurrent);
-                blockCurrent.playerDestroy(world, player, posCurrent, bsCurrent, tile, stack);
-                blockCurrent.popExperience((ServerLevel) world, posCurrent, xpGivenOnDrop);
+              if (blockCurrent.onDestroyedByPlayer(bsCurrent, level, posCurrent, player, true, bsCurrent.getFluidState())
+                  && level instanceof ServerLevel) {
+                BlockEntity tile = level.getBlockEntity(posCurrent);
+                blockCurrent.destroy(level, posCurrent, bsCurrent);
+                blockCurrent.playerDestroy(level, player, posCurrent, bsCurrent, tile, stack);
+                blockCurrent.popExperience((ServerLevel) level, posCurrent, xpGivenOnDrop);
               }
-              mp.connection.send(new ClientboundBlockUpdatePacket(world, posCurrent));
+              mp.connection.send(new ClientboundBlockUpdatePacket(level, posCurrent));
             }
           }
         }

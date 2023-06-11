@@ -42,6 +42,7 @@ public class SnowEntity extends ThrowableItemProjectile {
       //drop torch
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
+      var level = level();
       if (target.isAlive() && target instanceof LivingEntity) {
         target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 5));
         target.hurt(level.damageSources().dryOut(), Mth.nextInt(level.random, 2, 3));

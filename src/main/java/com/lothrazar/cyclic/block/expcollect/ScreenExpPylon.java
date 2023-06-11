@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -16,7 +17,7 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
 
   public ScreenExpPylon(ContainerExpPylon screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    fluid = new FluidBar(this, 150, 8, TileExpPylon.CAPACITY);
+    fluid = new FluidBar(this.font, 150, 8, TileExpPylon.CAPACITY);
   }
 
   @Override
@@ -31,7 +32,7 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -39,18 +40,18 @@ public class ScreenExpPylon extends ScreenBase<ContainerExpPylon> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     int xp = menu.tile.getStoredXp();
     if (xp >= 0) {
-      this.font.draw(ms, xp + " " + ChatUtil.lang("cyclic.screen.xp"), (this.getXSize()) / 2 + 4, 40.0F, 4209792);
+      ms.drawString(font, xp + " " + ChatUtil.lang("cyclic.screen.xp"), (this.getXSize()) / 2 + 4, (int) 40.0F, 4209792);
     }
     btnRedstone.onValueUpdate(menu.tile);
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     fluid.draw(ms, menu.tile.tank.getFluid());
   }

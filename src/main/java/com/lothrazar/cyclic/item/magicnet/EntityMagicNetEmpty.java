@@ -50,6 +50,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
     HitResult.Type type = result.getType();
     SimpleParticleType particleType = null;
     double targetHeightOffset = 0.0d;
+    var level=level();
     if (type == HitResult.Type.ENTITY) {
       //now grab and kill the entity
       EntityHitResult entityRayTrace = (EntityHitResult) result;

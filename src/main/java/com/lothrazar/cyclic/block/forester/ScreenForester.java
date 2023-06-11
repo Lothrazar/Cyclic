@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -20,7 +21,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
 
   public ScreenForester(ContainerForester screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileForester.MAX);
+    this.energy = new EnergyBar(this.font, TileForester.MAX);
   }
 
   @Override
@@ -45,7 +46,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -53,7 +54,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(menu.tile);
@@ -62,7 +63,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     int relX = this.getXSize() / 2 - 9;
     this.drawSlot(ms, relX, 24, TextureRegistry.SLOT_SAPLING, Const.SQ);

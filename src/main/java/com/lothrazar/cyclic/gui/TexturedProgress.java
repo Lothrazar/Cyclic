@@ -5,6 +5,8 @@ import java.util.List;
 import com.lothrazar.cyclic.data.Const;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -12,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class TexturedProgress {
 
-  protected final Screen parent;
+  protected final Font font;
   protected final int x;
   protected final int y;
   protected final int width;
@@ -23,12 +25,12 @@ public class TexturedProgress {
   public int max = 1;
   protected boolean topDown = true;
 
-  public TexturedProgress(Screen parent, int x, int y, ResourceLocation texture) {
+  public TexturedProgress(Font parent, int x, int y, ResourceLocation texture) {
     this(parent, x, y, 14, 14, texture);
   }
 
-  public TexturedProgress(Screen parent, int x, int y, int width, int height, ResourceLocation texture) {
-    this.parent = parent;
+  public TexturedProgress(Font parent, int x, int y, int width, int height, ResourceLocation texture) {
+    this.font = parent;
     this.x = x;
     this.y = y;
     this.width = width;
@@ -41,28 +43,28 @@ public class TexturedProgress {
         && guiTop + y <= mouseY && mouseY <= guiTop + y + height;
   }
 
-  public void draw(PoseStack ms, float current) {
+  public void draw(GuiGraphics gg, float current) {
     int relX;
     int relY;
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, this.texture);
+//    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+//    RenderSystem.setShaderTexture(0, this.texture);
     relX = guiLeft + x;
     relY = guiTop + y;
     if (this.topDown) {
-      Screen.blit(ms, relX, relY, 0, 0, width, height, width, height * 2);
+      gg.blit(texture, relX, relY, 0, 0, width, height, width, height * 2);
       int rHeight = height - (int) (height * Math.min(current / max, 1.0F));
-      Screen.blit(ms, relX, relY, 0, height, width, rHeight, width, height * 2);
+      gg.blit(texture, relX, relY, 0, height, width, rHeight, width, height * 2);
     }
     else { //Left-Right mode
-      Screen.blit(ms, relX, relY, 0, height, width, height, width, height * 2);
+      gg.blit(texture, relX, relY, 0, height, width, height, width, height * 2);
       int rWidth = (int) (width * Math.min(current / max, 1.0F));
       if (current != 0) {
-        Screen.blit(ms, relX, relY, 0, 0, width - rWidth, height, width, height * 2);
+        gg.blit(texture, relX, relY, 0, 0, width - rWidth, height, width, height * 2);
       }
     }
   }
 
-  public void renderHoveredToolTip(PoseStack ms, int mouseX, int mouseY, int curr) {
+  public void renderHoveredToolTip(GuiGraphics gg, int mouseX, int mouseY, int curr) {
     if (this.isMouseover(mouseX, mouseY) && curr > 0) {
       String display = "";
       int seconds = curr / Const.TICKS_PER_SEC;
@@ -81,7 +83,7 @@ public class TexturedProgress {
       }
       List<Component> list = new ArrayList<>();
       list.add(Component.translatable(display));
-      parent.renderComponentTooltip(ms, list, mouseX, mouseY);
+      gg.renderComponentTooltip(font, list, mouseX, mouseY);
     }
   }
 

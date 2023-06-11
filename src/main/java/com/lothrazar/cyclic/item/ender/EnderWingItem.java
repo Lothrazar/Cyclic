@@ -108,7 +108,7 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
 
   @Override
   public void toggle(Player player, ItemStack held) {
-    this.attemptTeleport(player.level, player, held);
+    this.attemptTeleport(player.level(), player, held);
   }
 
   @Override

@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.gui.TexturedProgress;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -20,8 +21,8 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
 
   public ScreenUncraft(ContainerUncraft screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    this.energy = new EnergyBar(this, TileUncraft.MAX);
-    this.progress = new TexturedProgress(this, 58, 20, TextureRegistry.SAW);
+    this.energy = new EnergyBar(this.font, TileUncraft.MAX);
+    this.progress = new TexturedProgress(this.font, 58, 20, TextureRegistry.SAW);
     this.progress.max = TileUncraft.TIMER.get();
   }
 
@@ -38,7 +39,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   }
 
   @Override
-  public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+  public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(ms);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
@@ -46,7 +47,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   }
 
   @Override
-  protected void renderLabels(PoseStack ms, int mouseX, int mouseY) {
+  protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(menu.tile);
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
@@ -77,7 +78,7 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
   }
 
   @Override
-  protected void renderBg(PoseStack ms, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, menu.tile.getEnergy());
     this.drawSlot(ms, 38, 18);

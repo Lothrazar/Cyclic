@@ -60,7 +60,7 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
   }
 
   @Override
-  public List<Component> getTooltip() {
+  public List<Component> getTooltips() {
     return tooltip;
   }
 
