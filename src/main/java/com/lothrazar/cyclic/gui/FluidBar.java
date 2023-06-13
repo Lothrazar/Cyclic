@@ -5,11 +5,9 @@ import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
-import com.lothrazar.cyclic.render.RenderUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.material.Fluids;
@@ -78,12 +76,13 @@ public class FluidBar {
     }
     int xPosition = x + 1;
     int yPosition = y + 1;
-    int yOffset = height - 2;
+    int maximum = height - 2;
     int desiredWidth = width - 2;
     int desiredHeight = fluidAmount - 2;
-    int blitoffset = AbstractContainerScreen.SLOT_ITEM_BLIT_OFFSET;// ???????? TODO: matrixPoseStack.getBlitOffset();
-    RenderUtils.drawTiledSprite(gg, xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, blitoffset);
-    // drawTiledSprite(gg, xPosition,yPosition,yOffset, width - 2, fluidAmount - 2, sprite);
+    // the .getBlitOffset() no longer exists.
+    //good news we can drop vertexbuilder sprites and use gg blit this way
+    // RenderUtils.drawTiledSprite(gg, xPosition,yPosition,yOffset, width - 2, fluidAmount - 2, sprite);
+    gg.blit(xPosition, yPosition + (maximum - desiredHeight), 0, desiredWidth, desiredHeight, sprite);
     if (fluid.getFluid() == Fluids.WATER) {
       RenderSystem.setShaderColor(1, 1, 1, 1); //un-apply the water filter
     }
