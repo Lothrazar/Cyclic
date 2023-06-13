@@ -98,8 +98,8 @@ public class EventRender {
     int width = mc.getWindow().getGuiScaledWidth();
     int height = mc.getWindow().getGuiScaledHeight();
     //    mc.getItemRenderer().render(stack, null, false, null, null, width, height, null);
-    var context = ItemDisplayContext.GUI;
-    var pose = poseStack.pose();
+//    var context = ItemDisplayContext.GUI;
+//    var pose = poseStack.pose();
     poseStack.renderItem(stack, width / 2, height / 2, 0, 10);
   }
 

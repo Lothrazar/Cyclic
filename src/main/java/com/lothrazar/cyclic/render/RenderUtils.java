@@ -16,6 +16,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -26,8 +27,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +43,6 @@ import net.minecraftforge.fluids.FluidStack;
 /**
  * legacy ref https://www.minecraftforge.net/forum/topic/79556-1151-rendering-block-manually-clientside/?tab=comments#comment-379808
  */
-@SuppressWarnings("removal") // fix in 1.19
 public class RenderUtils {
 
   /**
@@ -60,11 +58,12 @@ public class RenderUtils {
    * @param textureHeight
    * @param zLevel
    */
-  public static void drawTiledSprite(Matrix4f matrix, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite, int textureWidth,
+  public static void drawTiledSprite(GuiGraphics gg, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite, int textureWidth,
       int textureHeight, int zLevel) {
     if (desiredWidth == 0 || desiredHeight == 0 || textureWidth == 0 || textureHeight == 0) {
       return;
     }
+    var matrix = gg.pose().last().pose();
     //    Minecraft.getInstance().textureManager.bind(InventoryMenu.BLOCK_ATLAS);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
@@ -245,10 +244,12 @@ public class RenderUtils {
 
   /**
    * Call from TESR perspective
+   * 
+   * @param level
    */
-  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, ItemStack stack, float alpha, float scale) {
+  public static void renderAsBlock(Level level, final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, ItemStack stack, float alpha, float scale) {
     BlockState renderBlockState = Block.byItem(stack.getItem()).defaultBlockState();
-    renderAsBlock(centerPos, shape, matrix, renderBlockState, alpha, scale);
+    renderAsBlock(level, centerPos, shape, matrix, renderBlockState, alpha, scale);
   }
 
   /**
@@ -257,8 +258,8 @@ public class RenderUtils {
    * used by cyclic:light_camo
    * 
    */
-  public static void renderAsBlock(final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, BlockState renderBlockState, float alpha, float scale) {
-    Level world = Minecraft.getInstance().level;
+  public static void renderAsBlock(Level world, final BlockPos centerPos, final List<BlockPos> shape, PoseStack matrix, BlockState renderBlockState, float alpha, float scale) {
+    //    Level world = Minecraft.getInstance().level;
     //render 
     //    Minecraft.getInstance().getTextureManager().bind(InventoryMenu.BLOCK_ATLAS);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -303,7 +304,7 @@ public class RenderUtils {
         int combinedOverlay = 655360;
         for (Direction direction : Direction.values()) {
           RenderUtils.renderModelBrightnessColorQuads(matrix.last(), builder, red, green, blue, alpha,
-              ibakedmodel.getQuads(renderBlockState, direction, RandomSource.create(Mth.getSeed(coordinate)),
+              ibakedmodel.getQuads(renderBlockState, direction, world.random,
                   ibakedmodel.getModelData(world, centerPos, renderBlockState, null), FakeBlockRenderTypes.FAKE_BLOCK), // EmptyModelData.INSTANCE 
               combinedLights, combinedOverlay);
         }

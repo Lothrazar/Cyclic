@@ -26,7 +26,7 @@ public class SoundmuffRender implements BlockEntityRenderer<SoundmuffTile> {
     }
     ItemStack stack = inv.getStackInSlot(0);
     if (!stack.isEmpty()) {
-      RenderUtils.renderAsBlock(te.getBlockPos(), te.getShape(), matrixStack, stack, 1F, 1F);
+      RenderUtils.renderAsBlock(te.getLevel(), te.getBlockPos(), te.getShape(), matrixStack, stack, 1F, 1F);
     }
   }
 }

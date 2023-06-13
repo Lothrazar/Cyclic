@@ -141,7 +141,8 @@ public class CandleWaterBlock extends BlockCyclic {
   }
 
   private void afterSpawnSuccess(Mob monster, Level world, BlockPos pos, RandomSource rand) {
-    monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
+    //    monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
+    ForgeEventFactory.onFinalizeSpawn(monster, world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
     world.scheduleTick(pos, this, TICK_RATE.get());
   }
 

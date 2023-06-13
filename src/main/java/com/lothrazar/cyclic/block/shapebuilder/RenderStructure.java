@@ -26,7 +26,7 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure> {
         RenderUtils.renderOutline(te.getBlockPos(), te.getShape(), matrixStack, 0.4F, ClientConfigCyclic.getColor(te));
       }
       else {
-        RenderUtils.renderAsBlock(te.getBlockPos(), te.getShape(), matrixStack, stack, 1, 1);
+        RenderUtils.renderAsBlock(te.getLevel(), te.getBlockPos(), te.getShape(), matrixStack, stack, 1, 1);
       }
     }
   }

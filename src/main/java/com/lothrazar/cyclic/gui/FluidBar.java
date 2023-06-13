@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.render.RenderUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.material.Fluids;
@@ -53,12 +54,12 @@ public class FluidBar {
     this.width = width;
   }
 
-  public void draw(GuiGraphics ms, FluidStack fluid) {
+  public void draw(GuiGraphics gg, FluidStack fluid) {
     final int u = 0, v = 0, x = guiLeft + getX(), y = guiTop + getY();
     //    parent.getMinecraft().getTextureManager().bind(TextureRegistry.FLUID_WIDGET);
     //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
     //    RenderSystem.setShaderTexture(0, TextureRegistry.FLUID_WIDGET);
-    ms.blit(TextureRegistry.FLUID_WIDGET,
+    gg.blit(TextureRegistry.FLUID_WIDGET,
         x, y, u, v,
         width, height,
         width, height);
@@ -70,20 +71,22 @@ public class FluidBar {
     float amount = fluid.getAmount();
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-    TextureAtlasSprite icon = FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL);
+    TextureAtlasSprite sprite = FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL);
     if (fluid.getFluid() == Fluids.WATER) {
       //hack in the blue because water is grey and is filled in by the biome when in-world
       RenderSystem.setShaderColor(0, 0, 1, 1);
     }
-    drawTiledSprite(ms, x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
+    int xPosition = x + 1;
+    int yPosition = y + 1;
+    int yOffset = height - 2;
+    int desiredWidth = width - 2;
+    int desiredHeight = fluidAmount - 2;
+    int blitoffset = AbstractContainerScreen.SLOT_ITEM_BLIT_OFFSET;// ???????? TODO: matrixPoseStack.getBlitOffset();
+    RenderUtils.drawTiledSprite(gg, xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, blitoffset);
+    // drawTiledSprite(gg, xPosition,yPosition,yOffset, width - 2, fluidAmount - 2, sprite);
     if (fluid.getFluid() == Fluids.WATER) {
       RenderSystem.setShaderColor(1, 1, 1, 1); //un-apply the water filter
     }
-  }
-
-  protected void drawTiledSprite(GuiGraphics stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-    //32 stack.getBlitOffset() ?
-    RenderUtils.drawTiledSprite(stack.pose().last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, 32);
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {
