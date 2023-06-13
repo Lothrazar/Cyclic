@@ -32,6 +32,7 @@ public class DimensionTransit implements ITeleporter {
     return new PortalInfo(new Vec3(myPos.getX() + 0.5F, myPos.getY() + 0.5F, myPos.getZ() + 0.5F), Vec3.ZERO, entity.getYRot(), entity.getXRot());
   }
 
+  @SuppressWarnings("deprecation")
   private BlockPos moveToSafeCoords(ServerLevel world, BlockPos pos) {
     int tries = 10;
     while (tries > 0) {

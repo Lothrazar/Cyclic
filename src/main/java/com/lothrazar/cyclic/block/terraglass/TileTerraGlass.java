@@ -51,6 +51,7 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private boolean canBlockSeeSky(Level world, BlockPos pos) {
     if (world.canSeeSky(pos)) {
       return true;

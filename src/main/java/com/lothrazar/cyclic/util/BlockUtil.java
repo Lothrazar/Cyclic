@@ -112,6 +112,7 @@ public class BlockUtil {
    * @param playSound
    * @return
    */
+  @SuppressWarnings("deprecation")
   public static boolean placeStateSafe(Level world, Player player, BlockPos placePos, BlockState placeState, boolean playSound) {
     if (placePos == null) {
       return false;

@@ -32,7 +32,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -98,8 +97,8 @@ public class EventRender {
     int width = mc.getWindow().getGuiScaledWidth();
     int height = mc.getWindow().getGuiScaledHeight();
     //    mc.getItemRenderer().render(stack, null, false, null, null, width, height, null);
-//    var context = ItemDisplayContext.GUI;
-//    var pose = poseStack.pose();
+    //    var context = ItemDisplayContext.GUI;
+    //    var pose = poseStack.pose();
     poseStack.renderItem(stack, width / 2, height / 2, 0, 10);
   }
 

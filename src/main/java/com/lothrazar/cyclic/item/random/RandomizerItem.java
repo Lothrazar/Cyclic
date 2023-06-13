@@ -91,6 +91,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     return places;
   }
 
+  @SuppressWarnings("deprecation")
   public static boolean canMove(BlockState stateHere, Level world, BlockPos p) {
     if (stateHere.getDestroySpeed(world, p) < 0) {
       return false; //unbreakable

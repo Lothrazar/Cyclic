@@ -35,7 +35,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -236,7 +235,7 @@ public class ItemEvents {
   public void onEntityDamage(LivingDamageEvent event) {
     DamageSource src = event.getSource();
     if (event.getEntity() instanceof Player player) {
-//      DamageType type = src.type();
+      //      DamageType type = src.type();
       if (src.is(DamageTypes.EXPLOSION)) {
         //explosion thingy
         this.damageFinder(event, player, ItemRegistry.CHARM_CREEPER.get(), 0);

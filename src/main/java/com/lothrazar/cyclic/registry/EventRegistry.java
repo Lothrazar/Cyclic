@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.capabilities.CapabilityEvents;
-import com.lothrazar.cyclic.compat.curios.CuriosRegistry;
 import com.lothrazar.cyclic.event.BiomeEvents;
 import com.lothrazar.cyclic.event.BlockSpawnEvents;
 import com.lothrazar.cyclic.event.ItemEvents;
@@ -15,7 +14,6 @@ public class EventRegistry {
 
   public static void setup(final FMLCommonSetupEvent event) {
     //now all blocks/items exist
-    CuriosRegistry.setup(event);
     PotionRegistry.setup();
     PacketRegistry.setup();
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
