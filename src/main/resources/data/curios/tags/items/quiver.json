@@ -1,0 +1,7 @@
+{
+  "replace": "false",
+  "values": [
+    {"id": "cyclic:quiver_lightning","required":false}, 
+    {"id": "cyclic:quiver_damage","required":false}
+  ]
+}

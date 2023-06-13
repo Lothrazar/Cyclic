@@ -3,9 +3,7 @@
   "values": [
      {"id":   "cyclic:charm_ultimate",                                        "required":false}, 
      {"id":   "cyclic:charm_venom","required":false}, 
-     {"id":   "cyclic:charm_creeper","required":false}, 
      {"id":   "cyclic:charm_antipotion","required":false}, 
-     {"id":   "cyclic:charm_boostpotion","required":false}, 
-     {"id":   "cyclic:antigravity","required":false}
+     {"id":   "cyclic:charm_boostpotion","required":false}
   ]
 }

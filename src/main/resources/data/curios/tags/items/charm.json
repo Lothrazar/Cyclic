@@ -5,7 +5,9 @@
      {"id": "cyclic:charm_void","required":false}, 
      {"id": "cyclic:charm_antidote","required":false}, 
      {"id": "cyclic:charm_wither","required":false}, 
+    {"id":   "cyclic:charm_creeper",               "required":false}, 
      {"id": "cyclic:charm_fire","required":false}, 
+     {"id":   "cyclic:charm_magicdefense",          "required":false}, 
      {"id": "cyclic:charm_water","required":false}, 
      {"id": "cyclic:charm_starvation","required":false}, 
      {"id": "cyclic:charm_wing","required":false}, 
@@ -14,6 +16,7 @@
      {"id": "cyclic:charm_torch", "required":false},
      {"id":  "cyclic:charm_ultimate",                  "required":false}, 
      {"id": "cyclic:charm_stealthpotion","required":false},
+     {"id":   "cyclic:charm_stone"          ,        "required":false},
      {"id": "cyclic:antigravity","required":false}
   ]
 }

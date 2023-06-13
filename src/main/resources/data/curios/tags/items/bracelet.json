@@ -4,10 +4,6 @@
     {"id":   "cyclic:charm_knockback_resistance",  "required":false}, 
     {"id":   "cyclic:charm_crit",                  "required":false}, 
     {"id":   "cyclic:charm_creeper",               "required":false}, 
-    {"id":   "cyclic:quiver_lightning",            "required":false}, 
-    {"id":   "cyclic:quiver_damage",               "required":false}, 
-    {"id":   "cyclic:antigravity",                 "required":false}, 
-    {"id":   "cyclic:charm_magicdefense",          "required":false}, 
-    {"id":   "cyclic:charm_stone"          ,        "required":false}
+    {"id":   "cyclic:antigravity",                 "required":false}
   ]
 }

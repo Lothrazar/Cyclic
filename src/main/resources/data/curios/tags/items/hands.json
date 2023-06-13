@@ -2,7 +2,6 @@
   "replace": "false",
   "values": [
    {"id":  "cyclic:charm_attack_speed",                                   "required":false}, 
-   {"id":  "cyclic:charm_crit","required":false}, 
    {"id":  "cyclic:charm_starvation","required":false}, 
    {"id":  "cyclic:glove_climb","required":false}
   ]
