@@ -16,14 +16,11 @@ out
 # gradle
 build
 .gradle
-mcmodsrepo/
 
 # other
-eclipse
 run
+logs
+libs
 
 # Files from Forge MDK
 forge*changelog.txt
-logs/
-libs/
-src/generated
