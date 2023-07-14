@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.data.Model3D;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
@@ -9,6 +8,7 @@ import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
+import com.lothrazar.library.data.Model3D;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;

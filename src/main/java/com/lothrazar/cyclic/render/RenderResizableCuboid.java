@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.render;
 import java.util.Arrays;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import com.lothrazar.cyclic.data.Model3D;
+import com.lothrazar.library.data.Model3D;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

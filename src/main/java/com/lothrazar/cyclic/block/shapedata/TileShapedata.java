@@ -3,12 +3,12 @@ package com.lothrazar.cyclic.block.shapedata;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.library.core.BlockPosDim;
-import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -193,7 +193,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       return false;
     }
     boolean cardEmpty = stack.getTag() == null
-        || !stack.getTag().getBoolean(ShapeCard.VALID_SHAPE);
+        || !stack.getTag().getBoolean(RelativeShape.VALID_SHAPE);
     BlockPos invA = getTarget(SLOT_A);
     BlockPos invB = getTarget(SLOT_B);
     boolean hasTargets = invA != null && invB != null;

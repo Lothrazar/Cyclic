@@ -5,7 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.library.core.BlockPosDim;
-import com.lothrazar.cyclic.data.RelativeShape;
+import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;

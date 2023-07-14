@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
-import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
+import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.PlayerUtil;
 import net.minecraft.ChatFormatting;
@@ -23,8 +23,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ShapeCard extends ItemBaseCyclic {
-
-  public static final String VALID_SHAPE = "cyclic-shape";
 
   public ShapeCard(Properties properties) {
     super(properties);
