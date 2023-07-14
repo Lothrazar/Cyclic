@@ -23,7 +23,6 @@ public class FireplaceBlock extends BlockCyclic {
     this.registerDefaultState(this.defaultBlockState().setValue(LIT, false));
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     boolean isPowered = worldIn.hasNeighborSignal(pos);

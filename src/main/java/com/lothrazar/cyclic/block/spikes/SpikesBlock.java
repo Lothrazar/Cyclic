@@ -126,7 +126,6 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
     }
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     if (state.getValue(ACTIVATED).booleanValue() == false && world.hasNeighborSignal(pos)) {

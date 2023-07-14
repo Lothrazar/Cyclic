@@ -1,15 +1,15 @@
 package com.lothrazar.cyclic.block.anvilvoid;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
-import com.lothrazar.library.util.SoundUtil;
+import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.FluidHelpersUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

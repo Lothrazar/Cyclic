@@ -11,7 +11,6 @@ public class BlockScaffoldingResponsive extends BlockScaffolding {
     super(properties, autobreak);
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);

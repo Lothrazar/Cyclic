@@ -44,7 +44,6 @@ public class MembraneBlock extends BlockCyclic {
     return Shapes.block();
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     //if i am not wet
