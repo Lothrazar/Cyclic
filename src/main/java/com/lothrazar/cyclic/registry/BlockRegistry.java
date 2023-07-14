@@ -131,6 +131,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
@@ -157,7 +158,7 @@ public class BlockRegistry {
           .displayItems((enabledFlags, populator) -> {
             for (RegistryObject<Item> itemHolder : ItemRegistry.ITEMS.getEntries()) {
               ItemStack stupidForgeFiringEventsOutOfOrder = new ItemStack(itemHolder.get());
-              if (!stupidForgeFiringEventsOutOfOrder.isEmpty() && Block.byItem(itemHolder.get()) == null)
+              if (!stupidForgeFiringEventsOutOfOrder.isEmpty() && Block.byItem(itemHolder.get()) == Blocks.AIR)
                 populator.accept(stupidForgeFiringEventsOutOfOrder);
             }
           }).build());
