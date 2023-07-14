@@ -26,6 +26,7 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import com.lothrazar.library.util.TagDataUtil;
@@ -42,7 +43,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class MultiJumpEnchant extends EnchantmentCyclic {
+public class MultiJumpEnchant extends EnchantmentFlib {
 
   public static final String ID = "launch";
   public static final int COOLDOWN = 7 * Const.TPS;

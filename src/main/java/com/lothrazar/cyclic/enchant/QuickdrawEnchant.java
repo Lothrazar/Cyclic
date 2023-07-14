@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +35,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class QuickdrawEnchant extends EnchantmentCyclic {
+public class QuickdrawEnchant extends EnchantmentFlib {
 
   public static final String ID = "quickshot";
   public static BooleanValue CFG;

@@ -26,6 +26,7 @@ package com.lothrazar.cyclic.enchant;
 import java.util.Optional;
 import java.util.function.Supplier;
 import com.google.common.base.Suppliers;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -45,7 +46,7 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class AutoSmeltEnchant extends EnchantmentCyclic {
+public class AutoSmeltEnchant extends EnchantmentFlib {
 
   public static final String ID = "auto_smelt";
   public static BooleanValue CFG;

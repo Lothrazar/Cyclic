@@ -27,6 +27,7 @@ import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
@@ -48,7 +49,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class BeheadingEnchant extends EnchantmentCyclic {
+public class BeheadingEnchant extends EnchantmentFlib {
 
   public static IntValue PERCDROP;
   public static IntValue PERCPERLEVEL;

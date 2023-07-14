@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -37,7 +38,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class BeekeeperEnchant extends EnchantmentCyclic {
+public class BeekeeperEnchant extends EnchantmentFlib {
 
   public static final String ID = "beekeeper";
   public static BooleanValue CFG;

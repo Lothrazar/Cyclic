@@ -26,6 +26,7 @@ package com.lothrazar.cyclic.enchant;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclic.util.HarvestUtil;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -45,7 +46,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class GrowthEnchant extends EnchantmentCyclic {
+public class GrowthEnchant extends EnchantmentFlib {
 
   public static final double ODDS_ROTATE = 0.04;
   public static final String ID = "growth";

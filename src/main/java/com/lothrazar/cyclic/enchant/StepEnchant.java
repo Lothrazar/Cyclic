@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.AttributesUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +37,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class StepEnchant extends EnchantmentCyclic {
+public class StepEnchant extends EnchantmentFlib {
 
   private static final String NBT_ON = ModCyclic.MODID + "_stepenchant";
   public static final String ID = "step";

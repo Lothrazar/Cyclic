@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.FakePlayerUtil;
 import net.minecraft.world.effect.MobEffect;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 
-public class GloomCurseEnchant extends EnchantmentCyclic {
+public class GloomCurseEnchant extends EnchantmentFlib {
 
   public static final double BASE_ACTIVATION_CHANCE = 0.1;
   public static final double BASE_APPLY_CHANCE = 0.3;

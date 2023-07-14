@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -31,7 +32,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class SteadyEnchant extends EnchantmentCyclic {
+public class SteadyEnchant extends EnchantmentFlib {
 
   public static final String ID = "steady";
   public static BooleanValue CFG;

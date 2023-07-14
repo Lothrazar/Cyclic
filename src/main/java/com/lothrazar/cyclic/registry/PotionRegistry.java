@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.recipe.ModBrewingRecipe;
+import com.lothrazar.library.recipe.BrewingRecipeFlib;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
@@ -132,6 +132,6 @@ public class PotionRegistry {
   }
 
   private static void basicBrewing(ItemStack inputPot, Potion pot, Item item) {
-    BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(inputPot, Ingredient.of(item), PotionUtils.setPotion(new ItemStack(Items.POTION), pot)));
+    BrewingRecipeRegistry.addRecipe(new BrewingRecipeFlib(inputPot, Ingredient.of(item), PotionUtils.setPotion(new ItemStack(Items.POTION), pot)));
   }
 }
