@@ -1,4 +1,7 @@
 package com.lothrazar.cyclic.world.cache;
+
+import com.lothrazar.library.core.LivingTileCache;
+
 /**
  * Server side multi-cache
  */
