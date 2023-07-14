@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;

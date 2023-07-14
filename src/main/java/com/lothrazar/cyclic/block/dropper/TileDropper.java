@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.dropper;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;

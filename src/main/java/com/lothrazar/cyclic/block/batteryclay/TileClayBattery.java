@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.batteryclay;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;

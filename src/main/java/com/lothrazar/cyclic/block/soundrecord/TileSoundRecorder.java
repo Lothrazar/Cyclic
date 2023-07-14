@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.soundrecord;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
+import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;

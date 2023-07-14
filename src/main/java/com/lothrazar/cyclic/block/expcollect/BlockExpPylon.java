@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
+import com.lothrazar.library.cap.item.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ItemStackUtil;

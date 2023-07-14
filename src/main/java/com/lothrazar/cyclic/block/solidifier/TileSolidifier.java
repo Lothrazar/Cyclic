@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.solidifier;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
-import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.library.cap.ItemStackHandlerWrapper;
+import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;

@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
-import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;

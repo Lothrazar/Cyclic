@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

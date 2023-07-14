@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.expcollect;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
-import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
+import com.lothrazar.library.cap.item.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

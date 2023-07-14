@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.creativeitem;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
+import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
