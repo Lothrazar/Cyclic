@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.lothrazar.cyclic.util.ItemStackUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.data.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

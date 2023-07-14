@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.ender;
 
 import java.util.List;
-import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;

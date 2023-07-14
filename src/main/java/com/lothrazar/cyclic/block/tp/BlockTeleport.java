@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.tp;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.lothrazar.cyclic.world.DimensionTransit;

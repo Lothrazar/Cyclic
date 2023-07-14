@@ -113,6 +113,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
 
+  flatDir { dir 'libs' } 
   maven {
     // location of the maven that hosts JEI files
     name = "Progwml6 maven"
@@ -127,7 +128,9 @@ repositories {
 }
 
 dependencies {
- implementation fg.deobf("curse.maven:flib-661261:4583429")
+
+ implementation fg.deobf("blank:flib-1.20.1:0.0.7-SNAPSHOT")
+// implementation fg.deobf("curse.maven:flib-661261:4583429")
 //  implementation fg.deobf("curse.maven:patchouli-306770:4636277")
     // Specify the version of Minecraft to use.
     // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.

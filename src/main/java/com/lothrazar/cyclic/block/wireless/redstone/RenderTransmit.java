@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.wireless.redstone;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
-import com.lothrazar.cyclic.data.BlockPosDim;
+import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
