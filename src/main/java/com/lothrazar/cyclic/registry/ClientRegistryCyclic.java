@@ -99,8 +99,7 @@ public class ClientRegistryCyclic {
   };
 
   public ClientRegistryCyclic() {
-    //fired by mod constructor  DistExecutor.safeRunForDist
-    System.out.println("TESTY");
+    //fired by mod constructor  DistExecutor.safeRunForDist 
     MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
     MinecraftForge.EVENT_BUS.register(new EventRender());
   }

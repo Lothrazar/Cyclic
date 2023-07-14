@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.spawntriggers;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.cache.ServerCacheHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.world.cache.ServerCacheHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

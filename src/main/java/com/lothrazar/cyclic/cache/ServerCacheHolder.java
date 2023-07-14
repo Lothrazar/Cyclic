@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.world.cache;
+package com.lothrazar.cyclic.cache;
 
 import com.lothrazar.library.core.LivingTileCache;
 

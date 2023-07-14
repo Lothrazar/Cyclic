@@ -34,21 +34,11 @@ public class ClientInputEvents {
 
   @SubscribeEvent // KeyInputEvent 
   public void onKeyInput(InputEvent.Key event) {
-    System.out.println("key POST");
     EnchantRegistry.LAUNCH.get().onKeyInput(Minecraft.getInstance().player);
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
     }
   }
-  //  @SubscribeEvent // KeyInputEvent -> KeyPressed
-  //  public void onKeyInputfffff(ScreenEvent.KeyPressed.Pre event) {
-  //    System.out.println("key KeyPressed PRE");
-  //  }
-  //
-  //  @SubscribeEvent // KeyInputEvent -> KeyPressed
-  //  public void onKeyInputffre(ScreenEvent.KeyReleased.Pre event) {
-  //    System.out.println("key KeyReleased");
-  //  }
 
   @SubscribeEvent // MouseScrollEvent -> MouseScrollingEvent
   public void onMouseEvent(InputEvent.MouseScrollingEvent event) {
@@ -69,8 +59,7 @@ public class ClientInputEvents {
     Minecraft mc = Minecraft.getInstance();
     Screen screen = mc.screen;
     if (screen instanceof AbstractContainerScreen<?> gui && !(screen instanceof CreativeModeInventoryScreen)) {
-      //      if (gui.getSlotUnderMouse() != null) {
-      //        System.out.println("DrawScreenEvent");
+      //      if (gui.getSlotUnderMouse() != null) { 
       //        Slot slotHit = gui.getSlotUnderMouse();
       //        ItemStack stackTarget = slotHit.getItem();
       ItemStack maybeFood = mc.player.containerMenu.getCarried();
@@ -78,9 +67,7 @@ public class ClientInputEvents {
       //        if (held.isEdible()) {
       for (ItemStack box : boxes) {
         ItemLunchbox.setHoldingEdible(box, maybeFood.isEdible());
-        //        if (maybeFood.isEdible()) System.out.println(maybeFood + "DrawScreenEvent set edible " + box.getTag());
       }
-      //      }
     }
   }
 
