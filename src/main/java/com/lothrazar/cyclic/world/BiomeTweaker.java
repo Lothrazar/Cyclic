@@ -82,17 +82,5 @@ public class BiomeTweaker {
         // Tell generator to run only when server data are generating
         event.includeServer(),
         butts);
-    ///
-    //old shit
-    //    final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, event.getLookupProvider().get());
-    //    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
-    //        generator, existingFileHelper, ModCyclic.MODID, ops, Registries.PLACED_FEATURE, Map.of(
-    //            new ResourceLocation(ModCyclic.MODID, "cyan"), WorldGenPlacements.PF_FLOWER_CYAN.get())));
-    //    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
-    //        generator, existingFileHelper, ModCyclic.MODID, ops, Registries.PLACED_FEATURE, Map.of(
-    //            new ResourceLocation(ModCyclic.MODID, "lime"), WorldGenPlacements.PF_FLOWER_LIME.get())));
-    //    generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
-    //        generator, existingFileHelper, ModCyclic.MODID, ops, Registries.PLACED_FEATURE, Map.of(
-    //            new ResourceLocation(ModCyclic.MODID, "tulip"), WorldGenPlacements.PF_FLOWER_TULIP.get())));
   }
 }

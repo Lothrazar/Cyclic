@@ -13,8 +13,7 @@ import com.lothrazar.cyclic.item.elemental.SnowEntity;
 import com.lothrazar.cyclic.item.ender.EntityDungeonEye;
 import com.lothrazar.cyclic.item.ender.EyeOfEnderEntityNodrop;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
-import com.lothrazar.cyclic.item.slingshot.LaserEntity;
-import com.lothrazar.cyclic.item.slingshot.MagicMissileEntity;
+import com.lothrazar.cyclic.item.missile.MagicMissileEntity;
 import com.lothrazar.cyclic.item.slingshot.StoneEntity;
 import com.lothrazar.cyclic.item.torchthrow.EntityTorchBolt;
 import net.minecraft.world.entity.EntityType;
@@ -92,12 +91,6 @@ public class EntityRegistry {
       .setTrackingRange(128)
       .sized(.6F, .6F)
       .build("stone_bolt"));
-  public static final RegistryObject<EntityType<LaserEntity>> LASER_BOLT = ENTITIES.register("laser_bolt", () -> EntityType.Builder.<LaserEntity> of(LaserEntity::new, MobCategory.MISC)
-      .setShouldReceiveVelocityUpdates(true)
-      .setUpdateInterval(1)
-      .setTrackingRange(128)
-      .sized(.6F, .6F)
-      .build("laser_bolt"));
   public static final RegistryObject<EntityType<MagicMissileEntity>> MAGIC_MISSILE = ENTITIES.register("magic_missile", () -> EntityType.Builder.<MagicMissileEntity> of(MagicMissileEntity::new, MobCategory.MISC)
       .setShouldReceiveVelocityUpdates(true)
       .setUpdateInterval(1)

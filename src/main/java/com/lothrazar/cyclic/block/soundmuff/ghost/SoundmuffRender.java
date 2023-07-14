@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.soundmuff.ghost;
 
-import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -26,7 +26,7 @@ public class SoundmuffRender implements BlockEntityRenderer<SoundmuffTile> {
     }
     ItemStack stack = inv.getStackInSlot(0);
     if (!stack.isEmpty()) {
-      RenderUtils.renderAsBlock(te.getLevel(), te.getBlockPos(), te.getShape(), matrixStack, stack, 1F, 1F);
+      RenderBlockUtils.renderAsBlock(te.getLevel(), te.getBlockPos(), te.getShape(), matrixStack, stack, 1F, 1F);
     }
   }
 }

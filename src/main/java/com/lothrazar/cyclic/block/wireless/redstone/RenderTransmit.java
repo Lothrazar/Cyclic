@@ -4,7 +4,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
 import com.lothrazar.library.core.BlockPosDim;
-import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
+import com.lothrazar.library.render.type.FakeBlockRenderTypes;
 import com.lothrazar.library.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

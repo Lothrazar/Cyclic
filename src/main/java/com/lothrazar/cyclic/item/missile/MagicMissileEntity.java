@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.slingshot;
+package com.lothrazar.cyclic.item.missile;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EntityRegistry;

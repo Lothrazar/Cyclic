@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block.tp;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.dim.DimensionTransit;
 import com.lothrazar.library.util.LevelWorldUtil;
-import com.lothrazar.cyclic.world.DimensionTransit;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

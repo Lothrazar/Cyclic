@@ -4,6 +4,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import com.lothrazar.library.render.type.LaserRenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -26,7 +27,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
  * https://github.com/Direwolf20-MC/MiningGadgets
  *
  */
-public class RenderMiningLaser {
+public class RenderEntityToBlockLaser {
 
   private static float calculateLaserFlickerModifier(long gameTime) {
     return 0.9f + 0.1f * Mth.sin(gameTime * 0.99f) * Mth.sin(gameTime * 0.3f) * Mth.sin(gameTime * 0.1f);
@@ -34,14 +35,12 @@ public class RenderMiningLaser {
 
   public static final int RANGE = 18;
 
-  public static void renderLaser(RenderLevelStageEvent event, Player player, float ticks,
-      ItemStack stack, InteractionHand hand) {
+  public static void renderLaser(RenderLevelStageEvent event, Player player, float ticks, ItemStack stack, InteractionHand hand) {
     Vec3 playerPos = player.getEyePosition(ticks);
     HitResult trace = player.pick(RANGE, 0.0F, false);
     // parse data from item
     float speedModifier = 0.4F;
-    drawLasers(hand, stack, event, playerPos, trace, 0, 0, 0,
-        100F / 255f, 0F / 255f, 2F / 255f, 0.02f, player, ticks, speedModifier);
+    drawLasers(hand, stack, event, playerPos, trace, 0, 0, 0, 100F / 255f, 0F / 255f, 2F / 255f, 0.02f, player, ticks, speedModifier);
   }
 
   /**

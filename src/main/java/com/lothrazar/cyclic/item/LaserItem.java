@@ -1,6 +1,5 @@
-package com.lothrazar.cyclic.item.slingshot;
+package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;

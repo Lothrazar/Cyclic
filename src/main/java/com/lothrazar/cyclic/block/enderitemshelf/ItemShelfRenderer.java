@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.enderitemshelf;
 
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
-import com.lothrazar.cyclic.render.UtilRenderText;
+import com.lothrazar.library.util.RenderTextUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -19,7 +19,7 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
   @Override
   public void render(TileItemShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
     Direction side = tile.getCurrentFacing();
-    UtilRenderText.alignRendering(ms, side);
+    RenderTextUtil.alignRendering(ms, side);
     for (int i = 0; i < tile.inventory.getSlots(); i++) {
       renderSlot(tile, i, tile.inventory.getStackInSlot(i), ms, buffer, combinedLightIn, combinedOverlayIn);
     }

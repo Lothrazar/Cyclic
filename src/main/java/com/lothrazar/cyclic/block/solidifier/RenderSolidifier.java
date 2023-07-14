@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import com.lothrazar.cyclic.render.FluidTankRenderType;
-import com.lothrazar.cyclic.render.RenderUtils;
 import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.library.render.type.FluidTankRenderType;
+import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -62,9 +62,9 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
     VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.RESIZABLE);
     matrixStack.pushPose();
     matrixStack.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);
-    RenderUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
-        matrixStack, vertexBuffer, RenderUtils.getColorARGB(fluid, 0.1F),
-        RenderUtils.calculateGlowLight(light, fluid));
+    RenderBlockUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
+        matrixStack, vertexBuffer, RenderBlockUtils.getColorARGB(fluid, 0.1F),
+        RenderBlockUtils.calculateGlowLight(light, fluid));
     matrixStack.popPose();
   }
 }

@@ -183,14 +183,6 @@ public class ClientRegistryCyclic {
     //    net.minecraftforge.client.ClientRegistry.registerKeyBinding(CAKE);
     event.register(CAKE);
   }
-  //  @OnlyIn(Dist.CLIENT)
-  //  @SubscribeEvent
-  //  public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-  //    List<Block> blocks = new ArrayList<>();
-  //    event.register((state, worldIn, pos, tintIndex) -> {
-  //      return 0;
-  //    }, blocks.toArray(new Block[0]));
-  //  }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
@@ -240,13 +232,8 @@ public class ClientRegistryCyclic {
     event.registerEntityRenderer(EntityRegistry.DARKFIRE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.ENDER_FISHING.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.STONE_BOLT.get(), ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.LASER_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LIGHTNING_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.MAGIC_MISSILE.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.CONVEYOR_ITEM.get(), ConveyorItemRenderer::new);
   }
-
-  @OnlyIn(Dist.CLIENT)
-  @SubscribeEvent
-  public static void registerModels(FMLClientSetupEvent event) {}
 }

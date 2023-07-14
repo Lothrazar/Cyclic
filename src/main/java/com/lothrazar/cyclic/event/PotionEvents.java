@@ -50,23 +50,5 @@ public class PotionEvents {
         effect.tick(event);
       }
     }
-    //    if (!entity.level.isClientSide && entity instanceof Player player) {
-    //      //onPotionDisable hack trigger
-    //      if (player.getAbilities().mayfly
-    //          && !player.isCreative()
-    //          && !player.hasEffect(PotionEffectRegistry.angelic.get())) {
-    //        //youre not angelic potion'd, and you ARE allowed to fly, 
-    //        //and youre not creative
-    //        CyclicFile file = PlayerDataEvents.getOrCreate(player);
-    //        //        file.todoVisible = true; // set fly is from potion. les yes
-    //        if (file.todoVisible) {
-    //          file.todoVisible = false;
-    //          .println("booted from flight");
-    //          player.fallDistance = 0.0F;
-    //          player.getAbilities().flying = false;
-    //          player.getAbilities().mayfly = false;
-    //        }
-    //      }
-    //    }
   }
 }
