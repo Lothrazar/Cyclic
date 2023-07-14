@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.item.redstone;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
+import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.util.TagDataUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

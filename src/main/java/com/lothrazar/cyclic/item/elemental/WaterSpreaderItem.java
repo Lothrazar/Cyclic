@@ -24,8 +24,8 @@
 package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.EntityUtil;
-import com.lothrazar.cyclic.util.ShapeUtil;
+import com.lothrazar.library.util.EntityUtil;
+import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;

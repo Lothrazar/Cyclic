@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.world;
 
 import java.util.function.Function;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.core.BlockPosDim;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

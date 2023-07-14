@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.cyclic.world.cache.ServerCacheHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;

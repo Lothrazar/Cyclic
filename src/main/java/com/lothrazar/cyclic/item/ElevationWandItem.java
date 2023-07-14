@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item;
 
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.EntityUtil;
-import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.EntityUtil;
+import com.lothrazar.library.util.ItemStackUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;

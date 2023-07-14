@@ -24,9 +24,9 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.util.BlockUtil;
-import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.BlockUtil;
+import com.lothrazar.library.util.ItemStackUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;

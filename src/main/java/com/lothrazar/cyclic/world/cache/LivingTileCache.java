@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 

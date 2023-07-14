@@ -7,9 +7,9 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.SoundUtil;
+import com.lothrazar.library.util.FluidHelpersUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -54,7 +54,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
-    return FluidHelpers.matches(p.getFluid(), DataTags.EXPERIENCE);
+    return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 

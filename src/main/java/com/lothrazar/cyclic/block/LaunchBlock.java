@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;

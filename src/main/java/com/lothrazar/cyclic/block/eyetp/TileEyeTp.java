@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.eyetp;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.EntityUtil;
-import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.library.util.EntityUtil;
+import com.lothrazar.library.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;

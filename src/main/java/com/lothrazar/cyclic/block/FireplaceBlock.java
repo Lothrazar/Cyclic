@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.util.BlockstatesUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.BlockstatesUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

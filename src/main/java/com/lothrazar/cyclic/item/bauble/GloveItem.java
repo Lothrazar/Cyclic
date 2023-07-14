@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.util.EntityUtil;
-import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.EntityUtil;
+import com.lothrazar.library.util.ItemStackUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

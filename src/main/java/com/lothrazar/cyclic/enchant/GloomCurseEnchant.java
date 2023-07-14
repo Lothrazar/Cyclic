@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.Collections;
 import java.util.List;
-import com.lothrazar.cyclic.util.EnchantUtil;
-import com.lothrazar.cyclic.util.FakePlayerUtil;
+import com.lothrazar.library.util.EnchantUtil;
+import com.lothrazar.library.util.FakePlayerUtil;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;

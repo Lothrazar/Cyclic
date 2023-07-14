@@ -5,7 +5,7 @@ import org.joml.Vector3f;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

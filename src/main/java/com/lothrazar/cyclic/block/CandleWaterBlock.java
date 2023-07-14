@@ -24,8 +24,8 @@
 package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.util.ParticleUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.ParticleUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
