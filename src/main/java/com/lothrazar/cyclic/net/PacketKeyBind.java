@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.food.inventorycake.ContainerProviderCake;
-import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;

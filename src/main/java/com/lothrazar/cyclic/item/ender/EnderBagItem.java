@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.item.ender;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;

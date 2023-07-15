@@ -13,7 +13,7 @@ import com.lothrazar.cyclic.command.CommandNbt;
 import com.lothrazar.cyclic.command.CommandNetherping;
 import com.lothrazar.cyclic.command.CommandScoreboard;
 import com.lothrazar.cyclic.command.CommandTask;
-import com.lothrazar.cyclic.util.AttributesUtil;
+import com.lothrazar.library.util.AttributesUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;

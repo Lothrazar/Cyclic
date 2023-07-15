@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_mountain",
+  "features": ["cyclic:flower_cyan","cyclic:flower_lime"],
+  "step": "top_layer_modification"
+}

@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.spawntriggers;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.ParticleUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.ParticleUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;

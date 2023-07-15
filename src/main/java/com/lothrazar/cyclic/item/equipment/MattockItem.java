@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.util.ShapeUtil;
+import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;

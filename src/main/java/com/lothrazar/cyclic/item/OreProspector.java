@@ -2,12 +2,12 @@ package com.lothrazar.cyclic.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
-import com.lothrazar.cyclic.util.ShapeUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
+import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.library.util.ItemStackUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.util.ShapeUtil;
+import com.lothrazar.library.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;

@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -37,7 +38,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
-public class MultiBowEnchant extends EnchantmentCyclic {
+public class MultiBowEnchant extends EnchantmentFlib {
 
   public static final String ID = "multishot";
   public static BooleanValue CFG;

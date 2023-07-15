@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.expcollect;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

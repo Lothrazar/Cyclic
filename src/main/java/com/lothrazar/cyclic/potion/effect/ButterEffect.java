@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
-import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;

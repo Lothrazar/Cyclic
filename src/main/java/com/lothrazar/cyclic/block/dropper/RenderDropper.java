@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.dropper;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -14,7 +14,7 @@ public class RenderDropper implements BlockEntityRenderer<TileDropper> {
   @Override
   public void render(TileDropper te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {
     if (te.getField(TileDropper.Fields.RENDER.ordinal()) == 1) {
-      RenderUtils.renderOutline(te.getBlockPos(), te.getShape(), matrixStack, 0.5F, ClientConfigCyclic.getColor(te));
+      RenderBlockUtils.renderOutline(te.getBlockPos(), te.getShape(), matrixStack, 0.5F, ClientConfigCyclic.getColor(te));
     }
   }
 }

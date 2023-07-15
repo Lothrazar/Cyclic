@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_taiga",
+  "features": ["cyclic:flower_absalon","cyclic:flower_cyan"],
+  "step": "top_layer_modification"
+}

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.command;
 
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
-import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.library.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;

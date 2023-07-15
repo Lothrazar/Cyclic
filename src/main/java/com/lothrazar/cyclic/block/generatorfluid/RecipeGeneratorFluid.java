@@ -2,10 +2,10 @@ package com.lothrazar.cyclic.block.generatorfluid;
 
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.recipe.ingredient.EnergyIngredient;
-import com.lothrazar.cyclic.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
-import com.lothrazar.cyclic.util.RecipeUtil;
+import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
+import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
+import com.lothrazar.library.util.RecipeUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;

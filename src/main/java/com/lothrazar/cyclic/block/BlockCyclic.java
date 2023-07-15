@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.block;
 
-import java.util.List;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.SoundUtil;
-import net.minecraft.ChatFormatting;
+import com.lothrazar.library.block.EntityBlockFlib;
+import com.lothrazar.library.util.SoundUtil;
+import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -15,21 +15,15 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidUtil;
@@ -37,7 +31,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
-public class BlockCyclic extends BaseEntityBlock {
+public class BlockCyclic extends EntityBlockFlib {
 
   public static final BooleanProperty LIT = BooleanProperty.create("lit");
   private boolean hasGui = false;
@@ -50,11 +44,6 @@ public class BlockCyclic extends BaseEntityBlock {
 
   public static boolean never(BlockState bs, BlockGetter bg, BlockPos pos) {
     return false;
-  }
-
-  @Override
-  public RenderShape getRenderShape(BlockState st) {
-    return RenderShape.MODEL;
   }
 
   protected BlockCyclic setHasGui() {
@@ -94,7 +83,6 @@ public class BlockCyclic extends BaseEntityBlock {
     return newState;
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     if (hasFluidInteract) {
@@ -139,16 +127,8 @@ public class BlockCyclic extends BaseEntityBlock {
 
   private void displayClientFluidMessage(Player player, IFluidHandler handler) {
     if (ClientConfigCyclic.FLUID_BLOCK_STATUS.get()) {
-      player.displayClientMessage(Component.translatable(getFluidRatioName(handler)), true);
+      player.displayClientMessage(Component.translatable(StringParseUtil.getFluidRatioName(handler)), true);
     }
-  }
-
-  public static String getFluidRatioName(IFluidHandler handler) {
-    String ratio = handler.getFluidInTank(0).getAmount() + "/" + handler.getTankCapacity(0);
-    if (!handler.getFluidInTank(0).isEmpty()) {
-      ratio += " " + handler.getFluidInTank(0).getDisplayName().getString();
-    }
-    return ratio;
   }
 
   @SuppressWarnings("deprecation")
@@ -167,12 +147,6 @@ public class BlockCyclic extends BaseEntityBlock {
       }
       super.onRemove(state, worldIn, pos, newState, isMoving);
     }
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
   }
 
   /**

@@ -24,7 +24,8 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.library.enchant.EnchantmentFlib;
+import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -38,7 +39,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class VenomEnchant extends EnchantmentCyclic {
+public class VenomEnchant extends EnchantmentFlib {
 
   public static final int TICKSPERLEVEL = 3 * Const.TICKS_PER_SEC;
   public static final String ID = "venom";

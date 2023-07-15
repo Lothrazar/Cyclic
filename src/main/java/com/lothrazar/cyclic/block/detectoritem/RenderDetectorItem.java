@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.detectoritem;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -15,7 +15,7 @@ public class RenderDetectorItem implements BlockEntityRenderer<TileDetectorItem>
   public void render(TileDetectorItem te, float v, PoseStack matrixStack,
       MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {
     if (te.getField(TileDetectorItem.Fields.RENDER.ordinal()) == 1) {
-      RenderUtils.renderOutline(te.getBlockPos(), te.getShape(), matrixStack, 0.6F, ClientConfigCyclic.getColor(te));
+      RenderBlockUtils.renderOutline(te.getBlockPos(), te.getShape(), matrixStack, 0.6F, ClientConfigCyclic.getColor(te));
     }
   }
 }

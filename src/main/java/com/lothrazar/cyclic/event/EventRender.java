@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.data.BlockPosDim;
-import com.lothrazar.cyclic.data.RelativeShape;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
+import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
@@ -16,17 +15,18 @@ import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
-import com.lothrazar.cyclic.item.slingshot.LaserItem;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.render.RenderMiningLaser;
-import com.lothrazar.cyclic.render.RenderUtils;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
-import com.lothrazar.cyclic.util.PlayerUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.data.RelativeShape;
+import com.lothrazar.library.render.RenderEntityToBlockLaser;
+import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.util.PlayerUtil;
+import com.lothrazar.library.util.RenderBlockUtils;
+import com.lothrazar.library.util.RenderUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -65,13 +65,13 @@ public class EventRender {
       BlockState targetState = BuilderActionType.getBlockState(level, itemStackHeld);
       if (targetState != null) {
         //ok still 
-        drawStack(event.getGuiGraphics(), new ItemStack(targetState.getBlock()));
+        RenderUtil.drawStack(event.getGuiGraphics(), new ItemStack(targetState.getBlock()));
         int slot = PlayerUtil.getFirstSlotWithBlock(player, targetState);
         if (slot < 0) {
           //nothing found
           int width = mc.getWindow().getGuiScaledWidth();
           int height = mc.getWindow().getGuiScaledHeight();
-          drawString(event.getGuiGraphics(), "" + 0, width / 2 + 16, height / 2 + 12);
+          RenderUtil.drawString(event.getGuiGraphics(), "" + 0, width / 2 + 16, height / 2 + 12);
         }
       }
     }
@@ -83,23 +83,8 @@ public class EventRender {
     //    }
     if (datFile.spectatorTicks > 0) {
       int sec = datFile.spectatorTicks / 20;
-      drawString(event.getGuiGraphics(), "noClip " + sec, 10, height - 10);
+      RenderUtil.drawString(event.getGuiGraphics(), "noClip " + sec, 10, height - 10);
     }
-  }
-
-  public static void drawString(GuiGraphics gg, String str, int x, int y) {
-    Minecraft mc = Minecraft.getInstance();
-    gg.drawString(mc.font, str, x, y, 0xFFFFFF);
-  }
-
-  public static void drawStack(GuiGraphics poseStack, ItemStack stack) {
-    Minecraft mc = Minecraft.getInstance();
-    int width = mc.getWindow().getGuiScaledWidth();
-    int height = mc.getWindow().getGuiScaledHeight();
-    //    mc.getItemRenderer().render(stack, null, false, null, null, width, height, null);
-    //    var context = ItemDisplayContext.GUI;
-    //    var pose = poseStack.pose();
-    poseStack.renderItem(stack, width / 2, height / 2, 0, 10);
   }
 
   @SubscribeEvent
@@ -137,7 +122,7 @@ public class EventRender {
     ///////////////////// RandomizerItem
     stack = RandomizerItem.getIfHeld(player);
     if (stack.getItem() instanceof RandomizerItem) {
-      BlockHitResult lookingAt = RenderUtils.getLookingAt(player, (int) range);
+      BlockHitResult lookingAt = RenderBlockUtils.getLookingAt(player, (int) range);
       if (world.getBlockState(lookingAt.getBlockPos()).isAir()) {
         return;
       }
@@ -153,7 +138,7 @@ public class EventRender {
         if (loc != null) {
           if (loc.getDimension() == null ||
               loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(world))) {
-            RenderUtils.createBox(event.getPoseStack(), loc.getPos());
+            RenderBlockUtils.createBox(event.getPoseStack(), loc.getPos());
           }
         }
       }
@@ -184,7 +169,7 @@ public class EventRender {
     }
     //render the pos->colour map
     if (renderCubes.keySet().size() > 0) {
-      RenderUtils.renderColourCubes(event, renderCubes, alpha);
+      RenderBlockUtils.renderColourCubes(event, renderCubes, alpha);
     }
     /****************** end rendering cubes. start laser beam render ********************/
     stack = LaserItem.getIfHeld(player);
@@ -197,7 +182,7 @@ public class EventRender {
       // objectMouseOver became hitResult
       if (mc.crosshairPickEntity != null) {
         //Render and Shoot
-        RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
+        RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
         if (world.getGameTime() % 4 == 0) {
           PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
           SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
@@ -226,7 +211,7 @@ public class EventRender {
             }
             else {
               //Render and Shoot
-              RenderMiningLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
+              RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
               if (world.getGameTime() % 4 == 0) {
                 PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
                 SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);

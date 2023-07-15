@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.util.ShapeUtil;
+import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

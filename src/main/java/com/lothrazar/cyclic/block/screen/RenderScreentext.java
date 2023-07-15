@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.screen;
 
-import com.lothrazar.cyclic.render.UtilRenderText;
+import com.lothrazar.library.util.RenderTextUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -39,7 +39,7 @@ public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
     float offsetVertical = 0;
     float blockOffset = -0.01F - offset; //negative val is so its not overlapping texture  
     matrix.pushPose();
-    UtilRenderText.alignRendering(matrix, side);
+    RenderTextUtil.alignRendering(matrix, side);
     matrix.translate(0, 1, 1 - blockOffset);
     matrix.scale(1 / 16f, -1 / 16f, 0.00005f);
     matrix.translate(offsetHoriz, offsetVertical, 0);

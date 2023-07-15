@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.tank;
 
 import java.util.List;
-import com.lothrazar.cyclic.capabilities.item.FluidHandlerCapabilityStack;
 import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.library.cap.item.FluidHandlerCapabilityStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.equipment;
 
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
-import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

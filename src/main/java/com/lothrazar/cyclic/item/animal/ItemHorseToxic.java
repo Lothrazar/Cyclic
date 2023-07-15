@@ -25,7 +25,7 @@ package com.lothrazar.cyclic.item.animal;
 
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;

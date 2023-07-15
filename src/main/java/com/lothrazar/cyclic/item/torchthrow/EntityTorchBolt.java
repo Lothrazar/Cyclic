@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.torchthrow;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

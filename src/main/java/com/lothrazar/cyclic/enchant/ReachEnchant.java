@@ -24,7 +24,8 @@
 package com.lothrazar.cyclic.enchant;
 
 import java.util.UUID;
-import com.lothrazar.cyclic.util.AttributesUtil;
+import com.lothrazar.library.enchant.EnchantmentFlib;
+import com.lothrazar.library.util.AttributesUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +36,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ReachEnchant extends EnchantmentCyclic {
+public class ReachEnchant extends EnchantmentFlib {
 
   private static final String NBT_REACH_ON = "reachon";
   public static final int REACH_BOOST = 11; // 16 = 11 + 5

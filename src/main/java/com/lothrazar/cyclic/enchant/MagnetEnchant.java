@@ -24,7 +24,8 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.compat.botania.BotaniaWrapper;
-import com.lothrazar.cyclic.util.EntityUtil;
+import com.lothrazar.library.enchant.EnchantmentFlib;
+import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +36,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class MagnetEnchant extends EnchantmentCyclic {
+public class MagnetEnchant extends EnchantmentFlib {
 
   private static final int ITEM_HRADIUS = 4;
   private static final int HRADIUS_PER_LEVEL = 4;

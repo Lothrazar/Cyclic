@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.bedrock;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.InteractionHand;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.render.RenderUtils;
+import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -15,7 +15,7 @@ public class RenderItemCollect implements BlockEntityRenderer<TileItemCollector>
   public void render(TileItemCollector te, float v, PoseStack matrix,
       MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
     if (1 == te.getField(TileItemCollector.Fields.RENDER.ordinal())) {
-      RenderUtils.renderOutline(te.getBlockPos(), te.getShape(), matrix, 0.5F, ClientConfigCyclic.getColor(te));
+      RenderBlockUtils.renderOutline(te.getBlockPos(), te.getShape(), matrix, 0.5F, ClientConfigCyclic.getColor(te));
     }
   }
 }

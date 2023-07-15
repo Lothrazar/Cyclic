@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.endershelf;
 import java.util.Map;
 import java.util.Map.Entry;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
-import com.lothrazar.cyclic.render.UtilRenderText;
+import com.lothrazar.library.util.RenderTextUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -25,7 +25,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
   @Override
   public void render(TileEnderShelf tile, float partialTicks, PoseStack ms, MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
     Direction side = tile.getCurrentFacing();
-    UtilRenderText.alignRendering(ms, side);
+    RenderTextUtil.alignRendering(ms, side);
     tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       for (int i = 0; i < h.getSlots(); i++) {
         renderSlot(tile, i, h.getStackInSlot(i), ms, buffer, combinedLightIn, combinedOverlayIn);

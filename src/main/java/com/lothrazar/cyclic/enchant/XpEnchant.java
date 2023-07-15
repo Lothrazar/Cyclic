@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.registry.EnchantRegistry;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
@@ -13,7 +14,7 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class XpEnchant extends EnchantmentCyclic {
+public class XpEnchant extends EnchantmentFlib {
 
   public static final String ID = "experience_boost";
   public static BooleanValue CFG;

@@ -23,7 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.util.ParticleUtil;
+import com.lothrazar.library.enchant.EnchantmentFlib;
+import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
@@ -39,7 +40,7 @@ import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class TravellerEnchant extends EnchantmentCyclic {
+public class TravellerEnchant extends EnchantmentFlib {
 
   public static final String ID = "traveler";
   public static BooleanValue CFG;

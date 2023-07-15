@@ -1,11 +1,15 @@
 package com.lothrazar.cyclic.potion.effect;
 
+import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
-import com.lothrazar.cyclic.util.PlayerUtil;
+import com.lothrazar.cyclic.registry.PacketRegistry;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.network.NetworkDirection;
 
 public class FlightMayflyEffect extends CyclicMobEffect {
 
@@ -13,11 +17,23 @@ public class FlightMayflyEffect extends CyclicMobEffect {
     super(typeIn, liquidColorIn);
   }
 
+  private static void setMayFlyFromServer(LivingEntity entity, boolean mayflyIn) {
+    if (entity instanceof ServerPlayer sp) {
+      //set server-player
+      sp.getAbilities().mayfly = mayflyIn;
+      if (!mayflyIn) {
+        sp.getAbilities().flying = false;
+      }
+      //sync to client
+      PacketRegistry.INSTANCE.sendTo(new PacketPlayerSyncToClient(mayflyIn), sp.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+  }
+
   @Override
   public void onPotionAdded(MobEffectEvent.Added event) {
     if (event.getEntity() instanceof Player player) {
       if (!player.getAbilities().mayfly) {
-        PlayerUtil.setMayFlyFromServer(event.getEntity(), true);
+        setMayFlyFromServer(event.getEntity(), true);
       }
     }
   }
@@ -37,11 +53,11 @@ public class FlightMayflyEffect extends CyclicMobEffect {
 
   @Override
   public void onPotionRemove(MobEffectEvent.Remove event) {
-    PlayerUtil.setMayFlyFromServer(event.getEntity(), false);
+    setMayFlyFromServer(event.getEntity(), false);
   }
 
   @Override
   public void onPotionExpiry(MobEffectEvent.Expired event) {
-    PlayerUtil.setMayFlyFromServer(event.getEntity(), false);
+    setMayFlyFromServer(event.getEntity(), false);
   }
 }

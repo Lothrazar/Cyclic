@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block;
 
 import java.util.List;
-import com.lothrazar.cyclic.util.ShapeUtil;
+import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;

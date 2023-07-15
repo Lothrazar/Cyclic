@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.gui;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.ChatUtil;
+import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.core.BlockPos;
 
 public class ButtonMachineField extends ButtonMachine {

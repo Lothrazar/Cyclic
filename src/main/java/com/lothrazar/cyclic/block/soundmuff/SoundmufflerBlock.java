@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.soundmuff;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.util.BlockstatesUtil;
+import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.sounds.SoundInstance;

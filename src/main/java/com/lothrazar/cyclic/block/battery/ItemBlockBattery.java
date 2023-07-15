@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.battery;
 
 import java.util.List;
-import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
-import com.lothrazar.cyclic.capabilities.item.CapabilityProviderEnergyStack;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.library.cap.item.CapabilityProviderEnergyStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

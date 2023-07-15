@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.library.enchant.EnchantmentFlib;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -13,7 +14,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.MinecraftForge;
 
-public class DisarmEnchant extends EnchantmentCyclic {
+public class DisarmEnchant extends EnchantmentFlib {
   //halves the desired base chance to activate because onEntityDamage gets called twice and it's currently a 
   // "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
 

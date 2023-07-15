@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_beach",
+  "features": ["cyclic:flower_cyan","cyclic:flower_purple"],
+  "step": "top_layer_modification"
+}

@@ -2,11 +2,11 @@ package com.lothrazar.cyclic.item.datacard;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.LevelWorldUtil;
-import com.lothrazar.cyclic.util.TagDataUtil;
+import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.util.TagDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

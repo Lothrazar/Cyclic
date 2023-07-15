@@ -16,7 +16,7 @@ import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -32,8 +32,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ClientInputEvents {
 
-  @SubscribeEvent // KeyInputEvent -> KeyPressed
-  public void onKeyInput(ScreenEvent.KeyPressed.Post event) {
+  @SubscribeEvent // KeyInputEvent 
+  public void onKeyInput(InputEvent.Key event) {
     EnchantRegistry.LAUNCH.get().onKeyInput(Minecraft.getInstance().player);
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
@@ -59,8 +59,7 @@ public class ClientInputEvents {
     Minecraft mc = Minecraft.getInstance();
     Screen screen = mc.screen;
     if (screen instanceof AbstractContainerScreen<?> gui && !(screen instanceof CreativeModeInventoryScreen)) {
-      //      if (gui.getSlotUnderMouse() != null) {
-      //        System.out.println("DrawScreenEvent");
+      //      if (gui.getSlotUnderMouse() != null) { 
       //        Slot slotHit = gui.getSlotUnderMouse();
       //        ItemStack stackTarget = slotHit.getItem();
       ItemStack maybeFood = mc.player.containerMenu.getCarried();
@@ -68,9 +67,7 @@ public class ClientInputEvents {
       //        if (held.isEdible()) {
       for (ItemStack box : boxes) {
         ItemLunchbox.setHoldingEdible(box, maybeFood.isEdible());
-        //        if (maybeFood.isEdible()) System.out.println(maybeFood + "DrawScreenEvent set edible " + box.getTag());
       }
-      //      }
     }
   }
 

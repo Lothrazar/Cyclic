@@ -26,9 +26,10 @@ package com.lothrazar.cyclic.enchant;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
-import com.lothrazar.cyclic.util.ChatUtil;
-import com.lothrazar.cyclic.util.PlayerUtil;
-import com.lothrazar.cyclic.util.SoundUtil;
+import com.lothrazar.library.enchant.EnchantmentFlib;
+import com.lothrazar.library.util.ChatUtil;
+import com.lothrazar.library.util.PlayerUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -43,7 +44,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class LastStandEnchant extends EnchantmentCyclic {
+public class LastStandEnchant extends EnchantmentFlib {
 
   public static final String ID = "laststand";
   public static BooleanValue CFG;

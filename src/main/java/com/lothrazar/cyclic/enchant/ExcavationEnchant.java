@@ -29,7 +29,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.cyclic.util.ItemStackUtil;
+import com.lothrazar.library.enchant.EnchantmentFlib;
+import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +54,7 @@ import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ExcavationEnchant extends EnchantmentCyclic {
+public class ExcavationEnchant extends EnchantmentFlib {
 
   public static final String ID = "excavate";
   public static BooleanValue CFG;

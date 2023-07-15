@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.laser;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.render.FakeBlockRenderTypes;
+import com.lothrazar.library.render.type.FakeBlockRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
