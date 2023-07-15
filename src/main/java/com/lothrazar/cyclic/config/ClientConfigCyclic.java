@@ -8,6 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
+/**
+ * TODO: fully refactor this as ConfigTemplate flow
+ * 
+ * @author lothr
+ *
+ */
 public class ClientConfigCyclic {
 
   private static final Color DEFAULTC = Color.GRAY;

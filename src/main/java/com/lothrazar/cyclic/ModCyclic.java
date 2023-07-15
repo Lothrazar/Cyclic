@@ -37,8 +37,9 @@ public class ModCyclic {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(EventRegistry::setup);
     FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistryCyclic::setupClient);
     DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
-    ConfigRegistry.setup();
-    ConfigRegistry.setupClient();
+    ConfigRegistry cfg = new ConfigRegistry();
+    cfg.setupMain();
+    cfg.setupClient();
     DataTags.setup();
     MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, CapabilityRegistry::onAttachCapabilitiesPlayer);
     MinecraftForge.EVENT_BUS.register(new CapabilityRegistry());

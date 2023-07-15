@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
 import com.lothrazar.cyclic.CyclicLogger;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
@@ -95,15 +93,13 @@ import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
+import com.lothrazar.library.config.ConfigTemplate;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.fml.loading.FMLPaths;
 
-public class ConfigRegistry {
+public class ConfigRegistry extends ConfigTemplate {
 
-  private static final ForgeConfigSpec.Builder CFG = new ForgeConfigSpec.Builder();
-  private static final ForgeConfigSpec.Builder CFGC = new ForgeConfigSpec.Builder();
   private static ForgeConfigSpec COMMON_CONFIG;
   private static ForgeConfigSpec CLIENT_CONFIG;
   // Defaults
@@ -222,6 +218,7 @@ public class ConfigRegistry {
   }
 
   private static void initConfig() {
+    final ForgeConfigSpec.Builder CFG = builder();
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
     CFG.comment(WALL, " Configs make sure players will not be able to craft any in survival "
         + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
@@ -517,6 +514,7 @@ public class ConfigRegistry {
   }
 
   private static void initClientConfig() {
+    final ForgeConfigSpec.Builder CFGC = builder();
     CFGC.comment(WALL, "Client-side properties", WALL)
         .push(ModCyclic.MODID);
     CFGC.comment(WALL, "Block Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
@@ -552,24 +550,12 @@ public class ConfigRegistry {
     CLIENT_CONFIG = CFGC.build();
   }
 
-  public static void setup() {
-    final CommentedFileConfig configData = CommentedFileConfig.builder(FMLPaths.CONFIGDIR.get().resolve(ModCyclic.MODID + ".toml"))
-        .sync()
-        .autosave()
-        .writingMode(WritingMode.REPLACE)
-        .build();
-    configData.load();
-    COMMON_CONFIG.setConfig(configData);
+  public void setupMain() {
+    COMMON_CONFIG.setConfig(setup(ModCyclic.MODID));
   }
 
-  public static void setupClient() {
-    final CommentedFileConfig configData = CommentedFileConfig.builder(FMLPaths.CONFIGDIR.get().resolve(ModCyclic.MODID + "-client.toml"))
-        .sync()
-        .autosave()
-        .writingMode(WritingMode.REPLACE)
-        .build();
-    configData.load();
-    CLIENT_CONFIG.setConfig(configData);
+  public void setupClient() {
+    CLIENT_CONFIG.setConfig(setup(ModCyclic.MODID + "-client"));
   }
 
   @SuppressWarnings("unchecked")
