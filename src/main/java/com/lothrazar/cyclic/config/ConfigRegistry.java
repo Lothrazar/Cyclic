@@ -97,11 +97,23 @@ import com.lothrazar.library.config.ConfigTemplate;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 
 public class ConfigRegistry extends ConfigTemplate {
 
   private static ForgeConfigSpec COMMON_CONFIG;
   private static ForgeConfigSpec CLIENT_CONFIG;
+
+  public void setupMain() {
+    COMMON_CONFIG.setConfig(setup(ModCyclic.MODID));
+  }
+
+  public void setupClient() {
+    CLIENT_CONFIG.setConfig(setup(ModCyclic.MODID + "-client"));
+    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigRegistry.CLIENT_CONFIG);
+  }
+
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> IGNORE_LIST_UNCRAFTER = new ArrayList<>();
@@ -548,14 +560,6 @@ public class ConfigRegistry extends ConfigTemplate {
     CFGC.pop(); //end of items
     CFGC.pop();
     CLIENT_CONFIG = CFGC.build();
-  }
-
-  public void setupMain() {
-    COMMON_CONFIG.setConfig(setup(ModCyclic.MODID));
-  }
-
-  public void setupClient() {
-    CLIENT_CONFIG.setConfig(setup(ModCyclic.MODID + "-client"));
   }
 
   @SuppressWarnings("unchecked")

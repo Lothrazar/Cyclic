@@ -133,7 +133,7 @@ repositories {
 
 dependencies {
 
- implementation fg.deobf("blank:flib-1.20.1:0.0.7-SNAPSHOT")
+ implementation fg.deobf("blank:flib-1.20.1:${flib_version}")
 // implementation fg.deobf("curse.maven:flib-661261:4583429")
 //  implementation fg.deobf("curse.maven:patchouli-306770:4636277")
     // Specify the version of Minecraft to use.
