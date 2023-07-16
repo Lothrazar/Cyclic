@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.item.bauble;
 
 import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.ParticleUtil;

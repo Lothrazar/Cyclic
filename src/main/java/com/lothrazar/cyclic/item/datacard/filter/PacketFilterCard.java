@@ -21,52 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  ******************************************************************************/
-package com.lothrazar.cyclic.net;
+package com.lothrazar.cyclic.item.datacard.filter;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.library.packet.PacketFlib;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
-/**
- * Forge docs suggest using a direct packet to keep capabilities, such as power, in sync with the client according to https://mcforge.readthedocs.io/en/latest/datastorage/capabilities/
- */
-public class PacketEnergySync extends PacketFlib {
+public class PacketFilterCard extends PacketFlib {
 
-  private BlockPos pos;
-  private int energy;
+  private CraftingActionEnum action;
 
-  public PacketEnergySync(BlockPos p, int fluid) {
-    pos = p;
-    this.energy = fluid;
+  public PacketFilterCard(CraftingActionEnum s) {
+    action = s;
   }
 
-  public static void handle(PacketEnergySync message, Supplier<NetworkEvent.Context> ctx) {
+  public static PacketFilterCard decode(FriendlyByteBuf buf) {
+    return new PacketFilterCard(CraftingActionEnum.values()[buf.readInt()]);
+  }
+
+  public static void encode(PacketFilterCard msg, FriendlyByteBuf buf) {
+    buf.writeInt(msg.action.ordinal());
+  }
+
+  public static void handle(PacketFilterCard message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
-      doWork(message);
+      //rotate type
+      ServerPlayer sender = ctx.get().getSender();
+      ItemStack filter = sender.getItemInHand(InteractionHand.MAIN_HAND);
+      FilterCardItem.toggleFilterType(filter);
     });
     message.done(ctx);
-  }
-
-  private static void doWork(PacketEnergySync message) {
-    BlockEntity te = Minecraft.getInstance().level.getBlockEntity(message.pos);
-    if (te instanceof TileBlockEntityCyclic) {
-      ((TileBlockEntityCyclic) te).setEnergy(message.energy);
-    }
-  }
-
-  public static PacketEnergySync decode(FriendlyByteBuf buf) {
-    PacketEnergySync msg = new PacketEnergySync(buf.readBlockPos(),
-        buf.readInt());
-    return msg;
-  }
-
-  public static void encode(PacketEnergySync msg, FriendlyByteBuf buf) {
-    buf.writeBlockPos(msg.pos);
-    buf.writeInt(msg.energy);
   }
 }

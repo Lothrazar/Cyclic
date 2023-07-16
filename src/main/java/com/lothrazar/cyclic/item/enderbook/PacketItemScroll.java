@@ -1,7 +1,6 @@
-package com.lothrazar.cyclic.net;
+package com.lothrazar.cyclic.item.enderbook;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.ender.EnderBookItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.network.FriendlyByteBuf;

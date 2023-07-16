@@ -14,7 +14,7 @@ import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.elemental.AntimatterEvaporatorWandItem;
-import com.lothrazar.cyclic.item.ender.EnderBookItem;
+import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;

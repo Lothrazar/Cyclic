@@ -55,7 +55,7 @@ import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
-import com.lothrazar.cyclic.item.ender.EnderBookContainer;
+import com.lothrazar.cyclic.item.enderbook.EnderBookContainer;
 import com.lothrazar.cyclic.item.food.inventorycake.ContainerCake;
 import com.lothrazar.cyclic.item.lunchbox.ContainerLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;

@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item.food.inventorycake;
 
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.ItemStackHandler;

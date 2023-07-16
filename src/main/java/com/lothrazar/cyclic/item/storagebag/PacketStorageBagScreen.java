@@ -1,9 +1,6 @@
-package com.lothrazar.cyclic.net;
+package com.lothrazar.cyclic.item.storagebag;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.storagebag.DepositMode;
-import com.lothrazar.cyclic.item.storagebag.PickupMode;
-import com.lothrazar.cyclic.item.storagebag.RefillMode;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.nbt.ByteArrayTag;

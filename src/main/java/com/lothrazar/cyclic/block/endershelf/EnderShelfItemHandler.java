@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.endershelf;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -39,11 +38,11 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   public CompoundTag serializeNBT() {
     CompoundTag tag = super.serializeNBT();
     for (int i = 0; i < ROWS; i++) {
-      tag.putInt(Const.MODID + ":idc" + i, extraBooks[i]);
+      tag.putInt("cyclicmagic" + ":idc" + i, extraBooks[i]);
       if (enchantmentIdCache[i] == null) {
         enchantmentIdCache[i] = "";
       }
-      tag.putString(Const.MODID + ":ench", enchantmentIdCache[i]);
+      tag.putString("cyclicmagic" + ":ench", enchantmentIdCache[i]);
     }
     return tag;
   }
@@ -52,8 +51,8 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   public void deserializeNBT(CompoundTag nbt) {
     super.deserializeNBT(nbt);
     for (int i = 0; i < ROWS; i++) {
-      extraBooks[i] = nbt.getInt(Const.MODID + ":idc" + i);
-      enchantmentIdCache[i] = nbt.getString(Const.MODID + ":ench");
+      extraBooks[i] = nbt.getInt("cyclicmagic" + ":idc" + i);
+      enchantmentIdCache[i] = nbt.getString("cyclicmagic" + ":ench");
     }
   }
 

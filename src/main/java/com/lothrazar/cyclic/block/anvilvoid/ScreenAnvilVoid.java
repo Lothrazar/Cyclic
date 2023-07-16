@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.block.anvilvoid;
 
 import com.lothrazar.cyclic.gui.ButtonMachineField;
-import com.lothrazar.cyclic.gui.FluidBar;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.library.gui.FluidBar;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;

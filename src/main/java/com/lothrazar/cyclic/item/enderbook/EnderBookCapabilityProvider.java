@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.ender;
+package com.lothrazar.cyclic.item.enderbook;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

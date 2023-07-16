@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.data.Const;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.world.effect.MobEffectInstance;

@@ -26,9 +26,7 @@ public class TextureRegistry {
   public static final ResourceLocation SLOT_GPS = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_gps.png");
   public static final ResourceLocation SLOT_FILTER = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_filter.png");
   public static final ResourceLocation SLOT_SHAPE = new ResourceLocation(ModCyclic.MODID, "textures/gui/slot_shape.png");
-  public static final ResourceLocation ENERGY_BAR = new ResourceLocation(ModCyclic.MODID, "textures/gui/energy_bar.png");
   public static final ResourceLocation WIDGETS = new ResourceLocation(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");
-  public static final ResourceLocation FLUID_WIDGET = new ResourceLocation(ModCyclic.MODID, "textures/gui/fluid.png");
   public static final ResourceLocation INVENTORY_SIDEBAR = new ResourceLocation(ModCyclic.MODID, "textures/gui/inventory_sidebar.png");
   public static final ResourceLocation FUEL_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/fuel_prog.png");
   public static final ResourceLocation FOOD_PROG = new ResourceLocation(ModCyclic.MODID, "textures/gui/food_prog.png");

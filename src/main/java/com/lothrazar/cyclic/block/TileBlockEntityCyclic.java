@@ -12,10 +12,12 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
-import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.library.core.IHasEnergy;
+import com.lothrazar.library.core.IHasFluid;
+import com.lothrazar.library.packet.PacketSyncEnergy;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.FakePlayerUtil;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -56,7 +58,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public abstract class TileBlockEntityCyclic extends BlockEntity implements Container {
+public abstract class TileBlockEntityCyclic extends BlockEntity implements Container, IHasEnergy, IHasFluid {
 
   public static final String NBTINV = "inv";
   public static final String NBTFLUID = "fluid";
@@ -531,7 +533,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (level.isClientSide == false && level.getGameTime() % 20 == 0) { //if serverside then 
       IEnergyStorage energ = this.getCapability(ForgeCapabilities.ENERGY).orElse(null);
       if (energ != null) {
-        PacketRegistry.sendToAllClients(this.getLevel(), new PacketEnergySync(this.getBlockPos(), energ.getEnergyStored()));
+        PacketRegistry.sendToAllClients(this.getLevel(), new PacketSyncEnergy(this.getBlockPos(), energ.getEnergyStored()));
       }
     }
   }

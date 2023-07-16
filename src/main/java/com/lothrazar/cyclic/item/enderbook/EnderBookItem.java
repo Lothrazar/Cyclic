@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.ender;
+package com.lothrazar.cyclic.item.enderbook;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;

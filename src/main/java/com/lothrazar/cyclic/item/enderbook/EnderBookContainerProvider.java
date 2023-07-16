@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.item.ender;
+package com.lothrazar.cyclic.item.enderbook;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;

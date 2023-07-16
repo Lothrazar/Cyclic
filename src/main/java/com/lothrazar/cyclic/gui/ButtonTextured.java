@@ -36,20 +36,12 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   @Override
   public void renderWidget(GuiGraphics gg, int mouseX, int mouseY, float partial) {
     super.renderWidget(gg, mouseX, mouseY, partial);
-    //    Minecraft minecraft = Minecraft.getInstance();
-    //    minecraft.getTextureManager().bind(TextureRegistry.WIDGETS);
-    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    //    RenderSystem.setShaderTexture(0, TextureRegistry.WIDGETS);
-    //    GL11.glColor4f(1.0F, 1.0F, 1.0F, this.alpha);
-    //    GL11.glEnable(GL11.GL_BLEND);
-    //    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     if (textureId != null) {
       gg.blit(TextureRegistry.WIDGETS,
           this.getX() + textureId.getOffsetX(), this.getY() + textureId.getOffsetY(),
           textureId.getX() + xOffset, textureId.getY() + yOffset,
           textureId.getWidth() - yOffset, textureId.getHeight() - yOffset);
     }
-    //    this.renderBg(ms, minecraft, mouseX, mouseY);
   }
 
   @Override

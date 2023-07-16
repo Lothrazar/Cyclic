@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.structure",
+  "icon": "cyclic:structure",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.structure.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:structure"
+    }
+  ]
+}

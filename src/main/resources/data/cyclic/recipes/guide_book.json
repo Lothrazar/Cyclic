@@ -14,7 +14,7 @@
 		"item": "patchouli:guide_book",
 		"count": 1,
 		"nbt": {
-			"patchouli:book": "cyclic:cyclic_guide_book"
+			"patchouli:book": "cyclic:guide_book"
 		}
 	},
 	"conditions": [

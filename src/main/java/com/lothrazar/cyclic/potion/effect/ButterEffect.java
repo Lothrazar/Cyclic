@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.potion.effect;
 
 import java.util.Arrays;
 import java.util.List;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EquipmentSlot;

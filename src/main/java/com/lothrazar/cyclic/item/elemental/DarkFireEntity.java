@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.elemental;
 
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;

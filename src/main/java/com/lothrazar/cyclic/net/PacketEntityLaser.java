@@ -81,10 +81,6 @@ public class PacketEntityLaser extends PacketFlib {
     }
     IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     return (storage != null && storage.extractEnergy(LaserItem.COST, true) == LaserItem.COST);
-    //    int dmgCooldown = LaserItem.getDamageCooldown(lasercannon);
-    //    //past time plus interval equals now
-    //    // dmg every _ ticks, not every tick
-    //    return dmgCooldown + LaserItem.DELAYDAMAGETICKS < sender.level.getGameTime();
   }
 
   public static PacketEntityLaser decode(FriendlyByteBuf buf) {

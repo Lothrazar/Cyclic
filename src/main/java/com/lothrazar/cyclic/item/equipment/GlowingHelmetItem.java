@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import java.util.List;
-import com.lothrazar.cyclic.api.IHasClickToggle;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
+import com.lothrazar.library.core.Const;
+import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.TagDataUtil;

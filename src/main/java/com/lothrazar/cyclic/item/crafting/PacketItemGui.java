@@ -1,8 +1,6 @@
-package com.lothrazar.cyclic.net;
+package com.lothrazar.cyclic.item.crafting;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
-import com.lothrazar.cyclic.item.crafting.CraftingBagContainerProvider;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainerProvider;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;

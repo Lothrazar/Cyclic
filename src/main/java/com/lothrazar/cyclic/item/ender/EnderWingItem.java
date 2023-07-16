@@ -24,9 +24,9 @@
 package com.lothrazar.cyclic.item.ender;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.api.IHasClickToggle;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;

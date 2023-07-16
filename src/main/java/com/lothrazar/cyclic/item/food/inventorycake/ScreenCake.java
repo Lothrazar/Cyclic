@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.food.inventorycake;
 
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;

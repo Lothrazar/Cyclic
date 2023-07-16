@@ -1,10 +1,10 @@
-package com.lothrazar.cyclic.item.ender;
+package com.lothrazar.cyclic.item.enderbook;
 
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.TextureRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;

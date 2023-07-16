@@ -23,10 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.block.peatfarm;
 
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.capabilities.block;
 
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.net.PacketFluidSync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.library.packet.PacketSyncFluid;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -27,7 +27,7 @@ public class FluidTankBase extends FluidTank {
     }
     FluidStack f = handler.getFluidInTank(0);
     if (tile.getLevel().isClientSide == false) { //if serverside then 
-      PacketRegistry.sendToAllClients(tile.getLevel(), new PacketFluidSync(tile.getBlockPos(), f));
+      PacketRegistry.sendToAllClients(tile.getLevel(), new PacketSyncFluid(tile.getBlockPos(), f));
     }
   }
 }

@@ -23,8 +23,8 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.EntityUtil;
@@ -46,7 +46,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class MultiJumpEnchant extends EnchantmentFlib {
 
   public static final String ID = "launch";
-  public static final int COOLDOWN = 7 * Const.TPS;
+  public static final int COOLDOWN = 7 * Const.TICKS_PER_SEC;
   public static final float POWER = 1.07F;
   public static final int ROTATIONPITCH = 68;
   public static BooleanValue CFG;

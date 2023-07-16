@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.util;
 
 import org.apache.commons.lang3.tuple.Triple;
-import com.lothrazar.cyclic.api.IHasClickToggle;
 import com.lothrazar.cyclic.compat.CompatConstants;
+import com.lothrazar.library.core.IHasClickToggle;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

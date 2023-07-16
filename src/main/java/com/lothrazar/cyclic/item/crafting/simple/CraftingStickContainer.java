@@ -1,10 +1,10 @@
 package com.lothrazar.cyclic.item.crafting.simple;
 
 import java.util.Optional;
-import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.library.core.Const;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
