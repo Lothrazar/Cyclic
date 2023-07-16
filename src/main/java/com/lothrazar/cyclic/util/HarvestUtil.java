@@ -160,10 +160,9 @@ public class HarvestUtil {
   }
 
   public static IntegerProperty getAgeProp(BlockState blockState) {
-    if (blockState.getBlock() instanceof CropBlock) {
-      //      CropBlock crops = (CropBlock) blockState.getBlock();
+    if (blockState.getBlock() instanceof CropBlock crops) {
       //better mod compatibility if they dont use 'age'
-      return CropBlock.AGE; // protected :(  crops.getAgeProperty();
+      return crops.getAgeProperty();
     }
     String age = CropBlock.AGE.getName();
     ResourceLocation bid = ForgeRegistries.BLOCKS.getKey(blockState.getBlock());
