@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.net.PacketBaseCyclic;
+import com.lothrazar.library.packet.PacketFlib;
 import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketRandomize extends PacketBaseCyclic {
+public class PacketRandomize extends PacketFlib {
 
   private static final Random RND = new Random();
   private BlockPos pos;

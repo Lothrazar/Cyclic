@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.random.PacketRandomize;
 import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
-import com.lothrazar.cyclic.net.PacketBaseCyclic;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
@@ -16,7 +15,6 @@ import com.lothrazar.cyclic.net.PacketItemGui;
 import com.lothrazar.cyclic.net.PacketItemScroll;
 import com.lothrazar.cyclic.net.PacketItemToggle;
 import com.lothrazar.cyclic.net.PacketKeyBind;
-import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.net.PacketRotateBlock;
@@ -25,6 +23,8 @@ import com.lothrazar.cyclic.net.PacketSyncManaToClient;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileString;
+import com.lothrazar.library.packet.PacketFlib;
+import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -71,7 +71,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketSyncManaToClient.class, PacketSyncManaToClient::encode, PacketSyncManaToClient::decode, PacketSyncManaToClient::handle);
   }
 
-  public static void sendToAllClients(Level world, PacketBaseCyclic packet) {
+  public static void sendToAllClients(Level world, PacketFlib packet) {
     if (world.isClientSide) {
       return;
     }

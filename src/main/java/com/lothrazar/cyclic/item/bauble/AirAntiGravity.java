@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
+import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.net.PacketBaseCyclic;
+import com.lothrazar.library.packet.PacketFlib;
 import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketSwapBlock extends PacketBaseCyclic {
+public class PacketSwapBlock extends PacketFlib {
 
   private BlockPos pos;
   private BuilderActionType actionType;

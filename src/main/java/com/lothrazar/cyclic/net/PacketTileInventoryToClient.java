@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.net;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketTileInventoryToClient extends PacketBaseCyclic {
+public class PacketTileInventoryToClient extends PacketFlib {
 
   private BlockPos blockPos;
   private int slot;

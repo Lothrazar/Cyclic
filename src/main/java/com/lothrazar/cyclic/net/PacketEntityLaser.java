@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.LaserItem;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -37,7 +38,7 @@ import net.minecraftforge.network.NetworkEvent;
 /**
  * Forge docs suggest using a direct packet to keep capabilities, such as power, in sync with the client according to https://mcforge.readthedocs.io/en/latest/datastorage/capabilities/
  */
-public class PacketEntityLaser extends PacketBaseCyclic {
+public class PacketEntityLaser extends PacketFlib {
 
   private int entityId;
   private boolean crosshair;

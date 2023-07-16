@@ -1,11 +1,12 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketPlayerSyncToClient extends PacketBaseCyclic {
+public class PacketPlayerSyncToClient extends PacketFlib {
 
   private boolean mayfly;
 

@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -34,7 +35,7 @@ import net.minecraftforge.network.NetworkEvent;
 /**
  * Forge docs suggest using a direct packet to keep capabilities, such as power, in sync with the client according to https://mcforge.readthedocs.io/en/latest/datastorage/capabilities/
  */
-public class PacketEnergySync extends PacketBaseCyclic {
+public class PacketEnergySync extends PacketFlib {
 
   private BlockPos pos;
   private int energy;

@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainerProvider;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainerProvider;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
@@ -17,7 +18,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 
-public class PacketItemGui extends PacketBaseCyclic {
+public class PacketItemGui extends PacketFlib {
 
   private int slot;
   private Item item;

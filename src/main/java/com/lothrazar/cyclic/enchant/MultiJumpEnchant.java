@@ -24,9 +24,9 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.data.Const;
-import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.enchant.EnchantmentFlib;
+import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import com.lothrazar.library.util.TagDataUtil;

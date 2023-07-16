@@ -26,13 +26,14 @@ package com.lothrazar.cyclic.net;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketFilterCard extends PacketBaseCyclic {
+public class PacketFilterCard extends PacketFlib {
 
   private CraftingActionEnum action;
 

@@ -25,15 +25,15 @@ package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.net.PacketBaseCyclic;
 import com.lothrazar.cyclic.util.HarvestUtil;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketScythe extends PacketBaseCyclic {
+public class PacketScythe extends PacketFlib {
 
   private BlockPos pos;
   private ScytheType type;

@@ -3,11 +3,12 @@ package com.lothrazar.cyclic.net;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.ender.EnderBookItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketItemScroll extends PacketBaseCyclic {
+public class PacketItemScroll extends PacketFlib {
 
   private int slot;
   private boolean isDown;

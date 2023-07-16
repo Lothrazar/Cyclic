@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.item.storagebag.DepositMode;
 import com.lothrazar.cyclic.item.storagebag.PickupMode;
 import com.lothrazar.cyclic.item.storagebag.RefillMode;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +24,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketStorageBagScreen extends PacketBaseCyclic {
+public class PacketStorageBagScreen extends PacketFlib {
 
   private ItemStack stack;
   private byte type;

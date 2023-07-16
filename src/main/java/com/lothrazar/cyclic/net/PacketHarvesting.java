@@ -25,13 +25,14 @@ package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.util.HarvestUtil;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketHarvesting extends PacketBaseCyclic {
+public class PacketHarvesting extends PacketFlib {
 
   BlockPos pos;
   int radius;

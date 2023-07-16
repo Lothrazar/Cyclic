@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
 import com.lothrazar.cyclic.capabilities.chunk.ChunkDataStorage;
 import com.lothrazar.cyclic.capabilities.player.PlayerCapabilityStorage;
+import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -11,7 +12,7 @@ import net.minecraftforge.network.NetworkEvent;
  * Sync Player and Chunk capabilities to client
  *
  */
-public class PacketSyncManaToClient extends PacketBaseCyclic {
+public class PacketSyncManaToClient extends PacketFlib {
 
   private int playerMana; // TODO : playerData object
   private int chunkMana; // TODO: chunkData object
