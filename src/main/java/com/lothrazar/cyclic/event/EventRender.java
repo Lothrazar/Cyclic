@@ -182,6 +182,7 @@ public class EventRender {
       // objectMouseOver became hitResult
       if (mc.crosshairPickEntity != null) {
         //Render and Shoot
+        System.out.println("renderlaserxxx");
         RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
         if (world.getGameTime() % 4 == 0) {
           PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));

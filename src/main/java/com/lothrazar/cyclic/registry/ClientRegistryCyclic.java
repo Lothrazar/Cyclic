@@ -113,23 +113,6 @@ public class ClientRegistryCyclic {
     }
     initShields();
   }
-  // see /resources/assets/cyclic/assets/
-  //  @SubscribeEvent
-  //  public static void onStitch(TextureStitchEvent.Pre event) {
-  //    SpriteSourceProvider bitch;
-  //    if (event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_WOOD.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_WOOD_NOPATTERN.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_LEATHER.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_LEATHER_NOPATTERN.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_FLINT_NOPATTERN.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_BONE.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_BONE_NOPATTERN.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN.texture());
-  //      event.addSprite(MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN_NOPATTERN.texture());
-  //    }
-  //  }
 
   @SubscribeEvent
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {

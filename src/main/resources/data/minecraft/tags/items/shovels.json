@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+         {"required":false, "id":"cyclic:amethyst_shovel"},
+         {"required":false, "id":"cyclic:copper_shovel"},
+         {"required":false, "id":"cyclic:crystal_shovel"},
+         {"required":false, "id":"cyclic:emerald_shovel"},
+         {"required":false, "id":"cyclic:netherbrick_shovel"},
+         {"required":false, "id":"cyclic:sandstone_shovel"}
+  ]
+}

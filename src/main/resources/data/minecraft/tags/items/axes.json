@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+         {"required":false, "id":"cyclic:amethyst_axe"},
+         {"required":false, "id":"cyclic:copper_axe"},
+         {"required":false, "id":"cyclic:crystal_axe"},
+         {"required":false, "id":"cyclic:emerald_axe"},
+         {"required":false, "id":"cyclic:netherbrick_axe"},
+         {"required":false, "id":"cyclic:sandstone_axe"}
+  ]
+}

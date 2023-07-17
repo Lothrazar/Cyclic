@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+         {"required":false, "id":"cyclic:amethyst_hoe"},
+         {"required":false, "id":"cyclic:copper_hoe"},
+         {"required":false, "id":"cyclic:crystal_hoe"},
+         {"required":false, "id":"cyclic:emerald_hoe"},
+         {"required":false, "id":"cyclic:netherbrick_hoe"},
+         {"required":false, "id":"cyclic:sandstone_hoe"}
+  ]
+}
