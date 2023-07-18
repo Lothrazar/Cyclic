@@ -5,7 +5,6 @@ import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
-import com.lothrazar.cyclic.render.RenderUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -71,20 +70,28 @@ public class FluidBar {
     float amount = fluid.getAmount();
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-    TextureAtlasSprite icon = FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL);
+    TextureAtlasSprite sprite = FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL);
     if (fluid.getFluid() == Fluids.WATER) {
       //hack in the blue because water is grey and is filled in by the biome when in-world
       RenderSystem.setShaderColor(0, 0, 1, 1);
     }
-    drawTiledSprite(ms, x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
+    int xPosition = x + 1;
+    int yPosition = y + 1;
+    int maximum = height - 2;
+    int desiredWidth = width - 2;
+    int desiredHeight = fluidAmount - 2;
+    //
+    Screen.blit(ms, xPosition, yPosition + (maximum - desiredHeight), 0, desiredWidth, desiredHeight, sprite);
+    //
+    //    drawTiledSprite(ms, x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, sprite);
     if (fluid.getFluid() == Fluids.WATER) {
       RenderSystem.setShaderColor(1, 1, 1, 1); //un-apply the water filter
     }
   }
-
-  protected void drawTiledSprite(PoseStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
-  }
+  //
+  //  protected void drawTiledSprite(PoseStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
+  //    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
+  //  }
 
   public boolean isMouseover(int mouseX, int mouseY) {
     return guiLeft + x <= mouseX && mouseX <= guiLeft + x + width

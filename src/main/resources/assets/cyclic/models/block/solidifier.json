@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube",
-    "render_type:": "translucent",
+    "render_type": "cutout_mipped",
     "textures": {
         "down": "cyclic:blocks/solidifier_top",
         "up": "cyclic:blocks/solidifier_top",
