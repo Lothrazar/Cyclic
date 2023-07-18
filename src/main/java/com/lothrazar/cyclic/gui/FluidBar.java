@@ -5,6 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.cyclic.render.FluidRenderMap;
 import com.lothrazar.cyclic.render.FluidRenderMap.FluidFlow;
+import com.lothrazar.cyclic.render.RenderUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -81,17 +82,20 @@ public class FluidBar {
     int desiredWidth = width - 2;
     int desiredHeight = fluidAmount - 2;
     //
-    Screen.blit(ms, xPosition, yPosition + (maximum - desiredHeight), 0, desiredWidth, desiredHeight, sprite);
+    //    Screen.blit(ms, xPosition, yPosition + (maximum - desiredHeight), 0, desiredWidth, desiredHeight, sprite);
     //
-    //    drawTiledSprite(ms, x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, sprite);
+    System.out.println("test" + yPosition);
+    drawTiledSprite(ms, xPosition, yPosition, 0, desiredWidth, desiredHeight, sprite);
     if (fluid.getFluid() == Fluids.WATER) {
       RenderSystem.setShaderColor(1, 1, 1, 1); //un-apply the water filter
     }
   }
   //
-  //  protected void drawTiledSprite(PoseStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-  //    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, parent.getBlitOffset());
-  //  }
+
+  public static void drawTiledSprite(PoseStack matrix, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
+    //texture width and height are 16, zlevel zero
+    RenderUtils.drawTiledSprite(matrix, xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, 16, 16, 0, true);
+  }
 
   public boolean isMouseover(int mouseX, int mouseY) {
     return guiLeft + x <= mouseX && mouseX <= guiLeft + x + width

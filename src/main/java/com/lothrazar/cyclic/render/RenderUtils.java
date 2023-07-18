@@ -7,11 +7,12 @@ import java.util.Map;
 import com.lothrazar.cyclic.data.Model3D;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
@@ -49,6 +51,7 @@ public class RenderUtils {
 
   /**
    * used by fluid gui screen rendering Thanks to Mekanism https://github.com/mekanism/Mekanism which uses compatible MIT License
+   * https://github.com/mekanism/Mekanism/blob/1.19.x/src/main/java/mekanism/client/gui/GuiUtils.java#L177
    *
    * @param xPosition
    * @param yPosition
@@ -60,14 +63,13 @@ public class RenderUtils {
    * @param textureHeight
    * @param zLevel
    */
-  public static void drawTiledSprite(Matrix4f matrix, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite, int textureWidth,
-      int textureHeight, int zLevel) {
+  public static void drawTiledSprite(PoseStack matrix, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite,
+      int textureWidth, int textureHeight, int zLevel, boolean blend) {
     if (desiredWidth == 0 || desiredHeight == 0 || textureWidth == 0 || textureHeight == 0) {
       return;
     }
-    //    Minecraft.getInstance().textureManager.bind(InventoryMenu.BLOCK_ATLAS);
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
+    RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
     int xTileCount = desiredWidth / textureWidth;
     int xRemainder = desiredWidth - (xTileCount * textureWidth);
     int yTileCount = desiredHeight / textureHeight;
@@ -79,11 +81,12 @@ public class RenderUtils {
     float vMax = sprite.getV1();
     float uDif = uMax - uMin;
     float vDif = vMax - vMin;
-    RenderSystem.enableBlend();
-    //    RenderSystem.enableAlphaTest();
+    if (blend) {
+      RenderSystem.enableBlend();
+    }
     BufferBuilder vertexBuffer = Tesselator.getInstance().getBuilder();
-    vertexBuffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-    //    vertexBuffer.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
+    vertexBuffer.begin(Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+    Matrix4f matrix4f = matrix.last().pose();
     for (int xTile = 0; xTile <= xTileCount; xTile++) {
       int width = (xTile == xTileCount) ? xRemainder : textureWidth;
       if (width == 0) {
@@ -92,7 +95,18 @@ public class RenderUtils {
       int x = xPosition + (xTile * textureWidth);
       int maskRight = textureWidth - width;
       int shiftedX = x + textureWidth - maskRight;
-      float uMaxLocal = uMax - (uDif * maskRight / textureWidth);
+      float uLocalDif = uDif * maskRight / textureWidth;
+      float uLocalMin;
+      float uLocalMax;
+      boolean right = true;
+      if (right) {
+        uLocalMin = uMin;
+        uLocalMax = uMax - uLocalDif;
+      }
+      else {
+        uLocalMin = uMin + uLocalDif;
+        uLocalMax = uMax;
+      }
       for (int yTile = 0; yTile <= yTileCount; yTile++) {
         int height = (yTile == yTileCount) ? yRemainder : textureHeight;
         if (height == 0) {
@@ -102,17 +116,28 @@ public class RenderUtils {
         }
         int y = yStart - ((yTile + 1) * textureHeight);
         int maskTop = textureHeight - height;
-        float vMaxLocal = vMax - (vDif * maskTop / textureHeight);
-        vertexBuffer.vertex(matrix, x, y + textureHeight, zLevel).uv(uMin, vMaxLocal).endVertex();
-        vertexBuffer.vertex(matrix, shiftedX, y + textureHeight, zLevel).uv(uMaxLocal, vMaxLocal).endVertex();
-        vertexBuffer.vertex(matrix, shiftedX, y + maskTop, zLevel).uv(uMaxLocal, vMin).endVertex();
-        vertexBuffer.vertex(matrix, x, y + maskTop, zLevel).uv(uMin, vMin).endVertex();
+        float vLocalDif = vDif * maskTop / textureHeight;
+        float vLocalMin;
+        float vLocalMax;
+        boolean down = true;
+        if (down) {
+          vLocalMin = vMin;
+          vLocalMax = vMax - vLocalDif;
+        }
+        else {
+          vLocalMin = vMin + vLocalDif;
+          vLocalMax = vMax;
+        }
+        vertexBuffer.vertex(matrix4f, x, y + textureHeight, zLevel).uv(uLocalMin, vLocalMax).endVertex();
+        vertexBuffer.vertex(matrix4f, shiftedX, y + textureHeight, zLevel).uv(uLocalMax, vLocalMax).endVertex();
+        vertexBuffer.vertex(matrix4f, shiftedX, y + maskTop, zLevel).uv(uLocalMax, vLocalMin).endVertex();
+        vertexBuffer.vertex(matrix4f, x, y + maskTop, zLevel).uv(uLocalMin, vLocalMin).endVertex();
       }
     }
-    vertexBuffer.end();
-    //    BufferUploader.end(vertexBuffer);
-    //    RenderSystem.disableAlphaTest();
-    RenderSystem.disableBlend();
+    BufferUploader.drawWithShader(vertexBuffer.end());
+    if (blend) {
+      RenderSystem.disableBlend();
+    }
   }
 
   private static void renderCube(Matrix4f matrix, VertexConsumer builder, BlockPos pos, Color color, float alpha) {
