@@ -33,7 +33,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ClientInputEvents {
 
   @SubscribeEvent // KeyInputEvent -> KeyPressed
-  public void onKeyInput(ScreenEvent.KeyPressed.Post event) {
+  public void onKeyInput(InputEvent.Key event) {
     EnchantRegistry.LAUNCH.get().onKeyInput(Minecraft.getInstance().player);
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
@@ -42,7 +42,6 @@ public class ClientInputEvents {
 
   @SubscribeEvent // MouseScrollEvent -> MouseScrollingEvent
   public void onMouseEvent(InputEvent.MouseScrollingEvent event) {
-    //    PlayerEvent.Visibility
     LocalPlayer player = Minecraft.getInstance().player;
     if (player.isCrouching() && player.getMainHandItem().getItem() == ItemRegistry.ENDER_BOOK.get()) {
       //
