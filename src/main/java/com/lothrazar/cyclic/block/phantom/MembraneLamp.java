@@ -13,16 +13,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class MembraneLamp extends BlockCyclic {
 
   public static final IntegerProperty POWER = BlockStateProperties.POWER;
 
   public MembraneLamp(Properties properties) {
-    super(properties.strength(1.0F, 1.0F).lightLevel(state -> {
+    super(properties.lightLevel(state -> {
       return state.getValue(POWER);
     }).noOcclusion());
   }
@@ -41,11 +38,10 @@ public class MembraneLamp extends BlockCyclic {
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.LAMP.get(), world.isClientSide ? MembraneLampTile::clientTick : MembraneLampTile::serverTick);
   }
-
-  @Override
-  public VoxelShape getVisualShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-    return Shapes.block();
-  }
+  //  @Override
+  //  public VoxelShape getVisualShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+  //    return Shapes.block();
+  //  }
 
   @Override
   public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
