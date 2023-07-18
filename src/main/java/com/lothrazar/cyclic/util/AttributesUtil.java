@@ -93,7 +93,7 @@ public class AttributesUtil {
   // ench
   public static void setPlayerReach(UUID id, Player player, int reachBoost) {
     removePlayerReach(id, player);
-    AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+    AttributeInstance attr = player.getAttribute(ForgeMod.BLOCK_REACH.get());
     //vanilla is 5, so +11 it becomes 16
     AttributeModifier enchantment = new AttributeModifier(id, "ReachEnchantmentCyclic", reachBoost, AttributeModifier.Operation.ADDITION);
     attr.addPermanentModifier(enchantment);

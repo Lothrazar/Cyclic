@@ -28,7 +28,7 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
     RenderSystem.setShaderTexture(0, gui);
     int relX = (this.width - this.imageWidth) / 2;
     int relY = (this.height - this.imageHeight) / 2;
-    this.blit(ms, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+    blit(ms, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
   }
 
   @Override
