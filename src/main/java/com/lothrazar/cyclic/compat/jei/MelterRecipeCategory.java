@@ -70,40 +70,4 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     List<FluidStack> matchingFluids = List.of(recipe.getRecipeFluid());
     builder.addSlot(RecipeIngredientRole.OUTPUT, 140, 19).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids);
   }
-  //  @Override
-  //  public void setIngredients(RecipeMelter recipe, IIngredients ingredients) {
-  //    List<List<ItemStack>> in = new ArrayList<>();
-  //    List<ItemStack> stuff = new ArrayList<>();
-  //    Collections.addAll(stuff, recipe.ingredientAt(0));
-  //    in.add(stuff);
-  //    stuff = new ArrayList<>();
-  //    Collections.addAll(stuff, recipe.ingredientAt(1));
-  //    in.add(stuff);
-  //    ingredients.setInputLists(VanillaTypes.ITEM, in);
-  //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
-  //  }
-  //
-  //  @Override
-  //  public void setRecipe(IRecipeLayout recipeLayout, RecipeMelter recipe, IIngredients ingredients) {
-  //    IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-  //    guiItemStacks.init(0, true, 3, Const.SQ);
-  //    guiItemStacks.init(1, true, 21, Const.SQ);
-  //    guiItemStacks.init(2, true, 41, Const.SQ);
-  //    guiItemStacks.init(3, true, 3, 120);
-  //    List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
-  //    List<ItemStack> input = inputs.get(0);
-  //    if (input != null && input.isEmpty() == false) {
-  //      guiItemStacks.set(0, input);
-  //    }
-  //    input = inputs.get(1);
-  //    if (input != null && input.isEmpty() == false) {
-  //      guiItemStacks.set(1, input);
-  //    }
-  //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
-  //    //getname is the same
-  //    recipeLayout.getFluidStacks().init(0, true, 140, Const.SQ + 1, Const.SQ - 2, Const.SQ - 2,
-  //        FluidAttributes.BUCKET_VOLUME, false,
-  //        null);
-  //    recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
-  //  }
 }
