@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.food;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
@@ -43,6 +44,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
       datFile.toggleStepHeight();
       ChatUtil.addServerChatMessage(player, "cyclic.unlocks.stepheight." + datFile.stepHeight);
+      ModCyclic.LOGGER.error("saved with " + datFile);
     }
     return super.finishUsingItem(stack, worldIn, entityLiving);
   }
@@ -58,11 +60,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
       AttributesUtil.enableStepHeight(player);
     }
     else {
-      // do we force it off?
-      if (datFile.stepHeightForceOff) {
-        AttributesUtil.disableStepHeight(player);
-        datFile.stepHeightForceOff = false;
-      }
+      AttributesUtil.disableStepHeight(player);
     }
   }
 }
