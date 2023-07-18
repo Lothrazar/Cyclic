@@ -83,6 +83,6 @@
 	"1.20.1": {
 		"1.11.0":"Ported to MC-1.20 (from 1.19.4-1.10.0)",
 		"1.12.0":"First official port to MC-1.20.1.  This mod now has a required dependency on flib(future-library 0.0.7 or greater).  Fixed worldgen flower features spawning with forge biome modifiers.  Fixed patchouli book.  added tools to minecraft tags (for example emerald_pickaxe in item tag minecraft:pickaxes).  Fix harvester crash with beetroot.  (Merge pull request #2286 from UraraChiya/trunk/1.20) : Update Simplified Chinese transaction. "
-	
+		,"1.12.1":"Fix rendering of cyclic:laser_cannon beams and block highlights for Building Scepters and Location GPS.   "
 	}
 }

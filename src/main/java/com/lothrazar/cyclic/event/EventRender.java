@@ -89,17 +89,20 @@ public class EventRender {
 
   @SubscribeEvent
   public void onRenderWorldLast(RenderLevelStageEvent event) {
+    //    if (event.getStage() == Stage.AFTER_TRANSLUCENT_BLOCKS) { // was AFTER_SOLID_BLOCKS
+    //      //      return; //send it
+    //    }
+    if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) { // was AFTER_SOLID_BLOCKS
+      return; //send it
+    }
     Minecraft mc = Minecraft.getInstance();
     Player player = mc.player;
     if (player == null) {
       return;
     }
-    if (event.getStage() != Stage.AFTER_SOLID_BLOCKS) {
-      return; //send it
-    }
     Level world = player.level();
     double range = 6F;
-    float alpha = 0.125F * 2;
+    float alpha = 1; //0.125F * 2;
     Map<BlockPos, Color> renderCubes = new HashMap<>();
     ///////////////////// BuilderItem
     ItemStack stack = BuilderItem.getIfHeld(player);
@@ -111,7 +114,7 @@ public class EventRender {
         if (buildStyle.isOffset() && lookingAt.getDirection() != null) {
           pos = pos.relative(lookingAt.getDirection());
         }
-        alpha = 0.4F;
+        alpha = 0.125F;
         //now the item has a build area
         List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getDirection(), buildStyle);
         for (BlockPos coordinate : coordinates) {
@@ -182,8 +185,7 @@ public class EventRender {
       // objectMouseOver became hitResult
       if (mc.crosshairPickEntity != null) {
         //Render and Shoot
-        System.out.println("renderlaserxxx");
-        RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
+        RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND, 18, -0.02F); // TODO
         if (world.getGameTime() % 4 == 0) {
           PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
           SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
