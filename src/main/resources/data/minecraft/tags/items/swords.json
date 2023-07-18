@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+         {"required":false, "id":"cyclic:amethyst_sword"},
+         {"required":false, "id":"cyclic:copper_sword"},
+         {"required":false, "id":"cyclic:crystal_sword"},
+         {"required":false, "id":"cyclic:emerald_sword"},
+         {"required":false, "id":"cyclic:netherbrick_sword"},
+         {"required":false, "id":"cyclic:sandstone_sword"}
+  ]
+}

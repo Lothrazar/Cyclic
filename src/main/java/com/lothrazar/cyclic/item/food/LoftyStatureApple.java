@@ -58,11 +58,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
       AttributesUtil.enableStepHeight(player);
     }
     else {
-      // do we force it off?
-      if (datFile.stepHeightForceOff) {
-        AttributesUtil.disableStepHeight(player);
-        datFile.stepHeightForceOff = false;
-      }
+      AttributesUtil.disableStepHeight(player);
     }
   }
 }

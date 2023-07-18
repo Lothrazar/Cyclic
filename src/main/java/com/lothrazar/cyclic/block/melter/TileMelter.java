@@ -70,11 +70,12 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     if (timer < 0) {
       timer = 0;
     }
-    final int cost = this.currentRecipe.getEnergyCost();
+    final int cost = this.currentRecipe.getEnergy().getRfPertick();
     if (energy.getEnergyStored() < cost && cost > 0) {
       this.timer = 0;
       return;
     }
+    energy.extractEnergy(cost, false);
     if (currentRecipe == null || !currentRecipe.matches(this, level)) {
       this.findMatchingRecipe();
       if (currentRecipe == null) {
@@ -82,11 +83,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
         return;
       }
     }
-    if (--this.timer < 0) {
-      timer = 0;
-    }
     if (timer == 0 && this.tryProcessRecipe()) {
-      energy.extractEnergy(cost, false);
       if (this.currentRecipe != null) {
         this.timer = this.currentRecipe.getEnergy().getTicks(); // may also reset during findRecipe
       }

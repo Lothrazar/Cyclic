@@ -71,20 +71,28 @@ public class FluidBar {
     float amount = fluid.getAmount();
     float scale = amount / capacity;
     int fluidAmount = (int) (scale * height);
-    TextureAtlasSprite icon = FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL);
+    TextureAtlasSprite sprite = FluidRenderMap.getFluidTexture(fluid, FluidFlow.STILL);
     if (fluid.getFluid() == Fluids.WATER) {
       //hack in the blue because water is grey and is filled in by the biome when in-world
       RenderSystem.setShaderColor(0, 0, 1, 1);
     }
-    drawTiledSprite(ms, x + 1, y + 1, height - 2, width - 2, fluidAmount - 2, icon);
+    int xPosition = x + 1;
+    int maximum = height - 2;
+    int yPosition = y + 1 + maximum;
+    int desiredWidth = width - 2;
+    int desiredHeight = fluidAmount - 2;
+    //
+    //    Screen.blit(ms, xPosition, yPosition + (maximum - desiredHeight), 0, desiredWidth, desiredHeight, sprite);
+    // 
+    drawTiledSprite(ms, xPosition, yPosition, 0, desiredWidth, desiredHeight, sprite);
     if (fluid.getFluid() == Fluids.WATER) {
       RenderSystem.setShaderColor(1, 1, 1, 1); //un-apply the water filter
     }
   }
 
-  protected void drawTiledSprite(PoseStack stack, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
-    //32 stack.getBlitOffset() ?
-    RenderUtils.drawTiledSprite(stack.last().pose(), xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, width - 2, width - 2, 32);
+  public static void drawTiledSprite(PoseStack matrix, int xPosition, int yPosition, int yOffset, int desiredWidth, int desiredHeight, TextureAtlasSprite sprite) {
+    //texture width and height are 16, zlevel zero
+    RenderUtils.drawTiledSprite(matrix, xPosition, yPosition, yOffset, desiredWidth, desiredHeight, sprite, 16, 16, 0, true);
   }
 
   public boolean isMouseover(int mouseX, int mouseY) {

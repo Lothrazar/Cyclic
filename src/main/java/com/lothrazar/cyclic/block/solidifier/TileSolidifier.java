@@ -71,16 +71,16 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       this.timer = 0;
       return;
     }
-    this.timer--;
-    if (timer < 0) {
-      timer = 0;
-    }
     final int cost = this.currentRecipe.getEnergy().getRfPertick();
     if (energy.getEnergyStored() < cost && cost > 0) {
       return;
     }
+    energy.extractEnergy(cost, false);
+    this.timer--;
+    if (timer < 0) {
+      timer = 0;
+    }
     if (timer == 0 && this.tryProcessRecipe()) {
-      energy.extractEnergy(cost, false);
       if (this.currentRecipe != null)
         this.timer = this.currentRecipe.getEnergy().getTicks();
     }

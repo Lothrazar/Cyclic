@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+         {"required":false, "id":"cyclic:amethyst_pickaxe"},
+         {"required":false, "id":"cyclic:copper_pickaxe"},
+         {"required":false, "id":"cyclic:crystal_pickaxe"},
+         {"required":false, "id":"cyclic:emerald_pickaxe"},
+         {"required":false, "id":"cyclic:netherbrick_pickaxe"},
+         {"required":false, "id":"cyclic:sandstone_pickaxe"}
+  ]
+}
