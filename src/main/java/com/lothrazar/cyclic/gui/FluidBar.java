@@ -77,14 +77,13 @@ public class FluidBar {
       RenderSystem.setShaderColor(0, 0, 1, 1);
     }
     int xPosition = x + 1;
-    int yPosition = y + 1;
     int maximum = height - 2;
+    int yPosition = y + 1 + maximum;
     int desiredWidth = width - 2;
     int desiredHeight = fluidAmount - 2;
     //
     //    Screen.blit(ms, xPosition, yPosition + (maximum - desiredHeight), 0, desiredWidth, desiredHeight, sprite);
-    //
-    System.out.println("test" + yPosition);
+    // 
     drawTiledSprite(ms, xPosition, yPosition, 0, desiredWidth, desiredHeight, sprite);
     if (fluid.getFluid() == Fluids.WATER) {
       RenderSystem.setShaderColor(1, 1, 1, 1); //un-apply the water filter
