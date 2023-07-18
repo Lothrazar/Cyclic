@@ -23,13 +23,11 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
   }
 
   protected void drawBackground(GuiGraphics ms, ResourceLocation gui) {
-    //    this.minecraft.getTextureManager().bind(gui);
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, gui);
+    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    //    RenderSystem.setShaderTexture(0, gui);
     int relX = (this.width - this.imageWidth) / 2;
     int relY = (this.height - this.imageHeight) / 2;
     ms.blit(gui, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
-    //  ScreenUtils.drawTexturedModalRect(ms, relX, relY, relY, relY, relY, relX, relY);
   }
 
   @Override

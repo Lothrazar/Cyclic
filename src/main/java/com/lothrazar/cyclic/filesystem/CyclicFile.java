@@ -20,12 +20,11 @@ public class CyclicFile {
   public int spectatorTicks = 0;
   // first 27 slots are for inventory cake storage. remaining unused
   public ItemStackHandler inventory = new ItemStackHandler(5 * 9);
-  public boolean stepHeightForceOff;
 
   @Override
   public String toString() {
     return "CyclicFile [playerId=" + playerId + ", storageVisible=" + storageVisible + ", todoVisible=" + todoVisible + ", stepHeight=" + stepHeight +
-        ", todoTasks=" + todoTasks + ", spectatorTicks=" + spectatorTicks + ", inventory=" + inventory + ", stepHeightForceOff=" + stepHeightForceOff + "]";
+        ", todoTasks=" + todoTasks + ", spectatorTicks=" + spectatorTicks + ", inventory=" + inventory + "]";
   }
 
   public CyclicFile(UUID playerId) {
@@ -36,7 +35,6 @@ public class CyclicFile {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     spectatorTicks = tag.getInt("spectatorTicks");
     storageVisible = tag.getBoolean("storageVisible");
-    stepHeightForceOff = tag.getBoolean("stepHeightForceOff");
     stepHeight = tag.getBoolean("stepHeight");
     if (tag.contains("tasks")) {
       ListTag glist = tag.getList("tasks", Tag.TAG_COMPOUND);
@@ -52,7 +50,6 @@ public class CyclicFile {
     tag.put(NBTINV, inventory.serializeNBT());
     tag.putInt("spectatorTicks", spectatorTicks);
     tag.putBoolean("stepHeight", stepHeight);
-    tag.putBoolean("stepHeightForceOff", stepHeightForceOff);
     tag.putBoolean("storageVisible", storageVisible);
     ListTag glist = new ListTag();
     int i = 0;
@@ -68,8 +65,5 @@ public class CyclicFile {
 
   public void toggleStepHeight() {
     this.stepHeight = !this.stepHeight;
-    if (!this.stepHeight) {
-      this.stepHeightForceOff = true;
-    }
   }
 }

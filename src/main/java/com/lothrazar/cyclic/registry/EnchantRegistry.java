@@ -36,7 +36,7 @@ public class EnchantRegistry {
   public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, ModCyclic.MODID);
   private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
   public static final RegistryObject<TravellerEnchant> TRAVELLER = ENCHANTMENTS.register(TravellerEnchant.ID, () -> new TravellerEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS));
-  public static final RegistryObject<MultiBowEnchant> MULTIBOW = ENCHANTMENTS.register(MultiBowEnchant.ID, () -> new MultiBowEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND));
+  public static final RegistryObject<MultiBowEnchant> MULTIBOW = ENCHANTMENTS.register(MultiBowEnchant.ID, () -> new MultiBowEnchant(Enchantment.Rarity.COMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND));
   public static final RegistryObject<ExcavationEnchant> EXCAVATE = ENCHANTMENTS.register(ExcavationEnchant.ID, () -> new ExcavationEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND));
   public static final RegistryObject<EnchantmentFlib> EXPERIENCE_BOOST = ENCHANTMENTS.register(XpEnchant.ID, () -> new XpEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND));
   public static final RegistryObject<MultiJumpEnchant> LAUNCH = ENCHANTMENTS.register(MultiJumpEnchant.ID, () -> new MultiJumpEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.FEET }));

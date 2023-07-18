@@ -234,6 +234,7 @@ task signJar(type: SignJar, dependsOn: jar) {
     inputFile = jar.archivePath
     outputFile = jar.archivePath
 }
+
 task cleanJar {
   delete 'build/libs'
 }

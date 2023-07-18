@@ -63,7 +63,7 @@ public class XpEnchant extends EnchantmentFlib {
       return;
     }
     int level = getCurrentLevelTool(event.getPlayer().getMainHandItem());
-    if (level <= 0) {
+    if (level <= 0 || event.getExpToDrop() <= 0) {
       return;
     }
     event.setExpToDrop(event.getExpToDrop() + getRandomExpAmount(level, event.getPlayer().level()));
