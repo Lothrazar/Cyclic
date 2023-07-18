@@ -57,6 +57,6 @@ description='''
 [[dependencies.cyclic]]
     modId="flib"
     mandatory=true
-    versionRange="[0.0.7,)"
+    versionRange="[0.0.8,)"
     ordering="NONE"
     side="BOTH"

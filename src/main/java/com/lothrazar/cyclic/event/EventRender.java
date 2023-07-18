@@ -101,11 +101,26 @@ public class EventRender {
       return;
     }
     Level world = player.level();
+    ItemStack stack = ItemStack.EMPTY;
+    /****************** rendering outline ********************/
+    stack = OreProspector.getIfHeld(player);
+    if (stack.getItem() instanceof OreProspector) {
+      List<BlockPosDim> coords = OreProspector.getPosition(stack);
+      for (BlockPosDim loc : coords) {
+        if (loc != null) {
+          if (loc.getDimension() == null ||
+              loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(world))) {
+            RenderBlockUtils.createBox(event.getPoseStack(), loc.getPos());
+          }
+        }
+      }
+    }
+    /****************** end rendering outline,. start cubes ********************/
     double range = 6F;
     float alpha = 1; //0.125F * 2;
     Map<BlockPos, Color> renderCubes = new HashMap<>();
     ///////////////////// BuilderItem
-    ItemStack stack = BuilderItem.getIfHeld(player);
+    stack = BuilderItem.getIfHeld(player);
     if (stack.getItem() instanceof BuilderItem) {
       BlockHitResult lookingAt = (BlockHitResult) player.pick(range, 0F, false);
       if (!world.isEmptyBlock(lookingAt.getBlockPos())) {
@@ -114,7 +129,7 @@ public class EventRender {
         if (buildStyle.isOffset() && lookingAt.getDirection() != null) {
           pos = pos.relative(lookingAt.getDirection());
         }
-        alpha = 0.125F;
+        alpha = .01f;
         //now the item has a build area
         List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getDirection(), buildStyle);
         for (BlockPos coordinate : coordinates) {
@@ -132,18 +147,6 @@ public class EventRender {
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());
       for (BlockPos e : coords) {
         renderCubes.put(e, RandomizerItem.canMove(world.getBlockState(e), world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
-      }
-    }
-    stack = OreProspector.getIfHeld(player);
-    if (stack.getItem() instanceof OreProspector) {
-      List<BlockPosDim> coords = OreProspector.getPosition(stack);
-      for (BlockPosDim loc : coords) {
-        if (loc != null) {
-          if (loc.getDimension() == null ||
-              loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(world))) {
-            RenderBlockUtils.createBox(event.getPoseStack(), loc.getPos());
-          }
-        }
       }
     }
     stack = player.getMainHandItem();
