@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cube",
-    "render_type:": "translucent",
+    "render_type": "translucent",
     "textures": {
         "particle": "cyclic:block/terra_glass",
         "down": "cyclic:block/terra_glass",

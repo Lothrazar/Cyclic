@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -12,6 +13,10 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,7 +24,7 @@ public class BlockTerraGlass extends BlockCyclic {
 
   public BlockTerraGlass(Properties properties) {
     //https://en.wikipedia.org/wiki/Terra_preta
-    super(properties.strength(0.5F).noOcclusion().lightLevel(state -> {
+    super(properties.noOcclusion().lightLevel(state -> {
       return state.getValue(LIT) ? 6 : 0;
     }));
   }
@@ -36,9 +41,13 @@ public class BlockTerraGlass extends BlockCyclic {
   }
 
   @Override
-  @Deprecated
-  public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-    return 0;
+  public VoxelShape getVisualShape(BlockState bs, BlockGetter level, BlockPos pos, CollisionContext context) {
+    return Shapes.empty();
+  }
+
+  @Override
+  public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
+    return true;
   }
 
   @Override

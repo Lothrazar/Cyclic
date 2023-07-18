@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube",
-    "render_type:": "translucent",
+    "render_type": "translucent",
 	"textures": {
 		"0": "cyclic:block/machine/steel",
 		"1": "cyclic:block/machine/lapis",
