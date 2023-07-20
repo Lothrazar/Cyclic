@@ -155,11 +155,9 @@ public class BlockEnderShelf extends BlockBase {
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
-      if (!shelf.inventory.isEmptyShelves()) {
-        CompoundNBT tileData = shelf.inventory.serializeNBT();
-        //read from tile, write to itemstack 
-        newStack.setTag(tileData);
-      }
+      CompoundNBT tileData = shelf.inventory.serializeNBT();
+      //read from tile, write to itemstack 
+      newStack.setTag(tileData);
     }
     UtilItemStack.dropItemStackMotionless(world, pos, newStack);
   }
