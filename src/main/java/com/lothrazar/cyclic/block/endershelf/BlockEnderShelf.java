@@ -161,6 +161,6 @@ public class BlockEnderShelf extends BlockBase {
         newStack.setTag(tileData);
       }
     }
-    UtilItemStack.drop(world, pos, newStack);
+    UtilItemStack.dropItemStackMotionless(world, pos, newStack);
   }
 }

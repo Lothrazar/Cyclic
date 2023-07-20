@@ -154,6 +154,6 @@ public class BlockItemShelf extends BlockBase {
       //read from tile, write to itemstack 
       newStack.setTag(tileData);
     }
-    UtilItemStack.drop(world, pos, newStack);
+    UtilItemStack.dropItemStackMotionless(world, pos, newStack);
   }
 }

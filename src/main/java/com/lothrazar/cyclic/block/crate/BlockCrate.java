@@ -81,6 +81,6 @@ public class BlockCrate extends BlockBase {
         newStack.getOrCreateTag().put(NBTCRATE + i, nbt);
       }
     }
-    UtilItemStack.drop(world, pos, newStack);
+    UtilItemStack.dropItemStackMotionless(world, pos, newStack);
   }
 }

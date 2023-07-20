@@ -86,7 +86,7 @@ public class TileTransporterItem extends ItemBase {
       player.setHeldItem(context.getHand(), ItemStack.EMPTY);
       UtilSound.playSound(player, SoundRegistry.THUNK);
       if (player.isCreative() == false) {
-        UtilItemStack.drop(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
+        UtilItemStack.dropItemStackMotionless(world, player.getPosition(), new ItemStack(ItemRegistry.tile_transporterempty));
       }
     }
     return ActionResultType.SUCCESS;

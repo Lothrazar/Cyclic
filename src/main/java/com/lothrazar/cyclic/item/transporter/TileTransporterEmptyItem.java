@@ -116,7 +116,7 @@ public class TileTransporterEmptyItem extends ItemBase {
         }
         ItemStack drop = new ItemStack(ItemRegistry.tile_transporter);
         drop.setTag(itemData);
-        UtilItemStack.drop(world, player.getPosition(), drop);
+        UtilItemStack.dropItemStackMotionless(world, player.getPosition(), drop);
         if (player.isCreative() == false && held.getCount() > 0) {
           held.shrink(1);
           if (held.getCount() == 0) {
