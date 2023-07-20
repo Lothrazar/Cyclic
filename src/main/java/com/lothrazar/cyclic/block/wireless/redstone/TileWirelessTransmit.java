@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.wireless.redstone;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -18,6 +19,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -79,14 +81,27 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     return super.write(tag);
   }
 
-  private void toggleTarget(BlockPos targetPos) {
-    BlockState target = world.getBlockState(targetPos);
+  private void toggleTarget(BlockPosDim dimPos) {
+    if (world.isRemote) {
+      return;
+    }
+    BlockPos targetPos = dimPos.getPos();
+    ServerWorld serverLevel = world.getServer().getWorld(UtilWorld.stringToDimension(dimPos.getDimension()));
+    if (serverLevel == null) {
+      ModCyclic.LOGGER.info("Dimension not found " + dimPos.getDimension());
+      return;
+    }
+    if (!serverLevel.isAreaLoaded(targetPos, targetPos)) {
+      ModCyclic.LOGGER.info("DimPos is unloaded" + dimPos);
+      return;
+    }
+    BlockState target = serverLevel.getBlockState(targetPos);
     if (target.hasProperty(BlockStateProperties.POWERED)) {
       boolean targetPowered = target.get(BlockStateProperties.POWERED);
       //update target based on my state
       boolean isPowered = world.isBlockPowered(pos);
       if (targetPowered != isPowered) {
-        world.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
+        serverLevel.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
         //and update myself too   
         world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
         //TODO: send exact 1-16 power level
@@ -104,7 +119,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
           UtilWorld.dimensionIsEqual(targetPos, world) == false) {
         continue;
       }
-      toggleTarget(targetPos.getPos());
+      toggleTarget(targetPos);
     }
   }
 
