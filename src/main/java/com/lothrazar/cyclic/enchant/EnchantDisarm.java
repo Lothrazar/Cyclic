@@ -1,23 +1,24 @@
 package com.lothrazar.cyclic.enchant;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.util.UtilString;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EnchantDisarm extends EnchantBase {
-
-  //halves the desired base chance to activate because onEntityDamage gets called twice and it's currently a 
-  // "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
-  private static final double BASE_CHANCE = 0.08 / 2;
 
   public EnchantDisarm(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType... slots) {
     super(rarityIn, typeIn, slots);
@@ -25,6 +26,7 @@ public class EnchantDisarm extends EnchantBase {
   }
 
   public static BooleanValue CFG;
+  public static IntValue PERCENTPERLEVEL;
   public static final String ID = "disarm";
 
   @Override
@@ -38,7 +40,8 @@ public class EnchantDisarm extends EnchantBase {
   }
 
   public double getChanceToDisarm(int level) {
-    return BASE_CHANCE + (BASE_CHANCE / 2 * (level - 1));
+    float BASE_CHANCE = PERCENTPERLEVEL.get() / 100F;
+    return BASE_CHANCE + (BASE_CHANCE * (level - 1));
   }
 
   @Override
@@ -47,9 +50,13 @@ public class EnchantDisarm extends EnchantBase {
       return;
     }
     LivingEntity livingTarget = (LivingEntity) target;
+    if (!canDisarm(livingTarget)) {
+      return;
+    }
     List<ItemStack> toDisarm = new ArrayList<>();
     target.getHeldEquipment().forEach(itemStack -> {
-      if (getChanceToDisarm(level) > user.world.rand.nextDouble()) {
+      double pct = getChanceToDisarm(level);
+      if (pct > user.world.rand.nextDouble()) {
         toDisarm.add(itemStack);
       }
     });
@@ -69,5 +76,15 @@ public class EnchantDisarm extends EnchantBase {
       }
     });
     super.onEntityDamaged(user, target, level);
+  }
+
+  private boolean canDisarm(LivingEntity target) {
+    String id = EntityType.getKey(target.getType()).toString();
+    if (UtilString.isInList(ConfigRegistry.getDisarmIgnoreList(), EntityType.getKey(target.getType()))) {
+      ModCyclic.LOGGER.info("disenchant ignored by: CONFIG LIST" + id);
+      return false;
+    }
+    //default yes, its not in ignore list so canDisarm=true
+    return true;
   }
 }

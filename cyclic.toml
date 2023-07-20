@@ -26,6 +26,9 @@
 		launch = true
 		#Set false to disable enchantment
 		ender = true
+		#Enchant level drop rate.  % = drop + (level-1)*drop
+		#Range: 1 ~ 100
+		disarmPercentPerLevel = 15
 		#Set false to disable enchantment
 		disarm = true
 		#Set false to disable enchantment
@@ -40,6 +43,8 @@
 		beheading = true
 		#Set false to disable enchantment
 		quickshot = true
+		#Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment
+		disarmIngoredMobs = ["alexsmobs:mimicube"]
 		#Set false to disable enchantment
 		venom = true
 		#Set false to disable enchantment
@@ -205,6 +210,8 @@
 
 		#Sack of Holding settings
 		[cyclic.items.tile_transporter]
+			#Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.
+			overrideChestSingle = true
 			#Block these from being picked up
 			disable_pickup = ["parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller", "exnihilosequentia:*", "refinedstorage:*", "tconstruct:seared_fuel_tank", "tconstruct:smeltery_controller", "tconstruct:seared_drain", "tconstruct:seared_fuel_gauge", "tconstruct:seared_ingot_tank", "tconstruct:seared_ingot_gauge", "tconstruct:seared_melter", "tconstruct:seared_heater", "tconstruct:scorched_drain", "tconstruct:scorched_duct", "tconstruct:scorched_chute", "tconstruct:foundry_controller", "tconstruct:scorched_alloyer", "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1", "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1"]
 
@@ -284,17 +291,17 @@
 			radius = 6
 
 		#####################################################################################
-		# spell_ice settings
+		# spell_water settings
 		#####################################################################################
-		[cyclic.items.spell_ice]
+		[cyclic.items.spell_water]
 			#Radius defines how far it reaches
 			#Range: 0 ~ 32
 			radius = 3
 
 		#####################################################################################
-		# spell_water settings
+		# spell_ice settings
 		#####################################################################################
-		[cyclic.items.spell_water]
+		[cyclic.items.spell_ice]
 			#Radius defines how far it reaches
 			#Range: 0 ~ 32
 			radius = 3
@@ -331,6 +338,14 @@
 			conversionChance = 0.07999999821186066
 
 		#####################################################################################
+		# scythe_brush settings. note radius is halved while player is sneaking
+		#####################################################################################
+		[cyclic.items.scythe_brush]
+			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
+			#Range: 0 ~ 32
+			radius = 6
+
+		#####################################################################################
 		# Emerald gear settings
 		#####################################################################################
 		[cyclic.items.emerald]
@@ -352,14 +367,6 @@
 			#Damage Reduction
 			#Range: 1 ~ 99
 			leg = 7
-
-		#####################################################################################
-		# scythe_brush settings. note radius is halved while player is sneaking
-		#####################################################################################
-		[cyclic.items.scythe_brush]
-			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
-			#Range: 0 ~ 32
-			radius = 6
 
 	#####################################################################################
 	# Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  

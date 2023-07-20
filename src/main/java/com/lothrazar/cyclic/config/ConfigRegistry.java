@@ -86,6 +86,7 @@ public class ConfigRegistry {
   // Defaults
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> UNCRAFT_IGNORE_ITEMS = new ArrayList<>();
+  private static final List<String> DISARM_IGNORE = new ArrayList<>();
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
   private static final List<String> UNCRAFT_RECIPE_IDS = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
@@ -107,6 +108,7 @@ public class ConfigRegistry {
   public static IntValue HEARTXPMINUS;
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
+  private static ConfigValue<List<? extends String>> DISARM_IGNORE_LIST;
   public static BooleanValue CYAN_GENERATES;
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
@@ -182,6 +184,7 @@ public class ConfigRegistry {
     // 
     MBALL_IGNORE.add("minecraft:ender_dragon");
     MBALL_IGNORE.add("minecraft:wither");
+    DISARM_IGNORE.add("alexsmobs:mimicube");
     ENDERAPPLE.addAll(Arrays.asList(
         "minecraft:shipwreck",
         "minecraft:mineshaft",
@@ -201,6 +204,10 @@ public class ConfigRegistry {
     EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.ID, true);
     EnchantGloom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGloom.ID, true);
     EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
+    EnchantDisarm.PERCENTPERLEVEL = CFG.comment("Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(EnchantDisarm.ID + "PercentPerLevel", 15, 1, 100);
+    DISARM_IGNORE_LIST = CFG.comment("Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
+        .defineList(EnchantDisarm.ID + "IngoredMobs", DISARM_IGNORE,
+            it -> it instanceof String);
     EnchantExcavation.CFG = CFG.comment("Set false to disable enchantment").define(EnchantExcavation.ID, true);
     EnchantGrowth.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGrowth.ID, true);
     EnchantLaunch.CFG = CFG.comment("Set false to disable Multi Jump enchantment").define(EnchantLaunch.ID, true);
@@ -354,7 +361,7 @@ public class ConfigRegistry {
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
         .defineList("disable_pickup", TRANSPORTBAG, it -> it instanceof String);
     OVERRIDE_TRANSPORTER_SINGLETON = CFG.comment("Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.")
-        .define("override_chest_single", true);
+        .define("overrideChestSingle", true);
     CFG.pop();
     //
     CFG.comment("apple_ender of settings").push("apple_ender");
@@ -487,6 +494,11 @@ public class ConfigRegistry {
   @SuppressWarnings("unchecked")
   public static List<String> getMagicNetList() {
     return (List<String>) MBALL_IGNORE_LIST.get();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static List<String> getDisarmIgnoreList() {
+    return (List<String>) DISARM_IGNORE_LIST.get();
   }
 
   public static Map<String, String> getMappedBeheading() {
