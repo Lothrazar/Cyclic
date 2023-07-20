@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.item.transporter;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ItemBase;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.UtilChat;
@@ -40,6 +41,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.properties.ChestType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -99,6 +102,12 @@ public class TileTransporterItem extends ItemBase {
       return false;
     }
     BlockState toPlace = NBTUtil.readBlockState(itemData.getCompound(KEY_BLOCKSTATE));
+    if (ConfigRegistry.OVERRIDE_TRANSPORTER_SINGLETON.get()) {
+      if (toPlace.hasProperty(BlockStateProperties.CHEST_TYPE)
+          && toPlace.get(BlockStateProperties.CHEST_TYPE) != ChestType.SINGLE) {
+        toPlace = toPlace.with(BlockStateProperties.CHEST_TYPE, ChestType.SINGLE);
+      }
+    }
     //maybe get from player direction or offset face, but instead rely on that from saved data
     World world = player.getEntityWorld();
     try {
@@ -109,8 +118,7 @@ public class TileTransporterItem extends ItemBase {
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
-        tile.read(toPlace, tileData); // can cause errors in 3rd party mod
-        //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
+        tile.read(toPlace, tileData);
         tile.markDirty();
         world.markChunkDirty(pos, tile);
       }
@@ -121,7 +129,6 @@ public class TileTransporterItem extends ItemBase {
       world.setBlockState(pos, Blocks.AIR.getDefaultState());
       return false;
     }
-    //    heldChestSack.stackSize = 0;
     heldChestSack = ItemStack.EMPTY;
     heldChestSack.setTag(null);
     return true;

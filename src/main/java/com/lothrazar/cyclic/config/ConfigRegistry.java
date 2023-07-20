@@ -91,6 +91,7 @@ public class ConfigRegistry {
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final List<String> ENDERAPPLE = new ArrayList<>();
   private static final String WALL = "####################################################################################";
+  public static BooleanValue OVERRIDE_TRANSPORTER_SINGLETON;
   private static ForgeConfigSpec COMMON_CONFIG;
   private static ForgeConfigSpec CLIENT_CONFIG;
   public static IntValue PEATERICHPOWER;
@@ -352,6 +353,8 @@ public class ConfigRegistry {
     CFG.comment("Sack of Holding settings").push("tile_transporter");
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
         .defineList("disable_pickup", TRANSPORTBAG, it -> it instanceof String);
+    OVERRIDE_TRANSPORTER_SINGLETON = CFG.comment("Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.")
+        .define("override_chest_single", true);
     CFG.pop();
     //
     CFG.comment("apple_ender of settings").push("apple_ender");
