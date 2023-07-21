@@ -76,13 +76,14 @@ dependencies {
     
     // optional compat: jei plugin for custom recipes
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
-    
+     
     // optional compat: many items useable in curios slots
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 	
 	// optional compat: guidebook
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
+ 
     
     // other optional integration
  //   runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3671594") // recipes
