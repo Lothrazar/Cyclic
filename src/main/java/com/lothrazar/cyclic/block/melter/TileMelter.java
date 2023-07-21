@@ -27,6 +27,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -42,11 +43,11 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidAttributes.BUCKET_VOLUME / 20;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
   private RecipeMelter currentRecipe;
   private int burnTimeMax = 0; //only non zero if processing
 

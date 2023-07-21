@@ -103,6 +103,14 @@ public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider
     return super.getCapability(cap, side);
   }
 
+  @Override
+  public void invalidateCaps() {
+    super.invalidateCaps();
+    for (final LazyOptional<IItemHandler> sidedCap : flow.values()) {
+      sidedCap.invalidate();
+    }
+  }
+
   @SuppressWarnings("unchecked")
   @Override
   public void load(CompoundTag tag) {

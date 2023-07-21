@@ -50,7 +50,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
     e.tick();
   }
 
-  //  @Override
+  //  @Override 
   public void tick() {
     this.syncEnergy();
     this.tickDownIncomingPowerFaces();
@@ -145,8 +145,10 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityEnergy.ENERGY && !CableBase.isCableBlocked(this.getBlockState(), side)) {
-      return energyCap.cast();
+    if (cap == CapabilityEnergy.ENERGY) {
+      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
+        return energyCap.cast();
+      }
     }
     return super.getCapability(cap, side);
   }
