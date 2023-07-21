@@ -3,6 +3,7 @@
 
 	"curios.identifier.feet":"Ноги",
 	"curios.identifier.charm":"Амулет",
+ 
   "item.cyclic.copper_nugget": "Кусочек меди",
   "item.cyclic.copper_nugget.guide": "Кусочек меди",
   "item.cyclic.netherite_nugget": "Кусочек незерита",
@@ -58,6 +59,7 @@
   "block.cyclic.crusher": "Дробитель",
   "block.cyclic.crusher.tooltip": "Измельчает материалы, а также разделяет на компоненты",
   "block.cyclic.crusher.guide": "В рецептах дробителя есть шанс получить дополнительный бонусный продукт",
+
 
     "itemGroup.cyclic": "Cyclic: Блоки",
     "itemGroup.cyclicitems": "Cyclic: Предметы",

@@ -75,6 +75,9 @@ public class FluidHelpers {
   }
 
   public static void extractSourceWaterloggedCauldron(Level level, BlockPos posTarget, IFluidHandler tank) {
+    if (tank == null) {
+      return;
+    }
     //fills always gonna be one bucket but we dont know what type yet
     //test if its a source block, or a waterlogged block
     BlockState targetState = level.getBlockState(posTarget);
@@ -120,13 +123,10 @@ public class FluidHelpers {
    * @return
    */
   public static TextureAtlasSprite getBaseFluidTexture(Fluid fluid, FluidType type) {
-    ResourceLocation spriteLocation;
-    if (type == FluidType.STILL) {
-      spriteLocation = fluid.getAttributes().getStillTexture();
-    }
-    else {
-      spriteLocation = fluid.getAttributes().getFlowingTexture();
-    }
+    final FluidAttributes fluidAttributes = fluid.getAttributes();
+    final ResourceLocation spriteLocation = (type == FluidType.STILL)
+        ? fluidAttributes.getStillTexture()
+        : fluidAttributes.getFlowingTexture();
     return getSprite(spriteLocation);
   }
 
@@ -143,12 +143,11 @@ public class FluidHelpers {
     if (fluid.getFluid().getAttributes().getStillTexture(fluid) != null) {
       double sideSpacing = 0.00625;
       double belowSpacing = 0.0625 / 4;
-      double topSpacing = belowSpacing;
       model.minX = sideSpacing;
       model.minY = belowSpacing;
       model.minZ = sideSpacing;
       model.maxX = 1 - sideSpacing;
-      model.maxY = 1 - topSpacing;
+      model.maxY = 1 - belowSpacing;
       model.maxZ = 1 - sideSpacing;
     }
     if (CACHED_FLUIDS.containsKey(fluid)) {
@@ -180,31 +179,29 @@ public class FluidHelpers {
   }
 
   public static boolean tryFillPositionFromTank(Level world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, final int amount) {
-    if (tankFrom == null) {
+    if (tankFrom == null || amount <= 0) {
       return false;
     }
     try {
       IFluidHandler fluidTo = FluidUtil.getFluidHandler(world, posSide, sideOpp).orElse(null);
-      if (fluidTo != null) {
-        //its not my facing dir
-        // SO: pull fluid from that into myself
-        FluidStack wasDrained = tankFrom.drain(amount, FluidAction.SIMULATE);
-        if (wasDrained == null) {
-          return false;
-        }
-        int filled = fluidTo.fill(wasDrained, FluidAction.SIMULATE);
-        if (wasDrained != null && wasDrained.getAmount() > 0
-            && filled > 0) {
-          int realAmt = Math.min(filled, wasDrained.getAmount());
-          wasDrained = tankFrom.drain(realAmt, FluidAction.EXECUTE);
-          if (wasDrained == null) {
-            return false;
-          }
-          int actuallyFilled = fluidTo.fill(wasDrained, FluidAction.EXECUTE);
-          return actuallyFilled > 0;
-        }
+      if (fluidTo == null) {
+        return false;
       }
-      return false;
+      FluidStack toBeDrained = tankFrom.drain(amount, FluidAction.SIMULATE);
+      if (toBeDrained == null || toBeDrained.isEmpty()) {
+        return false;
+      }
+      final int filledAmount = fluidTo.fill(toBeDrained, FluidAction.EXECUTE);
+      if (filledAmount <= 0) {
+        return false;
+      }
+      final FluidStack drained = tankFrom.drain(filledAmount, FluidAction.EXECUTE);
+      final int drainedAmount = drained.getAmount();
+      //sanity check
+      if (filledAmount != drainedAmount) {
+        ModCyclic.LOGGER.error("Imbalance filling fluids, filled " + filledAmount + " drained " + drainedAmount);
+      }
+      return true;
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("A fluid tank had an issue when we tried to fill", e);

@@ -81,7 +81,7 @@ public class TileDice extends TileBlockEntityCyclic {
     //        //toggle block state
     //        if (this.timer % TICKS_PER_CHANGE == 0) {
     //          this.spinningIfZero = 0;
-    //          EnumFacing fac = BlockDice.getRandom(world.rand);
+    //          EnumFacing fac = UtilDirection.getRandom(world.rand);
     //          IBlockState stateold = world.getBlockState(pos);
     //          IBlockState newstate = stateold.withProperty(BlockDice.PROPERTYFACING, fac);
     //          world.setBlockState(pos, newstate);

@@ -1,16 +1,13 @@
 package com.lothrazar.cyclic.block.cable.item;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +31,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider {
 
   private static final int FLOW_QTY = 64; // fixed, for non-extract motion
-  private int extractQty = 64; // default
+  private int extractQty = FLOW_QTY; // default
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -63,16 +60,18 @@ public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider
     return new ItemStackHandler(1);
   }
 
-  List<Integer> rawList = IntStream.rangeClosed(
-      0,
-      5).boxed().collect(Collectors.toList());
-
-  //  @Override
   public void tick() {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
+      //=======
+      //  @Override
+      //  public void tick() {
+      //    for (final Direction extractSide : Direction.values()) {
+      //      final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
+      //      final EnumConnectType connection = this.getBlockState().get(extractFace);
+      //>>>>>>> cherries-1.16
       if (connection.isExtraction()) {
-        IItemHandler sideHandler = flow.get(extractSide).orElse(null);
+        final IItemHandler sideHandler = flow.get(extractSide).orElse(null);
         tryExtract(sideHandler, extractSide, extractQty, filter);
       }
     }
@@ -80,27 +79,24 @@ public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider
   }
 
   private void normalFlow() {
-    IItemHandler sideHandler;
-    Direction outgoingSide;
-    for (Direction incomingSide : Direction.values()) {
-      sideHandler = flow.get(incomingSide).orElse(null);
-      //thise items came from that
-      Collections.shuffle(rawList);
-      boolean validAdjacent = false;
-      for (Integer i : rawList) {
-        outgoingSide = Direction.values()[i];
+    // Label for loop for shortcutting, used to continue after items have been moved
+    incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
+      //in all cases sideHandler is required
+      final IItemHandler sideHandler = flow.get(incomingSide).orElse(null);
+      for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
         }
-        EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
-        if (connection.isExtraction() || connection.isBlocked()) {
+        EnumConnectType outgoingConnection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+        if (outgoingConnection.isExtraction() || outgoingConnection.isBlocked()) {
           continue;
         }
-        validAdjacent = validAdjacent || this.moveItems(outgoingSide, 64, sideHandler);
+        if (this.moveItems(outgoingSide, FLOW_QTY, sideHandler)) {
+          continue incomingSideLoop; //if items have been moved then change side
+        }
       }
-      if (!validAdjacent) {
-        this.moveItems(incomingSide, FLOW_QTY, sideHandler);
-      }
+      //if no items have been moved then move items in from adjacent
+      this.moveItems(incomingSide, FLOW_QTY, sideHandler);
     }
   }
 
