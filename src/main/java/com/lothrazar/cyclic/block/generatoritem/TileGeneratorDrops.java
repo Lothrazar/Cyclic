@@ -49,8 +49,8 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
-  private int burnPerTick;
   private RecipeGeneratorItem currentRecipe;
+  private int burnPerTick;
 
   public TileGeneratorDrops(BlockPos pos, BlockState state) {
     super(TileRegistry.GENERATOR_ITEM.get(), pos, state);
@@ -84,11 +84,13 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
       currentRecipe = null;
       this.burnTimeMax = 0;
       this.burnTime = 0;
-    }
-    //if we are not burning, find a new recipe
-    if (this.burnTimeMax == 0) {
+      //try to find a recipe now that its empty 
       this.findMatchingRecipe();
     }
+    tryConsumeFuel();
+  }
+
+  private void tryConsumeFuel() {
     if (burnPerTick == 0 || this.burnTime == 0) {
       return;
     }
@@ -96,9 +98,9 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
     setLitProperty(true);
     int onSim = energy.receiveEnergy(this.burnPerTick, true);
     if (onSim > 0) {
-      this.burnTime--;
       //gen up. we burned away a tick of this fuel
       energy.receiveEnergy(this.burnPerTick, false);
+      this.burnTime--;
     }
   }
 

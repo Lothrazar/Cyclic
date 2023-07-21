@@ -92,7 +92,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:roots-classic-295780:3939973") //
     runtimeOnly fg.deobf("curse.maven:expandability-465066:3678612")
     runtimeOnly fg.deobf("curse.maven:artifacts-312353:3984105") // everlasting beef compat
-
+ 
 	//added for testing
   //  runtimeOnly fg.deobf("curse.maven:brutal-bosses-dungeon-557999:3916875")
   //  runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3641681")
@@ -105,7 +105,7 @@ dependencies {
   //  runtimeOnly fg.deobf("curse.maven:pickle-tweaks-238761:3793199")
   //  runtimeOnly fg.deobf("curse.maven:libnonymous-357557:3677573")
   //  runtimeOnly fg.deobf("curse.maven:bonsai-trees-278993:3677571")
-  //  runtimeOnly fg.deobf("curse.maven:pipez-443900:3694227")
+  //  runtimeOnly fg.deobf("curse.maven:pipez-443900:3694227") 
   
 //   implementation fg.deobf("curse.maven:absent-by-design-305840:3686851")
 //   implementation fg.deobf("curse.maven:selene-499980:3687411")

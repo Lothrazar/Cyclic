@@ -63,13 +63,6 @@ public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider
   public void tick() {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
-      //=======
-      //  @Override
-      //  public void tick() {
-      //    for (final Direction extractSide : Direction.values()) {
-      //      final EnumProperty<EnumConnectType> extractFace = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
-      //      final EnumConnectType connection = this.getBlockState().get(extractFace);
-      //>>>>>>> cherries-1.16
       if (connection.isExtraction()) {
         final IItemHandler sideHandler = flow.get(extractSide).orElse(null);
         tryExtract(sideHandler, extractSide, extractQty, filter);

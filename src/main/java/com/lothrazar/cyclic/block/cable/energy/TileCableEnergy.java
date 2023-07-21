@@ -98,7 +98,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
     if (capacity <= 0) {
       return;
     }
-    //first we simulate
+    //first we simulate 
     final int energyToExtract = itemHandlerFrom.extractEnergy(TRANSFER_RATE.get(), true);
     if (energyToExtract <= 0) {
       return;
