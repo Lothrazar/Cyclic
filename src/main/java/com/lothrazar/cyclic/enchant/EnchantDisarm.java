@@ -40,8 +40,8 @@ public class EnchantDisarm extends EnchantBase {
   }
 
   public double getChanceToDisarm(int level) {
-    float BASE_CHANCE = PERCENTPERLEVEL.get() / 100F;
-    return BASE_CHANCE + (BASE_CHANCE * (level - 1));
+    float baseChance = PERCENTPERLEVEL.get() / 100F;
+    return baseChance + (baseChance * (level - 1));
   }
 
   @Override

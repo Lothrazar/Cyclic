@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilWorld;
+import java.util.UUID;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,6 +29,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileWirelessTransmit extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
+  private static final String REDSTONE_ID = "redstone_id";
+
   static enum Fields {
     RENDER;
   }
@@ -44,6 +47,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     }
   };
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private UUID id;
 
   @Override
   public ITextComponent getDisplayName() {
@@ -72,12 +76,22 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
+    if (tag.hasUniqueId(REDSTONE_ID)) {
+      this.id = tag.getUniqueId(REDSTONE_ID);
+    }
+    else {
+      this.id = UUID.randomUUID();
+    }
     super.read(bs, tag);
   }
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
     tag.put(NBTINV, inventory.serializeNBT());
+    if (this.id == null) {
+      this.id = UUID.randomUUID();
+    }
+    tag.putUniqueId(REDSTONE_ID, id);
     return super.write(tag);
   }
 
@@ -95,20 +109,32 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
       ModCyclic.LOGGER.info("DimPos is unloaded" + dimPos);
       return;
     }
-    BlockState target = serverLevel.getBlockState(targetPos);
-    if (target.hasProperty(BlockStateProperties.POWERED)) {
-      boolean targetPowered = target.get(BlockStateProperties.POWERED);
-      //update target based on my state
-      boolean isPowered = world.isBlockPowered(pos);
-      if (targetPowered != isPowered) {
-        serverLevel.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
-        //and update myself too   
-        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
-        //TODO: send exact 1-16 power level
-        //        world.getTileEntity(targetPos) instanceof TileWirelessRec
-        //        && target.getBlock() instanceof BlockWirelessRec
+    boolean isPowered = world.isBlockPowered(pos);
+    //    BlockState target = serverLevel.getBlockState(targetPos);
+    if (serverLevel.getTileEntity(targetPos) instanceof TileWirelessRec) {
+      TileWirelessRec receiver = (TileWirelessRec) serverLevel.getTileEntity(targetPos);
+      //am I powered?
+      if (isPowered) {
+        receiver.putPowerSender(this.id);
+      }
+      else {
+        receiver.removePowerSender(this.id);
       }
     }
+    world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
+    //    if (target.hasProperty(BlockStateProperties.POWERED)) {
+    //      boolean targetPowered = target.get(BlockStateProperties.POWERED);
+    //      //update target based on my state
+    //      boolean isPowered = world.isBlockPowered(pos);
+    //      if (targetPowered != isPowered) {
+    //        serverLevel.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
+    //        //and update myself too   
+    //        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
+    //        //TODO: send exact 1-16 power level
+    //        //        world.getTileEntity(targetPos) instanceof TileWirelessRec
+    //        //        && target.getBlock() instanceof BlockWirelessRec
+    //      }
+    //    }
   }
 
   @Override
