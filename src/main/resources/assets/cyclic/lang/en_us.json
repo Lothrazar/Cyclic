@@ -1382,7 +1382,6 @@
   "item.minecraft.lingering_potion.effect.cyclic_waterwalk": "Lingering Potion of Waterwalking",
   "item.minecraft.tipped_arrow.effect.cyclic_waterwalk": "Arrow of Waterwalking",
   
-  
   "effect.cyclic.magnetic": "Magnetism",
   "effect.cyclic.magnetic.description": "Pull items and XP towards you with range of 8 blocks per level",
   "item.minecraft.potion.effect.cyclic_magnetic": "Potion of Magnetism",

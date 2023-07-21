@@ -85,13 +85,13 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
     
     // other optional integration
-    runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3671594") // recipes
-    runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3820697") // lang file 
-    runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027") // recipes and datatags
-    runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3999153") // recipes and datatags
-    runtimeOnly fg.deobf("curse.maven:roots-classic-295780:3939973") //
-    runtimeOnly fg.deobf("curse.maven:expandability-465066:3678612")
-    runtimeOnly fg.deobf("curse.maven:artifacts-312353:3984105") // everlasting beef compat
+ //   runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3671594") // recipes
+ //   runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3820697") // lang file 
+ //   runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027") // recipes and datatags
+ //   runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3999153") // recipes and datatags
+ //   runtimeOnly fg.deobf("curse.maven:roots-classic-295780:3939973") //
+ //   runtimeOnly fg.deobf("curse.maven:expandability-465066:3678612")
+ //   runtimeOnly fg.deobf("curse.maven:artifacts-312353:3984105") // everlasting beef compat
  
 	//added for testing
   //  runtimeOnly fg.deobf("curse.maven:brutal-bosses-dungeon-557999:3916875")
