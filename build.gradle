@@ -97,10 +97,10 @@ dependencies {
 	//added for testing
   //  runtimeOnly fg.deobf("curse.maven:brutal-bosses-dungeon-557999:3916875")
   //  runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3641681")
-    runtimeOnly fg.deobf("curse.maven:simple-storage-network-268495:3868680")
+  //  runtimeOnly fg.deobf("curse.maven:simple-storage-network-268495:3868680")
   //  runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3671753")
   //  runtimeOnly fg.deobf("curse.maven:construction-wand-399558:3712396")
-    runtimeOnly fg.deobf("curse.maven:gardening-tools-351990:3694027")
+  //  runtimeOnly fg.deobf("curse.maven:gardening-tools-351990:3694027")
   //  runtimeOnly fg.deobf("curse.maven:cucumber-272335:3859559")
   //  runtimeOnly fg.deobf("curse.maven:mystical-agriculture-246640:4005473")
   //  runtimeOnly fg.deobf("curse.maven:pickle-tweaks-238761:3793199")
@@ -137,7 +137,7 @@ repositories {
   maven { url 'https://maven.theillusivec4.top/'    }
   maven { url 'https://maven.blamejared.com' }    
   maven { url 'https://modmaven.dev'  }    
-  maven { url 'https://www.cursemaven.com'  }
+  //maven { url 'https://www.cursemaven.com'  }
 }
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {

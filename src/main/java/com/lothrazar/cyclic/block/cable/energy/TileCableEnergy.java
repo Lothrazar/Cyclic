@@ -7,8 +7,6 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
-import com.lothrazar.cyclic.net.PacketEnergySync;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.core.BlockPos;
@@ -182,8 +180,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
     }
     final int currentEnergy = energy.getEnergyStored();
     if (currentEnergy != energyLastSynced) {
-      final PacketEnergySync packetEnergySync = new PacketEnergySync(this.worldPosition, currentEnergy);
-      PacketRegistry.sendToAllClients(level, packetEnergySync);
+      super.syncEnergy();
       energyLastSynced = currentEnergy;
     }
   }
