@@ -15,7 +15,7 @@
 
 		[cyclic.potion.flight]
 			#Set false to disable the base recipe
-			enabled = false
+			enabled = true
 
 		[cyclic.potion.blind]
 			#Set false to disable the base recipe
@@ -161,7 +161,7 @@
 
 		[cyclic.enchantment.auto_smelt]
 			#Set false to disable enchantment
-			enabled = false
+			enabled = true
 
 		[cyclic.enchantment.growth]
 			#Radius per level.  size around player to perform growth logic
@@ -497,21 +497,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
-
-	#####################################################################################
-	#Fluid cost for various machines
-	#####################################################################################
-	[cyclic.fluid]
-		#Cost of magma fluid per action
-		#Range: 1 ~ 64000
-		anvil_magma = 100
-		#Cost of (or payment for if negative) per enchanted book generated
-		#Range: -1000 ~ 16000
-		disenchanter = 100
-		#Payment per void action, if not zero
-		#Range: 0 ~ 16000
-		void_anvil = 25
+		info = false
 
 	#####################################################################################
 	# Item specific configs
@@ -526,7 +512,7 @@
 			#Range: 0 ~ 32
 			radius = 6
 
-		#apple_ender of settings
+		#apple_ender settings
 		[cyclic.items.apple_ender]
 			#How many results the client will see
 			#Range: 1 ~ 60
@@ -762,53 +748,6 @@
 	# Energy related configs for machines and items
 	#####################################################################################
 	[cyclic.energy]
-
-		#####################################################################################
-		#Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).
-		#####################################################################################
-		[cyclic.energy.cost]
-			#Power per use disenchanter
-			#Range: 0 ~ 64000
-			disenchanter = 2500
-			#Power per repair anvil
-			#Range: 0 ~ 64000
-			anvil = 250
-			#Power per use dropper
-			#Range: 0 ~ 64000
-			dropper = 50
-			#Power per recipe in the packager
-			#Range: 0 ~ 64000
-			packager = 50
-			#Power per use peat_farm
-			#Range: 0 ~ 64000
-			peat_farm = 500
-			#Power per use miner
-			#Range: 0 ~ 64000
-			miner = 10
-			#Power per use collector_fluid
-			#Range: 0 ~ 64000
-			collector_fluid = 500
-			#Power per tick while in use
-			#Range: 0 ~ 64000
-			structure = 10
-			#Power per use harvester
-			#Range: 0 ~ 64000
-			harvester = 250
-			#Power per use uncraft
-			#Range: 0 ~ 64000
-			uncraft = 1000
-			#Power per use forester
-			#Range: 0 ~ 64000
-			forester = 50
-			#Power per tick beacon
-			#Range: 0 ~ 64000
-			beacon = 10
-			#Power per use crafter
-			#Range: 0 ~ 64000
-			crafter = 500
-			#Power per use user
-			#Range: 0 ~ 64000
-			user = 50
 
 		[cyclic.energy.generator_food]
 			#RF energy per tick generated while burning food in this machine

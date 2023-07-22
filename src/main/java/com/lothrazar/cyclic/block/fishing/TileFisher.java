@@ -143,7 +143,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
       if (table == null) {
         return;
       }
-      //got it 
+      //got it
       int luck = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK, fishingRod) + 1;
       LootContext lootContext = new LootContext.Builder((ServerLevel) world)
           .withLuck(luck).withRandom(rand).withParameter(LootContextParams.ORIGIN,
@@ -160,7 +160,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
           }
           else { // https://github.com/Lothrazar/Cyclic/blob/trunk/1.12/src/main/java/com/lothrazar/cyclicmagic/block/fishing/TileEntityFishing.java#L209
             //copy alg from MC 1.12.2 version 
-            if (rand.nextDouble() < 0.25) { //25% chance damage 
+            if (rand.nextDouble() < 0.25) { //25% chance damage
               ItemStackUtil.damageItem(null, fishingRod);
             }
             else if (rand.nextDouble() < 0.66) { //66-25 = chance repair

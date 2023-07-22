@@ -30,10 +30,6 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     RENDER;
   }
 
-  public TileWirelessTransmit(BlockPos pos, BlockState state) {
-    super(TileRegistry.WIRELESS_TRANSMITTER.get(), pos, state);
-  }
-
   ItemStackHandler inventory = new ItemStackHandler(9) {
 
     @Override
@@ -46,8 +42,11 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
-  //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private UUID id;
+
+  public TileWirelessTransmit(BlockPos pos, BlockState state) {
+    super(TileRegistry.WIRELESS_TRANSMITTER.get(), pos, state);
+  }
 
   @Override
   public Component getDisplayName() {
@@ -88,39 +87,19 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
       ModCyclic.LOGGER.info("Dimension not found " + dimPos.getDimension());
       return;
     }
-    //<<<<<<< HEAD
-    //    if (!serverLevel.isLoaded(targetPos)) {
-    //      ModCyclic.LOGGER.info("DimPos is unloaded" + dimPos);
-    //      return;
-    //    }
-    //    //getstate should be valid now, 
-    //    BlockState target = serverLevel.getBlockState(targetPos);
-    //    if (target.hasProperty(BlockStateProperties.POWERED)) {
-    //      boolean targetPowered = target.getValue(BlockStateProperties.POWERED);
-    //      //update target based on my state
-    //      boolean isPowered = level.hasNeighborSignal(worldPosition);
-    //      if (targetPowered != isPowered) {
-    //        serverLevel.setBlockAndUpdate(targetPos, target.setValue(BlockStateProperties.POWERED, isPowered));
-    //        //and update myself too
-    //        if (level.isLoaded(worldPosition) && level.getBlockState(worldPosition).getBlock() == this.getBlockState().getBlock()) {
-    //          level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
-    //        }
-    //======= 
-    if (!serverLevel.isAreaLoaded(targetPos, 4)) {
+    if (!serverLevel.isLoaded(targetPos)) {
       ModCyclic.LOGGER.info("DimPos is unloaded" + dimPos);
       return;
     }
     boolean isPowered = level.hasNeighborSignal(worldPosition);
     //    BlockState target = serverLevel.getBlockState(targetPos);
     if (serverLevel.getBlockEntity(targetPos) instanceof TileWirelessRec receiver) {
-      //      TileWirelessRec receiver = (TileWirelessRec) serverLevel.getBlockEntity(targetPos);
       //am I powered?
       if (isPowered) {
         receiver.putPowerSender(this.id);
       }
       else {
         receiver.removePowerSender(this.id);
-        //>>>>>>> 969e48b331351f362c2b8e45211b4907e28e3a09
       }
     }
     if (level.isLoaded(worldPosition) && level.getBlockState(worldPosition).getBlock() == this.getBlockState().getBlock()) {

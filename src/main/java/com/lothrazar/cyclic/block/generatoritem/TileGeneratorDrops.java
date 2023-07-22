@@ -49,8 +49,8 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
-  private RecipeGeneratorItem currentRecipe;
   private int burnPerTick;
+  private RecipeGeneratorItem currentRecipe;
 
   public TileGeneratorDrops(BlockPos pos, BlockState state) {
     super(TileRegistry.GENERATOR_ITEM.get(), pos, state);

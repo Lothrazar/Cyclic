@@ -73,7 +73,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     //get and update target
     BlockPos targetPos = getShapeTarget();
     shapeIndex++;
-    //does it exist 
+    //does it exist
     if (targetPos != null && HarvestUtil.tryHarvestSingle(this.level, targetPos)) {
       //energy is per action
       energy.extractEnergy(cost, false);
