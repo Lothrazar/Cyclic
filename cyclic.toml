@@ -85,11 +85,6 @@
 	# Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)
 	#####################################################################################
 	[cyclic.enchantment]
-		#Enchant level drop rate.  % = drop + (level-1)*drop
-		#Range: 1 ~ 100
-		disarmPercentPerLevel = 15
-		#Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment
-		disarmIngoredMobs = ["alexsmobs:mimicube"]
 
 		[cyclic.enchantment.traveler]
 			#Set false to disable enchantment
@@ -116,6 +111,11 @@
 			enabled = true
 
 		[cyclic.enchantment.disarm]
+			#Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment
+			ingoredMobs = ["alexsmobs:mimicube"]
+			#Enchant level drop rate.  % = drop + (level-1)*drop
+			#Range: 1 ~ 100
+			percentPerLevel = 15
 			#Set false to disable enchantment
 			enabled = true
 
@@ -743,22 +743,4 @@
 		home = true
 		#True means only players with OP can use this /cyclic command
 		hunger = true
-
-	#####################################################################################
-	# Energy related configs for machines and items
-	#####################################################################################
-	[cyclic.energy]
-
-		[cyclic.energy.generator_food]
-			#RF energy per tick generated while burning food in this machine
-			#Range: 1 ~ 6400
-			rf_per_tick = 60
-			#This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.
-			#Range: 1 ~ 6400
-			ticks_per_food = 100
-
-		[cyclic.energy.generator_fuel]
-			#RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks
-			#Range: 1 ~ 6400
-			rf_per_tick = 80
 

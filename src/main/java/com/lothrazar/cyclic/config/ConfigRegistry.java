@@ -286,9 +286,9 @@ public class ConfigRegistry {
     VenomEnchant.CFG = CFG.comment("Set false to disable enchantment").define(VenomEnchant.ID + ".enabled", true);
     XpEnchant.CFG = CFG.comment("Set false to disable enchantment").define(XpEnchant.ID + ".enabled", true);
     //    DisarmEnchant.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
-    DisarmEnchant.PERCENTPERLEVEL = CFG.comment("Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + "PercentPerLevel", 15, 1, 100);
+    DisarmEnchant.PERCENTPERLEVEL = CFG.comment("Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
     DISARM_IGNORE_LIST = CFG.comment("Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
-        .defineList(DisarmEnchant.ID + "IngoredMobs", DISARM_IGNORE,
+        .defineList(DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
             it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
