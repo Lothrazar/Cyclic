@@ -1,9 +1,6 @@
 package com.lothrazar.cyclic.block.harvester;
 
 import java.util.List;
-import java.util.Set;
-import com.google.common.collect.Sets;
-import com.lothrazar.cyclic.api.IHarvesterOverride;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -34,7 +31,6 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
   }
 
-  public static final Set<IHarvesterOverride> HARVEST_OVERRIDES = Sets.newIdentityHashSet();
   public static final int MAX_SIZE = 12;
   static final int MAX_ENERGY = 640000;
   static final int MAX_HEIGHT = 16;
@@ -77,7 +73,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     //get and update target
     BlockPos targetPos = getShapeTarget();
     shapeIndex++;
-    //does it exist
+    //does it exist 
     if (targetPos != null && HarvestUtil.tryHarvestSingle(this.level, targetPos)) {
       //energy is per action
       energy.extractEnergy(cost, false);
