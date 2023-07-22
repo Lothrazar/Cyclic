@@ -116,7 +116,6 @@ public class BlockEnderShelf extends BlockCyclic {
   public TileEnderShelf getTileEntity(Level world, BlockPos pos) {
     return (TileEnderShelf) world.getBlockEntity(pos);
   }
-  //
 
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {

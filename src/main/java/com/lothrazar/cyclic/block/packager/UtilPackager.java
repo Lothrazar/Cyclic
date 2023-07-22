@@ -104,7 +104,6 @@ public class UtilPackager {
         return false;
       }
       boolean outIsStorage = recipeOutput.is(Tags.Items.STORAGE_BLOCKS);
-      final Item mainIngredientItem = mainIngredientStack.getItem();
       boolean inIsIngot = mainIngredientStack.is(Tags.Items.INGOTS);
       if (!outIsStorage && inIsIngot) {
         return false;

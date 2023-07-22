@@ -15,7 +15,7 @@
 
 		[cyclic.potion.flight]
 			#Set false to disable the base recipe
-			enabled = true
+			enabled = false
 
 		[cyclic.potion.blind]
 			#Set false to disable the base recipe
@@ -156,7 +156,7 @@
 
 		[cyclic.enchantment.auto_smelt]
 			#Set false to disable enchantment
-			enabled = true
+			enabled = false
 
 		[cyclic.enchantment.growth]
 			#Radius per level.  size around player to perform growth logic
@@ -491,7 +491,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = false
+		info = true
 
 	#####################################################################################
 	# Item specific configs
