@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.phys.AABB;
 
@@ -185,7 +186,7 @@ public class ShapeUtil {
       otherOff = 0;
       d = 2 - (2 * radius); //dont use Diameter again, for integer roundoff
       do {
-        if (dir.getAxis() == Direction.Axis.Z) {
+        if (dir.getAxis() == Axis.Z) {
           centerH = pos.getX();
           circleList.add(new BlockPos(centerH + otherOff, centerY + radOffset, pos.getZ() + diroff * i));
           circleList.add(new BlockPos(centerH + otherOff, centerY - radOffset, pos.getZ() + diroff * i));

@@ -107,7 +107,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
         toPlace = toPlace.setValue(BlockStateProperties.CHEST_TYPE, ChestType.SINGLE);
       }
     }
-    //>>>>>>> 969e48b331351f362c2b8e45211b4907e28e3a09
     //maybe get from player direction or offset face, but instead rely on that from saved data
     Level world = player.getCommandSenderWorld();
     try {

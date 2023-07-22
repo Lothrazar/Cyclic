@@ -63,8 +63,7 @@ public class PacketItemGui extends PacketBaseCyclic {
   }
 
   public static PacketItemGui decode(FriendlyByteBuf buf) {
-    PacketItemGui p = new PacketItemGui(buf.readInt(), buf.readItem().getItem());
-    return p;
+    return new PacketItemGui(buf.readInt(), buf.readItem().getItem());
   }
 
   public static void encode(PacketItemGui msg, FriendlyByteBuf buf) {

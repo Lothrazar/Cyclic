@@ -108,7 +108,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
       if (entities) {
         //do entities
-        ModCyclic.LOGGER.info(this.worldPosition + "entities ");
         this.interactEntities(target);
       }
       else {
@@ -136,7 +135,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     var usedItem = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND);
     for (int slotId = 0; slotId < outputSlots.getSlots(); slotId++) {
       if (!usedItem.isEmpty()) {
-        ModCyclic.LOGGER.info("inserting ?milk" + usedItem);
         //        usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);
         if (outputSlots.insertItem(slotId, usedItem.copy(), true).isEmpty()) {
           usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);

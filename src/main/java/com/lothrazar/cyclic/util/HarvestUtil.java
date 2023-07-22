@@ -145,7 +145,7 @@ public class HarvestUtil {
         dropStack.shrink(1);
         seed = null;
       }
-      //drop the rest 
+      //drop the rest
       LevelWorldUtil.dropItemStackInWorld(world, posCurrent, dropStack);
     }
     if (world instanceof ServerLevel) {
