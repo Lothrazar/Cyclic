@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.ParticleUtil;
 import com.lothrazar.cyclic.util.LevelWorldUtil;
+import com.lothrazar.cyclic.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;
