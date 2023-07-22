@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.cable.fluid;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
@@ -46,7 +46,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
       return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
   };
-  private final Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
+  private final Map<Direction, LazyOptional<FluidTankBase>> flow = new ConcurrentHashMap<>();
 
   public TileCableFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.FLUID_PIPE.get(), pos, state);

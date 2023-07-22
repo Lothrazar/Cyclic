@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.cable.energy;
 
 import java.util.Map;
-import com.google.common.collect.Maps;
+import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
@@ -30,7 +30,7 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
   public static IntValue TRANSFER_RATE;
   CustomEnergyStorage energy;
   private LazyOptional<IEnergyStorage> energyCap;
-  private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
+  private final Map<Direction, Integer> mapIncomingEnergy = new ConcurrentHashMap<>();
   private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not 
 
   public TileCableEnergy(BlockPos pos, BlockState state) {
@@ -68,21 +68,6 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
     if (extractSide == null) {
       return;
     }
-    //<<<<<<< HEAD
-    //    BlockPos posTarget = this.worldPosition.relative(extractSide);
-    //    BlockEntity tile = level.getBlockEntity(posTarget);
-    //    if (tile != null) {
-    //      IEnergyStorage itemHandlerFrom = tile.getCapability(CapabilityEnergy.ENERGY, extractSide.getOpposite()).orElse(null);
-    //      if (itemHandlerFrom != null) {
-    //        //ok go
-    //        //
-    //        int extractSim = itemHandlerFrom.extractEnergy(TRANSFER_RATE.get(), true);
-    //        if (extractSim > 0 && energy.receiveEnergy(extractSim, true) > 0) {
-    //          //actually extract energy for real, whatever it accepted 
-    //          int actuallyEx = itemHandlerFrom.extractEnergy(energy.receiveEnergy(extractSim, false), false);
-    //        }
-    //      }
-    //=======
     final BlockPos posTarget = this.worldPosition.relative(extractSide);
     final BlockEntity tile = level.getBlockEntity(posTarget);
     if (tile == null) {

@@ -110,12 +110,15 @@ public class ConfigRegistry {
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> IGNORE_LIST_UNCRAFTER = new ArrayList<>();
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
+  private static final List<String> DISARM_IGNORE = new ArrayList<>();
   private static final List<String> IGNORE_RECIPES_UNCRAFTER = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final List<String> ENDERAPPLE = new ArrayList<>();
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
+  private static ConfigValue<List<? extends String>> DISARM_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
+  public static BooleanValue OVERRIDE_TRANSPORTER_SINGLETON;
   public static BooleanValue GENERATE_FLOWERS;
   public static BooleanValue CYAN_PODZOL_LEGACY;
   static {
@@ -214,6 +217,7 @@ public class ConfigRegistry {
     // 
     MBALL_IGNORE.add("minecraft:ender_dragon");
     MBALL_IGNORE.add("minecraft:wither");
+    DISARM_IGNORE.add("alexsmobs:mimicube");
     ENDERAPPLE.addAll(Arrays.asList(
         "minecraft:shipwreck",
         "minecraft:mineshaft",
@@ -281,6 +285,11 @@ public class ConfigRegistry {
     TravellerEnchant.CFG = CFG.comment("Set false to disable enchantment").define(TravellerEnchant.ID + ".enabled", true);
     VenomEnchant.CFG = CFG.comment("Set false to disable enchantment").define(VenomEnchant.ID + ".enabled", true);
     XpEnchant.CFG = CFG.comment("Set false to disable enchantment").define(XpEnchant.ID + ".enabled", true);
+    //    DisarmEnchant.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
+    DisarmEnchant.PERCENTPERLEVEL = CFG.comment("Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + "PercentPerLevel", 15, 1, 100);
+    DISARM_IGNORE_LIST = CFG.comment("Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
+        .defineList(DisarmEnchant.ID + "IngoredMobs", DISARM_IGNORE,
+            it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     GENERATE_FLOWERS = CFG.comment("Do the four generate in the world. "
@@ -303,34 +312,69 @@ public class ConfigRegistry {
         .push("logging");
     CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
-    CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
+    CFG.comment(WALL, " Energy related configs for machines and items", WALL)
+        .push("energy");
+    //    CFG.comment(WALL, " Fuel gained by consuming items", WALL).push("fuel");
+    ////    PEATPOWER = CFG.comment(" Power gained burning one of this")        .defineInRange("peat_fuel", 256, 1, 64000);
+    ////    PEATERICHPOWER = CFG.comment("Power gained burning one of this")        .defineInRange("peat_fuel_enriched", 256 * 4, 1, 64000);
+    //    CFG.pop(); //fuel
+    TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
+        .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
+    TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
+        .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
+    TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
+        .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
+    CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
+        .push("cost");
+    TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager", 50, 0, 64000);
+    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("disenchanter", 2500, 0, 64000);
+    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 50, 0, 64000);
+    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
+    TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper", 50, 0, 64000);
+    TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester", 50, 0, 64000);
+    TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester", 250, 0, 64000);
+    TilePotionBeacon.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon", 10, 0, 64000);
+    TileMiner.POWERCONF = CFG.comment("Power per use miner").defineInRange("miner", 10, 0, 64000);
+    TileUncraft.POWERCONF = CFG.comment("Power per use uncraft").defineInRange("uncraft", 1000, 0, 64000);
+    TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid", 500, 0, 64000);
+    TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm", 500, 0, 64000);
+    TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter", 500, 0, 64000);
+    TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure", 10, 0, 64000);
+    //    TilePotion.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon", 0, 0, 64000);
+    CFG.pop(); //cost
+    CFG.pop(); //energy
+    CFG.comment(WALL, "Fluid cost for various machines", WALL)
+        .push("fluid");
+    TileAnvilMagma.FLUIDCOST = CFG.comment("Cost of magma fluid per action").defineInRange("anvil_magma", 100, 1, 64000);
+    TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("disenchanter", 100, -1000, 16000);
+    TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("void_anvil", 25, 0, 16000);
+    CFG.pop(); //fluid
+    CFG.comment(WALL, " Item specific configs", WALL).push("items");
     //
-    CFG.comment(" scythe_brush settings. note radius is halved while player is sneaking").push("scythe_brush");
+    CFG.comment(WALL, " scythe_brush settings. note radius is halved while player is sneaking", WALL).push("scythe_brush");
     ScytheBrush.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
-    CFG.comment(" scythe_forage settings. note radius is halved while player is sneaking").push("scythe_forage");
+    CFG.comment(WALL, " scythe_forage settings. note radius is halved while player is sneaking", WALL).push("scythe_forage");
     ScytheForage.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
-    CFG.comment(" scythe_leaves settings.  radius is halved while player is sneaking").push("scythe_leaves");
+    CFG.comment(WALL, " scythe_leaves settings. note radius is halved while player is sneaking", WALL).push("scythe_leaves");
     ScytheLeaves.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
-    CFG.comment(" scythe_harvest settings. radius is halved while player is sneaking").push("scythe_harvest");
+    CFG.comment(WALL, " scythe_harvest settings. note radius is halved while player is sneaking", WALL).push("scythe_harvest");
     ScytheHarvest.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
     //
-    CFG.comment(" spell_water settings").push("spell_water");
+    CFG.comment(WALL, " spell_water settings", WALL).push("spell_water");
     WaterSpreaderItem.RADIUS = CFG.comment("Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
     CFG.pop();
     //
-    CFG.comment(" spell_ice settings").push("spell_ice");
+    CFG.comment(WALL, " spell_ice settings", WALL).push("spell_ice");
     IceWand.RADIUS = CFG.comment("Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
     CFG.pop();
-    //
-    CFG.comment("apple_ender settings").push("apple_ender");
+    CFG.comment("apple_ender of settings").push("apple_ender");
     EnderApple.IGNORELIST = CFG.comment("Ignored Structures").defineList("ignore", ENDERAPPLE, it -> it instanceof String);
     EnderApple.PRINTED = CFG.comment("How many results the client will see").defineInRange("printed", 5, 1, 60);
     CFG.pop();
-    //
     //
     ShieldCyclicItem.LEATHER_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_leather.blocked_damage_percent", 20, 0, 100);
     ShieldCyclicItem.WOOD_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_wood.blocked_damage_percent", 60, 0, 100);
@@ -342,6 +386,7 @@ public class ConfigRegistry {
     WandMissileItem.RANGE = CFG.comment("Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
     OreProspector.HEIGHT = CFG.comment("Ore Prospector height around player to search for ores").defineInRange("prospector.height", 8, 1, 128);
+    ///
     CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
     MaterialRegistry.EMERALD_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 3.0F, 0.1F, 99F);
     MaterialRegistry.EMERALD_DMG = CFG.comment("Weapon damage").defineInRange("damage", 4.5F, 0.1F, 99F);
@@ -363,8 +408,8 @@ public class ConfigRegistry {
     CharmBase.CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
     CharmBase.CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
     AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
-    CFG.comment(" Caving Torch Charm settings").push("caving_torch");
-    AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 13);
+    CFG.comment(WALL, " Caving Torch Charm settings", WALL).push("caving_torch");
+    AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 14);
     AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
         "Light level of the current block after placing down a torch. Must be greater than light_limit",
         "Higher values means torches will be placed closer to you. Lower values means torches will overlap less,",
@@ -378,9 +423,12 @@ public class ConfigRegistry {
     CFG.comment("Wand settings").push("teleport_wand");
     TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 256, 8, 1024);
     CFG.pop();
+    //
     CFG.comment("Sack of Holding settings").push("tile_transporter");
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
         .defineList("disable_pickup", TRANSPORTBAG, it -> it instanceof String);
+    OVERRIDE_TRANSPORTER_SINGLETON = CFG.comment("Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.")
+        .define("overrideChestSingle", true);
     CFG.pop();
     CFG.comment("Heart items").push("heart");
     HeartToxicItem.HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
@@ -471,7 +519,7 @@ public class ConfigRegistry {
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 256, 1, 1024);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
-    CFG.push("sprinkler");
+    CFG.comment("Sprinkler settings").push("sprinkler");
     TileSprinkler.RADIUS = CFG.comment("Radius").defineInRange("radius", 4, 1, 32);
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
     TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);
@@ -578,6 +626,11 @@ public class ConfigRegistry {
   @SuppressWarnings("unchecked")
   public static List<String> getMagicNetList() {
     return (List<String>) MBALL_IGNORE_LIST.get();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static List<String> getDisarmIgnoreList() {
+    return (List<String>) DISARM_IGNORE_LIST.get();
   }
 
   public static Map<String, String> getMappedBeheading() {

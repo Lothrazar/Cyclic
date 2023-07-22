@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.battery;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -53,7 +53,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   public TileBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY.get(), pos, state);
     flowing = 0;
-    poweredSides = new HashMap<Direction, Boolean>();
+    poweredSides = new ConcurrentHashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, false);
     }

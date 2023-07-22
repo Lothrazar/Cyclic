@@ -85,6 +85,11 @@
 	# Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)
 	#####################################################################################
 	[cyclic.enchantment]
+		#Enchant level drop rate.  % = drop + (level-1)*drop
+		#Range: 1 ~ 100
+		disarmPercentPerLevel = 15
+		#Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment
+		disarmIngoredMobs = ["alexsmobs:mimicube"]
 
 		[cyclic.enchantment.traveler]
 			#Set false to disable enchantment
@@ -353,6 +358,7 @@
 			#Range: 0 ~ 512
 			height = 4
 
+		#Sprinkler settings
 		[cyclic.blocks.sprinkler]
 			#Tick rate.  20 will fire one block per second
 			#Range: 1 ~ 20
@@ -494,17 +500,33 @@
 		info = true
 
 	#####################################################################################
+	#Fluid cost for various machines
+	#####################################################################################
+	[cyclic.fluid]
+		#Cost of magma fluid per action
+		#Range: 1 ~ 64000
+		anvil_magma = 100
+		#Cost of (or payment for if negative) per enchanted book generated
+		#Range: -1000 ~ 16000
+		disenchanter = 100
+		#Payment per void action, if not zero
+		#Range: 0 ~ 16000
+		void_anvil = 25
+
+	#####################################################################################
 	# Item specific configs
 	#####################################################################################
 	[cyclic.items]
 
-		# scythe_harvest settings. radius is halved while player is sneaking
+		#####################################################################################
+		# scythe_harvest settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_harvest]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
 			radius = 6
 
-		#apple_ender settings
+		#apple_ender of settings
 		[cyclic.items.apple_ender]
 			#How many results the client will see
 			#Range: 1 ~ 60
@@ -530,22 +552,28 @@
 			#Range: 0 ~ 100
 			blocked_damage_percent = 20
 
+		#####################################################################################
 		# spell_water settings
+		#####################################################################################
 		[cyclic.items.spell_water]
 			#Radius defines how far it reaches
 			#Range: 0 ~ 32
 			radius = 3
 
-		# scythe_leaves settings.  radius is halved while player is sneaking
+		#####################################################################################
+		# scythe_leaves settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_leaves]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
 			radius = 6
 
+		#####################################################################################
 		# Caving Torch Charm settings
+		#####################################################################################
 		[cyclic.items.caving_torch]
 			#Light level at which to start placing down a torch
-			#Range: 0 ~ 13
+			#Range: 0 ~ 14
 			light_limit = 7
 			#Light level of the current block after placing down a torch. Must be greater than light_limit
 			#Higher values means torches will be placed closer to you. Lower values means torches will overlap less,
@@ -558,7 +586,9 @@
 			#True means left, False means right
 			prefer_left_wall = false
 
+		#####################################################################################
 		# scythe_brush settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_brush]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
@@ -594,6 +624,8 @@
 
 		#Sack of Holding settings
 		[cyclic.items.tile_transporter]
+			#Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.
+			overrideChestSingle = true
 			#Block these from being picked up
 			disable_pickup = ["parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller", "exnihilosequentia:*", "refinedstorage:*", "tconstruct:seared_fuel_tank", "tconstruct:smeltery_controller", "tconstruct:seared_drain", "tconstruct:seared_fuel_gauge", "tconstruct:seared_ingot_tank", "tconstruct:seared_ingot_gauge", "tconstruct:seared_melter", "tconstruct:seared_heater", "tconstruct:scorched_drain", "tconstruct:scorched_duct", "tconstruct:scorched_chute", "tconstruct:foundry_controller", "tconstruct:scorched_alloyer", "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1", "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1"]
 
@@ -628,7 +660,9 @@
 			#Range: 0 ~ 99999
 			experience = 500
 
+		#####################################################################################
 		# scythe_forage settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_forage]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
@@ -644,7 +678,9 @@
 			#Range: 1 ~ 20000
 			ticks = 600
 
+		#####################################################################################
 		# spell_ice settings
+		#####################################################################################
 		[cyclic.items.spell_ice]
 			#Radius defines how far it reaches
 			#Range: 0 ~ 32
@@ -721,4 +757,69 @@
 		home = true
 		#True means only players with OP can use this /cyclic command
 		hunger = true
+
+	#####################################################################################
+	# Energy related configs for machines and items
+	#####################################################################################
+	[cyclic.energy]
+
+		#####################################################################################
+		#Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).
+		#####################################################################################
+		[cyclic.energy.cost]
+			#Power per use disenchanter
+			#Range: 0 ~ 64000
+			disenchanter = 2500
+			#Power per repair anvil
+			#Range: 0 ~ 64000
+			anvil = 250
+			#Power per use dropper
+			#Range: 0 ~ 64000
+			dropper = 50
+			#Power per recipe in the packager
+			#Range: 0 ~ 64000
+			packager = 50
+			#Power per use peat_farm
+			#Range: 0 ~ 64000
+			peat_farm = 500
+			#Power per use miner
+			#Range: 0 ~ 64000
+			miner = 10
+			#Power per use collector_fluid
+			#Range: 0 ~ 64000
+			collector_fluid = 500
+			#Power per tick while in use
+			#Range: 0 ~ 64000
+			structure = 10
+			#Power per use harvester
+			#Range: 0 ~ 64000
+			harvester = 250
+			#Power per use uncraft
+			#Range: 0 ~ 64000
+			uncraft = 1000
+			#Power per use forester
+			#Range: 0 ~ 64000
+			forester = 50
+			#Power per tick beacon
+			#Range: 0 ~ 64000
+			beacon = 10
+			#Power per use crafter
+			#Range: 0 ~ 64000
+			crafter = 500
+			#Power per use user
+			#Range: 0 ~ 64000
+			user = 50
+
+		[cyclic.energy.generator_food]
+			#RF energy per tick generated while burning food in this machine
+			#Range: 1 ~ 6400
+			rf_per_tick = 60
+			#This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.
+			#Range: 1 ~ 6400
+			ticks_per_food = 100
+
+		[cyclic.energy.generator_fuel]
+			#RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks
+			#Range: 1 ~ 6400
+			rf_per_tick = 80
 

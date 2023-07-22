@@ -2,8 +2,12 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -11,13 +15,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 
 public class DisarmEnchant extends EnchantmentCyclic {
   //halves the desired base chance to activate because onEntityDamage gets called twice and it's currently a 
   // "won't fix" situation for Forge https://github.com/MinecraftForge/MinecraftForge/issues/6556#issuecomment-596441220
 
-  public static final double BASE_CHANCE = 0.04;
+  public static IntValue PERCENTPERLEVEL;
 
   public DisarmEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
@@ -58,7 +63,8 @@ public class DisarmEnchant extends EnchantmentCyclic {
   }
 
   public double getChanceToDisarm(int level) {
-    return BASE_CHANCE + (BASE_CHANCE / 2 * (level - 1));
+    float baseChance = PERCENTPERLEVEL.get() / 100F;
+    return baseChance + (baseChance * (level - 1));
   }
 
   @Override
@@ -72,6 +78,9 @@ public class DisarmEnchant extends EnchantmentCyclic {
       return;
     }
     LivingEntity livingTarget = (LivingEntity) target;
+    if (!canDisarm(livingTarget)) {
+      return;
+    }
     List<ItemStack> toDisarm = new ArrayList<>();
     target.getHandSlots().forEach(itemStack -> {
       if (getChanceToDisarm(level) > user.level.random.nextDouble()) {
@@ -94,5 +103,15 @@ public class DisarmEnchant extends EnchantmentCyclic {
       }
     });
     super.doPostAttack(user, target, level);
+  }
+
+  private boolean canDisarm(LivingEntity target) {
+    String id = EntityType.getKey(target.getType()).toString();
+    if (StringParseUtil.isInList(ConfigRegistry.getDisarmIgnoreList(), EntityType.getKey(target.getType()))) {
+      ModCyclic.LOGGER.info("disenchant ignored by: CONFIG LIST" + id);
+      return false;
+    }
+    //default yes, its not in ignore list so canDisarm=true
+    return true;
   }
 }

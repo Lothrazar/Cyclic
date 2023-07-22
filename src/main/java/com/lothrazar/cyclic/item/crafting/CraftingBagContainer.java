@@ -38,7 +38,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;
-    //result first
+    //result first 
     this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     if (slot > -1) {
       this.bag = playerInventory.getItem(slot);

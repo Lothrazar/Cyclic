@@ -20,7 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BlockTerraGlass extends BlockCyclic {
 
   public BlockTerraGlass(Properties properties) {
-    //https://en.wikipedia.org/wiki/Terra_preta
+    //https://en.wikipedia.org/wiki/Terra_preta 
     super(properties.strength(0.5F).noOcclusion().lightLevel(state -> {
       return state.getValue(LIT) ? 6 : 0;
     }));
