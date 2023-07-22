@@ -312,18 +312,6 @@ public class ConfigRegistry {
         .push("logging");
     CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
-    CFG.comment(WALL, " Energy related configs for machines and items", WALL)
-        .push("energy");
-    TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
-        .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
-    TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
-        .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
-    TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
-        .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
-    CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
-        .push("cost");
-    CFG.pop(); //cost
-    CFG.pop(); //energy
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
     //
     CFG.comment(WALL, " scythe_brush settings. note radius is halved while player is sneaking", WALL).push("scythe_brush");
