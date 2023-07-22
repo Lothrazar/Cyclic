@@ -1,11 +1,10 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
@@ -14,6 +13,7 @@ import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -46,7 +46,7 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
       return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
   };
-  private Map<Direction, LazyOptional<FluidTankBase>> flow = Maps.newHashMap();
+  private final Map<Direction, LazyOptional<FluidTankBase>> flow = new ConcurrentHashMap<>();
 
   public TileCableFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.FLUID_PIPE.get(), pos, state);
@@ -65,12 +65,11 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
 
   List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
 
-  //  @Override
   public void tick() {
-    for (Direction side : Direction.values()) {
-      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+    for (Direction extractSide : Direction.values()) {
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
       if (connection.isExtraction()) {
-        tryExtract(side);
+        tryExtract(extractSide);
       }
     }
     normalFlow();
@@ -80,41 +79,40 @@ public class TileCableFluid extends TileBlockEntityCyclic implements MenuProvide
     if (extractSide == null) {
       return;
     }
-    BlockPos target = this.worldPosition.relative(extractSide);
-    Direction incomingSide = extractSide.getOpposite();
-    IFluidHandler stuff = FluidHelpers.getTank(level, target, incomingSide);
-    //check filter
-    if (stuff != null
-        && stuff.getTanks() > 0
-        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stuff.getFluidInTank(0))) {
+    final BlockPos target = this.worldPosition.relative(extractSide); // .offset(
+    final Direction incomingSide = extractSide.getOpposite();
+    //when draining from a tank (instead of a source/waterlogged block) check the filter
+    final IFluidHandler tankTarget = FluidHelpers.getTank(level, target, incomingSide);
+    if (tankTarget != null
+        && tankTarget.getTanks() > 0
+        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tankTarget.getFluidInTank(0))) {
       return;
     }
-    //is it a tank? try pulling from a tank
-    boolean success = FluidHelpers.tryFillPositionFromTank(level, worldPosition, extractSide, stuff, TRANSFER_RATE.get());
-    if (success) {
+    //first try standard fluid transfer
+    if (FluidHelpers.tryFillPositionFromTank(level, worldPosition, extractSide, tankTarget, TRANSFER_RATE.get())) {
       return;
     }
-    //not a tank. try the world
-    FluidTankBase tank = flow.get(extractSide).orElse(null);
-    if (tank != null && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      FluidHelpers.extractSourceWaterloggedCauldron(level, target, tank);
+    //handle special cases 
+    //waterlogged
+    //cauldron
+    FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
+    if (sideHandler != null && sideHandler.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
+      FluidHelpers.extractSourceWaterloggedCauldron(level, target, sideHandler);
     }
   }
 
   private void normalFlow() {
-    IFluidHandler sideHandler;
-    Direction outgoingSide;
     for (Direction incomingSide : Direction.values()) {
-      sideHandler = flow.get(incomingSide).orElse(null);
-      //thise items came from that
-      Collections.shuffle(rawList);
-      for (Integer i : rawList) {
-        outgoingSide = Direction.values()[i];
+      final FluidTankBase sideHandler = flow.get(incomingSide).orElse(null);
+      for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
         }
         EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
         if (connection.isExtraction() || connection.isBlocked()) {
+          continue;
+        }
+        if (sideHandler.getFluidAmount() <= 0) {
           continue;
         }
         this.moveFluids(outgoingSide, worldPosition.relative(outgoingSide), TRANSFER_RATE.get(), sideHandler);

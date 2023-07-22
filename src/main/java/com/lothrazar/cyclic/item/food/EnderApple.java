@@ -49,9 +49,8 @@ public class EnderApple extends ItemBaseCyclic {
       return super.finishUsingItem(stack, worldIn, entityLiving);
     }
     player.getCooldowns().addCooldown(this, COOLDOWN);
-    if (worldIn instanceof ServerLevel) {
+    if (worldIn instanceof ServerLevel serverWorld) {
       final List<String> structIgnoreList = (List<String>) IGNORELIST.get();
-      ServerLevel serverWorld = (ServerLevel) worldIn;
       Map<String, Integer> distanceStructNames = new HashMap<>();
       Registry<ConfiguredStructureFeature<?, ?>> registry = worldIn.registryAccess().registryOrThrow(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY);
       //      registry.getho

@@ -1,0 +1,22 @@
+{
+	"type": "jeed:potion_provider",
+	"providers": [
+		{
+			"item": "cyclic:slingshot"
+		},
+		{
+			"item": "cyclic:boomerang_stun"
+		}
+	],
+	"conditions": [
+		{
+			"values": [
+				{
+					"modid": "jeed",
+					"type": "forge:mod_loaded"
+				}
+			],
+			"type": "forge:and"
+		}
+	]
+}

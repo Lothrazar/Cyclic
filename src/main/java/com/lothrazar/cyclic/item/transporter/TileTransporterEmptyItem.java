@@ -28,9 +28,9 @@ import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.cyclic.util.BlockUtil;
 import com.lothrazar.cyclic.util.ChatUtil;
 import com.lothrazar.cyclic.util.ItemStackUtil;
-import com.lothrazar.cyclic.util.BlockUtil;
 import com.lothrazar.cyclic.util.SoundUtil;
 import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
@@ -116,7 +116,7 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
         }
         ItemStack drop = new ItemStack(ItemRegistry.TILE_TRANSPORTER.get());
         drop.setTag(itemData);
-        ItemStackUtil.drop(world, player.blockPosition(), drop);
+        ItemStackUtil.dropItemStackMotionless(world, player.blockPosition(), drop);
         if (player.isCreative() == false && held.getCount() > 0) {
           held.shrink(1);
           if (held.getCount() == 0) {

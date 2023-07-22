@@ -68,6 +68,7 @@ public class BlockCableEnergy extends CableBase {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.getValue(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
+      //      updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
     if (isEnergy(stateIn, facing, facingState, world, currentPos, facingPos)) {

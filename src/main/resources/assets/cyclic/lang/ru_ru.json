@@ -3,6 +3,7 @@
 
 	"curios.identifier.feet":"Ноги",
 	"curios.identifier.charm":"Амулет",
+ 
   "item.cyclic.copper_nugget": "Кусочек меди",
   "item.cyclic.copper_nugget.guide": "Кусочек меди",
   "item.cyclic.netherite_nugget": "Кусочек незерита",
@@ -58,6 +59,9 @@
   "block.cyclic.crusher": "Дробитель",
   "block.cyclic.crusher.tooltip": "Измельчает материалы, а также разделяет на компоненты",
   "block.cyclic.crusher.guide": "В рецептах дробителя есть шанс получить дополнительный бонусный продукт",
+
+	  
+
 
     "itemGroup.cyclic": "Cyclic: Блоки",
     "itemGroup.cyclicitems": "Cyclic: Предметы",
@@ -419,7 +423,7 @@
     "cyclic.screen.size9": "19x19",
     "cyclic.screen.size10": "21x21",
     "cyclic.screen.size11": "23x23",
-    "cyclic.screen.size12": "23x23",
+    "cyclic.screen.size12": "25x25",
     "button.height.down": "Уменьшить высоту",
     "button.height.up": "Увеличить высоту",
  
@@ -1066,7 +1070,9 @@
     "block.cyclic.user.tooltip": "Автономное использование ПКМ с любыми предметами",
     "block.cyclic.user.guide": "Использователь предметов - это мощная машина, которая использует (нажимает ПКМ) любым предметом по блоку перед ней с настраиваемой задержкой.",
     "block.cyclic.user.delay": "Задержка тиков",
+
 	"block.cyclic.user.hand": "Используйте левую руку",
+
     "enchantment_stack.empty": "Пусто; используйте чародейскую книгу для хранения зачарований",
     "block.cyclic.screen": "Текстовый проектор",
     "block.cyclic.screen.tooltip": "Выводит текст",
