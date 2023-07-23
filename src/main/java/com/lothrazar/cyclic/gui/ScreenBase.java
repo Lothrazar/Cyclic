@@ -92,7 +92,6 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
     for (GuiEventListener btn : this.children()) {
       if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)
           && btn instanceof AbstractWidget) {
-        ((AbstractWidget) btn).render(ms, mouseX, mouseY, 0);
         List<Component> localTooltip = ((IHasTooltip) btn).getTooltip();
         if (localTooltip != null) {
           this.renderComponentTooltip(ms, localTooltip, mouseX - leftPos, mouseY - topPos);
