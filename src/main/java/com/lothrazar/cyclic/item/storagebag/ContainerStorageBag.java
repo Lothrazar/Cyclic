@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -22,12 +21,10 @@ public class ContainerStorageBag extends ContainerBase {
   public ContainerStorageBag(int i, Inventory playerInventory, Player player, int slot) {
     super(MenuTypeRegistry.STORAGE_BAG.get(), i);
     this.slot = slot;
-    ModCyclic.LOGGER.info("bag slot " + slot);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     if (slot > -1) {
       this.bag = playerInventory.getItem(slot);
-      ModCyclic.LOGGER.info("bag   " + bag);
     }
     if (bag.isEmpty()) {
       this.bag = super.findBag(ItemRegistry.STORAGE_BAG.get());

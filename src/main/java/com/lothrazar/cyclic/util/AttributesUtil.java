@@ -86,7 +86,7 @@ public class AttributesUtil {
 
   //ench
   public static void removePlayerReach(UUID id, Player player) {
-    AttributeInstance attr = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+    AttributeInstance attr = player.getAttribute(ForgeMod.BLOCK_REACH.get());
     attr.removeModifier(id);
   }
 

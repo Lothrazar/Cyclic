@@ -1366,22 +1366,19 @@
   "item.minecraft.lingering_potion.effect.cyclic_flight": "Lingering Potion of Flight",
   "item.minecraft.tipped_arrow.effect.cyclic_flight": "Arrow of Flight",
    
-  
+   
   "effect.cyclic.butter": "Butterfingers",
   "effect.cyclic.butter.description": "Chance to drop items while moving or attacking",
   "item.minecraft.potion.effect.cyclic_butter": "Potion of Butterfingers",
   "item.minecraft.splash_potion.effect.cyclic_butter": "Splash Potion of Butterfingers",
   "item.minecraft.lingering_potion.effect.cyclic_butter": "Lingering Potion of Butterfingers",
   "item.minecraft.tipped_arrow.effect.cyclic_butter": "Arrow of Butterfingers",
-   
-   
   "effect.cyclic.waterwalk": "Waterwalking",
   "effect.cyclic.waterwalk.description": "Prevents you from sinking down through the waters surface",
   "item.minecraft.potion.effect.cyclic_waterwalk": "Potion of Waterwalking",
   "item.minecraft.splash_potion.effect.cyclic_waterwalk": "Splash Potion of Waterwalking",
   "item.minecraft.lingering_potion.effect.cyclic_waterwalk": "Lingering Potion of Waterwalking",
   "item.minecraft.tipped_arrow.effect.cyclic_waterwalk": "Arrow of Waterwalking",
-  
   
   "effect.cyclic.magnetic": "Magnetism",
   "effect.cyclic.magnetic.description": "Pull items and XP towards you with range of 8 blocks per level",
@@ -1739,4 +1736,5 @@
   "block.cyclic.solidifier": "Solidification Chamber",
   "block.cyclic.solidifier.tooltip": "Craft fluid into items",
   "block.cyclic.solidifier.guide": "The Solidifier combines various fluids and ingredients to solidify them into something else, usually to make new crafting ingredients."
+
 }

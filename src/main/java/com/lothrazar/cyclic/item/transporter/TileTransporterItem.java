@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.item.transporter;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -50,6 +51,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -83,7 +86,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
       player.setItemInHand(context.getHand(), ItemStack.EMPTY);
       SoundUtil.playSound(player, SoundRegistry.THUNK.get());
       if (player.isCreative() == false) {
-        ItemStackUtil.drop(world, player.blockPosition(), new ItemStack(ItemRegistry.TILE_TRANSPORTER_EMPTY.get()));
+        ItemStackUtil.dropItemStackMotionless(world, player.blockPosition(), new ItemStack(ItemRegistry.TILE_TRANSPORTER_EMPTY.get()));
       }
     }
     return InteractionResult.SUCCESS;
@@ -99,6 +102,12 @@ public class TileTransporterItem extends ItemBaseCyclic {
       return false;
     }
     BlockState toPlace = NbtUtils.readBlockState(player.level.holderLookup(Registries.BLOCK), itemData.getCompound(KEY_BLOCKSTATE));
+    if (ConfigRegistry.OVERRIDE_TRANSPORTER_SINGLETON.get()) {
+      if (toPlace.hasProperty(BlockStateProperties.CHEST_TYPE)
+          && toPlace.getValue(BlockStateProperties.CHEST_TYPE) != ChestType.SINGLE) {
+        toPlace = toPlace.setValue(BlockStateProperties.CHEST_TYPE, ChestType.SINGLE);
+      }
+    }
     //maybe get from player direction or offset face, but instead rely on that from saved data
     Level world = player.getCommandSenderWorld();
     try {
@@ -122,7 +131,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
       world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
       return false;
     }
-    //    heldChestSack.stackSize = 0;
     heldChestSack = ItemStack.EMPTY;
     heldChestSack.setTag(null);
     return true;

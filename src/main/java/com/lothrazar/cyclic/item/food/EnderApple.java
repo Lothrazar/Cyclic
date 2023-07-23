@@ -73,8 +73,8 @@ public class EnderApple extends ItemBaseCyclic {
     if (worldIn instanceof ServerLevel serverlevel) {
       Map<String, Integer> distanceStructNames = new HashMap<>();
       try {
-        final List<String> structIgnoreList = (List<String>) STRUCTURE_TAGS.get();
-        for (String conf : structIgnoreList) {
+        final List<String> structList = (List<String>) STRUCTURE_TAGS.get();
+        for (String conf : structList) {
           //EXAMPLE    test = StructureTags.EYE_OF_ENDER_LOCATED;
           Pair<BlockPos, Holder<Structure>> blockpos = findNearestPair(serverlevel,
               TagKey.create(Registries.STRUCTURE, new ResourceLocation(conf)),

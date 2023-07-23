@@ -50,7 +50,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private int timerDelay = 20;
-  boolean doHitBreak = false;
+  boolean doHitBreak = false; // was useLeftHand
   boolean entities = false;
 
   public TileUser(BlockPos pos, BlockState state) {
@@ -107,7 +107,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       BlockPos target = this.worldPosition.relative(this.getCurrentFacing());
       if (entities) {
         //do entities
-        ModCyclic.LOGGER.info(this.worldPosition + "entities ");
         this.interactEntities(target);
       }
       else {
@@ -121,7 +120,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       }
       boolean mainhandChanged = oldItem != userSlots.getStackInSlot(0).getItem();
       if (mainhandChanged) {
-        ModCyclic.LOGGER.error("mainhandChangedmainhandChangedmainhandChangedmainhandChangedr");
         this.depositOutputMainhand();
       }
       TileBlockEntityCyclic.syncEquippedItem(this.userSlots, fakePlayer, 0, InteractionHand.MAIN_HAND);
@@ -136,7 +134,6 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     var usedItem = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND);
     for (int slotId = 0; slotId < outputSlots.getSlots(); slotId++) {
       if (!usedItem.isEmpty()) {
-        ModCyclic.LOGGER.info("inserting ?milk" + usedItem);
         //        usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);
         if (outputSlots.insertItem(slotId, usedItem.copy(), true).isEmpty()) {
           usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);
@@ -186,7 +183,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       case RENDER:
         this.render = value % 2;
       break;
-      case INTERACTTYPE:
+      case INTERACTTYPE: // was LEFTHAND
         this.doHitBreak = value == 1;
       break;
       case ENTITIES:

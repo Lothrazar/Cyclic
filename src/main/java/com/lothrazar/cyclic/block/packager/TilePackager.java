@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.packager;
 
-import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capabilities.ItemStackHandlerWrapper;
@@ -18,7 +18,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,17 +40,30 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
   public static IntValue POWERCONF;
   public static final int TICKS = 10;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler inputSlots = new ItemStackHandler(1);
+  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  ItemStackHandler inputSlots = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return isItemStackValid(stack);
+    }
+  };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
-  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  private final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
 
   public TilePackager(BlockPos pos, BlockState state) {
     super(TileRegistry.PACKAGER.get(), pos, state);
     this.needsRedstone = 0;
+  }
+
+  private boolean isItemStackValid(ItemStack stack) {
+    if (level == null) {
+      return false;
+    }
+    return UtilPackager.isItemStackValid(level.getRecipeManager(), level.registryAccess(), stack);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePackager e) {
@@ -63,6 +75,9 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   public void tick() {
+    //    if (world == null || world.isRemote) {
+    //      return;
+    //    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -82,20 +97,22 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
     setLitProperty(true);
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
-    //shapeless recipes / shaped check either
-    List<CraftingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
-    for (CraftingRecipe rec : recipes) {
-      if (!isRecipeValid(rec, level)) {
-        continue;
-      }
-      //test matching recipe and its size
-      int total = getCostIfMatched(stack, rec);
-      if (total > 0 && outputSlots.insertItem(0, rec.getResultItem(level.registryAccess()).copy(), true).isEmpty()) {
-        //consume items, produce output
-        inputSlots.extractItem(0, total, false);
-        outputSlots.insertItem(0, rec.getResultItem(level.registryAccess()).copy(), false);
-        energy.extractEnergy(POWERCONF.get(), false);
-      }
+    if (level == null) {
+      return;
+    }
+    //shapeless recipes / shaped check either 
+    final CraftingRecipe recipe = UtilPackager.getRecipeForItemStack(level.getRecipeManager(), level.registryAccess(), stack); // level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
+    if (recipe == null) {
+      return;
+    }
+    if (outputSlots.insertItem(0, recipe.getResultItem(level.registryAccess()).copy(), true).isEmpty()) {
+      final int total = UtilPackager.getIngredientsInRecipe(recipe);
+      final ItemStack output = recipe.getResultItem(level.registryAccess()).copy();
+      ModCyclic.LOGGER.info("Packager recipe match of size " + total + " producing -> " + output);
+      //consume items, produce output
+      inputSlots.extractItem(0, total, false);
+      outputSlots.insertItem(0, output, false);
+      energy.extractEnergy(POWERCONF.get(), false);
     }
   }
 
@@ -137,26 +154,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
       return true;
     }
     return false;
-  }
-
-  private int getCostIfMatched(ItemStack stack, CraftingRecipe recipe) {
-    int total = 0, matched = 0;
-    for (Ingredient ingr : recipe.getIngredients()) {
-      if (ingr == Ingredient.EMPTY) {
-        continue;
-      }
-      total++;
-      if (ingr.test(stack)) {
-        matched++;
-      }
-    }
-    if (total == matched &&
-        stack.getCount() >= total &&
-        (total == 4 || total == 9) &&
-        (recipe.getResultItem(level.registryAccess()).getCount() == 1 || recipe.getResultItem(level.registryAccess()).getCount() == total)) {
-      return total;
-    }
-    return -1;
   }
 
   @Override

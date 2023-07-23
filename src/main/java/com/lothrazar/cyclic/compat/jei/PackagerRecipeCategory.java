@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.compat.jei;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.packager.TilePackager;
+import com.lothrazar.cyclic.block.packager.UtilPackager;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.util.ChatUtil;
 import mezz.jei.api.constants.VanillaTypes;
@@ -55,7 +55,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   @Override
   public boolean isHandled(CraftingRecipe recipe) {
-    return TilePackager.isRecipeValid(recipe, Minecraft.getInstance().level);
+    return UtilPackager.isRecipeValid(recipe, Minecraft.getInstance().level.registryAccess());
   }
 
   @Override
@@ -82,41 +82,4 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(VanillaTypes.ITEM_STACK, haxor);
     builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
   }
-  //  @Override
-  //  public void setIngredients(CraftingRecipe recipe, IIngredients ingredients) {
-  //    if (recipe.getIngredients().size() == 0) {
-  //      return;
-  //    }
-  //    List<List<ItemStack>> in = new ArrayList<>();
-  //    List<ItemStack> stuff = new ArrayList<>();
-  //    Ingredient ingr = recipe.getIngredients().get(0);
-  //    Collections.addAll(stuff, ingr.getItems());
-  //    in.add(stuff);
-  //    ingredients.setInputLists(VanillaTypes.ITEM, in);
-  //  }
-  //
-  //  @Override
-  //  public void setRecipe(IRecipeLayout recipeLayout, CraftingRecipe recipe, IIngredients ingredients) {
-  //    List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
-  //    IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-  //    guiItemStacks.init(0, true, 5, 6);
-  //    int sz = 0; // recipe.getIngredients().size();
-  //    for (Ingredient wtf : recipe.getIngredients()) {
-  //      if (wtf != Ingredient.EMPTY && wtf.getItems().length > 0) {
-  //        sz++;
-  //      }
-  //    }
-  //    List<ItemStack> haxor = new ArrayList<>();
-  //    for (ItemStack st : inputs.get(0)) {
-  //      if (st.isEmpty()) {
-  //        continue;
-  //      }
-  //      ItemStack cpy = st.copy();
-  //      cpy.setCount(sz);
-  //      haxor.add(cpy);
-  //    }
-  //    guiItemStacks.set(0, haxor);
-  //    guiItemStacks.init(1, false, 67, 8);
-  //    guiItemStacks.set(1, recipe.getResultItem());
-  //  }
 }

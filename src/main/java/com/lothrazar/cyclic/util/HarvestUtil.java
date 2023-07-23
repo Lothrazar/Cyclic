@@ -2,8 +2,9 @@ package com.lothrazar.cyclic.util;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import com.google.common.collect.Sets;
 import com.lothrazar.cyclic.api.IHarvesterOverride;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.item.scythe.ScytheType;
@@ -28,6 +29,8 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HarvestUtil {
+
+  public static final Set<IHarvesterOverride> HARVEST_OVERRIDES = Sets.newIdentityHashSet();
 
   // hardcoded as MAIN hand
   public static boolean harvestByScytheType(Level world, Player player, BlockPos posCurrent, ScytheType type) {
@@ -94,7 +97,7 @@ public class HarvestUtil {
     BlockState blockState = world.getBlockState(posCurrent);
     // Try running override logic
     IHarvesterOverride applicable = null;
-    for (IHarvesterOverride override : TileHarvester.HARVEST_OVERRIDES) {
+    for (IHarvesterOverride override : HARVEST_OVERRIDES) {
       if (override.appliesTo(blockState, world, posCurrent)) {
         applicable = override;
         break;
