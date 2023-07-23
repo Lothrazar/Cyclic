@@ -275,4 +275,10 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         && blockState.hasProperty(property)
         && blockState.getValue(property).isUnBlocked() == false;
   }
+  //  protected void updateConnection(final IWorld world, final BlockPos blockPos, final Direction side, final EnumConnectType connectType) {
+  //    final TileEntity tileEntity = world.getTileEntity(blockPos);
+  //    if (tileEntity instanceof TileCableBase) {
+  //      ((TileCableBase) tileEntity).updateConnection(side, connectType);
+  //    }
+  //  }
 }

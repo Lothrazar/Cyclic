@@ -1,13 +1,11 @@
 package com.lothrazar.cyclic.gui;
 
-import java.util.List;
 import com.lothrazar.cyclic.api.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -87,18 +85,14 @@ public abstract class ScreenBase<T extends AbstractContainerMenu> extends Abstra
 
   public void drawButtonTooltips(GuiGraphics gg, int mouseX, int mouseY) {
     for (GuiEventListener btn : this.children()) {
-      if (btn instanceof IHasTooltip && btn.isMouseOver(mouseX, mouseY)
-          && btn instanceof AbstractWidget ww) {
-        //   ww.render(gg, mouseX, mouseY, 0);
-        List<Component> localTooltip = ((IHasTooltip) btn).getTooltips();
-        if (localTooltip != null) {
-          gg.renderComponentTooltip(font, localTooltip, mouseX - leftPos, mouseY - topPos);
+      if (btn instanceof IHasTooltip ww && btn.isMouseOver(mouseX, mouseY)) {
+        if (ww.getTooltips() != null) {
+          gg.renderComponentTooltip(font, ww.getTooltips(), mouseX - leftPos, mouseY - topPos);
         }
       }
     }
     for (GuiEventListener widget : this.children()) {
-      if (widget instanceof IHasTooltip && widget.isMouseOver(mouseX, mouseY)) {
-        IHasTooltip txt = (IHasTooltip) widget;
+      if (widget instanceof IHasTooltip txt && widget.isMouseOver(mouseX, mouseY)) {
         if (txt.getTooltips() != null) {
           gg.renderComponentTooltip(font, txt.getTooltips(), mouseX - leftPos, mouseY - topPos);
         }

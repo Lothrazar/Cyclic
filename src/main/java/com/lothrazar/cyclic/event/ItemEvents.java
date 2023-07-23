@@ -235,7 +235,6 @@ public class ItemEvents {
   public void onEntityDamage(LivingDamageEvent event) {
     DamageSource src = event.getSource();
     if (event.getEntity() instanceof Player player) {
-      //      DamageType type = src.type();
       if (src.is(DamageTypes.EXPLOSION)) {
         //explosion thingy
         this.damageFinder(event, player, ItemRegistry.CHARM_CREEPER.get(), 0);

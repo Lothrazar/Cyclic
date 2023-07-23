@@ -64,7 +64,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
 
   @Override
   public int getStackLimit(int slot, ItemStack stack) {
-    return BOOKS_PER_ROW.get(); // Math.min(getSlotLimit(slot), stack.getMaxStackSize());
+    return BOOKS_PER_ROW.get();
   }
 
   @Override
@@ -75,10 +75,6 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     boolean oldEmpty = stacks.get(slot).isEmpty();
     ItemStack extracted = super.extractItem(slot, amount, simulate);
     boolean newEmpty = stacks.get(slot).isEmpty();
-    //    if (extracted.getCount() < amount) {
-    //      int rem = amount - extracted.getCount();
-    //      ModCyclic.LOGGER.info("EXTRACT: still some rem" + rem);
-    //    }
     if (oldEmpty != newEmpty) {
       this.refreshId(slot);
     }
@@ -99,9 +95,6 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     boolean oldEmpty = stacks.get(slot).isEmpty();
     ItemStack remaining = super.insertItem(slot, stack, simulate);
     boolean newEmpty = stacks.get(slot).isEmpty();
-    //    if (!remaining.isEmpty()) {
-    //      ModCyclic.LOGGER.info("still some left on insert" + remaining);
-    //    }
     if (oldEmpty != newEmpty) {
       this.refreshId(slot);
     }
@@ -151,15 +144,5 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     }
     //else no cache, old way
     return EnchantUtil.doBookEnchantmentsMatch(stackIn, stackHere);
-  }
-
-  public boolean isEmptyShelves() {
-    int empty = 0;
-    for (int i = 0; i < ROWS; i++) {
-      if (enchantmentIdCache[i] == null || enchantmentIdCache[i].isEmpty()) {
-        empty++;
-      }
-    }
-    return empty == ROWS;
   }
 }
