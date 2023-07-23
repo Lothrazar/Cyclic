@@ -74,7 +74,10 @@ public class EnderControllerItemHandler extends ItemStackHandler {
       }
     }
     if (emptySlots.size() > 0 && insertWhenEmpty) {
-      return shelf.inventory.insertItem(emptySlots.get(0), stack, simulate);
+      ItemStack inserted = shelf.inventory.insertItem(emptySlots.get(0), stack, simulate);
+      if (inserted.isEmpty()) {
+        return inserted;
+      }
     }
     return stack;
   }

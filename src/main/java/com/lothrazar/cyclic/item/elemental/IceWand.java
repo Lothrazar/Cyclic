@@ -40,11 +40,11 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class IceWand extends ItemBaseCyclic {
 
+  public static IntValue RADIUS;
+
   public IceWand(Properties properties) {
     super(properties);
   }
-
-  public static IntValue RADIUS;
 
   @Override
   public InteractionResult useOn(UseOnContext context) {

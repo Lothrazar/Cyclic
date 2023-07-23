@@ -42,7 +42,6 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
 
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
   public static IntValue FLUIDPAY;
-  public static IntValue POWERCONF;
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override

@@ -23,7 +23,6 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
@@ -69,7 +68,7 @@ public class RenderUtils {
       return;
     }
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+    RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
     int xTileCount = desiredWidth / textureWidth;
     int xRemainder = desiredWidth - (xTileCount * textureWidth);
     int yTileCount = desiredHeight / textureHeight;

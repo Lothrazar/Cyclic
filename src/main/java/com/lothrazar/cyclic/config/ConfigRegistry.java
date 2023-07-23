@@ -110,12 +110,15 @@ public class ConfigRegistry {
   private static final List<String> BEHEADING = new ArrayList<>();
   private static final List<String> IGNORE_LIST_UNCRAFTER = new ArrayList<>();
   private static final List<String> MBALL_IGNORE = new ArrayList<>();
+  private static final List<String> DISARM_IGNORE = new ArrayList<>();
   private static final List<String> IGNORE_RECIPES_UNCRAFTER = new ArrayList<>();
   private static final List<String> TRANSPORTBAG = new ArrayList<>();
   private static final List<String> ENDERAPPLE = new ArrayList<>();
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
+  private static ConfigValue<List<? extends String>> DISARM_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
+  public static BooleanValue OVERRIDE_TRANSPORTER_SINGLETON;
   public static BooleanValue GENERATE_FLOWERS;
   public static BooleanValue CYAN_PODZOL_LEGACY;
   static {
@@ -214,6 +217,7 @@ public class ConfigRegistry {
     // 
     MBALL_IGNORE.add("minecraft:ender_dragon");
     MBALL_IGNORE.add("minecraft:wither");
+    DISARM_IGNORE.add("alexsmobs:mimicube");
     ENDERAPPLE.addAll(Arrays.asList(
         "minecraft:eye_of_ender_located",
         "minecraft:on_woodland_explorer_maps",
@@ -278,6 +282,10 @@ public class ConfigRegistry {
     TravellerEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(TravellerEnchant.ID + ".enabled", true);
     VenomEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(VenomEnchant.ID + ".enabled", true);
     XpEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(XpEnchant.ID + ".enabled", true);
+    DisarmEnchant.PERCENTPERLEVEL = CFG.comment("Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
+    DISARM_IGNORE_LIST = CFG.comment("Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
+        .defineList(DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
+            it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     GENERATE_FLOWERS = CFG.comment("Do the four generate in the world. "
@@ -300,34 +308,32 @@ public class ConfigRegistry {
         .push("logging");
     CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
     CFG.pop(); //logging 
-    CFG.comment(WALL, " Item specific configs", WALL).push("items"); //////////////////////////////////////////////////////////////////////////////////////// items
+    CFG.comment(WALL, " Item specific configs", WALL).push("items");
     //
-    CFG.comment(" scythe_brush settings. note radius is halved while player is sneaking").push("scythe_brush");
+    CFG.comment(WALL, " scythe_brush settings. note radius is halved while player is sneaking", WALL).push("scythe_brush");
     ScytheBrush.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
-    CFG.comment(" scythe_forage settings. note radius is halved while player is sneaking").push("scythe_forage");
+    CFG.comment(WALL, " scythe_forage settings. note radius is halved while player is sneaking", WALL).push("scythe_forage");
     ScytheForage.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
-    CFG.comment(" scythe_leaves settings.  radius is halved while player is sneaking").push("scythe_leaves");
+    CFG.comment(WALL, " scythe_leaves settings. note radius is halved while player is sneaking", WALL).push("scythe_leaves");
     ScytheLeaves.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
-    CFG.comment(" scythe_harvest settings. radius is halved while player is sneaking").push("scythe_harvest");
+    CFG.comment(WALL, " scythe_harvest settings. note radius is halved while player is sneaking", WALL).push("scythe_harvest");
     ScytheHarvest.RADIUS = CFG.comment("Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
     //
-    CFG.comment(" spell_water settings").push("spell_water");
+    CFG.comment(WALL, " spell_water settings", WALL).push("spell_water");
     WaterSpreaderItem.RADIUS = CFG.comment("Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
     CFG.pop();
     //
-    CFG.comment(" spell_ice settings").push("spell_ice");
+    CFG.comment(WALL, " spell_ice settings", WALL).push("spell_ice");
     IceWand.RADIUS = CFG.comment("Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
     CFG.pop();
-    //
     CFG.comment("apple_ender settings").push("apple_ender");
     EnderApple.STRUCTURE_TAGS = CFG.comment("Which structure tags are looked for").defineList("structure_tags", ENDERAPPLE, it -> it instanceof String);
     EnderApple.PRINTED = CFG.comment("How many results the client will see").defineInRange("printed", 5, 1, 60);
     CFG.pop();
-    //
     //
     ShieldCyclicItem.LEATHER_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_leather.blocked_damage_percent", 20, 0, 100);
     ShieldCyclicItem.WOOD_PCT = CFG.comment("How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_wood.blocked_damage_percent", 60, 0, 100);
@@ -339,6 +345,7 @@ public class ConfigRegistry {
     WandMissileItem.RANGE = CFG.comment("Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
     OreProspector.RANGE = CFG.comment("Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
     OreProspector.HEIGHT = CFG.comment("Ore Prospector height around player to search for ores").defineInRange("prospector.height", 8, 1, 128);
+    ///
     CFG.comment(WALL, " Emerald gear settings", WALL).push("emerald");
     MaterialRegistry.EMERALD_TOUGH = CFG.comment("Armor toughness").defineInRange("toughness", 3.0F, 0.1F, 99F);
     MaterialRegistry.EMERALD_DMG = CFG.comment("Weapon damage").defineInRange("damage", 4.5F, 0.1F, 99F);
@@ -360,8 +367,8 @@ public class ConfigRegistry {
     CharmBase.CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
     CharmBase.CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
     AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
-    CFG.comment(" Caving Torch Charm settings").push("caving_torch");
-    AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 13);
+    CFG.comment(WALL, " Caving Torch Charm settings", WALL).push("caving_torch");
+    AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 14);
     AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
         "Light level of the current block after placing down a torch. Must be greater than light_limit",
         "Higher values means torches will be placed closer to you. Lower values means torches will overlap less,",
@@ -375,9 +382,12 @@ public class ConfigRegistry {
     CFG.comment("Wand settings").push("teleport_wand");
     TeleporterWandItem.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 256, 8, 1024);
     CFG.pop();
+    //
     CFG.comment("Sack of Holding settings").push("tile_transporter");
     TileTransporterEmptyItem.IGNORELIST = CFG.comment("Block these from being picked up")
         .defineList("disable_pickup", TRANSPORTBAG, it -> it instanceof String);
+    OVERRIDE_TRANSPORTER_SINGLETON = CFG.comment("Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.")
+        .define("overrideChestSingle", true);
     CFG.pop();
     CFG.comment("Heart items").push("heart");
     HeartToxicItem.HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
@@ -468,7 +478,7 @@ public class ConfigRegistry {
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 256, 1, 1024);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
-    CFG.push("sprinkler");
+    CFG.comment("Sprinkler settings").push("sprinkler");
     TileSprinkler.RADIUS = CFG.comment("Radius").defineInRange("radius", 4, 1, 32);
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
     TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);
@@ -575,6 +585,11 @@ public class ConfigRegistry {
   @SuppressWarnings("unchecked")
   public static List<String> getMagicNetList() {
     return (List<String>) MBALL_IGNORE_LIST.get();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static List<String> getDisarmIgnoreList() {
+    return (List<String>) DISARM_IGNORE_LIST.get();
   }
 
   public static Map<String, String> getMappedBeheading() {

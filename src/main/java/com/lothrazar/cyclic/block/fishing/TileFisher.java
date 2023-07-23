@@ -109,11 +109,12 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
     if (this.requiresRedstone() && !this.isPowered()) {
       return;
     }
+    final int radius = RADIUS.get();
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.is(DataTags.FISHING_RODS)) {
-      int x = worldPosition.getX() + level.random.nextInt(RADIUS.get() * 2) - RADIUS.get();
+      int x = worldPosition.getX() + level.random.nextInt(radius * 2) - radius;
       int y = worldPosition.getY();
-      int z = worldPosition.getZ() + level.random.nextInt(RADIUS.get() * 2) - RADIUS.get();
+      int z = worldPosition.getZ() + level.random.nextInt(radius * 2) - radius;
       BlockPos center = new BlockPos(x, y, z);
       if (isWater(this.level, center)) {
         try {

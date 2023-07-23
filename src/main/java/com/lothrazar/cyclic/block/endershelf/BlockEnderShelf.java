@@ -116,7 +116,6 @@ public class BlockEnderShelf extends BlockCyclic {
   public TileEnderShelf getTileEntity(Level world, BlockPos pos) {
     return (TileEnderShelf) world.getBlockEntity(pos);
   }
-  //
 
   @Override
   public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootContext.Builder builder) {
@@ -152,11 +151,9 @@ public class BlockEnderShelf extends BlockCyclic {
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
-      if (!shelf.inventory.isEmptyShelves()) {
-        //read from tile, write to itemstack  
-        CompoundTag tileData = shelf.inventory.serializeNBT();
-        newStack.setTag(tileData);
-      }
+      //read from tile, write to itemstack  
+      CompoundTag tileData = shelf.inventory.serializeNBT();
+      newStack.setTag(tileData);
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);
   }

@@ -1,22 +1,21 @@
 package com.lothrazar.cyclic.block.cable.energy;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import com.google.common.collect.Maps;
+import java.util.concurrent.ConcurrentHashMap;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -29,7 +28,8 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
   public static IntValue TRANSFER_RATE;
   CustomEnergyStorage energy;
   private LazyOptional<IEnergyStorage> energyCap;
-  private Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
+  private final Map<Direction, Integer> mapIncomingEnergy = new ConcurrentHashMap<>();
+  private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not 
 
   public TileCableEnergy(BlockPos pos, BlockState state) {
     super(TileRegistry.ENERGY_PIPE.get(), pos, state);
@@ -48,61 +48,75 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
     e.tick();
   }
 
-  //  @Override
+  //  @Override 
   public void tick() {
     this.syncEnergy();
     this.tickDownIncomingPowerFaces();
     this.tickCableFlow();
-    //extract mode conditionally
-    for (Direction side : Direction.values()) {
-      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(side));
+    for (final Direction extractSide : Direction.values()) {
+      final EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(extractSide);
+      final EnumConnectType connection = getBlockState().getValue(property);
       if (connection.isExtraction()) {
-        tryExtract(side);
+        tryExtract(extractSide);
       }
     }
   }
 
-  @SuppressWarnings("unused")
   private void tryExtract(Direction extractSide) {
     if (extractSide == null) {
       return;
     }
-    BlockPos posTarget = this.worldPosition.relative(extractSide);
-    BlockEntity tile = level.getBlockEntity(posTarget);
-    if (tile != null) {
-      IEnergyStorage itemHandlerFrom = tile.getCapability(ForgeCapabilities.ENERGY, extractSide.getOpposite()).orElse(null);
-      if (itemHandlerFrom != null) {
-        //ok go
-        //
-        int extractSim = itemHandlerFrom.extractEnergy(TRANSFER_RATE.get(), true);
-        if (extractSim > 0 && energy.receiveEnergy(extractSim, true) > 0) {
-          //actually extract energy for real, whatever it accepted 
-          int actuallyEx = itemHandlerFrom.extractEnergy(energy.receiveEnergy(extractSim, false), false);
-        }
-      }
+    final BlockPos posTarget = this.worldPosition.relative(extractSide);
+    final BlockEntity tile = level.getBlockEntity(posTarget);
+    if (tile == null) {
+      return;
+    }
+    final IEnergyStorage itemHandlerFrom = tile
+        .getCapability(ForgeCapabilities.ENERGY, extractSide.getOpposite())
+        .orElse(null);
+    if (itemHandlerFrom == null) {
+      return;
+    }
+    final int capacity = energy.getMaxEnergyStored() - energy.getEnergyStored();
+    if (capacity <= 0) {
+      return;
+    }
+    //first we simulate 
+    final int energyToExtract = itemHandlerFrom.extractEnergy(TRANSFER_RATE.get(), true);
+    if (energyToExtract <= 0) {
+      return;
+    }
+    final int energyReceived = energy.receiveEnergy(energyToExtract, false);
+    if (energyReceived <= 0) {
+      return;
+    }
+    final int energyExtracted = itemHandlerFrom.extractEnergy(energyReceived, false);
+    //sanity check
+    if (energyExtracted != energyReceived) {
+      ModCyclic.LOGGER.error("Imbalance extracting energy, extracted " + energyExtracted + " received " + energyReceived);
     }
   }
 
   private void tickCableFlow() {
-    List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
-    Collections.shuffle(rawList);
-    for (Integer i : rawList) {
-      Direction outgoingSide = Direction.values()[i];
+    for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
       if (connection.isExtraction() || connection.isBlocked()) {
         continue;
       }
-      if (this.isEnergyIncomingFromFace(outgoingSide) == false) {
+      if (!this.isEnergyIncomingFromFace(outgoingSide)) {
         moveEnergy(outgoingSide, TRANSFER_RATE.get());
       }
     }
   }
 
   public void tickDownIncomingPowerFaces() {
-    for (Direction f : Direction.values()) {
-      if (mapIncomingEnergy.get(f) > 0) {
-        mapIncomingEnergy.put(f, mapIncomingEnergy.get(f) - 1);
-      }
+    for (final Direction incomingDirection : Direction.values()) {
+      mapIncomingEnergy.computeIfPresent(incomingDirection, (direction, amount) -> {
+        if (amount > 0) {
+          amount -= 1;
+        }
+        return amount;
+      });
     }
   }
 
@@ -156,5 +170,18 @@ public class TileCableEnergy extends TileBlockEntityCyclic {
   @Override
   public int getField(int field) {
     return 0;
+  }
+
+  @Override
+  protected void syncEnergy() {
+    //skip if clientside
+    if (level.isClientSide || level.getGameTime() % 20 != 0) {
+      return;
+    }
+    final int currentEnergy = energy.getEnergyStored();
+    if (currentEnergy != energyLastSynced) {
+      super.syncEnergy();
+      energyLastSynced = currentEnergy;
+    }
   }
 }

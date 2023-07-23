@@ -63,6 +63,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+
     // https://github.com/mezz/JustEnoughItems/wiki/Getting-Started-%5BJEI-10-or-higher-for-Forge-or-Fabric%5D#repositories
 	compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
 	compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
@@ -70,11 +71,13 @@ dependencies {
 //	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
 	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
+
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 	
 	// optional compat: guidebook
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
+ 
     
     // mods that have optional/soft integration
    // runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3873025")
@@ -82,6 +85,7 @@ dependencies {
   //  runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027")
 
   //  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3834150")
+
 
 }
 
@@ -101,7 +105,7 @@ repositories {
   }
   maven { url = "https://maven.theillusivec4.top/"    }
   maven { url 'https://dvs1.progwml6.com/files/maven/'  }
-  maven { url 'https://maven.blamejared.com' }    
+  maven { url 'https://maven.blamejared.com' }   
   maven { url = "https://modmaven.dev"  }    
 //  maven { url 'https://www.cursemaven.com'  }
 }
@@ -159,7 +163,6 @@ task signJar(type: SignJar, dependsOn: jar) {
     inputFile = jar.archivePath
     outputFile = jar.archivePath
 }
-
 
 
 

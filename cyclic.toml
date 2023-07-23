@@ -111,6 +111,11 @@
 			enabled = true
 
 		[cyclic.enchantment.disarm]
+			#Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment
+			ingoredMobs = ["alexsmobs:mimicube"]
+			#Enchant level drop rate.  % = drop + (level-1)*drop
+			#Range: 1 ~ 100
+			percentPerLevel = 15
 			#Set false to disable enchantment
 			enabled = true
 
@@ -353,6 +358,7 @@
 			#Range: 0 ~ 512
 			height = 4
 
+		#Sprinkler settings
 		[cyclic.blocks.sprinkler]
 			#Tick rate.  20 will fire one block per second
 			#Range: 1 ~ 20
@@ -427,7 +433,7 @@
 			controller_distance = 64
 			#Each shelf has five rows.  Set the number of books stored per row here
 			#Range: 1 ~ 1024
-			books_per_row = 64
+			books_per_row = 256
 
 		[cyclic.blocks.uncraft]
 			#Power per use uncraft
@@ -467,9 +473,9 @@
 			#Range: 1 ~ 9999
 			ticks = 60
 			#ITEM IDS HERE.  Block ALL recipes that output this item, no matter which recipe they use
-			ignore_list = ["minecraft:elytra", "minecraft:tipped_arrow", "minecraft:magma_block", "minecraft:stick", "minecraft:*_dye", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
+			ignore_list = ["minecraft:elytra", "minecraft:tipped_arrow", "minecraft:magma_block", "minecraft:stick", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
 			#RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item
-			ignore_recipes = ["botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*", "cyclic:fireball", "cyclic:shapeless/spark"]
+			ignore_recipes = ["minecraft:white_dye_from_lily_of_the_valley", "minecraft:orange_dye_from_orange_tulip", "minecraft:magenta_dye_from_allium", "minecraft:magenta_dye_from_lilac", "minecraft:light_blue_dye_from_blue_orchid", "minecraft:yellow_dye_from_sunflower", "minecraft:yellow_dye_from_dandelion", "minecraft:pink_dye_from_peony", "minecraft:pink_dye_from_pink_tulip", "minecraft:light_gray_dye_from_oxeye_daisy", "minecraft:light_gray_dye_from_azure_bluet", "minecraft:light_gray_dye_from_white_tulip", "minecraft:blue_dye_from_cornflower", "minecraft:red_dye_from_poppy", "minecraft:red_dye_from_rose_bush", "minecraft:red_dye_from_tulip", "minecraft:black_dye_from_wither_rose", "minecraft:blue_dye", "minecraft:black_dye", "minecraft:brown_dye", "botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*", "cyclic:flower_purple_tulip", "cyclic:flower_absalon_tulip", "cyclic:flower_cyan", "cyclic:flower_lime_carnation", "cyclic:fireball", "cyclic:shapeless/spark"]
 
 		[cyclic.blocks.anti_beacon]
 			#List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)
@@ -498,7 +504,9 @@
 	#####################################################################################
 	[cyclic.items]
 
-		# scythe_harvest settings. radius is halved while player is sneaking
+		#####################################################################################
+		# scythe_harvest settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_harvest]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
@@ -530,22 +538,28 @@
 			#Range: 0 ~ 100
 			blocked_damage_percent = 20
 
+		#####################################################################################
 		# spell_water settings
+		#####################################################################################
 		[cyclic.items.spell_water]
 			#Radius defines how far it reaches
 			#Range: 0 ~ 32
 			radius = 3
 
-		# scythe_leaves settings.  radius is halved while player is sneaking
+		#####################################################################################
+		# scythe_leaves settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_leaves]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
 			radius = 6
 
+		#####################################################################################
 		# Caving Torch Charm settings
+		#####################################################################################
 		[cyclic.items.caving_torch]
 			#Light level at which to start placing down a torch
-			#Range: 0 ~ 13
+			#Range: 0 ~ 14
 			light_limit = 7
 			#Light level of the current block after placing down a torch. Must be greater than light_limit
 			#Higher values means torches will be placed closer to you. Lower values means torches will overlap less,
@@ -558,7 +572,9 @@
 			#True means left, False means right
 			prefer_left_wall = false
 
+		#####################################################################################
 		# scythe_brush settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_brush]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
@@ -594,6 +610,8 @@
 
 		#Sack of Holding settings
 		[cyclic.items.tile_transporter]
+			#Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.
+			overrideChestSingle = true
 			#Block these from being picked up
 			disable_pickup = ["parabox:parabox", "extracells:fluidcrafter", "extracells:ecbaseblock", "extracells:fluidfiller", "exnihilosequentia:*", "refinedstorage:*", "tconstruct:seared_fuel_tank", "tconstruct:smeltery_controller", "tconstruct:seared_drain", "tconstruct:seared_fuel_gauge", "tconstruct:seared_ingot_tank", "tconstruct:seared_ingot_gauge", "tconstruct:seared_melter", "tconstruct:seared_heater", "tconstruct:scorched_drain", "tconstruct:scorched_duct", "tconstruct:scorched_chute", "tconstruct:foundry_controller", "tconstruct:scorched_alloyer", "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1", "rftoolspower:cell3", "rftoolspower:cell2", "rftoolspower:cell1"]
 
@@ -628,7 +646,9 @@
 			#Range: 0 ~ 99999
 			experience = 500
 
+		#####################################################################################
 		# scythe_forage settings. note radius is halved while player is sneaking
+		#####################################################################################
 		[cyclic.items.scythe_forage]
 			#Radius defines how far it reaches (for example radius 6 is 13x13 square)
 			#Range: 0 ~ 32
@@ -644,7 +664,9 @@
 			#Range: 1 ~ 20000
 			ticks = 600
 
+		#####################################################################################
 		# spell_ice settings
+		#####################################################################################
 		[cyclic.items.spell_ice]
 			#Radius defines how far it reaches
 			#Range: 0 ~ 32
