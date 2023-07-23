@@ -83,6 +83,7 @@ dependencies {
    // runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3873025")
    // runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3944903")
   //  runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027")
+  //  runtimeOnly fg.deobf("curse.maven:crafttweaker-239197:4657532")
 
   //  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3834150")
 

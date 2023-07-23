@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.capabilities.CapabilityEvents;
 import com.lothrazar.cyclic.compat.curios.CuriosRegistry;
-import com.lothrazar.cyclic.event.BiomeEvents;
 import com.lothrazar.cyclic.event.BlockSpawnEvents;
 import com.lothrazar.cyclic.event.ItemEvents;
 import com.lothrazar.cyclic.event.PlayerAbilityEvents;
@@ -21,7 +20,6 @@ public class EventRegistry {
     MinecraftForge.EVENT_BUS.register(new PotionEvents());
     MinecraftForge.EVENT_BUS.register(new ItemEvents());
     MinecraftForge.EVENT_BUS.register(new BlockSpawnEvents());
-    MinecraftForge.EVENT_BUS.register(new BiomeEvents());
     MinecraftForge.EVENT_BUS.register(new PlayerDataEvents());
     MinecraftForge.EVENT_BUS.register(new PlayerAbilityEvents());
     MinecraftForge.EVENT_BUS.register(new CapabilityEvents());
