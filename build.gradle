@@ -1,7 +1,8 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+	mavenCentral()
+        maven { url = "https://files.minecraftforge.net/maven" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
@@ -55,26 +56,21 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
 
 //Defines basic patterns for pulling various dependencies.
 repositories {
-    maven { url 'https://www.cursemaven.com'  }
+  flatDir { dir 'libs' } 
+ //   maven { url 'https://www.cursemaven.com'  }
     maven { url "https://dvs1.progwml6.com/files/maven"    }
-    maven { url "https://modmaven.k-4u.nl"  }
     maven { url "https://maven.theillusivec4.top/"    }
     maven { url "https://maven.blamejared.com" }
     maven { url "https://maven.blamejared.com/vazkii" }
-    maven { url "http://minecraft.curseforge.com/api/maven/"    }
-    maven { url 'https://www.cursemaven.com'  }
+    maven { url "https://minecraft.curseforge.com/api/maven/"    }
     maven { url "https://maven.thiakil.com/"    } 
-	maven {	url "https://maven.mcmoddev.com"	}
+    maven { url "https://maven.mcmoddev.com"	}
+    maven { url "https://maven.amadornes.com/" }
 
-   // maven { //Guide API
-	//	url "http://tehnut.info/maven/"
+	//ivy {
+	//	name 'asie dependency mirror'
+	//	artifactPattern "https://asie.pl/javadeps/[module]-[revision](-[classifier]).[ext]"
 	//}
-
-	maven { url "http://maven.amadornes.com/" }
-	ivy {
-		name 'asie dependency mirror'
-		artifactPattern "http://asie.pl/javadeps/[module]-[revision](-[classifier]).[ext]"
-	}
 }
 
 dependencies {
@@ -110,16 +106,6 @@ processResources {
     }
 }
 
-
-build.dependsOn signJar
-
-task copyJar(type: Copy) {
-    from jar
-    into "${dist_folder}"
-}
-
-build.finalizedBy copyJar
-
-cleanJar {
+task cleanJar {
   delete 'build/libs'
 }

@@ -15,9 +15,9 @@ Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 # APIs and Optional Dependencies
 #### I have plugins/compatibility with the following mods, they are highly recommended.  However everything works perfectly fine without them.
 
-- Baubles https://mods.curse.com/mc-mods/minecraft/227083-baubles
-- Guide API https://mods.curse.com/mc-mods/minecraft/228832-guide-api
-- JEI https://mods.curse.com/mc-mods/minecraft/238222-just-enough-items-jei
+- Baubles https://www.curseforge.com/minecraft/mc-mods/baubles
+- Guide API https://www.curseforge.com/minecraft/mc-mods/guide-api
+- JEI https://www.curseforge.com/minecraft/mc-mods/jei
 - Enchantment Descriptions https://minecraft.curseforge.com/projects/enchantment-descriptions
 - Curios https://www.curseforge.com/minecraft/mc-mods/curios
 
@@ -25,6 +25,6 @@ Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 
 Recipes for the Hydrator can be customized (added and removed) using CraftTwaker
 - https://minecraft.curseforge.com/projects/crafttweaker
-- Sample scripts https://github.com/Lothrazar/Cyclic/tree/trunk/1.12/scripts_zen_example
+- Sample scripts https://github.com/Lothrazar/Cyclic/tree/trunk/1.12/crafttweaker
 
 
