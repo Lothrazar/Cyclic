@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         jcenter()
-	mavenCentral()
+        mavenCentral()
         maven { url = "https://files.minecraftforge.net/maven" }
     }
     dependencies {
@@ -106,6 +106,4 @@ processResources {
     }
 }
 
-task cleanJar {
-  delete 'build/libs'
-}
+build.dependsOn signJar
