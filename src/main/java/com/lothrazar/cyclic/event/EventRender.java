@@ -133,7 +133,8 @@ public class EventRender {
         //now the item has a build area
         List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getDirection(), buildStyle);
         for (BlockPos coordinate : coordinates) {
-          renderCubes.put(coordinate, ClientConfigCyclic.getColor(stack));
+          //          renderCubes.put(coordinate, ClientConfigCyclic.getColor(stack));
+          RenderBlockUtils.createBox(event.getPoseStack(), coordinate);
         }
       }
     }
@@ -146,7 +147,12 @@ public class EventRender {
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());
       for (BlockPos e : coords) {
-        renderCubes.put(e, RandomizerItem.canMove(world.getBlockState(e), world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
+        if (!RandomizerItem.canMove(world.getBlockState(e), world, e)) {
+          renderCubes.put(e, Color.RED);
+        }
+        else {
+          RenderBlockUtils.createBox(event.getPoseStack(), e);
+        }
       }
     }
     stack = player.getMainHandItem();
@@ -169,7 +175,8 @@ public class EventRender {
       if (shape != null) {
         BlockPos here = player.blockPosition();
         for (BlockPos s : shape.getShape()) {
-          renderCubes.put(here.offset(s), ClientConfigCyclic.getColor(stack));
+          RenderBlockUtils.createBox(event.getPoseStack(), here.offset(s));
+          //  renderCubes.put(here.offset(s), ClientConfigCyclic.getColor(stack));
         }
       }
     }

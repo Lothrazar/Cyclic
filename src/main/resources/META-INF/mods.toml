@@ -42,7 +42,7 @@ description='''
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[46,)" #mandatory
+    versionRange="[47.1,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -57,6 +57,6 @@ description='''
 [[dependencies.cyclic]]
     modId="flib"
     mandatory=true
-    versionRange="[0.0.8,)"
+    versionRange="[0.0.9,)"
     ordering="NONE"
     side="BOTH"

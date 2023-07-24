@@ -273,8 +273,6 @@ public class ConfigRegistry extends ConfigTemplate {
     ExcavationEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
     GrowthEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
     GrowthEnchant.RADIUSFACTOR = CFG.comment("Radius per level.  size around player to perform growth logic").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
-    DisarmEnchant.CFG = CFG.comment("Set false to disable enchantment").define(DisarmEnchant.ID + ".enabled", true);
-    ExcavationEnchant.CFG = CFG.comment("Set false to disable enchantment").define(ExcavationEnchant.ID + ".enabled", true);
     MultiJumpEnchant.CFG = CFG.comment("(Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
     LifeLeechEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
     MagnetEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
