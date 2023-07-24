@@ -147,10 +147,11 @@ public class EventRender {
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());
       for (BlockPos e : coords) {
-        if (!RandomizerItem.canMove(world.getBlockState(e), world, e)) {
+        BlockState stHere = world.getBlockState(e);
+        if (!RandomizerItem.canMove(stHere, world, e) && !stHere.isAir()) {
           renderCubes.put(e, Color.RED);
         }
-        else {
+        else if (!stHere.isAir()) {
           RenderBlockUtils.createBox(event.getPoseStack(), e);
         }
       }
