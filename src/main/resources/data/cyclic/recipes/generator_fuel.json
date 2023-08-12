@@ -13,10 +13,10 @@
       "item": "minecraft:piston"
     },
     "b": {
-      "tag": "forge:ingots/copper"
+      "tag": "forge:nuggets/copper"
     },
     "c": {
-      "item": "minecraft:redstone_torch"
+      "item": "minecraft:repeater"
     }
   },
   "result": {

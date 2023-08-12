@@ -10,13 +10,13 @@
       "tag": "forge:storage_blocks/ender_eye"
     },
     "p": {
-      "item": "minecraft:observer"
+      "item": "minecraft:hopper"
     },
     "i": {
-      "tag": "forge:ingots/copper"
+      "tag": "forge:nuggets/copper"
     },
     "c": {
-      "item": "cyclic:gold_bars"
+      "item": "minecraft:repeater"
     }
   },
   "result": {

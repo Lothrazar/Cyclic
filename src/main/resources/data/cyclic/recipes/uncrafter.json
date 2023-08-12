@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ror",
+    "r r",
     "gsg",
     "ccc"
   ],
@@ -12,14 +12,11 @@
     "s": {
       "item": "cyclic:gem_obsidian"
     },
-    "o": {
-      "tag": "forge:obsidian"
-    },
     "g": {
       "tag": "forge:nuggets/netherite"
     },
     "r": {
-      "tag": "forge:storage_blocks/diamond"
+      "item": "minecraft:diamond"
     }
   },
   "result": {

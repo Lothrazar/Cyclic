@@ -1,19 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " i ",
-    "ioi",
-    "si "
+    "f ",
+    " f"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:stick"
-    },
-    "o": {
-      "tag": "forge:storage_blocks/flint"
-    },
-    "s": {
-      "tag": "forge:string"
+    "f": {
+      "item": "minecraft:flint"
     }
   },
   "result": {

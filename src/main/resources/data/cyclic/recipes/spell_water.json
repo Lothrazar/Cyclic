@@ -10,10 +10,10 @@
       "item": "cyclic:gem_amber"
     },
     "b": {
-      "item": "minecraft:lapis_block"
+      "tag": "forge:nuggets/copper"
     },
     "o": {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:magma_block"
     },
     "f": {
       "item": "minecraft:ice"

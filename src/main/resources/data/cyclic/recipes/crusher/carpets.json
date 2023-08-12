@@ -1,7 +1,7 @@
 {
 	"type": "cyclic:crusher",
 	"input": {
-		"tag": "minecraft:carpets"
+		"tag": "minecraft:wool_carpets"
 	},
 	"energy": {
 		"ticks": 100,

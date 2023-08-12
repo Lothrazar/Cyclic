@@ -2,21 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ofo",
-    "beb",
+    " e ",
     "ofo"
   ],
   "key": {
     "e": {
       "item": "cyclic:gem_amber"
     },
-    "b": {
-      "item": "minecraft:bone_block"
-    },
     "o": {
       "item": "minecraft:nether_brick"
     },
     "f": {
-      "item": "minecraft:gold_nugget"
+      "tag": "forge:nuggets/gold"
     }
   },
   "result": {

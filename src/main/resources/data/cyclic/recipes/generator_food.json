@@ -10,10 +10,10 @@
       "item": "minecraft:target"
     },
     "i": {
-      "item": "cyclic:gold_bars"
+      "item": "minecraft:cake"
     },
     "b": {
-      "tag": "forge:nuggets/netherite"
+      "tag": "forge:nuggets/copper"
     },
     "c": {
       "item": "minecraft:redstone_torch"

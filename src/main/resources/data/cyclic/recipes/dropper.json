@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "cgc",
-    "gdg",
+    " d ",
     "cpc"
   ],
   "key": {
@@ -13,10 +13,10 @@
       "tag": "forge:storage_blocks/cobblestone"
     },
     "c": {
-      "tag": "forge:ingots/copper"
+      "tag": "forge:nuggets/copper"
     },
     "p": {
-      "tag": "forge:storage_blocks/iron"
+      "tag": "forge:ingots/iron"
     }
   },
   "result": {

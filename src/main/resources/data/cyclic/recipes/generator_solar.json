@@ -7,16 +7,16 @@
   ],
   "key": {
     "e": {
-      "item": "cyclic:gem_obsidian"
+      "item": "cyclic:gem_amber"
     },
     "p": {
       "item": "minecraft:amethyst_shard"
     },
     "b": {
-      "tag": "forge:storage_blocks/lapis"
+      "tag": "forge:enchanting_fuels"
     },
     "c": {
-      "item": "cyclic:gold_chain"
+      "tag": "forge:nuggets/copper"
     }
   },
   "result": {

@@ -7,7 +7,7 @@
   ],
   "key": {
     "e": {
-      "tag": "forge:storage_blocks/emerald"
+      "item": "minecraft:yellow_terracotta"
     },
     "a": {
       "item": "cyclic:gem_obsidian"
