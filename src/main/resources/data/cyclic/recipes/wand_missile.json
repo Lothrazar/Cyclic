@@ -3,17 +3,17 @@
   "pattern": [
     "crc",
     " b ",
-    "rbr"
+    " b "
   ],
   "key": {
     "c": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:ghast_tear"
+    },
+    "b": {
+      "item": "cyclic:gem_amber"
     },
     "r": {
       "item": "minecraft:amethyst_shard"
-    },
-    "b": {
-      "item": "minecraft:copper_ingot"
     }
   },
   "result": {

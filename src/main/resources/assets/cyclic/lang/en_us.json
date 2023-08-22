@@ -101,7 +101,7 @@
   "block.cyclic.sponge_milk": "Potion Sponge",
   "block.cyclic.sponge_milk.tooltip": "When placed it clears all potions from nearby entities",
   "block.cyclic.sponge_milk.guide": "When placed it will clear potions from creatures and players in the area.  Break and replace to trigger again",
-  "block.cyclic.teleport": "Translocation Platform",
+  "block.cyclic.teleport": "Teleportation Platform",
   "block.cyclic.teleport.tooltip": "Teleport player using energy",
   "block.cyclic.teleport.guide": "Place and feed with energy.  Use a GPS Location device to track a target destination for the teleport.  Crouch to use",
   "block.cyclic.crusher": "Crushing Macerator",

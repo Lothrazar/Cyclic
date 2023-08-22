@@ -7,10 +7,10 @@
   ],
   "key": {
     "i": {
-      "item": "minecraft:amethyst_shard"
+      "tag": "forge:nuggets/copper"
     },
     "q": {
-      "item": "minecraft:copper_ingot"
+      "item": "cyclic:lever_remote"
     },
     "s": {
       "item": "minecraft:repeater"

@@ -7,10 +7,10 @@
   ],
   "key": {
     "g": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:gold_ingot"
     },
     "f": {
-      "item": "minecraft:amethyst_shard"
+      "item": "minecraft:obsidian"
     },
     "a": {
       "item": "cyclic:gem_obsidian"

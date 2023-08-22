@@ -13,10 +13,10 @@
       "item": "minecraft:nether_bricks"
     },
     "f": {
-			"tag": "forge:feathers"
+      "tag": "forge:feathers"
     },
     "a": {
-      "item": "minecraft:diamond_boots"
+      "item": "cyclic:gem_amber"
     }
   },
   "result": {
