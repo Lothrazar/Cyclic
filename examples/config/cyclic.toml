@@ -116,11 +116,11 @@
 			#Enchant level drop rate.  % = drop + (level-1)*drop
 			#Range: 1 ~ 100
 			percentPerLevel = 15
-			#Set false to disable enchantment
+			#Set false to stop enchantment from working
 			enabled = true
 
 		[cyclic.enchantment.excavate]
-			#Set false to disable enchantment
+			#Set false to stop enchantment from working
 			enabled = true
 
 		[cyclic.enchantment.magnet]
