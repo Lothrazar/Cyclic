@@ -1,4 +1,4 @@
-// https://docs.blamejared.com/1.20.1
+// https://docs.blamejared.com/
 // https://www.curseforge.com/minecraft/mc-mods/crafttweaker
 
 craftingTable.remove(<item:cyclic:emerald_sword>);
