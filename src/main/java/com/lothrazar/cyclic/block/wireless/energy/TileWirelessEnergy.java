@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.wireless.energy;
 import java.util.HashSet;
 import java.util.Set;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -138,7 +139,7 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
         this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case TRANSFER_RATE:
         //        transferRate = value;

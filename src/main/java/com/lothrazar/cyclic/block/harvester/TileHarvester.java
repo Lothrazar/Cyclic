@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.harvester;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.HarvestUtil;
@@ -140,7 +141,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
         this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);

@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.user;
 import java.lang.ref.WeakReference;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.CustomEnergyStorage;
@@ -181,7 +182,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
         this.timerDelay = value;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case INTERACTTYPE: // was LEFTHAND
         this.doHitBreak = value == 1;

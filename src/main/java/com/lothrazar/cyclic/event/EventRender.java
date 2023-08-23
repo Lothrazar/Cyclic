@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.RenderBlockUtils;
 import com.lothrazar.library.util.RenderUtil;
 import com.lothrazar.library.util.SoundUtil;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -102,6 +104,7 @@ public class EventRender {
     }
     Level world = player.level();
     ItemStack stack = ItemStack.EMPTY;
+    List<BlockPos> putBoxHere = new ArrayList<>();
     /****************** rendering outline ********************/
     stack = OreProspector.getIfHeld(player);
     if (stack.getItem() instanceof OreProspector) {
@@ -111,6 +114,7 @@ public class EventRender {
           if (loc.getDimension() == null ||
               loc.getDimension().equalsIgnoreCase(LevelWorldUtil.dimensionToString(world))) {
             RenderBlockUtils.createBox(event.getPoseStack(), loc.getPos());
+            putBoxHere.add(loc.getPos());
           }
         }
       }
@@ -133,8 +137,7 @@ public class EventRender {
         //now the item has a build area
         List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getDirection(), buildStyle);
         for (BlockPos coordinate : coordinates) {
-          //          renderCubes.put(coordinate, ClientConfigCyclic.getColor(stack));
-          RenderBlockUtils.createBox(event.getPoseStack(), coordinate);
+          putBoxHere.add(coordinate);
         }
       }
     }
@@ -152,7 +155,7 @@ public class EventRender {
           renderCubes.put(e, Color.RED);
         }
         else if (!stHere.isAir()) {
-          RenderBlockUtils.createBox(event.getPoseStack(), e);
+          putBoxHere.add(e);
         }
       }
     }
@@ -176,14 +179,20 @@ public class EventRender {
       if (shape != null) {
         BlockPos here = player.blockPosition();
         for (BlockPos s : shape.getShape()) {
-          RenderBlockUtils.createBox(event.getPoseStack(), here.offset(s));
-          //  renderCubes.put(here.offset(s), ClientConfigCyclic.getColor(stack));
+          putBoxHere.add(here.offset(s));
         }
       }
     }
-    //render the pos->colour map
+    //the block edge outline 
+    for (BlockPos coordinate : putBoxHere) {
+      RenderBlockUtils.createBox(event.getPoseStack(), coordinate);
+    }
+    //render the pos->colour map 
     if (renderCubes.keySet().size() > 0) {
-      RenderBlockUtils.renderColourCubes(event, renderCubes, alpha);
+      float scale = 1;
+      PoseStack matrix = event.getPoseStack();
+      Vec3 view = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+      RenderBlockUtils.renderColourCubes(matrix, view, renderCubes, scale, alpha); // TODO: why do they wiggle
     }
     /****************** end rendering cubes. start laser beam render ********************/
     stack = LaserItem.getIfHeld(player);

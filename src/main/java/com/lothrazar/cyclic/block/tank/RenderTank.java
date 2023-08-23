@@ -30,7 +30,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
     VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.RESIZABLE);
     matrix.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);
     RenderBlockUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
-        matrix, buffer, RenderBlockUtils.getColorARGB(fluid, 0.1F),
+        matrix, buffer, RenderBlockUtils.getColorARGB(fluid),
         RenderBlockUtils.calculateGlowLight(light, fluid));
   }
 }

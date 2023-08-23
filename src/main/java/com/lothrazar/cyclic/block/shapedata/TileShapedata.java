@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.shapedata;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -246,7 +247,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
         this.execute(cmd);
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
     }
   }

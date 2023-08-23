@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.collectitem;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -177,7 +178,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
         this.setNeedsRedstone(value);
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);

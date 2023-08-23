@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.wireless.redstone;
 import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -133,7 +134,7 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
     }
   }

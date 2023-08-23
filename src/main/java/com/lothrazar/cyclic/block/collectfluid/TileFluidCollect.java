@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.collectfluid;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
@@ -221,7 +222,7 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
         this.setNeedsRedstone(value);
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);

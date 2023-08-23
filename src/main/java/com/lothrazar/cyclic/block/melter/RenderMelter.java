@@ -54,7 +54,7 @@ public class RenderMelter implements BlockEntityRenderer<TileMelter> {
     matrixStack.pushPose();
     matrixStack.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);
     RenderBlockUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
-        matrixStack, vertexBuffer, RenderBlockUtils.getColorARGB(fluid, 0.1F),
+        matrixStack, vertexBuffer, RenderBlockUtils.getColorARGB(fluid),
         RenderBlockUtils.calculateGlowLight(light, fluid));
     matrixStack.popPose();
   }

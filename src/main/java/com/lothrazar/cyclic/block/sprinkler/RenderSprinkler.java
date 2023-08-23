@@ -33,7 +33,7 @@ public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler> {
     matrix.scale(f, 1F, f);
     matrix.translate(f, 0, f);
     RenderBlockUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
-        matrix, buffer, RenderBlockUtils.getColorARGB(fluid, 0.1F),
+        matrix, buffer, RenderBlockUtils.getColorARGB(fluid),
         RenderBlockUtils.calculateGlowLight(light, fluid));
   }
 }
