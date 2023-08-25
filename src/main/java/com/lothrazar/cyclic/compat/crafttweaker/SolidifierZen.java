@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.compat.crafttweaker;
 
+import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
@@ -76,6 +77,6 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
   @ZenCodeType.Method
   public void removeRecipe(String... names) {
     removeByName(names);
-    logger.debug("Recipe removed " + names);
+    logger.debug("Recipe removed " + Arrays.toString(names));
   }
 }
