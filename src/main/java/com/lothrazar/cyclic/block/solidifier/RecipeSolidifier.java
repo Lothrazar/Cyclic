@@ -30,8 +30,7 @@ public class RecipeSolidifier implements Recipe<TileSolidifier> {
   private final EnergyIngredient energy;
   public final FluidTagIngredient fluidIngredient;
 
-  public RecipeSolidifier(ResourceLocation id, NonNullList<Ingredient> inList,
-      FluidTagIngredient fluid, ItemStack result, EnergyIngredient energy) {
+  public RecipeSolidifier(ResourceLocation id, NonNullList<Ingredient> inList, FluidTagIngredient fluid, ItemStack result, EnergyIngredient energy) {
     this.id = id;
     this.energy = energy;
     ingredients = inList;
