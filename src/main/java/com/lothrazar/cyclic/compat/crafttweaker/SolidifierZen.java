@@ -53,7 +53,7 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
   }
 
   @ZenCodeType.Method
-  public void addTagRecipe(String name, IIngredient[] input, String fluidTag, int fluidQuantity, IItemStack output, int rfPertick, int ticks) {
+  public void addRecipe(String name, IIngredient[] input, String fluidTag, int fluidQuantity, IItemStack output, int rfPertick, int ticks) {
     name = fixRecipeName(name);
     if (output.isEmpty()) {
       throw new IllegalArgumentException("Output cannot be empty!");
