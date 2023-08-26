@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
@@ -21,9 +20,6 @@ public class CyclicLogger {
     logger.error(string, e);
   }
 
-  private void debug(String... strings) {
-    logger.log(Level.DEBUG, strings);
-  }
   public void info(String string) {
     //default for all releases is false to prevent spam-logs slipping out
     if (LOGINFO.get()) {

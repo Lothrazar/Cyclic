@@ -20,7 +20,7 @@ public class EdibleFlightItem extends AppleBuffs {
   public static IntValue TICKS;
 
   public EdibleFlightItem(Properties properties) {
-    super(properties.rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(3).saturationMod(0).alwaysEat().build()));
+    super(properties.rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(1).saturationMod(0).alwaysEat().build()));
   }
 
   @Override
@@ -30,8 +30,15 @@ public class EdibleFlightItem extends AppleBuffs {
   }
 
   @Override
-  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    entityLiving.addEffect(new MobEffectInstance(PotionEffectRegistry.FLIGHT.get(), TICKS.get()));
-    return super.finishUsingItem(stack, worldIn, entityLiving);
+  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entity) {
+    final var flight = PotionEffectRegistry.FLIGHT.get();
+    if (entity.hasEffect(flight)) {
+      MobEffectInstance currentEff = entity.getEffect(flight);
+      currentEff.update(new MobEffectInstance(PotionEffectRegistry.FLIGHT.get(), currentEff.getDuration() + TICKS.get())); // update to merge together new and existing timers
+    }
+    else {
+      entity.addEffect(new MobEffectInstance(flight, TICKS.get()));
+    }
+    return super.finishUsingItem(stack, worldIn, entity);
   }
 }
