@@ -141,11 +141,17 @@ public class BlockAntiBeacon extends BlockCyclic {
       }
 
       BlockPos closestAntiBeacon = livingEntityData.getClosestAntiBeaconPosition();
-      if (closestAntiBeacon == null || livingEntity.blockPosition().distManhattan(closestAntiBeacon) > TileAntiBeacon.RADIUS.get()) {
+      if (closestAntiBeacon == null) {
+        return;
+      }
+
+      if (livingEntity.blockPosition().distManhattan(closestAntiBeacon) > TileAntiBeacon.RADIUS.get()) {
+        livingEntityData.setClosestAntiBeaconPosition(null);
         return;
       }
 
       if (!serverLevel.getBlockState(closestAntiBeacon).getBlock().equals(this)) {
+        livingEntityData.setClosestAntiBeaconPosition(null);
         return;
       }
 
