@@ -4,8 +4,11 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -65,7 +68,14 @@ public class DoorbellButton extends ButtonBlock implements SimpleWaterloggedBloc
   }
 
   @Override
+  protected void playSound(Player p, LevelAccessor level, BlockPos pos, boolean isOn) {
+    if (isOn) {
+      level.playSound(p, pos, this.getSound(isOn), SoundSource.BLOCKS);
+    }
+  }
+
+  @Override
   protected SoundEvent getSound(boolean isOn) {
-    return isOn ? SoundRegistry.DOORBELL_MIKEKOENIG.get() : null;
+    return SoundRegistry.DOORBELL_MIKEKOENIG.get();
   }
 }

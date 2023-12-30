@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.bauble;
 
 import java.util.UUID;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.library.core.Const;
@@ -25,15 +26,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.ForgeMod;
 
 public abstract class CharmBase extends ItemBaseToggle {
 
-  public static IntValue CHARM_LUCK;
-  public static DoubleValue CHARM_SPEED;
-  public static DoubleValue CHARM_ATTACKSPEED;
   private static final int FIREPROTSECONDS = 10;
   private static final int FALLDISTANCESECONDS = 5;
   private static final int FALLDISTANCELIMIT = 5; // was 6 in 1.12.2
@@ -150,15 +146,15 @@ public abstract class CharmBase extends ItemBaseToggle {
   static final AttributeModifier.Operation MUL = AttributeModifier.Operation.MULTIPLY_BASE;
 
   static void charmSpeed(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED, ID_SPEED, CHARM_SPEED.get().floatValue(), 0, ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED, ID_SPEED, ConfigRegistry.CHARM_SPEED.get().floatValue(), 0, ADD);
   }
 
   static void charmLuck(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK, ID_LUCK, 0, CHARM_LUCK.get(), ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK, ID_LUCK, 0, ConfigRegistry.CHARM_LUCK.get(), ADD);
   }
 
   static void charmAttackSpeed(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, CHARM_ATTACKSPEED.get().floatValue(), 0, ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACKSPEED.get().floatValue(), 0, ADD);
   }
 
   static void charmSwimming(Player player) {
