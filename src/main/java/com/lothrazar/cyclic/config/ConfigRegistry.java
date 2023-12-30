@@ -74,7 +74,6 @@ import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
-import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.elemental.IceWand;
 import com.lothrazar.cyclic.item.elemental.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.ender.ItemProjectileDungeon;
@@ -98,6 +97,8 @@ import com.lothrazar.cyclic.registry.PotionRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 public class ConfigRegistry {
@@ -118,6 +119,9 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   private static ConfigValue<List<? extends String>> DISARM_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
+  public static IntValue CHARM_LUCK;
+  public static DoubleValue CHARM_SPEED;
+  public static DoubleValue CHARM_ATTACKSPEED;
   public static BooleanValue OVERRIDE_TRANSPORTER_SINGLETON;
   public static BooleanValue GENERATE_FLOWERS;
   public static BooleanValue CYAN_PODZOL_LEGACY;
@@ -363,9 +367,9 @@ public class ConfigRegistry {
     MaterialRegistry.OBS_LEG = CFG.comment("Damage Reduction").defineInRange("leg", 10, 1, 99);
     CFG.pop();
     ItemProjectileDungeon.RANGE = CFG.comment("Range in all directions to search for spawner").defineInRange("spawner_seeker.range", 64, 1, 256);
-    CharmBase.CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
-    CharmBase.CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
-    CharmBase.CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
+    CHARM_LUCK = CFG.comment("Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
+    CHARM_SPEED = CFG.comment("Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
+    CHARM_ATTACKSPEED = CFG.comment("Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
     AutoTorchItem.LIGHT_LEVEL = CFG.comment("Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
     CFG.comment(WALL, " Caving Torch Charm settings", WALL).push("caving_torch");
     AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment("Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 14);
