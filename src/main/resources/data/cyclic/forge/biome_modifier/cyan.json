@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#cyclic:has_flower/cyan",
+  "features": "cyclic:flower_cyan",
+  "step": "vegetal_decoration"
+}
