@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#minecraft:is_badlands",
+    "#minecraft:is_beach",
+    "#minecraft:is_mountain",
+    "#minecraft:is_river",
+    "#minecraft:is_taiga"
+  ]
+}
