@@ -161,5 +161,6 @@
 		,"1.20.4": "Remove eating cooldown on some foods.  Glistering Chorus Fruit is now stackable again like before (potion time +stacks up #2309).  CraftTweaker zenscript support added to the 5 cyclic recipe types, see scripts folder in this link for examples https://github.com/Lothrazar/Cyclic/tree/trunk/1.20/examples "
 		,"1.20.5":"Merge pull request #2334 from TelepathicGrunt/trunk/1.20 Optimize anti beacon to not deadlock worldgen or lag entities"
 		,"1.20.6":"#2332 Patch doorbell crash.  Patch InvocationTargetException: null errors coming from IHasClickToggle"
+		,"1.20.7":"Change curio render_toggle. #2356. Wooden Hopper is mineable with axes.  Fixed Block Breaker attempting to break liquid source blocks.  "
 	}
 }

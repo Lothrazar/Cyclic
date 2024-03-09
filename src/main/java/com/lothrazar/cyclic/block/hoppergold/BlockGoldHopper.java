@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class BlockGoldHopper extends BlockSimpleHopper {
 
   public BlockGoldHopper(Properties properties) {
-    super(properties.strength(1.3F));
+    super(properties);
   }
 
   @Override

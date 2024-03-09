@@ -27,7 +27,7 @@ public class BlockSimpleHopper extends BlockCyclic {
   public static final DirectionProperty FACING = BlockStateProperties.FACING_HOPPER;
 
   public BlockSimpleHopper(Properties properties) {
-    super(properties.strength(1.3F));
+    super(properties.strength(2.0F, 3.0F));
   }
 
   @Override

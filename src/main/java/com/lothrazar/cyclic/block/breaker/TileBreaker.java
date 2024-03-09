@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -44,12 +45,30 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     BlockPos target = worldPosition.relative(this.getCurrentFacing());
-    BlockState state = level.getBlockState(target);
-    if (!state.isAir() &&
-        state.getDestroySpeed(level, target) >= 0) {
+    if (this.isValid(target)) {
+       //old way would pass thru here and try to mine minecraft:water 
       this.level.destroyBlock(target, true);
     }
     //else unbreakable
+  }
+
+  /**
+   * Avoid mining source liquid blocks and unbreakable
+   */
+  private boolean isValid(BlockPos target) {
+    BlockState state = level.getBlockState(target);
+    if (level.isEmptyBlock(target)
+        && state.getDestroySpeed(level, target) >= 0) {
+      return false;
+    }
+    if (state.getFluidState() != null && state.getFluidState().isEmpty() == false) {
+      //am i a solid waterlogged state block? 
+      if (state.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
+        //pure liquid. but this will make canHarvestBlock go true  
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
