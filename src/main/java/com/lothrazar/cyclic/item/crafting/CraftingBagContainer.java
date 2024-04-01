@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.crafting;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.ContainerBase;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
@@ -42,9 +41,8 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     //
     if (slot > -1) {
       this.bag = playerInventory.getStackInSlot(slot);
-      ModCyclic.LOGGER.info("bag   " + bag);
     }
-    if (bag.isEmpty()) {
+    if (bag == null || bag.isEmpty()) {
       this.bag = super.findBag(ItemRegistry.crafting_bag);
     }
     //grid
@@ -59,11 +57,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
         });
       }
     }
-    //
-    //    this.nbt = bag.getOrCreateTag();
     bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-      //      this.handler = h;
-      //      this.slots = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {
@@ -80,25 +74,17 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     //this is not the saving version 
     if (playerIn.world.isRemote == false) {
-      //      if (this.handler == null) {
       IItemHandler handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
       if (handler == null) {
         return;
       }
-      //      }
       for (int i = 0; i < 9; i++) {
         ItemStack crafty = this.craftMatrix.getStackInSlot(i);
-        //        if (crafty.isEmpty()) {
-        //          continue;
-        //        }
         handler.extractItem(i, 64, false);
         ItemStack failtest = handler.insertItem(i, crafty, false);
         if (!failtest.isEmpty()) {
           //
         }
-        //
-        //          ItemStack doubleTest = h.extractItem(i, 64, true);
-        //          ModCyclic.LOGGER.info(doubleTest + " got saved in " + i);
       }
     }
     //    clearContainer(playerIn, playerIn.world, craftMatrix);
