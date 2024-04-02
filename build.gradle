@@ -94,57 +94,14 @@ dependencies {
     compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}:api")
     runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
-
+/*
     implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${mc_version}:${crafttweaker_version}")
-
-
-	  
-	// 	runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3541185")
-    runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3323640")
-    runtimeOnly fg.deobf("curse.maven:caelus-308989:3522094")
-    runtimeOnly fg.deobf("curse.maven:elytra-slot-317716:3522097")
-  //  implementation fg.deobf("curse.maven:openblocks-elevator-250832:3238352")
-  //  implementation fg.deobf("curse.maven:mantle-74924:3482897")
-  //  implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
-	//  implementation fg.deobf("curse.maven:construction-wand-399558:3499311")
-  //  implementation fg.deobf("curse.maven:glass-cutter-368921:3185268")
-	//  implementation fg.deobf("curse.maven:mob-grinding-utils-254241:3498537")
-    
-  //  implementation fg.deobf("curse.maven:inspirations-284007:3414517")
-  //  implementation fg.deobf("curse.maven:simple-storage-network-268495:3462942")
-  //	implementation fg.deobf("curse.maven:valkyrielib-245480:3396151")
-  //	implementation fg.deobf("curse.maven:simple-generators-246010:3464413")
-  //  implementation fg.deobf("curse.maven:autoreglib-250363:3326041")
-  //  implementation fg.deobf("curse.maven:quark-243121:3394265") 
-  // 	implementation fg.deobf("curse.maven:titanium-287342:3346366")
-  //  implementation fg.deobf("curse.maven:industrial-foregoing-266515:3446262")
-  //  implementation fg.deobf("curse.maven:forcecraft-454802:3495606")
-  //  implementation fg.deobf("curse.maven:plain-grinder-452000:3389092")  
-    
-  //  implementation fg.deobf("curse.maven:cofh-core-69162:3407019")
-	//  implementation fg.deobf("curse.maven:thermal-foundation-222880:3412300")
-	//	implementation fg.deobf("curse.maven:mekanism-268560:3206392")
-	//	implementation fg.deobf("curse.maven:mekanism-generators-268566:3206395")
-	//	implementation fg.deobf("curse.maven:mcjtylib-233105:3402861")
-	//	implementation fg.deobf("curse.maven:rftools-base-326041:3380271")
-  //  implementation fg.deobf("curse.maven:biomes-o-plenty-220318:3360574")
-  //  implementation fg.deobf("curse.maven:aquaculture-60028:3401886")
-	//  implementation fg.deobf("curse.maven:ensorcellation-349447:3407021")
-	//  implementation fg.deobf("curse.maven:liquid-blocks-301999:3323640")
-	//  implementation fg.deobf("curse.maven:gardening-tools-351990:3230668")
-  //  implementation fg.deobf("curse.maven:cucumber-272335:3349690")
-  //  implementation fg.deobf("curse.maven:mystical-agriculture-246640:3467262")
-  //  implementation fg.deobf("curse.maven:refined-storage-243076:3157354")
-  //  implementation fg.deobf("curse.maven:ex-nihilo-sequentia-400012:3060647")
-  //  implementation fg.deobf("curse.maven:storage-drawers-223852:3180569")
-  //  implementation fg.deobf("curse.maven:create-328085:328085")
-  
-	// 	implementation fg.deobf("curse.maven:selene-499980:3472679")
-	// 	implementation fg.deobf("curse.maven:supplementaries-412082:3466032")
-  //  implementation fg.deobf("curse.maven:resourceful-bees-384508:3206649")
-  //  implementation fg.deobf("curse.maven:architectury-forge-419699:3188530")
-	//  implementation fg.deobf("curse.maven:rhino-416294:3187177")
-	//  implementation fg.deobf("curse.maven:kubejs-238086:3137415")
+    implementation fg.deobf("curse.maven:mantle-74924:3482897")
+    implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
+    implementation fg.deobf("curse.maven:cucumber-272335:3507886")
+    implementation fg.deobf("curse.maven:mystical-agriculture-246640:3562127")
+    implementation fg.deobf("curse.maven:chunknogobyebye-332695:3195333")
+*/
   
     // To use any mod in /libs/ folder, place it in and set the mod and version to match jar filename
    // runtimeOnly fg.deobf("libs:SimpleStorageNetwork:1.16.4-1.3.1")

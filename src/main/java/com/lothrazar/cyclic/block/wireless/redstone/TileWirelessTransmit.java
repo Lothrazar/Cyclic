@@ -95,6 +95,7 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
     return super.write(tag);
   }
 
+  @SuppressWarnings("deprecation")
   private void toggleTarget(BlockPosDim dimPos) {
     if (world.isRemote) {
       return;

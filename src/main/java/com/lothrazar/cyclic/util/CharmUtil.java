@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import top.theillusivec4.curios.api.CuriosApi;
 
+@SuppressWarnings("deprecation")
 public class CharmUtil {
 
   public static ItemStack getIfEnabled(PlayerEntity player, Item match) {
