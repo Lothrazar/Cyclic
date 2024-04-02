@@ -21,6 +21,7 @@ public class DataTags {
   public static final INamedTag<Block> VINES = BlockTags.makeWrapperTag("forge:vines");
   public static final INamedTag<Block> CACTUS = BlockTags.makeWrapperTag("forge:cactus");
   public static final INamedTag<Block> CROP_BLOCKS = BlockTags.makeWrapperTag("forge:crop_blocks");
+  public static final INamedTag<Block> EXCAVATE_IGNORED = BlockTags.makeWrapperTag("cyclic:ignored/excavate");
   public static final INamedTag<Item> FISHING_RODS = ItemTags.makeWrapperTag("forge:fishing_rods");
   public static final INamedTag<Item> BOOKS = ItemTags.makeWrapperTag("forge:books");
   public static final INamedTag<Item> ANVIL_IMMUNE = ItemTags.makeWrapperTag("cyclic:anvil_immune");

@@ -25,6 +25,7 @@ package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.EnchantBase;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.Arrays;
@@ -64,6 +65,7 @@ public class EnchantExcavation extends EnchantBase {
 
   public static BooleanValue CFG;
   public static final String ID = "excavate";
+  public static boolean effectiveToolRequired = true; // non-config lets hardcode this actually
 
   @Override
   public boolean isEnabled() {
@@ -103,6 +105,14 @@ public class EnchantExcavation extends EnchantBase {
     ItemStack stackHarvestingWith = player.getHeldItem(player.swingingHand);
     int level = this.getCurrentLevelTool(stackHarvestingWith);
     if (level <= 0) {
+      return;
+    }
+    if (effectiveToolRequired && !ForgeHooks.isToolEffective(world, pos, stackHarvestingWith)) {
+      ModCyclic.LOGGER.info("excavate trigger cancelled; tool not effective");
+      return;
+    }
+    if (eventState.isIn(DataTags.EXCAVATE_IGNORED)) {
+      ModCyclic.LOGGER.info("excavate trigger cancelled; see blocktag " + DataTags.EXCAVATE_IGNORED.toString());
       return;
     }
     if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
