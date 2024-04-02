@@ -105,6 +105,7 @@ public class ConfigRegistry {
   public static BooleanValue COMMANDHUNGER;
   public static BooleanValue COMMANDPING;
   public static BooleanValue LOGINFO;
+  public static BooleanValue TRANSFER_NODES_DIMENSIONAL;
   public static IntValue HEARTXPMINUS;
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
@@ -384,6 +385,11 @@ public class ConfigRegistry {
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL)
         .push("blocks");
+    TRANSFER_NODES_DIMENSIONAL = CFG.comment("  Allows the dimensional Transfer Nodes to cross dimensions "
+        + "(no chunk loading is done, you have to do that on your own); "
+        + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
+        + "If you change it to false it will only work if the target is in the same dimension.")
+        .define("wireless_transfer_dimensional", true);
     CFG.comment("Ender shelf settings").push("sound");
     BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();

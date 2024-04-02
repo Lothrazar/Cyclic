@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.wireless.fluid;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -115,8 +116,13 @@ public class TileWirelessFluid extends TileEntityBase implements INamedContainer
     boolean moved = false;
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot(0);
-    if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-      this.moveFluids(loc.getSide(), loc.getPos(), this.transferRate, tank);
+    if (loc != null) {
+      if (UtilWorld.dimensionIsEqual(loc, world)) {
+        this.moveFluids(loc.getSide(), loc.getPos(), this.transferRate, tank);
+      }
+      else if (ConfigRegistry.TRANSFER_NODES_DIMENSIONAL.get()) {
+        this.moveFluidsDimensional(loc, this.transferRate, tank);
+      }
     }
     this.setLitProperty(moved);
   }

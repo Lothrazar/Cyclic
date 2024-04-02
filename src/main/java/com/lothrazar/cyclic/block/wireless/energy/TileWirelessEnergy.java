@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.wireless.energy;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -100,8 +101,15 @@ public class TileWirelessEnergy extends TileEntityBase implements INamedContaine
     boolean moved = false;
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot(0);
-    if (loc != null && UtilWorld.dimensionIsEqual(loc, world)) {
-      moved = moveEnergy(Direction.UP, loc.getPos(), transferRate);
+    if (loc != null) {
+      if (UtilWorld.dimensionIsEqual(loc, world)) {
+        // assume position is in the same level/dimension/world
+        moved = moveEnergy(loc.getSide(), loc.getPos(), transferRate);
+      }
+      else if (ConfigRegistry.TRANSFER_NODES_DIMENSIONAL.get()) {
+        //allows config to disable this cross dimension feature for modpack balance purposes
+        moved = moveEnergyDimensional(loc, transferRate);
+      }
     }
     this.setLitProperty(moved);
   }

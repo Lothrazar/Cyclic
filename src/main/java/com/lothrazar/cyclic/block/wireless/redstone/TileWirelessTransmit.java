@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.wireless.redstone;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -97,11 +98,11 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
 
   @SuppressWarnings("deprecation")
   private void toggleTarget(BlockPosDim dimPos) {
-    if (world.isRemote) {
+    if (dimPos == null || world.isRemote) {
       return;
     }
     BlockPos targetPos = dimPos.getPos();
-    ServerWorld serverLevel = world.getServer().getWorld(UtilWorld.stringToDimension(dimPos.getDimension()));
+    ServerWorld serverLevel = dimPos.getServerLevel(world.getServer()); // world.getServer().getWorld(UtilWorld.stringToDimension(dimPos.getDimension()));
     if (serverLevel == null) {
       ModCyclic.LOGGER.info("Dimension not found " + dimPos.getDimension());
       return;
@@ -111,41 +112,30 @@ public class TileWirelessTransmit extends TileEntityBase implements INamedContai
       return;
     }
     boolean isPowered = world.isBlockPowered(pos);
-    //    BlockState target = serverLevel.getBlockState(targetPos);
     if (serverLevel.getTileEntity(targetPos) instanceof TileWirelessRec) {
       TileWirelessRec receiver = (TileWirelessRec) serverLevel.getTileEntity(targetPos);
       //am I powered?
       if (isPowered) {
+        //    ModCyclic.LOGGER.info(" POWER UP target" + dimPos);
         receiver.putPowerSender(this.id);
       }
       else {
+        //  ModCyclic.LOGGER.info(" turn off target" + dimPos);
         receiver.removePowerSender(this.id);
       }
     }
     world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
-    //    if (target.hasProperty(BlockStateProperties.POWERED)) {
-    //      boolean targetPowered = target.get(BlockStateProperties.POWERED);
-    //      //update target based on my state
-    //      boolean isPowered = world.isBlockPowered(pos);
-    //      if (targetPowered != isPowered) {
-    //        serverLevel.setBlockState(targetPos, target.with(BlockStateProperties.POWERED, isPowered));
-    //        //and update myself too   
-    //        world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
-    //        //TODO: send exact 1-16 power level
-    //        //        world.getTileEntity(targetPos) instanceof TileWirelessRec
-    //        //        && target.getBlock() instanceof BlockWirelessRec
-    //      }
-    //    }
   }
 
   @Override
   public void tick() {
     for (int s = 0; s < inventory.getSlots(); s++) {
       BlockPosDim targetPos = getTargetInSlot(s);
-      if (targetPos == null ||
-          UtilWorld.dimensionIsEqual(targetPos, world) == false) {
+      if (!UtilWorld.dimensionIsEqual(targetPos, world) && !ConfigRegistry.TRANSFER_NODES_DIMENSIONAL.get()) {
+        //if dimensions dont match, AND config disables x-dimension communication, then skip this one
         continue;
       }
+      //else gogogo
       toggleTarget(targetPos);
     }
   }

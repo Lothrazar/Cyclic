@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -257,7 +258,14 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return this.needsRedstone == 1;
   }
 
-  public void moveFluids(Direction myFacingDir, BlockPos posTarget, int toFlow, IFluidHandler tank) {
+  protected void moveFluidsDimensional(BlockPosDim loc, int toFlow, IFluidHandler tank) {
+    Direction myFacingDir = loc.getSide();
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    // moveFluidsInternal is just util tryFillPositionFromTank
+    UtilFluid.tryFillPositionFromTank(loc.getServerLevel(world.getServer()), loc.getPos(), themFacingMe, tank, toFlow);
+  }
+
+  protected void moveFluids(Direction myFacingDir, BlockPos posTarget, int toFlow, IFluidHandler tank) {
     if (tank == null || tank.getFluidInTank(0).isEmpty()) {
       return;
     }
@@ -358,18 +366,29 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return moveItems(myFacingDir, pos.offset(myFacingDir), max, handlerHere, 0);
   }
 
+  public boolean moveItemsDimensional(BlockPosDim loc, int max, IItemHandler handlerHere, int theslot) {
+    Direction myFacingDir = loc.getSide();
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    ServerWorld serverWorld = loc.getServerLevel(world.getServer());
+    return moveItemsInternal(max, handlerHere, theslot, themFacingMe, serverWorld.getTileEntity(loc.getPos()));
+  }
+
   public boolean moveItems(Direction myFacingDir, BlockPos posTarget, int max, IItemHandler handlerHere, int theslot) {
-    if (max <= 0 || this.world.isRemote() || handlerHere == null) {
+    if (max <= 0 || this.world.isRemote()) {
       return false;
     }
     //first get the original ItemStack as creating new ones is expensive
-    final ItemStack originalItemStack = handlerHere.getStackInSlot(theslot);
-    if (originalItemStack.isEmpty()) {
-      return false;
-    }
     final Direction themFacingMe = myFacingDir.getOpposite();
     final TileEntity tileTarget = world.getTileEntity(posTarget);
-    if (tileTarget == null) {
+    return moveItemsInternal(max, handlerHere, theslot, themFacingMe, tileTarget);
+  }
+
+  private static boolean moveItemsInternal(int max, IItemHandler handlerHere, int theslot, final Direction themFacingMe, final TileEntity tileTarget) {
+    if (max <= 0 || tileTarget == null || handlerHere == null) {
+      return false;
+    }
+    final ItemStack originalItemStack = handlerHere.getStackInSlot(theslot);
+    if (originalItemStack.isEmpty()) {
       return false;
     }
     final IItemHandler handlerOutput = tileTarget.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, themFacingMe).orElse(null);
@@ -401,7 +420,25 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     return moveEnergy(myFacingDir, pos.offset(myFacingDir), quantity);
   }
 
+  protected boolean moveEnergyDimensional(final BlockPosDim loc, final int quantity) {
+    //validation pre-move
+    if (quantity <= 0) {
+      return false;
+    }
+    if (this.world.isRemote) {
+      return false; //important to not desync cables 
+    }
+    Direction myFacingDir = loc.getSide();
+    final IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
+    ServerWorld serverWorld = loc.getServerLevel(world.getServer());
+    final TileEntity tileTarget = serverWorld.getTileEntity(loc.getPos());
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
+  }
+
+  //assums posTarget is in the same dimension as this.world
   protected boolean moveEnergy(final Direction myFacingDir, final BlockPos posTarget, final int quantity) {
+    //validation pre-move
     if (quantity <= 0) {
       return false;
     }
@@ -409,11 +446,15 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       return false; //important to not desync cables 
     }
     final IEnergyStorage handlerHere = this.getCapability(CapabilityEnergy.ENERGY, myFacingDir).orElse(null);
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    final TileEntity tileTarget = world.getTileEntity(posTarget);
+    return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
+  }
+
+  private static boolean moveEnergyInternal(final int quantity, final IEnergyStorage handlerHere, final Direction themFacingMe, final TileEntity tileTarget) {
     if (handlerHere == null) {
       return false;
     }
-    final Direction themFacingMe = myFacingDir.getOpposite();
-    final TileEntity tileTarget = world.getTileEntity(posTarget);
     if (tileTarget == null) {
       return false;
     }
@@ -425,7 +466,8 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (capacity <= 0) {
       return false;
     }
-    //first simulate
+    //validation is done
+    //next, simulate
     final int drain = handlerHere.extractEnergy(Math.min(quantity, capacity), true);
     if (drain <= 0) {
       return false;
