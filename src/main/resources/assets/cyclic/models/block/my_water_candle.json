@@ -1,0 +1,91 @@
+    {
+	"credit": "Made with Blockbench @INooBTooMuch https://github.com/Lothrazar/Cyclic/issues/2182",
+	"parent": "block/block",
+	"textures": {
+		"holder": "cyclic:blocks/machine/water_candle_holder",
+		"2": "cyclic:blocks/machine/water_candle",
+		"sides": "cyclic:blocks/machine/water_candle_sides"
+	},
+	"elements": [
+		{
+			"name": "pillar",
+			"from": [7, 0.25, 7],
+			"to": [9, 8, 9],
+			"rotation": {"angle": 0, "axis": "z", "origin": [1, 0, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 12], "texture": "#sides"},
+				"east": {"uv": [6, 0, 9, 12], "texture": "#sides"},
+				"south": {"uv": [3, 0, 6, 12], "texture": "#sides"},
+				"west": {"uv": [9, 0, 12, 12], "texture": "#sides"},
+				"up": {"uv": [15, 2, 12, 0], "texture": "#sides"},
+				"down": {"uv": [15, 2, 12, 4], "texture": "#sides"}
+			}
+		},
+		{
+			"name": "center",
+			"from": [4, 0, 4],
+			"to": [12, 0.25, 12],
+			"faces": {
+				"north": {"uv": [10, 0, 9, 6], "texture": "#holder"},
+				"east": {"uv": [10, 0, 9, 6], "texture": "#holder"},
+				"south": {"uv": [10, 0, 9, 6], "texture": "#holder"},
+				"west": {"uv": [10, 0, 9, 6], "texture": "#holder"},
+				"up": {"uv": [9, 9, 0, 0], "texture": "#holder"},
+				"down": {"uv": [9, 0, 0, 9], "texture": "#holder"}
+			}
+		},
+		{
+			"name": "sh",
+			"from": [4, 0, 3],
+			"to": [12, 0.75, 4],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 1], "texture": "#2"},
+				"east": {"uv": [0, 4, 1, 5], "texture": "#2"},
+				"south": {"uv": [0, 1, 8, 2], "texture": "#2"},
+				"west": {"uv": [1, 4, 2, 5], "texture": "#2"},
+				"up": {"uv": [8, 3, 0, 2], "texture": "#2"},
+				"down": {"uv": [8, 3, 0, 4], "texture": "#2"}
+			}
+		},
+		{
+			"name": "sh",
+			"from": [3, 0, 4],
+			"to": [4, 0.75, 12],
+			"faces": {
+				"north": {"uv": [0, 4, 1, 5], "texture": "#2"},
+				"east": {"uv": [0, 15, 8, 16], "texture": "#2"},
+				"south": {"uv": [1, 4, 2, 5], "texture": "#2"},
+				"west": {"uv": [0, 14, 8, 15], "texture": "#2"},
+				"up": {"uv": [14, 8, 15, 16], "texture": "#2"},
+				"down": {"uv": [15, 8, 16, 16], "texture": "#2"}
+			}
+		},
+		{
+			"name": "sh",
+			"from": [12, 0, 4],
+			"to": [13, 0.75, 12],
+			"faces": {
+				"north": {"uv": [0, 4, 1, 5], "texture": "#2"},
+				"east": {"uv": [0, 12, 8, 13], "texture": "#2"},
+				"south": {"uv": [1, 4, 2, 5], "texture": "#2"},
+				"west": {"uv": [0, 13, 8, 14], "texture": "#2"},
+				"up": {"uv": [14, 0, 15, 8], "texture": "#2"},
+				"down": {"uv": [15, 0, 16, 8], "texture": "#2"}
+			}
+		},
+		{
+			"name": "sh",
+			"from": [4, 0, 12],
+			"to": [12, 0.75, 13],
+			"faces": {
+				"north": {"uv": [0, 11, 8, 12], "texture": "#2"},
+				"east": {"uv": [0, 4, 1, 5], "texture": "#2"},
+				"south": {"uv": [0, 8, 8, 9], "texture": "#2"},
+				"west": {"uv": [1, 4, 2, 5], "texture": "#2"},
+				"up": {"uv": [0, 9, 8, 10], "texture": "#2"},
+				"down": {"uv": [0, 7, 8, 8], "texture": "#2"}
+			}
+		}
+	],
+	"display": {}
+}
