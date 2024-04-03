@@ -27,7 +27,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
   private static final int MAX = 32000;
   final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> energyCapSides = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> flow = new ConcurrentHashMap<>();
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
   private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
 
@@ -42,14 +42,14 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
   public void updateConnection(final Direction side, final EnumConnectType connectType) {
     final EnumConnectType oldConnectType = getConnectionType(side);
     if (connectType == EnumConnectType.BLOCKED && oldConnectType != EnumConnectType.BLOCKED) {
-      final LazyOptional<IEnergyStorage> sidedCap = energyCapSides.get(side);
+      final LazyOptional<IEnergyStorage> sidedCap = flow.get(side);
       if (sidedCap != null) {
         sidedCap.invalidate();
-        energyCapSides.remove(side);
+        flow.remove(side);
       }
     }
     else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
-      energyCapSides.put(side, LazyOptional.of(() -> energy));
+      flow.put(side, LazyOptional.of(() -> energy));
     }
     super.updateConnection(side, connectType);
   }
@@ -131,11 +131,11 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
       if (side == null) {
         return energyCap.cast();
       }
-      LazyOptional<IEnergyStorage> sidedCap = energyCapSides.get(side);
+      LazyOptional<IEnergyStorage> sidedCap = flow.get(side);
       if (sidedCap == null) {
         if (getConnectionType(side) != EnumConnectType.BLOCKED) {
           sidedCap = LazyOptional.of(() -> energy);
-          energyCapSides.put(side, sidedCap);
+          flow.put(side, sidedCap);
           return sidedCap.cast();
         }
       }
@@ -149,7 +149,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
   @Override
   public void invalidateCaps() {
     energyCap.invalidate();
-    for (final LazyOptional<IEnergyStorage> sidedCap : energyCapSides.values()) {
+    for (final LazyOptional<IEnergyStorage> sidedCap : flow.values()) {
       sidedCap.invalidate();
     }
     super.invalidateCaps();

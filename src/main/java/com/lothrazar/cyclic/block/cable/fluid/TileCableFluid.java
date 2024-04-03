@@ -17,6 +17,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -44,7 +45,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
   public static final int EXTRACT_RATE = CAPACITY;
   private final FluidTank fluidTank = new FluidTankBase(this, CAPACITY, fluidStack -> FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
   private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> fluidTank);
-  private final ConcurrentHashMap<Direction, LazyOptional<IFluidHandler>> fluidCapSides = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<Direction, LazyOptional<IFluidHandler>> flow = new ConcurrentHashMap<>();
 
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
@@ -52,15 +53,16 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
 
   @Override
   public void updateConnection(final Direction side, final EnumConnectType connectType) {
-    final EnumConnectType oldConnectType = connectTypeMap.computeIfAbsent(side, k -> getBlockState().get(CableBase.FACING_TO_PROPERTY_MAP.get(k)));
+    EnumProperty<EnumConnectType> property = CableBase.FACING_TO_PROPERTY_MAP.get(side);
+    final EnumConnectType oldConnectType = getBlockState().get(property);
     if (connectType == EnumConnectType.BLOCKED && oldConnectType != EnumConnectType.BLOCKED) {
-      fluidCapSides.computeIfPresent(side, (k, v) -> {
+      flow.computeIfPresent(side, (k, v) -> {
         v.invalidate();
         return null;
       });
     }
     else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
-      fluidCapSides.put(side, LazyOptional.of(() -> fluidTank));
+      flow.put(side, LazyOptional.of(() -> fluidTank));
     }
     super.updateConnection(side, connectType);
   }
@@ -94,11 +96,11 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
       return;
     }
     //handle special cases
-    if (!fluidCapSides.containsKey(extractSide)) {
+    if (!flow.containsKey(extractSide)) {
       final LazyOptional<IFluidHandler> hax = LazyOptional.of(() -> fluidTank);
-      fluidCapSides.put(extractSide, hax);
+      flow.put(extractSide, hax);
     }
-    IFluidHandler tank = fluidCapSides.get(extractSide).orElse(null);
+    IFluidHandler tank = flow.get(extractSide).orElse(null);
     if (fluidTank.getSpace() > -FluidAttributes.BUCKET_VOLUME) {
       UtilFluid.extractSourceWaterloggedCauldron(world, target, tank);
     }
@@ -120,11 +122,11 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
       if (side == null) {
         return fluidCap.cast();
       }
-      LazyOptional<IFluidHandler> sidedCap = fluidCapSides.get(side);
+      LazyOptional<IFluidHandler> sidedCap = flow.get(side);
       if (sidedCap == null) {
         if (getConnectionType(side) != EnumConnectType.BLOCKED) {
           sidedCap = LazyOptional.of(() -> fluidTank);
-          fluidCapSides.put(side, sidedCap);
+          flow.put(side, sidedCap);
           return sidedCap.cast();
         }
       }
@@ -153,7 +155,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
   @Override
   public void invalidateCaps() {
     fluidCap.invalidate();
-    for (final LazyOptional<IFluidHandler> sidedCap : fluidCapSides.values()) {
+    for (final LazyOptional<IFluidHandler> sidedCap : flow.values()) {
       sidedCap.invalidate();
     }
     super.invalidateCaps();

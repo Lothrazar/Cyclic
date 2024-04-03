@@ -214,7 +214,7 @@ public abstract class CableBase extends BlockBase implements IWaterLoggable {
         break;
       }
       if (world.getBlockState(pos).getBlock() == this && world.setBlockState(pos, newState)) {
-        updateConnection(world, pos, sideToToggle, newState.get(prop));
+        //        updateConnection(world, pos, sideToToggle, newState.get(prop));
         if (updatePost) {
           newState.updatePostPlacement(sideToToggle, world.getBlockState(pos.offset(sideToToggle)), world, pos, pos.offset(sideToToggle));
         }

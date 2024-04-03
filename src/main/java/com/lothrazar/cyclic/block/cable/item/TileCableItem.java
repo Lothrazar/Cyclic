@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.cable.item;
 
+import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
-import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
@@ -36,41 +36,44 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
       return stack.getItem() == ItemRegistry.filter_data;
     }
   };
-  private final IItemHandler itemHandler = new ItemStackHandler(1) {
-
-    @Override
-    public boolean isItemValid(final int slot, final ItemStack stack) {
-      return FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), stack);
-    }
-  };
-  private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> itemHandler);
-  private final ConcurrentHashMap<Direction, LazyOptional<IItemHandler>> itemCapSides = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<Direction, LazyOptional<IItemHandler>> flow = new ConcurrentHashMap<>();
 
   public TileCableItem() {
     super(TileRegistry.item_pipeTile);
+    for (Direction f : Direction.values()) {
+      flow.put(f, LazyOptional.of(TileCableItem::createHandler));
+    }
+  }
+
+  private static ItemStackHandler createHandler() {
+    return new ItemStackHandler(1);
   }
 
   @Override
   public void updateConnection(final Direction side, final EnumConnectType connectType) {
     final EnumConnectType oldConnectType = getConnectionType(side);
     if (connectType == EnumConnectType.BLOCKED && oldConnectType != EnumConnectType.BLOCKED) {
-      final LazyOptional<IItemHandler> sidedCap = itemCapSides.get(side);
-      if (sidedCap != null) {
+      final LazyOptional<IItemHandler> sidedCap = flow.get(side);
+      if (sidedCap != null) { //redundant safety?
         sidedCap.invalidate();
       }
     }
     else if (oldConnectType == EnumConnectType.BLOCKED && connectType != EnumConnectType.BLOCKED) {
-      itemCapSides.put(side, LazyOptional.of(() -> itemHandler));
+      flow.put(side, LazyOptional.of(TileCableItem::createHandler));
     }
     super.updateConnection(side, connectType);
   }
 
   @Override
   public void tick() {
+    if (world.isRemote) {
+      return;
+    }
     for (final Direction extractSide : Direction.values()) {
       final EnumConnectType connection = getConnectionType(extractSide);
       if (connection.isExtraction()) {
-        tryExtract(itemHandler, extractSide, extractQty, filter);
+        final IItemHandler sideHandler = flow.get(extractSide).orElse(null);
+        tryExtract(sideHandler, extractSide, extractQty, filter);
       }
     }
     normalFlow();
@@ -80,6 +83,7 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
     // Label for loop for shortcutting, used to continue after items have been moved
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
+      final IItemHandler sideHandler = flow.get(incomingSide).orElse(null);
       for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
@@ -88,31 +92,20 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
         if (outgoingConnection.isExtraction() || outgoingConnection.isBlocked()) {
           continue;
         }
-        if (this.moveItems(outgoingSide, FLOW_QTY, itemHandler)) {
+        if (this.moveItems(outgoingSide, FLOW_QTY, sideHandler)) {
           continue incomingSideLoop; //if items have been moved then change side
         }
       }
       //if no items have been moved then move items in from adjacent
-      this.moveItems(incomingSide, FLOW_QTY, itemHandler);
+      this.moveItems(incomingSide, FLOW_QTY, sideHandler);
     }
   }
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      if (side == null) {
-        return itemCap.cast();
-      }
-      LazyOptional<IItemHandler> sidedCap = itemCapSides.get(side);
-      if (sidedCap == null) {
-        if (getConnectionType(side) != EnumConnectType.BLOCKED) {
-          sidedCap = LazyOptional.of(() -> itemHandler);
-          itemCapSides.put(side, sidedCap);
-          return sidedCap.cast();
-        }
-      }
-      else {
-        return sidedCap.cast();
+    if (side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
+        return flow.get(side).cast();
       }
     }
     return super.getCapability(cap, side);
@@ -121,8 +114,7 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
   @Override
   public void invalidateCaps() {
     super.invalidateCaps();
-    itemCap.invalidate();
-    for (final LazyOptional<IItemHandler> sidedCap : itemCapSides.values()) {
+    for (final LazyOptional<IItemHandler> sidedCap : flow.values()) {
       sidedCap.invalidate();
     }
   }
@@ -131,8 +123,15 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
     extractQty = tag.getInt("extractCount");
-    ((INBTSerializable<CompoundNBT>) itemHandler).deserializeNBT(tag.getCompound(NBTINV));
     filter.deserializeNBT(tag.getCompound("filter"));
+    LazyOptional<IItemHandler> item;
+    for (Direction f : Direction.values()) {
+      item = flow.get(f);
+      item.ifPresent(h -> {
+        CompoundNBT itemTag = tag.getCompound("item" + f.toString());
+        ((INBTSerializable<CompoundNBT>) h).deserializeNBT(itemTag);
+      });
+    }
     super.read(bs, tag);
   }
 
@@ -141,7 +140,14 @@ public class TileCableItem extends TileCableBase implements ITickableTileEntity,
   public CompoundNBT write(CompoundNBT tag) {
     tag.put("filter", filter.serializeNBT());
     tag.putInt("extractCount", extractQty);
-    tag.put(NBTINV, ((INBTSerializable<CompoundNBT>) itemHandler).serializeNBT());
+    LazyOptional<IItemHandler> item;
+    for (Direction f : Direction.values()) {
+      item = flow.get(f);
+      item.ifPresent(h -> {
+        CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+        tag.put("item" + f.toString(), compound);
+      });
+    }
     return super.write(tag);
   }
 

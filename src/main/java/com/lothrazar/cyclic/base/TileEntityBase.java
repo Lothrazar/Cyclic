@@ -277,11 +277,7 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
     if (qty <= 0) {
       return;
     }
-    final ItemStack stackInSlot = myself.getStackInSlot(0);
-    if (!stackInSlot.isEmpty()) {
-      return;
-    }
-    if (extractSide == null) {
+    if (myself == null || extractSide == null || !myself.getStackInSlot(0).isEmpty()) {
       return;
     }
     final BlockPos posTarget = pos.offset(extractSide);
