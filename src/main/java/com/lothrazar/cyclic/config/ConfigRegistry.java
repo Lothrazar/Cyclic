@@ -260,11 +260,11 @@ public class ConfigRegistry {
         .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
     TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
         .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
-    CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).", WALL)
+    CFG.comment(WALL, "Energy cost for various machines, either per use of an action or per tick (twenty ticks per second). Setting as zero (0) lets machine run for free", WALL)
         .push("cost");
     TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager", 50, 0, 64000);
     TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("disenchanter", 2500, 0, 64000);
-    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 50, 0, 64000);
+    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user", 0, 0, 64000);
     TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil", 250, 0, 64000);
     TileMelter.POWERCONF = CFG.comment("Power per recipe melter").defineInRange("melter", 5000, 0, 64000);
     TileSolidifier.POWERCONF = CFG.comment("Power per recipe solidifier").defineInRange("solidifier", 5000, 0, 64000);

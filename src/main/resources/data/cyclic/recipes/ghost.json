@@ -13,7 +13,7 @@
       "item": "minecraft:iron_nugget"
     },
     "r": {
-      "item": "minecraft:gray_dye"
+      "tag": "forge:dyes/gray"
     }
   },
   "result": {

@@ -41,7 +41,6 @@ public class PlayerAbilityEvents {
     }
     if (datFile.flyTicks > DISABLE_OFFSET) {
       player.abilities.allowFlying = true;
-      ModCyclic.LOGGER.info("allowFlying");
     }
     else if (datFile.flyTicks <= DISABLE_OFFSET) {
       player.abilities.allowFlying = false;

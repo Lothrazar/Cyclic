@@ -5,14 +5,19 @@ import net.minecraftforge.fml.ModList;
 
 public class BotaniaWrapper {
 
+  /**
+   * If the botania mod is loaded, use the botania-api to check for hasSolegnoliaAround(entity); otherwise return false
+   * 
+   * @param entity
+   * @return true if botania has found a solegnolia around the entity
+   */
   public static boolean hasSolegnoliaAround(LivingEntity entity) {
     try {
-      return ModList.get().isLoaded("botania") && vazkii.botania.api.BotaniaAPI.instance().hasSolegnoliaAround(entity);
+      if (ModList.get().isLoaded("botania")) {
+        return vazkii.botania.api.BotaniaAPI.instance().hasSolegnoliaAround(entity);
+      }
     }
-    catch (Exception e) {
-      //ive never seen an exception here yet, just being safe
-    }
-    //either botania does not exist or an error was thrown
+    catch (Exception e) {}
     return false;
   }
 }

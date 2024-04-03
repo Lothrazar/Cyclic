@@ -13,7 +13,7 @@
       "item": "minecraft:flint"
     },
     "g": {
-      "item": "minecraft:light_blue_dye"
+      "tag": "forge:dyes/light_blue"
     }
   },
   "result": {

@@ -7,20 +7,20 @@
   ],
   "key": {
     "i": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/gold"
     },
     "l": {
-      "tag": "minecraft:coral_blocks"
+      "tag": "forge:vines"
     },
     "a": {
-      "item": "minecraft:cyan_dye"
+      "tag": "forge:dyes/cyan"
     },
     "q": {
-      "item": "minecraft:snowball"
+      "item": "minecraft:ice"
     }
   },
   "result": {
     "item": "cyclic:magic_net",
-    "count": 2
+    "count": 4
   }
 }

@@ -121,6 +121,7 @@ public class EventRender {
   //  }
 
   ///////////////////// asdfasdf TODO REFACTOR THIS 
+  @SuppressWarnings("deprecation")
   @SubscribeEvent
   public void renderOverlay(RenderWorldLastEvent event) {
     PlayerEntity player = Minecraft.getInstance().player;
@@ -159,7 +160,13 @@ public class EventRender {
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getPos(), lookingAt.getFace());
       for (BlockPos e : coords) {
-        renderCubes.put(e, RandomizerItem.canMove(player.world.getBlockState(e), player.world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
+        BlockState stHere = player.world.getBlockState(e);
+        if (!RandomizerItem.canMove(stHere, world, e) && !stHere.isAir()) {
+          renderCubes.put(e, ClientConfigCyclic.getColor(stack));
+        }
+        else if (!stHere.isAir()) {
+          UtilRender.createBox(event.getMatrixStack(), e); // see: RenderBlockUtils and event.getPoseStack()
+        }
       }
     }
     stack = OreProspector.getIfHeld(player);

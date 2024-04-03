@@ -17,7 +17,7 @@ public class EdibleFlightItem extends ItemBase {
   public static IntValue TICKS;
 
   public EdibleFlightItem(Properties properties) {
-    super(properties.rarity(Rarity.RARE).food(new Food.Builder().hunger(3).saturation(0).setAlwaysEdible().build()));
+    super(properties.rarity(Rarity.RARE).food(new Food.Builder().hunger(1).saturation(0).setAlwaysEdible().build()));
   }
 
   @Override

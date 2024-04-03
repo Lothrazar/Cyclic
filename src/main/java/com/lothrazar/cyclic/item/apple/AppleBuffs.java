@@ -6,7 +6,6 @@ import com.mojang.datafixers.util.Pair;
 import java.util.List;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.text.ITextComponent;
@@ -40,10 +39,6 @@ public class AppleBuffs extends ItemBase {
 
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-    if (entityLiving instanceof PlayerEntity) {
-      // TOOD
-      ((PlayerEntity) entityLiving).getCooldownTracker().setCooldown(this, 30);
-    }
     return super.onItemUseFinish(stack, worldIn, entityLiving);
   }
 }

@@ -6,7 +6,7 @@
   "mix": {
     "fluid": "cyclic:honey",
     "tag": "forge:honey",
-    "count": 100
+    "count": 1000
   },
   "result": {
     "item": "cyclic:apple_honey",

@@ -96,14 +96,16 @@ dependencies {
     runtimeOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
     // optional dependencies & mods for testing compat
-
+/*
     implementation fg.deobf("curse.maven:mantle-74924:3482897")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
     implementation fg.deobf("curse.maven:cucumber-272335:3507886")
     implementation fg.deobf("curse.maven:mystical-agriculture-246640:3562127")
     implementation fg.deobf("curse.maven:chunknogobyebye-332695:3195333")
-
-
+    implementation fg.deobf("curse.maven:yungs-api-421850:3494919")
+    implementation fg.deobf("curse.maven:yungs-better-strongholds-465575:3412586")
+    implementation fg.deobf("curse.maven:v-tweaks-238048:3675562")
+*/
     // To use any mod in /libs/ folder, place it in and set the mod and version to match jar filename
    // runtimeOnly fg.deobf("libs:SimpleStorageNetwork:1.16.4-1.3.1")
    // runtimeOnly fg.deobf("libs:refinedstorage:1.16.4-1.9.11")

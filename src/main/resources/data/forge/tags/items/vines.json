@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:vine",
+    "minecraft:weeping_vines",
+    "minecraft:twisting_vines",
+     {"required":false, "id": "tconstruct:sky_slime_vine"      },
+     {"required":false, "id": "tconstruct:ender_slime_vine"      },
+     {"required":false, "id": "biomesoplenty:willow_vine"      },
+     {"required":false, "id": "biomesoplenty:spanish_moss"      },
+     {"required":false, "id": "quark:root"      },
+     {"required":false, "id": "byg:skyris_vine"      },
+     {"required":false, "id": "byg:poison_ivy"      },
+     {"required":false, "id": "byg:lament_vine"      },
+     {"required":false, "id": "byg:lament_vine_plant"      },
+     {"required":false, "id": "byg:imparius_vine"      },
+     {"required":false, "id": "byg:imparius_vine_plant"      },
+     {"required":false, "id": "byg:shulkren_vine"      },
+     {"required":false, "id": "byg:shulkren_vine_plant"      },
+     {"required":false, "id": "byg:fungal_imparius_filament"      },
+     {"required":false, "id": "byg:whaling_vine"      }
+    
+  ]
+}

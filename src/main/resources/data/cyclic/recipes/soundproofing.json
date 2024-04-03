@@ -7,7 +7,7 @@
   ],
   "key": {
     "s": {
-      "item": "minecraft:orange_dye"
+      "tag": "forge:dyes/orange"
     },
     "o": {
       "item": "minecraft:bone_block"

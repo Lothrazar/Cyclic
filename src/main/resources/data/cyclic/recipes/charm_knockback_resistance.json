@@ -7,13 +7,13 @@
   ],
   "key": {
     "g": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:gold_ingot"
     },
     "f": {
       "item": "minecraft:obsidian"
     },
     "a": {
-      "item": "cyclic:gem_amber"
+      "item": "cyclic:gem_obsidian"
     }
   },
   "result": {

@@ -9,10 +9,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 
 public class TileBreaker extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
@@ -41,25 +43,32 @@ public class TileBreaker extends TileEntityBase implements INamedContainerProvid
       return;
     }
     BlockPos target = pos.offset(this.getCurrentFacing());
-    BlockState state = world.getBlockState(target);
-    if (state.getBlock() != Blocks.AIR &&
-        state.getBlockHardness(world, target) >= 0) {
+    if (this.isValid(target)) {
       this.world.destroyBlock(target, true);
-      //      int cost = POWERCONF.get();
-      //      ModCyclic.LOGGER.info("cost" + cost + " have " + energy.getEnergyStored());
-      //      if (cost > 0) {
-      //        energy.extractEnergy(cost, false);
-      //      }
     }
-    //else unbreakable
   }
-  //  @Override
-  //  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-  //    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
-  //      return energyCap.cast();
-  //    }
-  //    return super.getCapability(cap, side);
-  //  }
+
+  /**
+   * Avoid mining source liquid blocks and unbreakable
+   */
+  private boolean isValid(BlockPos target) {
+    World level = world;
+    BlockState state = level.getBlockState(target);
+    if (state.getBlock() == Blocks.AIR) {
+      return false;
+    }
+    if (state.getBlockHardness(level, target) < 0) {
+      return false;
+    }
+    if (state.getFluidState() != null && state.getFluidState().isEmpty() == false) {
+      //am i a solid waterlogged state block? 
+      if (state.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
+        //pure liquid. but this will make canHarvestBlock go true  
+        return false;
+      }
+    }
+    return true;
+  }
 
   @Override
   public ITextComponent getDisplayName() {
