@@ -111,6 +111,7 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   private static ConfigValue<List<? extends String>> DISARM_IGNORE_LIST;
+  public static ConfigValue<List<? extends String>> GLOOM_IGNORE_LIST;
   public static BooleanValue CYAN_GENERATES;
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
@@ -204,7 +205,10 @@ public class ConfigRegistry {
     EnchantAutoSmelt.CFG = CFG.comment("Set false to disable enchantment").define(EnchantAutoSmelt.ID, true);
     EnchantBeekeeper.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeekeeper.ID, true);
     EnchantBeheading.CFG = CFG.comment("Set false to disable enchantment").define(EnchantBeheading.ID, true);
-    EnchantGloom.CFG = CFG.comment("Set false to disable enchantment").define(EnchantGloom.ID, true);
+    GLOOM_IGNORE_LIST = CFG.comment("Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these")
+        .defineList("gloomIgnored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
+            it -> it instanceof String);
+    EnchantGloom.CFG = CFG.comment("Set false to disable gloom enchantment").define(EnchantGloom.ID, true);
     EnchantDisarm.CFG = CFG.comment("Set false to disable enchantment").define(EnchantDisarm.ID, true);
     EnchantDisarm.PERCENTPERLEVEL = CFG.comment("Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(EnchantDisarm.ID + "PercentPerLevel", 15, 1, 100);
     DISARM_IGNORE_LIST = CFG.comment("Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
@@ -509,6 +513,11 @@ public class ConfigRegistry {
   @SuppressWarnings("unchecked")
   public static List<String> getDisarmIgnoreList() {
     return (List<String>) DISARM_IGNORE_LIST.get();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static List<String> getGloomIgnoreList() {
+    return (List<String>) GLOOM_IGNORE_LIST.get();
   }
 
   public static Map<String, String> getMappedBeheading() {

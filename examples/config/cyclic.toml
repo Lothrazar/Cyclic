@@ -15,17 +15,26 @@
 		growthRadius = 2
 		#Set false to disable enchantment
 		reach = true
-		#Enchant level increase drop rate.  % = beheadingDrop + (level-1)*beheadingPerLevel
-		#Range: 1 ~ 100
-		beheadingPerLevel = 25
 		#Set false to disable enchantment
 		beekeeper = true
 		#Set false to disable enchantment
 		experience_boost = true
-		#Set false to disable Multi Jump enchantment
-		launch = true
 		#Set false to disable enchantment
 		ender = true
+		#Beheading enchant add player skin head drop, add any mob id and any skin
+		beheadingEntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
+		#Set false to disable enchantment
+		venom = true
+		#Set false to disable enchantment
+		auto_smelt = true
+		#Initial level drop rate.  So level I of enchant gives this % drop chance
+		#Range: 1 ~ 100
+		beheadingDrop = 20
+		#Enchant level increase drop rate.  % = beheadingDrop + (level-1)*beheadingPerLevel
+		#Range: 1 ~ 100
+		beheadingPerLevel = 25
+		#Set false to disable Multi Jump enchantment
+		launch = true
 		#Enchant level drop rate.  % = drop + (level-1)*drop
 		#Range: 1 ~ 100
 		disarmPercentPerLevel = 15
@@ -35,31 +44,24 @@
 		excavate = true
 		#Set false to disable enchantment
 		magnet = true
-		#Beheading enchant add player skin head drop, add any mob id and any skin
-		beheadingEntityMHF = ["minecraft:blaze:MHF_Blaze", "minecraft:cat:MHF_Ocelot", "minecraft:cave_spider:MHF_CaveSpider", "minecraft:chicken:MHF_Chicken", "minecraft:cow:MHF_Cow", "minecraft:enderman:MHF_Enderman", "minecraft:ghast:MHF_Ghast", "minecraft:iron_golem:MHF_Golem", "minecraft:magma_cube:MHF_LavaSlime", "minecraft:mooshroom:MHF_MushroomCow", "minecraft:ocelot:MHF_Ocelot", "minecraft:pig:MHF_Pig", "minecraft:zombie_pigman:MHF_PigZombie", "minecraft:sheep:MHF_Sheep", "minecraft:slime:MHF_Slime", "minecraft:spider:MHF_Spider", "minecraft:squid:MHF_Squid", "minecraft:villager:MHF_Villager", "minecraft:witch:MHF_Witch", "minecraft:wolf:MHF_Wolf", "minecraft:guardian:MHF_Guardian", "minecraft:elder_guardian:MHF_Guardian", "minecraft:snow_golem:MHF_SnowGolem", "minecraft:silverfish:MHF_Silverfish", "minecraft:endermite:MHF_Endermite"]
 		#Set false to disable enchantment
 		multishot = true
 		#Set false to disable enchantment
 		beheading = true
+		#Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these
+		gloomIgnored = ["minecraft:bad_omen", "minecraft:nausea", "botania:clear"]
 		#Set false to disable enchantment
 		quickshot = true
 		#Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment
 		disarmIngoredMobs = ["alexsmobs:mimicube"]
 		#Set false to disable enchantment
-		venom = true
-		#Set false to disable enchantment
 		life_leech = true
-		#Set false to disable enchantment
+		#Set false to disable gloom enchantment
 		curse = true
-		#Set false to disable enchantment
-		auto_smelt = true
 		#Set false to disable enchantment
 		growth = true
 		#Set false to disable enchantment
 		step = true
-		#Initial level drop rate.  So level I of enchant gives this % drop chance
-		#Range: 1 ~ 100
-		beheadingDrop = 20
 
 	#####################################################################################
 	# Worldgen settings  
@@ -170,7 +172,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
+		info = false
 
 	#####################################################################################
 	#Fluid cost for various machines
@@ -446,7 +448,7 @@
 			crafter = 500
 			#Power per use user
 			#Range: 0 ~ 64000
-			user = 50
+			user = 0
 			#Power per recipe solidifier
 			#Range: 0 ~ 64000
 			solidifier = 5000
