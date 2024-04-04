@@ -274,7 +274,7 @@
     "block.cyclic.soundproofing_ghost.guide": "Prevents sound, and copies a block appearance.  Use block on it to copy appearance",
     "block.cyclic.soundproofing_ghost.tooltip": "Use block on it to copy appearance",
     "block.cyclic.soundproofing": "Soundproofing",
-    "block.cyclic.soundproofing.tooltip": "Each block reduces sound volume nearby",
+    "block.cyclic.soundproofing.tooltip": "Each block muffles sound volume nearby",
     "block.cyclic.soundproofing.guide": "Place to reduce the volume of nearby sounds in the world.  Multiple can be placed in close proximity for a stronger effect.",
     "block.cyclic.fan": "Fan",
     "block.cyclic.fan.tooltip": "Pushes entities",

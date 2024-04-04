@@ -97,6 +97,7 @@ public class ConfigRegistry {
   private static ForgeConfigSpec CLIENT_CONFIG;
   public static IntValue PEATERICHPOWER;
   public static IntValue PEATPOWER;
+  public static IntValue SOUND_RADIUS;
   public static DoubleValue PEATCHANCE;
   public static BooleanValue COMMANDDEV;
   public static BooleanValue COMMANDGETHOME;
@@ -397,6 +398,9 @@ public class ConfigRegistry {
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 64, 1, 64);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
+    CFG.comment("soundproofing settings").push("soundproofing"); //soundproofing
+    SOUND_RADIUS = CFG.comment("Radius of sound proofing (distance from each block that it will listen)").defineInRange("radius", 6, 1, 16);
+    CFG.pop(); //soundproofing
     CFG.comment("Sprinkler settings").push("sprinkler");
     TileSprinkler.RADIUS = CFG.comment("Radius").defineInRange("radius", 4, 1, 32);
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);

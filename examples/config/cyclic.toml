@@ -159,12 +159,18 @@
 			#Range: 1 ~ 32
 			radius = 12
 
+		#soundproofing settings
+		[cyclic.blocks.soundproofing]
+			#Radius of sound proofing (distance from each block that it will listen)
+			#Range: 1 ~ 16
+			radius = 6
+
 	#####################################################################################
 	# Logging related configs
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = false
+		info = true
 
 	#####################################################################################
 	#Fluid cost for various machines
@@ -393,7 +399,7 @@
 	[cyclic.energy]
 
 		#####################################################################################
-		#Energy cost for various machines, either per use of an action or per tick (twenty ticks per second).
+		#Energy cost for various machines, either per use of an action or per tick (twenty ticks per second). Setting as zero (0) lets machine run for free
 		#####################################################################################
 		[cyclic.energy.cost]
 			#Power per use disenchanter
