@@ -30,6 +30,8 @@ import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.solidifier.TileSolidifier;
 import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
+import com.lothrazar.cyclic.block.terraglass.TileTerraGlass;
+import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
 import com.lothrazar.cyclic.enchant.EnchantAutoSmelt;
@@ -232,7 +234,7 @@ public class ConfigRegistry {
             it -> it instanceof String);
     EnchantBeheading.PERCENTDROP = CFG.comment("Initial level drop rate.  So level I of enchant gives this % drop chance").defineInRange("beheadingDrop", 20, 1, 100);
     EnchantBeheading.PERCENTPERLEVEL = CFG.comment("Enchant level increase drop rate.  % = beheadingDrop + (level-1)*beheadingPerLevel").defineInRange("beheadingPerLevel", 25, 1, 100);
-    EnchantGrowth.RADIUSFACTOR = CFG.comment("Radius per level.  size around player to perform growth logic").defineInRange("growthRadius", 2, 1, 16);
+    EnchantGrowth.RADIUSFACTOR = CFG.comment("Radius per level.  size around player to perform growth logic").defineInRange("growthRadius", 6, 1, 16);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL)
         .push("worldgen");
@@ -410,6 +412,14 @@ public class ConfigRegistry {
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
     TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);
     CFG.pop(); // sprinkler
+    CFG.comment("terra_preta settings").push("terra_preta");
+    TileTerraPreta.TIMER_FULL = CFG.comment("ticks between growth cycles").defineInRange("timer", 100, 1, 10000);
+    TileTerraPreta.HEIGHT = CFG.comment("growth height above the soil").defineInRange("height", 8, 2, 32);
+    CFG.pop(); // terra_preta
+    CFG.comment("terra_glass settings").push("terra_glass");
+    TileTerraGlass.TIMER_FULL = CFG.comment("ticks between growth cycles").defineInRange("timer", 100, 1, 10000);
+    TileTerraGlass.HEIGHT = CFG.comment("growth height below the glass").defineInRange("height", 8, 0, 32);
+    CFG.pop(); // terra_preta
     CFG.comment("Ender Anchor settings").push("eye_teleport");
     TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 128, 2, 256);
     TileEyeTp.HUNGER = CFG.comment("Hunger cost on teleport").defineInRange("hunger", 1, 0, 20);

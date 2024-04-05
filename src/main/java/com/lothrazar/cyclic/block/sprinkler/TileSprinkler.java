@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.sprinkler;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.GrowthUtil;
 import com.lothrazar.cyclic.util.UtilFluid;
 import com.lothrazar.cyclic.util.UtilParticle;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -56,14 +56,14 @@ public class TileSprinkler extends TileEntityBase implements ITickableTileEntity
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
     }
-    if (world.isRemote && TileTerraPreta.isValidGrow(world, shape.get(shapeIndex))) {
+    if (world.isRemote && GrowthUtil.isValidGrow(world, shape.get(shapeIndex))) {
       UtilParticle.spawnParticle(world, ParticleTypes.FALLING_WATER, shape.get(shapeIndex), 9);
     }
-    if (TileTerraPreta.grow(world, shape.get(shapeIndex), 1)) {
+    if (GrowthUtil.tryGrow(world, shape.get(shapeIndex), 1)) {
       //it worked so pay
       tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
       //run it again since sprinkler costs fluid and therefore should double what the glass and soil do 
-      TileTerraPreta.grow(world, shape.get(shapeIndex), 1);
+      GrowthUtil.tryGrow(world, shape.get(shapeIndex), 1);
     }
   }
 

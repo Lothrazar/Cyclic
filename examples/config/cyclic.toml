@@ -77,15 +77,6 @@
 		#  Allows the dimensional Transfer Nodes to cross dimensions (no chunk loading is done, you have to do that on your own); This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; If you change it to false it will only work if the target is in the same dimension.
 		wireless_transfer_dimensional = true
 
-		#Ender shelf settings
-		[cyclic.blocks.ender_shelf]
-			#Controller Max distance to search (using manhattan distance)
-			#Range: 1 ~ 256
-			controller_distance = 64
-			#Each shelf has five rows.  Set the number of books stored per row here
-			#Range: 1 ~ 64
-			books_per_row = 64
-
 		#Ender Anchor settings
 		[cyclic.blocks.eye_teleport]
 			#Maximum distance to activate
@@ -101,6 +92,45 @@
 			#Range: 1 ~ 20
 			frequency = 5
 
+		#Ender shelf settings
+		[cyclic.blocks.sound]
+			#Sound Recorder - how far out does it listen to record sounds
+			#Range: 1 ~ 64
+			radius = 8
+
+		#battery settings
+		[cyclic.blocks.battery]
+			#RF/t charging rate for the battery item slot
+			#Range: 1 ~ 6400000
+			charge = 8000
+
+		#fisher settings
+		[cyclic.blocks.fisher]
+			#Chance to Fish from nearby water.  Smaller values is slower fish
+			#Range: 1.0E-5 ~ 0.999
+			chance = 0.1
+			#Radius to Fish from nearby water
+			#Range: 1 ~ 32
+			radius = 12
+
+		#Ender shelf settings
+		[cyclic.blocks.ender_shelf]
+			#Controller Max distance to search (using manhattan distance)
+			#Range: 1 ~ 256
+			controller_distance = 64
+			#Each shelf has five rows.  Set the number of books stored per row here
+			#Range: 1 ~ 64
+			books_per_row = 64
+
+		#terra_preta settings
+		[cyclic.blocks.terra_preta]
+			#ticks between growth cycles
+			#Range: 1 ~ 10000
+			timer = 100
+			#growth height above the soil
+			#Range: 2 ~ 32
+			height = 8
+
 		#Uncrafter settings
 		[cyclic.blocks.uncrafter]
 			#False will mean you cannot uncraft damaged repairable items. When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items
@@ -113,12 +143,6 @@
 			#RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item
 			ignore_recipes = ["botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*"]
 
-		#Ender shelf settings
-		[cyclic.blocks.sound]
-			#Sound Recorder - how far out does it listen to record sounds
-			#Range: 1 ~ 64
-			radius = 8
-
 		#Ender Trigger settings
 		[cyclic.blocks.eye_redstone]
 			#Maximum distance to activate
@@ -127,12 +151,6 @@
 			#Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)
 			#Range: 1 ~ 20
 			frequency = 5
-
-		#battery settings
-		[cyclic.blocks.battery]
-			#RF/t charging rate for the battery item slot
-			#Range: 1 ~ 6400000
-			charge = 8000
 
 		#Sprinkler settings
 		[cyclic.blocks.sprinkler]
@@ -146,20 +164,20 @@
 			#Range: 0 ~ 1000
 			water = 5
 
+		#terra_glass settings
+		[cyclic.blocks.terra_glass]
+			#ticks between growth cycles
+			#Range: 1 ~ 10000
+			timer = 100
+			#growth height below the glass
+			#Range: 0 ~ 32
+			height = 8
+
 		#experience_pylon settings
 		[cyclic.blocks.experience_pylon]
 			#Radius to pickup xp orbs
 			#Range: 1 ~ 64
 			radius = 16
-
-		#fisher settings
-		[cyclic.blocks.fisher]
-			#Chance to Fish from nearby water.  Smaller values is slower fish
-			#Range: 1.0E-5 ~ 0.999
-			chance = 0.1
-			#Radius to Fish from nearby water
-			#Range: 1 ~ 32
-			radius = 12
 
 		#soundproofing settings
 		[cyclic.blocks.soundproofing]
@@ -172,7 +190,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		#Unblock info logs; very spammy; can be useful for testing certain issues
-		info = false
+		info = true
 
 	#####################################################################################
 	#Fluid cost for various machines

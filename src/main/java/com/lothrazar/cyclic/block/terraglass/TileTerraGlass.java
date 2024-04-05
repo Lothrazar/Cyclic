@@ -2,20 +2,21 @@ package com.lothrazar.cyclic.block.terraglass;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.GrowthUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class TileTerraGlass extends TileEntityBase implements ITickableTileEntity {
 
-  private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL / 2;
-  private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
+  public static IntValue TIMER_FULL;
+  public static IntValue HEIGHT;
 
   public TileTerraGlass() {
-    super(TileRegistry.TERRAGLASS.get());
+    super(TileRegistry.TERRA_GLASS.get());
   }
 
   @Override
@@ -28,7 +29,7 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
     if (timer > 0) {
       return;
     }
-    timer = TIMER_FULL;
+    timer = TIMER_FULL.get();
     boolean lit = this.getBlockState().get(BlockBase.LIT);
     boolean newLit = canBlockSeeSky(world, pos);
     if (lit != newLit) {
@@ -38,9 +39,9 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
     if (!newLit) {
       return;
     }
-    for (int h = 0; h < DISTANCE; h++) {
+    for (int h = 0; h < HEIGHT.get(); h++) {
       BlockPos current = pos.down(h);
-      TileTerraPreta.grow(world, current, 0.25);
+      GrowthUtil.tryGrow(world, current, 0.25);
     }
   }
 
@@ -48,8 +49,6 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
     if (world.canSeeSky(pos)) {
       return true;
     }
-    //    world.isOutsideBuildHeight(pos)
-    //    else {
     for (BlockPos blockpos1 = pos.up(); blockpos1.getY() < 256; blockpos1 = blockpos1.up()) {
       if (World.isYOutOfBounds(blockpos1.getY())) {
         continue;
@@ -61,7 +60,6 @@ public class TileTerraGlass extends TileEntityBase implements ITickableTileEntit
       }
     }
     return true;
-    //    }
   }
 
   @Override
