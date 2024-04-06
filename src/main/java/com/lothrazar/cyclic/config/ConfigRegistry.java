@@ -403,7 +403,11 @@ public class ConfigRegistry {
     CFG.pop(); //heart
     CFG.pop(); //items 
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
-    //buffer size for cables 
+    TRANSFER_NODES_DIMENSIONAL = CFG.comment("  Allows the dimensional Transfer Nodes to cross dimensions "
+        + "(no chunk loading is done, you have to do that on your own); "
+        + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
+        + "If you change it to false it will only work if the target is in the same dimension.")
+        .define("wireless_transfer_dimensional", true);
     TileAntiBeacon.HARMFUL_POTIONS = CFG.comment("If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
         .define("harmful_potions", true);
     TileAntiBeacon.RADIUS = CFG.comment("Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
@@ -474,14 +478,6 @@ public class ConfigRegistry {
     TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, 16000);
     CFG.pop();
     CFG.push("sound");
-    CFG.comment(WALL, " Block specific configs", WALL)
-        .push("blocks");
-    TRANSFER_NODES_DIMENSIONAL = CFG.comment("  Allows the dimensional Transfer Nodes to cross dimensions "
-        + "(no chunk loading is done, you have to do that on your own); "
-        + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
-        + "If you change it to false it will only work if the target is in the same dimension.")
-        .define("wireless_transfer_dimensional", true);
-    CFG.push("sound_recorder");
     RECORDER_RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
     CFG.push("ender_shelf");

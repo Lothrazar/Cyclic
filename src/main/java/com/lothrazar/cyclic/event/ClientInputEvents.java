@@ -64,18 +64,11 @@ public class ClientInputEvents {
     Minecraft mc = Minecraft.getInstance();
     Screen screen = mc.screen;
     if (screen instanceof AbstractContainerScreen<?> gui && !(screen instanceof CreativeModeInventoryScreen)) {
-      //      if (gui.getSlotUnderMouse() != null) {
-      //        System.out.println("DrawScreenEvent");
-      //        Slot slotHit = gui.getSlotUnderMouse();
-      //        ItemStack stackTarget = slotHit.getItem();
       ItemStack maybeFood = mc.player.containerMenu.getCarried();
       List<ItemStack> boxes = ItemBaseCyclic.findAmmos(mc.player, ItemRegistry.LUNCHBOX.get());
-      //        if (held.isEdible()) {
       for (ItemStack box : boxes) {
         ItemLunchbox.setHoldingEdible(box, maybeFood.isEdible());
-        //        if (maybeFood.isEdible()) System.out.println(maybeFood + "DrawScreenEvent set edible " + box.getTag());
       }
-      //      }
     }
   }
 
@@ -104,7 +97,6 @@ public class ClientInputEvents {
             if (maybeFood.isEdible()) {
               int slotId = gui.getSlotUnderMouse().getContainerSlot();
               SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK);
-              //              System.out.println("item Gui ");
               PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotId, stackTarget.getItem()));
               event.setCanceled(true);
               return;

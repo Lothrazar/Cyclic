@@ -46,6 +46,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class ItemLunchbox extends ItemBaseCyclic {
 
+  private static final String HOLDING = "holding";
   public static final int SLOTS = 7;
 
   public ItemLunchbox(Properties prop) {
@@ -171,12 +172,11 @@ public class ItemLunchbox extends ItemBaseCyclic {
   }
 
   public static void setHoldingEdible(ItemStack box, boolean edible) {
-    box.getOrCreateTag().putBoolean("holding", edible);
+    box.getOrCreateTag().putBoolean(HOLDING, edible);
   }
 
   public static int getColour(ItemStack stack) {
-    if (stack.hasTag() && stack.getTag().getBoolean("holding")) {
-      //      System.out.println("00boxr!ender overla!y!");
+    if (stack.hasTag() && stack.getTag().getBoolean(HOLDING)) {
       // green? return 0x00AAAAFF;
       return 0x000000FF; //  0xFFFF0011;
     }
