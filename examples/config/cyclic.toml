@@ -156,6 +156,8 @@
 			enabled = true
 
 		[cyclic.enchantment.curse]
+			#Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these
+			ignored = ["minecraft:bad_omen", "minecraft:nausea", "botania:clear"]
 			#(Gloom) Set false to stop enchantment from working
 			enabled = true
 
@@ -208,6 +210,8 @@
 	# Block specific configs
 	#####################################################################################
 	[cyclic.blocks]
+		#  Allows the dimensional Transfer Nodes to cross dimensions (no chunk loading is done, you have to do that on your own); This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; If you change it to false it will only work if the target is in the same dimension.
+		wireless_transfer_dimensional = true
 		#If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).
 		harmful_potions = true
 
@@ -370,15 +374,25 @@
 			#Range: 0 ~ 1000
 			water = 5
 
+		#terra_glass settings
+		[cyclic.blocks.terra_glass]
+			#ticks between growth cycles
+			#Range: 1 ~ 10000
+			timer = 100
+			#growth height below the glass
+			#Range: 0 ~ 32
+			height = 8
+
 		#experience_pylon settings
 		[cyclic.blocks.experience_pylon]
 			#Radius to pickup xp orbs
 			#Range: 1 ~ 64
 			radius = 16
 
+		#soundproofing settings
 		[cyclic.blocks.soundproofing]
-			#Radius to find and muffle sounds. 
-			#Range: 1 ~ 128
+			#Radius of sound proofing (distance from each block that it will listen)
+			#Range: 1 ~ 16
 			radius = 6
 
 		[cyclic.blocks.cables]
@@ -427,6 +441,7 @@
 			#Range: 0 ~ 64000
 			energy_cost = 10
 
+		#Ender shelf settings
 		[cyclic.blocks.ender_shelf]
 			#Controller Max distance to search (using manhattan distance)
 			#Range: 1 ~ 256
@@ -459,12 +474,15 @@
 			fluid_cost = 100
 
 		[cyclic.blocks.terra_preta]
-			#Growth interval in ticks (100 would be every 5 seconds). Also affects terra glass
+			#Growth interval in ticks (100 would be every 5 seconds). 
 			#Range: 1 ~ 64000
 			growth_interval = 100
 			#Chance that the crop will grow after the interval
 			#Range: 0.0 ~ 1.0
 			growth_chance = 0.5
+			#growth height above the soil
+			#Range: 2 ~ 32
+			height = 8
 
 		[cyclic.blocks.uncrafter]
 			#When searching for a recipe, does it ignore all NBT values (such as enchantments, RepairCost, Damage, etc).  For example, if false it will not uncraft damaged or enchanted items

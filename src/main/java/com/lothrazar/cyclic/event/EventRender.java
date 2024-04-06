@@ -51,7 +51,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class EventRender {
 
   @SubscribeEvent
-  //  public void overlay(RenderGameOverlayEvent.Post event) {
   public static void onCustomizeDebugText(CustomizeGuiOverlayEvent.DebugText event) {
     //Build scepter feature : render selected blockstate in cross hair
     Player player = Minecraft.getInstance().player;
@@ -76,10 +75,6 @@ public class EventRender {
     }
     int height = mc.getWindow().getGuiScaledHeight();
     CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
-    //    if (datFile.flyTicks > 0) {
-    //      int sec = datFile.flyTicks / 20;
-    //      drawString(event.getPoseStack(), "flight " + sec, 10, height - 30);
-    //    }
     if (datFile.spectatorTicks > 0) {
       int sec = datFile.spectatorTicks / 20;
       drawString(event.getPoseStack(), "noClip " + sec, 10, height - 10);
@@ -136,7 +131,14 @@ public class EventRender {
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());
       for (BlockPos e : coords) {
-        renderCubes.put(e, RandomizerItem.canMove(world.getBlockState(e), world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
+        //        renderCubes.put(e, RandomizerItem.canMove(world.getBlockState(e), world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
+        BlockState stHere = world.getBlockState(e);
+        if (!RandomizerItem.canMove(stHere, world, e) && !stHere.isAir()) {
+          renderCubes.put(e, ClientConfigCyclic.getColor(stack));
+        }
+        else if (!stHere.isAir()) {
+          RenderUtils.createBox(event.getPoseStack(), e); // see: RenderBlockUtils and event.getPoseStack()
+        }
       }
     }
     stack = OreProspector.getIfHeld(player);

@@ -22,6 +22,7 @@ import net.minecraftforge.common.util.FakePlayer;
 public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
   WeakReference<FakePlayer> fakePlayer;
+  final static boolean dropItemsOnGround = true;
 
   public TileDiamondSpikes(BlockPos pos, BlockState state) {
     super(TileRegistry.SPIKES_DIAMOND.get(), pos, state);
@@ -63,7 +64,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
         fakePlayer.get().setItemInHand(InteractionHand.MAIN_HAND, sword);
       }
       if (level.random.nextDouble() < 0.001F) {
-        tryDumpFakePlayerInvo(fakePlayer, null, true);
+        tryDumpFakePlayerInvo(fakePlayer, null, dropItemsOnGround);
       }
     }
   }

@@ -127,17 +127,16 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
     }
-    tryDumpFakePlayerInvo(fakePlayer, this.outputSlots, false);
+    final boolean dropItemsOnGround = false;
+    tryDumpFakePlayerInvo(fakePlayer, this.outputSlots, dropItemsOnGround);
   }
 
   private void depositOutputMainhand() {
     var usedItem = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND);
     for (int slotId = 0; slotId < outputSlots.getSlots(); slotId++) {
       if (!usedItem.isEmpty()) {
-        //        usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);
         if (outputSlots.insertItem(slotId, usedItem.copy(), true).isEmpty()) {
           usedItem = outputSlots.insertItem(slotId, usedItem.copy(), false);
-          //          userSlots.setStackInSlot(0, usedItem);
           TileBlockEntityCyclic.tryEquipItem(usedItem, fakePlayer, InteractionHand.MAIN_HAND);
         }
       }

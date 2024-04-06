@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.wireless.item;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -113,8 +114,13 @@ public class TileWirelessItem extends TileBlockEntityCyclic implements MenuProvi
     boolean moved = false;
     //run the transfer. one slot only
     BlockPosDim loc = getTargetInSlot();
-    if (loc != null && LevelWorldUtil.dimensionIsEqual(loc, level)) {
-      moved = moveItems(Direction.UP, loc.getPos(), this.transferRate, this.inventory, 0);
+    if (loc != null) {
+      if (LevelWorldUtil.dimensionIsEqual(loc, level)) {
+        moved = moveItems(loc.getSide(), loc.getPos(), this.transferRate, this.inventory, 0);
+      }
+      else if (ConfigRegistry.TRANSFER_NODES_DIMENSIONAL.get()) {
+        moved = moveItemsDimensional(loc, this.transferRate, this.inventory, 0);
+      }
     }
     this.setLitProperty(moved);
   }

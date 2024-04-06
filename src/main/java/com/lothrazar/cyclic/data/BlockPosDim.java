@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -79,7 +80,11 @@ public class BlockPosDim {
     if (world == null || world.getServer() == null || dimension == null) {
       return null;
     }
-    return world.getServer().getLevel(LevelWorldUtil.stringToDimension(getDimension()));
+    return getServerLevel(world.getServer());
+  }
+
+  public ServerLevel getServerLevel(MinecraftServer server) {
+    return server.getLevel(LevelWorldUtil.stringToDimension(this.getDimension()));
   }
 
   public double getZ() {
