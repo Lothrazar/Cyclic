@@ -45,6 +45,7 @@ public class SoundmufflerBlock extends BlockBase {
     rebuildSoundWithVolume(event, sound, volume);
   }
 
+  @OnlyIn(Dist.CLIENT)
   private static void rebuildSoundWithVolume(PlaySoundEvent event, ISound sound, float volume) {
     try {
       //WARNING": DO NOT USE getVolume anywhere here it just crashes
