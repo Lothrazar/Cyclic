@@ -3,7 +3,9 @@ package com.lothrazar.cyclic.block.spikes;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.UtilItemStack;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import net.minecraft.block.BlockState;
@@ -68,6 +70,19 @@ public class TileDiamondSpikes extends TileEntityBase implements ITickableTileEn
         tryDumpFakePlayerInvo(fakePlayer, false);
       }
     }
+  }
+
+  private void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
+    int start = (includeMainHand) ? 0 : 1;
+    ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
+    for (int i = start; i < fp.get().inventory.mainInventory.size(); i++) {
+      ItemStack s = fp.get().inventory.mainInventory.get(i);
+      if (s.isEmpty() == false) {
+        toDrop.add(s.copy());
+        fp.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
+      }
+    }
+    UtilItemStack.drop(this.world, this.pos.up(), toDrop);
   }
 
   @Override

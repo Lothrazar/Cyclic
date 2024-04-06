@@ -12,9 +12,7 @@ import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.cyclic.util.UtilEntity;
 import com.lothrazar.cyclic.util.UtilFakePlayer;
 import com.lothrazar.cyclic.util.UtilFluid;
-import com.lothrazar.cyclic.util.UtilItemStack;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import net.minecraft.block.BlockState;
@@ -89,19 +87,6 @@ public abstract class TileEntityBase extends TileEntity implements IInventory {
       }
     }
     return null;
-  }
-
-  public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, boolean includeMainHand) {
-    int start = (includeMainHand) ? 0 : 1;
-    ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-    for (int i = start; i < fp.get().inventory.mainInventory.size(); i++) {
-      ItemStack s = fp.get().inventory.mainInventory.get(i);
-      if (s.isEmpty() == false) {
-        toDrop.add(s.copy());
-        fp.get().inventory.mainInventory.set(i, ItemStack.EMPTY);
-      }
-    }
-    UtilItemStack.drop(this.world, this.pos.up(), toDrop);
   }
 
   public static void tryEquipItem(ItemStack item, WeakReference<FakePlayer> fp, Hand hand) {

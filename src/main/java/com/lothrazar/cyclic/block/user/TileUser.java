@@ -117,7 +117,6 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     catch (Exception e) {
       ModCyclic.LOGGER.error("User action item error", e);
     }
-    tryDumpFakePlayerInvo(fakePlayer, false);
   }
 
   public boolean isUsingLeftHand() {
