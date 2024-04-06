@@ -1358,7 +1358,6 @@
   "potion.butter.oops": "Butterfingers!  Dropped something when you moved.",
   
   
-  
   "effect.cyclic.flight": "Flight",
   "effect.cyclic.flight.description": "Players can fly using this effect",
   "item.minecraft.potion.effect.cyclic_flight": "Potion of Flight",
@@ -1366,7 +1365,9 @@
   "item.minecraft.lingering_potion.effect.cyclic_flight": "Lingering Potion of Flight",
   "item.minecraft.tipped_arrow.effect.cyclic_flight": "Arrow of Flight",
    
-   
+  "item.cyclic.tile_transporter_empty.guide": "Right click on any machine or container with the Sack of Holding to pick it up.  Right click on any block with a filled Sack of Holding to place the machine again.",
+
+  
   "effect.cyclic.butter": "Butterfingers",
   "effect.cyclic.butter.description": "Chance to drop items while moving or attacking",
   "item.minecraft.potion.effect.cyclic_butter": "Potion of Butterfingers",

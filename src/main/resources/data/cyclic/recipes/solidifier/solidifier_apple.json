@@ -17,7 +17,7 @@
 	},
 	"mix": {
 		"tag": "forge:honey",
-		"count": 300
+		"count": 3000
 	},
 	"result": {
 		"item": "cyclic:apple_honey",

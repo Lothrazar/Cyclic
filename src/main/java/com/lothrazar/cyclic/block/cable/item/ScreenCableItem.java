@@ -10,39 +10,11 @@ public class ScreenCableItem extends ScreenBase<ContainerCableItem> {
 
   public ScreenCableItem(ContainerCableItem screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-    //    fluid = new FluidBar(this, TileFluidCollect.CAPACITY);
-    //    energy = new EnergyBar(this, TileFluidCollect.MAX);
   }
 
   @Override
   public void init() {
     super.init();
-    //    energy.guiLeft = fluid.guiLeft = guiLeft;
-    //    energy.guiTop = fluid.guiTop = guiTop;
-    //    energy.visible = TileFluidCollect.POWERCONF.get() > 0;
-    //    int x, y;
-    //    x = guiLeft + 8;
-    //    y = guiTop + 8;
-    //    btnRedstone = addButton(new ButtonMachineRedstone(x, y, TileFluidCollect.Fields.REDSTONE.ordinal(), container.tile.getPos()));
-    //    btnRender = addButton(new ButtonMachineRedstone(x, y + 20, TileFluidCollect.Fields.RENDER.ordinal(),
-    //        container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
-    //    //
-    //    //
-    //    int w = 96;
-    //    int h = 20;
-    //    x = guiLeft + 32;
-    //    y += h + 1;
-    //    int f = TileFluidCollect.Fields.HEIGHT.ordinal();
-    //    GuiSliderInteger height = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-    //        0, TileFluidCollect.MAX_HEIGHT, container.tile.getField(f)));
-    //    height.setTooltip("buildertype.height.tooltip");
-    //    y += h + 1;
-    //    //
-    //    //
-    //    f = TileFluidCollect.Fields.SIZE.ordinal();
-    //    GuiSliderInteger size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-    //        0, TileMiner.MAX_SIZE, container.tile.getField(f)));
-    //    size.setTooltip("buildertype.size.tooltip");
   }
 
   @Override

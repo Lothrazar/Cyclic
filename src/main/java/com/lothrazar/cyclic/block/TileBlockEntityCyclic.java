@@ -12,6 +12,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.capabilities.block.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.BlockPosDim;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.net.PacketEnergySync;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -281,20 +282,23 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return this.needsRedstone == 1;
   }
 
-  public void moveFluids(Direction myFacingDir, BlockPos posTarget, int toFlow, IFluidHandler tank) {
-    // posTarget = pos.offset(myFacingDir);
-    if (tank == null || tank.getFluidInTank(0).getAmount() <= 0) {
+  protected void moveFluidsDimensional(BlockPosDim loc, int toFlow, IFluidHandler tank) {
+    Direction myFacingDir = loc.getSide();
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    // moveFluidsInternal is just util tryFillPositionFromTank
+    FluidHelpers.tryFillPositionFromTank(loc.getServerLevel(level.getServer()), loc.getPos(), themFacingMe, tank, toFlow);
+  }
+
+  protected void moveFluids(Direction myFacingDir, BlockPos posTarget, int toFlow, IFluidHandler tank) {
+    if (tank == null || tank.getFluidInTank(0).isEmpty()) {
       return;
     }
-    Direction themFacingMe = myFacingDir.getOpposite();
+    final Direction themFacingMe = myFacingDir.getOpposite();
     FluidHelpers.tryFillPositionFromTank(level, posTarget, themFacingMe, tank, toFlow);
   }
 
   public void tryExtract(IItemHandler myself, Direction extractSide, int qty, ItemStackHandler nullableFilter) {
-    if (extractSide == null) {
-      return;
-    }
-    if (extractSide == null || !myself.getStackInSlot(0).isEmpty()) {
+    if (myself == null || extractSide == null || !myself.getStackInSlot(0).isEmpty()) {
       return;
     }
     BlockPos posTarget = worldPosition.relative(extractSide);
@@ -345,29 +349,46 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
     return false;
   }
+  //
+  //
+  //
 
   public boolean moveItems(Direction myFacingDir, int max, IItemHandler handlerHere) {
-    return moveItems(myFacingDir, worldPosition.relative(myFacingDir), max, handlerHere, 0);
+    return moveItems(myFacingDir, this.worldPosition.relative(myFacingDir), max, handlerHere, 0);
+  }
+
+  public boolean moveItemsDimensional(BlockPosDim loc, int max, IItemHandler handlerHere, int theslot) {
+    Direction myFacingDir = loc.getSide();
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    ServerLevel serverWorld = loc.getServerLevel(level.getServer());
+    return moveItemsInternal(max, handlerHere, theslot, themFacingMe, serverWorld.getBlockEntity(loc.getPos()));
   }
 
   public boolean moveItems(Direction myFacingDir, BlockPos posTarget, int max, IItemHandler handlerHere, int theslot) {
-    if (this.level.isClientSide()) {
+    if (max <= 0 || this.level.isClientSide()) {
       return false;
     }
-    if (handlerHere == null) {
+    //first get the original ItemStack as creating new ones is expensive
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    final BlockEntity tileTarget = level.getBlockEntity(posTarget);
+    return moveItemsInternal(max, handlerHere, theslot, themFacingMe, tileTarget);
+  }
+
+  private static boolean moveItemsInternal(int max, IItemHandler handlerHere, int theslot, final Direction themFacingMe, final BlockEntity tileTarget) {
+    if (max <= 0 || tileTarget == null || handlerHere == null) {
       return false;
     }
-    Direction themFacingMe = myFacingDir.getOpposite();
-    BlockEntity tileTarget = level.getBlockEntity(posTarget);
-    if (tileTarget == null) {
+    final ItemStack originalItemStack = handlerHere.getStackInSlot(theslot);
+    if (originalItemStack.isEmpty()) {
       return false;
     }
-    IItemHandler handlerOutput = tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
+    // IItemHandler handlerOutput = tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
+    final IItemHandler handlerOutput = tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
     //first simulate 
-    ItemStack drain = handlerHere.extractItem(theslot, max, true); // handlerHere.getStackInSlot(theslot).copy();
+    ItemStack drain = handlerHere.extractItem(theslot, max, true);
     int sizeStarted = drain.getCount();
     if (!drain.isEmpty()) {
       //now push it into output, but find out what was ACTUALLY taken
@@ -384,49 +405,86 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
     return sizeAfter > 0;
   }
+  //
+  //
+  //
+  //
+  //
+  //
 
   protected boolean moveEnergy(Direction myFacingDir, int quantity) {
-    return moveEnergy(myFacingDir, worldPosition.relative(myFacingDir), quantity);
+    return moveEnergy(myFacingDir, this.worldPosition.relative(myFacingDir), quantity);
   }
 
-  protected boolean moveEnergy(Direction myFacingDir, BlockPos posTarget, int quantity) {
-    if (this.level.isClientSide) {
-      return false; //important to not desync cables
-    }
-    IEnergyStorage handlerHere = this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
-    if (handlerHere == null || handlerHere.getEnergyStored() == 0) {
+  protected boolean moveEnergyDimensional(final BlockPosDim loc, final int quantity) {
+    //validation pre-move
+    if (quantity <= 0) {
       return false;
     }
-    if (myFacingDir == null) {
-      myFacingDir = Direction.UP;
+    if (this.level.isClientSide) {
+      return false; //important to not desync cables 
     }
-    Direction themFacingMe = myFacingDir.getOpposite();
-    BlockEntity tileTarget = level.getBlockEntity(posTarget);
+    Direction myFacingDir = loc.getSide();
+    final IEnergyStorage handlerHere = this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
+    ServerLevel serverWorld = loc.getServerLevel(level.getServer());
+    final BlockEntity tileTarget = serverWorld.getBlockEntity(loc.getPos());
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
+  }
+
+  //assums posTarget is in the same dimension as this.world
+  protected boolean moveEnergy(final Direction myFacingDir, final BlockPos posTarget, final int quantity) {
+    //validation pre-move
+    if (quantity <= 0) {
+      return false;
+    }
+    if (this.level.isClientSide) {
+      return false; //important to not desync cables 
+    }
+    final IEnergyStorage handlerHere = this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
+    final Direction themFacingMe = myFacingDir.getOpposite();
+    final BlockEntity tileTarget = level.getBlockEntity(posTarget);
+    return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
+  }
+
+  private static boolean moveEnergyInternal(final int quantity, final IEnergyStorage handlerHere, final Direction themFacingMe, final BlockEntity tileTarget) {
+    if (handlerHere == null) {
+      return false;
+    }
     if (tileTarget == null) {
       return false;
     }
-    IEnergyStorage handlerOutput = tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
+    final IEnergyStorage handlerOutput = tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
-    if (handlerHere != null && handlerOutput != null
-        && handlerHere.canExtract() && handlerOutput.canReceive()) {
-      //first simulate
-      int drain = handlerHere.extractEnergy(quantity, true);
-      if (drain > 0) {
-        //now push it into output, but find out what was ACTUALLY taken
-        int filled = handlerOutput.receiveEnergy(drain, false);
-        //now actually drain that much from here
-        handlerHere.extractEnergy(filled, false);
-        if (filled > 0 && tileTarget instanceof TileCableEnergy) {
-          // not so compatible with other fluid systems. itl do i guess
-          TileCableEnergy cable = (TileCableEnergy) tileTarget;
-          cable.updateIncomingEnergyFace(themFacingMe);
-        }
-        return filled > 0;
-      }
+    final int capacity = handlerOutput.getMaxEnergyStored() - handlerOutput.getEnergyStored();
+    if (capacity <= 0) {
+      return false;
     }
-    return false;
+    //validation is done
+    //next, simulate
+    final int drain = handlerHere.extractEnergy(Math.min(quantity, capacity), true);
+    if (drain <= 0) {
+      return false;
+    }
+    //now push it into output, but find out what was ACTUALLY taken
+    final int filled = handlerOutput.receiveEnergy(drain, false);
+    if (filled <= 0) {
+      return false;
+    }
+    //now actually drain that much from here
+    final int drained = handlerHere.extractEnergy(filled, false);
+    //sanity check
+    if (drained != filled) {
+      ModCyclic.LOGGER.error("Imbalance moving energy, extracted " + drained + " received " + filled);
+    }
+    if (tileTarget instanceof TileCableEnergy) {
+      // not so compatible with other fluid systems. it will do i guess
+      TileCableEnergy cable = (TileCableEnergy) tileTarget;
+      cable.updateIncomingEnergyFace(themFacingMe);
+    }
+    return true;
   }
 
   @Override

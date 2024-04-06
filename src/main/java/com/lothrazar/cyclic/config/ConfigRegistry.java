@@ -46,6 +46,7 @@ import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
+import com.lothrazar.cyclic.block.terraglass.TileTerraGlass;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
@@ -98,6 +99,7 @@ import com.lothrazar.cyclic.registry.PotionRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 public class ConfigRegistry {
@@ -117,10 +119,13 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> BEHEADING_SKINS;
   private static ConfigValue<List<? extends String>> MBALL_IGNORE_LIST;
   private static ConfigValue<List<? extends String>> DISARM_IGNORE_LIST;
+  public static ConfigValue<List<? extends String>> GLOOM_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
   public static BooleanValue OVERRIDE_TRANSPORTER_SINGLETON;
   public static BooleanValue GENERATE_FLOWERS;
   public static BooleanValue CYAN_PODZOL_LEGACY;
+  public static BooleanValue TRANSFER_NODES_DIMENSIONAL;
+  public static IntValue SOUND_RADIUS;
   static {
     buildDefaults();
     initConfig();
@@ -255,8 +260,11 @@ public class ConfigRegistry {
     AutoSmeltEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", true);
     BeekeeperEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
     BeheadingEnchant.CFG = CFG.comment("Set false to stop enchantment from working").define(BeheadingEnchant.ID + ".enabled", true);
-    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin").defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING,
-        it -> it instanceof String);
+    GLOOM_IGNORE_LIST = CFG.comment("Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these")
+        .defineList(GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
+            it -> it instanceof String);
+    BEHEADING_SKINS = CFG.comment("Beheading enchant add player skin head drop, add any mob id and any skin")
+        .defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
     BeheadingEnchant.PERCDROP = CFG.comment("Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
     BeheadingEnchant.PERCPERLEVEL = CFG.comment("Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
     GloomCurseEnchant.CFG = CFG.comment("(Gloom) Set false to stop enchantment from working").define(GloomCurseEnchant.ID + ".enabled", true);
@@ -307,7 +315,7 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Logging related configs", WALL)
         .push("logging");
     CyclicLogger.LOGINFO = CFG.comment("Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
-    CFG.pop(); //logging 
+    CFG.pop(); //logging  
     CFG.comment(WALL, " Item specific configs", WALL).push("items");
     //
     CFG.comment(WALL, " scythe_brush settings. note radius is halved while player is sneaking", WALL).push("scythe_brush");
@@ -393,8 +401,13 @@ public class ConfigRegistry {
     HeartToxicItem.HEARTXPMINUS = CFG.comment("Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
     HeartItem.MAX = CFG.comment("Maximum number of hearts that can be attained (including initial 10)").defineInRange("maximum", 100, 1, 200);
     CFG.pop(); //heart
-    CFG.pop(); //items
+    CFG.pop(); //items 
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
+    TRANSFER_NODES_DIMENSIONAL = CFG.comment("  Allows the dimensional Transfer Nodes to cross dimensions "
+        + "(no chunk loading is done, you have to do that on your own); "
+        + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
+        + "If you change it to false it will only work if the target is in the same dimension.")
+        .define("wireless_transfer_dimensional", true);
     //buffer size for cables 
     SoundmufflerBlock.RADIUS = CFG.comment("Radius to find and muffle sounds. ")
         .defineInRange("soundproofing.radius", 6, 1, 128);
@@ -464,25 +477,34 @@ public class ConfigRegistry {
     TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("fluid_cost", 100, -1000, 16000);
     TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("energy_cost", 2500, 0, 64000);
     CFG.pop();
-    CFG.push("terra_preta");
-    TileTerraPreta.TIMER_FULL = CFG.comment("Growth interval in ticks (100 would be every 5 seconds). Also affects terra glass").defineInRange("growth_interval", 100, 1, 64000);
-    TileTerraPreta.CHANCE = CFG.comment("Chance that the crop will grow after the interval").defineInRange("growth_chance", 0.5, 0, 1);
-    CFG.pop();
     CFG.push("anvil_void");
     TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, 16000);
     CFG.pop();
     CFG.push("sound");
     BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
-    CFG.push("ender_shelf");
+    CFG.comment("Ender shelf settings").push("ender_shelf");
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 256, 1, 1024);
     EnderShelfHelper.MAX_DIST = CFG.comment("Controller Max distance to search (using manhattan distance)").defineInRange("controller_distance", 64, 1, 256);
     CFG.pop(); // ender_shelf*6
+    //
+    CFG.comment("soundproofing settings").push("soundproofing"); //soundproofing
+    SOUND_RADIUS = CFG.comment("Radius of sound proofing (distance from each block that it will listen)").defineInRange("radius", 6, 1, 16);
+    CFG.pop(); //soundproofing
     CFG.comment("Sprinkler settings").push("sprinkler");
     TileSprinkler.RADIUS = CFG.comment("Radius").defineInRange("radius", 4, 1, 32);
     TileSprinkler.WATERCOST = CFG.comment("Water consumption").defineInRange("water", 5, 0, 1000);
     TileSprinkler.TIMER_FULL = CFG.comment("Tick rate.  20 will fire one block per second").defineInRange("ticks", 20, 1, 20);
     CFG.pop(); // sprinkler
+    CFG.push("terra_preta");
+    TileTerraPreta.TIMER_FULL = CFG.comment("Growth interval in ticks (100 would be every 5 seconds). ").defineInRange("growth_interval", 100, 1, 64000);
+    TileTerraPreta.CHANCE = CFG.comment("Chance that the crop will grow after the interval").defineInRange("growth_chance", 0.5, 0, 1);
+    TileTerraPreta.HEIGHT = CFG.comment("growth height above the soil").defineInRange("height", 8, 2, 32);
+    CFG.pop(); // terra_preta
+    CFG.comment("terra_glass settings").push("terra_glass");
+    TileTerraGlass.TIMER_FULL = CFG.comment("ticks between growth cycles").defineInRange("timer", 100, 1, 10000);
+    TileTerraGlass.HEIGHT = CFG.comment("growth height below the glass").defineInRange("height", 8, 0, 32);
+    CFG.pop(); // terra_preta
     CFG.comment("Ender Anchor settings").push("eye_teleport");
     TileEyeTp.RANGE = CFG.comment("Maximum distance to activate").defineInRange("range", 128, 2, 256);
     TileEyeTp.HUNGER = CFG.comment("Hunger cost on teleport").defineInRange("hunger", 1, 0, 20);
@@ -590,6 +612,11 @@ public class ConfigRegistry {
   @SuppressWarnings("unchecked")
   public static List<String> getDisarmIgnoreList() {
     return (List<String>) DISARM_IGNORE_LIST.get();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static List<String> getGloomIgnoreList() {
+    return (List<String>) GLOOM_IGNORE_LIST.get();
   }
 
   public static Map<String, String> getMappedBeheading() {

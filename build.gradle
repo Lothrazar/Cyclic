@@ -71,21 +71,29 @@ dependencies {
 //	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
 	runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
+     
+    // optional compat: many items useable in curios slots
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 	
+    implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}")
+    
+
+    compileOnly fg.deobf("vazkii.botania:Botania:${mc_version}-${botania_version}-FORGE:api")
+    runtimeOnly fg.deobf("vazkii.botania:Botania:${mc_version}-${botania_version}-FORGE")
+    
 	// optional compat: guidebook
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
  
-    
-    // mods that have optional/soft integration
-   // runtimeOnly fg.deobf("curse.maven:liquid-blocks-301999:3873025")
-   // runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:3944903")
-  //  runtimeOnly fg.deobf("curse.maven:plain-grinder-452000:3653027")
-  //  runtimeOnly fg.deobf("curse.maven:crafttweaker-239197:4657532")
+/*
 
-  //  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:3834150")
+     implementation fg.deobf("curse.maven:yungs-api-421850:4428184")
+     implementation fg.deobf("curse.maven:yungs-better-strongholds-465575:3778231")
+     implementation fg.deobf("curse.maven:mekanism-268560:3875976")
+  
+//   implementation fg.deobf("curse.maven:absent-by-design-305840:3686851")
+*/
 
 
 }
@@ -104,11 +112,12 @@ repositories {
     name = "mappings"
     url 'https://dogforce-games.com/maven'
   }
-  maven { url = "https://maven.theillusivec4.top/"    }
+
   maven { url 'https://dvs1.progwml6.com/files/maven/'  }
-  maven { url 'https://maven.blamejared.com' }   
-  maven { url = "https://modmaven.dev"  }    
-//  maven { url 'https://www.cursemaven.com'  }
+  maven { url 'https://maven.theillusivec4.top/'    }
+  maven { url 'https://maven.blamejared.com' }    
+  maven { url 'https://modmaven.dev'  }    
+  maven { url 'https://www.cursemaven.com'  }
 }
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
@@ -164,7 +173,6 @@ task signJar(type: SignJar, dependsOn: jar) {
     inputFile = jar.archivePath
     outputFile = jar.archivePath
 }
-
 
 
 task cleanJar {

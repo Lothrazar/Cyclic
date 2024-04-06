@@ -97,7 +97,7 @@ public class BlockCyclic extends BaseEntityBlock {
   @SuppressWarnings("deprecation")
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    if (hasFluidInteract) {
+    if (hasFluidInteract && player.getItemInHand(hand).isEmpty()) {
       if (!world.isClientSide) {
         BlockEntity tankHere = world.getBlockEntity(pos);
         if (tankHere != null) {
