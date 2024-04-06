@@ -95,7 +95,7 @@
 			enabled = true
 
 		[cyclic.enchantment.beekeeper]
-			#Set false to disable enchantment
+			#Set false to stop enchantment from working
 			enabled = true
 
 		[cyclic.enchantment.experience_boost]
@@ -140,7 +140,7 @@
 			#Base perecentage chance to drop a head on kill
 			#Range: 1 ~ 99
 			percent = 20
-			#Set false to disable enchantment
+			#Set false to stop enchantment from working
 			enabled = true
 
 		[cyclic.enchantment.quickshot]
@@ -162,7 +162,7 @@
 			enabled = true
 
 		[cyclic.enchantment.auto_smelt]
-			#Set false to disable enchantment
+			#Set false to stop enchantment from working
 			enabled = true
 
 		[cyclic.enchantment.growth]
@@ -279,11 +279,6 @@
 			#Power per use while crossing dimensions
 			#Range: 0 ~ 64000
 			energy_cost_xdim = 8000
-
-		[cyclic.blocks.sound]
-			#Sound Recorder - how far out does it listen to record sounds
-			#Range: 1 ~ 64
-			radius = 8
 
 		#battery settings
 		[cyclic.blocks.battery]
@@ -494,6 +489,11 @@
 			ignore_list = ["minecraft:elytra", "minecraft:tipped_arrow", "minecraft:magma_block", "minecraft:stick", "spectrite:spectrite_arrow", "spectrite:spectrite_arrow_special", "techreborn:uumatter", "projecte:*"]
 			#RECIPE IDS HERE.  Block these recipe ids from being reversed, but do not block all recipes for this output item
 			ignore_recipes = ["minecraft:white_dye_from_lily_of_the_valley", "minecraft:orange_dye_from_orange_tulip", "minecraft:magenta_dye_from_allium", "minecraft:magenta_dye_from_lilac", "minecraft:light_blue_dye_from_blue_orchid", "minecraft:yellow_dye_from_sunflower", "minecraft:yellow_dye_from_dandelion", "minecraft:pink_dye_from_peony", "minecraft:pink_dye_from_pink_tulip", "minecraft:light_gray_dye_from_oxeye_daisy", "minecraft:light_gray_dye_from_azure_bluet", "minecraft:light_gray_dye_from_white_tulip", "minecraft:blue_dye_from_cornflower", "minecraft:red_dye_from_poppy", "minecraft:red_dye_from_rose_bush", "minecraft:red_dye_from_tulip", "minecraft:black_dye_from_wither_rose", "minecraft:blue_dye", "minecraft:black_dye", "minecraft:brown_dye", "botania:cobweb", "minecraft:magma_cream", "minecraft:beacon", "minecraft:stick_from_bamboo_item", "minecraft:netherite_ingot_from_netherite_block", "mysticalagriculture:essence*", "mysticalagriculture:farmland_till", "refinedstorage:coloring_recipes*", "forcecraft:transmutation*", "cyclic:flower_purple_tulip", "cyclic:flower_absalon_tulip", "cyclic:flower_cyan", "cyclic:flower_lime_carnation", "cyclic:fireball", "cyclic:shapeless/spark"]
+
+		[cyclic.blocks.sound_recorder]
+			#Sound Recorder - how far out does it listen to record sounds
+			#Range: 1 ~ 64
+			radius = 8
 
 		[cyclic.blocks.anti_beacon]
 			#List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)

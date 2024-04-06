@@ -13,14 +13,12 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class SoundmufflerBlock extends BlockCyclic {
 
   private static final int VOL_REDUCE_PER_BLOCK = 2;
-  public static IntValue RADIUS; // 6
 
   public SoundmufflerBlock(Properties properties) {
     super(properties.strength(1F).sound(SoundType.SCAFFOLDING));
@@ -37,7 +35,7 @@ public class SoundmufflerBlock extends BlockCyclic {
     SoundInstance sound = event.getSound();
     final boolean isPowered = false; // if im NOT powered, im running
     List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld, new BlockPos(sound.getX(), sound.getY(), sound.getZ()), this,
-        RADIUS.get(),
+        ConfigRegistry.SOUND_RADIUS.get(),
         isPowered);
     if (blocks == null || blocks.size() == 0) {
       return;
@@ -50,6 +48,7 @@ public class SoundmufflerBlock extends BlockCyclic {
     rebuildSoundWithVolume(event, sound, volume);
   }
 
+  @OnlyIn(Dist.CLIENT)
   private static void rebuildSoundWithVolume(PlaySoundEvent event, SoundInstance sound, float newVolume) {
     try {
       //WARNING": DO NOT USE getVolume anywhere here it just crashes
