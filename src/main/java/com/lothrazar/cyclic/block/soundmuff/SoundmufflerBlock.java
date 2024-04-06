@@ -50,6 +50,7 @@ public class SoundmufflerBlock extends BlockCyclic {
     rebuildSoundWithVolume(event, sound, volume);
   }
 
+  @OnlyIn(Dist.CLIENT)
   private static void rebuildSoundWithVolume(PlaySoundEvent event, SoundInstance sound, float newVolume) {
     try {
       //WARNING": DO NOT USE getVolume anywhere here it just crashes
