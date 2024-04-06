@@ -100,7 +100,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return null;
   }
 
-  public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, ItemStackHandler out, boolean onGround) {
+  // TODO: this could use a refactor
+  public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, ItemStackHandler out, boolean dropItemsOnGround) {
     if (out == null) {
       return;
     }
@@ -111,23 +112,20 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       if (fpItem.isEmpty()) {
         continue;
       }
-      ModCyclic.LOGGER.info("NONEMPTY itemstack found what do we do");
       if (fpItem == fp.get().getMainHandItem()) {
-        ModCyclic.LOGGER.info("aha continue main hand item dont doump it");
         continue;
       }
       for (int j = 0; j < out.getSlots(); j++) {
-        ModCyclic.LOGGER.info(fpItem + "insert itit here" + j);
         fpItem = out.insertItem(j, fpItem, false);
       }
-      if (onGround) {
+      if (dropItemsOnGround) {
         toDrop.add(fpItem);
       }
       else {
         fp.get().getInventory().items.set(i, fpItem);
       }
     }
-    if (onGround) {
+    if (dropItemsOnGround) {
       ItemStackUtil.drop(this.level, this.worldPosition.above(), toDrop);
     }
   }
