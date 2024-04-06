@@ -41,8 +41,6 @@ import com.lothrazar.cyclic.block.miner.TileMiner;
 import com.lothrazar.cyclic.block.packager.TilePackager;
 import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
-import com.lothrazar.cyclic.block.soundmuff.SoundmufflerBlock;
-import com.lothrazar.cyclic.block.soundrecord.BlockSoundRecorder;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
@@ -126,6 +124,7 @@ public class ConfigRegistry {
   public static BooleanValue CYAN_PODZOL_LEGACY;
   public static BooleanValue TRANSFER_NODES_DIMENSIONAL;
   public static IntValue SOUND_RADIUS;
+  public static IntValue RECORDER_RADIUS;
   static {
     buildDefaults();
     initConfig();
@@ -405,8 +404,6 @@ public class ConfigRegistry {
     CFG.pop(); //items 
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     //buffer size for cables 
-    SoundmufflerBlock.RADIUS = CFG.comment("Radius to find and muffle sounds. ")
-        .defineInRange("soundproofing.radius", 6, 1, 128);
     TileAntiBeacon.HARMFUL_POTIONS = CFG.comment("If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
         .define("harmful_potions", true);
     TileAntiBeacon.RADIUS = CFG.comment("Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
@@ -484,8 +481,8 @@ public class ConfigRegistry {
         + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
         + "If you change it to false it will only work if the target is in the same dimension.")
         .define("wireless_transfer_dimensional", true);
-    CFG.comment("Ender shelf settings").push("sound");
-    BlockSoundRecorder.RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
+    CFG.push("sound_recorder");
+    RECORDER_RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
     CFG.pop();
     CFG.push("ender_shelf");
     EnderShelfItemHandler.BOOKS_PER_ROW = CFG.comment("Each shelf has five rows.  Set the number of books stored per row here").defineInRange("books_per_row", 256, 1, 1024);
