@@ -7,20 +7,20 @@
   ],
   "key": {
     "i": {
-      "item": "minecraft:amethyst_shard"
+      "tag": "forge:ingots/gold"
     },
     "l": {
-      "tag": "minecraft:coral_blocks"
+      "tag": "forge:vines"
     },
     "a": {
       "tag": "forge:dyes/cyan"
     },
     "q": {
-      "item": "minecraft:snowball"
+      "item": "minecraft:ice"
     }
   },
   "result": {
     "item": "cyclic:magic_net",
-    "count": 8
+    "count": 4
   }
 }

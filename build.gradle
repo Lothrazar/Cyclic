@@ -80,10 +80,22 @@ dependencies {
     // optional compat: many items useable in curios slots
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 	
+    implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}")
+    
+
+    compileOnly fg.deobf("vazkii.botania:Botania:${mc_version}-${botania_version}:api")
+    runtimeOnly fg.deobf("vazkii.botania:Botania:${mc_version}-${botania_version}")
+    
 	// optional compat: guidebook
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
  
+  
+  
+
+     implementation fg.deobf("curse.maven:yungs-api-421850:4428184")
+     implementation fg.deobf("curse.maven:yungs-better-strongholds-465575:3778231")
+     implementation fg.deobf("curse.maven:mekanism-268560:3875976")
   
 //   implementation fg.deobf("curse.maven:absent-by-design-305840:3686851")
 
@@ -108,7 +120,7 @@ repositories {
   maven { url 'https://maven.theillusivec4.top/'    }
   maven { url 'https://maven.blamejared.com' }    
   maven { url 'https://modmaven.dev'  }    
-  //maven { url 'https://www.cursemaven.com'  }
+  maven { url 'https://www.cursemaven.com'  }
 }
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {

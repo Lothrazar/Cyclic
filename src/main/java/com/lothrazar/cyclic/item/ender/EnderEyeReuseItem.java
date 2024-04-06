@@ -32,7 +32,9 @@ public class EnderEyeReuseItem extends ItemBaseCyclic {
     ItemStack stack = player.getItemInHand(hand);
     if (!worldIn.isClientSide && worldIn instanceof ServerLevel) {
       ServerLevel sw = (ServerLevel) worldIn;
-      BlockPos closestBlockPos = sw.findNearestMapFeature(STRONGHOLD, player.blockPosition(), MAX_RANGE, false);
+      BlockPos closestBlockPos = null;
+      //modded strongholds, as long as they are tagged as a stronghold, will alos be found ie yungs, betterstrongholds, etc
+      closestBlockPos = sw.findNearestMapFeature(STRONGHOLD, player.blockPosition(), MAX_RANGE, false);
       if (closestBlockPos != null) {
         double posX = player.getX();
         double posY = player.getY();

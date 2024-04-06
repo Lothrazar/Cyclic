@@ -2,8 +2,11 @@ package com.lothrazar.cyclic.enchant;
 
 import java.util.Collections;
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.util.EnchantUtil;
 import com.lothrazar.cyclic.util.FakePlayerUtil;
+import com.lothrazar.cyclic.util.StringParseUtil;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -90,6 +93,10 @@ public class GloomCurseEnchant extends EnchantmentCyclic {
         if (effect == null) {
           continue;
           //should be impossible, but i had a random NPE crash log
+        }
+        if (StringParseUtil.isInList(ConfigRegistry.getGloomIgnoreList(), effect.getRegistryName())) {
+          ModCyclic.LOGGER.info("Gloom(curse) effect cannot apply " + effect.getRegistryName());
+          continue;
         }
         if (appliedEffects < MIN_EFFECTS
             || BASE_APPLY_CHANCE > user.level.random.nextDouble()) {

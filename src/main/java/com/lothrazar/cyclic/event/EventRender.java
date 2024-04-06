@@ -113,6 +113,7 @@ public class EventRender {
     mc.getItemRenderer().renderAndDecorateItem(stack, width / 2, height / 2);
   }
 
+  ///////////////////// asdfasdf TODO REFACTOR THIS  
   @SubscribeEvent
   public void onRenderWorldLast(RenderLevelLastEvent event) {
     Minecraft mc = Minecraft.getInstance();
@@ -151,7 +152,14 @@ public class EventRender {
       }
       List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());
       for (BlockPos e : coords) {
-        renderCubes.put(e, RandomizerItem.canMove(world.getBlockState(e), world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
+        //        renderCubes.put(e, RandomizerItem.canMove(world.getBlockState(e), world, e) ? ClientConfigCyclic.getColor(stack) : Color.RED);
+        BlockState stHere = world.getBlockState(e);
+        if (!RandomizerItem.canMove(stHere, world, e) && !stHere.isAir()) {
+          renderCubes.put(e, ClientConfigCyclic.getColor(stack));
+        }
+        else if (!stHere.isAir()) {
+          RenderUtils.createBox(event.getPoseStack(), e); // see: RenderBlockUtils and event.getPoseStack()
+        }
       }
     }
     stack = OreProspector.getIfHeld(player);

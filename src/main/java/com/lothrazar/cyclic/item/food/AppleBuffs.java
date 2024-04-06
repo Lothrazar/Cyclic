@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -40,10 +39,6 @@ public class AppleBuffs extends ItemBaseCyclic {
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    if (entityLiving instanceof Player) {
-      // TOOD
-      ((Player) entityLiving).getCooldowns().addCooldown(this, 30);
-    }
     return super.finishUsingItem(stack, worldIn, entityLiving);
   }
 }

@@ -105,7 +105,7 @@ public class TileRegistry {
   public static final RegistryObject<BlockEntityType<TileRotator>> ROTATOR = TILES.register("rotator", () -> BlockEntityType.Builder.of(TileRotator::new, BlockRegistry.ROTATOR.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileMoon>> DETECTORMOON = TILES.register("detector_moon", () -> BlockEntityType.Builder.of(TileMoon::new, BlockRegistry.DETECTORMOON.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileWeather>> DETECTORWEATHER = TILES.register("detector_weather", () -> BlockEntityType.Builder.of(TileWeather::new, BlockRegistry.DETECTORWEATHER.get()).build(null));
-  public static final RegistryObject<BlockEntityType<TileTerraGlass>> TERRAGLASS = TILES.register("terra_glass", () -> BlockEntityType.Builder.of(TileTerraGlass::new, BlockRegistry.TERRAGLASS.get()).build(null));
+  public static final RegistryObject<BlockEntityType<TileTerraGlass>> TERRA_GLASS = TILES.register("terra_glass", () -> BlockEntityType.Builder.of(TileTerraGlass::new, BlockRegistry.TERRAGLASS.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileSprinkler>> SPRINKLER = TILES.register("sprinkler", () -> BlockEntityType.Builder.of(TileSprinkler::new, BlockRegistry.SPRINKLER.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileItemShelf>> ENDER_ITEM_SHELF = TILES.register("ender_item_shelf", () -> BlockEntityType.Builder.of(TileItemShelf::new, BlockRegistry.ENDER_ITEM_SHELF.get()).build(null));
   public static final RegistryObject<BlockEntityType<TileWirelessEnergy>> WIRELESS_ENERGY = TILES.register("wireless_energy", () -> BlockEntityType.Builder.of(TileWirelessEnergy::new, BlockRegistry.WIRELESS_ENERGY.get()).build(null));

@@ -21,7 +21,7 @@ public class EdibleFlightItem extends AppleBuffs {
   public static IntValue TICKS;
 
   public EdibleFlightItem(Properties properties) {
-    super(properties.rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(3).saturationMod(0).alwaysEat().build()));
+    super(properties.rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(1).saturationMod(0).alwaysEat().build()));
   }
 
   @Override

@@ -96,14 +96,17 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     if (serverLevel.getBlockEntity(targetPos) instanceof TileWirelessRec receiver) {
       //am I powered?
       if (isPowered) {
+        ModCyclic.LOGGER.info(" POWER UP target" + dimPos);
         receiver.putPowerSender(this.id);
       }
       else {
+        ModCyclic.LOGGER.info(" turn off target" + dimPos);
         receiver.removePowerSender(this.id);
       }
     }
     if (level.isLoaded(worldPosition) && level.getBlockState(worldPosition).getBlock() == this.getBlockState().getBlock()) {
       level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
+      //    world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
     }
   }
 

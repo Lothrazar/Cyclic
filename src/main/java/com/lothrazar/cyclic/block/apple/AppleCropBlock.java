@@ -79,6 +79,7 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
     int age = state.getValue(AGE);
     if (age < MAX_AGE && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.random.nextInt(5) == 0)) {
       worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(age + 1)), 2);
+      // this.grow(worldIn, random, pos, state);
       ForgeHooks.onCropsGrowPost(worldIn, pos, state);
     }
   }
