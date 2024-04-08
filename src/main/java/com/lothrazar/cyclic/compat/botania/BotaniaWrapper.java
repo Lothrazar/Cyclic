@@ -14,7 +14,7 @@ public class BotaniaWrapper {
   public static boolean hasSolegnoliaAround(LivingEntity entity) {
     try {
       if (ModList.get().isLoaded("botania")) {
-        //   return vazkii.botania.api.BotaniaAPI.instance().hasSolegnoliaAround(entity); //  1.19.4 only doesnt have a port 
+        return vazkii.botania.api.BotaniaAPI.instance().hasSolegnoliaAround(entity);
       }
     }
     catch (Exception e) {}
