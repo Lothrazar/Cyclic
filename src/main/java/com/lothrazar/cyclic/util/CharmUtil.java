@@ -53,7 +53,6 @@ public class CharmUtil {
     if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
       //check curios slots IF mod is loaded
       try {
-        //  final ImmutableTriple<String, Integer, ItemStack> equipped = CuriosApi.getCuriosHelper().findEquippedCurio(match, player).orElse(null);
         SlotResult first = CuriosApi.getCuriosHelper().findFirstCurio(player, match).orElse(null);
         if (first != null && isMatching(first.stack(), match)) {
           ItemStack found = first.stack();
@@ -70,14 +69,7 @@ public class CharmUtil {
         // if API not installed or fails
       }
     }
-    //is "baubles" in 1.16? 
-    //not curios, check others
-    //    for (int i = 0; i < player.getInventoryEnderChest().getSizeInventory(); i++) {
-    //      ItemStack temp = player.getInventoryEnderChest().getStackInSlot(i);
-    //      if (isRemote(temp, remote)) {
-    //        return Triple.of("ender", i, temp);
-    //      }
-    //    }
+    // TODO: does the "baubles" mod still exist
     for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
       ItemStack temp = player.getInventory().getItem(i);
       if (isMatching(temp, match)) {
