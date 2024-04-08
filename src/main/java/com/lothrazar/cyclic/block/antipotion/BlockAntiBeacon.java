@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.antipotion;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.capabilities.livingentity.LivingEntityCapProvider;
@@ -26,9 +28,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockAntiBeacon extends BlockCyclic {
 
@@ -85,12 +84,10 @@ public class BlockAntiBeacon extends BlockCyclic {
       if (livingEntityData == null) {
         continue;
       }
-
       BlockPos oldPosition = livingEntityData.getClosestAntiBeaconPosition();
       if (oldPosition != null && world.getBlockState(oldPosition).is(BlockRegistry.ANTI_BEACON.get())) {
         int oldDistance = e.blockPosition().distManhattan(oldPosition);
         int newDistance = e.blockPosition().distManhattan(pos);
-
         if (newDistance < oldDistance) {
           livingEntityData.setClosestAntiBeaconPosition(pos);
         }
@@ -128,38 +125,31 @@ public class BlockAntiBeacon extends BlockCyclic {
     if (event.getEffectInstance() == null) {
       return;
     }
-
     //this will cancel it
     LivingEntity livingEntity = event.getEntity();
     if (BlockAntiBeacon.doesConfigBlockEffect(event.getEffectInstance().getEffect()) &&
-            livingEntity.getCommandSenderWorld() instanceof ServerLevel serverLevel &&
-            serverLevel.isLoaded(livingEntity.blockPosition())) {
-
+        livingEntity.getCommandSenderWorld() instanceof ServerLevel serverLevel &&
+        serverLevel.isLoaded(livingEntity.blockPosition())) {
       LivingEntityCapabilityStorage livingEntityData = livingEntity.getCapability(LivingEntityCapProvider.CYCLIC_LIVING_ENTITY).orElse(null);
       if (livingEntityData == null) {
         return;
       }
-
       BlockPos closestAntiBeacon = livingEntityData.getClosestAntiBeaconPosition();
       if (closestAntiBeacon == null) {
         return;
       }
-
       if (livingEntity.blockPosition().distManhattan(closestAntiBeacon) > TileAntiBeacon.RADIUS.get()) {
         livingEntityData.setClosestAntiBeaconPosition(null);
         return;
       }
-
       if (!serverLevel.getBlockState(closestAntiBeacon).getBlock().equals(this)) {
         livingEntityData.setClosestAntiBeaconPosition(null);
         return;
       }
-
       final boolean isPowered = false; // if im NOT powered, im running
       if (serverLevel.hasNeighborSignal(closestAntiBeacon) != isPowered) {
         return;
       }
-
       //can
       ModCyclic.LOGGER.info("[potion blocked] " + event.getEffectInstance());
       event.setResult(Result.DENY);

@@ -55,24 +55,6 @@ public class ScreenUncraft extends ScreenBase<ContainerUncraft> {
           ModCyclic.MODID + ".gui.uncrafter." + menu.tile.getStatus().name().toLowerCase());
       int center = (this.getXSize() - this.font.width(name)) / 2;
       drawString(ms, name, center + 37, 24);
-      //=======
-      //    UncraftStatusEnum status = container.tile.getStatus();
-      //    if (status != UncraftStatusEnum.EMPTY && status != UncraftStatusEnum.MATCH) {
-      //      minecraft.getTextureManager().bindTexture(TextureRegistry.WIDGETS);
-      //      blit(ms, 125, 15, 228, 452, 24, 24, 512, 512);
-      //    }
-      //  }
-      //
-      //  @Override
-      //  protected void renderHoveredTooltip(MatrixStack matrixStack, int x, int y) {
-      //    super.renderHoveredTooltip(matrixStack, x, y);
-      //    if (this.isPointInRegion(125, 15, 24, 24, x, y)) {
-      //      UncraftStatusEnum status = container.tile.getStatus();
-      //      if (status != UncraftStatusEnum.EMPTY && status != UncraftStatusEnum.MATCH) {
-      //        TranslationTextComponent comp = new TranslationTextComponent(ModCyclic.MODID + ".gui.uncrafter." + container.tile.getStatus().name().toLowerCase());
-      //        GuiUtils.drawHoveringText(matrixStack, Arrays.asList(comp), x, y, this.width, this.height, 0xFFFFFF, font);
-      //      }
-      //>>>>>>> 54f4445a2d7902cf4ef454efe328c9667ca5b652
     }
   }
 

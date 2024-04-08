@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -47,6 +49,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -58,6 +61,7 @@ public class ExcavationEnchant extends EnchantmentFlib {
 
   public static final String ID = "excavate";
   public static BooleanValue CFG;
+  public static boolean effectiveToolRequired = true; // non-config lets hardcode this actually
 
   public ExcavationEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
@@ -127,7 +131,14 @@ public class ExcavationEnchant extends EnchantmentFlib {
     if (level <= 0) {
       return;
     }
-    //if (ForgeHooks.canHarvestBlock(eventState, player, world, pos)) {
+    if (effectiveToolRequired && !ForgeHooks.isCorrectToolForDrops(eventState, player)) {
+      ModCyclic.LOGGER.info("excavate trigger cancelled; tool not effective");
+      return;
+    }
+    if (eventState.is(DataTags.EXCAVATE_IGNORED)) {
+      ModCyclic.LOGGER.info("excavate trigger cancelled; see blocktag " + DataTags.EXCAVATE_IGNORED.toString());
+      return;
+    }
     if (ForgeEventFactory.doPlayerHarvestCheck(player, eventState, true)) {
       int harvested = this.harvestSurrounding((Level) world, player, pos, block, 1, level, player.swingingArm);
       if (harvested > 0) {

@@ -2,20 +2,22 @@ package com.lothrazar.cyclic.block.terraglass;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.GrowthUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class TileTerraGlass extends TileBlockEntityCyclic {
 
-  private static final int TIMER_FULL = TileTerraPreta.TIMER_FULL.get() / 2;
-  private static final int DISTANCE = TileTerraPreta.HEIGHT / 2;
+  public static IntValue TIMER_FULL;
+  public static IntValue HEIGHT;
 
   public TileTerraGlass(BlockPos pos, BlockState state) {
-    super(TileRegistry.TERRAGLASS.get(), pos, state);
+    super(TileRegistry.TERRA_GLASS.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraGlass e) {
@@ -35,7 +37,7 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
     if (timer > 0) {
       return;
     }
-    timer = TIMER_FULL;
+    timer = TIMER_FULL.get();
     boolean lit = this.getBlockState().getValue(BlockCyclic.LIT);
     boolean newLit = canBlockSeeSky(level, worldPosition);
     if (lit != newLit) {
@@ -45,9 +47,11 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
     if (!newLit) {
       return;
     }
-    for (int h = 0; h < DISTANCE; h++) {
-      BlockPos current = worldPosition.below(h);
-      TileTerraPreta.grow(level, current, 0.25);
+    if (level instanceof ServerLevel sl) {
+      for (int h = 0; h < HEIGHT.get(); h++) {
+        BlockPos current = worldPosition.below(h);
+        GrowthUtil.tryGrow(sl, current, 0.25);
+      }
     }
   }
 
@@ -56,8 +60,6 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
     if (world.canSeeSky(pos)) {
       return true;
     }
-    //    world.isOutsideBuildHeight(pos)
-    //    else {
     for (BlockPos blockpos1 = pos.above(); blockpos1.getY() < 256; blockpos1 = blockpos1.above()) {
       if (level.isOutsideBuildHeight(blockpos1.getY())) {
         continue;
@@ -69,7 +71,6 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
       }
     }
     return true;
-    //    }
   }
 
   @Override

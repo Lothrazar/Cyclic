@@ -13,5 +13,3 @@ crusher.addRecipe("castlevania", <item:minecraft:diamond>,<item:minecraft:iron_n
 
 // no bonus, same as last number zero
 crusher.addRecipe("castlevania2", <item:minecraft:obsidian>,<item:minecraft:sand>*2, 500, 300);
-
-

@@ -53,7 +53,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class EventRender {
 
   @SubscribeEvent
-  //  public void overlay(RenderGameOverlayEvent.Post event) {
   public static void onCustomizeDebugText(CustomizeGuiOverlayEvent.DebugText event) {
     //Build scepter feature : render selected blockstate in cross hair
     Player player = Minecraft.getInstance().player;
@@ -79,10 +78,6 @@ public class EventRender {
     }
     int height = mc.getWindow().getGuiScaledHeight();
     CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
-    //    if (datFile.flyTicks > 0) {
-    //      int sec = datFile.flyTicks / 20;
-    //      drawString(event.getPoseStack(), "flight " + sec, 10, height - 30);
-    //    }
     if (datFile.spectatorTicks > 0) {
       int sec = datFile.spectatorTicks / 20;
       RenderUtil.drawString(event.getGuiGraphics(), "noClip " + sec, 10, height - 10);

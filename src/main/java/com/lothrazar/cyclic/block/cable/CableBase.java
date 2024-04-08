@@ -161,26 +161,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
   }
 
   public static void crouchClick(RightClickBlock event, BlockState state) {
-    //    Direction sideToToggle = event.getFace(); // no
     rotateFromWrench(state, event.getLevel(), event.getPos(), event.getEntity(), event.getHitVec());
-    //    EnumProperty<EnumConnectType> prop = CableBase.FACING_TO_PROPERTY_MAP.get(sideToToggle);
-    //    if (state.hasProperty(prop)) {
-    //      EnumConnectType status = state.getValue(prop);
-    //      BlockState newState = state;
-    //      switch (status) {
-    //        case BLOCKED: 
-    //          newState = state.setValue(prop, EnumConnectType.NONE);
-    //        break;
-    //        case NONE: // no connection
-    //        case INVENTORY: // inventory connection or
-    //        case CABLE: // extract
-    //          // extract to blocked 
-    //          newState = state.setValue(prop, EnumConnectType.BLOCKED);
-    //        break;
-    //      }
-    //      event.getWorld().setBlock(event.getPos(), newState, 3);
-    //      //      newState.updateShape(sideToToggle, world.getBlockState(pos.relative(sideToToggle)), world, pos, pos.relative(sideToToggle));
-    //    }
   }
 
   private static void rotateFromWrench(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
@@ -228,7 +209,7 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
           break;
         }
       }
-      else {
+      else { // non-crouching flow
         switch (status) {
           case BLOCKED:
             newState = state.setValue(prop, EnumConnectType.NONE);
@@ -246,7 +227,6 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
           break;
         }
       }
-      //
       //
       if (world.getBlockState(pos).getBlock() instanceof CableBase && world.setBlockAndUpdate(pos, newState)) {
         if (updatePost) {
@@ -275,10 +255,4 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         && blockState.hasProperty(property)
         && blockState.getValue(property).isUnBlocked() == false;
   }
-  //  protected void updateConnection(final IWorld world, final BlockPos blockPos, final Direction side, final EnumConnectType connectType) {
-  //    final TileEntity tileEntity = world.getTileEntity(blockPos);
-  //    if (tileEntity instanceof TileCableBase) {
-  //      ((TileCableBase) tileEntity).updateConnection(side, connectType);
-  //    }
-  //  }
 }

@@ -30,7 +30,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   private final ResultContainer craftResult = new ResultContainer();
   //
   public int slot = -1;
-  public ItemStack bag;
+  public ItemStack bag = ItemStack.EMPTY;
 
   public CraftingBagContainer(int id, Inventory playerInventory, Player player, int slot) {
     super(MenuTypeRegistry.CRAFTING_BAG.get(), id);
@@ -43,9 +43,8 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35));
     if (slot > -1) {
       this.bag = playerInventory.getItem(slot);
-      ModCyclic.LOGGER.info("bag   " + bag);
     }
-    if (bag.isEmpty()) {
+    if (bag == null || bag.isEmpty()) {
       this.bag = super.findBag(ItemRegistry.CRAFTING_BAG.get());
     }
     //grid

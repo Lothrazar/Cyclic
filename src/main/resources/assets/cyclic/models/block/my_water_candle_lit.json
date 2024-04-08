@@ -4,9 +4,9 @@
 	"textures": {
 		"holder": "cyclic:block/machine/water_candle_holder",
 		"2": "cyclic:block/machine/water_candle",
-  	  "centerwater": "cyclic:block/water_fake",
+		"centerwater": "cyclic:block/water_fake",
 		"sides": "cyclic:block/machine/water_candle_sides",
-   	 "flame": "cyclic:block/machine/gold"
+		"flame": "cyclic:block/machine/gold"
 	},
 	"elements": [
 	    {

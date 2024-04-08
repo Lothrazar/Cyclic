@@ -46,10 +46,9 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     }
     BlockPos target = worldPosition.relative(this.getCurrentFacing());
     if (this.isValid(target)) {
-       //old way would pass thru here and try to mine minecraft:water 
+      //old way would pass thru here and try to mine minecraft:water 
       this.level.destroyBlock(target, true);
     }
-    //else unbreakable
   }
 
   /**

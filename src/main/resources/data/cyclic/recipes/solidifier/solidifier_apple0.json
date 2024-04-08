@@ -7,7 +7,7 @@
 	],
 	"mix": {
 		"tag": "forge:honey",
-		"count": 100
+		"count": 1000
 	},
 	"energy": {
 		"rfpertick": 100,

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+       "#minecraft:shulker_boxes",
+       {"required":false, "id": "cyclic:crate"},
+       {"required":false, "id": "minecraft:chest"},
+       {"required":false, "id": "minecraft:command_block"}
+  ]
+}

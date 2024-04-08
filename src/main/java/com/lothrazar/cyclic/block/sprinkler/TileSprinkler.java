@@ -2,16 +2,17 @@ package com.lothrazar.cyclic.block.sprinkler;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.cyclic.util.GrowthUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -63,14 +64,16 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
     }
-    if (level.isClientSide && TileTerraPreta.isValidGrow(level, shape.get(shapeIndex))) {
+    if (level.isClientSide && GrowthUtil.isValidGrow(level, shape.get(shapeIndex))) {
       ParticleUtil.spawnParticle(level, ParticleTypes.FALLING_WATER, shape.get(shapeIndex), 9);
     }
-    if (TileTerraPreta.grow(level, shape.get(shapeIndex), 1)) {
-      //it worked, so double drain
-      tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
-      //run it again since sprinkler costs fluid and therefore should double what the glass and soil do 
-      TileTerraPreta.grow(level, shape.get(shapeIndex), 1);
+    if (level instanceof ServerLevel sl) {
+      if (GrowthUtil.tryGrow(sl, shape.get(shapeIndex), 1)) {
+        //it worked so pay
+        tank.drain(WATERCOST.get(), FluidAction.EXECUTE);
+        //run it again since sprinkler costs fluid and therefore should double what the glass and soil do 
+        GrowthUtil.tryGrow(sl, shape.get(shapeIndex), 1);
+      }
     }
   }
 

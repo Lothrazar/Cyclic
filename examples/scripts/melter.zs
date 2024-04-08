@@ -7,5 +7,6 @@ var melter = <recipetype:cyclic:melter>;
 melter.removeRecipe("cyclic:melter/melter_snowwater");
 melter.removeRecipe("cyclic:melter/melter_expflesh", "cyclic:melter/melter_expblaze");
 
+
 melter.addRecipe("spruce_wayne", [<item:minecraft:sand>,<item:minecraft:spruce_trapdoor>], <fluid:cyclic:wax>*75, 500, 3);
 
