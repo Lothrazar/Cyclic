@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#minecraft:is_savanna",
-  "features": ["cyclic:flower_absalon","cyclic:flower_lime","cyclic:flower_purple"],
-  "step": "top_layer_modification"
-}
