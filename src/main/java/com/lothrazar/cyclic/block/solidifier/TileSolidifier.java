@@ -72,7 +72,8 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     final int cost = this.currentRecipe.getEnergy().getRfPertick();
-    if (energy.getEnergyStored() < cost && cost > 0) {
+    final int f = this.currentRecipe.getRecipeFluid().getAmount();
+    if ((energy.getEnergyStored() < cost && cost > 0) || (tank.getFluidAmount() < f && f > 0)) {
       return;
     }
     energy.extractEnergy(cost, false);
@@ -218,7 +219,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
-      tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
+      if(!level.isClientSide()) tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
       outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), false);
       return true;
     }
