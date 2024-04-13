@@ -71,19 +71,21 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       this.timer = 0;
       return;
     }
-    final int cost = this.currentRecipe.getEnergy().getRfPertick();
-    final int f = this.currentRecipe.getRecipeFluid().getAmount();
-    if ((energy.getEnergyStored() < cost && cost > 0) || (tank.getFluidAmount() < f && f > 0)) {
-      return;
+    final int energyCost = this.currentRecipe.getEnergy().getRfPertick();
+    final int fluidCost = this.currentRecipe.getRecipeFluid().getAmount();
+    if ((energy.getEnergyStored() < energyCost && energyCost > 0)
+        || (tank.getFluidAmount() < fluidCost && fluidCost > 0)) {
+      return; // not enough resources for the recipe
     }
-    energy.extractEnergy(cost, false);
+    energy.extractEnergy(energyCost, false);
     this.timer--;
     if (timer < 0) {
       timer = 0;
     }
     if (timer == 0 && this.tryProcessRecipe()) {
-      if (this.currentRecipe != null)
+      if (this.currentRecipe != null) { //if we processed AND looped back to it again
         this.timer = this.currentRecipe.getEnergy().getTicks();
+      }
     }
   }
 
@@ -147,7 +149,6 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     tag.put(NBTFLUID, fluid);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.put(NBTINV, inputSlots.serializeNBT());
-    //    ModCyclic.LOGGER.info("saveAd: " + inputSlots.serializeNBT().toString());
     tag.put("invoutput", outputSlots.serializeNBT());
     tag.putInt("burnTimeMax", this.burnTimeMax);
     super.saveAdditional(tag);
@@ -219,7 +220,9 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
-      if(!level.isClientSide()) tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
+      if (!level.isClientSide()) { // only drain serverside to avoid desync issues
+        tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
+      }
       outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), false);
       return true;
     }
