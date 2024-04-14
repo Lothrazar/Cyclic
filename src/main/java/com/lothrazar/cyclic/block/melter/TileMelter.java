@@ -67,6 +67,8 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     if (currentRecipe == null) {
       return;
     }
+    //Fixes sync issue entirely
+    if(level.isClientSide()) return;
     this.timer--;
     if (timer < 0) {
       timer = 0;
@@ -230,7 +232,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       //ok it has room for all the fluid none will be wasted
       inventory.getStackInSlot(0).shrink(1);
       inventory.getStackInSlot(1).shrink(1);
-      if (!level.isClientSide()) tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
+      tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
       return true;
     }
     return false;
