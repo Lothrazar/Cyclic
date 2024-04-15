@@ -44,6 +44,8 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.MELTER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
     progress = new TexturedProgress(font, 80, 19, 24, 17, TextureRegistry.ARROW);
+    bar.guiTop = -4;
+    bar.guiLeft = -2;
   }
 
   @Override
@@ -80,6 +82,6 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     builder.addSlot(RecipeIngredientRole.INPUT, 4, 19).addIngredients(recipe.at(0));
     builder.addSlot(RecipeIngredientRole.INPUT, 22, 19).addIngredients(recipe.at(1));
     List<FluidStack> matchingFluids = List.of(recipe.getRecipeFluid());
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 136, 19).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 132, 19).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }
 }

@@ -44,6 +44,8 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.SOLIDIFIER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
     progress = new TexturedProgress(font, 63, 25, 24, 17, TextureRegistry.ARROW);
+    bar.guiTop = -4;
+    bar.guiLeft = -2;
   }
 
   @Override
