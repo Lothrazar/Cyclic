@@ -75,11 +75,9 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
       ms.drawString(font, sec + " s", x, 6, FONT);
     }
     ms.drawString(font, recipe.energy.getRfPertick() + " RF/t", x, 16, FONT);
-    ms.drawString(font, recipe.energy.getEnergyTotal() + " RF", x, 26, FONT);
     if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
       ms.drawString(font, recipe.randOutput.percent + "%", 56, 36, FONT);
     }
-    
     bar.draw(ms, recipe.energy.getEnergyTotal());
     bar.renderHoveredToolTip(ms, (int) mouseX, (int) mouseY, recipe.energy.getEnergyTotal());
   }
