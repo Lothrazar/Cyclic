@@ -104,23 +104,23 @@ public class CyclicPluginJEI implements IModPlugin {
   @Override
   public void registerGuiHandlers(IGuiHandlerRegistration registry) {
     registry.addRecipeClickArea(ScreenMelter.class,
-        75, 20,
-        40, 26, MelterRecipeCategory.TYPE);
+    	68, 37,
+    	24, 17, MelterRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenSolidifier.class,
-        75, 20,
-        40, 26, SolidifierRecipeCategory.TYPE);
+    	68, 37,
+    	24, 17, SolidifierRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenGeneratorDrops.class,
-        10, 10,
-        40, 66, GenitemRecipeCategory.TYPE);
+        74, 58,
+        20, 20, GenitemRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenGeneratorFluid.class,
-        50, 8,
+        74, 58,
         20, 20, GenfluidRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenPackager.class,
-        60, 0,
-        60, 30, PackagerRecipeCategory.TYPE);
+        60, 4,
+        52, 12, PackagerRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenCrusher.class,
-        50, 0,
-        40, 30, CrusherRecipeCategory.TYPE);
+        76, 38,
+        20, 20, CrusherRecipeCategory.TYPE);
   }
 
   @Override
