@@ -43,7 +43,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.MELTER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
-    progress = new TexturedProgress(font, 80, 19, 24, 17, TextureRegistry.ARROW);
+    progress = new TexturedProgress(font, 58, 26, 24, 17, TextureRegistry.ARROW);
     bar.guiTop = -4;
     bar.guiLeft = -2;
   }
@@ -70,7 +70,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   @Override
   public void draw(RecipeMelter recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
-    ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 75, 9, FONT);
+    ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 58, 9, FONT);
     bar.draw(ms, recipe.getEnergy().getEnergyTotal());
     progress.draw(ms, 0);
     bar.renderHoveredToolTip(ms, (int) mouseX, (int) mouseY, recipe.getEnergy().getEnergyTotal());
