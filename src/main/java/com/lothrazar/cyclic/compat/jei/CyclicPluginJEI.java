@@ -110,11 +110,11 @@ public class CyclicPluginJEI implements IModPlugin {
     	68, 37,
     	24, 17, SolidifierRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenGeneratorDrops.class,
-        74, 58,
-        20, 20, GenitemRecipeCategory.TYPE);
+        38, 6,
+        100, 10, GenitemRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenGeneratorFluid.class,
-        74, 58,
-        20, 20, GenfluidRecipeCategory.TYPE);
+        28, 6,
+        120, 10, GenfluidRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenPackager.class,
         60, 4,
         52, 12, PackagerRecipeCategory.TYPE);
