@@ -121,6 +121,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
     ArrayList<Fluid> fluids = new ArrayList<>();
     for (RecipeGeneratorFluid recipe : recipes) {
       fluids.add(recipe.getRecipeFluid().getFluid());
+      fluids.addAll(recipe.getFluidsFromTag());
     }
     return fluids;
   }
