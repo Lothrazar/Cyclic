@@ -25,7 +25,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "packager");
   static final RecipeType<CraftingRecipe> TYPE = new RecipeType<>(ID, CraftingRecipe.class);
-  Minecraft instance;
+  Minecraft instance; // since we call on this so often for recipe validatoin, cache one copy of it for the duration
   private IDrawable gui;
   private IDrawable icon;
 

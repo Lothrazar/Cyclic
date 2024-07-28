@@ -26,7 +26,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
 
-  private static final int FONT = 4210752;
+  private static final int FONT = 0xFFFFFFFF;
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "crusher");
   static final RecipeType<RecipeCrusher> TYPE = new RecipeType<>(ID, RecipeCrusher.class);
   private IDrawable gui;

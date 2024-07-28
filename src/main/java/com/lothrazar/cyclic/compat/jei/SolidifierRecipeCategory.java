@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
 
-  private static final int FONT = 4210752;
+  private static final int FONT = 0xFFFFFFFF;
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "solidifier");
   static final RecipeType<RecipeSolidifier> TYPE = new RecipeType<>(ID, RecipeSolidifier.class);
   private IDrawable gui;

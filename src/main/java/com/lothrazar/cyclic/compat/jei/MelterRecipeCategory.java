@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
-  private static final int FONT = 4210752;
+  private static final int FONT = 0xFFFFFFFF;
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "melter");
   static final RecipeType<RecipeMelter> TYPE = new RecipeType<>(ID, RecipeMelter.class);
   private IDrawable gui;

@@ -29,6 +29,7 @@ public class ContainerCrusher extends ContainerBase {
     });
     addSlot(new SlotItemHandler(tile.outputSlots, 0, 105 + 4, 21 + 4) {
 
+      // do not allow player place stuff in output slot
       @Override
       public boolean mayPlace(ItemStack stack) {
         return false;
@@ -41,6 +42,7 @@ public class ContainerCrusher extends ContainerBase {
     });
     addSlot(new SlotItemHandler(tile.outputSlots, 1, 109, 55) {
 
+      // do not allow player place stuff in output-bonus slot
       @Override
       public boolean mayPlace(ItemStack stack) {
         return false;

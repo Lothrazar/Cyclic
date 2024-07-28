@@ -238,8 +238,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
 			  gridStacks.removeAll(lolbit);
 		  }
 	  }
-	  if(gridStacks.isEmpty()) return true;
-	  return false;
+	  return gridStacks.isEmpty();
   }
   
   //TODO:? re-write this whole thing using ASSEMBLE?

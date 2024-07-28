@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorItem> {
 
-  private static final int FONT = 4210752;
+  private static final int FONT = 0xFFFFFFFF;
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "generator_item");
   static final RecipeType<RecipeGeneratorItem> TYPE = new RecipeType<>(ID, RecipeGeneratorItem.class);
   private IDrawable gui;

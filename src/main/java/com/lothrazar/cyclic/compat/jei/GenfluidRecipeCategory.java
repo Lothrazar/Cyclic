@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFluid> {
 
-  private static final int FONT = 4210752;
+  private static final int FONT = 0xFFFFFFFF;
   static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "generator_fluid");
   static final RecipeType<RecipeGeneratorFluid> TYPE = new RecipeType<>(ID, RecipeGeneratorFluid.class);
   private IDrawable gui;

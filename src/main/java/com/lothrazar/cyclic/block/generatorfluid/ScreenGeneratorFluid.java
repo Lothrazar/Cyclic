@@ -58,7 +58,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     this.renderTooltip(gg, mouseX, mouseY);
     energy.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getEnergy());
     progress.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
-    //fluid.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getFluid());
+
     btnRedstone.onValueUpdate(menu.tile);
     var pose = gg.pose();
     pose.pushPose();
@@ -68,7 +68,6 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     Vector4f vec = new Vector4f(mouseX, mouseY, 0, 1);
     // 
     vec = pose.last().pose().transform(vec);
-    //    vec.transform(ms.last().pose());
     pose.popPose(); //Look, it's a bit hacky, but it gets the job done.  Rotation Math!
     if (fluid.isMouseover((int) vec.x(), (int) vec.y())) {
       fluid.renderTooltip(gg, mouseX, mouseY, menu.tile.getFluid());
