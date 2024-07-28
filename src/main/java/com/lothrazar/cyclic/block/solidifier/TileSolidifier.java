@@ -72,9 +72,11 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     //Fixes sync issue entirely
-    if(level.isClientSide()) return;
+    if(level.isClientSide()) { return; }
     //Checks if there is space in the output slot
-    if(this.outputSlots.getStackInSlot(0).getCount() > 64 - currentRecipe.getResultItem(level.registryAccess()).getCount()) return;
+    var res = currentRecipe.getResultItem(level.registryAccess());
+    var max = res.getMaxStackSize();
+    if(this.outputSlots.getStackInSlot(0).getCount() > max - res.getCount()){ return; }
     final int energyCost = this.currentRecipe.getEnergy().getRfPertick();
     final int fluidCost = this.currentRecipe.getRecipeFluid().getAmount();
     if ((energy.getEnergyStored() < energyCost && energyCost > 0)

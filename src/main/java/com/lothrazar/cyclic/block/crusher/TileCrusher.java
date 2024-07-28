@@ -116,8 +116,11 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
         return;
     }
     //Checks if there is space in the output slots before processing
-    if(outputSlots.getStackInSlot(0).getCount() > 64 - currentRecipe.getResultItem(level.registryAccess()).copy().getCount()) return;
-    if(outputSlots.getStackInSlot(1).getCount() > 64 - currentRecipe.randOutput.bonus.getCount()) return;
+    var res = currentRecipe.getResultItem(level.registryAccess()).copy();
+    var max = res.getMaxStackSize();
+    if(outputSlots.getStackInSlot(0).getCount() > max - res.getCount()) { return; }
+    max = currentRecipe.randOutput.bonus.getMaxStackSize();
+    if(outputSlots.getStackInSlot(1).getCount() > max - currentRecipe.randOutput.bonus.getCount()) { return; }
     
     if (this.burnTime <= 0 && this.currentRecipe != null) {
       this.burnTimeMax = 0;
