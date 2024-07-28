@@ -71,6 +71,10 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       this.timer = 0;
       return;
     }
+    //Fixes sync issue entirely
+    if(level.isClientSide()) return;
+    //Checks if there is space in the output slot
+    if(this.outputSlots.getStackInSlot(0).getCount() > 64 - currentRecipe.getResultItem(level.registryAccess()).getCount()) return;
     final int energyCost = this.currentRecipe.getEnergy().getRfPertick();
     final int fluidCost = this.currentRecipe.getRecipeFluid().getAmount();
     if ((energy.getEnergyStored() < energyCost && energyCost > 0)
@@ -220,9 +224,9 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
-      if (!level.isClientSide()) { // only drain serverside to avoid desync issues
+      // if (!level.isClientSide()) { // only drain serverside to avoid desync issues # not needed anymore with above fix
         tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
-      }
+      // }
       outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), false);
       return true;
     }

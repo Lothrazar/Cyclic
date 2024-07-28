@@ -25,12 +25,14 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "packager");
   static final RecipeType<CraftingRecipe> TYPE = new RecipeType<>(ID, CraftingRecipe.class);
+  Minecraft instance;
   private IDrawable gui;
   private IDrawable icon;
 
   public PackagerRecipeCategory(IGuiHelper helper) {
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/packager.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.PACKAGER.get()));
+    instance = Minecraft.getInstance();
   }
 
   @Override
@@ -55,7 +57,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
 
   @Override
   public boolean isHandled(CraftingRecipe recipe) {
-    return UtilPackager.isRecipeValid(recipe, Minecraft.getInstance().level.registryAccess());
+    return UtilPackager.isRecipeValid(recipe, instance.level.registryAccess());
   }
 
   @Override
@@ -80,6 +82,6 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
       haxor.add(cpy);
     }
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(VanillaTypes.ITEM_STACK, haxor);
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 69, 8).addItemStack(recipe.getResultItem(instance.level.registryAccess()));
   }
 }

@@ -8,9 +8,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 
 public class PeatBlock extends BlockCyclic {
@@ -32,8 +32,9 @@ public class PeatBlock extends BlockCyclic {
     List<BlockPos> waters = new ArrayList<>();
     for (BlockPos p : around) {
       //try to bake if SOURCE water is nearby
-      Block bSide = world.getBlockState(p).getBlock();
-      if (bSide == Blocks.WATER) {
+      //using FluidState instead of Block
+      FluidState fluid = world.getFluidState(p);
+      if (fluid.getType() == Fluids.WATER.getSource()) {
         sidesWet++;
         waters.add(p);
       }

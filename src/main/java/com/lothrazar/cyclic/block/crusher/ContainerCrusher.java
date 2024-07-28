@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -29,12 +30,22 @@ public class ContainerCrusher extends ContainerBase {
     addSlot(new SlotItemHandler(tile.outputSlots, 0, 105 + 4, 21 + 4) {
 
       @Override
+      public boolean mayPlace(ItemStack stack) {
+        return false;
+      }
+      
+      @Override
       public void setChanged() {
         tile.setChanged();
       }
     });
     addSlot(new SlotItemHandler(tile.outputSlots, 1, 109, 55) {
 
+      @Override
+      public boolean mayPlace(ItemStack stack) {
+        return false;
+      }
+    	
       @Override
       public void setChanged() {
         tile.setChanged();

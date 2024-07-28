@@ -47,8 +47,8 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     this.needsRedstone = 0;
   }
 
-  public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrusher tileAnvilAuto) {
-    tileAnvilAuto.tick();
+  public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrusher e) {
+    e.tick();
   }
 
   public static <E extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCrusher e) {
@@ -111,6 +111,14 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     if (level.isClientSide) {
       return;
     }
+    if (currentRecipe == null) {
+        this.findMatchingRecipe();
+        return;
+    }
+    //Checks if there is space in the output slots before processing
+    if(outputSlots.getStackInSlot(0).getCount() > 64 - currentRecipe.getResultItem(level.registryAccess()).copy().getCount()) return;
+    if(outputSlots.getStackInSlot(1).getCount() > 64 - currentRecipe.randOutput.bonus.getCount()) return;
+    
     if (this.burnTime <= 0 && this.currentRecipe != null) {
       this.burnTimeMax = 0;
       this.burnTime = 0;
@@ -132,10 +140,6 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     // if MAX is zero, we are not currently burning 
     if (this.burnTime <= 0 && this.burnTimeMax == 0) {
       this.findMatchingRecipe();
-    }
-    if (currentRecipe == null) {
-      this.findMatchingRecipe();
-      return;
     }
     if (this.burnTimeMax > 0) {
       setLitProperty(true); // has recipe so lit

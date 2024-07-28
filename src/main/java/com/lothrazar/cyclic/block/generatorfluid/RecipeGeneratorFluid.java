@@ -1,5 +1,7 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
+import java.util.List;
+
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
@@ -10,13 +12,16 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
 
@@ -61,6 +66,12 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
     return fluidIng.getFluidStack();
   }
 
+  public List<Fluid> getFluidsFromTag() {
+	TagKey<Fluid> tag = ForgeRegistries.FLUIDS.tags().createTagKey(new ResourceLocation(this.fluidIng.getTag()));
+	List<Fluid> list = ForgeRegistries.FLUIDS.tags().getTag(tag).stream().toList();
+	return list;
+  }
+  
   @Override
   public boolean matches(TileGeneratorFluid inv, Level worldIn) {
     try {

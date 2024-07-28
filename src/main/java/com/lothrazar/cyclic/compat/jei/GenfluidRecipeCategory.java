@@ -61,12 +61,13 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
     ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
     ms.drawString(font, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
     ms.drawString(font, recipe.getRfTotal() + " RF", 60, 20, FONT);
+    //ms.drawString(font, recipe.fluidIng.getAmount() + " mB", 60, 30, FONT);
   }
 
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeGeneratorFluid recipe, IFocusGroup focuses) {
     List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
-    builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids);
+    builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }
   //keep old code for reference
   //
