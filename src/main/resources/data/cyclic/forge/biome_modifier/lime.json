@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "#cyclic:has_flower/absalon",
-  "features": "cyclic:flower_absalon",
+  "biomes": "#cyclic:has_flower/lime",
+  "features": "cyclic:flower_lime",
   "step": "vegetal_decoration"
 }
