@@ -58,7 +58,6 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     this.renderTooltip(gg, mouseX, mouseY);
     energy.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getEnergy());
     progress.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getField(TileGeneratorFluid.Fields.TIMER.ordinal()));
-
     btnRedstone.onValueUpdate(menu.tile);
     var pose = gg.pose();
     pose.pushPose();

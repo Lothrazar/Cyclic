@@ -45,7 +45,7 @@ public class BlockWirelessTransmit extends BlockCyclic {
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(POWERED);
   }
-  
+
   @Override // was onReplaced
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {

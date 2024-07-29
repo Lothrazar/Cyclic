@@ -16,7 +16,6 @@ public class ScreenLunchbox extends ScreenBase<ContainerLunchbox> {
   @Override
   protected void init() {
     super.init();
-    //    CompoundTag nbt = this.menu.bag.getOrCreateTag();
   }
 
   @Override

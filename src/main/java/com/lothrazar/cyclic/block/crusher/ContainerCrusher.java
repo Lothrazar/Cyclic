@@ -34,7 +34,7 @@ public class ContainerCrusher extends ContainerBase {
       public boolean mayPlace(ItemStack stack) {
         return false;
       }
-      
+
       @Override
       public void setChanged() {
         tile.setChanged();
@@ -47,7 +47,7 @@ public class ContainerCrusher extends ContainerBase {
       public boolean mayPlace(ItemStack stack) {
         return false;
       }
-    	
+
       @Override
       public void setChanged() {
         tile.setChanged();

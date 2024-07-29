@@ -68,6 +68,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
     return UseAnim.EAT;
   }
 
+  // Show durability if our lunchbox has tagData, meaning it has or had food
   @Override
   public boolean isBarVisible(ItemStack stack) {
     return stack.hasTag() || super.isBarVisible(stack);
@@ -119,7 +120,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    if (!worldIn.isClientSide && entityLiving instanceof Player player) {
+    if (!worldIn.isClientSide && entityLiving instanceof Player player) { // && !player.isCrouching()
       IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
       if (handler != null) {
         ItemStack found = ItemStack.EMPTY;
@@ -132,6 +133,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
           }
         }
         if (!found.isEmpty()) {
+          // found is edible and is not on cooldown
           ChatUtil.addServerChatMessage(player, found.getDisplayName());
           //          entityLiving.eat(worldIn, found); 
           //moved from. eat() to forwarding the .finishUsingItem call
@@ -146,7 +148,6 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
-    //    ItemStack itemstack = player.getItemInHand(handIn);
     if (player.isCrouching()) {
       if (!worldIn.isClientSide) {
         NetworkHooks.openScreen((ServerPlayer) player, new ContainerProviderLunchbox(), player.blockPosition());
@@ -181,5 +182,29 @@ public class ItemLunchbox extends ItemBaseCyclic {
       return 0x000000FF; //  0xFFFF0011;
     }
     return 0xFFFFFFFF;
+  }
+
+  /**
+   * for use by Item slot GUI Screen interactions. Mouse is holding an item to be inserted into a closed luncbbox from a different GUI
+   *
+   * @param lunchbox
+   *          assumes this is a valid lunchbox with item as instance of this
+   * @param itemFoodMouse
+   *          a valid food item nonempty and not a lunchbox
+   * @param player
+   *          instance that is doing the insert
+   */
+  public static void insertFoodIntoLunchbox(ItemStack lunchbox, ItemStack itemFoodMouse, ServerPlayer player) {
+    IItemHandler boxCap = lunchbox.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    if (boxCap == null) {
+      return;
+    }
+    //try to put/stack into each slot
+    int i = 0;
+    while (i < boxCap.getSlots()) {
+      itemFoodMouse = boxCap.insertItem(i, itemFoodMouse, false);
+      i++;
+    }
+    player.containerMenu.setCarried(itemFoodMouse);
   }
 }

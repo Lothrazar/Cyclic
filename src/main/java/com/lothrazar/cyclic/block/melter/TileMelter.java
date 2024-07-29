@@ -68,7 +68,9 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     //Fixes sync issue entirely
-    if(level.isClientSide()) return;
+    if (level.isClientSide()) {
+      return;
+    }
     this.timer--;
     if (timer < 0) {
       timer = 0;

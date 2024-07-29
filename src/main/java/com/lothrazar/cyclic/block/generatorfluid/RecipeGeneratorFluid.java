@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
 import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
@@ -67,11 +66,11 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
   }
 
   public List<Fluid> getFluidsFromTag() {
-	TagKey<Fluid> tag = ForgeRegistries.FLUIDS.tags().createTagKey(new ResourceLocation(this.fluidIng.getTag()));
-	List<Fluid> list = ForgeRegistries.FLUIDS.tags().getTag(tag).stream().toList();
-	return list;
+    TagKey<Fluid> tag = ForgeRegistries.FLUIDS.tags().createTagKey(new ResourceLocation(this.fluidIng.getTag()));
+    List<Fluid> list = ForgeRegistries.FLUIDS.tags().getTag(tag).stream().toList();
+    return list;
   }
-  
+
   @Override
   public boolean matches(TileGeneratorFluid inv, Level worldIn) {
     try {

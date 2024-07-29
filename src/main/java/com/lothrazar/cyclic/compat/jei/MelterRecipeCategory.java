@@ -39,7 +39,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   private TexturedProgress progress;
 
   public MelterRecipeCategory(IGuiHelper helper) {
-	font = Minecraft.getInstance().font;
+    font = Minecraft.getInstance().font;
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.MELTER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);

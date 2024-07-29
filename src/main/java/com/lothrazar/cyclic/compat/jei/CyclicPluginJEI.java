@@ -104,11 +104,11 @@ public class CyclicPluginJEI implements IModPlugin {
   @Override
   public void registerGuiHandlers(IGuiHandlerRegistration registry) {
     registry.addRecipeClickArea(ScreenMelter.class,
-    	68, 37,
-    	24, 17, MelterRecipeCategory.TYPE);
+        68, 37,
+        24, 17, MelterRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenSolidifier.class,
-    	68, 37,
-    	24, 17, SolidifierRecipeCategory.TYPE);
+        68, 37,
+        24, 17, SolidifierRecipeCategory.TYPE);
     registry.addRecipeClickArea(ScreenGeneratorDrops.class,
         38, 6,
         100, 10, GenitemRecipeCategory.TYPE);

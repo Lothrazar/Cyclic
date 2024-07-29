@@ -86,15 +86,15 @@ public class ClientInputEvents {
           if (stackTarget.getItem() instanceof ItemLunchbox
               && mc.player != null
               && mc.player.containerMenu != null) {
-            //
             ItemStack maybeFood = mc.player.containerMenu.getCarried();
-            //
             if (maybeFood.isEdible()) {
+              // inserting food must be done onMouse Released event
+              // this is important. opening screens is on the other event
+              // send the slot and info to the server to process with the lunchbox
               int slotId = gui.getSlotUnderMouse().getContainerSlot();
               SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.get());
               PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotId, stackTarget.getItem()));
               event.setCanceled(true);
-              return;
             }
           }
         }
@@ -104,6 +104,7 @@ public class ClientInputEvents {
 
   @SubscribeEvent(priority = EventPriority.HIGH) // WAS MouseClickedEvent
   public void onMouseEvent(ScreenEvent.MouseButtonPressed.Pre event) {
+    Minecraft mc = Minecraft.getInstance();
     if (event.getScreen() == null || !(event.getScreen() instanceof AbstractContainerScreen<?>)) {
       return;
     }
@@ -124,6 +125,14 @@ public class ClientInputEvents {
               PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
               event.setCanceled(true);
             }
+        else if (maybeCharm.getItem() instanceof ItemLunchbox) {
+          // if you have an EMPTY hand, use this to open the GUI screen of the lunchbox
+          ItemStack maybeFood = mc.player.containerMenu.getCarried();
+          if (maybeFood.isEmpty()) {
+            PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
+            event.setCanceled(true);
+          }
+        }
       }
     }
     catch (Exception e) { //array out of bounds, or we are in a strange third party GUI that doesnt have slots like this

@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.item.crafting;
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainerProvider;
+import com.lothrazar.cyclic.item.lunchbox.ContainerProviderLunchbox;
+import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import com.lothrazar.cyclic.item.storagebag.StorageBagContainerProvider;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -29,27 +31,18 @@ public class PacketItemGui extends PacketFlib {
   public static void handle(PacketItemGui message, Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       ServerPlayer player = ctx.get().getSender();
-      //      if (message.item == ItemRegistry.STORAGE_BAG.get() && (player.containerMenu instanceof ContainerStorageBag) == false) {
-      //        NetworkHooks.openScreen(player, new StorageBagContainerProvider(message.slot), buf -> buf.writeInt(message.slot));
-      //      }
       if (message.item == ItemRegistry.LUNCHBOX.get()) {
         //put the food in the lunchbox
         ItemStack itemFoodMouse = player.containerMenu.getCarried();
-        if (itemFoodMouse.isEmpty() || !itemFoodMouse.isEdible()) {
-          return; //its not food
+        if (itemFoodMouse.isEmpty()) {
+          //right click on mouse-empty-holding means open the GUI like the stick
+          NetworkHooks.openScreen(player, new ContainerProviderLunchbox(), buf -> buf.writeInt(message.slot));
         }
-        ItemStack lunchbox = player.getInventory().getItem(message.slot);//why is it air
-        IItemHandler boxCap = lunchbox.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-        if (boxCap == null) {
-          return;
+        else if (itemFoodMouse.isEdible()) {
+          ItemStack lunchbox = player.getInventory().getItem(message.slot);//why is it air
+          ItemLunchbox.insertFoodIntoLunchbox(lunchbox, itemFoodMouse, player);
         }
-        //try to put/stack into each slot
-        int i = 0;
-        while (i < boxCap.getSlots()) {
-          itemFoodMouse = boxCap.insertItem(i, itemFoodMouse, false);
-          i++;
-        }
-        player.containerMenu.setCarried(itemFoodMouse);
+        //else it is not edible so do nothing
       } // end of lunchbox flow
       else if (message.item == ItemRegistry.STORAGE_BAG.get() && (player.containerMenu instanceof ContainerStorageBag) == false) {
         NetworkHooks.openScreen(player, new StorageBagContainerProvider(message.slot), buf -> buf.writeInt(message.slot));

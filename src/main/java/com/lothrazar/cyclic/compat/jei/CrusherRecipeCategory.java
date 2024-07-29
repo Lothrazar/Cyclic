@@ -35,7 +35,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   private EnergyBar bar;
 
   public CrusherRecipeCategory(IGuiHelper helper) {
-	font = Minecraft.getInstance().font;
+    font = Minecraft.getInstance().font;
     gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.CRUSHER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
