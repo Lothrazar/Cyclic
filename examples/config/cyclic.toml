@@ -248,7 +248,7 @@
 
 		[cyclic.blocks.disenchanter]
 			#Power per use disenchanter
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 2500
 			#Cost of (or payment for if negative) per enchanted book generated
 			#Range: -1000 ~ 16000
@@ -256,12 +256,12 @@
 
 		[cyclic.blocks.anvil]
 			#Power per repair anvil
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 250
 
 		[cyclic.blocks.dropper]
 			#Power per use dropper
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 50
 
 		[cyclic.blocks.water_candle]
@@ -269,15 +269,15 @@
 			#Range: 1 ~ 64
 			radius = 8
 			#Tick rate of the candle
-			#Range: 1 ~ 2000
+			#Range: > 1
 			tick_rate = 60
 
 		[cyclic.blocks.teleport]
 			#Power per use
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 400
 			#Power per use while crossing dimensions
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost_xdim = 8000
 
 		[cyclic.blocks.sound]
@@ -288,22 +288,25 @@
 		#battery settings
 		[cyclic.blocks.battery]
 			#RF/t charging rate for the battery item slot
-			#Range: 1 ~ 6400000
+			#Range: > 1
 			charge = 8000
+			#Maximum storage capacity; default 6400000 [warning: energy contents of items in world may be reset when changing this value]
+			#Range: > 1
+			capacity = 6400000
 
 		[cyclic.blocks.generator_fuel]
 			#RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks
-			#Range: 1 ~ 6400
+			#Range: > 1
 			rf_per_tick = 80
 
 		[cyclic.blocks.peat_farm]
 			#Power per use peat_farm
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 500
 
 		[cyclic.blocks.miner]
 			#Power per use miner
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 10
 
 		#fisher settings
@@ -317,17 +320,17 @@
 
 		[cyclic.blocks.harvester]
 			#Power per use harvester
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 250
 
 		[cyclic.blocks.forester]
 			#Power per use forester
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 50
 
 		[cyclic.blocks.crafter]
 			#Power per use crafter
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 500
 
 		[cyclic.blocks.sponge_lava]
@@ -337,7 +340,7 @@
 
 		[cyclic.blocks.anvil_void]
 			#Payment per void action, if not zero
-			#Range: 0 ~ 16000
+			#Range: > 0
 			fluid_cost = 25
 
 		#Ender Trigger settings
@@ -395,6 +398,12 @@
 			#Range: 1 ~ 16
 			radius = 6
 
+		#battery_clay settings
+		[cyclic.blocks.battery_clay]
+			#Maximum storage capacity; default 16000 [warning: energy contents of items in world may be reset when changing this value]
+			#Range: > 1
+			capacity = 16000
+
 		[cyclic.blocks.cables]
 
 			[cyclic.blocks.cables.fluid]
@@ -402,23 +411,23 @@
 				#Range: 1 ~ 32
 				buffer = 16
 				#How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode
-				#Range: 100 ~ 32000
-				flow = 1000
+				#Range: > 100
+				flow = 16000
 
 			[cyclic.blocks.cables.energy]
 				#How much buffer the energy cables hold (must not be smaller than flow)
-				#Range: 1 ~ 128000
+				#Range: > 1
 				buffer = 32000
 				#How fast energy flows in these cables (must not be greater than buffer)
-				#Range: 100 ~ 32000
-				flow = 1000
+				#Range: > 100
+				flow = 32000
 
 		[cyclic.blocks.generator_food]
 			#RF energy per tick generated while burning food in this machine
-			#Range: 1 ~ 6400
+			#Range: > 1
 			rf_per_tick = 60
 			#This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.
-			#Range: 1 ~ 6400
+			#Range: > 1
 			ticks_per_food = 100
 
 		[cyclic.blocks.magnet_block]
@@ -428,17 +437,17 @@
 
 		[cyclic.blocks.packager]
 			#Power per recipe in the packager
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 50
 
 		[cyclic.blocks.collector_fluid]
 			#Power per use collector_fluid
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 500
 
 		[cyclic.blocks.structure]
 			#Power per tick while in use
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 10
 
 		#Ender shelf settings
@@ -452,15 +461,15 @@
 
 		[cyclic.blocks.uncraft]
 			#Power per use uncraft
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 1000
 
 		[cyclic.blocks.generator_solar]
 			#Ticks between power gen interval. Example: 40 ticks is 2 seconds. 0 means every tick it generates
-			#Range: 0 ~ 6400
+			#Range: > 0
 			ticks = 60
 			#Base level of solar power generation (affected by weather contitions).
-			#Range: 1 ~ 100
+			#Range: > 1
 			energy = 4
 
 		[cyclic.blocks.beacon]
@@ -507,7 +516,7 @@
 
 		[cyclic.blocks.user]
 			#Power per use user
-			#Range: 0 ~ 64000
+			#Range: > 0
 			energy_cost = 0
 
 	#####################################################################################

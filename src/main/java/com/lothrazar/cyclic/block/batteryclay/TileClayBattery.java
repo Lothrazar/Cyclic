@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -22,12 +23,14 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static final int MAX = 16000; // TODO: Config
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  public static IntValue MAX;
+  CustomEnergyStorage energy;
+  private LazyOptional<IEnergyStorage> energyCap;
 
   public TileClayBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY_CLAY.get(), pos, state);
+    energy = new CustomEnergyStorage(MAX.get(), MAX.get() / 4);
+    energyCap = LazyOptional.of(() -> energy);
   }
 
   @Override
@@ -51,7 +54,7 @@ public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvid
   public void tick() {
     this.syncEnergy();
     if (this.isPowered()) {
-      moveEnergy(Direction.DOWN, MAX / 160);
+      moveEnergy(Direction.DOWN, MAX.get() / 4);
     }
   }
 

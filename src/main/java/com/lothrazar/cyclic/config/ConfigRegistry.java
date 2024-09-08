@@ -15,6 +15,7 @@ import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
 import com.lothrazar.cyclic.block.battery.TileBattery;
+import com.lothrazar.cyclic.block.batteryclay.TileClayBattery;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotionBeacon;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
@@ -519,9 +520,15 @@ public class ConfigRegistry extends ConfigTemplate {
     CFG.pop(); // eye_teleport
     //
     //
+    CFG.comment("battery_clay settings").push("battery_clay");
+    TileClayBattery.MAX = CFG.comment("Maximum storage capacity; default 16000 [warning: energy contents of items in world may be reset when changing this value]")
+        .defineInRange("capacity", 16000, 1, Integer.MAX_VALUE);
+    CFG.pop();
     CFG.comment("battery settings").push("battery");
     TileBattery.SLOT_CHARGING_RATE = CFG.comment("RF/t charging rate for the battery item slot")
         .defineInRange("charge", 8000, 1, Integer.MAX_VALUE);
+    TileBattery.MAX = CFG.comment("Maximum storage capacity; default 6400000 [warning: energy contents of items in world may be reset when changing this value]")
+        .defineInRange("capacity", 6400000, 1, Integer.MAX_VALUE);
     CFG.pop();
     //
     //

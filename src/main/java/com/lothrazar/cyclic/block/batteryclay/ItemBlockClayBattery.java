@@ -74,7 +74,7 @@ public class ItemBlockClayBattery extends BlockItem {
 
   @Override
   public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new CapabilityProviderEnergyStack(TileClayBattery.MAX);
+    return new CapabilityProviderEnergyStack(TileClayBattery.MAX.get());
   }
 
   // ShareTag for server->client capability data sync

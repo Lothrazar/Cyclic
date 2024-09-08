@@ -28,11 +28,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static final int MAX = 6400000;
+  public static IntValue MAX;
   public static IntValue SLOT_CHARGING_RATE;
   private Map<Direction, Boolean> poweredSides;
-  final CustomEnergyStorage energy;//= new CustomEnergyStorage(MAX, MAX / 4);
-  private final LazyOptional<IEnergyStorage> energyCap;//= LazyOptional.of(() -> energy);
+  final CustomEnergyStorage energy;
+  private final LazyOptional<IEnergyStorage> energyCap;
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
@@ -52,7 +52,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY.get(), pos, state);
-    energy = new CustomEnergyStorage(MAX, MAX / 4);
+    energy = new CustomEnergyStorage(MAX.get(), MAX.get());
     energyCap = LazyOptional.of(() -> energy);
     flowing = 0;
     poweredSides = new ConcurrentHashMap<Direction, Boolean>();
@@ -109,7 +109,8 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public EnumBatteryPercent calculateRoundedPercentFilled() {
-    int percent = (int) Math.floor((this.getEnergy() * 1.0F) / MAX * 10.0) * 10;
+    int max = MAX.get();
+    int percent = (int) Math.floor((this.getEnergy() * 1.0F) / max * 10.0) * 10;
     //    ut.printf("%d / %d = %d percent%n", this.getEnergy(), MAX, percent);
     if (percent >= 100) {
       return EnumBatteryPercent.ONEHUNDRED;
@@ -192,7 +193,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   private void tickCableFlow() {
     for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
-        moveEnergy(exportToSide, MAX / 4);
+        moveEnergy(exportToSide, MAX.get() / 4);
       }
     }
   }
