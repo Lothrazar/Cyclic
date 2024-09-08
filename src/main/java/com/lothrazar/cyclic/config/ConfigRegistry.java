@@ -432,22 +432,22 @@ public class ConfigRegistry extends ConfigTemplate {
     TileCableFluid.BUFFERSIZE = CFG.comment("How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);
     TileCableFluid.TRANSFER_RATE = CFG.comment("How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode")
-        .defineInRange("cables.fluid.flow", 1000, 100, 32 * 1000);
+        .defineInRange("cables.fluid.flow", 16000, 100, Integer.MAX_VALUE);
     TileCableEnergy.BUFFERSIZE = CFG.comment("How much buffer the energy cables hold (must not be smaller than flow)")
-        .defineInRange("cables.energy.buffer", 32000, 1, 32000 * 4);
+        .defineInRange("cables.energy.buffer", 32000, 1, Integer.MAX_VALUE);
     TileCableEnergy.TRANSFER_RATE = CFG.comment("How fast energy flows in these cables (must not be greater than buffer)")
-        .defineInRange("cables.energy.flow", 1000, 100, 32 * 1000);
+        .defineInRange("cables.energy.flow", 32000, 100, Integer.MAX_VALUE);
     //
     TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
-        .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
+        .defineInRange("generator_fuel.rf_per_tick", 80, 1, Integer.MAX_VALUE);
     TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")
-        .defineInRange("generator_food.rf_per_tick", 60, 1, 6400);
+        .defineInRange("generator_food.rf_per_tick", 60, 1, Integer.MAX_VALUE);
     TileGeneratorFood.TICKS_PER_FOOD = CFG.comment("This [factor * (item.food + item.saturation) = ticks] results in the number of ticks food will burn at. IE Bread has (5 + 0.6) with factor 100, will burn for 560 ticks.")
-        .defineInRange("generator_food.ticks_per_food", 100, 1, 6400);
+        .defineInRange("generator_food.ticks_per_food", 100, 1, Integer.MAX_VALUE);
     BlockGeneratorSolar.ENERGY_GENERATE = CFG.comment("Base level of solar power generation (affected by weather contitions).")
-        .defineInRange("generator_solar.energy", 4, 1, 100);
+        .defineInRange("generator_solar.energy", 4, 1, Integer.MAX_VALUE);
     BlockGeneratorSolar.TIMEOUT = CFG.comment("Ticks between power gen interval. Example: 40 ticks is 2 seconds. 0 means every tick it generates")
-        .defineInRange("generator_solar.ticks", 60, 0, 6400);
+        .defineInRange("generator_solar.ticks", 60, 0, Integer.MAX_VALUE);
     LavaSpongeBlock.RADIUS = CFG.comment("Reach of the sponge").defineInRange("sponge_lava.radius", 8, 1, 64);
     CandlePeaceBlock.HEIGHT = CFG.comment("Height reach of the candle for spawn prevention").defineInRange("peace_candle.height", 4, 0, 512);
     CandlePeaceBlock.RADIUS = CFG.comment("Reach of the candle for spawn prevention").defineInRange("peace_candle.radius", 32, 0, 64);
@@ -457,22 +457,22 @@ public class ConfigRegistry extends ConfigTemplate {
     BlockAltarNoTraders.HEIGHT = CFG.comment("Height reach of the no_soliciting for spawn prevention").defineInRange("no_soliciting.height", 4, 0, 512);
     BlockAltarNoTraders.RADIUS = CFG.comment("Reach of the no_soliciting for spawn prevention").defineInRange("no_soliciting.radius", 32, 0, 64);
     CandleWaterBlock.RADIUS = CFG.comment("Reach of the candle").defineInRange("water_candle.radius", 8, 1, 64);
-    CandleWaterBlock.TICK_RATE = CFG.comment("Tick rate of the candle").defineInRange("water_candle.tick_rate", 60, 1, 2000);
-    TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, 64000);
-    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user.energy_cost", 0, 0, 64000);
-    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, 64000);
-    TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper.energy_cost", 50, 0, 64000);
-    TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester.energy_cost", 50, 0, 64000);
-    TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester.energy_cost", 250, 0, 64000);
-    TilePotionBeacon.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon.energy_cost", 10, 0, 64000);
-    TileMiner.POWERCONF = CFG.comment("Power per use miner").defineInRange("miner.energy_cost", 10, 0, 64000);
-    TileUncraft.POWERCONF = CFG.comment("Power per use uncraft").defineInRange("uncraft.energy_cost", 1000, 0, 64000);
-    TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid.energy_cost", 500, 0, 64000);
-    TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm.energy_cost", 500, 0, 64000);
-    TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter.energy_cost", 500, 0, 64000);
-    TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure.energy_cost", 10, 0, 64000);
-    BlockTeleport.POWERCONF = CFG.comment("Power per use").defineInRange("teleport.energy_cost", 400, 0, 64000);
-    BlockTeleport.COSTDIM = CFG.comment("Power per use while crossing dimensions").defineInRange("teleport.energy_cost_xdim", 8000, 0, 64000);
+    CandleWaterBlock.TICK_RATE = CFG.comment("Tick rate of the candle").defineInRange("water_candle.tick_rate", 60, 1, Integer.MAX_VALUE);
+    TilePackager.POWERCONF = CFG.comment("Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, Integer.MAX_VALUE);
+    TileUser.POWERCONF = CFG.comment("Power per use user").defineInRange("user.energy_cost", 0, 0, Integer.MAX_VALUE);
+    TileAnvilAuto.POWERCONF = CFG.comment("Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, Integer.MAX_VALUE);
+    TileDropper.POWERCONF = CFG.comment("Power per use dropper").defineInRange("dropper.energy_cost", 50, 0, Integer.MAX_VALUE);
+    TileForester.POWERCONF = CFG.comment("Power per use forester").defineInRange("forester.energy_cost", 50, 0, Integer.MAX_VALUE);
+    TileHarvester.POWERCONF = CFG.comment("Power per use harvester").defineInRange("harvester.energy_cost", 250, 0, Integer.MAX_VALUE);
+    TilePotionBeacon.POWERCONF = CFG.comment("Power per tick beacon").defineInRange("beacon.energy_cost", 10, 0, Integer.MAX_VALUE);
+    TileMiner.POWERCONF = CFG.comment("Power per use miner").defineInRange("miner.energy_cost", 10, 0, Integer.MAX_VALUE);
+    TileUncraft.POWERCONF = CFG.comment("Power per use uncraft").defineInRange("uncraft.energy_cost", 1000, 0, Integer.MAX_VALUE);
+    TileFluidCollect.POWERCONF = CFG.comment("Power per use collector_fluid").defineInRange("collector_fluid.energy_cost", 500, 0, Integer.MAX_VALUE);
+    TilePeatFarm.POWERCONF = CFG.comment("Power per use peat_farm").defineInRange("peat_farm.energy_cost", 500, 0, Integer.MAX_VALUE);
+    TileCrafter.POWERCONF = CFG.comment("Power per use crafter").defineInRange("crafter.energy_cost", 500, 0, Integer.MAX_VALUE);
+    TileStructure.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("structure.energy_cost", 10, 0, Integer.MAX_VALUE);
+    BlockTeleport.POWERCONF = CFG.comment("Power per use").defineInRange("teleport.energy_cost", 400, 0, Integer.MAX_VALUE);
+    BlockTeleport.COSTDIM = CFG.comment("Power per use while crossing dimensions").defineInRange("teleport.energy_cost_xdim", 8000, 0, Integer.MAX_VALUE);
     TilePotionBeacon.POWERCONF = CFG.comment("Power per tick while in use").defineInRange("beacon.energy_cost", 0, 0, 64000);
     PeatBlock.PEATCHANCE = CFG.comment("Chance that Peat Bog converts to Peat when wet (is multiplied by the number of surrounding water blocks)")
         .defineInRange("peat.conversion_chance",
@@ -481,10 +481,10 @@ public class ConfigRegistry extends ConfigTemplate {
     TileAnvilMagma.FLUIDCOST = CFG.comment("Cost of magma fluid per action").defineInRange("anvil_magma.fluid_cost", 100, 1, 64000);
     CFG.push("disenchanter");
     TileDisenchant.FLUIDCOST = CFG.comment("Cost of (or payment for if negative) per enchanted book generated").defineInRange("fluid_cost", 100, -1000, 16000);
-    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("energy_cost", 2500, 0, 64000);
+    TileDisenchant.POWERCONF = CFG.comment("Power per use disenchanter").defineInRange("energy_cost", 2500, 0, Integer.MAX_VALUE);
     CFG.pop();
     CFG.push("anvil_void");
-    TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, 16000);
+    TileAnvilVoid.FLUIDPAY = CFG.comment("Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, Integer.MAX_VALUE);
     CFG.pop();
     CFG.push("sound");
     RECORDER_RADIUS = CFG.comment("Sound Recorder - how far out does it listen to record sounds").defineInRange("radius", 8, 1, 64);
@@ -520,7 +520,8 @@ public class ConfigRegistry extends ConfigTemplate {
     //
     //
     CFG.comment("battery settings").push("battery");
-    TileBattery.SLOT_CHARGING_RATE = CFG.comment("RF/t charging rate for the battery item slot").defineInRange("charge", 8000, 1, TileBattery.MAX);
+    TileBattery.SLOT_CHARGING_RATE = CFG.comment("RF/t charging rate for the battery item slot")
+        .defineInRange("charge", 8000, 1, Integer.MAX_VALUE);
     CFG.pop();
     //
     //

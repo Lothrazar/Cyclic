@@ -31,8 +31,8 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   public static final int MAX = 6400000;
   public static IntValue SLOT_CHARGING_RATE;
   private Map<Direction, Boolean> poweredSides;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  final CustomEnergyStorage energy;//= new CustomEnergyStorage(MAX, MAX / 4);
+  private final LazyOptional<IEnergyStorage> energyCap;//= LazyOptional.of(() -> energy);
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
@@ -52,6 +52,8 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY.get(), pos, state);
+    energy = new CustomEnergyStorage(MAX, MAX / 4);
+    energyCap = LazyOptional.of(() -> energy);
     flowing = 0;
     poweredSides = new ConcurrentHashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {

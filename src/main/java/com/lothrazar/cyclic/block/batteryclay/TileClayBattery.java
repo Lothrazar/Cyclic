@@ -22,7 +22,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static final int MAX = 16000;
+  public static final int MAX = 16000; // TODO: Config
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 

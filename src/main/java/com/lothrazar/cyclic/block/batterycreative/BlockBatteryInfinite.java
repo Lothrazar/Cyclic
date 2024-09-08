@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.creativebattery;
+package com.lothrazar.cyclic.block.batterycreative;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
