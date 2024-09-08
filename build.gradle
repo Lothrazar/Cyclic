@@ -118,16 +118,15 @@ minecraft {
 
 repositories {
 
-  flatDir { dir 'libs' } 
+ // flatDir { dir 'libs' }
+  maven { url = 'https://maven.blamejared.com' }
+  maven { url = 'https://modmaven.dev'  }
   maven {
   	name = "curios"
     url = 'https://maven.theillusivec4.top/'
   }
- // maven { url = 'https://dvs1.progwml6.com/files/maven/'  }   
-  maven { url = 'https://maven.blamejared.com' }    
-  maven { url = 'https://modmaven.dev'  }     
+  maven { url = 'https://dvs1.progwml6.com/files/maven/'  }
   maven { url = 'https://www.cursemaven.com'  }
-
 
 }
 
@@ -164,7 +163,9 @@ dependencies {
     compileOnly fg.deobf("vazkii.botania:Botania:${mc_version}-${botania_version}-FORGE:api")
     runtimeOnly fg.deobf("vazkii.botania:Botania:${mc_version}-${botania_version}-FORGE")
     
+  
     
+  implementation fg.deobf("curse.maven:jade-324717:5493390")
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
