@@ -2,27 +2,21 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "rlr",
-    "tsg",
+    "g g",
     "ooo"
   ],
   "key": {
-    "l": {
-      "tag": "forge:nuggets/copper"
-    },
     "o": {
-      "item": "minecraft:mossy_cobblestone_slab"
+      "item": "minecraft:cobblestone_slab"
     },
     "g": {
-      "item": "cyclic:copper_pickaxe"
+      "tag": "forge:nuggets/copper"
     },
-    "t": {
-      "item": "cyclic:copper_shovel"
-    },
-    "s": {
-      "item": "minecraft:dispenser"
+    "l": {
+      "item": "minecraft:dropper"
     },
     "r": { 
-      "item": "minecraft:tripwire_hook"
+      "item": "minecraft:diorite"
     }
   },
   "result": {

@@ -24,6 +24,7 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.network.FriendlyByteBuf;
@@ -58,11 +59,11 @@ public class PacketEntityLaser extends PacketFlib {
       if (PacketEntityLaser.canShoot(sender, target, stack)) {
         IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
         if (storage != null) {
-          float dmg = message.crosshair ? LaserItem.DMG_CLOSE : LaserItem.DMG_FAR;
+          float dmg = message.crosshair ? ConfigRegistry.LaserItemDamageClose.get() : ConfigRegistry.LaserItemDamageFar.get();
           if (target.hurt(level.damageSources().indirectMagic(sender, sender), dmg)) {
             //DRAIN RF ETC 
             LaserItem.resetStackDamageCool(stack, level.getGameTime());
-            storage.extractEnergy(LaserItem.COST, false);
+            storage.extractEnergy(ConfigRegistry.LaserItemEnergy.get(), false);
           }
         }
         //        target.causeFallDamage(0, 0, null);
@@ -80,7 +81,7 @@ public class PacketEntityLaser extends PacketFlib {
       return false;
     }
     IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
-    return (storage != null && storage.extractEnergy(LaserItem.COST, true) == LaserItem.COST);
+    return (storage != null && storage.extractEnergy(ConfigRegistry.LaserItemEnergy.get(), true) == ConfigRegistry.LaserItemEnergy.get());
   }
 
   public static PacketEntityLaser decode(FriendlyByteBuf buf) {

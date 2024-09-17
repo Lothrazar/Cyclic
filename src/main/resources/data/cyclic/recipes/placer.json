@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "rsr",
-    "gbg",
+    "g g",
     "ooo"
   ],
   "key": {
@@ -10,16 +10,13 @@
       "item": "minecraft:cobblestone_slab"
     },
     "g": {
-      "tag": "forge:ingots/copper"
+      "tag": "forge:nuggets/copper"
     },
     "s": {
       "item": "minecraft:dropper"
     },
     "r": {
       "item": "minecraft:andesite"
-    },
-    "b": {
-      "item": "minecraft:redstone"
     }
   },
   "result": {

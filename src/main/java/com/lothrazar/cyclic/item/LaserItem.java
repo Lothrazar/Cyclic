@@ -12,11 +12,7 @@ import net.minecraft.world.level.Level;
 public class LaserItem extends ItemBaseCyclic {
 
   public static final int DELAYDAMAGETICKS = 5;
-  public static final int DMG_FAR = 4;
-  public static final int COST = 50;
-  public static final int DMG_CLOSE = 6;
-  public static final double RANGE_FACTOR = 8;
-  public static final double RANGE_MAX = 6000;
+  //  public static final double RANGE_FACTOR = 8;
 
   public LaserItem(Properties properties) {
     super(properties.stacksTo(1));

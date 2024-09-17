@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import com.google.common.collect.Lists;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
@@ -618,7 +617,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     BlockPos blockpos;
     if (beamStuff.lastCheckY < pos.getY()) {
       blockpos = pos;
-      beamStuff.checkingBeamSections = Lists.newArrayList();
+      beamStuff.checkingBeamSections = new ArrayList<>();
       beamStuff.lastCheckY = pos.getY() - 1;
     }
     else {

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.cyclic.item.OreProspector;
@@ -22,6 +23,7 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.render.RenderEntityToBlockLaser;
+import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -193,13 +195,13 @@ public class EventRender {
     stack = LaserItem.getIfHeld(player);
     if (!stack.isEmpty() && player.isUsingItem()) {
       IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
-      if (storage == null || storage.getEnergyStored() < LaserItem.COST) {
+      if (storage == null || storage.getEnergyStored() < ConfigRegistry.LaserItemEnergy.get()) {
         return;
       }
       // RayTraceResult  became HitResult
       // objectMouseOver became hitResult
       if (mc.crosshairPickEntity != null) {
-        //Render and Shoot
+        //Render and Shoot. closerange version
         RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND, 18, -0.02F); // TODO
         if (world.getGameTime() % 4 == 0) {
           PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(mc.crosshairPickEntity.getId(), true));
@@ -207,34 +209,42 @@ public class EventRender {
         }
       }
       else {
-        //out of range- do custom raytrace 
-        double laserGamemodeRange = mc.gameMode.getPickRange() * LaserItem.RANGE_FACTOR;
+        //out of range- do custom raytrace for longrange version
+        final int laserRange = ConfigRegistry.LaserItemRange.get();
+        double laserGamemodeRange = laserRange;// mc.gameMode.getPickRange() * LaserItem.RANGE_FACTOR;
         Entity camera = mc.getCameraEntity();
         Vec3 cameraViewVector = camera.getViewVector(1.0F);
         Vec3 cameraEyePosition = camera.getEyePosition(1.0F);
         Vec3 cameraEyeViewRay = cameraEyePosition.add(cameraViewVector.x * laserGamemodeRange, cameraViewVector.y * laserGamemodeRange, cameraViewVector.z * laserGamemodeRange);
         AABB aabb = camera.getBoundingBox().expandTowards(cameraViewVector.scale(laserGamemodeRange)).inflate(1.0D, 1.0D, 1.0D);
+        //
+        //
         EntityHitResult ehr = ProjectileUtil.getEntityHitResult(camera, cameraEyePosition, cameraEyeViewRay, aabb, (ent) -> {
           return ent.isAttackable() && ent.isAlive();
         }, 0);
         if (ehr != null) {
           Vec3 entityHitResultLocation = ehr.getLocation();
           double distance = Math.sqrt(cameraEyePosition.distanceToSqr(entityHitResultLocation));
-          if (distance < LaserItem.RANGE_MAX) {
+          if (distance < laserRange) {
             //first vector is FROM, second is TO
             BlockHitResult miss = mc.level.clip(new ClipContext(cameraEyePosition, entityHitResultLocation, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, mc.player));
-            //              BlockHitResult miss = BlockHitResult.miss(entityHitResultLocation, Direction.getNearest(cameraViewVector.x, cameraViewVector.y, cameraViewVector.z),                new BlockPos(entityHitResultLocation));
-            if (miss.getType() == HitResult.Type.BLOCK) {
-              //we hit a wall, dont shoot thru walls
-            }
-            else {
-              //Render and Shoot
+            if (miss.getType() != HitResult.Type.BLOCK) {
+              //  dont shoot thru walls
               RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
               if (world.getGameTime() % 4 == 0) {
                 PacketRegistry.INSTANCE.sendToServer(new PacketEntityLaser(ehr.getEntity().getId(), false));
                 SoundUtil.playSound(player, SoundRegistry.LASERBEANPEW.get(), 0.2F);
               }
             }
+          }
+        }
+        else {
+          //we missed. Do we render on a miss?
+          if (ConfigRegistry.LaserRenderMisses.get()) {
+            RenderEntityToBlockLaser.renderLaser(event, player, mc.getFrameTime(), stack, InteractionHand.MAIN_HAND);
+          }
+          else { //if we dont render the miss, show a message for better user experience
+            ChatUtil.sendStatusMessage(player, "item.cyclic.laser_cannon.notarget");
           }
         }
       }

@@ -223,7 +223,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
     if (cap == ForgeCapabilities.ITEM_HANDLER) {
       return inventoryCap.cast();
     }
-    if (cap == ForgeCapabilities.ENERGY) {
+    if (cap == ForgeCapabilities.ENERGY && TileUser.POWERCONF.get() > 0) {
       return energyCap.cast();
     }
     return super.getCapability(cap, side);
