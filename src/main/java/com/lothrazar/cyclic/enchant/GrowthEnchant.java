@@ -98,9 +98,8 @@ public class GrowthEnchant extends EnchantmentFlib {
       return;
     }
     LivingEntity entity = event.getEntity();
-    if (entity instanceof Player) {
-      Player p = (Player) entity;
-      if (p.isSpectator() || !p.isAlive()) {
+    if (entity instanceof Player player) {
+      if (player.isSpectator() || !player.isAlive()) {
         return;
       }
     }

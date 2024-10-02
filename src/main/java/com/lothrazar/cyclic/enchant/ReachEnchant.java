@@ -39,13 +39,28 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ReachEnchant extends EnchantmentFlib {
 
   private static final String NBT_REACH_ON = "reachon";
-  public static final int REACH_BOOST = 11; // 16 = 11 + 5
   public static final String ID = "reach";
   public static BooleanValue CFG;
 
   public ReachEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
     MinecraftForge.EVENT_BUS.register(this);
+  }
+
+  // TOTAL: 5 + boost           5  8 10 12 14 16 ... 20 ... 24            
+  // level                      0  1  2  3  4  5
+  final static int[] LEVELS = { 0, 3, 5, 7, 9, 11 };
+
+  private int getBoost(int level) {
+    if (level < 0) {
+      return 0;
+    }
+    else if (level < LEVELS.length) {
+      return LEVELS[level];
+    }
+    //default max level is 5, but other mods can boost this ie apotheosis so give it some gas
+    int oldLevel = 5; // aka LEVELS.length
+    return 4 * (level - LEVELS.length) + LEVELS[oldLevel];
   }
 
   @Override
@@ -80,7 +95,7 @@ public class ReachEnchant extends EnchantmentFlib {
 
   @Override
   public int getMaxLevel() {
-    return 1;
+    return 5;
   }
 
   public static final UUID ENCHANTMENT_REACH_ID = UUID.fromString("1abcdef2-eff2-4a81-b92b-a1cb95f115c6");
@@ -90,9 +105,9 @@ public class ReachEnchant extends EnchantmentFlib {
     AttributesUtil.removePlayerReach(ENCHANTMENT_REACH_ID, player);
   }
 
-  private void turnReachOn(Player player) {
+  private void turnReachOn(Player player, int level) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, true);
-    AttributesUtil.setPlayerReach(ENCHANTMENT_REACH_ID, player, REACH_BOOST);
+    AttributesUtil.setPlayerReach(ENCHANTMENT_REACH_ID, player, getBoost(level));
   }
 
   @SubscribeEvent
@@ -114,7 +129,7 @@ public class ReachEnchant extends EnchantmentFlib {
       level = EnchantmentHelper.getEnchantments(armor).get(this);
     }
     if (level > 0) {
-      turnReachOn(player);
+      turnReachOn(player, level);
     }
     else {
       //was it on before, do we need to do an off hit

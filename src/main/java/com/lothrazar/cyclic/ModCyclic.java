@@ -36,7 +36,6 @@ public class ModCyclic {
   public ModCyclic() {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(EventRegistry::setup);
     FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistryCyclic::setupClient);
-    //TODO: before port fix warnings
     DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
     ConfigRegistry cfg = new ConfigRegistry();
     cfg.setupMain();
