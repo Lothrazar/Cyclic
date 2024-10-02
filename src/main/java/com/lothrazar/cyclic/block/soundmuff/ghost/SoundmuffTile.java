@@ -6,7 +6,9 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -17,6 +19,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class SoundmuffTile extends TileBlockEntityCyclic {
+
+  private CompoundTag facadeState = null;
 
   ItemStackHandler notInventory = new ItemStackHandler(1);
   private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> notInventory);
@@ -68,5 +72,17 @@ public class SoundmuffTile extends TileBlockEntityCyclic {
     List<BlockPos> lis = new ArrayList<BlockPos>();
     lis.add(worldPosition);
     return lis;
+  }
+
+  public BlockState getFacadeState() {
+    if (level == null || facadeState == null || facadeState.isEmpty()) {
+      return null; // level is null on world load 
+    }
+    BlockState stateFound = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), facadeState);
+    return stateFound;
+  }
+
+  public void setFacadeState(CompoundTag facadeState) {
+    this.facadeState = facadeState;
   }
 }

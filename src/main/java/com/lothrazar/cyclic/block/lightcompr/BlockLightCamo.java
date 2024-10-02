@@ -32,10 +32,6 @@ public class BlockLightCamo extends BlockCyclic {
     return new TileLightCamo(pos, state);
   }
 
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.light_camo, world.isClientSide ? TileLightCamo::clientTick : TileLightCamo::serverTick);
-  //  }
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     ItemStack stack = player.getItemInHand(handIn);

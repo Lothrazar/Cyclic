@@ -6,16 +6,29 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SoundmufflerBlockGhost extends SoundmufflerBlock {
 
   public SoundmufflerBlockGhost(Properties properties) {
     super(properties.noOcclusion());
+  }
+
+  @Override
+  public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    SoundmuffTile tile = (SoundmuffTile) worldIn.getBlockEntity(pos);
+    if (tile != null
+        && tile.getFacadeState() != null) {
+      return tile.getFacadeState().getShape(worldIn, pos, context);
+    }
+    return super.getShape(state, worldIn, pos, context);
   }
 
   @Override
@@ -26,10 +39,6 @@ public class SoundmufflerBlockGhost extends SoundmufflerBlock {
     return new SoundmuffTile(pos, state);
   }
 
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type,TileRegistry.soundproofing_ghost, world.isClientSide ? SoundmuffTile::clientTick : SoundmuffTile::serverTick);
-  //  }
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     ItemStack stack = player.getItemInHand(handIn);
