@@ -16,7 +16,6 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -44,23 +43,7 @@ public class MattockItem extends DiggerItem {
     if (ray != null && ray.getType() == HitResult.Type.BLOCK) {
       BlockHitResult brt = (BlockHitResult) ray;
       Direction sideHit = brt.getDirection();
-      List<BlockPos> shape;
-      if (sideHit == Direction.UP || sideHit == Direction.DOWN) {
-        shape = ShapeUtil.squareHorizontalHollow(pos, radius);
-        if (radius == 2) {
-          shape.addAll(ShapeUtil.squareHorizontalHollow(pos, radius - 1));
-        }
-      }
-      else if (sideHit == Direction.EAST || sideHit == Direction.WEST) {
-        int y = 1 + radius - yoff;
-        int z = radius;
-        shape = ShapeUtil.squareVerticalZ(pos, y, z);
-      }
-      else { //has to be NORTHSOUTH
-        int x = radius;
-        int y = 1 + radius - yoff;
-        shape = ShapeUtil.squareVerticalX(pos, x, y);
-      }
+      List<BlockPos> shape = getShape(pos, yoff, sideHit);
       for (BlockPos posCurrent : shape) {
         BlockState bsCurrent = level.getBlockState(posCurrent);
         if (bsCurrent.isAir()) {
@@ -71,30 +54,19 @@ public class MattockItem extends DiggerItem {
             && ForgeEventFactory.doPlayerHarvestCheck(player, bsCurrent, true)
             && this.getDestroySpeed(stack, bsCurrent) > 1
             && (bsCurrent.canHarvestBlock(level, pos, player)
-                || bsCurrent.is(this.getTier().getTag())
-            //this.getTier().getTag().contains(bsCurrent.getBlock())
-            )
-        //end of OR
-        ) {
+                || bsCurrent.is(this.getTier().getTag()))) {
           stack.mineBlock(level, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
           if (level.isClientSide) {
             level.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
-            //removedByPlayer
-            if (blockCurrent.onDestroyedByPlayer(bsCurrent, level, posCurrent, player, true, bsCurrent.getFluidState())) {
-              blockCurrent.destroy(level, posCurrent, bsCurrent);
-            }
-            //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
           }
           else if (player instanceof ServerPlayer) { //Server side, so this works
             ServerPlayer mp = (ServerPlayer) player;
             int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
             if (xpGivenOnDrop >= 0) {
+              blockCurrent.playerDestroy(level, player, posCurrent, bsCurrent, level.getBlockEntity(posCurrent), stack);
               if (blockCurrent.onDestroyedByPlayer(bsCurrent, level, posCurrent, player, true, bsCurrent.getFluidState())
                   && level instanceof ServerLevel) {
-                BlockEntity tile = level.getBlockEntity(posCurrent);
-                blockCurrent.destroy(level, posCurrent, bsCurrent);
-                blockCurrent.playerDestroy(level, player, posCurrent, bsCurrent, tile, stack);
                 blockCurrent.popExperience((ServerLevel) level, posCurrent, xpGivenOnDrop);
               }
               mp.connection.send(new ClientboundBlockUpdatePacket(level, posCurrent));
@@ -110,6 +82,27 @@ public class MattockItem extends DiggerItem {
   //    return Math.max(Items.DIAMOND_PICKAXE.getHarvestLevel(stack, tool, player, blockState),
   //        Items.DIAMOND_SHOVEL.getHarvestLevel(stack, tool, player, blockState));
   //  }
+
+  private List<BlockPos> getShape(BlockPos pos, int yoff, Direction sideHit) {
+    List<BlockPos> shape;
+    if (sideHit == Direction.UP || sideHit == Direction.DOWN) {
+      shape = ShapeUtil.squareHorizontalHollow(pos, radius);
+      if (radius == 2) {
+        shape.addAll(ShapeUtil.squareHorizontalHollow(pos, radius - 1));
+      }
+    }
+    else if (sideHit == Direction.EAST || sideHit == Direction.WEST) {
+      int y = 1 + radius - yoff;
+      int z = radius;
+      shape = ShapeUtil.squareVerticalZ(pos, y, z);
+    }
+    else { //has to be NORTHSOUTH
+      int x = radius;
+      int y = 1 + radius - yoff;
+      shape = ShapeUtil.squareVerticalX(pos, x, y);
+    }
+    return shape;
+  }
 
   @Override
   public float getDestroySpeed(ItemStack stack, BlockState state) {
