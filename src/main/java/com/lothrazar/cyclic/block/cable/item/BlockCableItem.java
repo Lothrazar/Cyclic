@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.cable.item;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -39,6 +40,12 @@ public class BlockCableItem extends CableBase {
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    if (ConfigRegistry.CABLE_FACADES.get()) {
+    var facade = this.getFacadeShape(state, worldIn, pos, context);
+    if (facade != null) {
+      return facade;
+    }
+  }
     return ShapeCache.getOrCreate(state, CableBase::createShape);
   }
 

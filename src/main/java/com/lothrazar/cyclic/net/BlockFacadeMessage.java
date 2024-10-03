@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.net;
 
 import java.util.function.Supplier;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.facade.IBlockFacade;
 import com.lothrazar.cyclic.block.facade.ITileFacade;
 import net.minecraft.core.BlockPos;
@@ -44,11 +43,9 @@ public class BlockFacadeMessage {
         //
         ITileFacade tile = facadeBlock.getTileFacade(serverWorld, message.pos);
         if (message.erase) {
-          ModCyclic.LOGGER.info("Network Packet facade  SAVE NULL EMPTY ERASE " + message.blockStateTag);
           tile.setFacade(null);
         }
         else {
-          ModCyclic.LOGGER.info("Network Packet facade  SAVE " + message.blockStateTag);
           tile.setFacade(message.blockStateTag);
         }
         serverWorld.markAndNotifyBlock(message.pos, serverWorld.getChunkAt(message.pos),

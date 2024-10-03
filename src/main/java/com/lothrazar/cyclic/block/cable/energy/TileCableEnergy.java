@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.block.cable.energy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.block.cable.CableTileBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
@@ -22,7 +22,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileCableEnergy extends TileBlockEntityCyclic {
+public class TileCableEnergy extends CableTileBase {
 
   public static IntValue BUFFERSIZE;
   public static IntValue TRANSFER_RATE;

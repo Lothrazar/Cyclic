@@ -146,6 +146,7 @@ public class ConfigRegistry extends ConfigTemplate {
   public static IntValue LaserItemDamageFar;
   public static IntValue LaserItemEnergy;
   public static BooleanValue LaserRenderMisses;
+  public static BooleanValue CABLE_FACADES;
   static {
     buildDefaults();
     initConfig();
@@ -434,6 +435,8 @@ public class ConfigRegistry extends ConfigTemplate {
     CFG.pop(); //items 
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     CFG.push("facades");
+    CABLE_FACADES = CFG.comment("\r\n Allow cables to have blocks placed in them as facades (sneak-left-click to set; use empty hand to remove).  False to disable")
+        .define("allowCableFacades", true);
     //a few default
     List<String> list = Arrays.asList("minecraft:ladder", "minecraft:double_plant", "minecraft:waterlily");
     FACADE_IGNORELIST = CFG.comment("\r\n  These blocks are not allowed to be used as Facades for blocks (for example: Glowstone Facade, Soundproofing Facade and others)")
@@ -658,6 +661,7 @@ public class ConfigRegistry extends ConfigTemplate {
   }
 
   private static ConfigValue<List<String>> FACADE_IGNORELIST;
+
   public static boolean isFacadeAllowed(ItemStack item) {
     ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item.getItem());
     if (StringParseUtil.isInList(FACADE_IGNORELIST.get(), itemId)) {

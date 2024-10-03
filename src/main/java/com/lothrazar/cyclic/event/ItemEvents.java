@@ -479,34 +479,11 @@ public class ItemEvents {
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     Player player = event.getEntity();
     ItemStack held = player.getItemInHand(event.getHand());
-
     Level world = player.getCommandSenderWorld();
     BlockState target = world.getBlockState(event.getPos());
     if (target.getBlock() instanceof IBlockFacade && player.isCrouching()) {
-
       //
-      if (held.isEmpty()) {
-        PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), true));
-      }
-      else {
-        Block block = Block.byItem(held.getItem());
-        if (block == null || block == Blocks.AIR) {
-          return;
-
-        }
-        if (!ConfigRegistry.isFacadeAllowed(held)) {
-          ModCyclic.LOGGER.info("not allowed as a facade from config");
-          return;
-        }
-        BlockHitResult bhr = (BlockHitResult) player.pick(5, 1, false);
-        BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), held, bhr);
-        BlockState facadeState = null;
-        facadeState = block.getStateForPlacement(context);
-        CompoundTag tags = NbtUtils.writeBlockState(facadeState);
-        PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
-      }
-      //cancel the event so creative players will not break it
-      event.setCanceled(true);
+      onHitFacadeHandler(event, player, held, target);
       //
     }
     //    if (held.isEmpty()) {
@@ -526,8 +503,7 @@ public class ItemEvents {
       BuilderActionType.setTimeout(held);
       event.setCanceled(true);
       if (player.isCrouching()) {
-        //pick out target block
-        //        BlockState target = world.getBlockState(event.getPos());
+        //pick out target block 
         BuilderActionType.setBlockState(held, target);
         ChatUtil.sendStatusMessage(player, target.getBlock().getDescriptionId());
         event.setCanceled(true);
@@ -546,6 +522,36 @@ public class ItemEvents {
     if (held.getItem() instanceof AntimatterEvaporatorWandItem) {
       AntimatterEvaporatorWandItem.toggleMode(player, held);
     }
+  }
+
+  private void onHitFacadeHandler(PlayerInteractEvent.LeftClickBlock event, Player player, ItemStack held, BlockState target) {
+    if (held.isEmpty()) {
+      PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), true));
+    }
+    else {
+      Block block = Block.byItem(held.getItem());
+      if (block == null || block == Blocks.AIR) {
+        return;
+      }
+      if (target.getBlock() instanceof CableBase) {
+        if (!ConfigRegistry.CABLE_FACADES.get()) {
+          ModCyclic.LOGGER.error("Config file has blocked cables from having a facade");
+          return;
+        }
+      }
+      if (!ConfigRegistry.isFacadeAllowed(held)) {
+        ModCyclic.LOGGER.info("not allowed to use this item as a facade from config: " + held.getItem());
+        return;
+      }
+      BlockHitResult bhr = (BlockHitResult) player.pick(5, 1, false);
+      BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), held, bhr);
+      BlockState facadeState = null;
+      facadeState = block.getStateForPlacement(context);
+      CompoundTag tags = NbtUtils.writeBlockState(facadeState);
+      PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
+    }
+    //cancel the event so creative players will not break it
+    event.setCanceled(true);
   }
 
   @SubscribeEvent

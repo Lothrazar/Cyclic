@@ -14,6 +14,7 @@ import com.lothrazar.cyclic.block.detectoritem.RenderDetectorItem;
 import com.lothrazar.cyclic.block.dropper.RenderDropper;
 import com.lothrazar.cyclic.block.enderitemshelf.ItemShelfRenderer;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfRenderer;
+import com.lothrazar.cyclic.block.facade.RenderCableFacade;
 import com.lothrazar.cyclic.block.facade.light.RenderLightFacade;
 import com.lothrazar.cyclic.block.facade.soundmuff.SoundmuffRenderFacade;
 import com.lothrazar.cyclic.block.fishing.RenderFisher;
@@ -142,6 +143,9 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
     event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
+    event.registerBlockEntityRenderer(TileRegistry.ENERGY_PIPE.get(), RenderCableFacade::new);
+    event.registerBlockEntityRenderer(TileRegistry.FLUID_PIPE.get(), RenderCableFacade::new);
+    event.registerBlockEntityRenderer(TileRegistry.ITEM_PIPE.get(), RenderCableFacade::new);
   }
 
   @SuppressWarnings("deprecation") //shield itemproperty

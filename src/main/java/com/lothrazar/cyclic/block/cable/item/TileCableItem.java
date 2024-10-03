@@ -2,8 +2,8 @@ package com.lothrazar.cyclic.block.cable.item;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.block.cable.CableTileBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -28,7 +28,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileCableItem extends TileBlockEntityCyclic implements MenuProvider {
+public class TileCableItem extends CableTileBase implements MenuProvider {
 
   private static final int FLOW_QTY = 64; // fixed, for non-extract motion
   private int extractQty = FLOW_QTY; // default
