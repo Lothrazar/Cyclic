@@ -482,7 +482,7 @@ public class ItemEvents {
 
     Level world = player.getCommandSenderWorld();
     BlockState target = world.getBlockState(event.getPos());
-    if (target.getBlock() instanceof IBlockFacade) {
+    if (target.getBlock() instanceof IBlockFacade && player.isCrouching()) {
 
       //
       if (held.isEmpty()) {
@@ -492,6 +492,7 @@ public class ItemEvents {
         Block block = Block.byItem(held.getItem());
         if (block == null || block == Blocks.AIR) {
           return;
+
         }
         if (!ConfigRegistry.isFacadeAllowed(held)) {
           ModCyclic.LOGGER.info("not allowed as a facade from config");
@@ -504,6 +505,8 @@ public class ItemEvents {
         CompoundTag tags = NbtUtils.writeBlockState(facadeState);
         PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
       }
+      //cancel the event so creative players will not break it
+      event.setCanceled(true);
       //
     }
     //    if (held.isEmpty()) {

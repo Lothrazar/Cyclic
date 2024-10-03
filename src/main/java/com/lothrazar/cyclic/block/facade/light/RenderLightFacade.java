@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.lightcompr;
+package com.lothrazar.cyclic.block.facade.light;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -9,21 +9,21 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 
-public class RenderLightCamo implements BlockEntityRenderer<TileLightCamo> {
+public class RenderLightFacade implements BlockEntityRenderer<TileLightFacade> {
 
   private BlockRenderDispatcher brd;
 
-  public RenderLightCamo(BlockEntityRendererProvider.Context d) {
+  public RenderLightFacade(BlockEntityRendererProvider.Context d) {
     this.brd = d.getBlockRenderDispatcher();
   }
 
   @Override
-  public boolean shouldRenderOffScreen(TileLightCamo te) {
+  public boolean shouldRenderOffScreen(TileLightFacade te) {
     return true;
   }
 
   @Override
-  public void render(TileLightCamo te, float v, PoseStack matrixStack, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
+  public void render(TileLightFacade te, float v, PoseStack matrixStack, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
 
     if (te.getFacade() != null) {
       BlockState facadeState = te.getFacadeState(te.getLevel());

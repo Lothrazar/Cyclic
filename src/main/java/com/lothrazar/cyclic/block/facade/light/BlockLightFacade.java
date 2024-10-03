@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.lightcompr;
+package com.lothrazar.cyclic.block.facade.light;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.facade.IBlockFacade;
@@ -10,12 +10,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockLightCamo extends BlockCyclic implements IBlockFacade {
+public class BlockLightFacade extends BlockCyclic implements IBlockFacade {
 
-  private static final double BOUNDS = 7;
-  private static final VoxelShape AABB = Block.box(BOUNDS, BOUNDS, BOUNDS,
-      16 - BOUNDS, 16 - BOUNDS, 16 - BOUNDS);
-  public BlockLightCamo(Properties properties) {
+  private static final VoxelShape TWO = Block.box(7, 7, 7,
+      9, 9, 9);
+  private static final VoxelShape THREE = Block.box(6, 6, 6,
+      10, 10, 10);
+  public BlockLightFacade(Properties properties) {
     super(properties.lightLevel(state -> 15).strength(1F).noOcclusion());
   }
 
@@ -25,7 +26,7 @@ public class BlockLightCamo extends BlockCyclic implements IBlockFacade {
     if (facade != null) {
       return facade;
     }
-    return AABB; // super.getShape(state, worldIn, pos, context);
+    return THREE; // super.getShape(state, worldIn, pos, context);
   }
 
   @Override
@@ -38,6 +39,6 @@ public class BlockLightCamo extends BlockCyclic implements IBlockFacade {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-    return new TileLightCamo(pos, state);
+    return new TileLightFacade(pos, state);
   }
 }

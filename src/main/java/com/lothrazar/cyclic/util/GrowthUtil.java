@@ -17,7 +17,7 @@ public class GrowthUtil {
     }
     BlockState bState = world.getBlockState(current);
     if (!bState.is(BlockTags.CROPS) && !bState.is(BlockTags.SAPLINGS)) {
-      ModCyclic.LOGGER.info("terra-grow can only grow minecraft:crops | minecraft:saplings : " + bState.getBlock());
+      //   ModCyclic.LOGGER.info("terra-grow can only grow minecraft:crops | minecraft:saplings : " + bState.getBlock());
       return false;
     }
     if (bState.getBlock() instanceof BonemealableBlock crop) {
@@ -66,6 +66,6 @@ public class GrowthUtil {
       block.randomTick(bState, world, current, world.random);
       block.randomTick(bState, world, current, world.random);
     }
-    ModCyclic.LOGGER.info("terra-grow Successful growth" + block);
+    ModCyclic.LOGGER.info("terra-grow Successful growth: " + block);
   }
 }
