@@ -1,7 +1,9 @@
 package com.lothrazar.cyclic.event;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.api.IEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableBase;
+import com.lothrazar.cyclic.block.facade.IBlockFacade;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
@@ -19,9 +21,11 @@ import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
+import com.lothrazar.cyclic.net.BlockFacadeMessage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
@@ -33,6 +37,8 @@ import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -51,9 +57,12 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
@@ -470,13 +479,38 @@ public class ItemEvents {
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     Player player = event.getEntity();
     ItemStack held = player.getItemInHand(event.getHand());
-    if (held.isEmpty()) {
-      return;
-    }
+
     Level world = player.getCommandSenderWorld();
+    BlockState target = world.getBlockState(event.getPos());
+    if (target.getBlock() instanceof IBlockFacade) {
+
+      //
+      if (held.isEmpty()) {
+        PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), true));
+      }
+      else {
+        Block block = Block.byItem(held.getItem());
+        if (block == null || block == Blocks.AIR) {
+          return;
+        }
+        if (!ConfigRegistry.isFacadeAllowed(held)) {
+          ModCyclic.LOGGER.info("not allowed as a facade from config");
+          return;
+        }
+        BlockHitResult bhr = (BlockHitResult) player.pick(5, 1, false);
+        BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), held, bhr);
+        BlockState facadeState = null;
+        facadeState = block.getStateForPlacement(context);
+        CompoundTag tags = NbtUtils.writeBlockState(facadeState);
+        PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
+      }
+      //
+    }
+    //    if (held.isEmpty()) {
+    //      return;
+    //    }
     ///////////// shape
     if (held.getItem() instanceof ShapeCard && player.isCrouching()) {
-      BlockState target = world.getBlockState(event.getPos());
       ShapeCard.setBlockState(held, target);
       ChatUtil.sendStatusMessage(player, target.getBlock().getDescriptionId());
     }
@@ -490,7 +524,7 @@ public class ItemEvents {
       event.setCanceled(true);
       if (player.isCrouching()) {
         //pick out target block
-        BlockState target = world.getBlockState(event.getPos());
+        //        BlockState target = world.getBlockState(event.getPos());
         BuilderActionType.setBlockState(held, target);
         ChatUtil.sendStatusMessage(player, target.getBlock().getDescriptionId());
         event.setCanceled(true);

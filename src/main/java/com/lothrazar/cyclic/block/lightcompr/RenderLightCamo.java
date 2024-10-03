@@ -1,17 +1,21 @@
 package com.lothrazar.cyclic.block.lightcompr;
 
-import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelData;
 
 public class RenderLightCamo implements BlockEntityRenderer<TileLightCamo> {
 
-  public RenderLightCamo(BlockEntityRendererProvider.Context d) {}
+  private BlockRenderDispatcher brd;
+
+  public RenderLightCamo(BlockEntityRendererProvider.Context d) {
+    this.brd = d.getBlockRenderDispatcher();
+  }
 
   @Override
   public boolean shouldRenderOffScreen(TileLightCamo te) {
@@ -20,13 +24,11 @@ public class RenderLightCamo implements BlockEntityRenderer<TileLightCamo> {
 
   @Override
   public void render(TileLightCamo te, float v, PoseStack matrixStack, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
-    IItemHandler inv = te.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-    if (inv == null) {
-      return;
-    }
-    ItemStack stack = inv.getStackInSlot(0);
-    if (!stack.isEmpty()) {
-      RenderBlockUtils.renderAsBlock(te.getLevel(), te.getBlockPos(), te.getShape(), matrixStack, stack, 1F, 1F);
+
+    if (te.getFacade() != null) {
+      BlockState facadeState = te.getFacadeState(te.getLevel());
+      brd.renderSingleBlock(facadeState, matrixStack, ibuffer, partialTicks, destroyStage,
+          ModelData.EMPTY, RenderType.solid());
     }
   }
 }

@@ -93,6 +93,9 @@ import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.library.config.ConfigTemplate;
+import com.lothrazar.library.util.StringParseUtil;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -100,6 +103,7 @@ import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ConfigRegistry extends ConfigTemplate {
 
@@ -429,6 +433,13 @@ public class ConfigRegistry extends ConfigTemplate {
     CFG.pop(); //heart
     CFG.pop(); //items 
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
+    CFG.push("facades");
+    //a few default
+    List<String> list = Arrays.asList("minecraft:ladder", "minecraft:double_plant", "minecraft:waterlily");
+    FACADE_IGNORELIST = CFG.comment("\r\n  These blocks are not allowed to be used as Facades for blocks (for example: Glowstone Facade, Soundproofing Facade and others)")
+        .define("FacadesDoNotUse", list);
+    //
+    CFG.pop();
     TRANSFER_NODES_DIMENSIONAL = CFG.comment("   Allows the dimensional Transfer Nodes to cross dimensions "
         + "(no chunk loading is done, you have to do that on your own); "
         + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
@@ -644,5 +655,14 @@ public class ConfigRegistry extends ConfigTemplate {
       }
     }
     return mappedBeheading;
+  }
+
+  private static ConfigValue<List<String>> FACADE_IGNORELIST;
+  public static boolean isFacadeAllowed(ItemStack item) {
+    ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item.getItem());
+    if (StringParseUtil.isInList(FACADE_IGNORELIST.get(), itemId)) {
+      return false;
+    }
+    return true;
   }
 }

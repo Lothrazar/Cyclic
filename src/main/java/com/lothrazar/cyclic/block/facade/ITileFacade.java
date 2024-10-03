@@ -22,4 +22,20 @@ public interface ITileFacade {
     BlockState stateFound = NbtUtils.readBlockState(level.holderLookup(Registries.BLOCK), facadeState);
     return stateFound;
   }
+
+  default void loadFacade(CompoundTag compound) {
+    if (compound.contains(NBT_FACADE)) {
+      this.setFacade(compound.getCompound(NBT_FACADE));
+    }
+    else {
+      this.setFacade(null);
+    }
+  }
+
+  default void saveFacade(CompoundTag compound) {
+    var fac = getFacade();
+    if (fac != null) {
+      compound.put(NBT_FACADE, fac);
+    }
+  }
 }

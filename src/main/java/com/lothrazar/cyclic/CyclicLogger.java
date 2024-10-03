@@ -26,4 +26,5 @@ public class CyclicLogger {
       logger.info(string);
     }
   }
+
 }
