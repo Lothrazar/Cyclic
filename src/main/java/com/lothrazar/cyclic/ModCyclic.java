@@ -33,6 +33,7 @@ public class ModCyclic {
   public static final String MODID = "cyclic";
   public static final CyclicLogger LOGGER = new CyclicLogger(LogManager.getLogger());
 
+  @SuppressWarnings("deprecation")
   public ModCyclic() {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(EventRegistry::setup);
     FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistryCyclic::setupClient);

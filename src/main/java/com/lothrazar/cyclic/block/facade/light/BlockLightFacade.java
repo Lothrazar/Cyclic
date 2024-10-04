@@ -12,10 +12,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BlockLightFacade extends BlockCyclic implements IBlockFacade {
 
-  private static final VoxelShape TWO = Block.box(7, 7, 7,
-      9, 9, 9);
   private static final VoxelShape THREE = Block.box(6, 6, 6,
       10, 10, 10);
+
   public BlockLightFacade(Properties properties) {
     super(properties.lightLevel(state -> 15).strength(1F).noOcclusion());
   }

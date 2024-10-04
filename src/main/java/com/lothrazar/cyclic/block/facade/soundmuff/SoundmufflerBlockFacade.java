@@ -21,7 +21,6 @@ public class SoundmufflerBlockFacade extends SoundmufflerBlock implements IBlock
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-
     var facade = this.getFacadeShape(state, worldIn, pos, context);
     if (facade != null) {
       return facade;

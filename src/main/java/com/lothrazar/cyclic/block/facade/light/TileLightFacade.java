@@ -40,8 +40,8 @@ public class TileLightFacade extends TileBlockEntityCyclic implements ITileFacad
     return 0;
   }
 
-
   private CompoundTag facadeState = null;
+
   @Override
   public CompoundTag getFacade() {
     return facadeState;

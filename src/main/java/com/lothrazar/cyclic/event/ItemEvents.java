@@ -527,7 +527,6 @@ public class ItemEvents {
     }
   }
 
-  //  
   private void onHitFacadeHandler(PlayerInteractEvent.LeftClickBlock event, Player player, ItemStack held, BlockState target) {
     if (held.isEmpty() && event.getLevel().isClientSide()) {
       PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), true));

@@ -41,7 +41,6 @@ public class BlockCableEnergy extends CableBase {
     return ShapeCache.getOrCreate(state, CableBase::createShape);
   }
 
-
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileCableEnergy(pos, state);

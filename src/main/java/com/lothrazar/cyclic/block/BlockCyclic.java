@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.block.facade.IBlockFacade;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.library.block.EntityBlockFlib;
@@ -25,8 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidUtil;
@@ -43,15 +40,6 @@ public class BlockCyclic extends EntityBlockFlib {
   public BlockCyclic(Properties properties) {
     super(properties);
     BlockRegistry.BLOCKSCLIENTREGISTRY.add(this);
-
-  }
-
-  @Override
-  public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-    if (this instanceof IBlockFacade) {
-      //ok lets check
-    }
-    return super.getShape(state, level, pos, ctx);
   }
 
   public static boolean never(BlockState bs, BlockGetter bg, BlockPos pos) {
