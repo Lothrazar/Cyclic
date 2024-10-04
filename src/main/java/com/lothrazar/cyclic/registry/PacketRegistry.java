@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.item.random.PacketRandomize;
 import com.lothrazar.cyclic.item.scythe.PacketScythe;
 import com.lothrazar.cyclic.item.storagebag.PacketStorageBagScreen;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
+import com.lothrazar.cyclic.net.BlockFacadeMessage;
 import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
 import com.lothrazar.cyclic.net.PacketHarvesting;
@@ -69,6 +70,7 @@ public class PacketRegistry {
     INSTANCE.registerMessage(id++, PacketEntityLaser.class, PacketEntityLaser::encode, PacketEntityLaser::decode, PacketEntityLaser::handle);
     INSTANCE.registerMessage(id++, PacketPlayerSyncToClient.class, PacketPlayerSyncToClient::encode, PacketPlayerSyncToClient::decode, PacketPlayerSyncToClient::handle);
     INSTANCE.registerMessage(id++, PacketSyncManaToClient.class, PacketSyncManaToClient::encode, PacketSyncManaToClient::decode, PacketSyncManaToClient::handle);
+    INSTANCE.registerMessage(id++, BlockFacadeMessage.class, BlockFacadeMessage::encode, BlockFacadeMessage::decode, BlockFacadeMessage::handle);
   }
 
   public static void sendToAllClients(Level world, PacketFlib packet) {
