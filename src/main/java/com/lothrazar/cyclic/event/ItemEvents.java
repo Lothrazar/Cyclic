@@ -538,7 +538,6 @@ public class ItemEvents {
       }
       if (target.getBlock() instanceof CableBase) {
         if (!ConfigRegistry.CABLE_FACADES.get()) {
-          ModCyclic.LOGGER.error("Config file has blocked cables from having a facade");
           return;
         }
       }
@@ -556,11 +555,12 @@ public class ItemEvents {
 
   @OnlyIn(Dist.CLIENT)
   private void onHitFacadeClient(PlayerInteractEvent.LeftClickBlock event, Player player, ItemStack held, Block block) {
-    BlockHitResult bhr = (BlockHitResult) player.pick(5, 1, false);
+    //pick the block, write to tags, and send to server
+    boolean pickFluids = false;
+    BlockHitResult bhr = (BlockHitResult) player.pick(player.getBlockReach(), 1, pickFluids);
     BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), held, bhr);
-    BlockState facadeState = null;
-    facadeState = block.getStateForPlacement(context);
-    CompoundTag tags = NbtUtils.writeBlockState(facadeState);
+    BlockState facadeState = block.getStateForPlacement(context);
+    CompoundTag tags = (facadeState == null) ? null : NbtUtils.writeBlockState(facadeState);
     PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
   }
 

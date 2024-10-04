@@ -435,12 +435,24 @@ public class ConfigRegistry extends ConfigTemplate {
     CFG.pop(); //items 
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     CFG.push("facades");
-    CABLE_FACADES = CFG.comment("\r\n Allow cables to have blocks placed in them as facades (sneak-left-click to set; use empty hand to remove).  False to disable")
-        .define("allowCableFacades", true);
+    CABLE_FACADES = CFG.comment("\r\n Allow cables to have blocks placed in them as facades (sneak-left-click to set; use empty hand to remove).  Set to false to disable facades")
+        .define("enabled", true);
     //a few default
-    List<String> list = Arrays.asList("minecraft:ladder", "minecraft:double_plant", "minecraft:waterlily");
-    FACADE_IGNORELIST = CFG.comment("\r\n  These blocks are not allowed to be used as Facades for blocks (for example: Glowstone Facade, Soundproofing Facade and others)")
-        .define("FacadesDoNotUse", list);
+    List<String> list = Arrays.asList("minecraft:ladder", "minecraft:double_plant", "minecraft:waterlily",
+        "minecraft:torch", "minecraft:*_torch", "minecraft:redstone", "minecraft:iron_bars",
+        "minecraft:chest", "minecraft:ender_chest", "minecraft:sculk_vein", "minecraft:string", "minecraft:vine",
+        "minecraft:rail",
+        "minecraft:*_rail",
+        "minecraft:brewing_stand",
+        "minecraft:*_dripleaf",
+        "minecraft:*_pane",
+        "minecraft:*_sapling", "minecraft:*_sign",
+        "minecraft:*_door",
+        "minecraft:*_banner", "minecraft:*_shulker_box",
+        "cyclic:*_pipe", "cyclic:*_bars",
+        "storagenetwork:*");
+    FACADE_IGNORELIST = CFG.comment("\r\n  These blocks are not allowed to be used as Facades for blocks because they look weird (used by cables and Glowstone Facade and Soundproofing Facade and others)")
+        .define("itemsNotAllowed", list);
     //
     CFG.pop();
     TRANSFER_NODES_DIMENSIONAL = CFG.comment("   Allows the dimensional Transfer Nodes to cross dimensions "

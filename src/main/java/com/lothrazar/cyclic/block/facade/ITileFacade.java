@@ -33,9 +33,12 @@ public interface ITileFacade {
   }
 
   default void saveFacade(CompoundTag compound) {
-    var fac = getFacade();
-    if (fac != null) {
-      compound.put(NBT_FACADE, fac);
+    var facadeState = getFacade();
+    if (facadeState == null) {
+      compound.remove(NBT_FACADE);
+    }
+    else {
+      compound.put(NBT_FACADE, facadeState);
     }
   }
 }

@@ -23,8 +23,8 @@ public class CableTileBase extends TileBlockEntityCyclic implements ITileFacade 
 
   @Override
   public void load(CompoundTag tag) {
-    this.loadFacade(tag);
     super.load(tag);
+    this.loadFacade(tag);
   }
 
   @Override
