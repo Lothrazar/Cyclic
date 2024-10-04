@@ -67,6 +67,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -481,7 +483,8 @@ public class ItemEvents {
     ItemStack held = player.getItemInHand(event.getHand());
     Level world = player.getCommandSenderWorld();
     BlockState target = world.getBlockState(event.getPos());
-    if (target.getBlock() instanceof IBlockFacade && player.isCrouching()) {
+    if (player.isCrouching()
+        && target.getBlock() instanceof IBlockFacade) {
       //
       onHitFacadeHandler(event, player, held, target);
       //
@@ -524,8 +527,9 @@ public class ItemEvents {
     }
   }
 
+  //  
   private void onHitFacadeHandler(PlayerInteractEvent.LeftClickBlock event, Player player, ItemStack held, BlockState target) {
-    if (held.isEmpty()) {
+    if (held.isEmpty() && event.getLevel().isClientSide()) {
       PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), true));
     }
     else {
@@ -543,15 +547,22 @@ public class ItemEvents {
         ModCyclic.LOGGER.info("not allowed to use this item as a facade from config: " + held.getItem());
         return;
       }
-      BlockHitResult bhr = (BlockHitResult) player.pick(5, 1, false);
-      BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), held, bhr);
-      BlockState facadeState = null;
-      facadeState = block.getStateForPlacement(context);
-      CompoundTag tags = NbtUtils.writeBlockState(facadeState);
-      PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
+      if (event.getLevel().isClientSide()) {
+        onHitFacadeClient(event, player, held, block);
+      }
     }
     //cancel the event so creative players will not break it
     event.setCanceled(true);
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  private void onHitFacadeClient(PlayerInteractEvent.LeftClickBlock event, Player player, ItemStack held, Block block) {
+    BlockHitResult bhr = (BlockHitResult) player.pick(5, 1, false);
+    BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), held, bhr);
+    BlockState facadeState = null;
+    facadeState = block.getStateForPlacement(context);
+    CompoundTag tags = NbtUtils.writeBlockState(facadeState);
+    PacketRegistry.INSTANCE.sendToServer(new BlockFacadeMessage(event.getPos(), tags));
   }
 
   @SubscribeEvent
