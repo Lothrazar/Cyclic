@@ -436,7 +436,7 @@ public class ConfigRegistry extends ConfigTemplate {
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     CFG.push("facades");
     CABLE_FACADES = CFG.comment("\r\n Allow cables to have blocks placed in them as facades (sneak-left-click to set; use empty hand to remove).  Set to false to disable facades")
-        .define("enabled", true);
+        .define("cables.enabled", true);
     //a few default
     List<String> list = Arrays.asList("minecraft:ladder", "minecraft:double_plant", "minecraft:waterlily",
         "minecraft:torch", "minecraft:*_torch", "minecraft:redstone", "minecraft:iron_bars",
