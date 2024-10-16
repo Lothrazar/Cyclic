@@ -10,6 +10,7 @@ import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
+@SuppressWarnings({ "deprecation", "removal" })
 public class CharmUtil {
 
   public static ItemStack getIfEnabled(Player player, Item match) {
