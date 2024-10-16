@@ -1,20 +1,15 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "lll",
-    "lml",
-    "lll"
-  ],
-  "key": {
-    "m": {
-      "item": "minecraft:honeycomb"
-    },
-    "l": {
-      "item": "minecraft:redstone_lamp"
-    }
-  },
-  "result": {
-    "item": "cyclic:lamp",
-    "count": 8
-  }
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "minecraft:redstone_lamp"
+		},
+		{
+			"item": "minecraft:honeycomb"
+		}
+	],
+	"result": {
+		"item": "cyclic:lamp",
+		"count": 1
+	}
 }
