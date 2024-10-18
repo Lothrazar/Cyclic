@@ -166,7 +166,7 @@ public class ItemRegistry {
   public static final RegistryObject<Item> WIRELESS_ITEM = ITEMS.register("wireless_item", () -> new BlockItem(BlockRegistry.WIRELESS_ITEM.get(), new Item.Properties().group(MaterialRegistry.BLOCK_GROUP)));
   public static final RegistryObject<Item> BUILD_SCEPTER = ITEMS.register("build_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.NORMAL));
   public static final RegistryObject<Item> REPLACE_SCEPTER = ITEMS.register("replace_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE));
-  public static final RegistryObject<Item> OFFSET_SCEPTER = ITEMS.register("offset_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.REPLACE));
+  public static final RegistryObject<Item> OFFSET_SCEPTER = ITEMS.register("offset_scepter", () -> new BuilderItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP), BuildStyle.OFFSET));
   public static final RegistryObject<Item> RANDOMIZE_SCEPTER = ITEMS.register("randomize_scepter", () -> new RandomizerItem(new Item.Properties().group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> SPAWNINSPECTOR = ITEMS.register("spawn_inspector", () -> new SpawnInspectorTool(new Item.Properties().maxDamage(256).group(MaterialRegistry.ITEM_GROUP)));
   public static final RegistryObject<Item> CHARM_WING = ITEMS.register("charm_wing", () -> new CharmWing(new Item.Properties().maxDamage(64).group(MaterialRegistry.ITEM_GROUP)));
