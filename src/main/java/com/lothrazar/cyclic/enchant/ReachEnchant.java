@@ -23,12 +23,14 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.enchant;
 
+import java.util.Map;
 import java.util.UUID;
 import com.lothrazar.library.enchant.EnchantmentFlib;
 import com.lothrazar.library.util.AttributesUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -47,9 +49,9 @@ public class ReachEnchant extends EnchantmentFlib {
     MinecraftForge.EVENT_BUS.register(this);
   }
 
-  // TOTAL: 5 + boost           5  8 10 12 14 16 ... 20 ... 24            
-  // level                      0  1  2  3  4  5
-  final static int[] LEVELS = { 0, 3, 5, 7, 9, 11 };
+  // TOTAL: 5 + boost           5  9 12 16  20  24
+  // level                      0  1  2  3   4   5
+  final static int[] LEVELS = { 0, 4, 7, 11, 16, 19 };
 
   private int getBoost(int level) {
     if (level < 0) {
@@ -59,8 +61,8 @@ public class ReachEnchant extends EnchantmentFlib {
       return LEVELS[level];
     }
     //default max level is 5, but other mods can boost this ie apotheosis so give it some gas
-    int oldLevel = 5; // aka LEVELS.length
-    return 4 * (level - LEVELS.length) + LEVELS[oldLevel];
+    int oldLevel = LEVELS.length - 1; // aka LEVELS.length
+    return 4 * (level - oldLevel) + LEVELS[oldLevel];
   }
 
   @Override
@@ -107,6 +109,7 @@ public class ReachEnchant extends EnchantmentFlib {
 
   private void turnReachOn(Player player, int level) {
     player.getPersistentData().putBoolean(NBT_REACH_ON, true);
+
     AttributesUtil.setPlayerReach(ENCHANTMENT_REACH_ID, player, getBoost(level));
   }
 
@@ -123,10 +126,10 @@ public class ReachEnchant extends EnchantmentFlib {
     //Ticking
     ItemStack armor = this.getFirstArmorStackWithEnchant(player);
     int level = 0;
-    if (armor.isEmpty() == false && EnchantmentHelper.getEnchantments(armor) != null
-        && EnchantmentHelper.getEnchantments(armor).containsKey(this)) {
-      //todo: maybe any armor?
-      level = EnchantmentHelper.getEnchantments(armor).get(this);
+    Map<Enchantment, Integer> enchHere = EnchantmentHelper.getEnchantments(armor);
+    if (armor.isEmpty() == false && enchHere != null
+        && enchHere.containsKey(this)) {
+      level = enchHere.get(this);
     }
     if (level > 0) {
       turnReachOn(player, level);
