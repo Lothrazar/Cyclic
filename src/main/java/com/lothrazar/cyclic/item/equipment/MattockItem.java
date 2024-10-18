@@ -12,7 +12,6 @@ import net.minecraft.item.ItemTier;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolItem;
 import net.minecraft.network.play.server.SChangeBlockPacket;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -70,20 +69,14 @@ public class MattockItem extends ToolItem {
           Block blockCurrent = bsCurrent.getBlock();
           if (world.isRemote) {
             world.playEvent(2001, posCurrent, Block.getStateId(bsCurrent));
-            if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
-              blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
-            }
-            //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
           }
           else if (player instanceof ServerPlayerEntity) { //Server side, so this works
             ServerPlayerEntity mp = (ServerPlayerEntity) player;
-            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, posCurrent);
+            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), mp, posCurrent);
             if (xpGivenOnDrop >= 0) {
-              if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())
-                  && world instanceof ServerWorld) {
-                TileEntity tile = world.getTileEntity(posCurrent);
-                blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
-                blockCurrent.harvestBlock(world, player, posCurrent, bsCurrent, tile, stack);
+              //              blockCurrent.onPlayerDestroy(world, posCurrent, bsCurrent);
+              blockCurrent.harvestBlock(world, player, posCurrent, bsCurrent, world.getTileEntity(posCurrent), stack);
+              if (blockCurrent.removedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState()) && world instanceof ServerWorld) {
                 blockCurrent.dropXpOnBlockBreak((ServerWorld) world, posCurrent, xpGivenOnDrop);
               }
               mp.connection.sendPacket(new SChangeBlockPacket(world, posCurrent));
