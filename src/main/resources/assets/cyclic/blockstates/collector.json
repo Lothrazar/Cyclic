@@ -10,6 +10,12 @@
 		"facing=south,lit=true":	{ "model": "cyclic:block/collector_on" , "y": 180 },
 	
 		"facing=west,lit=false":	{ "model": "cyclic:block/collector", "y": 270 },
-		"facing=west,lit=true":		{ "model": "cyclic:block/collector_on", "y": 270 }
+		"facing=west,lit=true":		{ "model": "cyclic:block/collector_on", "y": 270 },
+	
+		"facing=up,lit=false":		{ "model": "cyclic:block/collector_up" },
+		"facing=up,lit=true":		  { "model": "cyclic:block/collector_up_on" },
+	
+		"facing=down,lit=false":	{ "model": "cyclic:block/collector_up", "x": 180 },
+		"facing=down,lit=true":		{ "model": "cyclic:block/collector_up_on", "x": 180 }
     }
 }

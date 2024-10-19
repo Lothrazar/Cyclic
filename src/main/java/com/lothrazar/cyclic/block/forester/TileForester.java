@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.capability.CustomEnergyStorage;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,6 +18,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -43,7 +43,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileForester extends TileEntityBase implements INamedContainerProvider, ITickableTileEntity {
 
   static enum Fields {
-    REDSTONE, RENDER, SIZE;
+    REDSTONE, RENDER, SIZE, HEIGHT;
   }
 
   static final int MAX = 64000;
@@ -96,7 +96,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     //update target
     shapeIndex++;
     BlockPos targetPos = getShapeTarget(shape);
-    skipSomeAirBlocks(shape);
     //only saplings at my level, the rest is harvesting
     try {
       if (fakePlayer == null && world instanceof ServerWorld) {
@@ -111,13 +110,10 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         }
       }
       else if (this.isSapling(dropMe)) {
-        //plant me  . if im on the lowest level 
-        if (targetPos.getY() == this.pos.getY()) {
-          ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND, Direction.DOWN);
-          if (result == ActionResultType.CONSUME) {
-            //ok then DRAIN POWER
-            energy.extractEnergy(cost, false);
-          }
+        ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND, Direction.DOWN);
+        if (result == ActionResultType.CONSUME) {
+          //ok then DRAIN POWER
+          energy.extractEnergy(cost, false);
         }
       }
     }
@@ -193,16 +189,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
   }
 
-  private void skipSomeAirBlocks(List<BlockPos> shape) {
-    //    int skipping = MAX_HEIGHT - 2;
-    //    int i = 0;
-    //    while (world.isAirBlock(targetPos) && i < skipping
-    //        && targetPos.getY() > pos.getY()) {
-    //      updateTargetPos(shape);
-    //      i++;
-    //    }
-  }
-
   private BlockPos getShapeTarget(List<BlockPos> shape) {
     if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
       this.shapeIndex = 0;
@@ -210,16 +196,34 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     return shape.get(shapeIndex);
   }
 
+  private int heightWithDirection() {
+    Direction blockFacing = this.getBlockState().get(BlockStateProperties.FACING);
+    int diff = 1;//directionIsUp ? 1 : -1;
+    if (blockFacing.getAxis().isVertical()) {
+      diff = (blockFacing == Direction.UP) ? 1 : -1;
+    }
+    return diff * height;
+  }
+
   //for harvest
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, height);
+    BlockPos center = getFacingShapeCenter(radius);
+    List<BlockPos> shape = UtilShape.cubeSquareBase(center, radius, height);
+    int heightWithDirection = heightWithDirection();
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
+    }
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), this.radius);
+    BlockPos center = getFacingShapeCenter(radius);
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(center, radius);
+    //    int heightWithDirection = heightWithDirection();
+    //    if (heightWithDirection != 0) {
+    //      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
+    //    }
     BlockPos targetPos = getShapeTarget(shape);
     if (targetPos != null) {
       shape.add(targetPos);
@@ -228,7 +232,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   }
 
   private boolean isSapling(ItemStack dropMe) {
-    //    if(dropMe.getItem().isIn(Tags.Blocks.SAND))
     //sapling tag SHOULD exist. it doesnt. idk WHY
     Block block = Block.getBlockFromItem(dropMe.getItem());
     return block.isIn(BlockTags.SAPLINGS) ||
@@ -253,6 +256,8 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         return render;
       case SIZE:
         return radius;
+      case HEIGHT:
+        return height;
     }
     return 0;
   }
@@ -269,6 +274,13 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       case SIZE:
         radius = value % MAX_SIZE;
       break;
+      case HEIGHT:
+        this.height = value & MAX_HEIGHT;
+      break;
     }
+  }
+
+  public boolean hasSapling() {
+    return !this.inventory.getStackInSlot(0).isEmpty();
   }
 }

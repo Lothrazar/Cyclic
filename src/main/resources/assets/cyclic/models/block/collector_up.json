@@ -2,6 +2,6 @@
  	"parent": "cyclic:parent/machine_vertical",
 	"textures":{
         "base": "cyclic:blocks/machine/white",
-        "stem": "cyclic:blocks/machine/peat"
+        "stem": "cyclic:blocks/machine/lapis"
 	}
 }

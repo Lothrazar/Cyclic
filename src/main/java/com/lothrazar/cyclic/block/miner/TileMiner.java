@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -298,26 +297,35 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
     isCurrentlyMining = false;
     curBlockDamage = 0;
     if (fakePlayer != null && targetPos != null) {
-      //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
       getWorld().sendBlockBreakProgress(fakePlayer.get().getUniqueID().hashCode(), targetPos, -1);
     }
   }
 
-  public List<BlockPos> getShape() {
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(this.getCurrentFacingPos(radius + 1), radius);
+  private int heightWithDirection() {
+    Direction blockFacing = this.getBlockState().get(BlockStateProperties.FACING);
     int diff = directionIsUp ? 1 : -1;
-    if (height > 0) {
-      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    if (blockFacing.getAxis().isVertical()) {
+      diff = (blockFacing == Direction.UP) ? 1 : -1;
+    }
+    return diff * height;
+  }
+
+  public List<BlockPos> getShape() {
+    BlockPos center = getFacingShapeCenter(radius);
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(center, radius);
+    int heightWithDirection = heightWithDirection();
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
     }
     return shape;
   }
 
   public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = new ArrayList<BlockPos>();
-    shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
-    int diff = directionIsUp ? 1 : -1;
-    if (height > 0) {
-      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    BlockPos center = getFacingShapeCenter(radius);
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(center, radius);
+    int heightWithDirection = heightWithDirection();
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
     }
     if (targetPos != null) {
       shape.add(targetPos);

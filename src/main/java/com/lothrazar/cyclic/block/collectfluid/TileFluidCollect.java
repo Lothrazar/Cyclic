@@ -16,6 +16,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -49,7 +50,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   FluidTankBase tank;
   private final LazyOptional<FluidTankBase> tankWrapper = LazyOptional.of(() -> tank);
   private int shapeIndex = 0; // current index of shape array
-  private int size = 4 * 2;
+  private int radius = 4 * 2;
   private int height = 4;
   BlockPos targetPos = null;
   static final int MAX = 64000;
@@ -125,16 +126,23 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
     return TileEntity.INFINITE_EXTENT_AABB;
   }
 
-  private BlockPos getTargetCenter() {
-    //move center over that much, not including exact horizontal
-    return this.getCurrentFacingPos(size + 1); //this.getPos().offset(this.getCurrentFacing(), size + 1);
+  private int heightWithDirection() {
+    Direction blockFacing = this.getBlockState().get(BlockStateProperties.FACING);
+    int diff = 1; // directionIsUp ? 1 : -1;
+    if (blockFacing.getAxis().isVertical()) {
+      diff = (blockFacing == Direction.UP) ? 1 : -1;
+    }
+    return diff * height;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
-    BlockPos ctr = getTargetCenter();
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(ctr.down(height), this.size);
-    shape = UtilShape.repeatShapeByHeight(shape, height);
+    BlockPos center = getFacingShapeCenter(radius);
+    int heightWithDirection = heightWithDirection();
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(center.down(height), this.radius);
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
+    }
     if (targetPos != null) {
       shape.add(targetPos);
     }
@@ -143,9 +151,12 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
 
   //for harvest
   public List<BlockPos> getShapeFilled() {
-    BlockPos ctr = getTargetCenter();
-    List<BlockPos> shape = UtilShape.squareHorizontalFull(ctr.down(height), this.size);
-    shape = UtilShape.repeatShapeByHeight(shape, height - 1);
+    BlockPos center = getFacingShapeCenter(radius);
+    int heightWithDirection = heightWithDirection();
+    List<BlockPos> shape = UtilShape.squareHorizontalFull(center, this.radius);
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
+    }
     return shape;
   }
 
@@ -221,7 +232,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
         height = Math.min(value, MAX_HEIGHT);
       break;
       case SIZE:
-        size = Math.min(value, MAX_SIZE);
+        radius = Math.min(value, MAX_SIZE);
       break;
     }
   }
@@ -236,7 +247,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       case HEIGHT:
         return height;
       case SIZE:
-        return size;
+        return radius;
     }
     return 0;
   }

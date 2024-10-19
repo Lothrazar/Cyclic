@@ -15,8 +15,8 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
   private EnergyBar energy;
   private ButtonMachineField btnRedstone;
   private ButtonMachineField btnRender;
-  private GuiSliderInteger size;
   private ButtonMachineField btnDirection;
+  private GuiSliderInteger size;
   private GuiSliderInteger heightslider;
 
   public ScreenHarvester(ContainerHarvester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
@@ -41,23 +41,21 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     int f = TileHarvester.Fields.DIRECTION.ordinal();
     y += 20;
     btnDirection = addButton(new ButtonMachineField(x, y, f,
-        container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"))
-    //.setSize(18)
-    ;
-    int w = 110;
-    int h = 18;
+        container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
+    btnDirection.visible = !container.tile.getBlockStateVertical();
+    final int w = 110;
+    final int h = 18;
     //now start sliders
     //
-    y = guiTop + 22;
+    //
+    y = guiTop + 24;
     x = guiLeft + 34;
     f = TileHarvester.Fields.HEIGHT.ordinal();
     heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, TileHarvester.Fields.HEIGHT.ordinal(), container.tile.getPos(),
         0, TileHarvester.MAX_HEIGHT, container.tile.getField(f)));
-    heightslider.setTooltip("buildertype.height.tooltip");
-    //     w = 130;
-    //    int h = 18;
+    //
     f = TileHarvester.Fields.SIZE.ordinal();
-    y += 26;
+    y += 28;
     size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, TileHarvester.MAX_SIZE, container.tile.getField(f)));
   }
 
@@ -74,6 +72,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     btnRedstone.onValueUpdate(container.tile);
     btnRender.onValueUpdate(container.tile);
     btnDirection.onValueUpdate(container.tile);
+    heightslider.setTooltip("buildertype.height.tooltip");
     size.setTooltip("cyclic.screen.size" + container.tile.getField(size.getField()));
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());

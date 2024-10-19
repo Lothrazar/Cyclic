@@ -1,0 +1,7 @@
+{ 
+ 	"parent": "cyclic:parent/machine_vertical",
+    "textures": { 
+        "base": "cyclic:blocks/machine/blue",
+        "stem": "cyclic:blocks/machine/white"
+    }
+}

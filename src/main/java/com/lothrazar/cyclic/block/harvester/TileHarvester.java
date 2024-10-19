@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -33,9 +34,9 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
 
   public static final int MAX_SIZE = 12;
   static final int MAX_ENERGY = 640000;
-  static final int MAX_HEIGHT = 16;
+  public static final int MAX_HEIGHT = 16;
   public static IntValue POWERCONF;
-  private int radius = MAX_SIZE;
+  private int radius = MAX_SIZE / 2;
   private int shapeIndex = 0;
   private int height = 1;
   private boolean directionIsUp = false;
@@ -84,22 +85,33 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     return shape.get(shapeIndex);
   }
 
+  private int heightWithDirection() {
+    Direction blockFacing = this.getBlockState().get(BlockStateProperties.FACING);
+    int diff = directionIsUp ? 1 : -1;
+    if (blockFacing.getAxis().isVertical()) {
+      diff = (blockFacing == Direction.UP) ? 1 : -1;
+    }
+    return diff * height;
+  }
+
   //for harvest
   public List<BlockPos> getShape() {
-    List<BlockPos> shape = UtilShape.cubeSquareBase(this.getCurrentFacingPos(radius + 1), radius, 0);
-    int diff = directionIsUp ? 1 : -1;
-    if (height > 0) {
-      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    BlockPos center = getFacingShapeCenter(radius);
+    List<BlockPos> shape = UtilShape.cubeSquareBase(center, radius, 0);
+    int heightWithDirection = heightWithDirection();
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
     }
     return shape;
   }
 
   //for render
   public List<BlockPos> getShapeHollow() {
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(this.getCurrentFacingPos(radius + 1), radius);
-    int diff = directionIsUp ? 1 : -1;
-    if (height > 0) {
-      shape = UtilShape.repeatShapeByHeight(shape, diff * height);
+    BlockPos center = getFacingShapeCenter(radius);
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(center, radius);
+    int heightWithDirection = heightWithDirection();
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
     }
     return shape;
   }

@@ -1,0 +1,7 @@
+{ 
+ 	"parent": "cyclic:parent/machine_vertical_on",
+    "textures": {
+        "base": "cyclic:blocks/machine/iron",
+        "stem": "cyclic:blocks/machine/stone"
+    }
+}

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.forester;
 
 import com.lothrazar.cyclic.base.ScreenBase;
+import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
@@ -17,6 +18,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   private ButtonMachineField btnRedstone;
   private EnergyBar energy;
   private GuiSliderInteger size;
+  private GuiSliderInteger heightslider;
 
   public ScreenForester(ContainerForester screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
@@ -36,10 +38,16 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     y += 20;
     btnRender = addButton(new ButtonMachineField(x, y, TileForester.Fields.RENDER.ordinal(),
         container.tile.getPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
-    int w = 110;
-    int h = 18;
-    int f = TileForester.Fields.SIZE.ordinal();
-    x += 28;
+    final int w = 110;
+    final int h = 18;
+    int f = TileForester.Fields.HEIGHT.ordinal();
+    x = guiLeft + 34;
+    y = guiTop + 38;
+    heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, TileForester.Fields.HEIGHT.ordinal(), container.tile.getPos(),
+        0, TileHarvester.MAX_HEIGHT, container.tile.getField(f)));
+    //
+    f = TileForester.Fields.SIZE.ordinal();
+    //    x += 28;
     y += 20;
     size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, 10, container.tile.getField(f)));
   }
@@ -58,6 +66,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(container.tile);
     btnRender.onValueUpdate(container.tile);
+    heightslider.setTooltip("buildertype.height.tooltip");
     size.setTooltip("cyclic.screen.size" + container.tile.getField(size.getField()));
   }
 
@@ -65,7 +74,14 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
   protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     int relX = this.getXSize() / 2 - 9;
-    this.drawSlot(ms, relX, 24, TextureRegistry.SLOT_SAPLING, Const.SQ);
+    int y = 16;
+    //
+    if (container.tile.hasSapling()) {
+      this.drawSlot(ms, relX, y);
+    }
+    else {
+      this.drawSlot(ms, relX, y, TextureRegistry.SLOT_SAPLING, Const.SQ);
+    }
     energy.draw(ms, container.getEnergy());
   }
 }
