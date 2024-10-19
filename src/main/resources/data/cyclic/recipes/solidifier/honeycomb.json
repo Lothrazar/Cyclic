@@ -1,0 +1,18 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients":[ {
+    "item": "minecraft:honeycomb"
+  }],
+  "mix": {
+    "tag": "forge:wax",
+    "count": 500
+  },
+	"energy": {
+		"rfpertick": 200,
+		"ticks": 40
+	},
+  "result": {
+    "item": "minecraft:honeycomb",
+	"count": 3
+  }
+}

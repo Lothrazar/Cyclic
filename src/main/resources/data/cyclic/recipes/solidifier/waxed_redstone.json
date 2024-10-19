@@ -11,7 +11,7 @@
 	},
 	"energy": {
 		"rfpertick": 800,
-		"ticks": 120
+		"ticks": 20
 	},
 	"result": {
 		"item": "cyclic:waxed_redstone",

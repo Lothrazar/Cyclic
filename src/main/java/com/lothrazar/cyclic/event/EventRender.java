@@ -113,7 +113,7 @@ public class EventRender {
     mc.getItemRenderer().renderAndDecorateItem(stack, width / 2, height / 2);
   }
 
-  ///////////////////// asdfasdf TODO REFACTOR THIS  
+  /////////////////////  TODO REFACTOR THIS  
   @SubscribeEvent
   public void onRenderWorldLast(RenderLevelLastEvent event) {
     Minecraft mc = Minecraft.getInstance();
@@ -123,7 +123,7 @@ public class EventRender {
     }
     Level world = player.level;
     double range = 6F;
-    float alpha = 0.125F * 2;
+    final float alpha = 0.125F * 2;
     Map<BlockPos, Color> renderCubes = new HashMap<>();
     ///////////////////// BuilderItem
     ItemStack stack = BuilderItem.getIfHeld(player);
@@ -135,11 +135,11 @@ public class EventRender {
         if (buildStyle.isOffset() && lookingAt.getDirection() != null) {
           pos = pos.relative(lookingAt.getDirection());
         }
-        alpha = 0.4F;
         //now the item has a build area
         List<BlockPos> coordinates = PacketSwapBlock.getSelectedBlocks(world, pos, BuilderItem.getActionType(stack), lookingAt.getDirection(), buildStyle);
         for (BlockPos coordinate : coordinates) {
-          renderCubes.put(coordinate, ClientConfigCyclic.getColor(stack));
+          RenderUtils.createBox(event.getPoseStack(), coordinate);
+          // renderCubes.put(coordinate, ClientConfigCyclic.getColor(stack));
         }
       }
     }
