@@ -16,7 +16,6 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -70,32 +69,20 @@ public class MattockItem extends DiggerItem {
             && player.mayUseItemAt(posCurrent, sideHit, stack)
             && ForgeEventFactory.doPlayerHarvestCheck(player, bsCurrent, true)
             && this.getDestroySpeed(stack, bsCurrent) > 1
-            && (bsCurrent.canHarvestBlock(world, pos, player)
-                || bsCurrent.is(this.getTier().getTag())
-            //this.getTier().getTag().contains(bsCurrent.getBlock())
-            )
+            && (bsCurrent.canHarvestBlock(world, pos, player) || bsCurrent.is(this.getTier().getTag()))
         //end of OR
         ) {
           stack.mineBlock(world, bsCurrent, posCurrent, player);
           Block blockCurrent = bsCurrent.getBlock();
           if (world.isClientSide) {
             world.levelEvent(2001, posCurrent, Block.getId(bsCurrent));
-            //removedByPlayer
-            if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())) {
-              blockCurrent.destroy(world, posCurrent, bsCurrent);
-            }
-            //            stack.onBlockDestroyed(world, bsCurrent, posCurrent, player);//update tool damage
           }
-          else if (player instanceof ServerPlayer) { //Server side, so this works
-            ServerPlayer mp = (ServerPlayer) player;
-            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
+          else if (player instanceof ServerPlayer mp) { //Server side, so this works 
+            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(world, mp.gameMode.getGameModeForPlayer(), mp, posCurrent);
             if (xpGivenOnDrop >= 0) {
-              if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState())
-                  && world instanceof ServerLevel) {
-                BlockEntity tile = world.getBlockEntity(posCurrent);
-                blockCurrent.destroy(world, posCurrent, bsCurrent);
-                blockCurrent.playerDestroy(world, player, posCurrent, bsCurrent, tile, stack);
-                blockCurrent.popExperience((ServerLevel) world, posCurrent, xpGivenOnDrop);
+              blockCurrent.playerDestroy(world, player, posCurrent, bsCurrent, world.getBlockEntity(posCurrent), stack);
+              if (blockCurrent.onDestroyedByPlayer(bsCurrent, world, posCurrent, player, true, bsCurrent.getFluidState()) && world instanceof ServerLevel sl) {
+                blockCurrent.popExperience(sl, posCurrent, xpGivenOnDrop);
               }
               mp.connection.send(new ClientboundBlockUpdatePacket(world, posCurrent));
             }
@@ -105,11 +92,6 @@ public class MattockItem extends DiggerItem {
     }
     return super.onBlockStartBreak(stack, pos, player);
   }
-  //  @Override
-  //  public int getHarvestLevel(ItemStack stack, net.minecraftforge.common.ToolType tool, Player player, BlockState blockState) {
-  //    return Math.max(Items.DIAMOND_PICKAXE.getHarvestLevel(stack, tool, player, blockState),
-  //        Items.DIAMOND_SHOVEL.getHarvestLevel(stack, tool, player, blockState));
-  //  }
 
   @Override
   public float getDestroySpeed(ItemStack stack, BlockState state) {

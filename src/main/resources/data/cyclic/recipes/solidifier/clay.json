@@ -1,0 +1,22 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients":[{
+    "item": "minecraft:mud"
+  },{
+    "tag": "forge:sand"
+  },{
+    "tag": "forge:gravel"
+  }],
+  "mix": {
+    "fluid": "minecraft:water",
+    "count": 1000
+  },
+	"energy": {
+		"rfpertick": 500,
+		"ticks": 100
+	},
+  "result": {
+    "item": "minecraft:clay",
+	"count": 3
+  }
+}
