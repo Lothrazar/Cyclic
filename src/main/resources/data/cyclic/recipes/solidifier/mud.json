@@ -1,0 +1,18 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients":[ {
+    "tag": "minecraft:dirt"
+  }],
+  "mix": {
+    "fluid": "minecraft:water",
+    "count": 1000
+  },
+	"energy": {
+		"rfpertick": 200,
+		"ticks": 40
+	},
+  "result": {
+    "item": "minecraft:mud",
+	"count": 1
+  }
+}

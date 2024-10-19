@@ -1,0 +1,18 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients":[{
+    "item": "minecraft:weathered_copper"
+  }],
+  "mix": {
+    "tag": "forge:wax",
+    "count": 50
+  },
+	"energy": {
+		"rfpertick": 600,
+		"ticks": 20
+	},
+  "result": {
+    "item": "minecraft:waxed_weathered_copper",
+	"count": 1
+  }
+}
