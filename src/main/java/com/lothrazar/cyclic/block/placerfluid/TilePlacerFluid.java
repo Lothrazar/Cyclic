@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.placerfluid;
 
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.function.Predicate;
 import net.minecraft.block.BlockState;
@@ -133,7 +134,7 @@ public class TilePlacerFluid extends TileEntityBase implements INamedContainerPr
         this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
     }
   }

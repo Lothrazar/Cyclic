@@ -386,37 +386,41 @@ public class UtilRender {
     buffer.finish(FakeBlockRenderTypes.TRANSPARENT_COLOUR);
   }
 
+  public static void createBox(MatrixStack matrixStack, BlockPos pos) {
+    Minecraft mc = Minecraft.getInstance();
+    Vector3d cameraPosition = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
+    createBox(matrixStack, pos, cameraPosition);
+  }
+
   /**
    * Box OUTLINE that you can see thru blocks.
    * 
    * From https://github.com/Lothrazar/SimpleTomb/blob/trunk/1.16/src/main/java/com/lothrazar/simpletomb/event/ClientEvents.java
    * 
    */
-  public static void createBox(MatrixStack matrixStack, BlockPos pos) {
+  public static void createBox(MatrixStack matrixStack, BlockPos pos, Vector3d cameraPosition) {
     final double offset = 1;
     double x = pos.getX();
     double y = pos.getY();
     double z = pos.getZ();
-    Minecraft mc = Minecraft.getInstance();
     RenderSystem.disableTexture();
     RenderSystem.disableBlend();
     RenderSystem.disableDepthTest();
     RenderSystem.pushMatrix();
-    Vector3d viewPosition = mc.gameRenderer.getActiveRenderInfo().getProjectedView();
-    long c = (System.currentTimeMillis() / 15L) % 360L;
-    float[] color = getHSBtoRGBF(c / 360f, 1f, 1f);
+    float[] color = getRandomColour();
     matrixStack.push();
     // get a closer pos if too far
-    Vector3d vec = new Vector3d(x, y, z).subtract(viewPosition);
+    Vector3d vec = new Vector3d(x, y, z).subtract(cameraPosition);
     if (vec.distanceTo(Vector3d.ZERO) > 200d) { // could be 300
       vec = vec.normalize().scale(200d);
       x += vec.x;
       y += vec.y;
       z += vec.z;
     }
-    x -= viewPosition.getX();
-    y -= viewPosition.getY();
-    z -= viewPosition.getZ();
+    //    x -= cameraPosition.getX();
+    //    y -= cameraPosition.getY();
+    //    z -= cameraPosition.getZ();
+    matrixStack.translate(-cameraPosition.getX(), -cameraPosition.getY(), -cameraPosition.getZ());
     RenderSystem.multMatrix(matrixStack.getLast().getMatrix());
     Tessellator tessellator = Tessellator.getInstance();
     BufferBuilder renderer = tessellator.getBuffer();
@@ -455,6 +459,12 @@ public class UtilRender {
     RenderSystem.enableBlend();
     RenderSystem.enableTexture();
     //    RenderSystem.color4f(1f, 1f, 1f, 1f);
+  }
+
+  private static float[] getRandomColour() {
+    long c = (System.currentTimeMillis() / 15L) % 360L;
+    float[] color = getHSBtoRGBF(c / 360f, 1f, 1f);
+    return color;
   }
 
   /**

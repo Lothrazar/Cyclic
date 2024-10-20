@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.generatorpeat;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.PeatItem;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.block.BlockState;
@@ -162,7 +163,7 @@ public class TileGeneratorPeat extends TileEntityBase implements ITickableTileEn
         setNeedsRedstone(value);
       break;
       case RENDER:
-        render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case BURNTIME:
         this.setBurnTime(value);

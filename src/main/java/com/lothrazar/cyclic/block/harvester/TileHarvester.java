@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.harvester;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.HarvestUtil;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -38,6 +39,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
   public static IntValue POWERCONF;
   private int radius = MAX_SIZE / 2;
   private int shapeIndex = 0;
+  BlockPos targetPos = null;
   private int height = 1;
   private boolean directionIsUp = false;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX_ENERGY, MAX_ENERGY / 4);
@@ -65,7 +67,8 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
       return;
     }
     //get and update target
-    BlockPos targetPos = getShapeTarget();
+    List<BlockPos> shape = this.getShape();
+    targetPos = getShapeTarget(shape);
     shapeIndex++;
     //does it exist
     if (targetPos != null && HarvestUtil.tryHarvestSingle(this.world, targetPos)) {
@@ -74,8 +77,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     }
   }
 
-  private BlockPos getShapeTarget() {
-    List<BlockPos> shape = this.getShape();
+  private BlockPos getShapeTarget(List<BlockPos> shape) {
     if (shape.size() == 0) {
       return null;
     }
@@ -113,6 +115,9 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
     if (heightWithDirection != 0) {
       shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
     }
+    if (targetPos != null) {
+      shape.add(targetPos);
+    }
     return shape;
   }
 
@@ -145,7 +150,7 @@ public class TileHarvester extends TileEntityBase implements ITickableTileEntity
         this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);

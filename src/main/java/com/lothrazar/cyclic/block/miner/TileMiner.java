@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.miner;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.BlockStateMatcher;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -357,7 +358,7 @@ public class TileMiner extends TileEntityBase implements INamedContainerProvider
         this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case DIRECTION:
         this.directionIsUp = value == 1;

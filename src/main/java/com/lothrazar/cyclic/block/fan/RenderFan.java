@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.peatfarm;
+package com.lothrazar.cyclic.block.fan;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -10,17 +10,17 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 
-public class RenderPeatFarm extends TileEntityRenderer<TilePeatFarm> {
+public class RenderFan extends TileEntityRenderer<TileFan> {
 
-  public RenderPeatFarm(TileEntityRendererDispatcher d) {
+  public RenderFan(TileEntityRendererDispatcher d) {
     super(d);
   }
 
   @Override
-  public void render(TilePeatFarm te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
-    int previewType = te.getField(TilePeatFarm.Fields.RENDER.ordinal());
+  public void render(TileFan te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
+    int previewType = te.getField(TileFan.Fields.RENDER.ordinal());
     if (PreviewOutlineType.SHADOW.ordinal() == previewType) {
-      UtilRender.renderOutline(te.getPos(), te.getShape(), matrixStack, 0.4F, ClientConfigCyclic.getColor(te));
+      UtilRender.renderOutline(te.getPos(), te.getShapeHollow(), matrixStack, 0.7F, ClientConfigCyclic.getColor(te));
     }
     else if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
       for (BlockPos crd : te.getShapeHollow()) {

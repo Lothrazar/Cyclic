@@ -42,7 +42,6 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     y += 20;
     btnDirection = addButton(new ButtonMachineField(x, y, f,
         container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
-    btnDirection.visible = !container.tile.getBlockStateVertical();
     final int w = 110;
     final int h = 18;
     //now start sliders
@@ -76,6 +75,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     size.setTooltip("cyclic.screen.size" + container.tile.getField(size.getField()));
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
+    btnDirection.visible = !container.tile.getBlockStateVertical();
   }
 
   @Override

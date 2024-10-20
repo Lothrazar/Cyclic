@@ -28,6 +28,11 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
   }
 
   @Override
+  public boolean isGlobalRenderer(TileLaser te) {
+    return true;
+  }
+
+  @Override
   public void render(TileLaser te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
     if (te.requiresRedstone() && !te.isPowered()) {
       return;
@@ -113,10 +118,5 @@ public class RenderLaser extends TileEntityRenderer<TileLaser> {
         .overlay(OverlayTexture.NO_OVERLAY)
         .lightmap(15728880)
         .endVertex();
-  }
-
-  @Override
-  public boolean isGlobalRenderer(TileLaser te) {
-    return true;
   }
 }

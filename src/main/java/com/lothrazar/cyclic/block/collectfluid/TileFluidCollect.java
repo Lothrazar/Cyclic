@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.collectfluid;
 import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
@@ -82,9 +83,11 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       return;
     }
     ItemStack stack = inventory.getStackInSlot(0);
-    if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
-      return;
-    }
+    //    if (stack.isEmpty() || Block.getBlockFromItem(stack.getItem()) == Blocks.AIR) {
+    //      return;
+    //    }
+    //use air if its empty
+    BlockState newState = Block.getBlockFromItem(stack.getItem()).getDefaultState();
     this.setLitProperty(true);
     List<BlockPos> shape = this.getShapeFilled();
     if (shape.size() == 0) {
@@ -100,7 +103,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
       int result = tank.fill(fstack, FluidAction.SIMULATE);
       if (result == FluidAttributes.BUCKET_VOLUME) {
         //we got enough  
-        if (world.setBlockState(targetPos, Block.getBlockFromItem(stack.getItem()).getDefaultState())) {
+        if (world.setBlockState(targetPos, newState)) {
           //build the block, shrink the item
           stack.shrink(1);
           //drink fluid
@@ -138,8 +141,9 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
   //for render
   public List<BlockPos> getShapeHollow() {
     BlockPos center = getFacingShapeCenter(radius);
+    List<BlockPos> shape = UtilShape.squareHorizontalHollow(center, this.radius);
+    //
     int heightWithDirection = heightWithDirection();
-    List<BlockPos> shape = UtilShape.squareHorizontalHollow(center.down(height), this.radius);
     if (heightWithDirection != 0) {
       shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
     }
@@ -226,7 +230,7 @@ public class TileFluidCollect extends TileEntityBase implements ITickableTileEnt
         this.setNeedsRedstone(value);
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case HEIGHT:
         height = Math.min(value, MAX_HEIGHT);

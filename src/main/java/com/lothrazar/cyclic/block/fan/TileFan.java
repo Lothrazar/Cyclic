@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.fan;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.net.PacketPlayerFalldamage;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -23,7 +24,7 @@ import net.minecraft.util.text.StringTextComponent;
 public class TileFan extends TileEntityBase implements ITickableTileEntity, INamedContainerProvider {
 
   static enum Fields {
-    REDSTONE, RANGE, SPEED;
+    REDSTONE, RANGE, SPEED, RENDER;
   }
 
   public static final int MIN_RANGE = 1;
@@ -80,6 +81,10 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
 
   private boolean canBlowThrough(BlockPos tester) {
     return !world.getBlockState(tester).isSolid();
+  }
+
+  public List<BlockPos> getShapeHollow() {
+    return getShape();
   }
 
   public List<BlockPos> getShape() {
@@ -204,6 +209,8 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
         return this.needsRedstone;
       case SPEED:
         return this.speed;
+      case RENDER:
+        return this.render;
     }
     return 0;
   }
@@ -212,6 +219,9 @@ public class TileFan extends TileEntityBase implements ITickableTileEntity, INam
   public void setField(int field, int value) {
     Fields f = Fields.values()[field];
     switch (f) {
+      case RENDER:
+        this.render = value % PreviewOutlineType.values().length;
+      break;
       case RANGE:
         range = value;
         if (range < MIN_RANGE) {

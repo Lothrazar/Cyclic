@@ -40,7 +40,6 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     f = TileMiner.Fields.DIRECTION.ordinal();
     btnDirection = addButton(new ButtonMachineField(x, y + 40, f,
         container.tile.getPos(), TextureEnum.DIR_DOWN, TextureEnum.DIR_UPWARDS, "gui.cyclic.direction"));
-    btnDirection.visible = !container.tile.getBlockStateVertical();
     //
     int w = 120;
     int h = 20;
@@ -74,6 +73,7 @@ public class ScreenMiner extends ScreenBase<ContainerMiner> {
     btnRender.onValueUpdate(container.tile);
     btnDirection.onValueUpdate(container.tile);
     sizeSlider.setTooltip("cyclic.screen.size" + container.tile.getField(sizeSlider.getField()));
+    btnDirection.visible = !container.tile.getBlockStateVertical();
   }
 
   @Override

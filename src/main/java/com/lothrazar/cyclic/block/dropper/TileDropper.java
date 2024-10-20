@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.dropper;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilItemStack;
 import java.util.ArrayList;
@@ -176,9 +177,13 @@ public class TileDropper extends TileEntityBase implements INamedContainerProvid
         hOffset = Math.max(0, value);
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
     }
+  }
+
+  public List<BlockPos> getShapeHollow() {
+    return getShape();
   }
 
   public List<BlockPos> getShape() {

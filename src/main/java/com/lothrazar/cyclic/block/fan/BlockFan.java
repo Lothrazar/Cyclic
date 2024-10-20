@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.fan;
 
 import com.lothrazar.cyclic.base.BlockBase;
 import com.lothrazar.cyclic.registry.ContainerScreenRegistry;
+import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilBlockstates;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class BlockFan extends BlockBase {
 
@@ -49,6 +51,7 @@ public class BlockFan extends BlockBase {
 
   @Override
   public void registerClient() {
+    ClientRegistry.bindTileEntityRenderer(TileRegistry.fantile, RenderFan::new);
     RenderTypeLookup.setRenderLayer(this, RenderType.getCutoutMipped());
     ScreenManager.registerFactory(ContainerScreenRegistry.FAN, ScreenFan::new);
   }

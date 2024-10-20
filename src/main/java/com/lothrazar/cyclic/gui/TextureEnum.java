@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.gui;
 public enum TextureEnum {
 
-  REDSTONE_ON, REDSTONE_NEEDED, POWER_MOVING, POWER_STOP, RENDER_HIDE, RENDER_SHOW, CRAFT_EMPTY, CRAFT_BALANCE, CRAFT_MATCH, DIR_DOWN, DIR_UPWARDS;
+  REDSTONE_ON, REDSTONE_NEEDED, POWER_MOVING, POWER_STOP, RENDER_HIDE, RENDER_SHOW, CRAFT_EMPTY, CRAFT_BALANCE, CRAFT_MATCH, DIR_DOWN, DIR_UPWARDS, RENDER_OUTLINE;
 
   public int getX() {
     switch (this) {
@@ -27,6 +27,8 @@ public enum TextureEnum {
         return 609;
       case CRAFT_MATCH:
         return 593;
+      case RENDER_OUTLINE:
+        return 1 - 3;
     }
     return 0;
   }
@@ -55,6 +57,8 @@ public enum TextureEnum {
         return 129;
       case CRAFT_MATCH:
         return 129;
+      case RENDER_OUTLINE:
+        return 129 - 3;
     }
     return 0;
   }
@@ -69,6 +73,7 @@ public enum TextureEnum {
         return 14;
       case DIR_DOWN:
       case DIR_UPWARDS:
+      case RENDER_OUTLINE:
         return 18;
       default:
         return 20;
@@ -85,6 +90,7 @@ public enum TextureEnum {
         return 14;
       case DIR_DOWN:
       case DIR_UPWARDS:
+      case RENDER_OUTLINE:
         return 18;
       default:
         return 20;

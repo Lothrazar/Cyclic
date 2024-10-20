@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.collectitem;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -141,6 +142,10 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
     return diff * height;
   }
 
+  public List<BlockPos> getShapeHollow() {
+    return getShape();
+  }
+
   public List<BlockPos> getShape() {
     BlockPos center = getFacingShapeCenter(radius);
     List<BlockPos> shape = UtilShape.squareHorizontalHollow(center, radius);
@@ -174,7 +179,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
         this.setNeedsRedstone(value);
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case SIZE:
         radius = Math.min(value, MAX_SIZE);

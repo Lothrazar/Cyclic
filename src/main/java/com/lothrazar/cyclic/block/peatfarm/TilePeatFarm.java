@@ -27,6 +27,7 @@ import com.lothrazar.cyclic.base.FluidTankBase;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
@@ -156,7 +157,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
         this.setNeedsRedstone(value);
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
     }
   }
@@ -188,6 +189,10 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return Block.getBlockFromItem(stack.getItem()) == unbaked;
+  }
+
+  public List<BlockPos> getShapeHollow() {
+    return getShape();
   }
 
   List<BlockPos> getShape() {

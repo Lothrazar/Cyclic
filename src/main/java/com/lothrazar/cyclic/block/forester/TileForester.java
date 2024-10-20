@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.forester;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.lang.ref.WeakReference;
@@ -48,7 +49,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   static final int MAX = 64000;
   static final int MAX_HEIGHT = 32;
-  private static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
+  static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
   public static IntValue POWERCONF;
   private int height = MAX_HEIGHT;
   private int radius = MAX_SIZE;
@@ -157,6 +158,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public void read(BlockState bs, CompoundNBT tag) {
+    height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
     energy.deserializeNBT(tag.getCompound(NBTENERGY));
@@ -166,6 +168,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
 
   @Override
   public CompoundNBT write(CompoundNBT tag) {
+    tag.putInt("height", height);
     tag.putInt("shapeIndex", shapeIndex);
     tag.put(NBTENERGY, energy.serializeNBT());
     tag.putInt("radius", radius);
@@ -220,10 +223,10 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   public List<BlockPos> getShapeHollow() {
     BlockPos center = getFacingShapeCenter(radius);
     List<BlockPos> shape = UtilShape.squareHorizontalHollow(center, radius);
-    //    int heightWithDirection = heightWithDirection();
-    //    if (heightWithDirection != 0) {
-    //      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
-    //    }
+    int heightWithDirection = heightWithDirection();
+    if (heightWithDirection != 0) {
+      shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
+    }
     BlockPos targetPos = getShapeTarget(shape);
     if (targetPos != null) {
       shape.add(targetPos);
@@ -269,13 +272,13 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
         this.needsRedstone = value % 2;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case SIZE:
-        radius = value % MAX_SIZE;
+        radius = Math.min(value, MAX_SIZE);
       break;
       case HEIGHT:
-        this.height = value & MAX_HEIGHT;
+        this.height = Math.min(value, MAX_HEIGHT);
       break;
     }
   }

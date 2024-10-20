@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.detectorentity;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.data.EntityFilterType;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
@@ -103,6 +104,10 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
     return isPoweredNow;
   }
 
+  public List<BlockPos> getShapeHollow() {
+    return getShape();
+  }
+
   public List<BlockPos> getShape() {
     return UtilShape.getShape(getRange(), pos.getY());
   }
@@ -147,7 +152,7 @@ public class TileDetector extends TileEntityBase implements ITickableTileEntity,
   public void setField(int field, int value) {
     switch (Fields.values()[field]) {
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
       case GREATERTHAN:
         if (value >= CompareType.values().length) {

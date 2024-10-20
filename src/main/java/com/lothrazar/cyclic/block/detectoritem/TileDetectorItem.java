@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.detectoritem;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.detectorentity.CompareType;
+import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilShape;
 import java.util.List;
@@ -183,7 +184,7 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
         this.rangeZ = value;
       break;
       case RENDER:
-        this.render = value % 2;
+        this.render = value % PreviewOutlineType.values().length;
       break;
     }
   }
@@ -209,6 +210,10 @@ public class TileDetectorItem extends TileEntityBase implements ITickableTileEnt
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
     return super.write(tag);
+  }
+
+  public List<BlockPos> getShapeHollow() {
+    return getShape();
   }
 
   public List<BlockPos> getShape() {

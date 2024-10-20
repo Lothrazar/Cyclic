@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.forester;
 
 import com.lothrazar.cyclic.base.ScreenBase;
-import com.lothrazar.cyclic.block.harvester.TileHarvester;
 import com.lothrazar.cyclic.data.Const;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.EnergyBar;
@@ -44,12 +43,12 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     x = guiLeft + 34;
     y = guiTop + 38;
     heightslider = this.addButton(new GuiSliderInteger(x, y, w, h, TileForester.Fields.HEIGHT.ordinal(), container.tile.getPos(),
-        0, TileHarvester.MAX_HEIGHT, container.tile.getField(f)));
+        0, TileForester.MAX_HEIGHT, container.tile.getField(f)));
     //
     f = TileForester.Fields.SIZE.ordinal();
     //    x += 28;
     y += 20;
-    size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, 10, container.tile.getField(f)));
+    size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(), 0, TileForester.MAX_SIZE, container.tile.getField(f)));
   }
 
   @Override

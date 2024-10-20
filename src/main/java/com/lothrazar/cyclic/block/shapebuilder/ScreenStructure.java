@@ -46,7 +46,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     x = guiLeft + 8;
     y = guiTop + 82;
     GuiSliderInteger durationslider = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
-        1, TileStructure.MAXHEIGHT, container.tile.getField(f)));
+        1, TileStructure.MAX_HEIGHT, container.tile.getField(f)));
     durationslider.setTooltip("buildertype.height.tooltip");
     y += 21;
     f = TileStructure.Fields.SIZE.ordinal();
