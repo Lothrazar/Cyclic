@@ -17,6 +17,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -24,9 +25,12 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileCableEnergy extends TileCableBase implements ITickableTileEntity {
 
-  private static final int MAX = 32000;
-  final CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  //
+  public static IntValue BUFFERSIZE;
+  public static IntValue TRANSFER_RATE;
+  //
+  final CustomEnergyStorage energy;// = new CustomEnergyStorage(MAX, MAX);
+  private final LazyOptional<IEnergyStorage> energyCap;// = LazyOptional.of(() -> energy);
   private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> flow = new ConcurrentHashMap<>();
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
   private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
@@ -36,6 +40,8 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }
+    energy = new CustomEnergyStorage(BUFFERSIZE.get(), TRANSFER_RATE.get());
+    energyCap = LazyOptional.of(() -> energy);
   }
 
   @Override
@@ -109,7 +115,7 @@ public class TileCableEnergy extends TileCableBase implements ITickableTileEntit
         continue;
       }
       if (!this.isEnergyIncomingFromFace(outgoingSide)) {
-        moveEnergy(outgoingSide, MAX);
+        moveEnergy(outgoingSide, TRANSFER_RATE.get());
       }
     }
   }

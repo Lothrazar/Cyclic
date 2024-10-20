@@ -255,7 +255,7 @@ public class TilePeatFarm extends TileEntityBase implements ITickableTileEntity,
     if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
       return tankWrapper.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (cap == CapabilityEnergy.ENERGY && POWERCONF.get() > 0) {
       return energyCap.cast();
     }
     return super.getCapability(cap, side);

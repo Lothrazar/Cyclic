@@ -23,6 +23,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
@@ -40,15 +41,16 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
       return stack.getItem() == ItemRegistry.filter_data;
     }
   };
-  public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
-  public static final int FLOW_RATE = CAPACITY; //normal non-extract flow
-  public static final int EXTRACT_RATE = CAPACITY;
-  private final FluidTank fluidTank = new FluidTankBase(this, CAPACITY, fluidStack -> FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
-  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> fluidTank);
+  public static IntValue BUFFERSIZE;
+  public static IntValue TRANSFER_RATE;
+  private final FluidTank fluidTank;
+  private final LazyOptional<IFluidHandler> fluidCap;
   private final ConcurrentHashMap<Direction, LazyOptional<IFluidHandler>> flow = new ConcurrentHashMap<>();
 
   public TileCableFluid() {
     super(TileRegistry.fluid_pipeTile);
+    fluidTank = new FluidTankBase(this, BUFFERSIZE.get() * FluidAttributes.BUCKET_VOLUME, fluidStack -> FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), fluidStack));
+    fluidCap = LazyOptional.of(() -> fluidTank);
   }
 
   @Override
@@ -92,7 +94,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
       return;
     }
     //first try standard fluid transfer
-    if (UtilFluid.tryFillPositionFromTank(world, pos, extractSide, tankTarget, EXTRACT_RATE)) {
+    if (UtilFluid.tryFillPositionFromTank(world, pos, extractSide, tankTarget, TRANSFER_RATE.get())) {
       return;
     }
     //handle special cases
@@ -112,7 +114,7 @@ public class TileCableFluid extends TileCableBase implements ITickableTileEntity
       if (connection.isExtraction() || connection.isBlocked()) {
         continue;
       }
-      this.moveFluids(outgoingSide, pos.offset(outgoingSide), FLOW_RATE, fluidTank);
+      this.moveFluids(outgoingSide, pos.offset(outgoingSide), TRANSFER_RATE.get(), fluidTank);
     }
   }
 

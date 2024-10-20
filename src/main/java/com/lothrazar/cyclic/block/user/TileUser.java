@@ -170,7 +170,7 @@ public class TileUser extends TileEntityBase implements ITickableTileEntity, INa
     if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return inventoryCap.cast();
     }
-    if (cap == CapabilityEnergy.ENERGY) {
+    if (POWERCONF.get() > 0 && cap == CapabilityEnergy.ENERGY) {
       return energyCap.cast();
     }
     return super.getCapability(cap, side);

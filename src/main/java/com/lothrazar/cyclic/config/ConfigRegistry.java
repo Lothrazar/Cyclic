@@ -8,6 +8,8 @@ import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.block.beaconpotion.TilePotion;
+import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
 import com.lothrazar.cyclic.block.collectfluid.TileFluidCollect;
 import com.lothrazar.cyclic.block.crafter.TileCrafter;
 import com.lothrazar.cyclic.block.disenchant.TileDisenchant;
@@ -261,6 +263,18 @@ public class ConfigRegistry {
     PEATERICHPOWER = CFG.comment("Power gained burning one of this")
         .defineInRange("peat_fuel_enriched", 256 * 4, 1, 64000);
     CFG.pop(); //fuel
+    //
+    TileCableFluid.BUFFERSIZE = CFG.comment(" How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
+        .defineInRange("cables.fluid.buffer", 16, 1, 32);
+    TileCableFluid.TRANSFER_RATE = CFG.comment(" How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode")
+        .defineInRange("cables.fluid.flow", 16000, 100, Integer.MAX_VALUE);
+    TileCableEnergy.BUFFERSIZE = CFG.comment(" How much buffer the energy cables hold (must not be smaller than flow)")
+        .defineInRange("cables.energy.buffer", 32000, 1, Integer.MAX_VALUE);
+    TileCableEnergy.TRANSFER_RATE = CFG.comment(" How fast energy flows in these cables (must not be greater than buffer)")
+        .defineInRange("cables.energy.flow", 32000, 100, Integer.MAX_VALUE);
+    //
+    //
+    //
     TileGeneratorFuel.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning furnace fuel in this machine.  Burn time in ticks is the same as furnace values, so 1 coal = 1600 ticks")
         .defineInRange("generator_fuel.rf_per_tick", 80, 1, 6400);
     TileGeneratorFood.RF_PER_TICK = CFG.comment("RF energy per tick generated while burning food in this machine")

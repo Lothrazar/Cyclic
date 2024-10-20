@@ -53,6 +53,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   public static IntValue POWERCONF;
   private int height = MAX_HEIGHT;
   private int radius = MAX_SIZE;
+  private BlockPos targetPos = null;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(1) {
 
@@ -96,7 +97,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     }
     //update target
     shapeIndex++;
-    BlockPos targetPos = getShapeTarget(shape);
+    targetPos = getShapeTarget(shape);
     //only saplings at my level, the rest is harvesting
     try {
       if (fakePlayer == null && world instanceof ServerWorld) {
@@ -211,7 +212,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
   //for harvest
   public List<BlockPos> getShape() {
     BlockPos center = getFacingShapeCenter(radius);
-    List<BlockPos> shape = UtilShape.cubeSquareBase(center, radius, height);
+    List<BlockPos> shape = UtilShape.cubeSquareBase(center, radius, 0);
     int heightWithDirection = heightWithDirection();
     if (heightWithDirection != 0) {
       shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
@@ -227,7 +228,6 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
     if (heightWithDirection != 0) {
       shape = UtilShape.repeatShapeByHeight(shape, heightWithDirection);
     }
-    BlockPos targetPos = getShapeTarget(shape);
     if (targetPos != null) {
       shape.add(targetPos);
     }
