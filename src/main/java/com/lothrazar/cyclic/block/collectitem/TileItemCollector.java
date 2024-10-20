@@ -81,6 +81,7 @@ public class TileItemCollector extends TileEntityBase implements ITickableTileEn
           break;
         }
         remainder = inventory.insertItem(i, remainder, false);
+        updateComparatorOutputLevel();
       }
       stackEntity.setItem(remainder);
       if (remainder.isEmpty()) {

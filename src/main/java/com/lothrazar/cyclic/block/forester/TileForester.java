@@ -114,6 +114,7 @@ public class TileForester extends TileEntityBase implements INamedContainerProvi
       else if (this.isSapling(dropMe)) {
         ActionResultType result = TileEntityBase.rightClickBlock(fakePlayer, world, targetPos, Hand.OFF_HAND, Direction.DOWN);
         if (result == ActionResultType.CONSUME) {
+          updateComparatorOutputLevel();
           //ok then DRAIN POWER
           energy.extractEnergy(cost, false);
         }

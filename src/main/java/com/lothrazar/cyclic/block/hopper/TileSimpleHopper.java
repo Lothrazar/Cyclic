@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.hopper;
 
 import com.lothrazar.cyclic.base.TileEntityBase;
-import com.lothrazar.cyclic.block.hopperfluid.BlockFluidHopper;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import java.util.List;
 import net.minecraft.block.BlockState;
@@ -55,9 +54,10 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
     }
     this.tryPullFromWorld(pos.offset(Direction.UP));
     this.tryExtract(inventory, Direction.UP, getFlow(), null);
-    Direction exportToSide = this.getBlockState().get(BlockFluidHopper.FACING);
+    Direction exportToSide = this.getBlockState().get(BlockSimpleHopper.FACING);
     this.moveItemToCompost(exportToSide, inventory);
     this.moveItems(exportToSide, getFlow(), inventory);
+    updateComparatorOutputLevel();
   }
 
   public int getFlow() {
@@ -74,6 +74,7 @@ public class TileSimpleHopper extends TileEntityBase implements ITickableTileEnt
       if (remainder.isEmpty()) {
         stackEntity.remove();
       }
+      updateComparatorOutputLevel();
     }
   }
 

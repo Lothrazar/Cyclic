@@ -97,6 +97,8 @@ dependencies {
 
     // optional dependencies & mods for testing compat
 
+ implementation fg.deobf("curse.maven:jade-324717:3910873")
+ 
     implementation fg.deobf("curse.maven:mantle-74924:3482897")
     implementation fg.deobf("curse.maven:tinkers-construct-74072:3482903")
     implementation fg.deobf("curse.maven:cucumber-272335:3507886")

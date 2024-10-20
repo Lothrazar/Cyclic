@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.base.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
 public class BlockSimpleHopper extends BlockBase {
@@ -24,6 +26,16 @@ public class BlockSimpleHopper extends BlockBase {
 
   public BlockSimpleHopper(Properties properties) {
     super(properties.hardnessAndResistance(1.3F));
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 
   @Override

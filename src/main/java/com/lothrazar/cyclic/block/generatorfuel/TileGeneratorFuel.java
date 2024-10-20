@@ -97,6 +97,7 @@ public class TileGeneratorFuel extends TileEntityBase implements INamedContainer
       else {
         stack.shrink(1);
       }
+      updateComparatorOutputLevel();
     }
   }
 

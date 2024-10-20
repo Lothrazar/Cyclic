@@ -92,6 +92,7 @@ public class TileGeneratorFood extends TileEntityBase implements INamedContainer
       this.burnTimeMax = burnTimeTicks;
       this.burnTime = this.burnTimeMax;
       stack.shrink(1);
+      updateComparatorOutputLevel();
       //nether items, mob drops
       // lava fluid
       //exp fluid

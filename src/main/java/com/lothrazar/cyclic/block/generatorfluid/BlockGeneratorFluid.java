@@ -7,10 +7,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 public class BlockGeneratorFluid extends BlockBase {
 
@@ -19,6 +22,16 @@ public class BlockGeneratorFluid extends BlockBase {
     setDefaultState(getDefaultState().with(LIT, false));
     this.setHasGui();
     this.setHasFluidInteract();
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 
   @Override

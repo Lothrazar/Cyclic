@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.base.TileEntityBase;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.capability.CustomEnergyStorage;
@@ -106,7 +105,7 @@ public class TileGeneratorDrops extends TileEntityBase implements INamedContaine
         this.burnTime = this.burnTimeMax;
         this.burnPerTick = this.currentRecipe.getRfpertick();
         this.inputSlots.extractItem(0, 1, false);
-        ModCyclic.LOGGER.info("found genrecipe" + currentRecipe.getId());
+        updateComparatorOutputLevel();
         return;
       }
     }

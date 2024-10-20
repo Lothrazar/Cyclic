@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -23,6 +24,16 @@ public class BlockItemCollector extends BlockBase {
   public BlockItemCollector(Properties properties) {
     super(properties.hardnessAndResistance(1.8F).sound(SoundType.STONE));
     this.setHasGui();
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 
   @Override

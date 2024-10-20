@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer;
@@ -33,6 +34,16 @@ public class BlockItemShelf extends BlockBase {
 
   public BlockItemShelf(Properties properties) {
     super(properties.hardnessAndResistance(0.8F).notSolid());
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 
   @Override
@@ -89,6 +100,7 @@ public class BlockItemShelf extends BlockBase {
         //try to insert  
         boolean oldEmpty = shelfStack.isEmpty();
         ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
+        world.updateComparatorOutputLevel(pos, shelf.getBlockState().getBlock());
         if (remaining.isEmpty() || remaining.getCount() != shelfStack.getCount()) {
           player.setHeldItem(hand, remaining);
           player.swingArm(hand);
@@ -102,6 +114,7 @@ public class BlockItemShelf extends BlockBase {
         //withdraw direct to players empty hand
         int q = player.isCrouching() ? 1 : 64;
         ItemStack retrieved = shelf.inventory.extractItem(slot, q, false);
+        world.updateComparatorOutputLevel(pos, shelf.getBlockState().getBlock());
         player.setHeldItem(hand, retrieved);
         player.swingArm(hand);
       }
@@ -114,6 +127,7 @@ public class BlockItemShelf extends BlockBase {
         player.setHeldItem(hand, forPlayer);
         player.swingArm(hand);
         shelf.inventory.insertItem(slot, forShelf, false);
+        world.updateComparatorOutputLevel(pos, shelf.getBlockState().getBlock());
       }
       return ActionResultType.SUCCESS;
     }

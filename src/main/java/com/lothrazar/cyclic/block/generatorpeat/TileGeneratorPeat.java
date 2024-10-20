@@ -109,6 +109,7 @@ public class TileGeneratorPeat extends TileEntityBase implements ITickableTileEn
         fuelRate = peat.getPeatFuelValue();
         inventory.extractItem(0, 1, false);
         this.timer = BURNTIME;
+        updateComparatorOutputLevel();
       }
     }
   }
