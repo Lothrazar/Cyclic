@@ -10,6 +10,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +25,16 @@ public class BlockCrate extends BlockBase {
   public BlockCrate(Properties properties) {
     super(properties.hardnessAndResistance(1.1F, 3600000.0F).sound(SoundType.STONE));
     this.setHasGui();
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 
   @Override

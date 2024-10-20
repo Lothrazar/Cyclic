@@ -56,9 +56,9 @@ public class TilePlacer extends TileEntityBase implements INamedContainerProvide
     Direction dir = this.getBlockState().get(BlockStateProperties.FACING);
     BlockPos offset = pos.offset(dir);
     BlockState state = Block.getBlockFromItem(stack.getItem()).getDefaultState();
-    if (world.isAirBlock(offset) &&
-        world.setBlockState(offset, state)) {
+    if (world.isAirBlock(offset) && world.setBlockState(offset, state)) {
       stack.shrink(1);
+      this.updateComparatorOutputLevel();
     }
   }
 

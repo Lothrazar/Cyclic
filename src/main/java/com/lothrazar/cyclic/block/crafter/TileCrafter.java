@@ -236,6 +236,7 @@ public class TileCrafter extends TileEntityBase implements INamedContainerProvid
               break;
             }
           }
+          this.updateComparatorOutputLevel();
         }
       }
     }

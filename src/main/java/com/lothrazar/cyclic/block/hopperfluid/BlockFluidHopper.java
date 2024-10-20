@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 public class BlockFluidHopper extends BlockBase {
 
@@ -22,6 +23,16 @@ public class BlockFluidHopper extends BlockBase {
   public BlockFluidHopper(Properties properties) {
     super(properties.hardnessAndResistance(1.3F));
     this.setHasFluidInteract();
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return calcRedstoneFromFluid(worldIn.getTileEntity(pos));
   }
 
   @Override

@@ -9,12 +9,14 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
@@ -24,6 +26,16 @@ public class BlockSolidifier extends BlockBase {
     super(properties.harvestTool(ToolType.PICKAXE).hardnessAndResistance(1.2F).notSolid());
     this.setHasGui();
     this.setHasFluidInteract();
+  }
+
+  @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 
   @Override

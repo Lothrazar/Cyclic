@@ -29,6 +29,16 @@ public class BlockCask extends BlockBase {
   }
 
   @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return calcRedstoneFromFluid(worldIn.getTileEntity(pos));
+  }
+
+  @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
   }

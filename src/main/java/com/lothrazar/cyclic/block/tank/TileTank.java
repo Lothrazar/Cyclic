@@ -49,6 +49,7 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
     return super.getCapability(cap, side);
   }
 
+  @Override
   public void invalidateCaps() {
     fluidCap.invalidate();
     super.invalidateCaps();
@@ -65,6 +66,7 @@ public class TileTank extends TileEntityBase implements ITickableTileEntity {
   @Override
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
+    this.updateComparatorOutputLevel();
   }
 
   @Override

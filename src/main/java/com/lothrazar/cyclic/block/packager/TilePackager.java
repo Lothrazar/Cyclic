@@ -97,6 +97,7 @@ public class TilePackager extends TileEntityBase implements INamedContainerProvi
       inputSlots.extractItem(0, total, false);
       outputSlots.insertItem(0, output, false);
       energy.extractEnergy(POWERCONF.get(), false);
+      this.updateComparatorOutputLevel();
     }
   }
 

@@ -205,6 +205,7 @@ public class TileSolidifier extends TileEntityBase implements ITickableTileEntit
       inputSlots.getStackInSlot(2).shrink(1);
       tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
       outputSlots.insertItem(0, currentRecipe.getRecipeOutput(), false);
+      updateComparatorOutputLevel();
       return true;
     }
     ModCyclic.LOGGER.info(pos + " recipe stop on fluid not enoughl");

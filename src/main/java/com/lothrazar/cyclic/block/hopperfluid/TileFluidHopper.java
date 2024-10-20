@@ -79,11 +79,13 @@ public class TileFluidHopper extends TileEntityBase implements ITickableTileEnti
     if (stuff != null) {
       success = UtilFluid.tryFillPositionFromTank(world, pos, extractSide, stuff, FLOW);
       if (success) {
+        this.updateComparatorOutputLevel();
         return;
       }
     }
     if (!success && tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
       UtilFluid.extractSourceWaterloggedCauldron(world, target, tank);
+      this.updateComparatorOutputLevel();
     }
   }
 

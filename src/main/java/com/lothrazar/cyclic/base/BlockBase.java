@@ -22,6 +22,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -191,5 +192,17 @@ public class BlockBase extends Block {
       return true;
     }
     return false;
+  }
+
+  //for comparators that dont use item inventories
+  protected int calcRedstoneFromFluid(TileEntity tileEntity) {
+    IFluidHandler fluid = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY).orElse(null);
+    if (fluid.getFluidInTank(0).isEmpty()) {
+      return 0;
+    }
+    float cap = fluid.getTankCapacity(0);
+    float amt = fluid.getFluidInTank(0).getAmount();
+    float f = amt / cap;
+    return MathHelper.floor(f * 14.0F) + 1;
   }
 }

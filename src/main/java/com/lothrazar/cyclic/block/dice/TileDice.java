@@ -55,29 +55,8 @@ public class TileDice extends TileEntityBase implements ITickableTileEntity {
         BlockState stateold = world.getBlockState(pos);
         BlockState newstate = stateold.with(BlockStateProperties.FACING, fac);
         world.setBlockState(pos, newstate);
-        //        world.notifyBlockUpdate(pos, stateold, newstate, 3);
       }
     }
-    //
-    //
-    //    @Override
-    //    public void update() {
-    //      if (this.timer == 0) {
-    //        this.spinningIfZero = 1;
-    //        world.updateComparatorOutputLevel(pos, this.blockType);
-    //      }
-    //      else {
-    //        this.timer--;
-    //        //toggle block state
-    //        if (this.timer % TICKS_PER_CHANGE == 0) {
-    //          this.spinningIfZero = 0;
-    //          EnumFacing fac = UtilDirection.getRandom(world.rand);
-    //          IBlockState stateold = world.getBlockState(pos);
-    //          IBlockState newstate = stateold.withProperty(BlockDice.PROPERTYFACING, fac);
-    //          world.setBlockState(pos, newstate);
-    //          //        world.notifyBlockUpdate(pos, stateold, newstate, 3);
-    //        }
-    //      }
   }
 
   @Override

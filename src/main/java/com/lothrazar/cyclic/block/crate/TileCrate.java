@@ -33,6 +33,7 @@ public class TileCrate extends TileEntityBase implements INamedContainerProvider
 
   @Override
   public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    this.updateComparatorOutputLevel();
     return new ContainerCrate(i, world, pos, playerInventory, playerEntity);
   }
 

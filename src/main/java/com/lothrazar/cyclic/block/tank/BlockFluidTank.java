@@ -46,6 +46,16 @@ public class BlockFluidTank extends BlockBase {
   }
 
   @Override
+  public boolean hasComparatorInputOverride(BlockState state) {
+    return true;
+  }
+
+  @Override
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+    return calcRedstoneFromFluid(worldIn.getTileEntity(pos));
+  }
+
+  @Override
   public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
     if (!player.isCrouching() && player.getHeldItem(hand).getItem() == this.asItem()
         && (hit.getFace() == Direction.UP || hit.getFace() == Direction.DOWN)) {
