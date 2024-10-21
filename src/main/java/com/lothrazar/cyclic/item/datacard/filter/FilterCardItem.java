@@ -118,7 +118,7 @@ public class FilterCardItem extends ItemBaseCyclic {
         if (!filterPtr.isEmpty()) {
           isEmpty = false; //at least one thing is in the filter 
           //does it match
-          if (ItemStackUtil.matches(itemTarget, filterPtr)) {
+          if (ItemStackUtil.matches(itemTarget.getItem().getDefaultInstance(), filterPtr)) {
             isMatchingList = true;
             break;
           }
