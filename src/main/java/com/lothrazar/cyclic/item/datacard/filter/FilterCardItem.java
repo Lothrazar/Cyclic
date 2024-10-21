@@ -89,22 +89,21 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   public static FluidStack getFluidStack(ItemStack filterStack) {
-    if (filterStack.getItem() instanceof FilterCardItem == false) {
+    if (!(filterStack.getItem() instanceof FilterCardItem)) {
       return FluidStack.EMPTY; //filter is air, everything allowed
     }
     IItemHandler myFilter = filterStack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-    if (myFilter != null) {
       ItemStack bucket = myFilter.getStackInSlot(SLOT_FLUID);
       IFluidHandler fluidInStack = bucket.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
-      if (fluidInStack != null && fluidInStack.getFluidInTank(0) != null) {
-        return fluidInStack.getFluidInTank(0);
+      if (fluidInStack != null) {
+          fluidInStack.getFluidInTank(0);
+          return fluidInStack.getFluidInTank(0);
       }
-    }
-    return FluidStack.EMPTY;
+      return FluidStack.EMPTY;
   }
 
   public static boolean filterAllowsExtract(ItemStack filterStack, ItemStack itemTarget) {
-    if (filterStack.getItem() instanceof FilterCardItem == false) {
+    if (!(filterStack.getItem() instanceof FilterCardItem)) {
       return true; //filter is air, everything allowed
     }
     //does my filter allow extract
@@ -114,11 +113,11 @@ public class FilterCardItem extends ItemBaseCyclic {
     IItemHandler myFilter = filterStack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (myFilter != null) {
       for (int i = 0; i < myFilter.getSlots(); i++) {
-        ItemStack filterPtr = myFilter.getStackInSlot(i);
-        if (!filterPtr.isEmpty()) {
+          ItemStack filterPtr = myFilter.getStackInSlot(i);
+          if (!filterPtr.isEmpty()) {
           isEmpty = false; //at least one thing is in the filter 
           //does it match
-          if (ItemStackUtil.matches(itemTarget, filterPtr)) {
+          if (ItemStackUtil.matches(itemTarget.getItem().getDefaultInstance(), filterPtr)) {
             isMatchingList = true;
             break;
           }
@@ -141,7 +140,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   public static boolean filterAllowsExtract(ItemStack filterStack, FluidStack fluidInTank) {
-    if (filterStack.getItem() instanceof FilterCardItem == false) {
+    if (!(filterStack.getItem() instanceof FilterCardItem)) {
       return true; //filter is air, everything allowed
     }
     FluidStack fluidFilter = getFluidStack(filterStack);
