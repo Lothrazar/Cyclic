@@ -6,7 +6,7 @@
 		"1.18.2-latest": "1.7.18",
 		"1.19.2-latest":"1.8.3",
 		"1.19.4-latest":"1.10.4",
-		"1.20.1-latest":"1.12.14"
+		"1.20.1-latest":"1.12.16"
 
 	},
 	"1.16.5": {
@@ -188,5 +188,6 @@
 		,"1.12.13":"Fix Mattock not saving contents of Shulker Boxes when mined #2411.  Block Reach enchantment now has max level 5 to give players more control of how far the reach boost is increased; so levels I through V are now available.  Since players normally have 5 blocks of reach distance: level I reaches 8, II reaches 10, III reaches 12, IV reaches 14, and V reaches 16 blocks (+4 for anything beyond with something like apotheosis)"
 		,"1.12.14":"New feature with cables: hide them using solid blocks with a feature called 'facades', just sneak-left-click a block onto the cable (empty hand to remove it); this does not use any items and can be managed/disabled in the config file.  Renamed 'Concentrated Glowstone' to 'Glowstone Facade' and 'Concentrated Soundproofing' to 'Soundproofing Facade'.  Fixed issues with both blocks to correctly render facades (use sneak-left-click while not in creative), and they no longer have an inventory"
 		,"1.12.15":"Fixed bug in the item cyclic:offset_scepter #2427.  Slightly Boost the strength of the Reach enchantments.  Tweaked block model visuals of the Transfer Nodes.  Add recipes in the solidifier machine for Waxed copper blocks "
+		,"1.12.16":"Merge pull request #2438 from gavinwie: Fixed Filter Data Card Issues #2423, #2370, #2355, and #2330."
 	}
 }
