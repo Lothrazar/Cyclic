@@ -962,7 +962,7 @@
   "item.cyclic.scythe_forage.guide": "Forage growing resources, using the following block data tags:  minecraft:flowers, minecraft:corals, forge:mushrooms, forge:vines, forge:cactus, forge:crop_blocks",
   "item.cyclic.scythe_leaves": "Tree Scythe",
   "item.cyclic.scythe_leaves.tooltip": "Mass leaf removal",
-  "item.cyclic.scythe_leaves.guide": "Harvests all nearby leaves on use, using the forge:leaves block data tag",
+  "item.cyclic.scythe_leaves.guide": "Harvests all nearby leaves on use, using the minecraft:leaves block data tag",
   "item.cyclic.scythe_brush": "Brush Scythe",
   "item.cyclic.scythe_brush.tooltip": "Harvest weeds based on data tag.",
   "item.cyclic.scythe_brush.guide": "Harvest everything under the block data tag forge:plants.",

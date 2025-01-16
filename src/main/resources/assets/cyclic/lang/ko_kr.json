@@ -922,7 +922,7 @@
     "item.cyclic.scythe_forage.guide": "다음 블록 데이터 태그를 쓰는, 자라는 자원을 채집합니다:  minecraft:flowers, minecraft:corals, forge:mushrooms, forge:vines, forge:cactus, forge:crop_blocks",
     "item.cyclic.scythe_leaves": "나무 낫",
     "item.cyclic.scythe_leaves.tooltip": "잎 대량 제거",
-    "item.cyclic.scythe_leaves.guide": "사용 시 forge:leaves 블록 데이터 태그를 사용하는 근처의 모든 잎을 수확합니다.",
+    "item.cyclic.scythe_leaves.guide": "사용 시 minecraft:leaves 블록 데이터 태그를 사용하는 근처의 모든 잎을 수확합니다.",
     "item.cyclic.scythe_brush": "수풀 낫",
     "item.cyclic.scythe_brush.tooltip": "데이터 태그에 기반하여 잡초를 수확합니다",
     "item.cyclic.scythe_brush.guide": "블록 데이터 태그 forge:plants가 달린 모든 것을 수확합니다.",
