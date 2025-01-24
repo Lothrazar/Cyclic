@@ -27,7 +27,7 @@ public class GrowthUtil {
       //        return false; //cant grow, or cant bonemeal. no
       //      }
       if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide)) {//canUseBonemeal // canGrow
-        ModCyclic.LOGGER.info("terra-grow canUseBonemeal is false  " + bState.getBlock());
+        // ModCyclic.LOGGER.info("terra-grow canUseBonemeal is false  " + bState.getBlock());
         return false; //cant grow, or cant bonemeal. no
       }
     }

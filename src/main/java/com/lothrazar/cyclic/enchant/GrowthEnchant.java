@@ -46,11 +46,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class GrowthEnchant extends EnchantmentFlib {
 
-  public static final int HEIGHT = 2;
-  public static final double ODDS = 0.04;
   public static final String ID = "growth";
   public static BooleanValue CFG;
-  public static IntValue RADIUSFACTOR;
+  public static BooleanValue PLAYER_ONLY;
+  public static IntValue RADIUS_FACTOR;
+  public static IntValue LIMIT_FACTOR;
+  public static IntValue HEIGHT;
+  public static IntValue ODDS;
 
   public GrowthEnchant(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot... slots) {
     super(rarityIn, typeIn, slots);
@@ -100,22 +102,32 @@ public class GrowthEnchant extends EnchantmentFlib {
     LivingEntity entity = event.getEntity();
     if (entity instanceof Player player) {
       if (player.isSpectator() || !player.isAlive()) {
-        return;
+        return; // no dead players
+      }
+    }
+    else {
+      //entity is NOT a player
+      if (PLAYER_ONLY.get()) {
+        return; // config says only players are allowed and we are not a player
       }
     }
     //Ticking
     int level = getCurrentLevelTool(entity.getItemInHand(InteractionHand.MAIN_HAND));
     if (level > 0 && entity.level() instanceof ServerLevel sw) {
-      final int growthLimit = level * 2 + (entity.level().isRaining() ? 4 : 1); //faster when raining too 
+      final int growthLimit = level * LIMIT_FACTOR.get() + (entity.level().isRaining() ? 4 : 0); //more when raining too 
+      final int radius = 1 + level * RADIUS_FACTOR.get();
+      final double odds = ((double) ODDS.get()) / 100.0;
       int grown = 0;
-      List<BlockPos> shape = ShapeUtil.squareHorizontalFull(entity.blockPosition().below(), level + RADIUSFACTOR.get());
-      shape = ShapeUtil.repeatShapeByHeight(shape, HEIGHT);
+      List<BlockPos> shape = ShapeUtil.squareHorizontalFull(entity.blockPosition().below(), radius);
+      shape = ShapeUtil.repeatShapeByHeight(shape, HEIGHT.get());
       Collections.shuffle(shape);
       for (int i = 0; i < shape.size(); i++) {
         if (grown >= growthLimit) {
           break;
         }
-        GrowthUtil.tryGrow(sw, shape.get(i), ODDS * 10);
+        if (GrowthUtil.tryGrow(sw, shape.get(i), odds)) {
+          grown++;
+        }
       }
       if (grown > 0) {
         ItemStackUtil.damageItem(entity, entity.getItemInHand(InteractionHand.MAIN_HAND));

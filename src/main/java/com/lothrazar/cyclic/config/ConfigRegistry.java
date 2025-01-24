@@ -292,7 +292,11 @@ public class ConfigRegistry extends ConfigTemplate {
     DisarmEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
     ExcavationEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
     GrowthEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
-    GrowthEnchant.RADIUSFACTOR = CFG.comment(" Radius per level.  size around player to perform growth logic").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
+    GrowthEnchant.RADIUS_FACTOR = CFG.comment(" Radius increase per level.  Actual radius is (this * level + 1)").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
+    GrowthEnchant.HEIGHT = CFG.comment(" Height of growth enchantment range").defineInRange(GrowthEnchant.ID + ".height", 2, 0, 16);
+    GrowthEnchant.LIMIT_FACTOR = CFG.comment(" Max number of crops grown per growth per level. Actual is (level * this + 4 bonus when its raining) ").defineInRange(GrowthEnchant.ID + ".limit", 4, 1, 16);
+    GrowthEnchant.ODDS = CFG.comment(" Chance of trying to grow per tick / 100").defineInRange(GrowthEnchant.ID + ".percent", 4, 1, 100);
+    GrowthEnchant.PLAYER_ONLY = CFG.comment(" If true only players can use this (false allows anything with hands ie armor stands, zombies, etc)  ").define(GrowthEnchant.ID + ".player_only", false);
     MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
     LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
     MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
