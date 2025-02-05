@@ -1,12 +1,12 @@
 {
 	"parent": "minecraft:block/cube",
 	"textures": {
-		"particle": "cyclic:block/machine/crusher",
-		"down": "cyclic:block/machine/crusher_top",
-		"up": "cyclic:block/machine/crusher_top",
-		"north": "cyclic:block/machine/crusher",
-		"south": "cyclic:block/machine/crusher",
-		"west": "cyclic:block/machine/crusher",
-		"east": "cyclic:block/machine/crusher"
+		"particle": "cyclic:block/machine/crusher/crusher",
+		"down": "minecraft:block/furnace_top",
+		"up": "cyclic:block/machine/crusher/crusher_top",
+		"north": "cyclic:block/machine/crusher/crusher",
+		"south": "cyclic:block/machine/crusher/crusher",
+		"west": "cyclic:block/machine/crusher/crusher",
+		"east": "cyclic:block/machine/crusher/crusher"
 	}
 }

@@ -1,13 +1,4 @@
 {
-	"parent": "block/cube",
-  "render_type": "cutout_mipped",
-    "textures": {
-        "down": "cyclic:block/melter_top",
-        "up": "cyclic:block/melter_top",
-        "north": "cyclic:block/melter",
-        "south": "cyclic:block/melter",
-        "east": "cyclic:block/melter",
-        "west": "cyclic:block/melter",
-        "particle": "cyclic:block/melter_top"
-    }
+	"parent": "cyclic:parent/machine_crafting",
+  "render_type": "cutout_mipped"
 }

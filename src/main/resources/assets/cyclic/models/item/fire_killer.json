@@ -1,5 +1,5 @@
 {
-    "parent": "item/handheld",
+    "parent": "item/handheld_rod",
     "textures": {
         "layer0": "cyclic:item/fire_killer"
     }

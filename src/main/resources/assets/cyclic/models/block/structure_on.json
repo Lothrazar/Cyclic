@@ -1,7 +1,8 @@
 { 
  	"parent": "cyclic:parent/machine_classic_on",
     "textures": { 
-        "base": "cyclic:block/machine/red",
-        "stem": "cyclic:block/machine/obsidian"
+        "base": "minecraft:block/redstone_block",
+        "stem": "minecraft:block/quartz_block_bottom",
+        "front": "cyclic:block/machine/structure/structure_on"
     }
 }

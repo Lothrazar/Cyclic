@@ -1,13 +1,11 @@
 {
 	"parent": "block/cube",
     "textures": {
-		"particle": "cyclic:block/machine/front",
-		"side": "cyclic:block/machine/back",
+		"side": "minecraft:block/furnace_top",
+		"particle": "cyclic:block/machine/placer/placer",
 		"front": "cyclic:block/machine/front",
-		"bottom": "cyclic:block/machine/bottom",
-		"base": "cyclic:block/machine/bottom",
-		"stem": "cyclic:block/machine/inner",
-		"inner": "cyclic:block/machine/inner"
+		"base": "minecraft:block/furnace_top",
+		"stem": "minecraft:block/hopper_inside"
     },
     "elements": [
         {

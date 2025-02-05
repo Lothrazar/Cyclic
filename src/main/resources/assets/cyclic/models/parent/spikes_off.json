@@ -2,10 +2,10 @@
 	"parent": "block/block",
 
 	"textures": {
-		"side": "blocks/stone",
-		"base_up": "blocks/stone",
-		"down": "blocks/stone",
-		"particle": "blocks/stone"
+		"side": "minecraft:block/smooth_stone",
+		"base_up": "minecraft:block/smooth_stone",
+		"down": "minecraft:block/smooth_stone",
+		"particle": "minecraft:block/smooth_stone"
 	},
 
 	"elements": [

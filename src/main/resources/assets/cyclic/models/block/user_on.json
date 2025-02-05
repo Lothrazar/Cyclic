@@ -1,7 +1,6 @@
 { 
- 	"parent": "cyclic:parent/machine_classic_on",
+ 	"parent": "cyclic:block/user",
     "textures": { 
-        "base": "cyclic:block/machine/gold",
-        "stem": "cyclic:block/machine/obsidian"
+        "front": "cyclic:block/machine/user/user_on"
     }
 }

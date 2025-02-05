@@ -1,14 +1,14 @@
 {
  	"parent": "cyclic:parent/machine_vertical",
 	"textures":{
-        "base": "cyclic:block/machine/wood",
-        "stem": "cyclic:block/machine/wood",
-        "side": "cyclic:block/machine/stone",
-        "bottom": "cyclic:block/machine/stone",
-			"left": "cyclic:block/machine/stone",
-			"right": "cyclic:block/machine/stone",
-			"back": "cyclic:block/machine/stone",
-		"side_flipped": "cyclic:block/machine/stone",
-			"front": "cyclic:block/machine/smooth_on"
+        "base": "minecraft:block/dark_oak_log",
+        "stem": "minecraft:block/smooth_stone",
+        "side": "minecraft:block/furnace_top",
+        "bottom": "minecraft:block/furnace_top",
+			"left": "minecraft:block/furnace_top",
+			"right": "minecraft:block/furnace_top",
+			"back": "minecraft:block/furnace_top",
+		"side_flipped": "minecraft:block/furnace_top",
+			"front": "cyclic:block/machine/rotator/rotator_up"
 	}
 }

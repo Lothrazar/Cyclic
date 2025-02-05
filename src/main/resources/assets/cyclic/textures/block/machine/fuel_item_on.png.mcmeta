@@ -1,9 +1,12 @@
 {
   "animation": {
-    "frametime": 8,
-	"interpolate": true,
-	"frames": [
-		0,1,2,3,2,1
-	]
+    "frametime":2,
+    "frames": [
+      0,
+      2,
+      4,
+      3,
+      1
+    ]
   }
 }

@@ -3,8 +3,8 @@
   "render_type": "cutout",
     "textures": {
         "particle": "cyclic:block/shearing",
-        "down": "cyclic:block/ender_shelf_side",
-        "up": "cyclic:block/ender_shelf_side",
+        "down": "minecraft:block/furnace_top",
+        "up": "minecraft:block/furnace_top",
         "north": "cyclic:block/shearing",
         "south": "cyclic:block/shearing",
         "west": "cyclic:block/shearing",

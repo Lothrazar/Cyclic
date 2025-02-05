@@ -1,6 +1,12 @@
 {
-    "parent": "minecraft:block/cube_all",
+    "parent": "minecraft:block/cube",
     "textures": {
-        "all": "cyclic:block/battery_infinite"
+        "particle": "cyclic:block/battery_infinite_side",
+        "down": "cyclic:block/battery_infinite_top",
+        "up": "cyclic:block/battery_infinite_top",
+        "north": "cyclic:block/battery_infinite_side",
+        "south": "cyclic:block/battery_infinite_side",
+        "west": "cyclic:block/battery_infinite_side",
+        "east": "cyclic:block/battery_infinite_side"
     }
 }

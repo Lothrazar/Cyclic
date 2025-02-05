@@ -1,9 +1,9 @@
-{
-    "parent": "cyclic:parent/beacon",
+{   "parent": "cyclic:parent/beacon",
   "render_type": "cutout_mipped",
     "textures": {
-        "particle": "minecraft:block/glass",
-        "side": "minecraft:block/glass",
-        "base": "minecraft:block/redstone_block"
+        "particle": "cyclic:block/dark_glass",
+        "glass": "cyclic:block/dark_glass",
+        "obsidian": "minecraft:block/obsidian",
+        "beacon": "minecraft:block/redstone_block"
     }
 }

@@ -2,9 +2,9 @@
 	"parent": "minecraft:block/cube",
   "render_type": "cutout_mipped",
 	"textures": {
-		"particle": "cyclic:block/machine/back",
-		"down": "cyclic:block/machine/iron",
-		"up": "cyclic:block/machine/back",
+		"particle": "cyclic:block/machine/fuel_food",
+		"down": "cyclic:block/machine/fuel_food_top",
+		"up": "cyclic:block/machine/fuel_food_top",
 		"north": "cyclic:block/machine/fuel_food",
 		"south": "cyclic:block/machine/fuel_food",
 		"west": "cyclic:block/machine/fuel_food",

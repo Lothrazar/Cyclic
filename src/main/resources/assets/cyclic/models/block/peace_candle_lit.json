@@ -1,6 +1,8 @@
 {
-  "parent": "cyclic:block/my_water_candle_lit",
+  "parent": "cyclic:parent/candle_lit",
+  "render_type": "cutout_mipped",
   "textures": {
-    "sides": "cyclic:block/machine/green"
+    "0": "cyclic:block/peace_candle_lit",
+    "particle": "cyclic:block/peace_candle_lit"
   }
 }

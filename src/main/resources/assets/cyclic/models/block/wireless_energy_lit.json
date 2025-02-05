@@ -5,6 +5,6 @@
 		"main": "cyclic:block/node/main_energy",
 		"particle": "cyclic:block/node/main_energy",
 		"plate_front": "cyclic:block/node/front_energy",
-		"plate_back": "cyclic:block/node/back_energy"
+		"plate_back": "cyclic:block/node/back"
 	}
 }

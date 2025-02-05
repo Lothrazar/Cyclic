@@ -1,7 +1,8 @@
-{
- 	"parent": "cyclic:parent/machine_vertical",
-	"textures":{
-        "base": "cyclic:block/machine/fluid",
-        "stem": "cyclic:block/machine/wood"
-	}
+{ 
+ 	"parent": "cyclic:parent/machine_vertical_on",
+    "textures": { 
+        "base": "minecraft:block/copper_block",
+        "stem": "minecraft:block/iron_block",
+        "front": "cyclic:block/machine/placer_fluid/placer_fluid_up_on"
+    }
 }

@@ -1,7 +1,13 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
     "textures": { 
-        "base": "cyclic:block/machine/gold",
-        "stem": "cyclic:block/machine/obsidian"
+        "base": "minecraft:block/gold_block",
+        "stem": "minecraft:block/cobblestone",
+			"left": "cyclic:block/machine/user/user_left",
+			"right": "cyclic:block/machine/user/user_right",
+			"back": "cyclic:block/machine/user/user_back",
+		"side_flipped": "minecraft:block/furnace_top",
+			"front": "cyclic:block/machine/user/user",
+			"bottom": "cyclic:block/machine/plate"
     }
 }

@@ -4,7 +4,7 @@
    "textures": {
         "particle": "cyclic:block/anvil/diamond",
         "body": "cyclic:block/anvil/diamond",
-        "base": "cyclic:block/anvil/iron",
-        "pillar": "cyclic:block/anvil/iron"
+        "base": "minecraft:block/iron_block",
+        "pillar": "minecraft:block/iron_block"
     }
 }

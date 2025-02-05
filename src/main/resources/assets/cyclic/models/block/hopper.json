@@ -1,10 +1,10 @@
 {
   "parent": "minecraft:block/hopper",
   "textures": {
-    "particle": "cyclic:block/hoppers/plank",
-    "top": "cyclic:block/hoppers/wood",
-    "side": "cyclic:block/hoppers/plank",
-    "inside": "cyclic:block/hoppers/wood"
+    "particle": "minecraft:block/barrel_bottom",
+    "top": "minecraft:block/barrel_top_open",
+    "side": "minecraft:block/barrel_bottom",
+    "inside": "minecraft:block/barrel_top_open"
   },
       "gui_light": "side",
     "display": {
