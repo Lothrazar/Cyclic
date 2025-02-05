@@ -1,3 +1,6 @@
- {
-     "parent": "cyclic:block/apple/apple_diamond_7"
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "cyclic:block/apple/apple_diamond_7"
+    }
 }

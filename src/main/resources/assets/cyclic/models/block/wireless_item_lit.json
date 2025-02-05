@@ -5,6 +5,6 @@
 		"main": "cyclic:block/node/main_item",
 		"particle": "cyclic:block/node/main_item",
 		"plate_front": "cyclic:block/node/front_item",
-		"plate_back": "cyclic:block/node/back_item"
+		"plate_back": "cyclic:block/node/back"
 	}
 }

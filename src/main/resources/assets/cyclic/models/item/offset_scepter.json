@@ -1,6 +1,6 @@
 {
- 	"parent": "cyclic:parent/wand_simple",
+ 	"parent": "cyclic:item/build_scepter",
     "textures": {
-        "0": "minecraft:block/emerald_block"
+    "head": "cyclic:item/wand/emerald"
     }
 }

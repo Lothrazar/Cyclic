@@ -1,6 +1,17 @@
 {
  	"parent": "cyclic:parent/wand_simple",
     "textures": {
-        "0": "minecraft:block/lapis_block"
+    "particle": "minecraft:block/iron_block",
+		"base": "minecraft:block/iron_block",
+		"fl": "minecraft:block/quartz_block_bottom",
+		"head": "cyclic:item/wand/lapis",
+		"handle": "minecraft:block/copper_block",
+		"handle2": "minecraft:block/copper_block",
+		"handle3": "minecraft:block/copper_block",
+		"handle4": "minecraft:block/copper_block",
+		"handle1": "minecraft:block/copper_block",
+		"fr": "minecraft:block/quartz_block_bottom",
+		"br": "minecraft:block/quartz_block_bottom",
+		"bl": "minecraft:block/quartz_block_bottom"
     }
 }

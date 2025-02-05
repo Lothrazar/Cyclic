@@ -1,7 +1,8 @@
 {
  	"parent": "cyclic:parent/machine_vertical",
 	"textures":{
-        "base": "cyclic:block/machine/gold",
-        "stem": "cyclic:block/machine/obsidian"
+        "base": "minecraft:block/gold_block",
+        "stem": "minecraft:block/cobblestone",
+        "front": "cyclic:block/machine/user/user"
 	}
 }

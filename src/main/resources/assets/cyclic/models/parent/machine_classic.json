@@ -2,14 +2,14 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/cube",
 	"textures": {
-		"particle": "cyclic:block/machine/front",
 		"left": "cyclic:block/machine/left",
 		"right": "cyclic:block/machine/right",
-		"back": "cyclic:block/machine/back",
+		"back": "minecraft:block/furnace_top",
+		"particle": "cyclic:block/machine/placer/placer",
 		"front": "cyclic:block/machine/front",
-		"bottom": "cyclic:block/machine/bottom",
-		"side_flipped": "cyclic:block/machine/side_flipped",
-		"inner": "cyclic:block/machine/inner"
+		"bottom": "minecraft:block/furnace_top",
+		"side_flipped": "minecraft:block/furnace_top",
+		"inner": "minecraft:block/hopper_inside"
 	},
 	"elements": [
 		{
@@ -18,9 +18,9 @@
 			"to": [16, 16, 1],
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
-				"east": {"uv": [0, 0, 1, 16], "texture": "#side_flipped"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#right"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#inner"},
-				"west": {"uv": [0, 0, 1, 16], "texture": "#back"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#left"},
 				"up": {"uv": [0, 0, 16, 1], "texture": "#inner"},
 				"down": {"uv": [0, 0, 16, 1], "texture": "#back"}
 			}
@@ -31,9 +31,9 @@
 			"to": [16, 16, 16],
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#inner"},
-				"east": {"uv": [0, 0, 1, 16], "texture": "#back"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#right"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#back"},
-				"west": {"uv": [0, 0, 1, 16], "texture": "#side_flipped"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#left"},
 				"up": {"uv": [0, 0, 16, 1], "texture": "#inner"},
 				"down": {"uv": [0, 0, 16, 1], "texture": "#back"}
 			}

@@ -2,8 +2,8 @@
     "parent": "cyclic:parent/pedestal",
   "render_type": "cutout_mipped",
     "textures": {
-        "particle": "minecraft:block/copper_block",
-        "side": "minecraft:block/glass",
+        "particle": "cyclic:block/no_soliciting_on",
+        "side": "cyclic:block/no_soliciting_on",
         "base": "minecraft:block/copper_block"
     }
 }

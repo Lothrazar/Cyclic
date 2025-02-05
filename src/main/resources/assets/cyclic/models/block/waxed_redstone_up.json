@@ -1,12 +1,12 @@
 {
 	"parent": "minecraft:block/cube",
 	"textures": {
-		"particle": "cyclic:block/machine/crusher",
+		"particle": "cyclic:block/waxed_redstone_block_side",
 		"down": "cyclic:block/waxed_redstone_block",
 		"up": "minecraft:block/redstone_block",
-		"north": "cyclic:block/waxed_redstone_block",
-		"south": "cyclic:block/waxed_redstone_block",
-		"west": "cyclic:block/waxed_redstone_block",
-		"east": "cyclic:block/waxed_redstone_block"
+		"north": "cyclic:block/waxed_redstone_block_side",
+		"south": "cyclic:block/waxed_redstone_block_side",
+		"west": "cyclic:block/waxed_redstone_block_side",
+		"east": "cyclic:block/waxed_redstone_block_side"
 	}
 }

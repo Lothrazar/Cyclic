@@ -1,9 +1,11 @@
 {
  	"parent": "cyclic:parent/machine_simple",
     "textures": {
-        "side": "cyclic:block/machine/stone",
-        "base": "cyclic:block/machine/diamond",
-        "inner": "cyclic:block/machine/obsidian",
-        "particle": "cyclic:block/machine/diamond"
+        "side": "cyclic:block/machine/uncrafter",
+        "base": "minecraft:block/diamond_block",
+        "bottom": "minecraft:block/calcite",
+        "top": "minecraft:block/netherite_block",
+        "inner": "minecraft:block/crying_obsidian",
+        "particle": "cyclic:block/machine/uncrafter"
     }
 }

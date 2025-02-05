@@ -2,9 +2,9 @@
 	"parent": "cyclic:parent/spikes_off",
   "render_type": "cutout_mipped",
 	"textures": {
-		"side": "cyclic:block/spike/spikes_iron_side",
-		"base_up": "cyclic:block/spike/spikes_iron_base_up",
-		"down": "cyclic:block/spike/spikes_iron_base_down",
-		"particle": "cyclic:block/spike/spikes_iron_side"
+		"side": "minecraft:block/polished_blackstone",
+		"base_up": "minecraft:block/polished_blackstone",
+		"down": "minecraft:block/polished_blackstone",
+		"particle": "minecraft:block/polished_blackstone"
 	}
 }

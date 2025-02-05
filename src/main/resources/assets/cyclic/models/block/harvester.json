@@ -1,7 +1,8 @@
 { 
  	"parent": "cyclic:parent/machine_classic",
     "textures": { 
-        "base": "cyclic:block/machine/green",
-        "stem": "cyclic:block/machine/obsidian"
+        "base": "minecraft:block/emerald_block",
+        "stem": "minecraft:block/obsidian",
+        "front": "cyclic:block/machine/harvester/harvester"
     }
 }

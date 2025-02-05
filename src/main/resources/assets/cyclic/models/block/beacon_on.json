@@ -1,9 +1,4 @@
 {
-    "parent": "cyclic:parent/beacon",
-  "render_type": "cutout_mipped",
-    "textures": {
-        "particle": "minecraft:block/glass",
-        "side": "minecraft:block/glass",
-        "base": "minecraft:block/diamond_block"
-    }
+    "parent": "cyclic:block/beacon",
+  "render_type": "cutout_mipped"
 }

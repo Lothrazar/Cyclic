@@ -2,8 +2,8 @@
     "parent": "cyclic:parent/pedestal",
   "render_type": "cutout_mipped",
     "textures": {
-        "particle": "minecraft:block/blackstone_top",
-        "side": "minecraft:block/tnt_top",
+        "particle": "cyclic:block/altar_destruction",
+        "side": "cyclic:block/altar_destruction",
         "base": "minecraft:block/blackstone_top"
     }
 }

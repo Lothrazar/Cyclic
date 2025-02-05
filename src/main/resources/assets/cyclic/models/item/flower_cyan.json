@@ -1,3 +1,6 @@
 {
-     "parent": "cyclic:block/flower_cyan"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "cyclic:block/flower_cyan"
+    }
 }

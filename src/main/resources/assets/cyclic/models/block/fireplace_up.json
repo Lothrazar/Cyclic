@@ -3,7 +3,7 @@
     "textures": {
         "particle": "minecraft:block/netherrack",
         "down": "minecraft:block/bricks",
-        "up": "minecraft:block/netherrack",
+        "up": "cyclic:block/machine/fireplace/fireplace_up",
         "north": "minecraft:block/bricks",
         "south": "minecraft:block/bricks",
         "west": "minecraft:block/bricks",

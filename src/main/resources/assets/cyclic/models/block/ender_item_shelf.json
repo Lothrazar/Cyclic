@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "particle": "cyclic:block/item_shelf_side",
-    "down": "cyclic:block/item_shelf_side",
-    "up": "cyclic:block/item_shelf_side",
+    "particle": "minecraft:block/barrel_bottom",
+    "down": "minecraft:block/barrel_bottom",
+    "up": "minecraft:block/barrel_bottom",
     "north": "cyclic:block/item_shelf_front",
-    "south": "cyclic:block/item_shelf_side",
-    "west": "cyclic:block/item_shelf_side",
-    "east": "cyclic:block/item_shelf_side"
+    "south": "minecraft:block/barrel_bottom",
+    "west": "minecraft:block/barrel_bottom",
+    "east": "minecraft:block/barrel_bottom"
   }
 }

@@ -5,9 +5,9 @@
 		"particle": "cyclic:block/tank/tank_top",
 		"down": "cyclic:block/tank/tank_top",
 		"up": "cyclic:block/tank/tank_top",
-		"north": "cyclic:block/tank/tank_base",
-		"east": "cyclic:block/tank/tank_base_flip",
-		"south": "cyclic:block/tank/tank_base",
-		"west": "cyclic:block/tank/tank_base_flip_hack"
+		"north": "cyclic:block/tank/tank",
+		"east": "cyclic:block/tank/tank_flip",
+		"south": "cyclic:block/tank/tank",
+		"west": "cyclic:block/tank/tank_flip"
 	}
 }

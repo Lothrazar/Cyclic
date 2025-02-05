@@ -1,9 +1,11 @@
 {
-  "parent": "cyclic:parent/machine_simple",
-  "textures": {
-    "side": "cyclic:block/machine/back",
-    "base": "cyclic:block/machine/inner",
-    "inner": "cyclic:block/machine/white",
-    "particle": "cyclic:block/machine/peat"
-  }
+ 	"parent": "cyclic:parent/machine_simple",
+    "textures": {
+        "side": "cyclic:block/machine/peat_farm",
+        "base": "minecraft:block/furnace_top",
+        "bottom": "minecraft:block/copper_block",
+        "top": "minecraft:block/iron_block",
+        "inner": "minecraft:block/redstone_block",
+        "particle": "cyclic:block/machine/peat_farm"
+    }
 }
