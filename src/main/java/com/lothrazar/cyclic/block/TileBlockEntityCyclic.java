@@ -10,10 +10,10 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
-import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.core.IHasEnergy;
 import com.lothrazar.library.core.IHasFluid;
@@ -24,6 +24,7 @@ import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -49,14 +50,12 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public abstract class TileBlockEntityCyclic extends BlockEntity implements Container, IHasEnergy, IHasFluid {
 
@@ -146,11 +145,10 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     inv.insertItem(slot, fp.get().getItemInHand(hand), false);
   }
 
-  public static void tryEquipItem(LazyOptional<IItemHandler> i, WeakReference<FakePlayer> fp, int slot, InteractionHand hand) {
+  public static void tryEquipItem(IItemHandler inv, WeakReference<FakePlayer> fp, int slot, InteractionHand hand) {
     if (fp == null) {
       return;
     }
-    i.ifPresent(inv -> {
       ItemStack maybeTool = inv.getStackInSlot(0);
       if (!maybeTool.isEmpty()) {
         if (maybeTool.getCount() <= 0) {
@@ -160,7 +158,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       if (!maybeTool.equals(fp.get().getItemInHand(hand))) {
         fp.get().setItemInHand(hand, maybeTool);
       }
-    });
   }
 
   public static InteractionResult interactUseOnBlock(WeakReference<FakePlayer> fakePlayer,
@@ -252,16 +249,16 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   @Override
-  public CompoundTag getUpdateTag() {
-    CompoundTag syncData = super.getUpdateTag();
+  public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    CompoundTag syncData = super.getUpdateTag(registries);
     this.saveAdditional(syncData);
     return syncData;
   }
 
   @Override
-  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
     this.load(pkt.getTag());
-    super.onDataPacket(net, pkt);
+    super.onDataPacket(net, pkt, registries);
   }
 
   @Override
@@ -303,7 +300,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     BlockPos posTarget = worldPosition.relative(extractSide);
     BlockEntity tile = level.getBlockEntity(posTarget);
     if (tile != null) {
-      IItemHandler itemHandlerFrom = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, extractSide.getOpposite()).orElse(null);
+      IItemHandler itemHandlerFrom = CapabilityFixer.item(level, posTarget, extractSide.getOpposite()); // tile.getCapability(ForgeCapabilities.ITEM_HANDLER, extractSide.getOpposite()).orElse(null);
       //
       ItemStack itemTarget;
       if (itemHandlerFrom != null) {
@@ -373,7 +370,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return moveItemsInternal(max, handlerHere, theslot, themFacingMe, tileTarget);
   }
 
-  private static boolean moveItemsInternal(int max, IItemHandler handlerHere, int theslot, final Direction themFacingMe, final BlockEntity tileTarget) {
+  private  boolean moveItemsInternal(int max, IItemHandler handlerHere, int theslot, final Direction themFacingMe, final BlockEntity tileTarget) {
     if (max <= 0 || tileTarget == null || handlerHere == null) {
       return false;
     }
@@ -381,8 +378,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (originalItemStack.isEmpty()) {
       return false;
     }
-    // IItemHandler handlerOutput = tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
-    final IItemHandler handlerOutput = tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
+
+    final IItemHandler handlerOutput =  CapabilityFixer.item(level, tileTarget.getBlockPos(), themFacingMe); //  tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
@@ -418,7 +415,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       return false; //important to not desync cables 
     }
     Direction myFacingDir = loc.getSide();
-    final IEnergyStorage handlerHere = this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
+    final IEnergyStorage handlerHere =  CapabilityFixer.energy(level, this.worldPosition, myFacingDir); //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
     ServerLevel serverWorld = loc.getTargetLevel(level);
     final BlockEntity tileTarget = serverWorld.getBlockEntity(loc.getPos());
     final Direction themFacingMe = myFacingDir.getOpposite();
@@ -434,11 +431,12 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (this.level.isClientSide) {
       return false; //important to not desync cables 
     }
-    final IEnergyStorage handlerHere = this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
+    final IEnergyStorage handlerHere = CapabilityFixer.energy(level, this.worldPosition, myFacingDir);  //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
     final Direction themFacingMe = myFacingDir.getOpposite();
     final BlockEntity tileTarget = level.getBlockEntity(posTarget);
     return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
   }
+  //TODO: redundant tile passess
 
   private static boolean moveEnergyInternal(final int quantity, final IEnergyStorage handlerHere, final Direction themFacingMe, final BlockEntity tileTarget) {
     if (handlerHere == null) {
@@ -447,7 +445,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (tileTarget == null) {
       return false;
     }
-    final IEnergyStorage handlerOutput = tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
+    final IEnergyStorage handlerOutput =  CapabilityFixer.energy(tileTarget.getLevel(),tileTarget.getBlockPos(), themFacingMe);// tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
@@ -518,7 +516,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Deprecated
   @Override
   public int getContainerSize() { // was getSizeInventory
-    IItemHandler invo = this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    IItemHandler invo = CapabilityFixer.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (invo != null) {
       return invo.getSlots();
     }
@@ -534,7 +532,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Deprecated
   @Override
   public ItemStack getItem(int index) { // was getStackInSlot
-    IItemHandler invo = this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    IItemHandler invo = CapabilityFixer.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     try {
       if (invo != null && index < invo.getSlots()) {
         return invo.getStackInSlot(index);
@@ -581,23 +579,29 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Override
   public int getEnergy() {
-    return this.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+   var energy = CapabilityFixer.energy(level,worldPosition);
+
+return energy==null?0:energy.getEnergyStored()  ;
+//    return this.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override
   public void setEnergy(int value) {
-    IEnergyStorage energ = this.getCapability(ForgeCapabilities.ENERGY).orElse(null);
-    if (energ != null && energ instanceof CustomEnergyStorage) {
-      ((CustomEnergyStorage) energ).setEnergy(value);
-    }
+    var energy = CapabilityFixer.energy(level,worldPosition);
+//    if(energy !=null){
+//      energy.receiveEnergy(value,true);
+//    }
+//    if (energ != null && energ instanceof CustomEnergyStorage) {
+//      ((CustomEnergyStorage) energ).setEnergy(value);
+//    }
   }
 
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
     if (level.isClientSide == false && level.getGameTime() % 20 == 0) { //if serverside then 
-      IEnergyStorage energ = this.getCapability(ForgeCapabilities.ENERGY).orElse(null);
-      if (energ != null) {
-        PacketRegistry.sendToAllClients(this.getLevel(), new PacketSyncEnergy(this.getBlockPos(), energ.getEnergyStored()));
+      var energy = CapabilityFixer.energy(level,worldPosition);
+      if (energy != null) {
+        PacketRegistry.sendToAllClients(this.getLevel(), new PacketSyncEnergy(this.getBlockPos(), energy.getEnergyStored()));
       }
     }
   }
@@ -618,65 +622,65 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
    * @param pos
    * @param beamStuff
    */
-  public static void updateBeam(Level level, BlockPos pos, com.lothrazar.cyclic.block.beaconpotion.BeamStuff beamStuff) {
-    BlockPos blockpos;
-    if (beamStuff.lastCheckY < pos.getY()) {
-      blockpos = pos;
-      beamStuff.checkingBeamSections = new ArrayList<>();
-      beamStuff.lastCheckY = pos.getY() - 1;
-    }
-    else {
-      blockpos = new BlockPos(pos.getX(), beamStuff.lastCheckY + 1, pos.getZ());
-    }
-    BeaconBlockEntity.BeaconBeamSection beaconblockentity$beaconbeamsection = beamStuff.checkingBeamSections.isEmpty() ? null : beamStuff.checkingBeamSections.get(beamStuff.checkingBeamSections.size() - 1);
-    int surfaceHeight = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ());
-    for (int yLoop = 0; yLoop < 10 && blockpos.getY() <= surfaceHeight; ++yLoop) {
-      BlockState blockstate = level.getBlockState(blockpos);
-      // important: start one up OR give your beacon block an override to getBeaconColorMultiplier
-      float[] colorMult = blockstate.getBeaconColorMultiplier(level, blockpos, pos);
-      if (colorMult != null) {
-        if (beamStuff.checkingBeamSections.size() <= 1) {
-          beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(colorMult);
-          beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
-        }
-        else if (beaconblockentity$beaconbeamsection != null) {
-          float[] col = beaconblockentity$beaconbeamsection.getColor();
-          if (Arrays.equals(colorMult, col)) {
-            beaconblockentity$beaconbeamsection.increaseHeight();
-          }
-          else {
-            beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(new float[] { (col[0] + colorMult[0]) / 2.0F, (col[1] + colorMult[1]) / 2.0F, (col[2] + colorMult[2]) / 2.0F });
-            beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
-          }
-        }
-      }
-      else {
-        //        .println("     null color so check bedrock from state=" + blockstate);
-        if (beaconblockentity$beaconbeamsection == null || blockstate.getLightBlock(level, blockpos) >= 15 && !blockstate.is(Blocks.BEDROCK)) {
-          beamStuff.checkingBeamSections.clear();
-          //cancel does work but shoots thru sht. prevents us stopping at day zero
-          //.out.print("CANCELLED why reset to surface height here " + lastCheckY + " becomes " + surfaceHeight);
-          beamStuff.lastCheckY = surfaceHeight;
-          break;
-        }
-        if (beaconblockentity$beaconbeamsection != null)
-          beaconblockentity$beaconbeamsection.increaseHeight();
-      }
-      blockpos = blockpos.above();
-      ++beamStuff.lastCheckY;
-      //.out.println("     move up=" + lastCheckY);
-    }
-    if (level.getGameTime() % 80L == 0L) {
-      if (!beamStuff.beamSections.isEmpty()) {
-        //        applyEffects(p_155108_, p_155109_, this.levels, this.primaryPower, this.secondaryPower);
-        SoundUtil.playSound(level, pos, SoundEvents.BEACON_AMBIENT);
-      }
-    }
-    if (beamStuff.lastCheckY >= surfaceHeight) {
-      beamStuff.lastCheckY = level.getMinBuildHeight() - 1;
-      beamStuff.beamSections = beamStuff.checkingBeamSections;
-    }
-  }
+//  public static void updateBeam(Level level, BlockPos pos, com.lothrazar.cyclic.block.beaconpotion.BeamStuff beamStuff) {
+//    BlockPos blockpos;
+//    if (beamStuff.lastCheckY < pos.getY()) {
+//      blockpos = pos;
+//      beamStuff.checkingBeamSections = new ArrayList<>();
+//      beamStuff.lastCheckY = pos.getY() - 1;
+//    }
+//    else {
+//      blockpos = new BlockPos(pos.getX(), beamStuff.lastCheckY + 1, pos.getZ());
+//    }
+//    BeaconBlockEntity.BeaconBeamSection beaconblockentity$beaconbeamsection = beamStuff.checkingBeamSections.isEmpty() ? null : beamStuff.checkingBeamSections.get(beamStuff.checkingBeamSections.size() - 1);
+//    int surfaceHeight = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ());
+//    for (int yLoop = 0; yLoop < 10 && blockpos.getY() <= surfaceHeight; ++yLoop) {
+//      BlockState blockstate = level.getBlockState(blockpos);
+//      // important: start one up OR give your beacon block an override to getBeaconColorMultiplier
+//      float[] colorMult = blockstate.getBeaconColorMultiplier(level, blockpos, pos);
+//      if (colorMult != null) {
+//        if (beamStuff.checkingBeamSections.size() <= 1) {
+//          beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(colorMult);
+//          beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
+//        }
+//        else if (beaconblockentity$beaconbeamsection != null) {
+//          float[] col = beaconblockentity$beaconbeamsection.getColor();
+//          if (Arrays.equals(colorMult, col)) {
+//            beaconblockentity$beaconbeamsection.increaseHeight();
+//          }
+//          else {
+//            beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(new float[] { (col[0] + colorMult[0]) / 2.0F, (col[1] + colorMult[1]) / 2.0F, (col[2] + colorMult[2]) / 2.0F });
+//            beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
+//          }
+//        }
+//      }
+//      else {
+//        //        .println("     null color so check bedrock from state=" + blockstate);
+//        if (beaconblockentity$beaconbeamsection == null || blockstate.getLightBlock(level, blockpos) >= 15 && !blockstate.is(Blocks.BEDROCK)) {
+//          beamStuff.checkingBeamSections.clear();
+//          //cancel does work but shoots thru sht. prevents us stopping at day zero
+//          //.out.print("CANCELLED why reset to surface height here " + lastCheckY + " becomes " + surfaceHeight);
+//          beamStuff.lastCheckY = surfaceHeight;
+//          break;
+//        }
+//        if (beaconblockentity$beaconbeamsection != null)
+//          beaconblockentity$beaconbeamsection.increaseHeight();
+//      }
+//      blockpos = blockpos.above();
+//      ++beamStuff.lastCheckY;
+//      //.out.println("     move up=" + lastCheckY);
+//    }
+//    if (level.getGameTime() % 80L == 0L) {
+//      if (!beamStuff.beamSections.isEmpty()) {
+//        //        applyEffects(p_155108_, p_155109_, this.levels, this.primaryPower, this.secondaryPower);
+//        SoundUtil.playSound(level, pos, SoundEvents.BEACON_AMBIENT);
+//      }
+//    }
+//    if (beamStuff.lastCheckY >= surfaceHeight) {
+//      beamStuff.lastCheckY = level.getMinBuildHeight() - 1;
+//      beamStuff.beamSections = beamStuff.checkingBeamSections;
+//    }
+//  }
 
   // was getTargetCenter
   protected BlockPos getFacingShapeCenter(int radiusIn) {

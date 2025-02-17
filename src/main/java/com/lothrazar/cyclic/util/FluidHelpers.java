@@ -26,14 +26,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 public class FluidHelpers {
 
@@ -45,7 +44,7 @@ public class FluidHelpers {
 
   public static class FluidAttributes {
 
-    public static final int BUCKET_VOLUME = net.minecraftforge.fluids.FluidType.BUCKET_VOLUME;
+    public static final int BUCKET_VOLUME = FluidType.BUCKET_VOLUME;
   }
 
   /**
@@ -57,27 +56,28 @@ public class FluidHelpers {
   public static int getColorFromFluid(FluidStack fstack) {
     if (fstack != null && fstack.getFluid() != null) {
       //first check mine
-      if (fstack.getFluid() == FluidBiomassHolder.STILL.get()) {
-        return FluidBiomassHolder.COLOR;
-      }
-      else if (fstack.getFluid() == FluidHoneyHolder.STILL.get()) {
-        return FluidHoneyHolder.COLOR;
-      }
-      else if (fstack.getFluid() == FluidMagmaHolder.STILL.get()) {
-        return FluidMagmaHolder.COLOR;
-      }
-      else if (fstack.getFluid() == FluidSlimeHolder.STILL.get()) {
-        return FluidSlimeHolder.COLOR;
-      }
-      else if (fstack.getFluid() == FluidXpJuiceHolder.STILL.get()) {
-        return FluidXpJuiceHolder.COLOR;
-      }
-      else if (fstack.getFluid() == ForgeMod.MILK.get()) {
-        return COLOUR_MILK;
-      }
-      else if (fstack.getFluid() == Fluids.LAVA) {
-        return COLOUR_LAVA;
-      }
+      System.out.println("fluid COLOURS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//      if (fstack.getFluid() == FluidBiomassHolder.STILL.get()) {
+//        return FluidBiomassHolder.COLOR;
+//      }
+//      else if (fstack.getFluid() == FluidHoneyHolder.STILL.get()) {
+//        return FluidHoneyHolder.COLOR;
+//      }
+//      else if (fstack.getFluid() == FluidMagmaHolder.STILL.get()) {
+//        return FluidMagmaHolder.COLOR;
+//      }
+//      else if (fstack.getFluid() == FluidSlimeHolder.STILL.get()) {
+//        return FluidSlimeHolder.COLOR;
+//      }
+//      else if (fstack.getFluid() == FluidXpJuiceHolder.STILL.get()) {
+//        return FluidXpJuiceHolder.COLOR;
+//      }
+//      else if (fstack.getFluid() == NeoForgeMod.MILK.get()) {
+//        return COLOUR_MILK;
+//      }
+//      else if (fstack.getFluid() == Fluids.LAVA) {
+//        return COLOUR_LAVA;
+//      }
     }
     return COLOUR_DEFAULT;
   }
@@ -101,22 +101,22 @@ public class FluidHelpers {
     BlockState targetState = level.getBlockState(posTarget);
     if (targetState.getBlock() == Blocks.CAULDRON) {
       //cauldron is hardcoded mojang with two fluids
-      FluidStack simulate = tank.drain(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      FluidStack simulate = tank.drain(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simulate.getAmount() == FluidAttributes.BUCKET_VOLUME) {
         //we are able to fill the tank
         if (level.setBlock(posTarget, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3), 3)) {
           //we filled the cauldron, so now drain with execute
-          tank.drain(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          tank.drain(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
           return true;
         }
       }
       //try the same thing with lava
-      simulate = tank.drain(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      simulate = tank.drain(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simulate.getAmount() == FluidAttributes.BUCKET_VOLUME) {
         //we are able to fill the tank
         if (level.setBlock(posTarget, Blocks.LAVA_CAULDRON.defaultBlockState(), 3)) {
           //we filled the cauldron, so now drain with execute
-          tank.drain(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+          tank.drain(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
           return true;
         }
       }
@@ -226,14 +226,14 @@ public class FluidHelpers {
     float targetScale = (float) stored / capacity;
     return targetScale;
   }
-
-  public static IFluidHandler getTank(Level world, BlockPos pos, Direction side) {
-    BlockEntity tile = world.getBlockEntity(pos);
-    if (tile == null) {
-      return null;
-    }
-    return tile.getCapability(ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
-  }
+//use FIXERS
+//  public static IFluidHandler getTank(Level world, BlockPos pos, Direction side) {
+//    BlockEntity tile = world.getBlockEntity(pos);
+//    if (tile == null) {
+//      return null;
+//    }
+//    return tile.getCapability(ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
+//  }
 
   public static boolean tryFillPositionFromTank(Level world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, final int amount) {
     if (tankFrom == null || amount <= 0) {
@@ -244,15 +244,15 @@ public class FluidHelpers {
       if (fluidTo == null) {
         return false;
       }
-      FluidStack toBeDrained = tankFrom.drain(amount, FluidAction.SIMULATE);
+      FluidStack toBeDrained = tankFrom.drain(amount, IFluidHandler.FluidAction.SIMULATE);
       if (toBeDrained == null || toBeDrained.isEmpty()) {
         return false;
       }
-      final int filledAmount = fluidTo.fill(toBeDrained, FluidAction.EXECUTE);
+      final int filledAmount = fluidTo.fill(toBeDrained, IFluidHandler.FluidAction.EXECUTE);
       if (filledAmount <= 0) {
         return false;
       }
-      final FluidStack drained = tankFrom.drain(filledAmount, FluidAction.EXECUTE);
+      final FluidStack drained = tankFrom.drain(filledAmount, IFluidHandler.FluidAction.EXECUTE);
       final int drainedAmount = drained.getAmount();
       //sanity check
       if (filledAmount != drainedAmount) {

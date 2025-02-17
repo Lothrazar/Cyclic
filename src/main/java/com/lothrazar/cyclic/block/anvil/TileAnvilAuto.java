@@ -4,10 +4,12 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -75,35 +77,18 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
     return new ContainerAnvil(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 

@@ -23,9 +23,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.capabilities.BaseCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class BlockCyclic extends EntityBlockFlib {
 
@@ -145,17 +147,17 @@ public class BlockCyclic extends EntityBlockFlib {
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      BlockEntity tileentity = worldIn.getBlockEntity(pos);
-      if (tileentity != null) {
+//      BlockEntity tileentity = worldIn.getBlockEntity(pos);
+//      if (tileentity != null) {
 
-        IItemHandler items = tileentity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        IItemHandler items = CapabilityFixer.item(worldIn, pos);
         if (items != null) {
           for (int i = 0; i < items.getSlots(); ++i) {
             Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
           }
           worldIn.updateNeighbourForOutputSignal(pos, this);
         }
-      }
+//      }
       super.onRemove(state, worldIn, pos, newState, isMoving);
     }
   }
@@ -165,33 +167,22 @@ public class BlockCyclic extends EntityBlockFlib {
    */
   public void registerClient() {}
 
-  public static boolean isItem(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-    return hasCapabilityDir(facing, world, facingPos, ForgeCapabilities.ITEM_HANDLER);
-  }
 
-  public static boolean isFluid(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-    return hasCapabilityDir(facing, world, facingPos, ForgeCapabilities.FLUID_HANDLER);
-  }
-
-  public static boolean isEnergy(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-    return hasCapabilityDir(facing, world, facingPos, ForgeCapabilities.ENERGY);
-  }
-
-  private static boolean hasCapabilityDir(Direction facing, LevelAccessor world, BlockPos facingPos, Capability<?> cap) {
-    if (facing == null) {
-      return false;
-    }
-    BlockEntity neighbor = world.getBlockEntity(facingPos);
-    if (neighbor != null
-        && neighbor.getCapability(cap, facing.getOpposite()).orElse(null) != null) {
-      return true;
-    }
-    return false;
-  }
+//  private static boolean hasCapabilityDir(Direction facing, LevelAccessor world, BlockPos facingPos, BaseCapability cap) {
+//    if (facing == null) {
+//      return false;
+//    }
+//    BlockEntity neighbor = world.getBlockEntity(facingPos);
+//    if (neighbor != null
+//        && neighbor.getCapability(cap, facing.getOpposite()).orElse(null) != null) {
+//      return true;
+//    }
+//    return false;
+//  }
 
   //for comparators that dont use item inventories
   protected int calcRedstoneFromFluid(BlockEntity tileEntity) {
-    IFluidHandler fluid = tileEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+    IFluidHandler fluid = CapabilityFixer.fluid(tileEntity.getLevel(), tileEntity.getBlockPos());//tileEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
     if (fluid.getFluidInTank(0).isEmpty()) {
       return 0;
     }

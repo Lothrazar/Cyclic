@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.facade.ITileFacade;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -16,16 +17,16 @@ public class TileLightFacade extends TileBlockEntityCyclic implements ITileFacad
   }
 
   @Override
-  public CompoundTag getUpdateTag() {
-    CompoundTag syncData = super.getUpdateTag();
+  public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    CompoundTag syncData = super.getUpdateTag(registries);
     return syncData;
   }
 
   @Override
-  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
     if (pkt.getTag().contains(NBT_FACADE)) {
       this.load(pkt.getTag());
-      super.onDataPacket(net, pkt);
+      super.onDataPacket(net, pkt, registries);
     }
   }
 
