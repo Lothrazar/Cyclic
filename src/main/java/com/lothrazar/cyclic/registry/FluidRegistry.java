@@ -7,15 +7,20 @@ import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidWaxHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class FluidRegistry {
+  public static final DeferredRegister<Fluid> FLUID = DeferredRegister.create(Registries.FLUID, ModCyclic.MODID);
+  public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, ModCyclic.MODID);
 
-  public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, ModCyclic.MODID);
-  public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, ModCyclic.MODID);
+
   public static final FluidXpJuiceHolder XPJUICE = new FluidXpJuiceHolder();
   public static final FluidSlimeHolder SLIME = new FluidSlimeHolder();
   public static final FluidBiomassHolder BIOMASS = new FluidBiomassHolder();

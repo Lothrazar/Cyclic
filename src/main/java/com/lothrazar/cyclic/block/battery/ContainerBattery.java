@@ -10,7 +10,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerBattery extends ContainerBase {
 

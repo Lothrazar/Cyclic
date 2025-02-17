@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.api;
 
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+//import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public interface IEntityInteractable {
 
@@ -10,5 +11,5 @@ public interface IEntityInteractable {
    * @param event
    *          for the entity interaction on this
    */
-  void interactWith(EntityInteract event);
+  void interactWith(PlayerInteractEvent.EntityInteract event);
 }

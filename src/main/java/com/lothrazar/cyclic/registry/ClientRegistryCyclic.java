@@ -1,5 +1,16 @@
 package com.lothrazar.cyclic.registry;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.settings.IKeyConflictContext;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
@@ -48,23 +59,9 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.client.settings.IKeyConflictContext;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
 public class ClientRegistryCyclic {
 
   //TODO: refactor split into keyboard registry, overlay registry, other renderers below 
@@ -83,27 +80,25 @@ public class ClientRegistryCyclic {
     }
   }, InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_X), "key." + ModCyclic.MODID + ".category");
   //IIngameOverlay
-  public static final IGuiOverlay HUD_MANA = (gui, poseStack, partialTicks, width, height) -> {
-    //cancel if turned off
-    if (!FeatureRegistry.PLAYER_RENDER_CAPS) {
-      return;
-    }
-    //ok go
-    if (Minecraft.getInstance().player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
-      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
-      int x = 10; // ManaConfig.MANA_HUD_X.get();
-      int y = 10; // ManaConfig.MANA_HUD_Y.get(); //TODO: client-config
-      if (x >= 0 && y >= 0) {
-        poseStack.drawString(gui.getFont(), toDisplay, x, y, 0xFF0000);
-        //        gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
-      }
-    }
-  };
+//  public static final IGuiOverlay HUD_MANA = (gui, poseStack, partialTicks, width, height) -> {
+//    //cancel if turned off
+//    if (!FeatureRegistry.PLAYER_RENDER_CAPS) {
+//      return;
+//    }
+//    //ok go
+//    if (Minecraft.getInstance().player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
+//      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
+//      int x = 10; // ManaConfig.MANA_HUD_X.get();
+//      int y = 10; // ManaConfig.MANA_HUD_Y.get(); //TODO: client-config
+//      if (x >= 0 && y >= 0) {
+//        poseStack.drawString(gui.getFont(), toDisplay, x, y, 0xFF0000);
+//        //        gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
+//      }
+//    }
+//  };
 
   public ClientRegistryCyclic() {
-    //fired by mod constructor  DistExecutor.safeRunForDist 
-    MinecraftForge.EVENT_BUS.register(new ClientInputEvents());
-    MinecraftForge.EVENT_BUS.register(new EventRender());
+    //fired by mod constructor  DistExecutor.safeRunForDist
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
@@ -163,10 +158,10 @@ public class ClientRegistryCyclic {
   }
 
   //    OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "data", HUD_MANA);
-  @SubscribeEvent
-  public static void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
-    event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), ModCyclic.MODID, HUD_MANA);
-  }
+//  @SubscribeEvent
+//  public static void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
+//    event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), ModCyclic.MODID, HUD_MANA);
+//  }
 
   @SubscribeEvent
   public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
@@ -195,7 +190,7 @@ public class ClientRegistryCyclic {
     event.register((stack, tintIndex) -> {
       if (stack.hasTag() && tintIndex > 0) {
         //what entity is inside
-        EntityType<?> thing = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
+        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
         //pull the colours from the egg
         for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
           if (spawneggitem.getType(null) == thing) {

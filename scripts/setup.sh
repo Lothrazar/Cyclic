@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./gradlew genEclipseRuns
+./gradlew --refresh-dependencies

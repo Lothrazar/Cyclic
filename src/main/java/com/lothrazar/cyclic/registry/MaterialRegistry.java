@@ -12,13 +12,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ForgeTier;
-import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
 public class MaterialRegistry {
 
   //
@@ -36,18 +33,18 @@ public class MaterialRegistry {
   //      return new ItemStack(ItemRegistry.GEM_AMBER.get());
   //    }
   //  };
-  public static IntValue EMERALD_BOOTS;
-  public static IntValue EMERALD_LEG;
-  public static IntValue EMERALD_CHEST;
-  public static IntValue EMERALD_HELM;
-  public static IntValue OBS_BOOTS;
-  public static IntValue OBS_LEG;
-  public static IntValue OBS_CHEST;
-  public static IntValue OBS_HELM;
-  public static DoubleValue EMERALD_TOUGH;
-  public static DoubleValue EMERALD_DMG;
-  public static DoubleValue OBS_TOUGH;
-  public static DoubleValue OBS_DMG;
+  public static ModConfigSpec.IntValue EMERALD_BOOTS;
+  public static ModConfigSpec.IntValue EMERALD_LEG;
+  public static ModConfigSpec.IntValue EMERALD_CHEST;
+  public static ModConfigSpec.IntValue EMERALD_HELM;
+  public static ModConfigSpec.IntValue OBS_BOOTS;
+  public static ModConfigSpec.IntValue OBS_LEG;
+  public static ModConfigSpec.IntValue OBS_CHEST;
+  public static ModConfigSpec.IntValue OBS_HELM;
+  public static ModConfigSpec.DoubleValue EMERALD_TOUGH;
+  public static ModConfigSpec.DoubleValue EMERALD_DMG;
+  public static ModConfigSpec.DoubleValue OBS_TOUGH;
+  public static ModConfigSpec.DoubleValue OBS_DMG;
 
   public static class ArmorMats {
 

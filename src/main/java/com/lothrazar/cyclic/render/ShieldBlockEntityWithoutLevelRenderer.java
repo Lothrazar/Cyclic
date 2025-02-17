@@ -15,12 +15,14 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = ModCyclic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import  net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+
+//value = Dist.CLIENT,
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID, value =  Dist.CLIENT)
 public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
 
   public static ShieldBlockEntityWithoutLevelRenderer instance;

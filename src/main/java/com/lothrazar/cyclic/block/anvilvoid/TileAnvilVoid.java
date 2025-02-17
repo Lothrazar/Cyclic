@@ -25,14 +25,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -41,7 +37,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   }
 
   public static final int CAPACITY = 16 * FluidAttributes.BUCKET_VOLUME;
-  public static IntValue FLUIDPAY;
+  public static ModConfigSpec.IntValue FLUIDPAY;
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
@@ -51,11 +47,11 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+//  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+//  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileAnvilVoid(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVILVOID.get(), pos, state);

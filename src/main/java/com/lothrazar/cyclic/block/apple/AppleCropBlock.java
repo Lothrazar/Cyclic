@@ -19,7 +19,8 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.NeoForgeEventHandler;
+
 
 public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
 
@@ -67,20 +68,20 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
     return worldIn.getBlockState(pos.above()).is(BlockTags.LEAVES);
   }
 
-  @Override
-  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-    int age = state.getValue(AGE);
-    if (age < MAX_AGE && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.random.nextInt(5) == 0)) {
-      worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(age + 1)), 2);
-      // this.grow(worldIn, random, pos, state);
-      ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-    }
-  }
+//  @Override
+//  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
+//    int age = state.getValue(AGE);
+//    if (age < MAX_AGE && NeoForgeEventHandler.onCropsGrowPre(worldIn, pos, state, worldIn.random.nextInt(5) == 0)) {
+//      worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(age + 1)), 2);
+//      // this.grow(worldIn, random, pos, state);
+//      ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+//    }
+//  }
 
-  @Override
-  public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-    return state.getValue(AGE) < MAX_AGE;
-  }
+//  @Override
+//  public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+//    return state.getValue(AGE) < MAX_AGE;
+//  }
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

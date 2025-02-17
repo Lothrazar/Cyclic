@@ -24,12 +24,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static IntValue MAX;
-  public static IntValue SLOT_CHARGING_RATE;
+  public static ModConfigSpec.IntValue MAX;
+  public static ModConfigSpec.IntValue SLOT_CHARGING_RATE;
   private Map<Direction, Boolean> poweredSides;
   final CustomEnergyStorage energy;
   private final LazyOptional<IEnergyStorage> energyCap;

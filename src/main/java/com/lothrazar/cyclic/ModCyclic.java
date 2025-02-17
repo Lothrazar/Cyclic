@@ -1,5 +1,13 @@
 package com.lothrazar.cyclic;
 
+import com.lothrazar.cyclic.event.ClientInputEvents;
+import com.lothrazar.cyclic.event.EventRender;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import org.apache.logging.log4j.LogManager;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
@@ -20,12 +28,6 @@ import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ModCyclic.MODID)
 public class ModCyclic {
@@ -33,18 +35,25 @@ public class ModCyclic {
   public static final String MODID = "cyclic";
   public static final CyclicLogger LOGGER = new CyclicLogger(LogManager.getLogger());
 
-  public ModCyclic() {
-    FMLJavaModLoadingContext.get().getModEventBus().addListener(EventRegistry::setup);
-    FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientRegistryCyclic::setupClient);
-    DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
+  public ModCyclic(IEventBus bus, Dist dist, ModContainer container) {
+
+    bus.addListener(EventRegistry::setup);
+    if (dist.isClient()) {
+
+      bus.addListener(ClientRegistryCyclic::setupClient);
+
+      NeoForge.EVENT_BUS.register(new ClientInputEvents());
+      NeoForge.EVENT_BUS.register(new EventRender());
+    }
+
+//    DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
     ConfigRegistry cfg = new ConfigRegistry();
     cfg.setupMain();
     cfg.setupClient();
     DataTags.setup();
-    MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, CapabilityRegistry::onAttachCapabilitiesPlayer);
-    MinecraftForge.EVENT_BUS.register(new CapabilityRegistry());
-    MinecraftForge.EVENT_BUS.register(new CommandRegistry());
-    IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+//    NeoForge.EVENT_BUS.addGenericListener(Entity.class, CapabilityRegistry::onAttachCapabilitiesPlayer); // TODO:
+    NeoForge.EVENT_BUS.register(new CapabilityRegistry());
+    NeoForge.EVENT_BUS.register(new CommandRegistry());
     BlockRegistry.BLOCKS.register(bus);
     ItemRegistry.ITEMS.register(bus);
     TileRegistry.TILES.register(bus);
@@ -59,7 +68,8 @@ public class ModCyclic {
     EnchantRegistry.ENCHANTMENTS.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
     LootModifierRegistry.LOOT.register(bus);
-    ForgeMod.enableMilkFluid();
+    NeoForgeMod.enableMilkFluid();
+///    NeoforgeMod.enableMilkFluid();
   }
 
   public static void log(String string) {

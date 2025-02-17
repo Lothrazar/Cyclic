@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
@@ -19,13 +18,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -34,9 +30,8 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   }
 
   static final int MAX = 64000;
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     /* https://github.com/Lothrazar/Cyclic/pull/1990/files#diff-4eb95a3d9ac136172375b3e7be5bc26c576f9fa6efcabee458c4c80797205b73R40 */
@@ -57,7 +52,6 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileAnvilAuto(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVIL.get(), pos, state);
