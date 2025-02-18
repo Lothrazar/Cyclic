@@ -188,9 +188,9 @@ public class ItemRegistry {
       .effect(() -> new MobEffectInstance(MobEffects.LUCK, SMALLPOTIONDUR, 1), 1)
       .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, SMALLPOTIONDUR, 1), 1)
       .effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, SMALLPOTIONDUR, 1), 1)
-      .alwaysEat().build())));
+      .alwaysEdible().build())));
   public static final DeferredItem<Item> APPLE_CHOCOLATE = ITEMS.register("apple_chocolate", () -> new AppleChocolate(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR * 4)
-      .alwaysEat().build())));
+      .alwaysEdible().build())));
   public static final DeferredItem<Item> GLOWING_HELMET = ITEMS.register("glowing_helmet", () -> new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, ArmorItem.Type.HELMET, (new Item.Properties())));
   public static final DeferredItem<Item> FLUIDHOPPER = ITEMS.register("hopper_fluid", () -> new BlockItem(BlockRegistry.FLUIDHOPPER.get(), new Item.Properties()));
   public static final DeferredItem<Item> HOPPER = ITEMS.register("hopper", () -> new BlockItem(BlockRegistry.HOPPER.get(), new Item.Properties()));
@@ -246,7 +246,7 @@ public class ItemRegistry {
   public static final DeferredItem<Item> CHARM_WING = ITEMS.register("charm_wing", () -> new CharmWing(new Item.Properties().durability(64)));
   public static final DeferredItem<Item> SLINGSHOT = ITEMS.register("slingshot", () -> new SlingshotItem(new Item.Properties().durability(64)));
   public static final DeferredItem<Item> SOULSTONE = ITEMS.register("soulstone", () -> new SoulstoneCharm(new Item.Properties().durability(8)));
-  public static final DeferredItem<Item> INVENTORY_CAKE = ITEMS.register("inventory_cake", () -> new ItemCakeInventory(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(1).saturationMod(10).alwaysEat().build())));
+  public static final DeferredItem<Item> INVENTORY_CAKE = ITEMS.register("inventory_cake", () -> new ItemCakeInventory(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(1).saturationModifier(10).alwaysEdible().build())));
   public static final DeferredItem<Item> SOUND_RECORDER = ITEMS.register("sound_recorder", () -> new BlockItem(BlockRegistry.SOUND_RECORDER.get(), new Item.Properties()));
   public static final DeferredItem<Item> SOUND_PLAYER = ITEMS.register("sound_player", () -> new BlockItem(BlockRegistry.SOUND_PLAYER.get(), new Item.Properties()));
   public static final DeferredItem<Item> GENERATOR_FUEL = ITEMS.register("generator_fuel", () -> new BlockItem(BlockRegistry.GENERATOR_FUEL.get(), new Item.Properties()));
@@ -393,7 +393,7 @@ public class ItemRegistry {
   public static final DeferredItem<Item> ANVIL = ITEMS.register("anvil", () -> new BlockItem(BlockRegistry.ANVIL.get(), new Item.Properties()));
   public static final DeferredItem<Item> ANVIL_MAGMA = ITEMS.register("anvil_magma", () -> new BlockItem(BlockRegistry.ANVIL_MAGMA.get(), new Item.Properties()));
   public static final DeferredItem<Item> BEACON = ITEMS.register("beacon", () -> new BlockItem(BlockRegistry.BEACON.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties()));
+//  public static final DeferredItem<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties()));
   public static final DeferredItem<Item> BEACON_REDSTONE = ITEMS.register("beacon_redstone", () -> new BlockItem(BlockRegistry.BEACON_REDSTONE.get(), new Item.Properties()));
   public static final DeferredItem<Item> TANK = ITEMS.register("tank", () -> new ItemBlockTank(BlockRegistry.TANK.get(), new Item.Properties()));
   public static final DeferredItem<Item> DARK_GLASS = ITEMS.register("dark_glass", () -> new BlockItem(BlockRegistry.DARK_GLASS.get(), new Item.Properties()));

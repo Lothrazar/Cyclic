@@ -16,8 +16,7 @@ import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.PressurePlateMetal;
-import com.lothrazar.cyclic.block.antipotion.BlockAntiBeacon;
-import com.lothrazar.cyclic.block.antipotion.MilkSpongeBlock;
+import com.lothrazar.cyclic.block.MilkSpongeBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
@@ -304,7 +303,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> ANVIL_MAGMA = BLOCKS.register("anvil_magma", () -> new BlockAnvilMagma(Block.Properties.of().sound(SoundType.ANVIL)));
   public static final DeferredBlock<Block> BEACON = BLOCKS.register("beacon", () -> new BlockPotion(Block.Properties.of()));
   public static final DeferredBlock<Block> BEACON_REDSTONE = BLOCKS.register("beacon_redstone", () -> new BlockBeaconRedstone(Block.Properties.of().lightLevel(p -> 4)));
-  public static final DeferredBlock<BlockAntiBeacon> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of().lightLevel(p -> 2)));
+//  public static final DeferredBlock<BlockAntiBeacon> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of().lightLevel(p -> 2)));
   public static final DeferredBlock<Block> SOUNDPROOFING_GHOST = BLOCKS.register("soundproofing_ghost", () -> new SoundmufflerBlockFacade(Block.Properties.of()));
   public static final DeferredBlock<Block> SOUNDPROOFING = BLOCKS.register("soundproofing", () -> new SoundmufflerBlock(Block.Properties.of()));
   public static final DeferredBlock<Block> CLOCK = BLOCKS.register("clock", () -> new BlockRedstoneClock(Block.Properties.of()));
