@@ -2,12 +2,12 @@ package com.lothrazar.cyclic.capabilities.block;
 
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.packet.PacketSyncFluid;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 public class FluidTankBase extends FluidTank {
 
@@ -21,7 +21,7 @@ public class FluidTankBase extends FluidTank {
   @Override
   public void onContentsChanged() {
     //send to client
-    IFluidHandler handler = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
+    IFluidHandler handler = CapabilityFixer.fluid(tile.getLevel(), tile.getBlockPos()); // tile.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

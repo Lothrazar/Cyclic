@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.library.cap.CustomEnergyStorage;
@@ -16,18 +17,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class TileCableEnergy extends TileCableBase {
 
   final CustomEnergyStorage energy;
-  private LazyOptional<IEnergyStorage> energyCap;
-  public static IntValue BUFFERSIZE;
-  public static IntValue TRANSFER_RATE;
+  public static ModConfigSpec.IntValue BUFFERSIZE;
+  public static ModConfigSpec.IntValue TRANSFER_RATE;
   //  
   //  private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> flow = new ConcurrentHashMap<>();
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
@@ -39,7 +36,6 @@ public class TileCableEnergy extends TileCableBase {
       mapIncomingEnergy.put(f, 0);
     }
     energy = new CustomEnergyStorage(BUFFERSIZE.get(), TRANSFER_RATE.get());
-    energyCap = LazyOptional.of(() -> energy);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
@@ -69,13 +65,13 @@ public class TileCableEnergy extends TileCableBase {
       return;
     }
     final BlockPos posTarget = this.worldPosition.relative(extractSide);
-    final BlockEntity tile = level.getBlockEntity(posTarget);
-    if (tile == null) {
-      return;
-    }
-    final IEnergyStorage itemHandlerFrom = tile
-        .getCapability(ForgeCapabilities.ENERGY, extractSide.getOpposite())
-        .orElse(null);
+//    final BlockEntity tile = level.getBlockEntity(posTarget);
+//    if (tile == null) {
+//      return;
+//    }
+    final IEnergyStorage itemHandlerFrom = CapabilityFixer.energy(level, posTarget, extractSide.getOpposite());
+//        .getCapability(ForgeCapabilities.ENERGY, extractSide.getOpposite())
+//        .orElse(null);
     if (itemHandlerFrom == null) {
       return;
     }
@@ -122,21 +118,22 @@ public class TileCableEnergy extends TileCableBase {
     }
   }
 
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY) {
-      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
-        return energyCap.cast();
-      }
-    }
-    return super.getCapability(cap, side);
-  }
+//  @Override
+//  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//    if (cap == ForgeCapabilities.ENERGY) {
+//      //
+//      //
+//      //
+//      //TODO: how to block cables now
+//      //
+//      //
+//      ////
+//      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
+//        return energyCap.cast();
+//      }
+//    }
+//    return super.getCapability(cap, side);
+//  }
 
   @Override
   public void load(CompoundTag tag) {

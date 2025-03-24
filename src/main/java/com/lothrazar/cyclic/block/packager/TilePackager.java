@@ -9,6 +9,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -21,14 +22,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 public class TilePackager extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -37,10 +33,9 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   static final int MAX = TileBattery.MENERGY * 10;
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   public static final int TICKS = 10;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
@@ -49,8 +44,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
-  private final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
 
@@ -167,36 +161,19 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider 
     return new ContainerPackager(i, level, worldPosition, playerInventory, playerEntity);
   }
 
+
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY),registries);
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV),registries);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(tag);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   @Override

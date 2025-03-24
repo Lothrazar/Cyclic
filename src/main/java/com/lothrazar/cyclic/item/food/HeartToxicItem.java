@@ -12,12 +12,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class HeartToxicItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = HeartItem.COOLDOWN;
-  public static IntValue HEARTXPMINUS;
+  public static ModConfigSpec.IntValue HEARTXPMINUS;
 
   public HeartToxicItem(Properties properties) {
     super(properties);
@@ -48,7 +48,7 @@ public class HeartToxicItem extends ItemBaseCyclic {
     }
     //replace the modifier on the main attribute
     healthAttribute.removeModifier(AttributesUtil.DEFAULT_ID);
-    AttributeModifier healthModifier = new AttributeModifier(AttributesUtil.DEFAULT_ID, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADDITION);
+    AttributeModifier healthModifier = new AttributeModifier(AttributesUtil.DEFAULT_ID, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADD_VALUE);
     healthAttribute.addPermanentModifier(healthModifier);
     //
     return super.use(worldIn, playerIn, handIn);

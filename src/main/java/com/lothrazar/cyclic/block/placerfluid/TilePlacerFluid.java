@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -19,18 +20,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvider {
 
   public static final int CAPACITY = 8 * FluidType.BUCKET_VOLUME;
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());;
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   static enum Fields {
     REDSTONE, RENDER;
@@ -55,7 +52,7 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
       return;
     }
     setLitProperty(true);
-    FluidStack test = tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.SIMULATE);
+    FluidStack test = tank.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.SIMULATE);
     if (test.getAmount() == FluidAttributes.BUCKET_VOLUME
         && test.getFluid().defaultFluidState() != null &&
         test.getFluid().defaultFluidState().createLegacyBlock() != null) {
@@ -66,7 +63,7 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
       if (level.isEmptyBlock(offset) &&
           level.setBlockAndUpdate(offset, state)) {
         //pay
-        tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.EXECUTE);
+        tank.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
       }
     }
   }
@@ -96,31 +93,17 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
   }
 
   @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    super.invalidateCaps();
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(tag);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,registries);
   }
 
   @Override

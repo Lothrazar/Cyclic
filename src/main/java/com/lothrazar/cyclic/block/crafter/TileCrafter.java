@@ -34,6 +34,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -52,31 +53,24 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 @SuppressWarnings("unchecked")
 public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE);
   ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
-  private final LazyOptional<IItemHandler> input = LazyOptional.of(() -> inputHandler);
-  private final LazyOptional<IItemHandler> output = LazyOptional.of(() -> outHandler);
-  private final LazyOptional<IItemHandler> gridCap = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
-  private final LazyOptional<IItemHandler> preview = LazyOptional.of(() -> new ItemStackHandler(1));
+  final ItemStackHandler gridCap =  new ItemStackHandler(GRID_SIZE);
+  final ItemStackHandler preview = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
-  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
+//  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
   //
   public static final int IO_NUM_ROWS = 5;
   public static final int IO_NUM_COLS = 2;
@@ -130,14 +124,10 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     if (this.level.isClientSide) {
       return;
     }
-    //do i have enough power phase
-    IEnergyStorage cap = this.energyCap.orElse(null);
-    if (cap == null) {
-      return;
-    }
+
     this.syncEnergy();
     final int cost = POWERCONF.get();
-    if (cap.getEnergyStored() < cost && cost > 0) {
+    if (energy.getEnergyStored() < cost && cost > 0) {
       return;
     }
     if (timer < 0) {
@@ -216,14 +206,14 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
 
   // This could be done better, but it works so ¯\_(ツ)_/¯
   private boolean checkInput(IItemHandler inv) {
-    IItemHandler gridHandler = this.gridCap.orElse(null);
+
     List<ItemStack> inputStacks = new ArrayList<ItemStack>();
     List<ItemStack> gridStacks = new ArrayList<ItemStack>();
     for (int i = 0; i < inv.getSlots(); i++) {
       inputStacks.add(inv.getStackInSlot(i).copy());
     }
-    for (int i = 0; i < gridHandler.getSlots(); i++) {
-      gridStacks.add(gridHandler.getStackInSlot(i).copy());
+    for (int i = 0; i < this.gridCap.getSlots(); i++) {
+      gridStacks.add(this.gridCap.getStackInSlot(i).copy());
     }
     for (ItemStack stack : inputStacks) {
       List<ItemStack> lolbit = new ArrayList<ItemStack>();
@@ -293,9 +283,8 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private Recipe<CraftingContainer> findMatchingRecipe(ArrayList<ItemStack> itemStacksInGrid) {
-    IItemHandler gridHandler = this.gridCap.orElse(null);
-    for (int i = 0; i < gridHandler.getSlots(); i++) {
-      craftMatrix.setItem(i, gridHandler.getStackInSlot(i).copy());//fake items anyway. but also jus do a copy
+    for (int i = 0; i < this.gridCap.getSlots(); i++) {
+      craftMatrix.setItem(i, this.gridCap.getStackInSlot(i).copy());//fake items anyway. but also jus do a copy
     }
     List<CraftingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
     for (CraftingRecipe rec : recipes) {
@@ -335,73 +324,50 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     return new ContainerCrafter(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
+
+//  public <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers type) {
+//    if (cap == ForgeCapabilities.ITEM_HANDLER) {
+//      switch (type) {
+//        case INPUT:
+//          return inputHandler;
+//        case OUTPUT:
+//          return output.cast();
+//        case GRID:
+//          return gridCap.cast();
+//        case PREVIEW:
+//          return preview.cast();
+//      }
+//    }
+//    return null;
+//  }
+
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    energy.deserializeNBT(registries,tag.getCompound("energy"));
+    inputHandler.deserializeNBT(registries,tag.getCompound("input"));
+    outHandler.deserializeNBT(registries,tag.getCompound("output"));
+    gridCap.deserializeNBT(registries,tag.getCompound("grid"));
+    preview.deserializeNBT(registries,tag.getCompound("preview"));
+    super.loadAdditional(tag,registries);
   }
-
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers type) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      switch (type) {
-        case INPUT:
-          return input.cast();
-        case OUTPUT:
-          return output.cast();
-        case GRID:
-          return gridCap.cast();
-        case PREVIEW:
-          return preview.cast();
-      }
-    }
-    return null;
-  }
-
   @Override
-  public void load(CompoundTag tag) {
-    energyCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("energy")));
-    input.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("input")));
-    output.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("output")));
-    gridCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("grid")));
-    preview.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("preview")));
-    super.load(tag);
-  }
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
 
-  @Override
-  public void saveAdditional(CompoundTag tag) {
-    energyCap.ifPresent(h -> {
-      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
-      tag.put("energy", compound);
-    });
-    input.ifPresent(h -> {
-      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
-      tag.put("input", compound);
-    });
-    output.ifPresent(h -> {
-      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
-      tag.put("output", compound);
-    });
-    gridCap.ifPresent(h -> {
-      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
-      tag.put("grid", compound);
-    });
-    preview.ifPresent(h -> {
-      CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
-      tag.put("preview", compound);
-    });
-    super.saveAdditional(tag);
+      tag.put("energy", energy.serializeNBT(registries));
+
+      tag.put("input", inputHandler.serializeNBT(registries));
+
+
+      tag.put("output", outHandler.serializeNBT(registries));
+
+
+      tag.put("grid", gridCap.serializeNBT(registries));
+
+
+      tag.put("preview", preview.serializeNBT(registries));
+
+    super.saveAdditional(tag,registries);
   }
 
   @Override

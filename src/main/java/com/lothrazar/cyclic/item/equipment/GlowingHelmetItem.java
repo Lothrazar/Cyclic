@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
@@ -48,7 +48,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     tooltip.add(Component.translatable(ChatUtil.lang(this.getDescriptionId() + ".tooltip")).withStyle(ChatFormatting.GRAY));
     String onoff = this.isOn(stack) ? "on" : "off";
     MutableComponent t = Component.translatable(ChatUtil.lang("item.cantoggle.tooltip.info") + " " + ChatUtil.lang("item.cantoggle.tooltip." + onoff));
@@ -96,7 +96,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   //from ItemEvents- curios slot
-  public static void onEntityUpdate(LivingTickEvent event) {
+  public static void onEntityUpdate(EntityTickEvent event) {
     //reduce check to only once per second instead  of per tick
     if (event.getEntity().level().getGameTime() % Const.TICKS_PER_SEC == 0 &&
         event.getEntity() instanceof Player player) { //some of the items need an off switch 

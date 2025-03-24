@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -24,11 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileItemCollector extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -42,7 +39,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
   private boolean directionIsUp = false;
   //radius 7 translates to 15x15 area (center block + 7 each side)
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+//  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -109,37 +106,24 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
     return new ContainerItemCollector(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    filter.deserializeNBT(tag.getCompound("filter"));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    filter.deserializeNBT(registries,tag.getCompound("filter"));
     radius = tag.getInt("radius");
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put("filter", filter.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put("filter", filter.serializeNBT(registries));
     tag.putInt("radius", radius);
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.compat.botania;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 public class BotaniaWrapper {
 

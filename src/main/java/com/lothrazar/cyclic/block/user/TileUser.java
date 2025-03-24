@@ -10,6 +10,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -24,18 +25,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   static final int MAX = 640000;
 
   static enum Fields {
@@ -45,10 +41,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   ItemStackHandler userSlots = new ItemStackHandler(1);
   ItemStackHandler outputSlots = new ItemStackHandler(4);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> userSlots);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(userSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private int timerDelay = 20;
   boolean doHitBreak = false; // was useLeftHand
@@ -99,7 +92,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
       // Added to address the broken server side FakePlayer cooldowns we they
       // are not getting decremented causing any item with one to not function correctly.
       var cooldowns = fakePlayer.get().getCooldowns();
-      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
+      TileBlockEntityCyclic.tryEquipItem(inventory, fakePlayer, 0, InteractionHand.MAIN_HAND);
       var item = fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).getItem();
       var oldItem = item.asItem();
       if (cooldowns.isOnCooldown(item)) {
@@ -212,41 +205,23 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    energyCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     timerDelay = tag.getInt("delay");
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    userSlots.deserializeNBT(tag.getCompound(NBTINV));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    userSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     doHitBreak = tag.getBoolean("doBreakBlock");
     entities = tag.getBoolean("entities");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("delay", timerDelay);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, userSlots.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, userSlots.serializeNBT(registries));
     tag.putBoolean("doBreakBlock", doHitBreak);
     tag.putBoolean("entities", entities);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,registries);
   }
 
   @Override

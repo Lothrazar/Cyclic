@@ -22,13 +22,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class EnderApple extends ItemBaseCyclic {
 
-  public static ConfigValue<List<? extends String>> STRUCTURE_TAGS;
-  public static IntValue PRINTED;
+  public static ModConfigSpec.ConfigValue<List<? extends String>> STRUCTURE_TAGS;
+  public static ModConfigSpec.IntValue PRINTED;
   private static final int COOLDOWN = 60;
 
   public EnderApple(Properties properties) {

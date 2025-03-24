@@ -3,15 +3,15 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.elemental.FireballItem;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class PlayerAbilityEvents {
 
   private static final int DISABLE_OFFSET = 6;
 
   @SubscribeEvent
-  public void onEntityUpdate(LivingTickEvent event) {
+  public void onEntityUpdate(EntityTickEvent event) {
     if (event.getEntity() instanceof Player player) {
       FireballItem.tickHoldingFireball(player);
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);

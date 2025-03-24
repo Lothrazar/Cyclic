@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.item.FluidHandlerCapabilityStack;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,11 +29,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
 public class BlockFluidTank extends BlockCyclic {
 
@@ -55,13 +54,13 @@ public class BlockFluidTank extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     if (!player.isCrouching() && player.getItemInHand(hand).getItem() == this.asItem()
         && (hit.getDirection() == Direction.UP || hit.getDirection() == Direction.DOWN)) {
       //pass to allow quick building up and down
-      return InteractionResult.PASS;
+      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
-    return super.use(state, world, pos, player, hand, hit);
+    return super.useItemOn(st,state, world, pos, player, hand, hit);
   }
 
   @Override
@@ -118,13 +117,11 @@ public class BlockFluidTank extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     try {
-      IFluidHandlerItem storage = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
-      BlockEntity container = world.getBlockEntity(pos);
-      if (storage != null && container != null) {
-        IFluidHandler storageTile = container.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
-        if (storageTile != null) {
-          storageTile.fill(storage.getFluidInTank(0), FluidAction.EXECUTE);
-        }
+      IFluidHandler storage = CapabilityFixer.fluid(stack);//stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+      var storageTile = CapabilityFixer.fluid(world,pos);//world.getBlockEntity(pos);
+        if (storage != null && storageTile != null) {
+            storageTile.fill(storage.getFluidInTank(0), IFluidHandler.FluidAction.EXECUTE);
+
       }
     }
     catch (Exception e) {
@@ -140,12 +137,13 @@ public class BlockFluidTank extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stackTool);
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {
-      IFluidHandler fluidInStack = tankStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+      IFluidHandler fluidInStack = CapabilityFixer.fluid(tankStack);//tankStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
       if (fluidInStack != null && ent instanceof TileTank) {
         // push fluid from dying tank to itemstack
         TileTank ttank = (TileTank) ent;
         FluidStack fs = ttank.tank.getFluid();
-        ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
+        fluidInStack.fill(fs, IFluidHandler.FluidAction.EXECUTE);
+//        ((FluidHandlerCapabilityStack) fluidInStack).setFluid(fs);
       }
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, tankStack);

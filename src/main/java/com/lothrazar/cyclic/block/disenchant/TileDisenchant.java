@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -14,6 +15,7 @@ import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -29,16 +31,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -66,15 +63,15 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   public static final int CAPACITY = 16 * FluidType.BUCKET_VOLUME;
   ItemStackHandler outputSlots = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+//  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
-  public static IntValue POWERCONF;
-  public static IntValue FLUIDCOST;
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+  public static ModConfigSpec.IntValue POWERCONF;
+  public static ModConfigSpec.IntValue FLUIDCOST;
+//  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+//  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileDisenchant(BlockPos pos, BlockState state) {
     super(TileRegistry.DISENCHANTER.get(), pos, state);
@@ -133,7 +130,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     }
     energy.extractEnergy(cost, false);
     if (FLUIDCOST.get() > 0) {
-      tank.drain(FLUIDCOST.get(), FluidAction.EXECUTE);
+      tank.drain(FLUIDCOST.get(), IFluidHandler.FluidAction.EXECUTE);
     }
     else if (FLUIDCOST.get() < 0) {
       Fluid newFluid = FluidXpJuiceHolder.STILL.get();
@@ -141,7 +138,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
         //if its holding a tag compatible but different fluid, just fill 
         newFluid = this.getFluid().getFluid();
       }
-      tank.fill(new FluidStack(newFluid, -1 * FLUIDCOST.get()), FluidAction.EXECUTE);
+      tank.fill(new FluidStack(newFluid, -1 * FLUIDCOST.get()), IFluidHandler.FluidAction.EXECUTE);
     }
     inputEnchants.remove(keyMoved);
     ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
@@ -182,7 +179,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public int getEnergy() {
-    return this.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return CapabilityFixer.energyStored(level,this.getBlockPos());
   }
 
   @Override
@@ -195,42 +192,21 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     return new ContainerDisenchant(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    fluidCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
     super.saveAdditional(tag);
   }

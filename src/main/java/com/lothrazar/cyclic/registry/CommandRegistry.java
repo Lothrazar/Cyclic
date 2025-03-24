@@ -31,9 +31,9 @@ import net.minecraft.commands.arguments.ScoreHolderArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.ModConfigSpec.*;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 public class CommandRegistry {
 

@@ -5,8 +5,8 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.FarmlandWaterManager;
-import net.minecraftforge.common.ticket.AABBTicket;
+import net.neoforged.neoforge.common.FarmlandWaterManager;
+import net.neoforged.neoforge.common.ticket.AABBTicket;
 
 public class SoilTile extends TileBlockEntityCyclic {
 

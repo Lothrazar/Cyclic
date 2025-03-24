@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.block.beaconpotion;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.blamejared.crafttweaker.api.game.Game;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -11,9 +13,12 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.data.EntityFilterType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,18 +26,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -47,9 +47,8 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   private static final int POTION_TICKS = 20 * 20; //cant be too low BC night vision flicker
   private static final int MAX_RADIUS = 64;
   private int radius = MAX_RADIUS;
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -66,11 +65,12 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      List<MobEffectInstance> newEffects = PotionUtils.getMobEffects(stack);
-      return newEffects.size() > 0;
+//      List<MobEffectInstance> newEffects = PotionUtils.getMobEffects(stack);
+      PotionContents potionContents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+
+      return potionContents!=null;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private BeamStuff beamStuff = new BeamStuff();
 
   public TilePotionBeacon(BlockPos pos, BlockState state) {
@@ -142,30 +142,12 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    filter.deserializeNBT(tag.getCompound("filter"));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    filter.deserializeNBT(registries,tag.getCompound("filter"));
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     if (tag.contains("Effects", 9)) {
       ListTag listnbt = tag.getList("Effects", 10);
       this.effects.clear();
@@ -180,8 +162,8 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put("filter", filter.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put("filter", filter.serializeNBT(registries));
     tag.putInt("radius", radius);
     tag.putInt("entityFilter", entityFilter.ordinal());
     tag.put(NBTENERGY, energy.serializeNBT());

@@ -25,10 +25,10 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 
 public class ClientInputEvents {
 
@@ -61,7 +61,8 @@ public class ClientInputEvents {
       ItemStack maybeFood = mc.player.containerMenu.getCarried();
       List<ItemStack> boxes = ItemBaseCyclic.findAmmos(mc.player, ItemRegistry.LUNCHBOX.get());
       for (ItemStack box : boxes) {
-        ItemLunchbox.setHoldingEdible(box, maybeFood.isEdible());
+        boolean isEdible = maybeFood.getFoodProperties(mc.player)!=null;
+        ItemLunchbox.setHoldingEdible(box, isEdible);
       }
     }
   }
@@ -87,7 +88,8 @@ public class ClientInputEvents {
               && mc.player != null
               && mc.player.containerMenu != null) {
             ItemStack maybeFood = mc.player.containerMenu.getCarried();
-            if (maybeFood.isEdible()) {
+            boolean isEdible=maybeFood.getFoodProperties(mc.player)!=null;
+            if (isEdible) {
               // inserting food must be done onMouse Released event
               // this is important. opening screens is on the other event
               // send the slot and info to the server to process with the lunchbox

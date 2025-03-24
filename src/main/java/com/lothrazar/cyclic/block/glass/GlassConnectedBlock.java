@@ -13,8 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GlassConnectedBlock extends BlockCyclic {
 
@@ -45,9 +43,7 @@ public class GlassConnectedBlock extends BlockCyclic {
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   @Override
-  @OnlyIn(Dist.CLIENT)
   public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
   }

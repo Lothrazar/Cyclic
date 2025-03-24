@@ -12,10 +12,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.MobDespawnEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.SpawnClusterSizeEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 public class BlockSpawnEvents {
 
@@ -33,7 +34,8 @@ public class BlockSpawnEvents {
   }
 
   @SubscribeEvent
-  public void onLivingSpawnEvent(MobSpawnEvent.FinalizeSpawn event) {
+  public void onLivingSpawnEvent(MobSpawnEvent.SpawnPlacementCheck event) {
+
     MobSpawnType res = event.getSpawnType();
     if (res == MobSpawnType.NATURAL ||
         res == MobSpawnType.REINFORCEMENT ||

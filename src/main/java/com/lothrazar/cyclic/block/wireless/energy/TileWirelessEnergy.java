@@ -13,6 +13,7 @@ import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -23,11 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -43,7 +40,6 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   static final int MAX = 64000;
   private int transferRate = MAX / 8;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler gpsSlots = new ItemStackHandler(8) {
 
     @Override
@@ -68,33 +64,19 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
     //    this.transferRate = tag.getInt("transferRate");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     //    tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, gpsSlots.serializeNBT());
-    tag.put(NBTENERGY, energy.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTINV, gpsSlots.serializeNBT(registries));
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWirelessEnergy e) {

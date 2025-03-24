@@ -2,22 +2,23 @@ package com.lothrazar.cyclic.block.tankcask;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.util.FluidHelpers;
-import com.lothrazar.library.cap.item.FluidHandlerCapabilityStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+
 
 public class ItemBlockCask extends BlockItem {
 
@@ -60,8 +61,8 @@ public class ItemBlockCask extends BlockItem {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    IFluidHandler storage = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+  public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    IFluidHandler storage = CapabilityFixer.fluid(stack); // stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null && !fs.isEmpty()) {
@@ -77,8 +78,8 @@ public class ItemBlockCask extends BlockItem {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
-  @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
-    return new FluidHandlerCapabilityStack(stack, TileCask.CAPACITY);
-  }
+//  @Override
+//  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
+//    return new FluidHandlerCapabilityStack(stack, TileCask.CAPACITY);
+//  }
 }

@@ -8,8 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerShapedata extends ContainerBase {
 
@@ -20,7 +19,7 @@ public class ContainerShapedata extends ContainerBase {
     tile = (TileShapedata) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    var h = tile.inventory;
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 9, 29 + 18) {
 
@@ -43,7 +42,7 @@ public class ContainerShapedata extends ContainerBase {
           tile.setChanged();
         }
       });
-    });
+//    });
     this.trackAllIntFields(tile, TileShapedata.Fields.values().length);
     layoutPlayerInventorySlots(8, 84);
   }

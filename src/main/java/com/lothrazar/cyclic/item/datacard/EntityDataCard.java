@@ -13,11 +13,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EntityDataCard extends ItemBaseCyclic {
 
@@ -29,8 +28,8 @@ public class EntityDataCard extends ItemBaseCyclic {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+//  @OnlyIn(Dist.CLIENT)
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
       MutableComponent t = Component.translatable(stack.getTag().getString(ENTITY_KEY));
       t.withStyle(ChatFormatting.GRAY);

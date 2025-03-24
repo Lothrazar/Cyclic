@@ -9,11 +9,11 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class LavaSpongeBlock extends BlockCyclic {
 
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue RADIUS;
 
   public LavaSpongeBlock(Properties properties) {
     super(properties.randomTicks().strength(0.7F).sound(SoundType.GRASS));

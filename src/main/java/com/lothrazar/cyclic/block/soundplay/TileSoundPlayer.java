@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -17,11 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -37,7 +34,6 @@ public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvid
       return stack.getItem() == ItemRegistry.SOUND_DATA.get();
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileSoundPlayer(BlockPos pos, BlockState state) {
     super(TileRegistry.SOUND_PLAYER.get(), pos, state);
@@ -62,29 +58,15 @@ public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvid
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(tag);
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   @Override

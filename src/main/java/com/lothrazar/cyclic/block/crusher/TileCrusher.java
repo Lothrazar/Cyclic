@@ -9,6 +9,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -18,12 +19,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -33,11 +29,9 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
 
   static final int MAX = 64000;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1);
   ItemStackHandler outputSlots = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
   private RecipeCrusher currentRecipe;
@@ -66,38 +60,20 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     this.burnTime = tag.getInt("burnTime");
     this.burnTimeMax = tag.getInt("burnTimeMax");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("burnTime", burnTime);
     tag.putInt("burnTimeMax", burnTimeMax);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 

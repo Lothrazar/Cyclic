@@ -6,22 +6,19 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class TileTank extends TileBlockEntityCyclic {
 
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidType.BUCKET_VOLUME / 20;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileTank(BlockPos pos, BlockState state) {
     super(TileRegistry.TANK.get(), pos, state);
@@ -36,32 +33,18 @@ public class TileTank extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = tag.getCompound(NBTFLUID);
-    tank.readFromNBT(fluid);
-    super.load(tag);
+    tank.readFromNBT(registries,fluid);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
+    super.saveAdditional(tag,registries);
   }
 
   @Override

@@ -16,6 +16,7 @@ import net.minecraft.commands.arguments.EntityAnchorArgument;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -31,14 +32,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -46,7 +42,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     REDSTONE, RENDER, SIZE, HEIGHT, DIRECTION;
   }
 
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   private int shapeIndex = 0;
   static final int SLOT_TOOL = 0;
   static final int SLOT_FILTER = 1;
@@ -79,8 +75,6 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
       return true;
     }
   };
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -100,11 +94,6 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
-  }
-
-  @Override
   public Component getDisplayName() {
     return BlockRegistry.MINER.get().getName();
   }
@@ -115,45 +104,27 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     radius = tag.getInt("size");
     height = tag.getInt("height");
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
     shapeIndex = tag.getInt("shapeIndex");
     directionIsUp = tag.getBoolean("directionIsUp");
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(tag);
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("size", radius);
     tag.putInt("height", height);
     tag.putBoolean("isCurrentlyMining", isCurrentlyMining);
     tag.putInt("shapeIndex", shapeIndex);
     tag.putBoolean("directionIsUp", directionIsUp);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   public void tick() {
@@ -166,7 +137,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
       fakePlayer = setupBeforeTrigger((ServerLevel) level, "miner");
     }
     try {
-      TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.MAIN_HAND);
+      TileBlockEntityCyclic.tryEquipItem(inventory, fakePlayer, 0, InteractionHand.MAIN_HAND);
       List<BlockPos> shape = getShape();
       if (shape.size() == 0) {
         return;
@@ -254,6 +225,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     }
     //is this valid
     BlockState targetState = level.getBlockState(targetPos);
+
     if (targetState.destroySpeed < 0) {
       return false; //unbreakable 
     }

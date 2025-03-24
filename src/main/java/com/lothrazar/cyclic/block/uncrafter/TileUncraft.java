@@ -13,6 +13,7 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -22,20 +23,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -44,11 +38,11 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   static final int MAX = 64000;
-  public static IntValue POWERCONF;
-  public static BooleanValue NBT_IGNORED;
-  public static ConfigValue<Integer> TIMER;
-  public static ConfigValue<List<? extends String>> IGNORE_LIST;
-  public static ConfigValue<List<? extends String>> IGNORE_RECIPES;
+  public static ModConfigSpec.IntValue POWERCONF;
+  public static ModConfigSpec.BooleanValue NBT_IGNORED;
+  public static ModConfigSpec.ConfigValue<Integer> TIMER;
+  public static  ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_LIST;
+  public static  ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_RECIPES;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
@@ -67,8 +61,6 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     };
   };
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileUncraft(BlockPos pos, BlockState state) {
     super(TileRegistry.UNCRAFTER.get(), pos, state);
@@ -145,27 +137,9 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    energyCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void load(CompoundTag tag, HolderLookup.Provider registries) {
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
     super.load(tag);
   }
@@ -217,8 +191,9 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public Recipe<?> findMatchingRecipe(Level world, ItemStack dropMe) {
-    Collection<Recipe<?>> list = world.getServer().getRecipeManager().getRecipes();
-    for (Recipe<?> recipe : list) {
+    Collection<RecipeHolder<?>> list = world.getServer().getRecipeManager().getRecipes();
+    for (RecipeHolder<?> recipe : list) {
+
       if (recipe.getType() == RecipeType.CRAFTING) {
         //actual uncraft, ie not furnace recipe or anything
         if (recipeMatches(dropMe, recipe)) {

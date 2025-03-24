@@ -479,21 +479,21 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     flowing = tag.getInt("flowing");
     needsRedstone = tag.getInt("needsRedstone");
     render = tag.getInt("renderParticles");
     timer = tag.getInt("timer");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("flowing", flowing);
     tag.putInt("needsRedstone", needsRedstone);
     tag.putInt("renderParticles", render);
     tag.putInt("timer", timer);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,registries);
   }
 
   public abstract void setField(int field, int value);

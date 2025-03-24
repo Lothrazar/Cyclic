@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.CustomEnergyStorage;
@@ -22,8 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class BlockBattery extends BlockCyclic {
 
@@ -56,7 +56,7 @@ public class BlockBattery extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
     if (ent instanceof TileBattery battery) {
-      IEnergyStorage newStackCap = newStackBattery.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage newStackCap = CapabilityFixer.energy(newStackBattery);
       if (newStackCap instanceof CustomEnergyStorage) {
         ((CustomEnergyStorage) newStackCap).setEnergy(battery.energy.getEnergyStored());
       }
@@ -84,17 +84,18 @@ public class BlockBattery extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
-    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    IEnergyStorage storage =  CapabilityFixer.energy(stack);
     if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
       current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
     }
     else if (storage != null) {
       current = storage.getEnergyStored();
     }
-    TileBattery container = (TileBattery) world.getBlockEntity(pos);
-    CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+//    TileBattery container = (TileBattery) world.getBlockEntity(pos);
+    var storageTile = CapabilityFixer.energy(world, pos);
     if (storageTile != null) {
-      storageTile.setEnergy(current);
+//      storageTile.setEnergy(current);
+    storageTile.receiveEnergy(current, false);
     }
     super.setPlacedBy(world, pos, state, placer, stack);
   }

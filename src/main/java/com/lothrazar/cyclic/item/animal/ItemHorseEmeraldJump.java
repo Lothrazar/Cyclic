@@ -33,7 +33,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.animal.horse.Horse;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+//import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
 public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInteractable {
 
@@ -46,7 +47,7 @@ public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInter
   }
 
   @Override
-  public void interactWith(EntityInteract event) {
+  public void interactWith(PlayerInteractEvent.EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof Horse) {
       // lets go 
@@ -62,7 +63,7 @@ public class ItemHorseEmeraldJump extends ItemBaseCyclic implements IEntityInter
         double newAdded = (oldModifier == null) ? JUMP_AMT : oldModifier.getAmount() + JUMP_AMT;
         //got it      //replace the modifier on the main attribute
         mainAttribute.removeModifier(MODIFIER_ID);
-        AttributeModifier newModifier = new AttributeModifier(MODIFIER_ID, "Cyclic Carrot Jump", newAdded, AttributeModifier.Operation.ADDITION);
+        AttributeModifier newModifier = new AttributeModifier(MODIFIER_ID, "Cyclic Carrot Jump", newAdded, AttributeModifier.Operation.ADD_VALUE);
         mainAttribute.addPermanentModifier(newModifier);
         //finish up
         //

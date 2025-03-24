@@ -9,8 +9,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class DarkGlassConnectedBlock extends DarkGlassBlock {
 
@@ -27,7 +25,6 @@ public class DarkGlassConnectedBlock extends DarkGlassBlock {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
   public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
   }

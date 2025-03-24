@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.compat.crafttweaker;
 
 import java.util.Arrays;
+
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
@@ -20,7 +22,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.fluids.FluidStack;
 
 @ZenRegister
 @ZenCodeType.Name("mods.cyclic.solidifier")
@@ -43,7 +44,7 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
     for (int i = 0; i < input.length; i++) {
       list.set(i, input[i].asVanillaIngredient());
     }
-    RecipeSolidifier recipe = new RecipeSolidifier(new ResourceLocation(CompatConstants.CRAFTTWEAKER, name),
+    RecipeSolidifier recipe = new RecipeSolidifier(ResourceLocation.fromNamespaceAndPath(CompatConstants.CRAFTTWEAKER, name),
         list,
         new FluidTagIngredient(new FluidStack(fluid.getFluid(), 1), "", (int) fluid.getAmount()),
         output.getInternal(),
@@ -65,7 +66,7 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
     //because CT doesnt have a fluid tag ingredient type really and it could come in foramt <fluid:minecraft:water>
     //but the FluidTagIngredient just uses teh raw string, parse it out
     fluidTag = fluidTag.replace("<", "").replace(">", "").replace("fluid:", "");
-    RecipeSolidifier recipe = new RecipeSolidifier(new ResourceLocation(CompatConstants.CRAFTTWEAKER, name),
+    RecipeSolidifier recipe = new RecipeSolidifier(ResourceLocation.fromNamespaceAndPath(CompatConstants.CRAFTTWEAKER, name),
         list,
         new FluidTagIngredient(null, fluidTag, fluidQuantity), // TAG of fluid instead of actual fluid. 
         output.getInternal(),

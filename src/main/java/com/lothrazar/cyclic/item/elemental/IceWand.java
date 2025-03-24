@@ -36,11 +36,11 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class IceWand extends ItemBaseCyclic {
 
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue RADIUS;
 
   public IceWand(Properties properties) {
     super(properties);

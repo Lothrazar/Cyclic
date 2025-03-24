@@ -36,6 +36,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -49,16 +50,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -68,13 +64,12 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     REDSTONE, RENDER;
   }
 
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   public static final int CAPACITY = 64 * FluidAttributes.BUCKET_VOLUME;
   static final int MAX = 64000;
   public static final int TIMER_FULL = 1 * 10;
   private static final int PER_TICK = 1;
   FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(6) {
 
@@ -83,8 +78,6 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
       return Block.byItem(stack.getItem()) == BlockRegistry.PEAT_UNBAKED.get();
     }
   };
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private int blockPointer = 0;
   List<BlockPos> outer = null;
 
@@ -243,42 +236,20 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    fluidCap.invalidate();
-    super.invalidateCaps();
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(tag);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 }

@@ -3,17 +3,12 @@ package com.lothrazar.cyclic.block.endershelf;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
 
 public class TileEnderShelf extends TileBlockEntityCyclic {
 
   public final EnderShelfItemHandler inventory = new EnderShelfItemHandler(this);
-  private final LazyOptional<EnderShelfItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public RenderTextType renderStyle = RenderTextType.TEXT;
 
   public static enum RenderTextType {
@@ -30,20 +25,6 @@ public class TileEnderShelf extends TileBlockEntityCyclic {
   @Override
   public int getField(int field) {
     return 0;
-  }
-
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
   }
 
   @Override

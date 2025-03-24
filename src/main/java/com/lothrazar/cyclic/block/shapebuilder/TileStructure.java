@@ -15,6 +15,7 @@ import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -27,17 +28,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 public class TileStructure extends TileBlockEntityCyclic implements MenuProvider {
 
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   static final int SLOT_BUILD = 0;
   protected static final int SLOT_SHAPE = 1;
   protected static final int SLOT_GPS = 2;
@@ -72,8 +69,6 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
       }
     }
   };
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   // START of build settings
   private BuildStructureType buildType = BuildStructureType.FACING;
   private int buildSize = 3;
@@ -94,31 +89,26 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     int t = tag.getInt("buildType");
     buildType = BuildStructureType.values()[t];
     buildSize = tag.getInt("buildSize");
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("buildType", buildType.ordinal());
     tag.putInt("buildSize", buildSize);
     tag.putInt("height", height);
     tag.putInt("shapeIndex", shapeIndex);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   @Override
@@ -129,24 +119,6 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerStructure(i, level, worldPosition, playerInventory, playerEntity);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
   }
 
   @Override

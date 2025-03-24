@@ -9,12 +9,12 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class EdibleSpecItem extends ItemBaseCyclic {
 
   private static final int COOLDOWN = 2;
-  public static IntValue TICKS;
+  public static ModConfigSpec.IntValue TICKS;
 
   public EdibleSpecItem(Properties properties) {
     super(properties.rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(1).saturationMod(0).alwaysEat().build()));

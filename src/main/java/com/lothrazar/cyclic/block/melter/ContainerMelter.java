@@ -8,8 +8,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class ContainerMelter extends ContainerBase {
 
@@ -20,23 +20,23 @@ public class ContainerMelter extends ContainerBase {
     tile = (TileMelter) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 17, 31) {
+//    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+      this.endInv = tile.inventory.getSlots();
+      addSlot(new SlotItemHandler(tile.inventory, 0, 17, 31) {
 
         @Override
         public void setChanged() {
           tile.setChanged();
         }
       });
-      addSlot(new SlotItemHandler(h, 1, 35, 31) {
+      addSlot(new SlotItemHandler(tile.inventory, 1, 35, 31) {
 
         @Override
         public void setChanged() {
           tile.setChanged();
         }
       });
-    });
+//    });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileMelter.Fields.values().length);
     trackEnergy(tile);

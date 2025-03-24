@@ -11,6 +11,7 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -22,15 +23,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -39,7 +36,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   }
 
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
-  public static IntValue FLUIDCOST;
+  public static ModConfigSpec.IntValue FLUIDCOST;
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
@@ -59,9 +56,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileAnvilMagma(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVIL_MAGMA.get(), pos, state);
@@ -107,7 +102,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
       //we can repair so steal some power 
       //ok drain power  
       work = true;
-      tank.drain(repair, FluidAction.EXECUTE);
+      tank.drain(repair, IFluidHandler.FluidAction.EXECUTE);
     }
     //shift to other slot
     if (work) {
@@ -132,38 +127,21 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
     return new ContainerAnvilMagma(i, level, worldPosition, playerInventory, playerEntity);
   }
 
+
   @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
+  public void loadAdditional( CompoundTag tag,HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(tag);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag,HolderLookup.Provider provider) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(provider,fluid);
     tag.put(NBTFLUID, fluid);
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTINV, inventory.serializeNBT(provider));
+    super.saveAdditional(tag,provider);
   }
 
   @Override

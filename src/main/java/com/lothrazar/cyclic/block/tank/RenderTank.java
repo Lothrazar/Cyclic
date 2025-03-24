@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.tank;
 
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -8,9 +9,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class RenderTank implements BlockEntityRenderer<TileTank> {
 
@@ -19,7 +19,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
   @Override
   public void render(TileTank tankHere, float v, PoseStack matrix,
       MultiBufferSource renderer, int light, int overlayLight) {
-    IFluidHandler handler = tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
+    IFluidHandler handler = CapabilityFixer.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

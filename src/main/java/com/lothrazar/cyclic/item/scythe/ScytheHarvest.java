@@ -11,7 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ScytheHarvest extends ItemBaseCyclic {
 
@@ -19,7 +19,7 @@ public class ScytheHarvest extends ItemBaseCyclic {
     super(properties);
   }
 
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue RADIUS;
 
   public List<BlockPos> getShape(BlockPos pos, int radius) {
     return ShapeUtil.squareHorizontalFull(pos, radius);

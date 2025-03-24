@@ -26,7 +26,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 public abstract class CharmBase extends ItemBaseToggle {
 
@@ -142,23 +142,23 @@ public abstract class CharmBase extends ItemBaseToggle {
     }
   }
 
-  static final AttributeModifier.Operation ADD = AttributeModifier.Operation.ADDITION;
-  static final AttributeModifier.Operation MUL = AttributeModifier.Operation.MULTIPLY_BASE;
+  static final AttributeModifier.Operation ADD = Operation.ADD_VALUE;
+  static final AttributeModifier.Operation MUL = Operation.ADD_MULTIPLIED_BASE;
 
   static void charmSpeed(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED, ID_SPEED, ConfigRegistry.CHARM_SPEED.get().floatValue(), 0, ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED.value(), ID_SPEED, ConfigRegistry.CHARM_SPEED.get().floatValue(), 0, ADD);
   }
 
   static void charmLuck(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK, ID_LUCK, 0, ConfigRegistry.CHARM_LUCK.get(), ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK.value(), ID_LUCK, 0, ConfigRegistry.CHARM_LUCK.get(), ADD);
   }
 
   static void charmAttackSpeed(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACKSPEED.get().floatValue(), 0, ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED.value(), ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACKSPEED.get().floatValue(), 0, ADD);
   }
 
   static void charmSwimming(Player player) {
-    toggleAttribute(player, ItemRegistry.FLIPPERS.get(), ForgeMod.SWIM_SPEED.get(), ID_SPEED, 3, 0, MUL);
+    toggleAttribute(player, ItemRegistry.FLIPPERS.get(), NeoForgeMod.SWIM_SPEED.get(), ID_SPEED, 3, 0, MUL);
   }
 
   static void charmGravity(Player player) {

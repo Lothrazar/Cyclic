@@ -21,7 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PotionEffectRegistry {
 
-  public static final List<CyclicMobEffect> EFFECTS = new ArrayList<CyclicMobEffect>();
+  public static final List<CyclicMobEffect> EFFECTS = new ArrayList<>();
   public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ModCyclic.MODID);
   public static final RegistryObject<StunEffect> STUN = MOB_EFFECTS.register("stun", () -> new StunEffect(MobEffectCategory.HARMFUL, 0xcccc00));
   public static final RegistryObject<MobEffect> SWIMSPEED = MOB_EFFECTS.register("swimspeed", () -> new CyclicMobEffect(MobEffectCategory.BENEFICIAL, 0x663300)

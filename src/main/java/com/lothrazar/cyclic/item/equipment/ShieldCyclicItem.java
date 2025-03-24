@@ -24,28 +24,22 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
 
 public class ShieldCyclicItem extends ItemBaseCyclic {
 
-  public static final ResourceLocation BLOCKING = new ResourceLocation("minecraft:blocking");
+  public static final ResourceLocation BLOCKING = ResourceLocation.parse("minecraft:blocking");
 
   public static enum ShieldType {
     LEATHER, WOOD, FLINT, OBSIDIAN, BONE;
     // STONE? COPPER? 
   }
 
-  public static IntValue LEATHER_PCT;
-  public static IntValue WOOD_PCT;
-  public static IntValue FLINT_PCT;
-  public static IntValue FLINT_THORNS_PCT;
+  public static ModConfigSpec.IntValue LEATHER_PCT;
+  public static ModConfigSpec.IntValue WOOD_PCT;
+  public static ModConfigSpec.IntValue FLINT_PCT;
+  public static ModConfigSpec.IntValue FLINT_THORNS_PCT;
   private ShieldType type;
 
   /**
@@ -57,13 +51,6 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
     super(properties);
     this.type = type;
     DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
-  }
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    // tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip.line").withStyle(ChatFormatting.GRAY));
   }
 
   @Override

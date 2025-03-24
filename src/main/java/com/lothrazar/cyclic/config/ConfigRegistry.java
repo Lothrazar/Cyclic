@@ -5,12 +5,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.electronwill.nightconfig.core.ConfigSpec;
 import com.lothrazar.cyclic.CyclicLogger;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.LavaSpongeBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
-import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -48,26 +49,6 @@ import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
-import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
-import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
-import com.lothrazar.cyclic.enchant.BeheadingEnchant;
-import com.lothrazar.cyclic.enchant.DisarmEnchant;
-import com.lothrazar.cyclic.enchant.EnderPearlEnchant;
-import com.lothrazar.cyclic.enchant.ExcavationEnchant;
-import com.lothrazar.cyclic.enchant.GloomCurseEnchant;
-import com.lothrazar.cyclic.enchant.GrowthEnchant;
-import com.lothrazar.cyclic.enchant.LastStandEnchant;
-import com.lothrazar.cyclic.enchant.LifeLeechEnchant;
-import com.lothrazar.cyclic.enchant.MagnetEnchant;
-import com.lothrazar.cyclic.enchant.MultiBowEnchant;
-import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
-import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
-import com.lothrazar.cyclic.enchant.ReachEnchant;
-import com.lothrazar.cyclic.enchant.SteadyEnchant;
-import com.lothrazar.cyclic.enchant.StepEnchant;
-import com.lothrazar.cyclic.enchant.TravellerEnchant;
-import com.lothrazar.cyclic.enchant.VenomEnchant;
-import com.lothrazar.cyclic.enchant.XpEnchant;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.WandHypnoItem;
@@ -96,19 +77,14 @@ import com.lothrazar.library.config.ConfigTemplate;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec.*;
 
 public class ConfigRegistry extends ConfigTemplate {
 
-  private static ForgeConfigSpec COMMON_CONFIG;
-  private static ForgeConfigSpec CLIENT_CONFIG;
+  private static ConfigSpec COMMON_CONFIG;
+  private static ConfigSpec CLIENT_CONFIG;
 
   public void setupMain() {
     COMMON_CONFIG.setConfig(setup(ModCyclic.MODID));
@@ -251,7 +227,7 @@ public class ConfigRegistry extends ConfigTemplate {
   }
 
   private static void initConfig() {
-    final ForgeConfigSpec.Builder CFG = builder();
+    final ConfigSpec.Builder CFG = builder();
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
     CFG.comment(WALL, " Configs make sure players will not be able to craft any in survival "
         + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
@@ -275,45 +251,45 @@ public class ConfigRegistry extends ConfigTemplate {
     PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment(" Set false to disable the base recipe").define("waterwalk.enabled", true);
     PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
     CFG.pop();
-    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
-        .push("enchantment");
-    ////////////////////////////////////////////////////////////////// enchantment
-    AutoSmeltEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", true);
-    BeekeeperEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
-    BeheadingEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeheadingEnchant.ID + ".enabled", true);
-    GLOOM_IGNORE_LIST = CFG.comment(" Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these")
-        .defineList(GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
-            it -> it instanceof String);
-    BEHEADING_SKINS = CFG.comment(" Beheading enchant add player skin head drop, add any mob id and any skin")
-        .defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
-    BeheadingEnchant.PERCDROP = CFG.comment(" Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
-    BeheadingEnchant.PERCPERLEVEL = CFG.comment(" Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
-    GloomCurseEnchant.CFG = CFG.comment(" (Gloom) Set false to stop enchantment from working").define(GloomCurseEnchant.ID + ".enabled", true);
-    DisarmEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
-    ExcavationEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
-    GrowthEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
-    GrowthEnchant.RADIUSFACTOR = CFG.comment(" Radius per level.  size around player to perform growth logic").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
-    MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
-    LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
-    MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
-    MultiBowEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MultiBowEnchant.ID + ".enabled", true);
-    EnderPearlEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(EnderPearlEnchant.ID + ".enabled", true);
-    QuickdrawEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(QuickdrawEnchant.ID + ".enabled", true);
-    ReachEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ReachEnchant.ID + ".enabled", true);
-    StepEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(StepEnchant.ID + ".enabled", true);
-    SteadyEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(SteadyEnchant.ID + ".enabled", true);
-    LastStandEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LastStandEnchant.ID + ".enabled", true);
-    LastStandEnchant.COST = CFG.comment(" Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
-    LastStandEnchant.ABS = CFG.comment(" How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);
-    LastStandEnchant.COOLDOWN = CFG.comment(" How many ticks of cooldown, 0 to disable").defineInRange(LastStandEnchant.ID + ".cooldown", 20, 0, 99999);
-    TravellerEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(TravellerEnchant.ID + ".enabled", true);
-    VenomEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(VenomEnchant.ID + ".enabled", true);
-    XpEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(XpEnchant.ID + ".enabled", true);
-    DisarmEnchant.PERCENTPERLEVEL = CFG.comment(" Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
-    DISARM_IGNORE_LIST = CFG.comment(" Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
-        .defineList(DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
-            it -> it instanceof String);
-    CFG.pop(); //enchantment
+//    ////////////////////////////////////////////////////////////////// enchantment
+//    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
+//        .push("enchantment");
+//    AutoSmeltEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", true);
+//    BeekeeperEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
+//    BeheadingEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeheadingEnchant.ID + ".enabled", true);
+//    GLOOM_IGNORE_LIST = CFG.comment(" Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these")
+//        .defineList(GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
+//            it -> it instanceof String);
+//    BEHEADING_SKINS = CFG.comment(" Beheading enchant add player skin head drop, add any mob id and any skin")
+//        .defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
+//    BeheadingEnchant.PERCDROP = CFG.comment(" Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
+//    BeheadingEnchant.PERCPERLEVEL = CFG.comment(" Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
+//    GloomCurseEnchant.CFG = CFG.comment(" (Gloom) Set false to stop enchantment from working").define(GloomCurseEnchant.ID + ".enabled", true);
+//    DisarmEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
+//    ExcavationEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
+//    GrowthEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
+//    GrowthEnchant.RADIUSFACTOR = CFG.comment(" Radius per level.  size around player to perform growth logic").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
+//    MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
+//    LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
+//    MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
+//    MultiBowEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MultiBowEnchant.ID + ".enabled", true);
+//    EnderPearlEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(EnderPearlEnchant.ID + ".enabled", true);
+//    QuickdrawEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(QuickdrawEnchant.ID + ".enabled", true);
+//    ReachEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ReachEnchant.ID + ".enabled", true);
+//    StepEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(StepEnchant.ID + ".enabled", true);
+//    SteadyEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(SteadyEnchant.ID + ".enabled", true);
+//    LastStandEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LastStandEnchant.ID + ".enabled", true);
+//    LastStandEnchant.COST = CFG.comment(" Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
+//    LastStandEnchant.ABS = CFG.comment(" How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);
+//    LastStandEnchant.COOLDOWN = CFG.comment(" How many ticks of cooldown, 0 to disable").defineInRange(LastStandEnchant.ID + ".cooldown", 20, 0, 99999);
+//    TravellerEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(TravellerEnchant.ID + ".enabled", true);
+//    VenomEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(VenomEnchant.ID + ".enabled", true);
+//    XpEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(XpEnchant.ID + ".enabled", true);
+//    DisarmEnchant.PERCENTPERLEVEL = CFG.comment(" Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
+//    DISARM_IGNORE_LIST = CFG.comment(" Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
+//        .defineList(DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
+//            it -> it instanceof String);
+//    CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     GENERATE_FLOWERS = CFG.comment(" Do the four generate in the world. "
         + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "

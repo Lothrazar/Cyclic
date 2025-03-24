@@ -14,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,8 +34,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+//import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+//import net.minecraftforge.network.NetworkHooks;
 
 public abstract class CableBase extends BlockCyclic implements SimpleWaterloggedBlock, IBlockFacade {
 
@@ -122,12 +124,12 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+  public ItemInteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
     if (hit.getDirection() == null) {
-      return super.use(state, world, pos, player, handIn, hit);
+      return super.useItemOn( st,state, world, pos, player, handIn, hit);
     }
     if (handIn != InteractionHand.MAIN_HAND) {
-      return super.use(state, world, pos, player, handIn, hit);
+      return super.useItemOn( st,state, world, pos, player, handIn, hit);
     }
     ItemStack stack = player.getItemInHand(handIn);
     if (!stack.is(DataTags.WRENCH)) {
@@ -154,14 +156,14 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         return InteractionResult.SUCCESS;
       }
       //ex
-      return super.use(state, world, pos, player, handIn, hit);
+      return super.useItemOn(state, world, pos, player, handIn, hit);
     }
     rotateFromWrench(state, world, pos, player, hit);
     player.swing(handIn);
-    return super.use(state, world, pos, player, handIn, hit);
+    return super.useItemOn(state, world, pos, player, handIn, hit);
   }
 
-  public static void crouchClick(RightClickBlock event, BlockState state) {
+  public static void crouchClick(PlayerInteractEvent.RightClickBlock event, BlockState state) {
     rotateFromWrench(state, event.getLevel(), event.getPos(), event.getEntity(), event.getHitVec());
   }
 

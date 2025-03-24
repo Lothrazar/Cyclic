@@ -5,11 +5,9 @@ import java.util.Map;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.item.crafting.*;
+import net.neoforged.neoforge.common.Tags;
+//import net.minecraftforge.common.Tags;
 
 /**
  * https://github.com/Lothrazar/Cyclic/commit/2cd2376fd07685414b5a8a2a52250caab8143d9b#diff-f5ee2272c17948b8822c0020ec2b3f35b8dea7ec714d70a11355717c9d3a92f0
@@ -114,7 +112,8 @@ public class UtilPackager {
   }
 
   public static void buildRecipeCaches(final RecipeManager recipeManager, RegistryAccess ra) {
-    recipeLoop: for (final CraftingRecipe recipe : recipeManager.getAllRecipesFor(RecipeType.CRAFTING)) {
+    recipeLoop: for (final RecipeHolder<CraftingRecipe> r : recipeManager.getAllRecipesFor(RecipeType.CRAFTING)) {
+      CraftingRecipe recipe = r.value();
       final ItemStack recipeOutput = recipe.getResultItem(ra);
       if (recipeOutput.getMaxStackSize() == 1 || recipeOutput.getCount() != 1) {
         continue;

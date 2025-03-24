@@ -5,18 +5,16 @@ import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 public class TileTrash extends TileBlockEntityCyclic {
 
@@ -28,9 +26,7 @@ public class TileTrash extends TileBlockEntityCyclic {
       return ItemStack.EMPTY;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileTrash(BlockPos pos, BlockState state) {
     super(TileRegistry.TRASH.get(), pos, state);
@@ -38,33 +34,15 @@ public class TileTrash extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    fluidCap.invalidate();
-    super.invalidateCaps();
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(tag);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTrash e) {
@@ -77,7 +55,7 @@ public class TileTrash extends TileBlockEntityCyclic {
 
   public void tick() {
     inventory.extractItem(0, 64, false);
-    tank.drain(CAPACITY, FluidAction.EXECUTE);
+    tank.drain(CAPACITY, IFluidHandler.FluidAction.EXECUTE);
   }
 
   @Override

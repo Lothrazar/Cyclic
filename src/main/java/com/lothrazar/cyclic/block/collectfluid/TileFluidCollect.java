@@ -11,6 +11,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -27,16 +28,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -47,9 +44,9 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   static final int MAX_HEIGHT = 64;
   public static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   FluidTankBase tank;
-  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+//  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   private int shapeIndex = 0; // current index of shape array
   private int radius = 4 * 2;
   private int height = 4;
@@ -63,8 +60,6 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     }
   };
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileFluidCollect(BlockPos pos, BlockState state) {
     super(TileRegistry.COLLECTOR_FLUID.get(), pos, state);
@@ -104,14 +99,14 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     FluidState fluidState = level.getFluidState(targetPos);
     if (fluidState.isSource()) {
       FluidStack fstack = new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME);
-      int result = tank.fill(fstack, FluidAction.SIMULATE);
+      int result = tank.fill(fstack, IFluidHandler.FluidAction.SIMULATE);
       if (result == FluidAttributes.BUCKET_VOLUME) {
         //we got enough   
         if (level.setBlockAndUpdate(targetPos, newState)) {
           //build the block, shrink the item
           stack.shrink(1);
           //drink fluid
-          tank.fill(fstack, FluidAction.EXECUTE);
+          tank.fill(fstack, IFluidHandler.FluidAction.EXECUTE);
           energy.extractEnergy(cost, false);
         }
       }
@@ -128,10 +123,10 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
-  @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
-  }
+//  @Override
+//  public AABB getRenderBoundingBox() {
+//    return BlockEntity.INFINITE_EXTENT_AABB;
+//  }
 
   private int heightWithDirection() {
     Direction blockFacing = this.getBlockState().getValue(BlockStateProperties.FACING);
@@ -178,30 +173,9 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     return new ContainerFluidCollect(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     // For backwards-compatibility: these weren't always stored, so keep the default
     if (tag.contains("size", Tag.TAG_INT)) {
       radius = tag.getInt("size");
@@ -210,20 +184,20 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
       height = tag.getInt("height");
     }
     shapeIndex = tag.getInt("shapeIndex");
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("size", radius);
     tag.putInt("height", height);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("shapeIndex", shapeIndex);
     super.saveAdditional(tag);

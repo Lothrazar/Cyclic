@@ -12,12 +12,12 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BlockBeaconRedstone extends BlockCyclic {
 
   private static final float[] COLOR = new float[] { 1, 1, 1 };
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue RADIUS;
 
   public BlockBeaconRedstone(Properties properties) {
     super(properties.randomTicks().strength(0.7F).noOcclusion());

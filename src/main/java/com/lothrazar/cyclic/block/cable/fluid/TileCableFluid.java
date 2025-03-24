@@ -18,6 +18,7 @@ import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -28,18 +29,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileCableFluid extends TileCableBase implements MenuProvider {
 
-  public static IntValue BUFFERSIZE;
-  public static IntValue TRANSFER_RATE;
+  public static ModConfigSpec.IntValue BUFFERSIZE;
+  public static ModConfigSpec.IntValue TRANSFER_RATE;
   final ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -47,12 +45,12 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
       return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
   };
-  private final Map<Direction, LazyOptional<FluidTankBase>> flow = new ConcurrentHashMap<>();
+  private final Map<Direction, FluidTankBase> flow = new ConcurrentHashMap<>();
 
   public TileCableFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.FLUID_PIPE.get(), pos, state);
     for (Direction f : Direction.values()) {
-      flow.put(f, LazyOptional.of(() -> new FluidTankBase(this, BUFFERSIZE.get() * FluidAttributes.BUCKET_VOLUME, p -> true)));
+      flow.put(f, new FluidTankBase(this, BUFFERSIZE.get() * FluidAttributes.BUCKET_VOLUME, p -> true));
     }
   }
 
@@ -96,7 +94,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     //handle special cases 
     //waterlogged
     //cauldron
-    FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
+    FluidTankBase sideHandler = flow.get(extractSide);//.orElse(null);
     if (sideHandler != null && sideHandler.getSpace() >= FluidType.BUCKET_VOLUME) {
       FluidHelpers.extractSourceWaterloggedCauldron(level, target, sideHandler);
     }
@@ -104,7 +102,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
 
   private void normalFlow() {
     for (Direction incomingSide : Direction.values()) {
-      final FluidTankBase sideHandler = flow.get(incomingSide).orElse(null);
+      final FluidTankBase sideHandler = flow.get(incomingSide);//.orElse(null);
       for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
@@ -120,36 +118,45 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
       }
     }
   }
+//
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+//  @Override
+//  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//    if (side != null && cap == ForgeCapabilities.FLUID_HANDLER) {
+//      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
+//        return flow.get(side).cast();
+//      }
+//    }
+//    return super.getCapability(cap, side);
+//  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (side != null && cap == ForgeCapabilities.FLUID_HANDLER) {
-      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
-        return flow.get(side).cast();
-      }
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    filter.deserializeNBT(tag.getCompound("filter"));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    filter.deserializeNBT(registries,tag.getCompound("filter"));
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir).orElse(null);
+      fluidh = flow.get(dir);//.orElse(null);
       if (tag.contains("fluid" + dir.toString())) {
-        fluidh.readFromNBT(tag.getCompound("fluid" + dir.toString()));
+        fluidh.readFromNBT(registries,tag.getCompound("fluid" + dir.toString()));
       }
     }
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put("filter", filter.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put("filter", filter.serializeNBT(registries));
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir).orElse(null);
+      fluidh = flow.get(dir);//.orElse(null);
       CompoundTag fluidtag = new CompoundTag();
       if (fluidh != null) {
         fluidh.writeToNBT(fluidtag);

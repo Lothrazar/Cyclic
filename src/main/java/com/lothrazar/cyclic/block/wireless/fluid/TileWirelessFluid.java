@@ -11,6 +11,7 @@ import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -21,12 +22,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -39,7 +37,7 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidType.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, f -> true);
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+//  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   public ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
@@ -77,35 +75,21 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    gpsSlots.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     this.transferRate = tag.getInt("transferRate");
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(tag);
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("transferRate", transferRate);
-    tag.put(NBTINV, gpsSlots.serializeNBT());
+    tag.put(NBTINV, gpsSlots.serializeNBT(registries));
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,registries);
   }
 
   @Override

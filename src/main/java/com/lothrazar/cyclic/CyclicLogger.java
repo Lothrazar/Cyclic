@@ -1,12 +1,12 @@
 package com.lothrazar.cyclic;
 
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.logging.log4j.Logger;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
 public class CyclicLogger {
 
   private Logger logger;
-  public static BooleanValue LOGINFO;
+  public static ModConfigSpec.BooleanValue LOGINFO;
 
   public CyclicLogger(Logger logger) {
     this.logger = logger;

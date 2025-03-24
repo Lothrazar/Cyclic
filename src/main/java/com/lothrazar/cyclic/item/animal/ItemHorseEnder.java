@@ -35,7 +35,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractable {
 
@@ -59,7 +59,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
   }
 
   @Override
-  public void interactWith(EntityInteract event) {
+  public void interactWith(PlayerInteractEvent.EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof AbstractHorse
         && !event.getEntity().getCooldowns().isOnCooldown(this)) {

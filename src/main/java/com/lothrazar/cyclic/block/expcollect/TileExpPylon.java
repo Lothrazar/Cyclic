@@ -13,6 +13,7 @@ import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -26,13 +27,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -44,9 +42,8 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   public static final int FLUID_PER_EXP = 20;
   public static final int EXP_PER_BOTTLE = 11;
   public static final int CAPACITY = 64000 * FluidType.BUCKET_VOLUME;
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue RADIUS;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileExpPylon(BlockPos pos, BlockState state) {
     super(TileRegistry.EXPERIENCE_PYLON.get(), pos, state);
@@ -77,23 +74,10 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     return p -> FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   }
 
-  @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
     int legacy = tag.getInt("storedXp");
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
@@ -102,9 +86,9 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("storedXp", getStoredXp());
     super.saveAdditional(tag);
@@ -143,7 +127,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
         //at level 100+ this is way too slow
         if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
           p.giveExperiencePoints(-1 * addMeXp);
-          tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
+          tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), IFluidHandler.FluidAction.EXECUTE);
           //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
           SoundUtil.playSound(p, SoundEvents.EXPERIENCE_ORB_PICKUP);
           this.setChanged();
@@ -168,7 +152,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
         // myOrb.setPosition(this.pos.getX(), this.pos.getY(), this.pos.getZ());
         myOrb.remove(Entity.RemovalReason.DISCARDED);
         int addMeFluid = addMeXp * FLUID_PER_EXP;
-        tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), FluidAction.EXECUTE);
+        tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), IFluidHandler.FluidAction.EXECUTE);
       }
     }
   }

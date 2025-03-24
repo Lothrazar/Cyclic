@@ -44,8 +44,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class AutoCaveTorchItem extends ItemBaseToggle {
 
@@ -55,10 +54,10 @@ public class AutoCaveTorchItem extends ItemBaseToggle {
    * Maximum number of blocks to move the current players' position down by to find a surface block.
    */
   private static final int BLOCKS_TO_MOVE_FEET_DOWN = 2;
-  public static IntValue LIGHT_LIMIT;
-  public static IntValue LIGHT_TARGET;
-  public static BooleanValue PREFER_WALLS;
-  public static BooleanValue PREFER_LEFT_WALL;
+  public static ModConfigSpec.IntValue LIGHT_LIMIT;
+  public static ModConfigSpec.IntValue LIGHT_TARGET;
+  public static ModConfigSpec.BooleanValue PREFER_WALLS;
+  public static ModConfigSpec.BooleanValue PREFER_LEFT_WALL;
   private final AtomicInteger timer = new AtomicInteger();
   private final Lock lock = new ReentrantLock();
 

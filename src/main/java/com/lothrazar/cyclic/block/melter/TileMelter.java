@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -19,16 +20,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -42,9 +37,6 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
   private RecipeMelter currentRecipe;
   private int burnTimeMax = 0; //only non zero if processing
 
@@ -138,45 +130,23 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     burnTimeMax = tag.getInt("burnTimeMax");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     tag.putInt("burnTimeMax", this.burnTimeMax);
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
+    super.saveAdditional(tag,registries);
   }
 
   public float getCapacity() {
@@ -194,8 +164,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public ItemStack getStackInputSlot(int slot) {
-    IItemHandler inv = inventoryCap.orElse(null);
-    return (inv == null) ? ItemStack.EMPTY : inv.getStackInSlot(slot);
+    return (inventory == null) ? ItemStack.EMPTY : inventory.getStackInSlot(slot);
   }
 
   private void findMatchingRecipe() {
@@ -223,13 +192,13 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private boolean tryProcessRecipe() {
-    int test = tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.SIMULATE);
+    int test = tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()
         && currentRecipe.matches(this, level)) {
       //ok it has room for all the fluid none will be wasted
       inventory.getStackInSlot(0).shrink(1);
       inventory.getStackInSlot(1).shrink(1);
-      tank.fill(this.currentRecipe.getRecipeFluid(), FluidAction.EXECUTE);
+      tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.EXECUTE);
       updateComparatorOutputLevel();
       return true;
     }

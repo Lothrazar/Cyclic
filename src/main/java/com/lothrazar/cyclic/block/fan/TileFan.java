@@ -13,6 +13,7 @@ import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -25,7 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -157,7 +158,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
       default:
       break;
     }
-    AABB region = new AABB(start, end);
+    AABB region = AABB.encapsulatingFullBlocks(start, end);
     List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
     int moved = 0;
     final boolean doPush = true;
@@ -212,16 +213,16 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    filter.deserializeNBT(tag.getCompound("filter"));
+  public void load(CompoundTag tag, HolderLookup.Provider registries) {
+    filter.deserializeNBT(registries,tag.getCompound("filter"));
     speed = tag.getInt("speed");
     range = tag.getInt("range");
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put("filter", filter.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put("filter", filter.serializeNBT(registries));
     tag.putInt("speed", speed);
     tag.putInt("range", range);
     super.saveAdditional(tag);

@@ -41,13 +41,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.registries.RegistryObject;
 
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {
 
   private static final int PLAYER_INV_SIZE = 4 * 9;
-  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "jei");
+  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "jei");
 
   @Override
   public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
@@ -93,7 +92,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(GenfluidRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get())));
     registry.addRecipes(CrusherRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get())));
     registry.addRecipes(PackagerRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(RecipeType.CRAFTING)));
-    for (RegistryObject<Item> item : ItemRegistry.ITEMS.getEntries()) {
+    for (var item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {
         registry.addIngredientInfo(st, VanillaTypes.ITEM_STACK, Component.translatable(item.get().getDescriptionId() + ".guide"));

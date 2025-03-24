@@ -30,7 +30,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ScytheForage extends ItemBaseCyclic {
 
@@ -38,7 +38,7 @@ public class ScytheForage extends ItemBaseCyclic {
     super(properties);
   }
 
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue RADIUS;
 
   @Override
   public InteractionResult useOn(UseOnContext context) {

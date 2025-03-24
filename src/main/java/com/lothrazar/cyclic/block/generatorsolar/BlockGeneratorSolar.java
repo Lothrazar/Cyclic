@@ -17,13 +17,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BlockGeneratorSolar extends BlockCyclic {
 
   public static final VoxelShape AABB = Block.box(0, 0, 0, 16, 1, 16);
-  public static IntValue ENERGY_GENERATE;
-  public static IntValue TIMEOUT;
+  public static ModConfigSpec.IntValue ENERGY_GENERATE;
+  public static ModConfigSpec.IntValue TIMEOUT;
 
   public BlockGeneratorSolar(Properties properties) {
     super(properties.strength(1.2F).noOcclusion());

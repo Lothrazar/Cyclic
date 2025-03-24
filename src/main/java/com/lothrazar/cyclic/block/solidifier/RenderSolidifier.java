@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.solidifier;
 
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -12,10 +13,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
 
@@ -24,7 +24,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
   @Override
   public void render(TileSolidifier tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
-    IItemHandler itemHandler = tankHere.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
+    IItemHandler itemHandler = CapabilityFixer.item(tankHere.getLevel(),tankHere.getBlockPos());// tankHere.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
     var level = tankHere.getLevel();
     if (itemHandler != null) {
       ItemStack stack = itemHandler.getStackInSlot(0);
@@ -51,7 +51,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
         matrixStack.popPose();
       }
     }
-    IFluidHandler handler = tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
+    IFluidHandler handler = CapabilityFixer.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

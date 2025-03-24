@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,8 +22,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class BlockCableEnergy extends CableBase {
 
@@ -61,7 +61,7 @@ public class BlockCableEnergy extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IEnergyStorage energy = facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.ENERGY, d.getOpposite()).orElse(null);
+      IEnergyStorage energy = CapabilityFixer.energy(worldIn,pos.relative(d));
       if (energy != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);

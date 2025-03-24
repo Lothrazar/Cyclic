@@ -35,9 +35,9 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.items.IItemHandler;
+
 
 public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractable {
 
@@ -46,7 +46,7 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
   }
 
   @Override
-  public void interactWith(EntityInteract event) {
+  public void interactWith(PlayerInteractEvent.EntityInteract event) {
     if (event.getItemStack().getItem() == this
         && event.getTarget() instanceof Horse
         && event.getLevel() instanceof ServerLevel

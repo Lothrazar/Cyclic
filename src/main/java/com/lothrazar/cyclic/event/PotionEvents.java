@@ -4,9 +4,12 @@ import com.lothrazar.cyclic.potion.CyclicMobEffect;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
+//import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
+//import net.minecraftforge.event.entity.living.MobEffectEvent;
+//import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PotionEvents {
 
@@ -40,7 +43,7 @@ public class PotionEvents {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(LivingTickEvent event) {
+  public void onEntityUpdate(EntityTickEvent event) {
     LivingEntity entity = event.getEntity();
     if (entity == null) {
       return;

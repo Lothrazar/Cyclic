@@ -8,6 +8,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -19,14 +20,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -35,19 +30,17 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
   }
 
   static final int MAX = TileBattery.MENERGY * 10;
-  public static IntValue RF_PER_TICK;
+  public static ModConfigSpec.IntValue RF_PER_TICK;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0; //stack.getBurnTime(IRecipeType.SMELTING) >= 0;
+      return stack.getBurnTime(RecipeType.SMELTING) > 0;// ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0;
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   final int factor = 1;
   private int burnTimeMax = 0; //only non zero if processing
   private int burnTime = 0; //how much of current fuel is left
@@ -97,7 +90,7 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     final int factor = 1;
-    int burnTimeTicks = factor * ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
+    int burnTimeTicks = factor * stack.getBurnTime(RecipeType.SMELTING); //ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
     if (burnTimeTicks > 0) {
       // BURN IT
       this.burnTimeMax = burnTimeTicks;
@@ -123,35 +116,17 @@ public class TileGeneratorFuel extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    super.load(tag);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   @Override

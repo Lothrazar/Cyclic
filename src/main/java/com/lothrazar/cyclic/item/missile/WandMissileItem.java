@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.item.missile;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.core.BlockPos;
@@ -15,14 +17,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class WandMissileItem extends ItemBaseCyclic {
 
-  public static IntValue COST;
-  public static IntValue RANGE;
+  public static ModConfigSpec.IntValue COST;
+  public static ModConfigSpec.IntValue RANGE;
 
   public WandMissileItem(Properties properties) {
     super(properties.stacksTo(1));
@@ -55,7 +56,7 @@ public class WandMissileItem extends ItemBaseCyclic {
       }
     }
     if (!world.isClientSide) {
-      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {
         //we can afford it

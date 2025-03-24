@@ -8,8 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerLaser extends ContainerBase {
 
@@ -20,16 +19,16 @@ public class ContainerLaser extends ContainerBase {
     tile = (TileLaser) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 152, 8) {
+//    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+      this.endInv = tile.inventory.getSlots();
+      addSlot(new SlotItemHandler(tile.inventory, 0, 152, 8) {
 
         @Override
         public void setChanged() {
           tile.setChanged();
         }
       });
-    });
+//    });
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileLaser.Fields.values().length);
   }

@@ -10,20 +10,17 @@ import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
 
 public class TileEnderCtrl extends TileBlockEntityCyclic {
 
   private static final String NBT_SHELVES = "shelves";
   EnderControllerItemHandler controllerInv = new EnderControllerItemHandler(this);
-  private final LazyOptional<EnderControllerItemHandler> controllerInventoryCap = LazyOptional.of(() -> controllerInv);
   private List<BlockPos> connectedShelves = new ArrayList<>();
   RenderTextType renderStyle = RenderTextType.TEXT;
 
@@ -56,21 +53,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void invalidateCaps() {
-    controllerInventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return controllerInventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
@@ -82,18 +65,18 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
         this.connectedShelves.add(pos);
       }
     }
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
     ListTag shelves = new ListTag();
     for (BlockPos pos : this.connectedShelves) {
       shelves.add(NbtUtils.writeBlockPos(pos));
     }
     tag.put(NBT_SHELVES, shelves);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,registries);
   }
 
   public void toggleShowText() {

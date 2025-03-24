@@ -11,11 +11,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
 
 public class HeartItem extends ItemBaseCyclic {
 
-  public static IntValue MAX;
+  public static ModConfigSpec.IntValue MAX;
   static final int COOLDOWN = 10;
 
   public HeartItem(Properties properties) {

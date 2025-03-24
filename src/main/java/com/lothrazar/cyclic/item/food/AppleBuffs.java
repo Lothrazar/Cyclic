@@ -19,26 +19,26 @@ public class AppleBuffs extends ItemBaseCyclic {
     super(properties);
   }
 
-  @Override
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (this.getFoodProperties(stack, null) != null && this.getFoodProperties(stack, null).getEffects() != null) {
-      List<Pair<MobEffectInstance, Float>> eff = this.getFoodProperties(stack, null).getEffects();
-      for (Pair<MobEffectInstance, Float> entry : eff) {
-        MobEffectInstance effCurrent = entry.getFirst();
-        if (effCurrent == null || effCurrent.getEffect() == null) {
-          continue;
-        }
-        MutableComponent t = Component.translatable(effCurrent.getEffect().getDescriptionId());
-        t.append(" " + ChatUtil.lang("potion.potency." + effCurrent.getAmplifier()));
-        t.withStyle(ChatFormatting.DARK_GRAY);
-        tooltip.add(t);
-      }
-    }
-    //    super.addInformation(stack, worldIn, tooltip, flagIn);
-  }
+//  @Override
+//  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+//    if (this.getFoodProperties(stack, null) != null && this.getFoodProperties(stack, null).getEffects() != null) {
+//      List<Pair<MobEffectInstance, Float>> eff = this.getFoodProperties(stack, null).getEffects();
+//      for (Pair<MobEffectInstance, Float> entry : eff) {
+//        MobEffectInstance effCurrent = entry.getFirst();
+//        if (effCurrent == null || effCurrent.getEffect() == null) {
+//          continue;
+//        }
+//        MutableComponent t = Component.translatable(effCurrent.getEffect().getDescriptionId());
+//        t.append(" " + ChatUtil.lang("potion.potency." + effCurrent.getAmplifier()));
+//        t.withStyle(ChatFormatting.DARK_GRAY);
+//        tooltip.add(t);
+//      }
+//    }
+//    //    super.addInformation(stack, worldIn, tooltip, flagIn);
+//  }
 
-  @Override
-  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    return super.finishUsingItem(stack, worldIn, entityLiving);
-  }
+//  @Override
+//  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+//    return super.finishUsingItem(stack, worldIn, entityLiving);
+//  }
 }

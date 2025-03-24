@@ -2,28 +2,26 @@ package com.lothrazar.cyclic.block.hopperfluid;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class TileFluidHopper extends TileBlockEntityCyclic {
 
   private static final int FLOW = FluidType.BUCKET_VOLUME;
   public static final int CAPACITY = FluidType.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileFluidHopper(BlockPos pos, BlockState state) {
     super(TileRegistry.FLUIDHOPPER.get(), pos, state);
@@ -37,20 +35,6 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
   @Override
   public void setFluid(FluidStack fluid) {
     tank.setFluid(fluid);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidHopper e) {
@@ -87,7 +71,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
       return;
     }
     BlockPos target = this.worldPosition.relative(Direction.UP);
-    IFluidHandler tankAbove = FluidHelpers.getTank(level, target, Direction.DOWN);
+    IFluidHandler tankAbove = CapabilityFixer.fluid(level,target,Direction.DOWN); //FluidHelpers.getTank(level, target, Direction.DOWN);
     boolean success = FluidHelpers.tryFillPositionFromTank(level, worldPosition, Direction.UP, tankAbove, FLOW);
     if (success) {
       this.updateComparatorOutputLevelAt(target);
@@ -102,9 +86,9 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(tag);
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tank.readFromNBT(tag.getCompound(NBTFLUID),registries);
+    super.loadAdditional(tag,registries);
   }
 
   @Override

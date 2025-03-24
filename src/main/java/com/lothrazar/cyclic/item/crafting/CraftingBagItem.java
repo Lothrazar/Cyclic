@@ -10,8 +10,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.network.NetworkHooks;
 
 public class CraftingBagItem extends ItemBaseCyclic {
 
@@ -33,8 +31,8 @@ public class CraftingBagItem extends ItemBaseCyclic {
     MenuScreens.register(MenuTypeRegistry.CRAFTING_BAG.get(), CraftingBagScreen::new);
   }
 
-  @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new CraftingBagCapabilityProvider();
-  }
+//  @Override
+//  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+//    return new CraftingBagCapabilityProvider();
+//  }
 }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.anvilmagma;
 
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -8,9 +9,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerAnvilMagma extends ContainerBase {
 
@@ -42,7 +42,7 @@ public class ContainerAnvilMagma extends ContainerBase {
   }
 
   public int getEnergy() {
-    return tile.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+     return CapabilityFixer.energyStored(tile.getLevel(),tile.getBlockPos());
   }
 
   @Override

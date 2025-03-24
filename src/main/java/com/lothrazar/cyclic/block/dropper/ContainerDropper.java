@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.dropper;
 
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -8,9 +9,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerDropper extends ContainerBase {
 
@@ -21,7 +20,8 @@ public class ContainerDropper extends ContainerBase {
     tile = (TileDropper) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    var h=tile.inventory;
+//    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 89, 59) {
 
@@ -30,7 +30,7 @@ public class ContainerDropper extends ContainerBase {
           tile.setChanged();
         }
       });
-    });
+//    });
     addSlot(new SlotItemHandler(tile.gpsSlots, 0, 10, 59) {
 
       @Override
@@ -44,7 +44,7 @@ public class ContainerDropper extends ContainerBase {
   }
 
   public int getEnergy() {
-    return tile.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return CapabilityFixer.energyStored(tile.getLevel(),tile.getBlockPos());// tile.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
   }
 
   @Override

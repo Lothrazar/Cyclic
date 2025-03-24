@@ -2,16 +2,16 @@ package com.lothrazar.cyclic.capabilities;
 
 import com.lothrazar.cyclic.capabilities.player.PlayerCapProvider;
 import com.lothrazar.cyclic.registry.FeatureRegistry;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 public class CapabilityEvents {
 
   @SubscribeEvent
-  public void onWorldTick(TickEvent.LevelTickEvent event) {
+  public void onWorldTick(LevelTickEvent event) {
     // Don't do anything client side
-    if (event.level.isClientSide) {
+    if (event.getLevel().isClientSide) {
       return;
     }
     if (event.phase == TickEvent.Phase.START) {

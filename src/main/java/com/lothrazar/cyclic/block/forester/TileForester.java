@@ -11,6 +11,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -31,14 +32,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileForester extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -49,7 +45,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
   static final int MAX = 64000;
   static final int MAX_HEIGHT = 32;
   static final int MAX_SIZE = 12; //radius 7 translates to 15x15 area (center block + 7 each side)
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   private int height = MAX_HEIGHT;
   private int radius = MAX_SIZE;
   private BlockPos targetPos = null;
@@ -61,8 +57,6 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
       return isSapling(stack);
     }
   };
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private WeakReference<FakePlayer> fakePlayer;
   private int shapeIndex = 0;
 
@@ -132,10 +126,10 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     }
   }
 
-  @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
-  }
+//  @Override
+//  public AABB getRenderBoundingBox() {
+//    return BlockEntity.INFINITE_EXTENT_AABB;
+//  }
 
   @Override
   public Component getDisplayName() {
@@ -144,44 +138,27 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
 
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+
     return new ContainerForester(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("height", height);
     tag.putInt("shapeIndex", shapeIndex);
-    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.putInt("radius", radius);
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 
@@ -192,10 +169,10 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     if (fakePlayer == null) {
       return;
     }
-    TileBlockEntityCyclic.tryEquipItem(inventoryCap, fakePlayer, 0, InteractionHand.OFF_HAND);
+    TileBlockEntityCyclic.tryEquipItem(inventory, fakePlayer, 0, InteractionHand.OFF_HAND);
     if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
       ItemStack tool = new ItemStack(Items.DIAMOND_AXE);
-      tool.enchant(Enchantments.BLOCK_FORTUNE, 3);
+      tool.enchant(Enchantments.FORTUNE, 3);
       TileBlockEntityCyclic.tryEquipItem(tool, fakePlayer, InteractionHand.MAIN_HAND);
     }
   }

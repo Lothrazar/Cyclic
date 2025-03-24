@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -21,12 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileCableItem extends TileCableBase implements MenuProvider {
 
@@ -39,12 +36,12 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
       return stack.getItem() == ItemRegistry.FILTER_DATA.get();
     }
   };
-  private Map<Direction, LazyOptional<IItemHandler>> flow = new ConcurrentHashMap<>();
+  private Map<Direction, IItemHandler>flow = new ConcurrentHashMap<>();
 
   public TileCableItem(BlockPos pos, BlockState state) {
     super(TileRegistry.ITEM_PIPE.get(), pos, state);
     for (Direction f : Direction.values()) {
-      flow.put(f, LazyOptional.of(TileCableItem::createHandler));
+      flow.put(f, TileCableItem.createHandler());
     }
   }
 
@@ -64,7 +61,7 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
       if (connection.isExtraction()) {
-        final IItemHandler sideHandler = flow.get(extractSide).orElse(null);
+        final IItemHandler sideHandler = flow.get(extractSide).or;//Else(null);
         tryExtract(sideHandler, extractSide, extractQty, filter);
       }
     }
@@ -75,7 +72,7 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     // Label for loop for shortcutting, used to continue after items have been moved
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
-      final IItemHandler sideHandler = flow.get(incomingSide).orElse(null);
+      final IItemHandler sideHandler = flow.get(incomingSide);//.orElse(null);
       for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
@@ -99,52 +96,45 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     return !outgoingConnection.isExtraction() && !outgoingConnection.isBlocked();
   }
 
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (side != null && cap == ForgeCapabilities.ITEM_HANDLER) {
-      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
-        return flow.get(side).cast();
-      }
-    }
-    return super.getCapability(cap, side);
-  }
+//  @Override
+//  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+//    if (side != null && cap == ForgeCapabilities.ITEM_HANDLER) {
+//      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
+//        return flow.get(side).cast();
+//      }
+//    }
+//    return super.getCapability(cap, side);
+//  }
 
-  @Override
-  public void invalidateCaps() {
-    super.invalidateCaps();
-    for (final LazyOptional<IItemHandler> sidedCap : flow.values()) {
-      sidedCap.invalidate();
-    }
-  }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     extractQty = tag.getInt("extractCount");
-    LazyOptional<IItemHandler> item;
+    IItemHandler item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
-      item.ifPresent(h -> {
+      if(item !=null){ //item.ifPresent(h -> {
         CompoundTag itemTag = tag.getCompound("item" + f.toString());
-        ((INBTSerializable<CompoundTag>) h).deserializeNBT(itemTag);
-      });
+        item.deserializeNBT(itemTag);
+      }
     }
-    filter.deserializeNBT(tag.getCompound("filter"));
+    filter.deserializeNBT(registries,tag.getCompound("filter"));
     super.load(tag);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put("filter", filter.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put("filter", filter.serializeNBT(registries));
     tag.putInt("extractCount", extractQty);
-    LazyOptional<IItemHandler> item;
+    IItemHandler item;
     for (Direction f : Direction.values()) {
       item = flow.get(f);
-      item.ifPresent(h -> {
-        CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
+      if(item !=null){ //item.ifPresent(h -> {
+        CompoundTag compound = item.serializeNBT(registries);
         tag.put("item" + f.toString(), compound);
-      });
+      }
     }
     super.saveAdditional(tag);
   }

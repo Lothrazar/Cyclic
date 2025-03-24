@@ -9,12 +9,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class TileTerraGlass extends TileBlockEntityCyclic {
 
-  public static IntValue TIMER_FULL;
-  public static IntValue HEIGHT;
+  public static ModConfigSpec.IntValue TIMER_FULL;
+  public static ModConfigSpec.IntValue HEIGHT;
 
   public TileTerraGlass(BlockPos pos, BlockState state) {
     super(TileRegistry.TERRA_GLASS.get(), pos, state);

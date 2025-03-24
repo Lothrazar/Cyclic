@@ -32,9 +32,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+
 
 public class ContainerPeatFarm extends ContainerBase {
 
@@ -49,11 +48,11 @@ public class ContainerPeatFarm extends ContainerBase {
     tile = (TilePeatFarm) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-      this.endInv = h.getSlots();
+//    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+      this.endInv = tile.inventory.getSlots();
       int rowSize = 6;
       for (int i = 0; i < rowSize; i++) {
-        addSlot(new SlotItemHandler(h, i, SLOTX_START + i * Const.SQ, SLOTY) {
+        addSlot(new SlotItemHandler(tile.inventory, i, SLOTX_START + i * Const.SQ, SLOTY) {
 
           @Override
           public void setChanged() {
@@ -61,7 +60,7 @@ public class ContainerPeatFarm extends ContainerBase {
           }
         });
       }
-    });
+//    });
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TilePeatFarm.Fields.values().length);
     trackEnergy(tile);

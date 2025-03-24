@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.item;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
@@ -16,14 +18,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class WandHypnoItem extends ItemBaseCyclic {
 
-  public static IntValue COST;
-  public static IntValue RANGE;
+  public static ModConfigSpec.IntValue COST;
+  public static ModConfigSpec.IntValue RANGE;
 
   public WandHypnoItem(Properties properties) {
     super(properties.stacksTo(1));
@@ -44,7 +45,7 @@ public class WandHypnoItem extends ItemBaseCyclic {
 
   private void doAction(ItemStack stack, Level world, Player player) {
     if (!world.isClientSide) {
-      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {
         storage.extractEnergy(cost, false);

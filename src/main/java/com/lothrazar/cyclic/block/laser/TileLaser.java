@@ -8,6 +8,7 @@ import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.data.OffsetEnum;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -18,11 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -45,7 +43,6 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
       return stack.getItem() instanceof LocationGpsCard;
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileLaser(BlockPos pos, BlockState state) {
     super(TileRegistry.LASER.get(), pos, state);
@@ -58,20 +55,6 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
   //  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileLaser e) {
   //    e.tick();
   //  }
-
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
 
   @Override
   public Component getDisplayName() {
@@ -93,10 +76,10 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
     return this.getBlockPos();
   }
 
-  @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
-  }
+//  @Override
+//  public AABB getRenderBoundingBox() {
+//    return BlockEntity.INFINITE_EXTENT_AABB;
+//  }
 
   @Override
   public int getField(int id) {
@@ -166,25 +149,25 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     red = tag.getInt("red");
     green = tag.getInt("green");
     blue = tag.getInt("blue");
     alpha = tag.getInt("alpha");
     thick = tag.getInt("thick");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     tag.putInt("red", red);
     tag.putInt("green", green);
     tag.putInt("blue", blue);
     tag.putInt("alpha", alpha);
     tag.putInt("thick", thick);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,registries);
   }
 
   public float getRed() {

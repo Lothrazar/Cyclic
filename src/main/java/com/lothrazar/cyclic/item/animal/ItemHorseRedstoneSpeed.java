@@ -29,7 +29,7 @@ import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.Horse;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemHorseRedstoneSpeed extends ItemBaseCyclic implements IEntityInteractable {
 
@@ -41,7 +41,7 @@ public class ItemHorseRedstoneSpeed extends ItemBaseCyclic implements IEntityInt
   }
 
   @Override
-  public void interactWith(EntityInteract event) {
+  public void interactWith(PlayerInteractEvent.EntityInteract event) {
     if (event.getItemStack().getItem() == this && event.getTarget() instanceof Horse) {
       // lets go 
       Horse ahorse = (Horse) event.getTarget();

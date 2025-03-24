@@ -10,11 +10,11 @@ import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.TexturedProgress;
 import com.lothrazar.library.util.ChatUtil;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
@@ -25,12 +25,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
 
   private static final int FONT = 0xFFFFFFFF;
-  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "solidifier");
+  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "solidifier");
   static final RecipeType<RecipeSolidifier> TYPE = new RecipeType<>(ID, RecipeSolidifier.class);
   private IDrawable gui;
   private IDrawable icon;
@@ -40,7 +40,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
 
   public SolidifierRecipeCategory(IGuiHelper helper) {
     font = Minecraft.getInstance().font;
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/solidifier_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
+    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/solidifier_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.SOLIDIFIER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
     progress = new TexturedProgress(font, 63, 25, 24, 17, TextureRegistry.ARROW);
@@ -84,7 +84,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 43).addIngredients(recipe.at(2));
     builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 25).addItemStack(recipe.result);
     List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
-    builder.addSlot(RecipeIngredientRole.INPUT, 4, 25).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
+    builder.addSlot(RecipeIngredientRole.INPUT, 4, 25).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }
   //  @Override
   //  public void setIngredients(RecipeSolidifier recipe, IIngredients ingredients) {

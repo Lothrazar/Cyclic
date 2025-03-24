@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.compat.crafttweaker;
 
 import java.util.Arrays;
+
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
@@ -16,7 +18,6 @@ import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.fluids.FluidStack;
 
 @ZenRegister
 @ZenCodeType.Name("mods.cyclic.generator_fluid")
@@ -32,7 +33,7 @@ public class EnergyFluidZen implements IRecipeManager<RecipeGeneratorFluid> {
   @ZenCodeType.Method
   public void addRecipe(String name, IFluidStack fluid, int rfPertick, int ticks) {
     name = fixRecipeName(name);
-    RecipeGeneratorFluid m = new RecipeGeneratorFluid(new ResourceLocation(CompatConstants.CRAFTTWEAKER, name),
+    RecipeGeneratorFluid m = new RecipeGeneratorFluid(ResourceLocation.fromNamespaceAndPath(CompatConstants.CRAFTTWEAKER, name),
         new FluidTagIngredient(new FluidStack(fluid.getFluid(), 1), "", (int) fluid.getAmount()),
         new EnergyIngredient(rfPertick, ticks));
     CraftTweakerAPI.apply(new ActionAddRecipe<RecipeGeneratorFluid>(this, m, ""));
@@ -42,7 +43,7 @@ public class EnergyFluidZen implements IRecipeManager<RecipeGeneratorFluid> {
   @ZenCodeType.Method
   public void addRecipe(String name, String fluidTag, int amount, int rfPertick, int ticks) {
     name = fixRecipeName(name);
-    RecipeGeneratorFluid m = new RecipeGeneratorFluid(new ResourceLocation(CompatConstants.CRAFTTWEAKER, name),
+    RecipeGeneratorFluid m = new RecipeGeneratorFluid(ResourceLocation.fromNamespaceAndPath(CompatConstants.CRAFTTWEAKER, name),
         new FluidTagIngredient(null, fluidTag, amount),
         new EnergyIngredient(rfPertick, ticks));
     CraftTweakerAPI.apply(new ActionAddRecipe<RecipeGeneratorFluid>(this, m, ""));

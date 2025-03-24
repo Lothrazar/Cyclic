@@ -15,17 +15,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
+import net.neoforged.neoforge.common.NeoForge;
+
 
 public class BlockSoundRecorder extends BlockCyclic {
 
   public BlockSoundRecorder(Properties properties) {
     super(properties.strength(1F).sound(SoundType.SCAFFOLDING));
-    MinecraftForge.EVENT_BUS.register(this);
+    NeoForge.EVENT_BUS.register(this);
     this.setHasGui();
   }
 

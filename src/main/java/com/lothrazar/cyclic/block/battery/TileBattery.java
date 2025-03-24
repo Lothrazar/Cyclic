@@ -3,12 +3,14 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.library.cap.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -19,12 +21,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
@@ -33,12 +31,12 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   public static ModConfigSpec.IntValue SLOT_CHARGING_RATE;
   private Map<Direction, Boolean> poweredSides;
   final CustomEnergyStorage energy;
-  private final LazyOptional<IEnergyStorage> energyCap;
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
+      return CapabilityFixer.energy(stack) != null;
+      //return stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
     }
 
     @Override
@@ -54,7 +52,6 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   public TileBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY.get(), pos, state);
     energy = new CustomEnergyStorage(MAX.get(), MAX.get());
-    energyCap = LazyOptional.of(() -> energy);
     flowing = 0;
     poweredSides = new ConcurrentHashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
@@ -86,7 +83,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     ItemStack slotItem = this.batterySlots.getStackInSlot(0);
-    IEnergyStorage itemStackStorage = slotItem.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    IEnergyStorage itemStackStorage =CapabilityFixer.energy(slotItem); // slotItem.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (itemStackStorage != null) {
       int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE.get(), true);
       int accepted = itemStackStorage.receiveEnergy(extracted, true);
@@ -146,38 +143,25 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     this.poweredSides.put(side, (pow == 1));
   }
 
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    batterySlots.deserializeNBT(tag.getCompound(NBTINV + "batt"));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    batterySlots.deserializeNBT(registries,tag.getCompound(NBTINV + "batt"));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
-    tag.put(NBTINV + "batt", batterySlots.serializeNBT());
+    tag.put(NBTINV + "batt", batterySlots.serializeNBT(registries));
     tag.putInt("flowing", getFlowing());
-    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 

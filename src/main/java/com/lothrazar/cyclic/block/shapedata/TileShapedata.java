@@ -14,6 +14,7 @@ import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -24,11 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -52,7 +50,6 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       }
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private RelativeShape copiedShape;
   private int hasStashIfOne;
 
@@ -140,40 +137,27 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
     return new ContainerShapedata(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(tag.getCompound(NBTINV));
     if (tag.contains("copiedShape")) {
       CompoundTag cs = (CompoundTag) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
     }
     hasStashIfOne = tag.getInt("stashToggle");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("stashToggle", hasStashIfOne);
     if (this.copiedShape != null) {
       CompoundTag copiedShapeTags = this.copiedShape.write(new CompoundTag());
       tag.put("copiedShape", copiedShapeTags);
     }
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   //  @Override

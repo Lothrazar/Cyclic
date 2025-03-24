@@ -6,17 +6,16 @@ import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
 
 public class TileItemShelf extends TileBlockEntityCyclic {
 
   public final ItemStackHandler inventory = new ClientAutoSyncItemHandler(this, EnderShelfItemHandler.ROWS);
-  private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> inventory);
+
   public RenderTextType renderStyle = RenderTextType.STACK;
 
   public TileItemShelf(BlockPos pos, BlockState state) {
@@ -38,35 +37,22 @@ public class TileItemShelf extends TileBlockEntityCyclic {
     return 0;
   }
 
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
     }
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag,HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,registries);
   }
 
   public void toggleShowText() {

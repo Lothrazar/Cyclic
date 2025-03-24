@@ -6,10 +6,12 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -25,8 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class BlockEnderCtrl extends BlockCyclic {
 
@@ -73,12 +74,12 @@ public class BlockEnderCtrl extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  public ItemInteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     ItemStack heldItem = player.getItemInHand(hand);
     if (hand != InteractionHand.MAIN_HAND && heldItem.isEmpty()) {
       //if your hand is empty, dont process if its the OFF hand
       //otherwise: main hand inserts, off hand takes out right away
-      return InteractionResult.PASS;
+      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
     if (heldItem.is(DataTags.WRENCH)) {
       TileEnderCtrl contrl = (TileEnderCtrl) world.getBlockEntity(pos);
@@ -91,14 +92,15 @@ public class BlockEnderCtrl extends BlockCyclic {
         }
       }
       player.swing(InteractionHand.MAIN_HAND);
-      return InteractionResult.PASS;
+      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+      var h = CapabilityFixer.item(world,pos);
+//      world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
         insertIntoController(player, hand, heldItem, h);
-      });
+//      });
     }
-    return InteractionResult.CONSUME;
+    return ItemInteractionResult.CONSUME;
   }
 
   private void insertIntoController(Player player, InteractionHand hand, ItemStack heldItem, IItemHandler controller) {

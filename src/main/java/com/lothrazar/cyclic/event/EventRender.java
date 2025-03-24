@@ -8,6 +8,7 @@ import java.util.Map;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
@@ -45,12 +46,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class EventRender {
 
@@ -89,7 +88,7 @@ public class EventRender {
     //    if (event.getStage() == Stage.AFTER_TRANSLUCENT_BLOCKS) { // was AFTER_SOLID_BLOCKS
     //      //      return; //send it
     //    }
-    if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) { // was AFTER_SOLID_BLOCKS
+    if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) { // was AFTER_SOLID_BLOCKS
       return; //send it
     }
     Minecraft mc = Minecraft.getInstance();
@@ -192,7 +191,7 @@ public class EventRender {
     /****************** end rendering cubes. start laser beam render ********************/
     stack = LaserItem.getIfHeld(player);
     if (!stack.isEmpty() && player.isUsingItem()) {
-      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack); //stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       if (storage == null || storage.getEnergyStored() < ConfigRegistry.LaserItemEnergy.get()) {
         return;
       }

@@ -17,8 +17,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BlockTerraGlass extends BlockCyclic {
 
@@ -30,7 +28,7 @@ public class BlockTerraGlass extends BlockCyclic {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
+//  @OnlyIn(Dist.CLIENT)
   public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 1.0F;
   }

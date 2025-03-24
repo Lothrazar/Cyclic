@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.compat.crafttweaker;
 
 import java.util.Arrays;
+
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
@@ -18,7 +20,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.fluids.FluidStack;
 
 @ZenRegister
 @ZenCodeType.Name("mods.cyclic.melter")
@@ -38,7 +39,7 @@ public class MelterZen implements IRecipeManager<RecipeMelter> {
     for (int i = 0; i < input.length; i++) {
       list.set(i, input[i].asVanillaIngredient());
     }
-    RecipeMelter m = new RecipeMelter(new ResourceLocation(CompatConstants.CRAFTTWEAKER, name), list,
+    RecipeMelter m = new RecipeMelter(ResourceLocation.fromNamespaceAndPath(CompatConstants.CRAFTTWEAKER, name), list,
         new FluidStack(fluidStack.getFluid(), (int) fluidStack.getAmount()), new EnergyIngredient(rfPertick, ticks));
     CraftTweakerAPI.apply(new ActionAddRecipe<RecipeMelter>(this, m, ""));
     logger.debug("Recipe loaded " + m.getId().toString());

@@ -7,19 +7,20 @@ import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class ItemMobContainer extends ItemBaseCyclic {
 
@@ -29,7 +30,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (stack.hasTag()) {
       MutableComponent t = Component.translatable(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
       t.withStyle(ChatFormatting.GRAY);
@@ -54,7 +55,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
     Level world = context.getLevel();
     SoundUtil.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE.get(), 0.3F, 1F);
     if (!world.isClientSide) {
-      Entity entity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
+      Entity entity = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
           .create(world);
       //    entity.egg
       entity.load(stack.getTag());

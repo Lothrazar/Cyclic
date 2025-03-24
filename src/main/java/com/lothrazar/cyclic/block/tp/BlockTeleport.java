@@ -18,14 +18,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BlockTeleport extends BlockCyclic {
 
-  public static IntValue POWERCONF;
-  public static IntValue COSTDIM;
+  public static ModConfigSpec.IntValue POWERCONF;
+  public static ModConfigSpec.IntValue COSTDIM;
   public static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 0.5D, 15.0D);
 
   public BlockTeleport(Properties properties) {
@@ -51,9 +52,10 @@ public class BlockTeleport extends BlockCyclic {
       if (pay == 0 || sim == pay) {
         tile.energy.extractEnergy(pay, false);
         //tp now
-        DimensionTransit transit = new DimensionTransit((ServerLevel) worldIn, dimpos);
-        transit.teleport(player);
-        player.changeDimension(transit.getTargetLevel(), transit);
+        player.teleportTo(dimpos.getTargetLevel(worldIn),dimpos.getX(),dimpos.getY(),dimpos.getZ(),player.getYRot(),player.getXRot());
+//        DimensionTransit transit = new DimensionTransit((ServerLevel) worldIn, dimpos);
+//        transit.teleport(player);
+//        player.changeDimension(transit.getTargetLevel(), transit);
       }
     }
   }

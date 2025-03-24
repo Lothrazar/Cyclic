@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block.disenchant;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class DisenchantOutputSlot extends SlotItemHandler {
 

@@ -21,13 +21,11 @@ import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
-public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implements IContainerCraftingAction {
+public class ContainerWorkbench extends RecipeBookMenu<CraftingInput, CraftingRecipe> implements IContainerCraftingAction {
 
   private TileWorkbench tile;
   public static final int GRID_START_X = 30;
@@ -87,8 +85,8 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingContainer> implem
   }
 
   @Override
-  public boolean recipeMatches(Recipe<? super CraftingContainer> recipeIn) {
-    return recipeIn.matches(this.craftMatrix, this.player.level());
+  public boolean recipeMatches(RecipeHolder recipeIn) {
+    return recipeIn.value().matches(this.craftMatrix, this.player.level());
   }
 
   @Override

@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -20,18 +20,18 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFluid> {
 
   private static final int FONT = 0xFFFFFFFF;
-  static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "generator_fluid");
+  static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "generator_fluid");
   static final RecipeType<RecipeGeneratorFluid> TYPE = new RecipeType<>(ID, RecipeGeneratorFluid.class);
   private IDrawable gui;
   private IDrawable icon;
 
   public GenfluidRecipeCategory(IGuiHelper helper) {
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_fluid.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
+    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/generator_fluid.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.GENERATOR_FLUID.get()));
   }
 
@@ -67,37 +67,6 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeGeneratorFluid recipe, IFocusGroup focuses) {
     List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
-    builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
+    builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }
-  //keep old code for reference
-  //
-  //  @Override
-  //  public void setIngredients(RecipeGeneratorFluid recipe, IIngredients ingredients) {
-  //    if (recipe.getRecipeFluid().isEmpty()) {
-  //      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
-  //      if (matchingFluids != null) {
-  //        ingredients.setInputs(VanillaTypes.FLUID, recipe.fluidIng.getMatchingFluids());
-  //      }
-  //    }
-  //    else {
-  //      ingredients.setInput(VanillaTypes.FLUID, recipe.getRecipeFluid());
-  //    }
-  //  }
-  //
-  //  @Override
-  //  public void setRecipe(IRecipeLayout recipeLayout, RecipeGeneratorFluid recipe, IIngredients ingredients) {
-  //    //    ingredients.setOutput(VanillaTypes.FLUID, recipe.getRecipeFluid());
-  //    recipeLayout.getFluidStacks().init(0, true, 6, 7, Const.SQ - 2, Const.SQ - 2,
-  //        FluidAttributes.BUCKET_VOLUME, false, null);
-  //    //tag or stack?
-  //    if (recipe.fluidIng.hasTag()) {
-  //      List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
-  //      if (matchingFluids != null) {
-  //        recipeLayout.getFluidStacks().set(0, matchingFluids);
-  //      }
-  //    }
-  //    else if (!recipe.getRecipeFluid().isEmpty()) {
-  //      recipeLayout.getFluidStacks().set(0, recipe.getRecipeFluid());
-  //    }
-  //  }
 }

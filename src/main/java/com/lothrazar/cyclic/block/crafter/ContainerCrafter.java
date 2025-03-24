@@ -35,8 +35,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerCrafter extends ContainerBase {
 
@@ -74,7 +73,8 @@ public class ContainerCrafter extends ContainerBase {
       }
     }
     //add grid
-    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
+    var h = tile.gridCap;
+//    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
       int index = 0;
       for (int rowPos = 0; rowPos < TileCrafter.GRID_NUM_ROWS; rowPos++) {
         for (int colPos = 0; colPos < TileCrafter.GRID_NUM_ROWS; colPos++) {
@@ -90,7 +90,7 @@ public class ContainerCrafter extends ContainerBase {
           index++;
         }
       }
-    });
+//    });
     //add output 
     indexx = 0;
     for (int rowPos = 0; rowPos < TileCrafter.IO_NUM_ROWS; rowPos++) {
@@ -107,8 +107,8 @@ public class ContainerCrafter extends ContainerBase {
         indexx++;
       }
     }
-    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
-      addSlot(new CrafterGridSlot(h, 0,
+//    tile.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
+      addSlot(new CrafterGridSlot(tile.preview, 0,
           PREVIEW_START_X,
           PREVIEW_START_Y) {
 
@@ -117,7 +117,7 @@ public class ContainerCrafter extends ContainerBase {
           tile.setChanged();
         }
       });
-    });
+//    });
     this.endInv = slots.size();
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileCrafter.Fields.values().length);

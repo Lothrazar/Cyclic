@@ -9,15 +9,13 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class TileCask extends TileBlockEntityCyclic {
 
@@ -25,7 +23,6 @@ public class TileCask extends TileBlockEntityCyclic {
   public static final int CAPACITY = 8 * FluidType.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = CAPACITY / 2;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
-  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;
@@ -53,39 +50,25 @@ public class TileCask extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
     this.flowing = (tag.getInt("flowing"));
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    super.load(tag);
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries ) {
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
     tag.putInt("flowing", this.flowing);
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
+    super.saveAdditional(tag,registries);
   }
 
   @Override

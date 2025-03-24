@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.batteryclay;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.CustomEnergyStorage;
@@ -18,8 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class ClayBattery extends BlockCyclic {
 
@@ -44,7 +44,7 @@ public class ClayBattery extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
     if (ent instanceof TileClayBattery battery) {
-      IEnergyStorage newStackCap = newStackBattery.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage newStackCap = CapabilityFixer.energy(newStackBattery);// newStackBattery.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       if (newStackCap instanceof CustomEnergyStorage) {
         ((CustomEnergyStorage) newStackCap).setEnergy(battery.energy.getEnergyStored());
       }
@@ -73,7 +73,7 @@ public class ClayBattery extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
-    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    IEnergyStorage storage = CapabilityFixer.energy(stack);
     if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
       current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
     }

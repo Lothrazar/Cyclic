@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.EnchantUtil;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -13,12 +14,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class EnderShelfItemHandler extends ItemStackHandler {
 
-  public static IntValue BOOKS_PER_ROW;
+  public static ModConfigSpec.IntValue BOOKS_PER_ROW;
   public static final int ROWS = 5;
   public TileEnderShelf shelf;
   String[] nameCache = new String[ROWS];
@@ -35,8 +36,8 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   }
 
   @Override
-  public CompoundTag serializeNBT() {
-    CompoundTag tag = super.serializeNBT();
+  public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+    CompoundTag tag = super.serializeNBT(provider);
     for (int i = 0; i < ROWS; i++) {
       tag.putInt("cyclicmagic" + ":idc" + i, extraBooks[i]);
       if (enchantmentIdCache[i] == null) {
@@ -48,8 +49,8 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   }
 
   @Override
-  public void deserializeNBT(CompoundTag nbt) {
-    super.deserializeNBT(nbt);
+  public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+    super.deserializeNBT(provider,nbt);
     for (int i = 0; i < ROWS; i++) {
       extraBooks[i] = nbt.getInt("cyclicmagic" + ":idc" + i);
       enchantmentIdCache[i] = nbt.getString("cyclicmagic" + ":ench");

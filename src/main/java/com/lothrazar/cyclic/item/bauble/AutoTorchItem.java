@@ -32,11 +32,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class AutoTorchItem extends ItemBaseToggle {
 
-  public static IntValue LIGHT_LEVEL;
+  public static ModConfigSpec.IntValue LIGHT_LEVEL;
 
   public AutoTorchItem(Properties properties) {
     super(properties);

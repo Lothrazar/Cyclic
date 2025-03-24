@@ -10,6 +10,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -21,11 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -36,14 +33,13 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
   public static final int MAX_SIZE = 12;
   static final int MAX_ENERGY = 640000;
   public static final int MAX_HEIGHT = 16;
-  public static IntValue POWERCONF;
+  public static ModConfigSpec.IntValue POWERCONF;
   private int radius = MAX_SIZE / 2;
   private int shapeIndex = 0;
   BlockPos targetPos = null;
   private int height = 1;
   private boolean directionIsUp = false;
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX_ENERGY, MAX_ENERGY / 4);
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileHarvester(BlockPos pos, BlockState state) {
     super(TileRegistry.HARVESTER.get(), pos, state);
@@ -128,10 +124,10 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     return shape;
   }
 
-  @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
-  }
+//  @Override
+//  public AABB getRenderBoundingBox() {
+//    return BlockEntity.INFINITE_EXTENT_AABB;
+//  }
 
   @Override
   public int getField(int id) {
@@ -172,37 +168,23 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
   }
 
   @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY && POWERCONF.get() > 0) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     radius = tag.getInt("radius");
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
     shapeIndex = tag.getInt("shapeIndex");
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load(tag);
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    super.load(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("radius", radius);
     tag.putInt("shapeIndex", shapeIndex);
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    super.saveAdditional(tag,registries);
   }
 
   @Override

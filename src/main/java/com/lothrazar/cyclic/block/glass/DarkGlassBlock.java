@@ -8,8 +8,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class DarkGlassBlock extends BlockCyclic {
 
@@ -18,7 +16,6 @@ public class DarkGlassBlock extends BlockCyclic {
   }
 
   @Override
-  @Deprecated
   public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 255; //zero is transparent fullyworld.getMaxLightLevel();
   }
@@ -29,8 +26,6 @@ public class DarkGlassBlock extends BlockCyclic {
   }
 
   @Override
-  @Deprecated
-  @OnlyIn(Dist.CLIENT)
   public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 1.0F;
   }
@@ -40,9 +35,7 @@ public class DarkGlassBlock extends BlockCyclic {
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   @Override
-  @OnlyIn(Dist.CLIENT)
   public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     return adjacentBlockState.is(this) || super.skipRendering(state, adjacentBlockState, side);
   }

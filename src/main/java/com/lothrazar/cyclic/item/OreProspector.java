@@ -17,16 +17,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.Tags;
+//import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+//import net.minecraftforge.common.Tags;
 
 public class OreProspector extends ItemBaseCyclic {
 
   private static final int CD = 10;
   private static final String ORESIZE = "oresize";
   private static final String NBT_DIM = "dim";
-  public static IntValue RANGE;
-  public static IntValue HEIGHT;
+  public static ModConfigSpec.IntValue RANGE;
+  public static ModConfigSpec.IntValue HEIGHT;
 
   public OreProspector(Properties properties) {
     super(properties);

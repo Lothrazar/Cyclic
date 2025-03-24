@@ -9,6 +9,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -25,20 +26,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootDataManager;
+//import net.minecraft.world.level.storage.loot.LootDataManager;
 import net.minecraft.world.level.storage.loot.LootDataType;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.ModConfigSpec.*;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -51,7 +47,6 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
       return stack.is(DataTags.FISHING_RODS);
     }
   };
-  LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   static enum Fields {
     REDSTONE;
@@ -81,28 +76,14 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 
@@ -146,7 +127,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
         return;
       }
       //got it
-      int luck = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FISHING_LUCK, fishingRod) + 1;
+      int luck = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, fishingRod) + 1;
       LootParams lootContext = new LootParams.Builder((ServerLevel) world)
           .withLuck(luck)//.withRandom(rand)
           .withParameter(LootContextParams.ORIGIN,

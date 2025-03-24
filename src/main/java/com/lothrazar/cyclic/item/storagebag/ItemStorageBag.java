@@ -107,7 +107,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack,  Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     CompoundTag nbt = stack.getOrCreateTag();
     String pickupMode = nbt.getString(PickupMode.NBT);
@@ -138,10 +138,10 @@ public class ItemStorageBag extends ItemBaseCyclic {
     MenuScreens.register(MenuTypeRegistry.STORAGE_BAG.get(), ScreenStorageBag::new);
   }
 
-  @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new StorageBagCapability(stack, nbt);
-  }
+//  @Override
+//  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+//    return new StorageBagCapability(stack, nbt);
+//  }
 
   @Override
   public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {

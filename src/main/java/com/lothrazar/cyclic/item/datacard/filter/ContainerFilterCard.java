@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
 import javax.annotation.Nonnull;
+
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -9,8 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+
 
 public class ContainerFilterCard extends ContainerBase {
 
@@ -34,7 +36,8 @@ public class ContainerFilterCard extends ContainerBase {
     }
     //
     //    this.nbt = bag.getOrCreateTag();
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+//    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+      var h = CapabilityFixer.item(bag);
       this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
         int row = j / 9;
@@ -52,7 +55,7 @@ public class ContainerFilterCard extends ContainerBase {
           }
         });
       }
-    });
+//    });
     layoutPlayerInventorySlots(8, 84);
   }
 

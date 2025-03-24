@@ -13,8 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CloudBlock extends BlockCyclic {
 
@@ -40,7 +38,7 @@ public class CloudBlock extends BlockCyclic {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
+//  @OnlyIn(Dist.CLIENT)
   public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     return adjacentBlockState.getBlock() == this;
   }

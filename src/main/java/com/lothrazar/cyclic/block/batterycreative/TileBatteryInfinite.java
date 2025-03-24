@@ -8,14 +8,11 @@ import com.lothrazar.cyclic.util.UtilDirection;
 import com.lothrazar.library.cap.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileBatteryInfinite extends TileBlockEntityCyclic {
 
@@ -27,7 +24,6 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
 
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private Map<Direction, Boolean> poweredSides;
-  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
 
   public TileBatteryInfinite(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY_INFINITE.get(), pos, state);
@@ -49,35 +45,23 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
     this.poweredSides.put(side, (pow == 1));
   }
 
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    super.invalidateCaps();
-  }
+
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
-    tag.put(NBTENERGY, energy.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 

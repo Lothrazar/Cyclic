@@ -33,11 +33,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ScytheLeaves extends ItemBaseCyclic {
 
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue RADIUS;
 
   public ScytheLeaves(Properties properties) {
     super(properties);

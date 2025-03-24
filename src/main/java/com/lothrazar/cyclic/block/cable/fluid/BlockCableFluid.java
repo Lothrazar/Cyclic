@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.ChatFormatting;
@@ -15,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -29,8 +31,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class BlockCableFluid extends CableBase {
 
@@ -39,7 +40,7 @@ public class BlockCableFluid extends CableBase {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
     if (Screen.hasShiftDown()) {
       tooltip.add(Component.translatable("block.cyclic.fluid_pipe.tooltip0").withStyle(ChatFormatting.GRAY));
@@ -56,6 +57,7 @@ public class BlockCableFluid extends CableBase {
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    super.appendHoverText();
     if (ConfigRegistry.CABLE_FACADES.get()) {
       var facade = this.getFacadeShape(state, worldIn, pos, context);
       if (facade != null) {
@@ -84,8 +86,8 @@ public class BlockCableFluid extends CableBase {
   @Override
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
-      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IFluidHandler cap = facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.FLUID_HANDLER, d.getOpposite()).orElse(null);
+//      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
+      IFluidHandler cap = CapabilityFixer.fluid(worldIn,pos.relative(d),d.getOpposite()); //facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.FLUID_HANDLER, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);
@@ -114,7 +116,7 @@ public class BlockCableFluid extends CableBase {
       //  updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (isFluid(stateIn, facing, facingState, world, currentPos, facingPos)) {
+    if (CapabilityFixer.isFluid( facing,  (Level)world, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here

@@ -2,12 +2,16 @@ package com.lothrazar.cyclic.item;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.cap.CustomEnergyStorage;
-import com.lothrazar.library.cap.item.CapabilityProviderEnergyStack;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -21,11 +25,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class ItemBaseCyclic extends Item {
 
@@ -103,14 +102,6 @@ public class ItemBaseCyclic extends Item {
   }
 
   @Override
-  public Rarity getRarity(ItemStack stack) {
-    if (hasEnergy) {
-      return Rarity.EPIC; //uses energy
-    }
-    return super.getRarity(stack);
-  }
-
-  @Override
   public int getBarColor(ItemStack stack) {
     if (hasEnergy) {
       return TextureRegistry.COLOUR_RF_BAR;
@@ -121,7 +112,7 @@ public class ItemBaseCyclic extends Item {
   @Override
   public boolean isBarVisible(ItemStack stack) {
     if (hasEnergy) {
-      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack);
       return storage != null; // && storage.getEnergyStored() > 0;
     }
     return super.isBarVisible(stack);
@@ -129,12 +120,12 @@ public class ItemBaseCyclic extends Item {
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
     if (this.hasEnergy) {
       int current = 0;
       int energyttmax = 0;
-      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack);
       if (storage != null) {
         current = storage.getEnergyStored();
         energyttmax = storage.getMaxEnergyStored();
@@ -148,7 +139,7 @@ public class ItemBaseCyclic extends Item {
     if (hasEnergy) {
       float current = 0;
       float max = 0;
-      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack);
       if (storage != null) {
         current = storage.getEnergyStored();
         max = storage.getMaxEnergyStored();
@@ -161,20 +152,20 @@ public class ItemBaseCyclic extends Item {
   @OnlyIn(Dist.CLIENT)
   public void registerClient() {}
 
-  @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    if (this.hasEnergy) {
-      return new CapabilityProviderEnergyStack(MAX_ENERGY);
-    }
-    return super.initCapabilities(stack, nbt);
-  }
+//  @Override
+//  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+//    if (this.hasEnergy) {
+//      return new CapabilityProviderEnergyStack(MAX_ENERGY);
+//    }
+//    return super.initCapabilities(stack, nbt);
+//  }
 
   // ShareTag for server->client capability data sync
   @Override
   public CompoundTag getShareTag(ItemStack stack) {
     if (hasEnergy) {
       CompoundTag nbt = stack.getOrCreateTag();
-      IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage =  CapabilityFixer.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
       //on server  this runs . also has correct values.
       //set data for sync to client
       if (storage != null) {
@@ -194,7 +185,7 @@ public class ItemBaseCyclic extends Item {
       final int serverEnergyValue = nbt.getInt(ENERGYTT);
       stackTag.putInt(ENERGYTT, serverEnergyValue);
       stackTag.putInt(ENERGYTTMAX, nbt.getInt(ENERGYTTMAX));
-      final IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      final IEnergyStorage storage = CapabilityFixer.energy(stack);
       if (storage instanceof CustomEnergyStorage energy) {
         energy.setEnergy(serverEnergyValue);
       }

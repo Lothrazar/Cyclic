@@ -6,12 +6,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class TileEye extends TileBlockEntityCyclic {
 
-  public static IntValue RANGE;
-  public static IntValue FREQUENCY;
+  public static ModConfigSpec.IntValue RANGE;
+  public static ModConfigSpec.IntValue FREQUENCY;
 
   public TileEye(BlockPos pos, BlockState state) {
     super(TileRegistry.EYE_REDSTONE.get(), pos, state);

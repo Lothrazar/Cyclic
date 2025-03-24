@@ -32,12 +32,12 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BlockAltarNoTraders extends BlockCyclic implements SimpleWaterloggedBlock {
 
-  public static IntValue HEIGHT;
-  public static IntValue RADIUS;
+  public static ModConfigSpec.IntValue HEIGHT;
+  public static ModConfigSpec.IntValue RADIUS;
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   private static final double BOUNDS = 3;
   public static final VoxelShape AABB = Block.box(BOUNDS, 0, BOUNDS,

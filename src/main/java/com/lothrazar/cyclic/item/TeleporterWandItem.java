@@ -20,13 +20,13 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class TeleporterWandItem extends ItemBaseCyclic {
 
   private static final int TICK_REPAIR = 4;
   private static final int TICKS_USING = 93000;
-  public static IntValue RANGE;
+  public static ModConfigSpec.IntValue RANGE;
 
   public TeleporterWandItem(Properties properties) {
     super(properties);

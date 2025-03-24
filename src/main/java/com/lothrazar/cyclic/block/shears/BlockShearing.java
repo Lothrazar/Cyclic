@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.IForgeShearable;
+import net.neoforged.neoforge.common.IShearable;
 
 public class BlockShearing extends BlockCyclic {
 
@@ -36,11 +36,11 @@ public class BlockShearing extends BlockCyclic {
 
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-    if (entityIn instanceof IForgeShearable) {
+    if (entityIn instanceof IShearable sheep) {
       //do it
-      IForgeShearable sheep = (IForgeShearable) entityIn;
-      if (sheep.isShearable(ItemStack.EMPTY, worldIn, pos)) {
-        List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, worldIn, pos, worldIn.random.nextInt(3));
+//      IForgeShearable sheep = (IForgeShearable) entityIn;
+      if (sheep.isShearable(null,ItemStack.EMPTY, worldIn, pos)) {
+        List<ItemStack> drops = sheep.onSheared(null, ItemStack.EMPTY, worldIn, pos); //, worldIn.random.nextInt(3)
         drops.forEach(d -> {
           RandomSource rand = worldIn.random;
           ItemEntity ent = entityIn.spawnAtLocation(d, 1.0F);

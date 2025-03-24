@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -19,11 +20,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -44,7 +42,6 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   private NonNullList<String> sounds = NonNullList.withSize(MAX_SOUNDS, "");
   private List<String> ignored = new ArrayList<>();
 
@@ -63,8 +60,8 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     for (int i = 0; i < MAX_SOUNDS; i++) {
       if (tag.contains(SOUNDAT + i)) {
         sounds.set(i, tag.getString(SOUNDAT + i));
@@ -75,33 +72,19 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
         ignored.add(tag.getString(IGNORED + i));
       }
     }
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     for (int i = 0; i < MAX_SOUNDS; i++) {
       tag.putString(SOUNDAT + i, sounds.get(i));
     }
     for (int i = 0; i < ignored.size(); i++) {
       tag.putString(IGNORED + i, ignored.get(i));
     }
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
+    super.saveAdditional(tag,registries);
   }
 
   @Override

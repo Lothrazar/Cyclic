@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -21,11 +22,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -47,7 +45,6 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
       return stack.getItem() == ItemRegistry.STATECARD.get();
     }
   };
-  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
 
   public TileBreaker(BlockPos pos, BlockState state) {
     super(TileRegistry.BREAKER.get(), pos, state);
@@ -61,13 +58,6 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     e.tick();
   }
 
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
 
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
@@ -83,12 +73,6 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
       //old way would pass thru here and try to mine minecraft:water 
       this.level.destroyBlock(target, true);
     }
-  }
-
-  @Override
-  public void invalidateCaps() {
-    inventoryCap.invalidate();
-    super.invalidateCaps();
   }
 
   /**
@@ -145,14 +129,14 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     super.saveAdditional(tag);
   }
 

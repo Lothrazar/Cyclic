@@ -12,6 +12,7 @@ import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -26,6 +27,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -76,36 +79,20 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
     return new ContainerAnvilVoid(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public void invalidateCaps() {
-    fluidCap.invalidate();
-    inventoryCap.invalidate();
-    super.invalidateCaps();
-  }
+
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    return super.getCapability(cap, side);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
+  public void loadAdditional( CompoundTag tag, HolderLookup.Provider provider) {
+    inventory.deserializeNBT(provider,tag.getCompound(NBTINV));
+    tank.readFromNBT(provider,tag.getCompound(NBTFLUID));
     super.load(tag);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+    tag.put(NBTINV, inventory.serializeNBT(provider));
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(provider,fluid);
     tag.put(NBTFLUID, fluid);
     super.saveAdditional(tag);
   }
@@ -143,7 +130,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
         //if its holding a tag compatible but different fluid, just fill 
         newFluid = this.getFluid().getFluid();
       }
-      tank.fill(new FluidStack(newFluid, FLUIDPAY.get()), FluidAction.EXECUTE);
+      tank.fill(new FluidStack(newFluid, FLUIDPAY.get()), IFluidHandler.FluidAction.EXECUTE);
     }
   }
 

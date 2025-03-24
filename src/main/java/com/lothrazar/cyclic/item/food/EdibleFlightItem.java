@@ -7,25 +7,27 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
 
 public class EdibleFlightItem extends AppleBuffs {
 
-  public static IntValue TICKS;
+  public static ModConfigSpec.IntValue TICKS;
 
   public EdibleFlightItem(Properties properties) {
-    super(properties.rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(1).saturationMod(0).alwaysEat().build()));
+    super(properties.rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(1).saturationModifier(0).alwaysEdible().build()));
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
   }
 

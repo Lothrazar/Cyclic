@@ -10,14 +10,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class TileTerraPreta extends TileBlockEntityCyclic {
 
-  public static IntValue TIMER_FULL;
-  public static IntValue HEIGHT;
-  public static DoubleValue CHANCE;
+  public static ModConfigSpec.IntValue TIMER_FULL;
+  public static ModConfigSpec.IntValue HEIGHT;
+  public static ModConfigSpec.DoubleValue CHANCE;
   //  public static final double ODDS_DEFAULT = 0.5; 
 
   public TileTerraPreta(BlockPos pos, BlockState state) {
@@ -56,7 +55,7 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
       try {
         ServerLevel sw = (ServerLevel) world;
         if (d >= 1 || world.random.nextDouble() < d) {
-          block.randomTick(bState, sw, current, world.random);
+          block.randomTick(bState, sw, current, world.random); // its protected now
           block.randomTick(bState, sw, current, world.random);
           block.randomTick(bState, sw, current, world.random);
         }
@@ -72,7 +71,7 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
     BlockState bState = world.getBlockState(current);
     if (bState.getBlock() instanceof BonemealableBlock) {
       BonemealableBlock crop = ((BonemealableBlock) bState.getBlock());
-      if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide) || !crop.isBonemealSuccess(world, world.random, current, bState)) {
+      if (!crop.isValidBonemealTarget(world, current, bState) || !crop.isBonemealSuccess(world, world.random, current, bState)) {
         return false; //cant grow, or cant bonemeal. no
       }
     }

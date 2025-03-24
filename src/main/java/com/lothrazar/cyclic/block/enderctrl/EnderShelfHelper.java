@@ -12,12 +12,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.common.ModConfigSpec;
+
 
 public class EnderShelfHelper {
 
-  public static IntValue MAX_DIST;
+  public static ModConfigSpec.IntValue MAX_DIST;
   public static final int MAX_ITERATIONS = 6400; // kind of arbitrary
 
   public static BlockPos findConnectedController(Level world, BlockPos shelfPos) {

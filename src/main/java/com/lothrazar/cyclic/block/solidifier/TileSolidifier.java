@@ -10,6 +10,7 @@ import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -20,15 +21,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -44,10 +41,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   ItemStackHandler inputSlots = new ItemStackHandler(3);
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
-  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
-  private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   private int burnTimeMax = 0; //only non zero if processing
 
   public TileSolidifier(BlockPos pos, BlockState state) {
@@ -143,47 +137,25 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    inputSlots.deserializeNBT(tag.getCompound(NBTINV));
-    outputSlots.deserializeNBT(tag.getCompound("invoutput"));
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
+    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    inputSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
+    outputSlots.deserializeNBT(registries,tag.getCompound("invoutput"));
     burnTimeMax = tag.getInt("burnTimeMax");
-    super.load(tag);
+    super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inputSlots.serializeNBT());
-    tag.put("invoutput", outputSlots.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inputSlots.serializeNBT(registries));
+    tag.put("invoutput", outputSlots.serializeNBT(registries));
     tag.putInt("burnTimeMax", this.burnTimeMax);
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    energyCap.invalidate();
-    inventoryCap.invalidate();
-    fluidCap.invalidate();
-    super.invalidateCaps();
-  }
-
-  @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.FLUID_HANDLER) {
-      return fluidCap.cast();
-    }
-    if (cap == ForgeCapabilities.ENERGY) {
-      return energyCap.cast();
-    }
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
-    }
-    return super.getCapability(cap, side);
+    super.saveAdditional(tag,registries);
   }
 
   public float getCapacity() {
@@ -219,7 +191,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   private boolean tryProcessRecipe() {
-    FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid().getAmount(), FluidAction.SIMULATE);
+    FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid().getAmount(), IFluidHandler.FluidAction.SIMULATE);
     if (test.getAmount() >= this.currentRecipe.getRecipeFluid().getAmount()) {
       // wait is output slot compatible
       if (!outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), true).isEmpty()) {
@@ -230,7 +202,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
-      tank.drain(this.currentRecipe.fluidIngredient.getAmount(), FluidAction.EXECUTE);
+      tank.drain(this.currentRecipe.fluidIngredient.getAmount(), IFluidHandler.FluidAction.EXECUTE);
       outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), false);
       updateComparatorOutputLevel();
       return true;

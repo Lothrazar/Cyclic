@@ -10,11 +10,11 @@ import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.TexturedProgress;
 import com.lothrazar.library.util.ChatUtil;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
@@ -25,12 +25,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   private static final int FONT = 0xFFFFFFFF;
-  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "melter");
+  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "melter");
   static final RecipeType<RecipeMelter> TYPE = new RecipeType<>(ID, RecipeMelter.class);
   private IDrawable gui;
   private IDrawable icon;
@@ -40,7 +40,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
 
   public MelterRecipeCategory(IGuiHelper helper) {
     font = Minecraft.getInstance().font;
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
+    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/melter_recipe.png"), 0, 0, 169, 69).setTextureSize(169, 69).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.MELTER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
     progress = new TexturedProgress(font, 58, 26, 24, 17, TextureRegistry.ARROW);
@@ -82,6 +82,6 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
     builder.addSlot(RecipeIngredientRole.INPUT, 4, 19).addIngredients(recipe.at(0));
     builder.addSlot(RecipeIngredientRole.INPUT, 22, 19).addIngredients(recipe.at(1));
     List<FluidStack> matchingFluids = List.of(recipe.getRecipeFluid());
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 132, 19).addIngredients(ForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 132, 19).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }
 }

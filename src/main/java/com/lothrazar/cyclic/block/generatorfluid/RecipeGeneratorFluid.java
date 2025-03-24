@@ -7,8 +7,11 @@ import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.library.util.RecipeUtil;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -19,8 +22,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
 
@@ -65,11 +67,23 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
     return fluidIng.getFluidStack();
   }
 
+  @Deprecated
   public List<Fluid> getFluidsFromTag() {
-    TagKey<Fluid> tag = ForgeRegistries.FLUIDS.tags().createTagKey(new ResourceLocation(this.fluidIng.getTag()));
-    List<Fluid> list = ForgeRegistries.FLUIDS.tags().getTag(tag).stream().toList();
-    return list;
+    TagKey<Fluid> tag =  TagKey.create(Registries.FLUID, ResourceLocation.parse(this.fluidIng.getTag()));
+//    BuiltInRegistries.FLUID.getOrCreateTag(ResourceLocation.parse(this.fluidIng.getTag())  );
+//    BuiltInRegistries.FLUID.getOrCreateTag()
+    HolderSet.Named<Fluid> what = BuiltInRegistries.FLUID.getTag(tag).orElse(null);
+//    what.contains()
+//    List<Fluid> list = BuiltInRegistries.FLUID.getTag(tag).stream().toList();
+    return null;
   }
+  public TagKey<Fluid> getTag() {
+    TagKey<Fluid> tag =  TagKey.create(Registries.FLUID, ResourceLocation.parse(this.fluidIng.getTag()));
+
+//    HolderSet.Named<Fluid> namedTag = BuiltInRegistries.FLUID.getTag(tag).orElse(null);
+    return tag;
+  }
+
 
   @Override
   public boolean matches(TileGeneratorFluid inv, Level worldIn) {

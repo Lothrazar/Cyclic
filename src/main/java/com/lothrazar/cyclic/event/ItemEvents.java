@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.block.facade.IBlockFacade;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.enchant.MultiBowEnchant;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.animal.ItemHorseEnder;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
@@ -67,29 +66,15 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
-import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.BonemealEvent;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.*;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class ItemEvents {
 
@@ -112,7 +97,7 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onLivingJumpEvent(LivingJumpEvent event) {
+  public void onLivingJumpEvent(LivingEvent.LivingJumpEvent event) {
     if (!(event.getEntity() instanceof Player)) {
       return;
     }
@@ -333,10 +318,10 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(LivingTickEvent event) {
-    LivingEntity liv = event.getEntity();
-    tryItemHorseEnder(liv);
-    if (liv instanceof Player player) {
+  public void onEntityUpdate(EntityTickEvent event) { // was LivingTickEvent
+
+    tryItemHorseEnder(event);
+    if (event.getEntity() instanceof Player player) {
       CharmBase.onEntityUpdate(player);
       //step
       LoftyStatureApple.onUpdate(player);
@@ -353,12 +338,13 @@ public class ItemEvents {
     }
   }
 
-  private void tryItemHorseEnder(LivingEntity liv) {
+  private void tryItemHorseEnder(EntityTickEvent event) {
+    if(event instanceof LivingEntity liv)
     if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
         && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
       // 
       if (liv.isInWater()
-          && liv.canDrownInFluidType(ForgeMod.WATER_TYPE.get()) == false
+          && liv.canDrownInFluidType(NeoForgeMod.WATER_TYPE.get()) == false
           && liv.getAirSupply() < liv.getMaxAirSupply()
           && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
         liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60, 4));
@@ -437,7 +423,7 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onRightClickBlock(RightClickBlock event) {
+  public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
     if (event.getItemStack().isEmpty()) {
       return;
     }
@@ -457,7 +443,7 @@ public class ItemEvents {
     }
   }
 
-  private void scaffoldHit(RightClickBlock event) {
+  private void scaffoldHit(PlayerInteractEvent.RightClickBlock event) {
     ItemScaffolding item = (ItemScaffolding) event.getItemStack().getItem();
     Direction opp = event.getFace().getOpposite();
     BlockPos dest = LevelWorldUtil.nextReplaceableInDirection(event.getLevel(), event.getPos(), opp, 16, item.getBlock());
@@ -470,7 +456,7 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onEntityInteractEvent(EntityInteract event) {
+  public void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
     if (event.getItemStack().getItem() instanceof IEntityInteractable) {
       IEntityInteractable item = (IEntityInteractable) event.getItemStack().getItem();
       item.interactWith(event);

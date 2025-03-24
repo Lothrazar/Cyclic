@@ -17,7 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.util.FakePlayer;
 
 public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
@@ -26,16 +26,6 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
 
   public TileDiamondSpikes(BlockPos pos, BlockState state) {
     super(TileRegistry.SPIKES_DIAMOND.get(), pos, state);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag) {
-    super.saveAdditional(tag);
-  }
-
-  @Override
-  public void load(CompoundTag tag) {
-    super.load(tag);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDiamondSpikes e) {
@@ -55,12 +45,12 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
     if (fakePlayer == null && level instanceof ServerLevel) {
       fakePlayer = setupBeforeTrigger((ServerLevel) level, "spikes_diamond");
       if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-        Map<Enchantment, Integer> map = Maps.newHashMap();
-        map.put(Enchantments.BANE_OF_ARTHROPODS, 2);
-        map.put(Enchantments.SWEEPING_EDGE, 3);
-        map.put(Enchantments.SHARPNESS, 1);
         ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
-        EnchantmentHelper.setEnchantments(map, sword);
+//        Map<Enchantment, Integer> map = Maps.newHashMap();
+//        map.put(Enchantments.BANE_OF_ARTHROPODS, 2);
+//        map.put(Enchantments.SWEEPING_EDGE, 3);
+//        map.put(Enchantments.SHARPNESS, 1);
+//        EnchantmentHelper.setEnchantments(map, sword);
         fakePlayer.get().setItemInHand(InteractionHand.MAIN_HAND, sword);
       }
       if (level.random.nextDouble() < 0.001F) {
