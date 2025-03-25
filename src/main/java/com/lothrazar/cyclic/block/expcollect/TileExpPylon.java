@@ -37,8 +37,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
-    REDSTONE;
+    REDSTONE, COLLECT;
   }
+
 
   //20mb per xp following convention set by EnderIO; OpenBlocks; and Reliquary https://github.com/PrinceOfAmber/Cyclic/issues/599
   public static final int FLUID_PER_EXP = 20;
@@ -47,6 +48,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   public static IntValue RADIUS;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+  private int collect = 1;
 
   public TileExpPylon(BlockPos pos, BlockState state) {
     super(TileRegistry.EXPERIENCE_PYLON.get(), pos, state);
@@ -70,7 +72,9 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
       return;
     }
     //if turned on, collect from the world
-    collectLocalExperience();
+    if(this.collect != 0) {
+      collectLocalExperience();
+    }
   }
 
   public Predicate<FluidStack> isFluidValid() {
@@ -196,6 +200,9 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
       case REDSTONE:
         this.needsRedstone = value % 2;
       break;
+      case COLLECT:
+        this.collect = value % 2;
+      break;
     }
   }
 
@@ -204,6 +211,8 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     switch (Fields.values()[field]) {
       case REDSTONE:
         return this.needsRedstone;
+      case COLLECT:;
+        return this.collect;
     }
     return 0;
   }
