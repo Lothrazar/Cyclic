@@ -64,7 +64,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     e.tick();
   }
 
-  List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
+//  List<Integer> rawList = IntStream.rangeClosed(0, 5).boxed().collect(Collectors.toList());
 
   public void tick() {
     for (Direction extractSide : Direction.values()) {
@@ -80,13 +80,14 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     if (extractSide == null) {
       return;
     }
+    var filterSta = filter.getStackInSlot(0);
     final BlockPos target = this.worldPosition.relative(extractSide); // .offset(
     final Direction incomingSide = extractSide.getOpposite();
     //when draining from a tank (instead of a source/waterlogged block) check the filter
     final IFluidHandler tankTarget = FluidHelpers.getTank(level, target, incomingSide);
     if (tankTarget != null
         && tankTarget.getTanks() > 0
-        && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tankTarget.getFluidInTank(0))) {
+        && !FilterCardItem.filterAllowsExtract(filterSta, tankTarget.getFluidInTank(0))) {
       return;
     }
     //first try standard fluid transfer
@@ -98,7 +99,8 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     //cauldron
     FluidTankBase sideHandler = flow.get(extractSide).orElse(null);
     if (sideHandler != null && sideHandler.getSpace() >= FluidType.BUCKET_VOLUME) {
-      FluidHelpers.extractSourceWaterloggedCauldron(level, target, sideHandler);
+
+      FluidHelpers.extractSourceWaterloggedCauldron(level, target, sideHandler, filterSta);
     }
   }
 

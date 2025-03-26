@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.library.data.Model3D;
 import com.lothrazar.library.render.FluidRenderMap;
 import com.lothrazar.library.render.FluidRenderMap.FluidFlow;
@@ -17,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
@@ -126,52 +128,68 @@ public class FluidHelpers {
 
   /**
    * Internally knows that water cauldrons fil to level 3, but lava cauldrons are a different block without the level property.
-   * 
+   * <p>
    * Ignores partially filled water cauldrons.
-   * 
+   * <p>
    * a full cauldron is 1000mb
-   * 
+   *
    * @param level
    * @param posTarget
    * @param tank
+   * @param filterSta
    */
-  public static void extractSourceWaterloggedCauldron(Level level, BlockPos posTarget, IFluidHandler tank) {
+  public static void extractSourceWaterloggedCauldron(Level level, BlockPos posTarget, IFluidHandler tank, ItemStack filterSta) {
     if (tank == null) {
       return;
     }
+
     //fills always gonna be one bucket but we dont know what type yet
     //test if its a source block, or a waterlogged block
     BlockState targetState = level.getBlockState(posTarget);
     FluidState fluidState = level.getFluidState(posTarget);
+
     if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
       //for waterlogged it is hardcoded to water
-      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
-      if (simFill == FluidAttributes.BUCKET_VOLUME
-          && level.setBlockAndUpdate(posTarget, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
-        tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
+        //no filter exists, or its allowed.. so the purple data cards work
+        int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+        if (simFill == FluidAttributes.BUCKET_VOLUME
+                && level.setBlockAndUpdate(posTarget, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
+          tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
       }
     }
     else if (targetState.getBlock() == Blocks.WATER_CAULDRON && targetState.getValue(LayeredCauldronBlock.LEVEL) >= 3) {
-      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
-      if (simFill == FluidAttributes.BUCKET_VOLUME
-          && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
-        tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
+        //no filter exists, or its allowed.. so the purple data cards work
+        int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+        if (simFill == FluidAttributes.BUCKET_VOLUME
+                && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
+          tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
       }
     }
     else if (targetState.getBlock() == Blocks.LAVA_CAULDRON) {
-      //copypasta of water cauldron code
-      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
-      if (simFill == FluidAttributes.BUCKET_VOLUME
-          && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
-        tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.LAVA,1))) {
+        //no filter exists, or its allowed.. so the purple data cards work
+        //copypasta of water cauldron code
+        int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+        if (simFill == FluidAttributes.BUCKET_VOLUME
+                && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
+          tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
       }
     }
     else if (fluidState != null && fluidState.isSource() && fluidState.getType() != null) { // from ze world
-      //not just water. any fluid source block
-      int simFill = tank.fill(new FluidStack(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
-      if (simFill == FluidAttributes.BUCKET_VOLUME
-          && level.setBlockAndUpdate(posTarget, Blocks.AIR.defaultBlockState())) {
-        tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta,new FluidStack(fluidState.getType(),1))) {
+        //no filter exists, or its allowed.. so the purple data cards work
+
+        //not just water. any fluid source block
+        int simFill = tank.fill(new FluidStack(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+        if (simFill == FluidAttributes.BUCKET_VOLUME
+            && level.setBlockAndUpdate(posTarget, Blocks.AIR.defaultBlockState())) {
+          tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        }
       }
     }
   }
