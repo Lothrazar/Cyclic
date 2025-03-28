@@ -57,6 +57,6 @@ ${mod_id} A small mod by Lothrazar
 [[dependencies.cyclic]]
     modId="flib"
     mandatory=true
-    versionRange="[0.0.10,)"
+    versionRange="[0.0.15,)"
     ordering="NONE"
     side="BOTH"

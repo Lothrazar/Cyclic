@@ -38,6 +38,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -60,9 +61,10 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("unchecked")
-public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
+public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
@@ -75,8 +77,8 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   private final LazyOptional<IItemHandler> output = LazyOptional.of(() -> outHandler);
   private final LazyOptional<IItemHandler> gridCap = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
   private final LazyOptional<IItemHandler> preview = LazyOptional.of(() -> new ItemStackHandler(1));
-  private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
-  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputHandler, outHandler);
+  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   //
   public static final int IO_NUM_ROWS = 5;
   public static final int IO_NUM_COLS = 2;
@@ -430,5 +432,20 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
         this.render = value % PreviewOutlineType.values().length;
       break;
     }
+  }
+
+  @Override
+  public int[] getSlotsForFace(Direction direction) {
+    return inventory.getSlotsForFace(direction);
+  }
+
+  @Override
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, @Nullable Direction direction) {
+    return inventory.canPlaceItemThroughFace(i, itemStack, direction);
+  }
+
+  @Override
+  public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+    return inventory.canTakeItemThroughFace(i, itemStack, direction);
   }
 }
