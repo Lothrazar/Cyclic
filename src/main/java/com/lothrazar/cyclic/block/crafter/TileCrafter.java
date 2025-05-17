@@ -26,12 +26,16 @@ package com.lothrazar.cyclic.block.crafter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -46,7 +50,6 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -61,7 +64,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("unchecked")
 public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
@@ -71,14 +73,30 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   public static IntValue POWERCONF;
   private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   private final LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
-  ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE);
+  ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE) {
+    @Override
+    protected void onContentsChanged(int slot) {
+      // Input inventory changes can also affect crafting
+      TileCrafter.this.gridContentChanged = true;
+      super.onContentsChanged(slot);
+    }
+  };
   ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
   private final LazyOptional<IItemHandler> input = LazyOptional.of(() -> inputHandler);
   private final LazyOptional<IItemHandler> output = LazyOptional.of(() -> outHandler);
-  private final LazyOptional<IItemHandler> gridCap = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE));
+  private final LazyOptional<IItemHandler> gridCap = LazyOptional.of(() -> new ItemStackHandler(GRID_SIZE) {
+    @Override
+    protected void onContentsChanged(int slot) {
+      TileCrafter.this.gridContentChanged = true;
+      super.onContentsChanged(slot);
+    }
+  });
   private final LazyOptional<IItemHandler> preview = LazyOptional.of(() -> new ItemStackHandler(1));
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputHandler, outHandler);
   private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+  // Recipe caching
+  private boolean gridContentChanged = true;
+  private Recipe<CraftingContainer> cachedRecipe = null;
   //
   public static final int IO_NUM_ROWS = 5;
   public static final int IO_NUM_COLS = 2;
@@ -118,7 +136,18 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   }
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter tile) {
-    tile.serverTick();
+    // Don't call serverTick on the client side - reduces duplicate processing
+    // Just update visual state if needed
+    tile.clientTick();
+  }
+  
+  public void clientTick() {
+    // Only handle visual/client-side updates here
+    if (this.requiresRedstone() && !this.isPowered()) {
+      setLitProperty(false);
+    } else {
+      setLitProperty(true);
+    }
   }
 
   public void serverTick() {
@@ -145,7 +174,17 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
     if (timer < 0) {
       timer = 0;
     }
-    Recipe<CraftingContainer> lastValidRecipe = findMatchingRecipe(null);
+    
+    // Only find matching recipe if grid content has changed or we don't have a cached recipe
+    Recipe<CraftingContainer> lastValidRecipe = null;
+    if (gridContentChanged || cachedRecipe == null) {
+      lastValidRecipe = findMatchingRecipe(null);
+      cachedRecipe = lastValidRecipe;
+      gridContentChanged = false;
+    } else {
+      lastValidRecipe = cachedRecipe;
+    }
+    
     if (lastValidRecipe == null) {
       //reset 
       this.timer = TIMER_FULL;
@@ -182,6 +221,9 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
             depositOutput(s, this.outHandler);
           }
           this.updateComparatorOutputLevel();
+          
+          // Ensure we check the grid again after crafting
+          gridContentChanged = true;
         }
       }
     }
@@ -216,32 +258,47 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
     return test.isEmpty(); //empty means all of it was allowed to go in
   }
 
-  // This could be done better, but it works so ¯\_(ツ)_/¯
   private boolean checkInput(IItemHandler inv) {
     IItemHandler gridHandler = this.gridCap.orElse(null);
-    List<ItemStack> inputStacks = new ArrayList<ItemStack>();
-    List<ItemStack> gridStacks = new ArrayList<ItemStack>();
-    for (int i = 0; i < inv.getSlots(); i++) {
-      inputStacks.add(inv.getStackInSlot(i).copy());
+    if (gridHandler == null) {
+      return false;
     }
+    
+    // Create a map of required items from the grid
+    HashMap<String, Integer> requiredItems = new HashMap<>();
+    
+    // Count required items from grid
     for (int i = 0; i < gridHandler.getSlots(); i++) {
-      gridStacks.add(gridHandler.getStackInSlot(i).copy());
+      ItemStack gridStack = gridHandler.getStackInSlot(i);
+      if (!gridStack.isEmpty()) {
+        String itemKey = gridStack.getItem().getDescriptionId() + gridStack.getDamageValue();
+        requiredItems.put(itemKey, requiredItems.getOrDefault(itemKey, 0) + 1);
+      }
     }
-    for (ItemStack stack : inputStacks) {
-      List<ItemStack> lolbit = new ArrayList<ItemStack>();
-      boolean match = false;
-      for (ItemStack grid : gridStacks) {
-        if (stack.getItem() == grid.getItem()) {
-          match = true;
-          lolbit.add(grid);
-          stack.shrink(1);
+    
+    // Check if we have enough items in the input inventory
+    for (String itemKey : requiredItems.keySet()) {
+      int requiredCount = requiredItems.get(itemKey);
+      int availableCount = 0;
+      
+      // Count available items in input inventory
+      for (int i = 0; i < inv.getSlots() && availableCount < requiredCount; i++) {
+        ItemStack inputStack = inv.getStackInSlot(i);
+        if (!inputStack.isEmpty()) {
+          String inputKey = inputStack.getItem().getDescriptionId() + inputStack.getDamageValue();
+          if (inputKey.equals(itemKey)) {
+            availableCount += inputStack.getCount();
+          }
         }
       }
-      if (match) {
-        gridStacks.removeAll(lolbit);
+      
+      // If not enough of any required item, return false
+      if (availableCount < requiredCount) {
+        return false;
       }
     }
-    return gridStacks.isEmpty();
+    
+    return true;
   }
 
   //TODO:? re-write this whole thing using ASSEMBLE?
@@ -283,6 +340,8 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
         return false;
       }
     }
+    // Always force a grid content check after crafting
+    gridContentChanged = true;
     return true;
   }
 
@@ -295,17 +354,18 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   }
 
   private Recipe<CraftingContainer> findMatchingRecipe(ArrayList<ItemStack> itemStacksInGrid) {
+    if (level == null) return null;
+    
     IItemHandler gridHandler = this.gridCap.orElse(null);
+    if (gridHandler == null) return null;
+    
+    // Update the craft matrix with the current grid items
     for (int i = 0; i < gridHandler.getSlots(); i++) {
-      craftMatrix.setItem(i, gridHandler.getStackInSlot(i).copy());//fake items anyway. but also jus do a copy
+      craftMatrix.setItem(i, gridHandler.getStackInSlot(i).copy());
     }
-    List<CraftingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
-    for (CraftingRecipe rec : recipes) {
-      if (rec.matches(craftMatrix, level)) {
-        return rec;
-      }
-    }
-    return null;
+    
+    // Use the recipe manager's matching algorithm directly
+    return level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix, level).orElse(null);
   }
 
   public static class FakeContainer extends AbstractContainerMenu {
@@ -378,6 +438,9 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
     output.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("output")));
     gridCap.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("grid")));
     preview.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(tag.getCompound("preview")));
+    // Reset caching when loading
+    gridContentChanged = true;
+    cachedRecipe = null;
     super.load(tag);
   }
 
