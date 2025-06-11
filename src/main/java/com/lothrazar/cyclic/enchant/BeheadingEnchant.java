@@ -146,6 +146,9 @@ public class BeheadingEnchant extends EnchantmentFlib {
       else if (target.getType() == EntityType.WITHER_SKELETON) {
         ItemStackUtil.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL));
       }
+      else if (target.getType() == EntityType.PIGLIN) {
+        ItemStackUtil.drop(world, pos, new ItemStack(Items.PIGLIN_HEAD));
+      }
       else if (target.getType() == EntityType.WITHER) { //Drop number of heads equal to level of enchant [1,3] 
         ItemStackUtil.drop(world, pos, new ItemStack(Items.WITHER_SKELETON_SKULL, Math.max(level, 3)));
       }
