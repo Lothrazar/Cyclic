@@ -110,7 +110,7 @@ public class MultiJumpEnchant extends EnchantmentFlib {
   }
 
   public void onKeyInput(Player player) {
-    if (player == null || player.getVehicle() instanceof Boat) {
+    if (player == null || player.getVehicle() != null) {
       return;
     }
     ItemStack feet = getFirstArmorStackWithEnchant(player);
