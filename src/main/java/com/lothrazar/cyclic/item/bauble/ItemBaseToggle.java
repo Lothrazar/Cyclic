@@ -51,11 +51,10 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   @Override
   public boolean isOn(ItemStack held) {
     net.minecraft.world.item.component.CustomData customData = held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY);
-    if (customData.isEmpty()) {
-      return false;
+    if (customData.isEmpty() || !customData.copyTag().contains(NBT_STATUS)) {
+      return true; // Default to ON for newly crafted items
     }
-    return customData.copyTag().getInt(NBT_STATUS) == 0; //its flipped as 0 on, 1 off becuase! because we want teh default to be ON. so player can craft and use right away. 
-    //aka pickup and use instantly.  and then turning it off is optional later
+    return customData.copyTag().getInt(NBT_STATUS) == 0; // 0 is ON, 1 is OFF
   }
 
   @Override

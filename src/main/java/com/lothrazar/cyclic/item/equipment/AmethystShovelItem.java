@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class AmethystShovelItem extends ShovelItem {
 
   public AmethystShovelItem(Tier t, float f, float attackspeed, Properties prop) {
-    super(t, prop);
+    super(t, prop.attributes(ShovelItem.createAttributes(t, f, attackspeed)));
   }
 
   @Override

@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class AmethystHoeItem extends HoeItem {
 
   public AmethystHoeItem(Tier t, int db, float attackspeed, Properties prop) {
-    super(t, prop);
+    super(t, prop.attributes(HoeItem.createAttributes(t, db, attackspeed)));
   }
 
   @Override
