@@ -216,4 +216,16 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   public ItemStack getStackInputSlot(int slot) {
     return inputSlots.getStackInSlot(slot);
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

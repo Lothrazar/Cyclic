@@ -174,4 +174,10 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inputSlots;
+  }
+
 }

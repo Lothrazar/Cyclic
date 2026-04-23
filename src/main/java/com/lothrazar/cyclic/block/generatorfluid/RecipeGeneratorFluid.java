@@ -105,12 +105,20 @@ public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
 
   public static class SerializeGenerateFluid implements RecipeSerializer<RecipeGeneratorFluid> {
 
-    // TODO: implement proper codec/streamCodec with FluidTagIngredient/EnergyIngredient serialization
-    public static final MapCodec<RecipeGeneratorFluid> CODEC = MapCodec.unit(
-        new RecipeGeneratorFluid(new FluidTagIngredient(FluidStack.EMPTY, "minecraft:water", 1000), new EnergyIngredient(0, 0))
+    public static final MapCodec<RecipeGeneratorFluid> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+        FluidTagIngredient.CODEC.fieldOf("fluid").forGetter(r -> r.fluidIng),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfpertick(), r.getTicks()))
+    ).apply(instance, RecipeGeneratorFluid::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorFluid> STREAM_CODEC = StreamCodec.composite(
+        net.minecraft.network.codec.StreamCodec.composite(
+            net.neoforged.neoforge.fluids.FluidStack.OPTIONAL_STREAM_CODEC, f -> f.getFluidStack() == null ? net.neoforged.neoforge.fluids.FluidStack.EMPTY : f.getFluidStack(),
+            net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8, f -> f.getTag() == null ? "" : f.getTag(),
+            net.minecraft.network.codec.ByteBufCodecs.INT, f -> f.getAmount(),
+            (fs, tag, amount) -> new FluidTagIngredient(fs, tag.isEmpty() ? null : tag, amount)
+        ), r -> r.fluidIng,
+        EnergyIngredient.STREAM_CODEC, r -> new EnergyIngredient(r.getRfpertick(), r.getTicks()),
+        RecipeGeneratorFluid::new
     );
-    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorFluid> STREAM_CODEC =
-        StreamCodec.unit(new RecipeGeneratorFluid(new FluidTagIngredient(FluidStack.EMPTY, "minecraft:water", 1000), new EnergyIngredient(0, 0)));
 
     @Override
     public MapCodec<RecipeGeneratorFluid> codec() {

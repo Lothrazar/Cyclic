@@ -272,4 +272,16 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
   public boolean hasSapling() {
     return !this.inventory.getStackInSlot(0).isEmpty();
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

@@ -59,6 +59,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<Re
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;

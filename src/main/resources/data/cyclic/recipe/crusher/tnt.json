@@ -1,0 +1,34 @@
+{
+  "type": "cyclic:crusher",
+  "input": {
+    "item": "minecraft:tnt"
+  },
+  "energy": {
+    "ticks": 600,
+    "rfpertick": 40
+  },
+  "result": {
+    "count": 5,
+    "id": "minecraft:gunpowder"
+  },
+  "percent": 10,
+  "bonus": {
+    "item": "minecraft:sand",
+    "count": 3
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "c:mod_loaded"
+        },
+        {
+          "item": "cyclic:crusher",
+          "type": "c:item_exists"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

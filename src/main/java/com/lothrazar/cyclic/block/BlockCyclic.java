@@ -137,6 +137,22 @@ public class BlockCyclic extends EntityBlockFlib {
     return super.useItemOn(st,state, level, pos, player, hand, hit);
   }
 
+  @Override
+  protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    if (this.hasGui) {
+      if (!level.isClientSide) {
+        BlockEntity tileEntity = level.getBlockEntity(pos);
+        if (tileEntity instanceof MenuProvider mp) {
+          player.openMenu(mp, pos);
+        } else {
+          throw new IllegalStateException("Our named container provider is missing!");
+        }
+      }
+      return InteractionResult.SUCCESS;
+    }
+    return super.useWithoutItem(state, level, pos, player, hit);
+  }
+
   private void displayClientFluidMessage(Player player, IFluidHandler handler) {
     if (ClientConfigCyclic.FLUID_BLOCK_STATUS.get()) {
       player.displayClientMessage(Component.translatable(StringParseUtil.getFluidRatioName(handler)), true);

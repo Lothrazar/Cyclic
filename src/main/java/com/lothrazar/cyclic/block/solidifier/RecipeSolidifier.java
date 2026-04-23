@@ -28,7 +28,8 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
 
   public RecipeSolidifier(NonNullList<Ingredient> inList, FluidTagIngredient fluid, ItemStack result, EnergyIngredient energy) {
     this.energy = energy;
-    ingredients = inList;
+    ingredients = NonNullList.create();
+    ingredients.addAll(inList);
     while (ingredients.size() < 3) {
       ingredients.add(Ingredient.EMPTY);
     }
@@ -128,12 +129,24 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
 
   public static class SerializeSolidifier implements RecipeSerializer<RecipeSolidifier> {
 
-    // TODO: implement proper codec/streamCodec with ingredients/fluid/energy serialization
-    public static final MapCodec<RecipeSolidifier> CODEC = MapCodec.unit(
-        new RecipeSolidifier(NonNullList.create(), new FluidTagIngredient(FluidStack.EMPTY, "minecraft:water", 1000), ItemStack.EMPTY, new EnergyIngredient(0, 0))
+    public static final MapCodec<RecipeSolidifier> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+        Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
+        FluidTagIngredient.CODEC.fieldOf("mix").forGetter(r -> r.fluidIngredient),
+        ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
+    ).apply(instance, (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, result, energy)));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeSolidifier> STREAM_CODEC = StreamCodec.composite(
+        Ingredient.CONTENTS_STREAM_CODEC.apply(net.minecraft.network.codec.ByteBufCodecs.list()), r -> r.getIngredients(),
+        net.minecraft.network.codec.StreamCodec.composite(
+            net.neoforged.neoforge.fluids.FluidStack.OPTIONAL_STREAM_CODEC, f -> f.getFluidStack() == null ? net.neoforged.neoforge.fluids.FluidStack.EMPTY : f.getFluidStack(),
+            net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8, f -> f.getTag() == null ? "" : f.getTag(),
+            net.minecraft.network.codec.ByteBufCodecs.INT, f -> f.getAmount(),
+            (fs, tag, amount) -> new FluidTagIngredient(fs, tag.isEmpty() ? null : tag, amount)
+        ), r -> r.fluidIngredient,
+        ItemStack.OPTIONAL_STREAM_CODEC, r -> r.result,
+        EnergyIngredient.STREAM_CODEC, r -> r.getEnergy(),
+        (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, result, energy)
     );
-    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeSolidifier> STREAM_CODEC =
-        StreamCodec.unit(new RecipeSolidifier(NonNullList.create(), new FluidTagIngredient(FluidStack.EMPTY, "minecraft:water", 1000), ItemStack.EMPTY, new EnergyIngredient(0, 0)));
 
     @Override
     public MapCodec<RecipeSolidifier> codec() {

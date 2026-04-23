@@ -1,0 +1,29 @@
+{
+  "type": "cyclic:crusher",
+  "input": {
+    "item": "minecraft:light_blue_concrete"
+  },
+  "energy": {
+    "ticks": 60,
+    "rfpertick": 40
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:light_blue_concrete_powder"
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "c:mod_loaded"
+        },
+        {
+          "item": "cyclic:crusher",
+          "type": "c:item_exists"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

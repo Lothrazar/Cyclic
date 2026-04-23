@@ -72,6 +72,19 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     super(tileEntityTypeIn, pos, state);
   }
 
+  public IItemHandler getItemHandler(Direction side) {
+    return null;
+  }
+
+  public IFluidHandler getFluidHandler(Direction side) {
+    return null;
+  }
+
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return null;
+  }
+
+
   public int getTimer() {
     return timer;
   }

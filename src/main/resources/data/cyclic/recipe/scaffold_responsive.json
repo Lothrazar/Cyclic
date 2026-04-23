@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s s",
+    "sds",
+    "s s"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "d": {
+      "tag": "c:dyes/red"
+    }
+  },
+  "result": {
+    "count": 16,
+    "id": "cyclic:scaffold_responsive"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "tag": "minecraft:leaves"
+    }
+  ],
+  "mix": {
+    "tag": "c:biomass",
+    "amount": 50
+  },
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 20
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:rooted_dirt"
+  }
+}

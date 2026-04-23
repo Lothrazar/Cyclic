@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "mix": {
+    "tag": "c:experience",
+    "amount": 750
+  },
+  "energy": {
+    "rfpertick": 2000,
+    "ticks": 80
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:experience_bottle"
+  }
+}

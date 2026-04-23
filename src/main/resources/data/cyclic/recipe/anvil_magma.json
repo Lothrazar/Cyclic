@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ddd",
+    " s ",
+    "rfr"
+  ],
+  "key": {
+    "s": {
+      "tag": "c:storage_blocks/cobblestone"
+    },
+    "d": {
+      "item": "minecraft:magma_block"
+    },
+    "r": {
+      "item": "minecraft:obsidian"
+    },
+    "f": {
+      "item": "cyclic:fireball"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:anvil_magma"
+  }
+}

@@ -75,4 +75,10 @@ public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvid
   public int getField(int field) {
     return 0;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

@@ -190,4 +190,10 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
     float t = thick;
     return t / 100F;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

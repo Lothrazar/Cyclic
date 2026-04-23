@@ -155,4 +155,10 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
     }
     return false;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inputSlots;
+  }
+
 }

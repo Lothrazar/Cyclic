@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    " b ",
+    "ooo"
+  ],
+  "key": {
+    "b": {
+      "tag": "c:storage_blocks/flint"
+    },
+    "o": {
+      "item": "minecraft:blackstone"
+    },
+    "s": {
+      "item": "minecraft:creeper_head"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:altar_destruction"
+  }
+}

@@ -153,4 +153,16 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   public int getEnergyMax() {
     return TileAnvilAuto.MAX;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

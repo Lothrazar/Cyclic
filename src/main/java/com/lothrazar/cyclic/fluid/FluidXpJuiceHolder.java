@@ -31,10 +31,19 @@ public class FluidXpJuiceHolder {
                          FluidType.Properties.create().density(1024).viscosity(1024)
                                  .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                                  .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-                                 )
-
-
-
+                                 ) {
+           @Override
+           public void initializeClient(java.util.function.Consumer<net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions> consumer) {
+             consumer.accept(new net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions() {
+               @Override
+               public ResourceLocation getStillTexture() { return FLUID_STILL; }
+               @Override
+               public ResourceLocation getFlowingTexture() { return FLUID_FLOWING; }
+               @Override
+               public int getTintColor() { return COLOR | 0xFF000000; }
+             });
+           }
+         }
  );
 
 

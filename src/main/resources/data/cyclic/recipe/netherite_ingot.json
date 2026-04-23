@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:netherite_ingot"
+  }
+}

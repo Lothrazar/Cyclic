@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ww ",
+    "iew",
+    "iiw"
+  ],
+  "key": {
+    "e": {
+      "item": "cyclic:gem_amber"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "w": {
+      "item": "minecraft:spider_eye"
+    }
+  },
+  "result": {
+    "id": "cyclic:charm_antidote"
+  }
+}

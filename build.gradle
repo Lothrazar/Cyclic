@@ -102,10 +102,10 @@ repositories {
     maven { url = 'https://maven.blamejared.com' }
     maven { url = 'https://modmaven.dev'  }
 
-//    maven {
-//        name = "OctoStudios - curios continuation"
-//        url = uri("https://maven.octo-studios.com/#/releases")
-//    }
+    maven {
+        name = "OctoStudios - curios continuation"
+        url = uri("https://maven.octo-studios.com/releases")
+    }
     maven { url = 'https://dvs1.progwml6.com/files/maven/'  }
     maven { url = 'https://www.cursemaven.com'  }
 }
@@ -132,8 +132,8 @@ dependencies {
     // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
     // localRuntime "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
 
-    //   compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
-    //   localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
     compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
     localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"

@@ -41,6 +41,15 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   }
 
   @Override
+  public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level, Player player, net.minecraft.world.InteractionHand hand) {
+    ItemStack itemstack = player.getItemInHand(hand);
+    if (!level.isClientSide) {
+      this.toggle(player, itemstack);
+    }
+    return net.minecraft.world.InteractionResultHolder.success(itemstack);
+  }
+
+  @Override
   public void toggle(Player player, ItemStack held) {
     net.minecraft.world.item.component.CustomData customData = held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY);
     CompoundTag tag = customData.copyTag();

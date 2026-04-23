@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "sos",
+    " s "
+  ],
+  "key": {
+    "o": {
+      "tag": "c:dyes/orange"
+    },
+    "s": {
+      "item": "minecraft:white_terracotta"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:soundproofing"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "tag": "c:dyes/pink"
+    }
+  ],
+  "mix": {
+    "tag": "c:wax",
+    "amount": 100
+  },
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 120
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:pink_candle"
+  }
+}

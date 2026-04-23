@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:sponge"
+    },
+    {
+      "tag": "c:milk"
+    },
+    {
+      "tag": "c:dyes/magenta"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "cyclic:sponge_milk"
+  }
+}

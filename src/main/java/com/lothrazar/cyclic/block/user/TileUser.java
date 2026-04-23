@@ -234,4 +234,16 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerUser(i, level, worldPosition, playerInventory, playerEntity);
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return userSlots;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

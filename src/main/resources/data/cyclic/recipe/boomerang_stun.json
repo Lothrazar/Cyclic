@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " fd",
+    "dgf",
+    " fd"
+  ],
+  "key": {
+    "d": {
+      "tag": "c:nuggets/copper"
+    },
+    "g": {
+      "item": "minecraft:redstone"
+    },
+    "f": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:boomerang_stun"
+  }
+}

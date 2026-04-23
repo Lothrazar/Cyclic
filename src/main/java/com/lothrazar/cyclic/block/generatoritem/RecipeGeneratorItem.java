@@ -107,12 +107,15 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
 
   public static class SerializeGenerateItem implements RecipeSerializer<RecipeGeneratorItem> {
 
-    // TODO: implement proper codec/streamCodec with EnergyIngredient serialization
-    public static final MapCodec<RecipeGeneratorItem> CODEC = MapCodec.unit(
-        new RecipeGeneratorItem(Ingredient.EMPTY, new EnergyIngredient(0, 0))
+    public static final MapCodec<RecipeGeneratorItem> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+        Ingredient.CODEC.fieldOf("ingredient").forGetter(r -> r.at(0)),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()))
+    ).apply(instance, RecipeGeneratorItem::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> STREAM_CODEC = StreamCodec.composite(
+        Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
+        EnergyIngredient.STREAM_CODEC, r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()),
+        RecipeGeneratorItem::new
     );
-    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> STREAM_CODEC =
-        StreamCodec.unit(new RecipeGeneratorItem(Ingredient.EMPTY, new EnergyIngredient(0, 0)));
 
     @Override
     public MapCodec<RecipeGeneratorItem> codec() {

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ww ",
+    "iew",
+    "iiw"
+  ],
+  "key": {
+    "e": {
+      "item": "cyclic:gem_amber"
+    },
+    "i": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "w": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "id": "cyclic:charm_speed"
+  }
+}

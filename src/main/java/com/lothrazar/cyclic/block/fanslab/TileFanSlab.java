@@ -185,7 +185,7 @@ public class TileFanSlab extends TileBlockEntityCyclic {
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
           && entity instanceof Player) {
-        net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+        net.neoforged.neoforge.network.PacketDistributor.sendToServer(com.lothrazar.library.packet.PacketPlayerFalldamage.INSTANCE);
       }
     }
     return moved;

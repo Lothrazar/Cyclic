@@ -104,12 +104,19 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
 
   public static class SerializeCrusher implements RecipeSerializer<RecipeCrusher> {
 
-    // TODO: implement proper Codec/StreamCodec with EnergyIngredient/RandomizedOutputIngredient serialization
-    public static final MapCodec<RecipeCrusher> CODEC = MapCodec.unit(
-        new RecipeCrusher(Ingredient.EMPTY, new EnergyIngredient(0, 0), ItemStack.EMPTY, new RandomizedOutputIngredient(0, ItemStack.EMPTY))
+    public static final MapCodec<RecipeCrusher> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+        Ingredient.CODEC.fieldOf("ingredient").forGetter(r -> r.at(0)),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.energy),
+        ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
+        RandomizedOutputIngredient.CODEC.optionalFieldOf("bonus", new RandomizedOutputIngredient(0, ItemStack.EMPTY)).forGetter(r -> r.randOutput)
+    ).apply(instance, RecipeCrusher::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeCrusher> STREAM_CODEC = StreamCodec.composite(
+        Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
+        EnergyIngredient.STREAM_CODEC, r -> r.energy,
+        ItemStack.OPTIONAL_STREAM_CODEC, r -> r.result,
+        RandomizedOutputIngredient.STREAM_CODEC, r -> r.randOutput,
+        RecipeCrusher::new
     );
-    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeCrusher> STREAM_CODEC =
-        StreamCodec.unit(new RecipeCrusher(Ingredient.EMPTY, new EnergyIngredient(0, 0), ItemStack.EMPTY, new RandomizedOutputIngredient(0, ItemStack.EMPTY)));
 
     @Override
     public MapCodec<RecipeCrusher> codec() {

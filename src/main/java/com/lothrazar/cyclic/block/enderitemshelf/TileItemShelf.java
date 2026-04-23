@@ -61,4 +61,10 @@ public class TileItemShelf extends TileBlockEntityCyclic {
     }
     this.renderStyle = RenderTextType.values()[ord];
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

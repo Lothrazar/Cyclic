@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cyclic:tank"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "cyclic:tank"
+  }
+}

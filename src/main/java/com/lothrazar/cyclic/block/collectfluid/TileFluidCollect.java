@@ -244,4 +244,16 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     }
     return 0;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

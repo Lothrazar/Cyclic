@@ -186,4 +186,16 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     shape.add(getTargetPos());
     return shape;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

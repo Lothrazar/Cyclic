@@ -165,4 +165,16 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   public float getThick() {
     return 0.065F;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return gpsSlots;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

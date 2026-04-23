@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.capabilities;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.capabilities.chunk.ChunkDataStorage;
 import com.lothrazar.cyclic.capabilities.player.PlayerCapabilityStorage;
 import com.lothrazar.cyclic.net.PacketSyncManaToClient;
@@ -55,7 +54,6 @@ public class CyclicWorldSavedData extends SavedData {
   }
 
   // This function can be used to get access to the mana manager for a given level. It can only be called server-side!
-  @Nonnull
   public static CyclicWorldSavedData get(Level level) {
     if (level.isClientSide) {
       throw new RuntimeException("Don't access this client-side!");

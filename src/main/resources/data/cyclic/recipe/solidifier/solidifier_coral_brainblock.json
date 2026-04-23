@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:dead_brain_coral_block"
+    },
+    {
+      "item": "minecraft:brain_coral_block"
+    },
+    {
+      "item": "minecraft:dead_brain_coral_block"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 160
+  },
+  "mix": {
+    "id": "minecraft:water",
+    "amount": 100
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:brain_coral_block"
+  }
+}

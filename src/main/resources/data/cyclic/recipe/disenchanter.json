@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " a ",
+    "ete",
+    "ooo"
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:yellow_terracotta"
+    },
+    "a": {
+      "item": "cyclic:gem_obsidian"
+    },
+    "t": {
+      "item": "minecraft:enchanting_table"
+    },
+    "o": {
+      "item": "cyclic:obsidian_pressure_plate"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:disenchanter"
+  }
+}

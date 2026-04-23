@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "fff",
+    "sss"
+  ],
+  "key": {
+    "f": {
+      "item": "cyclic:fan"
+    },
+    "s": {
+      "tag": "c:storage_blocks/cobblestone"
+    }
+  },
+  "result": {
+    "count": 3,
+    "id": "cyclic:fan_slab"
+  }
+}

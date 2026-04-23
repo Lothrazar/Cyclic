@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cdc",
+    "c c"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:diamond_boots",
+      "data": 0
+    },
+    "c": {
+      "item": "cyclic:gem_obsidian"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:crystal_boots"
+  }
+}

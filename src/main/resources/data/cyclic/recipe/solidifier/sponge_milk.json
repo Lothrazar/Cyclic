@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "mix": {
+    "tag": "c:slime",
+    "amount": 100
+  },
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 120
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:lead"
+  }
+}

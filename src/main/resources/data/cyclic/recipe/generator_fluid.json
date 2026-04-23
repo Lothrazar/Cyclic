@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pip",
+    "cbc",
+    "pip"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:lava_bucket"
+    },
+    "i": {
+      "item": "minecraft:piston"
+    },
+    "b": {
+      "item": "minecraft:magma_block"
+    },
+    "c": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "result": {
+    "id": "cyclic:generator_fluid"
+  }
+}

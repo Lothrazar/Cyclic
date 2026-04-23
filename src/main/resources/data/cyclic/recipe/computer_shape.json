@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ipi",
+    "fof",
+    "ipi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:repeater"
+    },
+    "p": {
+      "tag": "c:storage_blocks/cobblestone"
+    },
+    "f": {
+      "item": "minecraft:iron_block"
+    },
+    "o": {
+      "item": "minecraft:green_concrete"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:computer_shape"
+  }
+}

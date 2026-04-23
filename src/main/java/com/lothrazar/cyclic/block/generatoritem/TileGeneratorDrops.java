@@ -187,4 +187,16 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   public int getEnergyMax() {
     return TileGeneratorDrops.MAX;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

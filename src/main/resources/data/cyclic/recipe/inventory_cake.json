@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_chest"
+    },
+    {
+      "item": "minecraft:pumpkin_pie"
+    },
+    {
+      "item": "minecraft:cake"
+    },
+    {
+      "item": "minecraft:cookie"
+    },
+    {
+      "tag": "c:nuggets/copper"
+    },
+    {
+      "item": "minecraft:poisonous_potato"
+    },
+    {
+      "tag": "c:gems/prismarine"
+    },
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "tag": "c:gems/quartz"
+    }
+  ],
+  "result": {
+    "id": "cyclic:inventory_cake"
+  }
+}

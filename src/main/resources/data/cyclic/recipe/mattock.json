@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ooo",
+    "oeo",
+    " e "
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:quartz_block"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "id": "cyclic:mattock"
+  }
+}

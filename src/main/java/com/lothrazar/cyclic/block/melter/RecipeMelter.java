@@ -23,7 +23,8 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
 
   public RecipeMelter(NonNullList<Ingredient> ingredientsIn, FluidStack out, EnergyIngredient energy) {
     this.energy = energy;
-    ingredients = ingredientsIn;
+    ingredients = NonNullList.create();
+    ingredients.addAll(ingredientsIn);
     while (ingredients.size() < 2) {
       ingredients.add(Ingredient.EMPTY);
     }
@@ -112,12 +113,17 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
 
   public static class SerializeMelter implements RecipeSerializer<RecipeMelter> {
 
-    // TODO: implement proper codec/streamCodec using EnergyIngredient/FluidStack serialization
-    public static final MapCodec<RecipeMelter> CODEC = MapCodec.unit(
-        new RecipeMelter(NonNullList.create(), FluidStack.EMPTY, new EnergyIngredient(0, 0))
+    public static final MapCodec<RecipeMelter> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+        Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
+        FluidStack.CODEC.fieldOf("result").forGetter(r -> r.getRecipeFluid()),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
+    ).apply(instance, (ingredients, fluid, energy) -> new RecipeMelter(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, energy)));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeMelter> STREAM_CODEC = StreamCodec.composite(
+        Ingredient.CONTENTS_STREAM_CODEC.apply(net.minecraft.network.codec.ByteBufCodecs.list()), r -> r.getIngredients(),
+        FluidStack.OPTIONAL_STREAM_CODEC, r -> r.getRecipeFluid(),
+        EnergyIngredient.STREAM_CODEC, r -> r.getEnergy(),
+        (ingredients, fluid, energy) -> new RecipeMelter(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, energy)
     );
-    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeMelter> STREAM_CODEC =
-        StreamCodec.unit(new RecipeMelter(NonNullList.create(), FluidStack.EMPTY, new EnergyIngredient(0, 0)));
 
     @Override
     public MapCodec<RecipeMelter> codec() {

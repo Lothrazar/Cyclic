@@ -10,7 +10,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
+import net.minecraft.client.gui.components.Button;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
@@ -89,7 +89,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     gg.blit(TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);//todo; use screenbase?
   }
 
-  private class ToggleButton extends ExtendedButton {
+  private class ToggleButton extends Button {
 
     List<Component> titles;
     List<Component> tooltips;
@@ -99,7 +99,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     int index;
 
     public ToggleButton(int x, int y, CompoundTag nbt, StringTag key, Tag defaultValue, Component defaultTitle, Component defaultTooltip) {
-      super(x, y, 0, 20, defaultTitle, (p -> {}));
+      super(x, y, 0, 20, defaultTitle, (p -> {}), Button.DEFAULT_NARRATION);
       this.width = ScreenStorageBag.this.font.width(defaultTitle.getString()) + 8;
       index = 0;
       titles = new LinkedList<>();

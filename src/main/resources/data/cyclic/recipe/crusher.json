@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pip",
+    "cbc",
+    "pip"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:stonecutter"
+    },
+    "b": {
+      "tag": "c:storage_blocks/flint"
+    },
+    "i": {
+      "tag": "c:nuggets/copper"
+    },
+    "p": {
+      "tag": "c:storage_blocks/cobblestone"
+    }
+  },
+  "result": {
+    "id": "cyclic:crusher"
+  }
+}

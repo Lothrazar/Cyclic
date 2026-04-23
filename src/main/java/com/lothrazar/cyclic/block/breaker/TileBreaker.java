@@ -164,4 +164,10 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
   public int getEnergyMax() {
     return MAX;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

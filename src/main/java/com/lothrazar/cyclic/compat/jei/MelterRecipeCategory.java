@@ -59,6 +59,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<Recipe
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;

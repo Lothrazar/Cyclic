@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ww ",
+    "iew",
+    "iiw"
+  ],
+  "key": {
+    "e": {
+      "item": "cyclic:gem_amber"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "w": {
+      "item": "minecraft:wither_rose"
+    }
+  },
+  "result": {
+    "id": "cyclic:charm_wither"
+  }
+}

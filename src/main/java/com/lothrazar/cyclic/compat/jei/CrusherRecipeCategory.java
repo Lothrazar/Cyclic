@@ -53,6 +53,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;

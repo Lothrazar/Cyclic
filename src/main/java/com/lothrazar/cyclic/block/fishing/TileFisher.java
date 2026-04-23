@@ -176,4 +176,10 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
     }
     return 0;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

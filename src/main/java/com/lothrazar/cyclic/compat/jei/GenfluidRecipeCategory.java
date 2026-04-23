@@ -46,6 +46,7 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<Reci
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;

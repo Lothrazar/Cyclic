@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
-import javax.annotation.Nonnull;
 
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.gui.ContainerBase;
@@ -47,7 +46,7 @@ public class ContainerFilterCard extends ContainerBase {
         this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
 
           @Override
-          public boolean mayPlace(@Nonnull ItemStack stack) {
+          public boolean mayPlace(ItemStack stack) {
             if (stack.getItem() == ItemRegistry.FILTER_DATA.get()) {
               return false;
             }

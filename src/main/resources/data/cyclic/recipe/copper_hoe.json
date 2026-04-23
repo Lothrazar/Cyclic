@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " cc",
+    " d ",
+    " d "
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:stick"
+    },
+    "c": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:copper_hoe"
+  }
+}

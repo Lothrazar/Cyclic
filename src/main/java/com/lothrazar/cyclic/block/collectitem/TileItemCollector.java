@@ -192,4 +192,10 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
     }
     return 0;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

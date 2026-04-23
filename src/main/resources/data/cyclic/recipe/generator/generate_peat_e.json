@@ -1,0 +1,25 @@
+{
+  "type": "cyclic:generator_item",
+  "fuel": {
+    "item": "cyclic:peat_fuel_enriched"
+  },
+  "energy": {
+    "ticks": 1000,
+    "rfpertick": 1000
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "c:mod_loaded"
+        },
+        {
+          "item": "cyclic:generator_item",
+          "type": "c:item_exists"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

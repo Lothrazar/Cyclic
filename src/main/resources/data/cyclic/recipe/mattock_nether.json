@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ooo",
+    "oeo",
+    " e "
+  ],
+  "key": {
+    "e": {
+      "tag": "c:nuggets/netherite"
+    },
+    "o": {
+      "item": "cyclic:gem_obsidian"
+    }
+  },
+  "result": {
+    "id": "cyclic:mattock_nether"
+  }
+}

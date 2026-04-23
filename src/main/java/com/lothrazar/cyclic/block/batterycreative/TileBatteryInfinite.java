@@ -131,4 +131,10 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
       break;
     }
   }
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

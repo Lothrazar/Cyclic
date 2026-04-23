@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:cobblestone"
+    },
+    {
+      "tag": "c:cobblestone"
+    },
+    {
+      "tag": "c:cobblestone"
+    }
+  ],
+  "energy": {
+    "rfpertick": 1500,
+    "ticks": 300
+  },
+  "mix": {
+    "id": "minecraft:lava",
+    "amount": 800
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:obsidian"
+  }
+}

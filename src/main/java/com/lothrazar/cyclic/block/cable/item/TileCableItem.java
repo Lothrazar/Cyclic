@@ -158,4 +158,12 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerCableItem(i, level, worldPosition, playerInventory, playerEntity);
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    if (side != null && !CableBase.isCableBlocked(this.getBlockState(), side)) {
+      return flow.get(side);
+    }
+    return null;
+  }
 }

@@ -40,8 +40,7 @@ public class FluidSlimeHolder {
 //          return FLUID_FLOWING;
 //        }
 //
-//        //        @Nullable
-//        @Override
+//        //        //        @Override
 //        public ResourceLocation getOverlayTexture() {
 //          return null;
 //        }

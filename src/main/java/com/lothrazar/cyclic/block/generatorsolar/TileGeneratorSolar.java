@@ -123,4 +123,10 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic implements MenuPro
       break;
     }
   }
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

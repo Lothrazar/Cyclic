@@ -253,4 +253,16 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     tag.put(NBTINV, inventory.serializeNBT(registries));
     super.saveAdditional(tag,registries);
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

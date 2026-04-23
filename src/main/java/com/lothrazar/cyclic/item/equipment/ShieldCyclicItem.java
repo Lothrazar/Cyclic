@@ -84,6 +84,7 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
     return InteractionResultHolder.consume(itemstack);
   }
 
+  @SuppressWarnings("removal")
   @Override
   public void initializeClient(java.util.function.Consumer<net.neoforged.neoforge.client.extensions.common.IClientItemExtensions> consumer) {
     consumer.accept(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {

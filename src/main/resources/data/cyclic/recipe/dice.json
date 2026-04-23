@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sts",
+    "t t",
+    "sts"
+  ],
+  "key": {
+    "t": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "s": {
+      "tag": "c:storage_blocks/cobblestone"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:dice"
+  }
+}

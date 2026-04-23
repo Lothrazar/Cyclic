@@ -150,7 +150,7 @@ public class FilterCardItem extends ItemBaseCyclic {
     CompoundTag nbt = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
     FluidStack fluidStack = FilterCardItem.getFluidStack(stack);
     if (!fluidStack.isEmpty()) {
-      nbt.putString("fluidTooltip", fluidStack.getDisplayName().getString());
+      nbt.putString("fluidTooltip", fluidStack.getHoverName().getString());
     }
     net.neoforged.neoforge.items.IItemHandler cap = stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
     //on server  this runs . also has correct values.

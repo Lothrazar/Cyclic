@@ -295,4 +295,16 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   private int getTimerSeconds() {
     return timer / 20;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return filter;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

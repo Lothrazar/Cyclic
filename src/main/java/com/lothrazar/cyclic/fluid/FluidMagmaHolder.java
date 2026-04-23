@@ -41,8 +41,7 @@ public class FluidMagmaHolder {
 //          return FLUID_STILL;
 //        }
 //
-//        //        @Nullable
-//        @Override
+//        //        //        @Override
 //        public ResourceLocation getOverlayTexture() {
 //          return null;
 //        }

@@ -47,6 +47,7 @@ public class PackagerRecipeCategory implements IRecipeCategory<RecipeHolder<Craf
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;

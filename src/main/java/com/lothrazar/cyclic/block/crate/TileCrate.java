@@ -54,4 +54,10 @@ public class TileCrate extends TileBlockEntityCyclic implements MenuProvider {
   public int getField(int field) {
     return 0;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

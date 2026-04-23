@@ -65,7 +65,7 @@ public class ItemBlockCask extends BlockItem {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null && !fs.isEmpty()) {
         MutableComponent t = Component.translatable(
-            fs.getDisplayName().getString()
+            fs.getHoverName().getString()
                 + " " + fs.getAmount()
                 + "/" + storage.getTankCapacity(0));
         t.withStyle(ChatFormatting.GRAY);

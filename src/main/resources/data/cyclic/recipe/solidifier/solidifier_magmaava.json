@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    },
+    {
+      "item": "minecraft:gravel"
+    },
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 220
+  },
+  "mix": {
+    "id": "minecraft:lava",
+    "amount": 1000
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:magma_block"
+  }
+}

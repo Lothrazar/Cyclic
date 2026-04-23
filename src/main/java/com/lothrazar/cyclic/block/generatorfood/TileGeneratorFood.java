@@ -167,4 +167,16 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
   public int getEnergyMax() {
     return TileGeneratorFood.MAX;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

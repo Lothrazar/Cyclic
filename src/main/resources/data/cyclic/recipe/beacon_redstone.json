@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "s s",
+    "bcb"
+  ],
+  "key": {
+    "b": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "c": {
+      "item": "minecraft:amethyst_block"
+    },
+    "s": {
+      "tag": "c:glass/dark"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:beacon_redstone"
+  }
+}

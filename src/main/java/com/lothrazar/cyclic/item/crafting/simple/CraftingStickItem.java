@@ -20,7 +20,7 @@ public class CraftingStickItem extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-      ((net.minecraft.server.level.ServerPlayer) playerIn).openMenu(new CraftingStickContainerProvider(slot), playerIn.blockPosition());
+      ((net.minecraft.server.level.ServerPlayer) playerIn).openMenu(new CraftingStickContainerProvider(slot), buf -> buf.writeInt(slot));
     }
     return super.use(worldIn, playerIn, handIn);
   }

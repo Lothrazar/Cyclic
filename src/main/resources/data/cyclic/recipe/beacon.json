@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sbs",
+    "ooo"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:beacon"
+    },
+    "o": {
+      "tag": "c:storage_blocks/emerald"
+    },
+    "s": {
+      "tag": "c:glass/dark"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:beacon"
+  }
+}

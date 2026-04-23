@@ -185,4 +185,13 @@ public class TileCableEnergy extends TileCableBase {
       energyLastSynced = currentEnergy;
     }
   }
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    if (side != null && !CableBase.isCableBlocked(this.getBlockState(), side)) {
+      return energy;
+    }
+    return null;
+  }
+
 }

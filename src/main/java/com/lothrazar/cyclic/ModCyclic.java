@@ -35,6 +35,8 @@ public class ModCyclic {
 
   public ModCyclic(IEventBus bus, Dist dist, ModContainer container) {
 
+    com.lothrazar.cyclic.registry.MaterialRegistry.ARMOR_MATERIALS.register(bus);
+    com.lothrazar.cyclic.registry.MaterialRegistry.setup();
     bus.addListener(EventRegistry::setup);
     bus.addListener(com.lothrazar.cyclic.registry.PacketRegistry::setup);
     if (dist.isClient()) {
