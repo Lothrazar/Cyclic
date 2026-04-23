@@ -45,6 +45,16 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
   }
 
   @Override
+  public ItemStack getItem() {
+    try {
+      ItemStack itemstack = this.getEntityData().get(DATA_ITEM_STACK);
+      return (itemstack == null || itemstack.isEmpty()) ? new ItemStack(this.getDefaultItem()) : itemstack;
+    } catch (Exception e) {
+      return new ItemStack(this.getDefaultItem());
+    }
+  }
+
+  @Override
   protected void onHit(HitResult result) {
     HitResult.Type type = result.getType();
     SimpleParticleType particleType = null;
