@@ -30,22 +30,22 @@ public class ScreenClock extends ScreenBase<ContainerClock> {
     y = topPos + 26;
     GuiSliderInteger dur = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 200, menu.tile.getField(f)));
-    dur.setTooltip("cyclic.clock.duration");
+    dur.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("cyclic.clock.duration")));
     y += h + 1;
     f = TileRedstoneClock.Fields.DELAY.ordinal();
     GuiSliderInteger delay = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 200, menu.tile.getField(f)));
-    delay.setTooltip("cyclic.clock.delay");
+    delay.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("cyclic.clock.delay")));
     y += h + 1;
     f = TileRedstoneClock.Fields.POWER.ordinal();
     GuiSliderInteger power = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 15, menu.tile.getField(f)));
-    power.setTooltip("cyclic.clock.power");
+    power.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("cyclic.clock.power")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

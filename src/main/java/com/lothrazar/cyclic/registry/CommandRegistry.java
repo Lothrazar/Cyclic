@@ -240,25 +240,25 @@ public class CommandRegistry {
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer(-10000, 10000))
                             .executes(x -> {
-                              return AttributesUtil.add(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
+                              return AttributesUtil.add(ResourceArgument.getResource(x, ARG_ATTR, net.minecraft.core.registries.Registries.ATTRIBUTE), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                             }))))
                 .then(Commands.literal(FORK_RANDOM)
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_MIN, IntegerArgumentType.integer(-10000, 10000))
                             .then(Commands.argument(ARG_MAX, IntegerArgumentType.integer(-10000, 10000))
                                 .executes(x -> {
-                                  return AttributesUtil.addRandom(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_MIN), IntegerArgumentType.getInteger(x, ARG_MAX));
+                                  return AttributesUtil.addRandom(ResourceArgument.getResource(x, ARG_ATTR, net.minecraft.core.registries.Registries.ATTRIBUTE), EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_MIN), IntegerArgumentType.getInteger(x, ARG_MAX));
                                 })))))
                 .then(Commands.literal(FORK_FACTOR)
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .then(Commands.argument(ARG_VALUE, DoubleArgumentType.doubleArg(0, 100))
                             .executes(x -> {
-                              return AttributesUtil.multiply(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER), DoubleArgumentType.getDouble(x, ARG_VALUE));
+                              return AttributesUtil.multiply(ResourceArgument.getResource(x, ARG_ATTR, net.minecraft.core.registries.Registries.ATTRIBUTE), EntityArgument.getPlayers(x, ARG_PLAYER), DoubleArgumentType.getDouble(x, ARG_VALUE));
                             }))))
                 .then(Commands.literal(FORK_RESET)
                     .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                         .executes(x -> {
-                          return AttributesUtil.reset(ResourceArgument.getAttribute(x, ARG_ATTR).get(), EntityArgument.getPlayers(x, ARG_PLAYER));
+                          return AttributesUtil.reset(ResourceArgument.getResource(x, ARG_ATTR, net.minecraft.core.registries.Registries.ATTRIBUTE), EntityArgument.getPlayers(x, ARG_PLAYER));
                         })))))
         // cyclic gamemode @p 1
         .then(Commands.literal(CyclicCommands.GAMEMODE.toString())

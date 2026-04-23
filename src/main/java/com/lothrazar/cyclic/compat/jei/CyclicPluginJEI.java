@@ -86,12 +86,12 @@ public class CyclicPluginJEI implements IModPlugin {
     ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
     RecipeManager rm = world.getRecipeManager();
     registry.addRecipes(RecipeTypes.CRAFTING, rm.getAllRecipesFor(RecipeType.CRAFTING));
-    registry.addRecipes(MelterRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.MELTER.get())));
-    registry.addRecipes(SolidifierRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.SOLID.get())));
-    registry.addRecipes(GenitemRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get())));
-    registry.addRecipes(GenfluidRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get())));
-    registry.addRecipes(CrusherRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get())));
-    registry.addRecipes(PackagerRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(RecipeType.CRAFTING)));
+    registry.addRecipes(MelterRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.MELTER.get()));
+    registry.addRecipes(SolidifierRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.SOLID.get()));
+    registry.addRecipes(GenitemRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get()));
+    registry.addRecipes(GenfluidRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get()));
+    registry.addRecipes(CrusherRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get()));
+    registry.addRecipes(PackagerRecipeCategory.TYPE, rm.getAllRecipesFor(RecipeType.CRAFTING));
     for (var item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {

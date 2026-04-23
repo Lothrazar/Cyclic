@@ -17,11 +17,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-//import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 
 public class MagmaFluidBlock extends LiquidBlock {
 
-  public static class Flowing extends ForgeFlowingFluid.Flowing {
+  public static class Flowing extends BaseFlowingFluid.Flowing {
 
     public Flowing(Properties properties) {
       super(properties);
@@ -38,7 +38,7 @@ public class MagmaFluidBlock extends LiquidBlock {
     }
   }
 
-  public static class Source extends ForgeFlowingFluid.Source {
+  public static class Source extends BaseFlowingFluid.Source {
 
     public Source(Properties properties) {
       super(properties);
@@ -58,7 +58,7 @@ public class MagmaFluidBlock extends LiquidBlock {
   VoxelShape shapes[] = new VoxelShape[16];
 
   public MagmaFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
-    super(supplier, props);
+    super(supplier.get(), props);
     int max = 15; //max of the property LEVEL.getAllowedValues()
     float offset = 0.875F;
     for (int i = 0; i <= max; i++) { //x and z go from [0,1] 
@@ -85,9 +85,9 @@ public class MagmaFluidBlock extends LiquidBlock {
       LivingEntity ent = (LivingEntity) entityIn;
       if (ent.isOnFire() == false
           && ent.fireImmune() == false) {
-        int level = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_PROTECTION, ent);
+        int level = 0; // TODO: use EnchantmentHelper.getTagEnchantmentLevel with registries
         if (level < 4) {
-          ent.setSecondsOnFire(Mth.floor(worldIn.random.nextDouble() * 10));
+          ent.igniteForSeconds(Mth.floor(worldIn.random.nextDouble() * 10));
         }
       }
     }

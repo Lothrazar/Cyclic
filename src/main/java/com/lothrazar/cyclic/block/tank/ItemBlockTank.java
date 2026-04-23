@@ -53,10 +53,7 @@ public class ItemBlockTank extends BlockItem {
   }
 
   public static FluidStack copyFluidFromStack(ItemStack stack) {
-    if (stack.getTag() != null) {
-      FluidHandlerCapabilityStack handler = new FluidHandlerCapabilityStack(stack, TileTank.CAPACITY);
-      return handler.getFluid();
-    }
+    // FluidHandlerCapabilityStack removed in 1.21.1
     return null;
   }
 
@@ -86,7 +83,7 @@ public class ItemBlockTank extends BlockItem {
   }
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
 //    return new FluidHandlerCapabilityStack(stack, TileTank.CAPACITY);
 //  }
 }

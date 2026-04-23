@@ -206,18 +206,18 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
           && entity instanceof Player p) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+        net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
     return moved;
   }
 
   @Override
-  public void load(CompoundTag tag, HolderLookup.Provider registries) {
+  public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
     filter.deserializeNBT(registries,tag.getCompound("filter"));
     speed = tag.getInt("speed");
     range = tag.getInt("range");
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -225,7 +225,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
     tag.put("filter", filter.serializeNBT(registries));
     tag.putInt("speed", speed);
     tag.putInt("range", range);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.SoundUtil;
@@ -54,8 +54,8 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
         return stack.getItem() == Items.BOOK;
       }
       else if (slot == SLOT_INPUT) {
-        Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
-        return enchants != null && enchants.size() > 0;
+        net.minecraft.world.item.enchantment.ItemEnchantments enchants = stack.getOrDefault(net.minecraft.core.component.DataComponents.ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
+        return enchants != null && !enchants.isEmpty();
       }
       return stack.getItem() == Items.ENCHANTED_BOOK;
     }
@@ -63,15 +63,15 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   public static final int CAPACITY = 16 * FluidType.BUCKET_VOLUME;
   ItemStackHandler outputSlots = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-//  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+// //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
   public static ModConfigSpec.IntValue POWERCONF;
   public static ModConfigSpec.IntValue FLUIDCOST;
-//  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
+// //  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
-//  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+// //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileDisenchant(BlockPos pos, BlockState state) {
     super(TileRegistry.DISENCHANTER.get(), pos, state);
@@ -109,7 +109,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     //input is size 1, at least one book exists, and output IS empty
-    Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer> newLinkedHashMap();
+    /*
     Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(input);
     Enchantment keyMoved = null;
     for (Map.Entry<Enchantment, Integer> entry : inputEnchants.entrySet()) {
@@ -168,13 +168,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     inputEnchants = EnchantmentHelper.getEnchantments(input);
     if (!input.isEmpty() && inputEnchants.size() == 0) {
       //hey we done, bump it over to the ALL NEW finished slot
-      if (outputSlots.getStackInSlot(1).isEmpty()) {
-        //only if there is space, then do it
-        outputSlots.insertItem(1, input.copy(), false);
-        inputSlots.extractItem(SLOT_INPUT, 64, false);
-      }
-      //delete input
-    }
+      }*/
   }
 
   @Override
@@ -198,7 +192,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
     energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -208,7 +202,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

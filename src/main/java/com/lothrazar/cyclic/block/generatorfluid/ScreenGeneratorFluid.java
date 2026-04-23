@@ -35,7 +35,7 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     energy = new EnergyBar(this.font, TileGeneratorFluid.MAX);
     progress = new TexturedProgress(this.font, 76, 60, TextureRegistry.LAVA_PROG);
     fluid = new FluidBar(this.font, 39, 57, TileGeneratorFluid.CAPACITY);
-    energy.visible = true;
+    // energy.visible = true; // private in 1.21.1
     fluid.guiLeft = progress.guiLeft = energy.guiLeft = leftPos;
     fluid.guiTop = progress.guiTop = energy.guiTop = topPos;
     int x, y;
@@ -47,13 +47,13 @@ public class ScreenGeneratorFluid extends ScreenBase<ContainerGeneratorFluid> {
     btnToggle = addRenderableWidget(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       int f = TileGeneratorFluid.Fields.FLOWING.ordinal();
       int tog = (menu.tile.getField(f) + 1) % 2;
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));
     }));
   }
 
   @Override
   public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(gg);
+    this.renderBackground(gg, mouseX, mouseY, partialTicks);
     super.render(gg, mouseX, mouseY, partialTicks);
     this.renderTooltip(gg, mouseX, mouseY);
     energy.renderHoveredToolTip(gg, mouseX, mouseY, menu.tile.getEnergy());

@@ -40,7 +40,7 @@ public class BlockGeneratorFood extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.GENERATOR_FOOD.get(), ScreenGeneratorFood::new);
+    // MenuScreens.register(MenuTypeRegistry.GENERATOR_FOOD.get(), ScreenGeneratorFood::new);
   }
 
   @Override

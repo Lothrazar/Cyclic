@@ -55,9 +55,9 @@ public class TileTerraPreta extends TileBlockEntityCyclic {
       try {
         ServerLevel sw = (ServerLevel) world;
         if (d >= 1 || world.random.nextDouble() < d) {
-          block.randomTick(bState, sw, current, world.random); // its protected now
-          block.randomTick(bState, sw, current, world.random);
-          block.randomTick(bState, sw, current, world.random);
+          bState.randomTick(sw, current, world.random);
+          bState.randomTick(sw, current, world.random);
+          bState.randomTick(sw, current, world.random);
         }
       }
       catch (Exception e) {

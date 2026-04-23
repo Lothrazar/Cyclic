@@ -21,7 +21,7 @@ public class StructureCard extends ItemBaseCyclic {
   }
 
   public static ResourceLocation readDisk(ItemStack item) {
-    CompoundTag tag = item.getOrCreateTag();
+    CompoundTag tag = item.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
     if (!tag.contains(NBTSTRUCTURE)) {
       return null;
     }
@@ -29,20 +29,21 @@ public class StructureCard extends ItemBaseCyclic {
   }
 
   public static void deleteDisk(ItemStack item) {
-    item.setTag(null);
+    item.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
   }
 
   public static void saveDisk(ItemStack item, ResourceLocation saved) {
-    CompoundTag tag = item.getOrCreateTag();
+    CompoundTag tag = item.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
     tag.putString(NBTSTRUCTURE, saved.toString());
+    item.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
   }
 
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    if (stack.hasTag()) {
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
       MutableComponent t = Component.translatable(
-          stack.getTag().getString(NBTSTRUCTURE));
+          stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(NBTSTRUCTURE));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }

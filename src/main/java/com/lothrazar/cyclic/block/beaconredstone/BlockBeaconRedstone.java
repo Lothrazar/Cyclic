@@ -24,11 +24,6 @@ public class BlockBeaconRedstone extends BlockCyclic {
   }
 
   @Override
-  public float[] getBeaconColorMultiplier(BlockState state, LevelReader level, BlockPos pos, BlockPos beaconPos) {
-    return COLOR;
-  }
-
-  @Override
   public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
     return true;
   }

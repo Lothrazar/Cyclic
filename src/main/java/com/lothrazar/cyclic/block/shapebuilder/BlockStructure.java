@@ -26,7 +26,7 @@ public class BlockStructure extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.STRUCTURE.get(), ScreenStructure::new);
+    // MenuScreens.register(MenuTypeRegistry.STRUCTURE.get(), ScreenStructure::new);
   }
 
   @Override

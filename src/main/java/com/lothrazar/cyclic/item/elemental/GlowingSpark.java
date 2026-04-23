@@ -42,17 +42,14 @@ public class GlowingSpark extends ItemBaseCyclic {
     super(properties);
   }
 
-  @Override
-  public Rarity getRarity(ItemStack stack) {
-    return Rarity.UNCOMMON;
-  }
+  
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
     InteractionHand hand = context.getHand();
     BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
-    ItemStack held = player.getItemInHand(hand);
+    ItemStack held = player.getMainHandItem();
     //can place
     BlockState blockState = context.getLevel().getBlockState(pos);
     if (blockState.is(Blocks.LIGHT)) {

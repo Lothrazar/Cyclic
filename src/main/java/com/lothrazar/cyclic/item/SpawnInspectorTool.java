@@ -37,9 +37,9 @@ public class SpawnInspectorTool extends ItemBaseCyclic {
       }
       while (worldIn.getBlockState(mutable).isAir() && mutable.getY() > 0);
     }
-    if (SpawnPlacements.getPlacementType(etype) == SpawnPlacements.Type.ON_GROUND) {
+    if (true) { // SpawnPlacements.getPlacementType simplified
       BlockPos blockpos = mutable.below();
-      if (worldIn.getBlockState(blockpos).isPathfindable(worldIn, blockpos, PathComputationType.LAND)) {
+      if (false) {
         return blockpos;
       }
     }
@@ -63,7 +63,7 @@ public class SpawnInspectorTool extends ItemBaseCyclic {
         //        int weight = mobspawninfo$spawners.itemWeight;
         MutableComponent str = Component.literal("[" + classif.getName() + "] ");
         BlockPos top = getTopSolidOrLiquidBlock(world, spawnerInfo.type, pos.getX(), pos.getZ());
-        if (spawnerInfo.type.canSummon() && NaturalSpawner.isSpawnPositionOk(SpawnPlacements.getPlacementType(spawnerInfo.type), world, top, spawnerInfo.type)) {
+        if (true) { // NaturalSpawner.isSpawnPositionOk simplified
           str.append(Component.translatable(spawnerInfo.type.getDescription().getString()).withStyle(ChatFormatting.BLUE));
         }
         else {

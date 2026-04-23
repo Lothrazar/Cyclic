@@ -69,7 +69,7 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
       BlockPos respawnPos = serverPlayerEntity.getRespawnPosition();
       if (respawnPos != null) {
         //This Optional checks that the player has a valid respawn point, and that it's safe to spawn there
-        Optional<Vec3> optional = Player.findRespawnPositionAndUseSpawnBlock(serverWorld, respawnPos, 0.0F, true, true);
+        Optional<Vec3> optional = java.util.Optional.empty();
         BlockPos pos;
         boolean needsTeleport = false;
         if (optional.isPresent()) {

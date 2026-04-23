@@ -37,7 +37,7 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidType.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, f -> true);
-//  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+// //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   public ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override

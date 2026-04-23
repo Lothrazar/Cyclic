@@ -6,74 +6,72 @@ import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.world.scores.Objective;
-import net.minecraft.world.scores.Score;
+import net.minecraft.world.scores.ReadOnlyScoreInfo;
+import net.minecraft.world.scores.ScoreAccess;
+import net.minecraft.world.scores.ScoreHolder;
 import net.minecraft.world.scores.Scoreboard;
 
 public class CommandScoreboard {
 
-  public static int scoreboardRngTest(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective) {
+  public static int scoreboardRngTest(CommandContext<CommandSourceStack> x, Collection<ScoreHolder> scoreHolderTargets, Objective objective) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
     int i = 0;
-    for (String s : scoreHolderTargets) {
-      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
-      ModCyclic.LOGGER.error("[test cmd]" + score.getScore());
-      i += score.getScore();
+    for (ScoreHolder holder : scoreHolderTargets) {
+      ScoreAccess score = scoreboard.getOrCreatePlayerScore(holder, objective);
+      ModCyclic.LOGGER.error("[test cmd]" + score.get());
+      i += score.get();
     }
     return i;
   }
 
-  public static int scoreboardAdd(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int integer) {
+  public static int scoreboardAdd(CommandContext<CommandSourceStack> x, Collection<ScoreHolder> scoreHolderTargets, Objective objective, int integer) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
     int i = 0;
-    for (String s : scoreHolderTargets) {
-      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
-      score.add(integer);
-      ModCyclic.LOGGER.info("objective add " + score.getScore());
-      i += score.getScore();
+    for (ScoreHolder holder : scoreHolderTargets) {
+      ScoreAccess score = scoreboard.getOrCreatePlayerScore(holder, objective);
+      score.set(score.get() + integer);
+      ModCyclic.LOGGER.info("objective add " + score.get());
+      i += score.get();
     }
     return i;
   }
 
   // orandom for darkosto
-  // /cyclic scoreboard orandom @p testmin testmax abc 
-  // use scoreboard setup and /cyclic scoreboard test to debug
-  public static int scoreboardObjectiveRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, Objective omin, Objective omax) {
+  public static int scoreboardObjectiveRng(CommandContext<CommandSourceStack> x, Collection<ScoreHolder> scoreHolderTargets, Objective objective, Objective omin, Objective omax) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
     int i = 0;
-    for (String s : scoreHolderTargets) {
-      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
-      Score scoreMin = scoreboard.getOrCreatePlayerScore(s, omin);
-      Score scoreMax = scoreboard.getOrCreatePlayerScore(s, omax);
-      int min = scoreMin.getScore();
-      int max = scoreMax.getScore();
+    for (ScoreHolder holder : scoreHolderTargets) {
+      ScoreAccess score = scoreboard.getOrCreatePlayerScore(holder, objective);
+      ScoreAccess scoreMin = scoreboard.getOrCreatePlayerScore(holder, omin);
+      ScoreAccess scoreMax = scoreboard.getOrCreatePlayerScore(holder, omax);
+      int min = scoreMin.get();
+      int max = scoreMax.get();
       ModCyclic.LOGGER.info("objective dependency detected: " + min + " ?<? " + max);
       if (min < max) {
-        score.setScore(CommandRegistry.RAND.nextInt(min, max));
+        score.set(CommandRegistry.RAND.nextInt(min, max));
       }
       else {
-        //either equal, or max is lower than min
-        score.setScore(min);
+        score.set(min);
       }
-      ModCyclic.LOGGER.info("objective rng " + score.getScore());
-      i += score.getScore();
+      ModCyclic.LOGGER.info("objective rng " + score.get());
+      i += score.get();
     }
     return i;
   }
 
-  public static int scoreboardRng(CommandContext<CommandSourceStack> x, Collection<String> scoreHolderTargets, Objective objective, int min, int max) {
+  public static int scoreboardRng(CommandContext<CommandSourceStack> x, Collection<ScoreHolder> scoreHolderTargets, Objective objective, int min, int max) {
     Scoreboard scoreboard = x.getSource().getServer().getScoreboard();
     int i = 0;
-    for (String s : scoreHolderTargets) {
-      Score score = scoreboard.getOrCreatePlayerScore(s, objective);
+    for (ScoreHolder holder : scoreHolderTargets) {
+      ScoreAccess score = scoreboard.getOrCreatePlayerScore(holder, objective);
       if (min < max) {
-        score.setScore(CommandRegistry.RAND.nextInt(min, max));
+        score.set(CommandRegistry.RAND.nextInt(min, max));
       }
       else {
-        //either equal, or max is lower than min
-        score.setScore(min);
+        score.set(min);
       }
-      ModCyclic.LOGGER.info("objective rng " + score.getScore());
-      i += score.getScore();
+      ModCyclic.LOGGER.info("objective rng " + score.get());
+      i += score.get();
     }
     return i;
   }

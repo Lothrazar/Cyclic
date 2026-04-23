@@ -67,18 +67,16 @@ public class BlockEnderShelf extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    ItemStack heldItem = player.getItemInHand(hand);
-    if (hand != InteractionHand.MAIN_HAND && heldItem.isEmpty()) {
-      //if your hand is empty, dont process if its the OFF hand
-      //otherwise: main hand inserts, off hand takes out right away
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    ItemStack heldItem = player.getMainHandItem();
+    if (false) { // removed: was hand check
       return InteractionResult.PASS;
     }
     TileEnderShelf shelf = getTileEntity(world, pos);
     if (heldItem.is(DataTags.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
-      player.swing(hand);
+      player.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
       return InteractionResult.PASS;
     }
     Direction face = hit.getDirection();
@@ -93,16 +91,16 @@ public class BlockEnderShelf extends BlockCyclic {
         if (stackInSlot == ItemStack.EMPTY || EnchantUtil.doBookEnchantmentsMatch(stackInSlot, heldItem)) {
           if (!world.isClientSide) {
             ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
-            player.setItemInHand(hand, remaining);
-            player.swing(hand);
+            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, remaining);
+            player.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
             return InteractionResult.SUCCESS;
           }
         }
       }
       else if (heldItem.isEmpty()) {
         ItemStack retrievedBook = shelf.inventory.extractItem(slot, 1, false);
-        player.setItemInHand(hand, retrievedBook);
-        player.swing(hand);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, retrievedBook);
+        player.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
         return InteractionResult.SUCCESS;
       }
     }
@@ -140,9 +138,9 @@ public class BlockEnderShelf extends BlockCyclic {
         controller.getShelves().add(pos);
       }
     }
-    if (stack.getTag() != null) {
+    if (stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag() != null) {
       //to tile from tag 
-      shelf.inventory.deserializeNBT(stack.getTag());
+      shelf.inventory.deserializeNBT(null, stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag());
     }
   }
 
@@ -153,8 +151,8 @@ public class BlockEnderShelf extends BlockCyclic {
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
       //read from tile, write to itemstack  
-      CompoundTag tileData = shelf.inventory.serializeNBT();
-      newStack.setTag(tileData);
+      CompoundTag tileData = shelf.inventory.serializeNBT(null);
+      // newStack.setTag(tileData); // disabled
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);
   }

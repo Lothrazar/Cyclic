@@ -61,7 +61,7 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
       if (connection.isExtraction()) {
-        final IItemHandler sideHandler = flow.get(extractSide).or;//Else(null);
+        final IItemHandler sideHandler = flow.get(extractSide);
         tryExtract(sideHandler, extractSide, extractQty, filter);
       }
     }
@@ -97,7 +97,7 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
   }
 
 //  @Override
-//  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+// //  // public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 //    if (side != null && cap == ForgeCapabilities.ITEM_HANDLER) {
 //      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
 //        return flow.get(side).cast();
@@ -116,11 +116,11 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
       item = flow.get(f);
       if(item !=null){ //item.ifPresent(h -> {
         CompoundTag itemTag = tag.getCompound("item" + f.toString());
-        item.deserializeNBT(itemTag);
+        ((ItemStackHandler)item).deserializeNBT(registries, itemTag);
       }
     }
     filter.deserializeNBT(registries,tag.getCompound("filter"));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @SuppressWarnings("unchecked")
@@ -132,11 +132,11 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     for (Direction f : Direction.values()) {
       item = flow.get(f);
       if(item !=null){ //item.ifPresent(h -> {
-        CompoundTag compound = item.serializeNBT(registries);
+        CompoundTag compound = ((ItemStackHandler)item).serializeNBT(registries);
         tag.put("item" + f.toString(), compound);
       }
     }
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

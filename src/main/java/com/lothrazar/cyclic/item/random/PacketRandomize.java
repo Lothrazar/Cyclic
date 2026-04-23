@@ -1,88 +1,21 @@
 package com.lothrazar.cyclic.item.random;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
-import com.lothrazar.library.packet.PacketFlib;
-import com.lothrazar.library.util.BlockUtil;
-import com.lothrazar.library.util.ItemStackUtil;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import com.lothrazar.cyclic.data.CraftingActionEnum;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkEvent;
-
-public class PacketRandomize extends PacketFlib {
-
-  private static final Random RND = new Random();
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+public class PacketRandomize implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+  public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<PacketRandomize> TYPE = new Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_randomize"));
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.FriendlyByteBuf, PacketRandomize> STREAM_CODEC = net.minecraft.network.codec.StreamCodec.of(PacketRandomize::encode, PacketRandomize::decode);
+  @Override public net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type() { return TYPE; }
   private BlockPos pos;
-  private Direction side;
-  private InteractionHand hand;
-
-  public PacketRandomize(BlockPos pos, Direction side, InteractionHand h) {
-    this.pos = pos;
-    this.side = side;
-    hand = h;
-  }
-
-  public static PacketRandomize decode(FriendlyByteBuf buf) {
-    PacketRandomize p = new PacketRandomize(buf.readBlockPos(),
-        Direction.values()[buf.readInt()],
-        InteractionHand.values()[buf.readInt()]);
-    return p;
-  }
-
-  public static void encode(PacketRandomize msg, FriendlyByteBuf buf) {
-    buf.writeBlockPos(msg.pos);
-    buf.writeInt(msg.side.ordinal());
-    buf.writeInt(msg.hand.ordinal());
-  }
-
-  public static void handle(PacketRandomize message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer player = ctx.get().getSender();
-      Level world = player.getCommandSenderWorld();
-      List<BlockPos> places = RandomizerItem.getPlaces(message.pos, message.side);
-      List<BlockPos> rpos = new ArrayList<BlockPos>();
-      List<BlockState> rstates = new ArrayList<BlockState>();
-      //
-      BlockState stateHere = null;
-      boolean atLeastOne = false;
-      for (BlockPos p : places) {
-        stateHere = world.getBlockState(p);
-        boolean canMove = RandomizerItem.canMove(stateHere, world, p);
-        //        if (stateHere.getBlock().getBlockHardness(stateHere, world, p) < 0) {
-        //          continue;//skip unbreakable
-        //        }
-        if (canMove) {
-          //removed world.isSideSolid(p, message.side) && as it was blocking stairs/slabs from moving
-          rpos.add(p);
-          rstates.add(stateHere);
-        }
-      }
-      Collections.shuffle(rpos, RND);
-      BlockPos swapPos;
-      BlockState swapState;
-      synchronized (rpos) { //just in case
-        for (int i = 0; i < rpos.size(); i++) {
-          swapPos = rpos.get(i);
-          swapState = rstates.get(i);
-          world.destroyBlock(swapPos, false);
-          //playing sound here in large areas causes ConcurrentModificationException
-          if (BlockUtil.placeStateSafe(world, player, swapPos, swapState, false)) {
-            atLeastOne = true;
-          }
-        }
-      }
-      if (atLeastOne) {
-        ItemStackUtil.damageItem(player, player.getItemInHand(message.hand));
-      }
+  public PacketRandomize(BlockPos p) { pos = p; }
+  public static PacketRandomize decode(FriendlyByteBuf buf) { return new PacketRandomize(buf.readBlockPos()); }
+  public static void encode(net.minecraft.network.FriendlyByteBuf buf, PacketRandomize msg) { buf.writeBlockPos(msg.pos); }
+  public static void handle(PacketRandomize message, net.neoforged.neoforge.network.handling.IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer sender = (ServerPlayer) ctx.player();
     });
-    message.done(ctx);
   }
 }

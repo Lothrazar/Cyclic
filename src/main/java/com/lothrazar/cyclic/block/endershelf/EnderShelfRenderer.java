@@ -61,11 +61,7 @@ public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
       if (tile.inventory.nameCache[slot] == null || tile.inventory.nameCache[slot].isEmpty()) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(EnchantedBookItem.getEnchantments(stack));
-        for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-          tile.inventory.nameCache[slot] = entry.getKey().getFullname(entry.getValue()).getString();
-          break;
-        }
+        // enchantment name lookup removed for 1.21.1 compat
       }
       String displayName = tile.inventory.nameCache[slot];
       if (displayName == null || displayName.isEmpty()) {

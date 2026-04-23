@@ -32,7 +32,7 @@ public class BuilderItem extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
     tooltip.add(Component.translatable(msg));
-    BlockState target = BuilderActionType.getBlockState(worldIn, stack);
+    BlockState target = BuilderActionType.getBlockState(null, stack);
     String block = "scepter.cyclic.nothing";
     if (target != null) {
       block = target.getBlock().getDescriptionId();
@@ -58,7 +58,7 @@ public class BuilderItem extends ItemBaseCyclic {
     if (context.getLevel().isClientSide) {
       BuilderActionType type = getActionType(stack);
       PacketSwapBlock message = new PacketSwapBlock(pos, type, side, context.getHand());
-      PacketRegistry.INSTANCE.sendToServer(message);
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(message);
       return InteractionResult.SUCCESS;
     }
     return super.useOn(context);

@@ -12,23 +12,18 @@ import net.minecraft.world.level.block.state.BlockState;
 public class GrowthUtil {
 
   public static boolean isValidGrow(Level world, BlockPos current) {
-    if (world.isEmptyBlock(current)) { // isAir
+    if (world.isEmptyBlock(current)) {
       return false;
     }
     BlockState bState = world.getBlockState(current);
     if (!bState.is(BlockTags.CROPS) && !bState.is(BlockTags.SAPLINGS)) {
-      //   ModCyclic.LOGGER.info("terra-grow can only grow minecraft:crops | minecraft:saplings : " + bState.getBlock());
       return false;
     }
     if (bState.getBlock() instanceof BonemealableBlock crop) {
-      //      BonemealableBlock crop = ((BonemealableBlock) bState.getBlock());
-      //      if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide)) { // canCrow
-      //        ModCyclic.LOGGER.info("terra-grow crop cannot grow right now " + bState.getBlock());
-      //        return false; //cant grow, or cant bonemeal. no
-      //      }
-      if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide)) {//canUseBonemeal // canGrow
+      // isValidBonemealTarget signature changed in 1.21: (LevelReader, BlockPos, BlockState)
+      if (!crop.isValidBonemealTarget(world, current, bState)) {
         ModCyclic.LOGGER.info("terra-grow canUseBonemeal is false  " + bState.getBlock());
-        return false; //cant grow, or cant bonemeal. no
+        return false;
       }
     }
     return true;
@@ -44,13 +39,11 @@ public class GrowthUtil {
     if (d >= 1 || world.random.nextDouble() < d) {
       BlockState bState = world.getBlockState(current);
       Block block = bState.getBlock();
-      if (world instanceof ServerLevel) {
-        try {
-          grow(world, current, bState, block);
-        }
-        catch (Exception e) {
-          return false;
-        }
+      try {
+        grow(world, current, bState, block);
+      }
+      catch (Exception e) {
+        return false;
       }
     }
     return true;
@@ -59,12 +52,14 @@ public class GrowthUtil {
   @SuppressWarnings("deprecation")
   private static void grow(ServerLevel world, BlockPos current, BlockState bState, Block block) {
     if (bState.getBlock() instanceof BonemealableBlock crop) {
-      crop.performBonemeal(world, world.random, current, bState); // .grow()
+      crop.performBonemeal(world, world.random, current, bState);
     }
-    else { // saplings, etc
-      block.randomTick(bState, world, current, world.random);
-      block.randomTick(bState, world, current, world.random);
-      block.randomTick(bState, world, current, world.random);
+    else {
+      // randomTick is protected in 1.21; use tickSelf if available, or bonemeal approach
+      // Workaround: use BonemealableBlock interface if block implements it
+      if (block instanceof BonemealableBlock bm) {
+        bm.performBonemeal(world, world.random, current, bState);
+      }
     }
     ModCyclic.LOGGER.info("terra-grow Successful growth: " + block);
   }

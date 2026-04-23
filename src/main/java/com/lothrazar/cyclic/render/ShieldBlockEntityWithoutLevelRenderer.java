@@ -4,9 +4,10 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MaterialShieldRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ShieldModel;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
@@ -18,17 +19,20 @@ import net.minecraft.world.item.ItemStack;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import  net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 
-//value = Dist.CLIENT,
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID, value =  Dist.CLIENT)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID, value = Dist.CLIENT)
 public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
 
   public static ShieldBlockEntityWithoutLevelRenderer instance;
+  private ShieldModel shieldBody;
+  private ShieldModel shieldNoPattern;
 
   public ShieldBlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher rd, EntityModelSet ems) {
     super(rd, ems);
+    this.shieldBody = new ShieldModel(ems.bakeLayer(ModelLayers.SHIELD));
+    this.shieldNoPattern = new ShieldModel(ems.bakeLayer(ModelLayers.SHIELD));
   }
 
   @SubscribeEvent
@@ -39,10 +43,9 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
 
   @Override
   public void renderByItem(ItemStack stackIn, ItemDisplayContext type, PoseStack ps, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-    //copied from superclass
     ps.pushPose();
     ps.scale(1, -1, -1);
-    boolean isBanner = (stackIn.getTagElement("BlockEntityTag") != null);
+    boolean isBanner = stackIn.has(net.minecraft.core.component.DataComponents.BANNER_PATTERNS);
     Material rendermaterial = isBanner ? ModelBakery.SHIELD_BASE : ModelBakery.NO_PATTERN_SHIELD;
     if (stackIn.is(ItemRegistry.SHIELD_WOOD.get())) {
       rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_WOOD : MaterialShieldRegistry.SHIELD_BASE_WOOD_NOPATTERN;
@@ -59,15 +62,9 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     else if (stackIn.is(ItemRegistry.SHIELD_OBSIDIAN.get())) {
       rendermaterial = isBanner ? MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN : MaterialShieldRegistry.SHIELD_BASE_OBSIDIAN_NOPATTERN;
     }
-    VertexConsumer vertex = rendermaterial.sprite().wrap(ItemRenderer.getFoilBufferDirect(buffer, shieldModel.renderType(rendermaterial.atlasLocation()), true, stackIn.hasFoil()));
-    shieldModel.handle().render(ps, vertex, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-    //    if (isBanner) {
-    //      List<Pair<BannerPattern, DyeColor>> pattern = BannerBlockEntity.createPatterns(ShieldItem.getColor(stackIn), BannerBlockEntity.getItemPatterns(stackIn));
-    //      BannerRenderer.renderPatterns(ps, buffer, combinedLight, combinedOverlay, shieldModel.plate(), rendermaterial, false, pattern, stackIn.hasFoil());
-    //    }
-    //    else {
-    shieldModel.plate().render(ps, vertex, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
-    //    }
+    ShieldModel model = isBanner ? shieldBody : shieldNoPattern;
+    var vertex = rendermaterial.sprite().wrap(ItemRenderer.getFoilBufferDirect(buffer, model.renderType(rendermaterial.atlasLocation()), true, stackIn.hasFoil()));
+    model.renderToBuffer(ps, vertex, combinedLight, combinedOverlay);
     ps.popPose();
   }
 }

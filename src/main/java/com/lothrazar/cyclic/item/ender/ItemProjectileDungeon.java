@@ -25,9 +25,9 @@ public class ItemProjectileDungeon extends ItemBaseCyclic {
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-    ItemStack stack = player.getItemInHand(hand);
+    ItemStack stack = player.getMainHandItem();
     EntityDungeonEye ball = new EntityDungeonEye(player, world);
-    shootMe(world, player, ball, 0, ItemBaseCyclic.VELOCITY_MAX);
+    /* shootMe(world, player, ball, 0, ItemBaseCyclic.VELOCITY_MAX); */
     stack.shrink(1);
     SoundUtil.playSound(player, SoundRegistry.DUNGEONFINDER.get(), 0.1F, 1.0F);
     findTargetLocation(player, ball);

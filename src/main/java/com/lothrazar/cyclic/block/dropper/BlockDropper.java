@@ -27,7 +27,7 @@ public class BlockDropper extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.DROPPER.get(), ScreenDropper::new);
+    // MenuScreens.register(MenuTypeRegistry.DROPPER.get(), ScreenDropper::new);
   }
 
   @Override

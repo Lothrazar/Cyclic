@@ -20,15 +20,9 @@ public class LoftyStatureApple extends ItemBaseCyclic {
     super(properties);
   }
 
-  @Override
-  public Rarity getRarity(ItemStack stack) {
-    return Rarity.UNCOMMON;
-  }
 
-  @Override
-  public boolean isFoil(ItemStack stack) {
-    return true;
-  }
+
+  
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {

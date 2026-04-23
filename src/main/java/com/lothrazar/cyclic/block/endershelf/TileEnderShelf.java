@@ -28,21 +28,21 @@ public class TileEnderShelf extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+  public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
+    inventory.deserializeNBT(registries, tag.getCompound(NBTINV));
     if (tag.contains("RenderTextType")) {
       int rt = tag.getInt("RenderTextType");
       this.renderStyle = RenderTextType.values()[rt];
     }
     inventory.resetNameCache();
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    tag.put(NBTINV, inventory.serializeNBT());
+  public void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public void toggleShowText() {

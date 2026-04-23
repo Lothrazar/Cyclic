@@ -87,16 +87,16 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tank.readFromNBT(tag.getCompound(NBTFLUID),registries);
+    tank.readFromNBT(registries, tag.getCompound(NBTFLUID));
     super.loadAdditional(tag,registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = new CompoundTag();
-    tank.writeToNBT(fluid);
+    tank.writeToNBT(registries, fluid);
     tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public int getFill() {

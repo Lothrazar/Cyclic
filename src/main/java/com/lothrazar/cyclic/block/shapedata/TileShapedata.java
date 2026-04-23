@@ -67,6 +67,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
    * @param cmd
    */
   public void execute(StructCommands cmd) {
+/*
     ItemStack shapeCard = inventory.getStackInSlot(SLOT_CARD);
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
@@ -113,7 +114,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
         }
       break;
     }
-  }
+*/  }
 
   public TileShapedata(BlockPos pos, BlockState state) {
     super(TileRegistry.COMPUTER_SHAPE.get(), pos, state);
@@ -140,7 +141,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    ((ItemStackHandler)inventory).deserializeNBT(registries, tag.getCompound(NBTINV));
     if (tag.contains("copiedShape")) {
       CompoundTag cs = (CompoundTag) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
@@ -156,7 +157,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       CompoundTag copiedShapeTags = this.copiedShape.write(new CompoundTag());
       tag.put("copiedShape", copiedShapeTags);
     }
-    tag.put(NBTINV, inventory.serializeNBT(registries));
+    tag.put(NBTINV, ((ItemStackHandler)inventory).serializeNBT(registries));
     super.saveAdditional(tag,registries);
   }
 
@@ -178,8 +179,8 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
     if (stack.isEmpty()) {
       return false;
     }
-    boolean cardEmpty = stack.getTag() == null
-        || !stack.getTag().getBoolean(RelativeShape.VALID_SHAPE);
+    boolean cardEmpty = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag() == null
+        || !stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getBoolean(RelativeShape.VALID_SHAPE);
     BlockPos invA = getTarget(SLOT_A);
     BlockPos invB = getTarget(SLOT_B);
     boolean hasTargets = invA != null && invB != null;

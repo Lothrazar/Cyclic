@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -74,7 +74,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     tag.putInt("burnTimeMax", burnTimeMax);
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public void tick() {
@@ -135,13 +135,15 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+    CrusherRecipeInput input = new CrusherRecipeInput(inputSlots.getStackInSlot(0));
+    if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeCrusher> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
-    for (RecipeCrusher rec : recipes) {
-      if (rec.matches(this, level)) {
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
+    for (var holder : recipes) {
+      RecipeCrusher rec = holder.value();
+      if (rec.matches(input, level)) {
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.energy.getTicks();
         this.burnTime = this.burnTimeMax;

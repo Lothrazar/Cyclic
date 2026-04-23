@@ -35,19 +35,19 @@ public class ScreenCableFluid extends ScreenBase<ContainerCableFluid> {
     //    int f = TileFluidCollect.Fields.HEIGHT.ordinal();
     //    GuiSliderInteger height = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
     //        0, TileFluidCollect.MAX_HEIGHT, container.tile.getField(f)));
-    //    height.setTooltip("buildertype.height.tooltip");
+    //    height.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("buildertype.height.tooltip")));
     //    y += h + 1;
     //    //
     //    //
     //    f = TileFluidCollect.Fields.SIZE.ordinal();
     //    GuiSliderInteger size = this.addButton(new GuiSliderInteger(x, y, w, h, f, container.tile.getPos(),
     //        0, TileMiner.MAX_SIZE, container.tile.getField(f)));
-    //    size.setTooltip("buildertype.size.tooltip");
+    //    size.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("buildertype.size.tooltip")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

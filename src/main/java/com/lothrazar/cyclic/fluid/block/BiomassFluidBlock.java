@@ -14,14 +14,14 @@ import net.minecraft.world.level.material.FlowingFluid;
 public class BiomassFluidBlock extends LiquidBlock {
 
   public BiomassFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
-    super(supplier, props);
+    super(supplier.get(), props);
   }
 
   @SuppressWarnings("deprecation")
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (!worldIn.isClientSide && entityIn instanceof LivingEntity ent && worldIn.random.nextDouble() < 000.1F) {
-      ent.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 0));
+      ent.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 0, false, false, false));
     }
     super.entityInside(state, worldIn, pos, entityIn);
   }

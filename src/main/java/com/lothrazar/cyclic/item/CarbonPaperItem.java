@@ -31,9 +31,9 @@ public class CarbonPaperItem extends ItemBaseCyclic {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (stack.hasTag()) {
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
       SignBlockEntity fakeSign = new SignBlockEntity(BlockPos.ZERO, Blocks.OAK_SIGN.defaultBlockState());
-      fakeSign.load(stack.getTag());
+      fakeSign.loadWithComponents(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(), net.minecraft.client.Minecraft.getInstance().level.registryAccess());
       //      tooltip.add(Component.translatable("[" + fakeSign.getColor().getSerializedName() + "]"));
       for (int i = 0; i < SignText.LINES; i++) {
         //        fakeSign.setText(line, p_212365_2_);
@@ -53,12 +53,12 @@ public class CarbonPaperItem extends ItemBaseCyclic {
     BlockPos pos = context.getClickedPos();
     //test spawn detetc
     //    Direction side = context.getFace();
-    ItemStack held = player.getItemInHand(hand);
+    ItemStack held = player.getMainHandItem();
     BlockEntity tile = context.getLevel().getBlockEntity(pos);
     if (player.level().getBlockState(pos).getBlock() instanceof CauldronBlock) {
-      if (held.hasTag()) {
+      if (held.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
         //clean with cauldron
-        held.setTag(null);
+        held.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
         ChatUtil.sendStatusMessage(player, "item.cyclic.carbon_paper.deleted");
         player.swing(hand);
         return InteractionResult.SUCCESS;
@@ -67,10 +67,10 @@ public class CarbonPaperItem extends ItemBaseCyclic {
     if (tile instanceof SignBlockEntity) {
       //ok, i am a sign
       SignBlockEntity sign = (SignBlockEntity) tile;
-      if (held.hasTag()) {
+      if (held.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
         //write to fake sign to parse nbt internally
         SignBlockEntity fakeSign = new SignBlockEntity(context.getClickedPos(), Blocks.OAK_SIGN.defaultBlockState());
-        fakeSign.load(held.getTag());
+        fakeSign.loadWithComponents(held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(), context.getLevel().registryAccess());
         //        sign.setColor(fakeSign.getColor());
         for (int i = 0; i <= 3; i++) {
           //          UtilChat.addChatMessage(player, fakeSign.getText(i).toString());
@@ -81,8 +81,8 @@ public class CarbonPaperItem extends ItemBaseCyclic {
       else {
         //so it has NO tag right now at all
         //read
-        CompoundTag data = sign.serializeNBT();
-        held.setTag(data);
+        CompoundTag data = sign.saveWithoutMetadata(context.getLevel().registryAccess());
+        net.minecraft.world.item.component.CustomData.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, held, data);
         ChatUtil.sendStatusMessage(player, "item.cyclic.carbon_paper.copied");
       }
       player.swing(hand);

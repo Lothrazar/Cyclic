@@ -35,7 +35,7 @@ public class ScytheHarvest extends ItemBaseCyclic {
     Player player = context.getPlayer();
     if (player.level().isClientSide) {
       int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
-      PacketRegistry.INSTANCE.sendToServer(new PacketHarvesting(pos, radius));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketHarvesting(pos, radius));
     }
     player.swing(context.getHand());
     ItemStackUtil.damageItem(player, context.getItemInHand());

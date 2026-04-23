@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
@@ -82,14 +82,14 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public void tick() {

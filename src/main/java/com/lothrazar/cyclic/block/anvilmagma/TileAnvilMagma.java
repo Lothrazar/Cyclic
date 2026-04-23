@@ -113,7 +113,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   public Predicate<FluidStack> isFluidValid() {
     return p -> {
       Fluid fluid = p.getFluid();
-      return fluid == FluidMagmaHolder.STILL.get();
+      return fluid == net.minecraft.world.level.material.Fluids.LAVA;
     };
   }
 

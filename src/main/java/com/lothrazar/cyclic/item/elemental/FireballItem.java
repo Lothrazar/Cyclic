@@ -34,7 +34,7 @@ public class FireballItem extends ItemBaseCyclic {
     if (player.getItemInHand(InteractionHand.MAIN_HAND).is(ItemRegistry.FIREBALL_ORANGE.get())) {
       //hurt
       //not if youre on fire
-      int fireProt = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_PROTECTION, player);
+      int fireProt = 0; // fireProt lookup disabled
       if (fireProt == 0 &&
           !player.isOnFire() &&
           player.level().random.nextDouble() < 0.03) {

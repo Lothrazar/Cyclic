@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item.storagebag;
 
 import java.util.function.Supplier;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
@@ -19,9 +18,19 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
 
-public class PacketStorageBagScreen extends PacketFlib {
+public class PacketStorageBagScreen implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+
+  public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<PacketStorageBagScreen> TYPE = new Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_storage_bag_screen"));
+
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, PacketStorageBagScreen> STREAM_CODEC = net.minecraft.network.codec.StreamCodec.of(PacketStorageBagScreen::encode, PacketStorageBagScreen::decode);
+
+
+  @Override
+  public net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private ItemStack stack;
   private byte type;
@@ -39,9 +48,9 @@ public class PacketStorageBagScreen extends PacketFlib {
     this.nbtValue = nbtValue;
   }
 
-  public static void handle(PacketStorageBagScreen message, Supplier<NetworkEvent.Context> context) {
-    context.get().enqueueWork(() -> {
-      ServerPlayer player = context.get().getSender();
+  public static void handle(PacketStorageBagScreen message, net.neoforged.neoforge.network.handling.IPayloadContext context) {
+    context.enqueueWork(() -> {
+      net.minecraft.server.level.ServerPlayer player = (net.minecraft.server.level.ServerPlayer) context.player();
       if (player != null) {
         ItemStack serverStack = ItemStack.EMPTY;
         if (0 <= message.slot && message.slot < player.getInventory().getContainerSize()) {
@@ -52,18 +61,17 @@ public class PacketStorageBagScreen extends PacketFlib {
             && serverStack.getItem() == ItemRegistry.STORAGE_BAG.get()
             && (key.equals(RefillMode.NBT) || key.equals(DepositMode.NBT) || key.equals(PickupMode.NBT))) {
           //its validated this item and nbt key so now save value in the tag
-          serverStack.getOrCreateTag().put(key, message.nbtValue);
+          net.minecraft.nbt.CompoundTag tag = ItemStorageBag.getCustomData(serverStack); tag.put(key, message.nbtValue); ItemStorageBag.setCustomData(serverStack, tag);
         }
       }
     });
-    message.done(context);
   }
 
-  public static PacketStorageBagScreen decode(FriendlyByteBuf buffer) {
+  public static PacketStorageBagScreen decode(net.minecraft.network.RegistryFriendlyByteBuf buffer) {
     PacketStorageBagScreen packet = new PacketStorageBagScreen();
     packet.slot = buffer.readInt();
     packet.type = buffer.readByte();
-    packet.stack = buffer.readItem();
+    packet.stack = ItemStack.STREAM_CODEC.decode(buffer);
     packet.nbtKey = StringTag.valueOf(buffer.readUtf(32767));
     switch (packet.type) {
       case 1: //Byte
@@ -109,10 +117,10 @@ public class PacketStorageBagScreen extends PacketFlib {
     return packet;
   }
 
-  public static void encode(PacketStorageBagScreen message, FriendlyByteBuf buffer) {
+  public static void encode(net.minecraft.network.RegistryFriendlyByteBuf buffer, PacketStorageBagScreen message) {
     buffer.writeInt(message.slot);
     buffer.writeByte(message.type);
-    buffer.writeItem(message.stack);
+    ItemStack.STREAM_CODEC.encode(buffer, message.stack);
     buffer.writeUtf(message.nbtKey.getAsString());
     switch (message.type) {
       case 1: //Byte

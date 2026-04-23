@@ -55,7 +55,7 @@ public class TextBoxAutosave extends EditBox {
   private void saveValue() {
     String current = getValue();
     tile.setFieldString(tileFieldId, current);
-    PacketRegistry.INSTANCE.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
+    net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
   }
 
   private int tileFieldId;

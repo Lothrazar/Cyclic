@@ -39,7 +39,7 @@ public class BlockGeneratorDrops extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.GENERATOR_DROPS.get(), ScreenGeneratorDrops::new);
+    // MenuScreens.register(MenuTypeRegistry.GENERATOR_DROPS.get(), ScreenGeneratorDrops::new);
   }
 
   @Override

@@ -28,7 +28,7 @@ public class FireScepter extends ItemBaseCyclic {
   }
 
   @Override
-  public int getUseDuration(ItemStack stack) {
+  public int getUseDuration(ItemStack stack, net.minecraft.world.entity.LivingEntity entity) {
     return 72000 / 2;
   }
 
@@ -45,7 +45,7 @@ public class FireScepter extends ItemBaseCyclic {
       return;
     }
     Player player = (Player) entity;
-    int charge = this.getUseDuration(stack) - chargeTimer;
+    int charge = this.getUseDuration(stack, entity) - chargeTimer;
     float percentageCharged = BowItem.getPowerForTime(charge); //never zero, its from [0.03,1];
     float velocityFactor = percentageCharged * ItemBaseCyclic.VELOCITY_MAX;
     shootMe(worldIn, player, new FireEntity(player, worldIn), 0, velocityFactor);

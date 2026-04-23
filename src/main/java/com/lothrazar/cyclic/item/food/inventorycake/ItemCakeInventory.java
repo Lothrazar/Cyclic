@@ -16,7 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 
 public class ItemCakeInventory extends ItemBaseCyclic {
 
@@ -27,20 +26,12 @@ public class ItemCakeInventory extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && playerIn.isCrouching()) {
-      NetworkHooks.openScreen((ServerPlayer) playerIn, new ContainerProviderCake(), playerIn.blockPosition());
+      // ((ServerPlayer) playerIn).openMenu(new ContainerProviderCake(), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
   }
 
-  @Override
-  public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.INVENTORY_CAKE.get(), ScreenCake::new);
-  }
-
-  @Override
-  public Rarity getRarity(ItemStack stack) {
-    return Rarity.UNCOMMON;
-  }
+  
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
@@ -57,6 +48,6 @@ public class ItemCakeInventory extends ItemBaseCyclic {
   }
 
   public static void onKeyInput(Player player) {
-    PacketRegistry.INSTANCE.sendToServer(new PacketKeyBind(""));
+    // net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketKeyBind(""));
   }
 }

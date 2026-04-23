@@ -25,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 public class EntityMagicNetEmpty extends ThrowableItemProjectile {
 
@@ -88,7 +87,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       //
       compound.putString(NBT_ENTITYID, id);
       ItemStack drop = new ItemStack(ItemRegistry.MOB_CONTAINER.get());
-      drop.setTag(compound);
+      net.minecraft.world.item.component.CustomData.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, drop, compound);
       targetHeightOffset = target.getBbHeight() / 2;
       particleType = ParticleTypes.PORTAL;
       ItemStackUtil.drop(level, this.blockPosition(), drop);
@@ -112,7 +111,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
   }
 
   @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
+  public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket(net.minecraft.server.level.ServerEntity serverEntity) {
+    return new net.minecraft.network.protocol.game.ClientboundAddEntityPacket(this, serverEntity);
   }
 }

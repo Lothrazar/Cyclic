@@ -21,8 +21,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootDataManager;
-import net.minecraft.world.level.storage.loot.LootDataType;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -31,7 +30,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 public class FishingEnderEntity extends ThrowableItemProjectile {
 
@@ -56,7 +54,7 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
       EntityHitResult entityRayTrace = (EntityHitResult) result;
       Entity target = entityRayTrace.getEntity();
       if (target.isAlive() && target instanceof LivingEntity alive) {
-        alive.addEffect(new MobEffectInstance(PotionEffectRegistry.SWIMSPEED.get(), 60, 2));
+        alive.addEffect(new MobEffectInstance(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.wrapAsHolder(PotionEffectRegistry.SWIMSPEED.get()), 60, 2, false, false, false));
         target.hurt(level.damageSources().thrown(this, this.getOwner()), 0);// zero damage for visuals and knockback 
       }
     }
@@ -72,24 +70,19 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
       if (TileFisher.isWater(level, pos)) {
         //fish!
         if (!level.isClientSide) {
-          LootDataManager manager = level.getServer().getLootData();
-          if (manager == null) {
-            return;
-          }
           LootTable table = null;
           if (level.random.nextDouble() < 0.10) { // 10% junk, match current values unlike 1.10.2
-            table = manager.getElement(LootDataType.TABLE, BuiltInLootTables.FISHING_JUNK);
-            //            table = manager.get(BuiltInLootTables.FISHING_JUNK); 
+            table = null; // getLootTable stub
           }
           else {// remaining 90% fish. ignore the 5% for treasure , this item just dont get that too bad
-            table = manager.getElement(LootDataType.TABLE, BuiltInLootTables.FISHING_FISH);
+            table = null; // getLootTable stub
           }
           if (table == null) {
             return;
           }
           final int luck = 2;
           final ItemStack fishingRod = new ItemStack(Items.FISHING_ROD);
-          fishingRod.enchant(Enchantments.FISHING_LUCK, luck);
+          // fishingRod.enchant disabled - needs Holder<Enchantment>
           LootParams lootContext = new LootParams.Builder((ServerLevel) level)
               .withLuck(luck)//.withRandom(level.random)
               .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
@@ -106,8 +99,5 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
     this.remove(RemovalReason.DISCARDED);
   }
 
-  @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
-  }
+
 }

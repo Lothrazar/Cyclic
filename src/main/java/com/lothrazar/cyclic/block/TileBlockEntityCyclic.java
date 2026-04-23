@@ -251,13 +251,15 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Override
   public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
     CompoundTag syncData = super.getUpdateTag(registries);
-    this.saveAdditional(syncData);
+    this.saveAdditional(syncData, registries);
     return syncData;
   }
 
   @Override
   public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
-    this.load(pkt.getTag());
+    if (pkt.getTag() != null) {
+      this.loadAdditional(pkt.getTag(), registries);
+    }
     super.onDataPacket(net, pkt, registries);
   }
 

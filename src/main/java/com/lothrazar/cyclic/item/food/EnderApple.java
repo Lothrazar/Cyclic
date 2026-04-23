@@ -76,12 +76,12 @@ public class EnderApple extends ItemBaseCyclic {
         for (String conf : structList) {
           //EXAMPLE    test = StructureTags.EYE_OF_ENDER_LOCATED;
           Pair<BlockPos, Holder<Structure>> blockpos = findNearestPair(serverlevel,
-              TagKey.create(Registries.STRUCTURE, new ResourceLocation(conf)),
+              TagKey.create(Registries.STRUCTURE, net.minecraft.resources.ResourceLocation.parse(conf)),
               entityLiving.blockPosition(), 100, false);
           if (blockpos != null) {
             //add to ze frekni map yo 
             double distance = LevelWorldUtil.distanceBetweenHorizontal(blockpos.getFirst(), entityLiving.blockPosition());
-            distanceStructNames.put(blockpos.getSecond().get().type().toString(), (int) distance);
+            distanceStructNames.put(blockpos.getSecond().toString(), (int) distance); // simplified
           }
         }
       }

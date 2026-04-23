@@ -13,16 +13,16 @@ import net.minecraft.world.level.material.FlowingFluid;
 public class WaxFluidBlock extends LiquidBlock {
 
   public WaxFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Properties props) {
-    super(supplier, props);
+    super(supplier.get(), props);
   }
 
   @SuppressWarnings("deprecation")
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (!worldIn.isClientSide && entityIn instanceof LivingEntity ent) {
-      ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0));
+      ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, false));
       if (!ent.isOnFire()) {
-        ent.setSecondsOnFire(1);
+        ent.igniteForSeconds(1);
       }
     }
     super.entityInside(state, worldIn, pos, entityIn);

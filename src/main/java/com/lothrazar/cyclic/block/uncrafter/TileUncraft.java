@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
@@ -103,14 +103,14 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     if (level.isClientSide || level.getServer() == null) {
       return;
     }
-    Recipe<?> match = this.findMatchingRecipe(level, dropMe);
+    RecipeHolder<?> match = this.findMatchingRecipe(level, dropMe);
     if (match != null) {
-      var status = uncraftRecipe(match);
+      var status = uncraftRecipe(match.value());
       this.status = status;
       if (status == UncraftStatusEnum.MATCH) {
         //pay cost
         // ModCyclic.LOGGER.info("before extract cost" + inputSlots.getStackInSlot(0));
-        inputSlots.extractItem(0, match.getResultItem(level.registryAccess()).getCount(), false);
+        inputSlots.extractItem(0, match.value().getResultItem(level.registryAccess()).getCount(), false);
         // ModCyclic.LOGGER.info("AFTER  extract cost" + inputSlots.getStackInSlot(0));
         energy.extractEnergy(cost, false);
       }
@@ -137,19 +137,19 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   @Override
-  public void load(CompoundTag tag, HolderLookup.Provider registries) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     this.status = UncraftStatusEnum.values()[tag.getInt("ucstats")];
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
     tag.putInt("ucstats", status.ordinal());
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
+    super.saveAdditional(tag, registries);
   }
 
   private UncraftStatusEnum uncraftRecipe(Recipe<?> match) {
@@ -190,11 +190,11 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     return UncraftStatusEnum.MATCH;
   }
 
-  public Recipe<?> findMatchingRecipe(Level world, ItemStack dropMe) {
+  public RecipeHolder<?> findMatchingRecipe(Level world, ItemStack dropMe) {
     Collection<RecipeHolder<?>> list = world.getServer().getRecipeManager().getRecipes();
     for (RecipeHolder<?> recipe : list) {
 
-      if (recipe.getType() == RecipeType.CRAFTING) {
+      if (recipe.value().getType() == RecipeType.CRAFTING) {
         //actual uncraft, ie not furnace recipe or anything
         if (recipeMatches(dropMe, recipe)) {
           return recipe;
@@ -206,11 +206,11 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
 
   // matches count and has enough
   @SuppressWarnings("unchecked")
-  private boolean recipeMatches(ItemStack stack, Recipe<?> recipe) {
+  private boolean recipeMatches(ItemStack stack, RecipeHolder<?> recipe) {
     if (recipe == null) {
       return false;
     }
-    var recipeResultItem = recipe.getResultItem(level.registryAccess());
+    var recipeResultItem = recipe.value().getResultItem(level.registryAccess());
     if (recipeResultItem.isEmpty() ||
         recipeResultItem.getItem() != stack.getItem() ||
         recipeResultItem.getCount() > stack.getCount()) {
@@ -218,11 +218,11 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
     }
     //check config
     List<String> recipes = (List<String>) TileUncraft.IGNORE_RECIPES.get();
-    if (StringParseUtil.isInList(recipes, recipe.getId())) {
+    if (StringParseUtil.isInList(recipes, recipe.id())) {
       //check the RECIPE id list
       return false;
     }
-    ResourceLocation stackKey = ForgeRegistries.ITEMS.getKey(stack.getItem());
+    ResourceLocation stackKey = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
     if (StringParseUtil.isInList((List<String>) TileUncraft.IGNORE_LIST.get(), stackKey)) {
       //checked the ITEM id list
       return false;
@@ -232,7 +232,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       return true;
     }
     else {
-      return ItemStack.isSameItemSameTags(stack, recipeResultItem);
+      return ItemStack.isSameItemSameComponents(stack, recipeResultItem);
     }
   }
 

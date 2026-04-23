@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
@@ -117,7 +117,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV + "gps"));
     this.delay = tag.getInt("delay");
     this.dropCount = tag.getInt("dropCount");
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -127,7 +127,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     tag.put(NBTINV + "gps", gpsSlots.serializeNBT(registries));
     tag.putInt("delay", delay);
     tag.putInt("dropCount", dropCount);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private BlockPos getTargetPos() {

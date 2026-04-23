@@ -26,7 +26,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   @Override
   protected void init() {
     super.init();
-    CompoundTag nbt = this.menu.bag.getOrCreateTag();
+    CompoundTag nbt = ItemStorageBag.getCustomData(this.menu.bag);
     ToggleButton pickup = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y,
         nbt, StringTag.valueOf("pickup_mode"), StringTag.valueOf("nothing"),
         Component.translatable("item.cyclic.storage_bag.disabled.button"),
@@ -74,7 +74,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
   @Override
   public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(gg);
+    super.renderBackground(gg, mouseX, mouseY, partialTicks);
     super.render(gg, mouseX, mouseY, partialTicks);
     this.renderTooltip(gg, mouseX, mouseY);
   }
@@ -125,7 +125,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
         index = 0;
       }
       this.setMessage(titles.get(index));
-      PacketRegistry.INSTANCE.sendToServer(new PacketStorageBagScreen(
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketStorageBagScreen(
           ScreenStorageBag.this.menu.bag, ScreenStorageBag.this.menu.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
 

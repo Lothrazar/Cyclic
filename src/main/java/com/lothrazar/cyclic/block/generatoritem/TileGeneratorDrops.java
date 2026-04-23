@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -98,20 +98,23 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+    net.minecraft.world.item.crafting.RecipeInput input = new net.minecraft.world.item.crafting.RecipeInput() {
+      @Override public net.minecraft.world.item.ItemStack getItem(int i) { return i == 0 ? inputSlots.getStackInSlot(0) : net.minecraft.world.item.ItemStack.EMPTY; }
+      @Override public int size() { return 1; }
+    };
+    if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorItem> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get());
-    for (RecipeGeneratorItem rec : recipes) {
-      if (rec.matches(this, level)) {
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get());
+    for (var holder : recipes) {
+      RecipeGeneratorItem rec = holder.value();
+      if (rec.matches(input, level)) {
         this.burnTimeMax = rec.getTicks();
         this.burnTime = this.burnTimeMax;
         this.burnPerTick = rec.getRfPertick();
         this.currentRecipe = rec;
-        final int slot = 0;
-        final int qty = 1;
-        this.inputSlots.extractItem(slot, qty, false);
+        this.inputSlots.extractItem(0, 1, false);
         updateComparatorOutputLevel();
         return;
       }

@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -30,7 +30,7 @@ public class ClayBattery extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.BATTERY_CLAY.get(), ScreenClayBattery::new);
+    // MenuScreens.register(MenuTypeRegistry.BATTERY_CLAY.get(), ScreenClayBattery::new);
   }
 
   @Override
@@ -52,8 +52,7 @@ public class ClayBattery extends BlockCyclic {
         newStackCap.receiveEnergy(battery.energy.getEnergyStored(), false);
       }
       if (battery.energy.getEnergyStored() > 0) {
-        newStackBattery.getOrCreateTag().putInt(ItemBlockClayBattery.ENERGYTT, battery.energy.getEnergyStored());
-        newStackBattery.getOrCreateTag().putInt(ItemBlockClayBattery.ENERGYTTMAX, battery.energy.getMaxEnergyStored());
+        // energy tag sync disabled
       }
     }
     //even if energy fails 
@@ -74,14 +73,14 @@ public class ClayBattery extends BlockCyclic {
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
     IEnergyStorage storage = CapabilityFixer.energy(stack);
-    if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
-      current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(com.lothrazar.cyclic.block.TileBlockEntityCyclic.NBTENERGY)) {
+      current = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt(com.lothrazar.cyclic.block.TileBlockEntityCyclic.NBTENERGY);
     }
     else if (storage != null) {
       current = storage.getEnergyStored();
     }
     TileClayBattery container = (TileClayBattery) world.getBlockEntity(pos);
-    CustomEnergyStorage storageTile = (CustomEnergyStorage) container.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    CustomEnergyStorage storageTile = null; // ForgeCapabilities removed
     if (storageTile != null) {
       storageTile.setEnergy(current);
     }

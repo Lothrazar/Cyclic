@@ -23,7 +23,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }
@@ -36,7 +36,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
     final int size = 20;
     btnType = this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.RENDER_HIDE, "", b -> {
       //pressed
-      PacketRegistry.INSTANCE.sendToServer(new PacketFilterCard(CraftingActionEnum.EMPTY));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketFilterCard(CraftingActionEnum.EMPTY));
       FilterCardItem.toggleFilterType(screenContainer.bag);
     }));
   }
@@ -45,7 +45,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
   protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     super.renderLabels(ms, mouseX, mouseY);
     this.drawButtonTooltips(ms, mouseX, mouseY);
-    boolean filter = screenContainer.bag.getOrCreateTag().getBoolean("filter");
+    boolean filter = false;
     btnType.setTextureId(filter ? TextureEnum.RENDER_HIDE : TextureEnum.RENDER_SHOW);
     btnType.setTooltip("cyclic.screen.filter." + filter);
   }

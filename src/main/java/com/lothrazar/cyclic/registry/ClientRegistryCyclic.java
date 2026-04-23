@@ -14,7 +14,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
+// import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
 import com.lothrazar.cyclic.block.beaconredstone.RenderBeaconRedstone;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
@@ -138,7 +138,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
     event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
-    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
+//    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
     //cable renderers
     event.registerBlockEntityRenderer(TileRegistry.ENERGY_PIPE.get(), RenderCableFacade::new);
@@ -165,7 +165,7 @@ public class ClientRegistryCyclic {
 
   @SubscribeEvent
   public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-    //    net.minecraftforge.client.ClientRegistry.registerKeyBinding(CAKE);
+    //    net.neoforged.neoforge.client.ClientRegistry.registerKeyBinding(CAKE);
     event.register(CAKE);
   }
 
@@ -188,9 +188,9 @@ public class ClientRegistryCyclic {
     }, ItemRegistry.STORAGE_BAG.get());
     //
     event.register((stack, tintIndex) -> {
-      if (stack.hasTag() && tintIndex > 0) {
+      if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && tintIndex > 0) {
         //what entity is inside
-        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
+        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
         //pull the colours from the egg
         for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
           if (spawneggitem.getType(null) == thing) {

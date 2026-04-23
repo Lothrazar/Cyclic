@@ -14,7 +14,7 @@ public class PressurePlateMetal extends PressurePlateBlock {
   boolean playersOnly = false;
 
   public PressurePlateMetal(Properties properties) {
-    super(PressurePlateBlock.Sensitivity.EVERYTHING, properties, BlockSetType.STONE);
+    super(BlockSetType.STONE, properties);
     playersOnly = true;
   }
 

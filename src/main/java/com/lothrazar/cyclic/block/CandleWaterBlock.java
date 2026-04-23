@@ -76,7 +76,7 @@ public class CandleWaterBlock extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
     boolean old = state.getValue(LIT);
     world.setBlockAndUpdate(pos, state.setValue(LIT, !old));
     SoundUtil.playSound(world, pos, old ? SoundEvents.FIRE_EXTINGUISH : SoundEvents.FIRE_AMBIENT);
@@ -127,7 +127,7 @@ public class CandleWaterBlock extends BlockCyclic {
     //null means not from a spawner 
     ///https://gist.github.com/ChampionAsh5357/163a75e87599d19ee6b4b879821953e8
     // null means cancelled
-    SpawnGroupData canSpawn = ForgeEventFactory.onFinalizeSpawn(monster, world, world.getCurrentDifficultyAt(posTarget), MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
+    SpawnGroupData canSpawn = net.neoforged.neoforge.event.EventHooks.finalizeMobSpawn(monster, world, world.getCurrentDifficultyAt(posTarget), MobSpawnType.SPAWNER, null);
     if (canSpawn == null || !monster.checkSpawnRules(world, MobSpawnType.SPAWNER)) {
       afterSpawnFailure(world, pos);
     }
@@ -142,7 +142,7 @@ public class CandleWaterBlock extends BlockCyclic {
 
   private void afterSpawnSuccess(Mob monster, Level world, BlockPos pos, RandomSource rand) {
     //    monster.finalizeSpawn(world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
-    ForgeEventFactory.onFinalizeSpawn(monster, world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null, null);
+    net.neoforged.neoforge.event.EventHooks.finalizeMobSpawn(monster, world.getServer().getLevel(world.dimension()), world.getCurrentDifficultyAt(pos), MobSpawnType.SPAWNER, null);
     world.scheduleTick(pos, this, TICK_RATE.get());
   }
 

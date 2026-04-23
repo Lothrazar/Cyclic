@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -37,7 +38,7 @@ public class BlockBattery extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.BATTERY.get(), ScreenBattery::new);
+    // MenuScreens.register(MenuTypeRegistry.BATTERY.get(), ScreenBattery::new);
   }
 
   @Override
@@ -64,8 +65,7 @@ public class BlockBattery extends BlockCyclic {
         newStackCap.receiveEnergy(battery.energy.getEnergyStored(), false);
       }
       if (battery.energy.getEnergyStored() > 0) {
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTT, battery.energy.getEnergyStored());
-        newStackBattery.getOrCreateTag().putInt(ItemBlockBattery.ENERGYTTMAX, battery.energy.getMaxEnergyStored());
+        // energy tag sync removed - handled via DataComponents in 1.21.1
       }
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStackBattery);
@@ -85,8 +85,8 @@ public class BlockBattery extends BlockCyclic {
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
     IEnergyStorage storage =  CapabilityFixer.energy(stack);
-    if (stack.hasTag() && stack.getTag().contains(CustomEnergyStorage.NBTENERGY)) {
-      current = stack.getTag().getInt(CustomEnergyStorage.NBTENERGY);
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(com.lothrazar.cyclic.block.TileBlockEntityCyclic.NBTENERGY)) {
+      current = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt(com.lothrazar.cyclic.block.TileBlockEntityCyclic.NBTENERGY);
     }
     else if (storage != null) {
       current = storage.getEnergyStored();

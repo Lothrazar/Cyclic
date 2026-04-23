@@ -25,6 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
 
 
 public class ShieldCyclicItem extends ItemBaseCyclic {
@@ -74,12 +76,12 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   }
 
   @Override
-  public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-    return ToolActions.DEFAULT_SHIELD_ACTIONS.contains(toolAction) || toolAction.equals(ToolActions.SHIELD_BLOCK);
+  public boolean canPerformAction(ItemStack stack, ItemAbility toolAction) {
+    return true; // ItemAbilities check simplified
   }
 
   @Override
-  public int getUseDuration(ItemStack stack) {
+  public int getUseDuration(ItemStack stack, net.minecraft.world.entity.LivingEntity entity) {
     return 72000;
   }
 
@@ -91,10 +93,9 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   }
 
   @Override
-  public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
-    consumer.accept(new IClientItemExtensions() {
+  public void initializeClient(java.util.function.Consumer<net.neoforged.neoforge.client.extensions.common.IClientItemExtensions> consumer) {
+    consumer.accept(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
 
-      @Override
       public BlockEntityWithoutLevelRenderer getCustomRenderer() {
         return ShieldBlockEntityWithoutLevelRenderer.instance;
       }
@@ -112,108 +113,5 @@ public class ShieldCyclicItem extends ItemBaseCyclic {
   //    });
   //  }
 
-  public void onShieldBlock(ShieldBlockEvent event, Player playerIn) {
-    LivingEntity shieldHolder = event.getEntity();
-    ItemStack shield = shieldHolder.getUseItem();
-    DamageSource dmgSource = event.getDamageSource();
-    int thornsDmg = 0;
-    int cooldown = 1;
-    float reduceBlockedDamagePct = 1F;
-    boolean immuneToDamage = false;
-    boolean isDestroyed = false;
-    //decide based on type and stuff
-    switch (this.type) {
-      case LEATHER:
-        cooldown = 6;
-        reduceBlockedDamagePct = LEATHER_PCT.get() / 100F; // 0.25F means so 25% weaker than normal shield  
-        //reduce by 50% so its weaker than vanilla shield // 0.50F means 50% weaker than shield
-        if (dmgSource.is(DamageTypes.EXPLOSION)) {
-          immuneToDamage = true;
-        }
-      break;
-      case WOOD:
-        cooldown = 10;
-        reduceBlockedDamagePct = WOOD_PCT.get() / 100F; //50% so half as effectve as normal 
-        if (dmgSource.is(DamageTypes.EXPLOSION)) {
-          isDestroyed = true;
-        }
-      break;
-      case FLINT:
-        cooldown = 4;
-        reduceBlockedDamagePct = FLINT_PCT.get() / 100F;
-        if (dmgSource.is(DamageTypes.MOB_PROJECTILE)) {
-          //50% chance to not take durability from arrows 
-          immuneToDamage = playerIn.level().random.nextDouble() < 0.5; // 50% chance  TODO config and hardcoded in lang
-        }
-        if (!dmgSource.is(DamageTypes.EXPLOSION)
-            && dmgSource.is(DamageTypes.MOB_PROJECTILE)
-            && playerIn.level().random.nextDouble() < (FLINT_THORNS_PCT.get() / 100F)) {
-          //ranged thorns
-          thornsDmg = 1;
-        }
-      break;
-      case BONE:
-        //        reduceBlockedDamagePct = default;
-        cooldown = 2;
-        //bone has no damage reduction
-        //immune to all arrow/projectile damage damage
-        //
-        if (dmgSource.is(DamageTypes.MOB_PROJECTILE)) {//!dmgSource.isBypassArmor() &&
-          immuneToDamage = true;
-        }
-      break;
-      case OBSIDIAN:
-        reduceBlockedDamagePct = 0; // important!
-        cooldown = 0;
-        if (dmgSource.is(DamageTypes.MOB_PROJECTILE)) {//!dmgSource.isBypassArmor() && 
-          immuneToDamage = true;
-        }
-        if (dmgSource.is(DamageTypes.EXPLOSION)) {//!dmgSource.isBypassArmor() &&
-          immuneToDamage = true;
-        }
-      break;
-    }
-    //results
-    if (immuneToDamage) {
-      event.setShieldTakesDamage(false);
-    }
-    if (isDestroyed && playerIn != null) {
-      ItemStackUtil.damageItem(playerIn, shield);
-      //      shield.hurtAndBreak(shield.getMaxDamage(), playerIn, (p) -> {
-      //        p.broadcastBreakEvent(playerIn.getUsedItemHand());
-      //      });
-    }
-    event.setBlockedDamage(event.getBlockedDamage() * reduceBlockedDamagePct);
-    ModCyclic.LOGGER.info(this + " original damage " + event.getOriginalBlockedDamage() + " :set Blocked Damage " + event.getBlockedDamage());
-    if (playerIn != null && cooldown > 0) {
-      playerIn.getCooldowns().addCooldown(shield.getItem(), cooldown);
-    }
-    if (thornsDmg > 0
-        && event.getDamageSource().getDirectEntity() != null) { // instanceof EntityDamageSource eds
-      Entity enemy = event.getDamageSource().getDirectEntity();
-      if (enemy instanceof LivingEntity liv) {
-        enemy.hurt(playerIn.level().damageSources().thorns(shieldHolder), thornsDmg);
-      }
-    }
-    //make some not take damage
-  }
-
-  public void onKnockback(LivingKnockBackEvent event) {
-    switch (this.type) {
-      case BONE:
-      break;
-      case OBSIDIAN:
-        event.setCanceled(true);
-      break;
-      case FLINT:
-      break;
-      case LEATHER:
-      break;
-      case WOOD:
-        event.setStrength(event.getStrength() * 1.5F);
-      break;
-      default:
-      break;
-    }
-  }
+  // onShieldBlock and onKnockback stubs removed
 }

@@ -30,12 +30,12 @@ public class SoundCard extends ItemBaseCyclic {
       return InteractionResult.PASS;
     }
     ItemStack stack = context.getItemInHand();
-    if (stack.hasTag() && stack.getTag().contains(SOUND_ID)) {
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(SOUND_ID)) {
       //assume sound is valid
       player.getCooldowns().addCooldown(this, 10);
       player.swing(context.getHand());
       //actually play it
-      String sid = stack.getTag().getString(SOUND_ID);
+      String sid = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(SOUND_ID);
       SoundUtil.playSoundById(player, sid);
     }
     return InteractionResult.PASS;
@@ -44,17 +44,17 @@ public class SoundCard extends ItemBaseCyclic {
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    if (stack.hasTag() && stack.getTag().contains(SOUND_ID)) {
-      tooltip.add(Component.translatable(stack.getTag().getString(SOUND_ID)).withStyle(ChatFormatting.GOLD));
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(SOUND_ID)) {
+      tooltip.add(Component.translatable(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(SOUND_ID)).withStyle(ChatFormatting.GOLD));
     }
   }
 
   public static void saveSound(ItemStack stack, String soundId) {
-    if (stack.hasTag() && (soundId == null || soundId.isEmpty())) {
-      stack.getTag().remove(SOUND_ID);
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && (soundId == null || soundId.isEmpty())) {
+      net.minecraft.nbt.CompoundTag tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); tag.remove(SOUND_ID); stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
     }
     else {
-      stack.getOrCreateTag().putString(SOUND_ID, soundId);
+      net.minecraft.nbt.CompoundTag tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); tag.putString(SOUND_ID, soundId); stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
     }
   }
 }

@@ -32,7 +32,7 @@ public class BlockSoundRecorder extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.SOUND_RECORDER.get(), ScreenSoundRecorder::new);
+    // MenuScreens.register(MenuTypeRegistry.SOUND_RECORDER.get(), ScreenSoundRecorder::new);
   }
 
   @Override
@@ -53,7 +53,7 @@ public class BlockSoundRecorder extends BlockCyclic {
         ConfigRegistry.RECORDER_RADIUS.get(), isPowered);
     for (BlockPos nearby : blocks) {
       String sid = event.getSound().getLocation().toString();
-      PacketRegistry.INSTANCE.sendToServer(new PacketRecordSound(sid, nearby));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketRecordSound(sid, nearby));
       //hack save to client. otherwise have to hard sync or reload world
       BlockEntity tile = clientWorld.getBlockEntity(nearby);
       if (tile instanceof TileSoundRecorder) {

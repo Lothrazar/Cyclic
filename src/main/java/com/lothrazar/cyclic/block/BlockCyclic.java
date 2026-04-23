@@ -117,7 +117,7 @@ public class BlockCyclic extends EntityBlockFlib {
           }
         }
       }
-      if (FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()) { // reverted to how 1.16.5 does it fix sapphys bug
+      if (FluidUtil.getFluidHandler(player.getMainHandItem()).isPresent()) { // reverted to how 1.16.5 does it fix sapphys bug
         return ItemInteractionResult.SUCCESS;
       }
     }

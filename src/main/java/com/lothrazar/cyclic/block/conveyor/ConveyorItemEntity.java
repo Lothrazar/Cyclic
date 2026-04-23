@@ -60,8 +60,5 @@ public class ConveyorItemEntity extends ItemEntity {
     //Do nothing
   }
 
-  @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return new ClientboundAddEntityPacket(this);
-  }
+  /* removed getAddEntityPacket */
 }

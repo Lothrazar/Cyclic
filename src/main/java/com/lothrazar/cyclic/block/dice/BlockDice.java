@@ -69,15 +69,15 @@ public class BlockDice extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
     BlockEntity tile = world.getBlockEntity(pos);
-    if (hand == InteractionHand.MAIN_HAND && tile instanceof TileDice) {
+    if (tile instanceof TileDice) {
       ((TileDice) tile).startSpinning();
       if (world.isClientSide) {
         SoundUtil.playSound(world, pos, SoundRegistry.DICE_MIKE_KOENIG.get());
       }
-      return InteractionResult.SUCCESS;
+      return net.minecraft.world.InteractionResult.SUCCESS;
     }
-    return super.use(state, world, pos, player, hand, result);
+    return super.useWithoutItem(state, world, pos, player, result);
   }
 }

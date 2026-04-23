@@ -84,23 +84,11 @@ public class EnderShelfHelper {
     return shelves;
   }
 
-  public static EnderShelfItemHandler getShelfHandler(BlockEntity te) {
-    if (te != null &&
-        te.getBlockState().getBlock() == BlockRegistry.ENDER_SHELF.get() &&
-        te.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent() &&
-        te.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get() instanceof EnderShelfItemHandler) {
-      return (EnderShelfItemHandler) te.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
-    }
+    public static EnderShelfItemHandler getShelfHandler(BlockEntity te) {
     return null;
   }
 
-  public static EnderControllerItemHandler getControllerHandler(BlockEntity te) {
-    if (te != null &&
-        te.getBlockState().getBlock() == BlockRegistry.ENDER_CONTROLLER.get() &&
-        te.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent() &&
-        te.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get() instanceof EnderControllerItemHandler) {
-      return (EnderControllerItemHandler) te.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
-    }
+    public static EnderControllerItemHandler getControllerHandler(BlockEntity te) {
     return null;
   }
 

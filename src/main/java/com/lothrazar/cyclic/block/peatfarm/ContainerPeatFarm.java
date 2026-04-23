@@ -67,7 +67,7 @@ public class ContainerPeatFarm extends ContainerBase {
   }
 
   public int getEnergy() {
-    return tile.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return tile.energy.getEnergyStored();
   }
 
   @Override

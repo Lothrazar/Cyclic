@@ -50,11 +50,11 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-//  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+// //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
-//  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+// //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
   public TileAnvilVoid(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVILVOID.get(), pos, state);
@@ -85,7 +85,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   public void loadAdditional( CompoundTag tag, HolderLookup.Provider provider) {
     inventory.deserializeNBT(provider,tag.getCompound(NBTINV));
     tank.readFromNBT(provider,tag.getCompound(NBTFLUID));
-    super.load(tag);
+    super.loadAdditional(tag, provider);
   }
 
   @Override
@@ -94,7 +94,7 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(provider,fluid);
     tag.put(NBTFLUID, fluid);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, provider);
   }
 
   //  @Override
@@ -116,9 +116,9 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
       outputSlots.insertItem(0, new ItemStack(Items.BOOK), false);
       doCost = true;
     }
-    else if (stack.getTag() != null && stack.getTag().contains("Enchantments") && !stack.is(DataTags.ANVIL_IMMUNE)) {
+    else if (stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag() != null && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("Enchantments") && !stack.is(DataTags.ANVIL_IMMUNE)) {
       //is enchanted
-      stack.getTag().remove("Enchantments");
+      stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().remove("Enchantments");
       outputSlots.insertItem(0, stack.copy(), false);
       inputSlots.extractItem(0, stack.getCount(), false);
       doCost = true;

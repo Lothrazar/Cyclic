@@ -61,7 +61,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
     if (tag.contains(NBT_SHELVES)) {
       ListTag shelves = tag.getList(NBT_SHELVES, Tag.TAG_COMPOUND);
       for (int i = 0; i < shelves.size(); i++) {
-        BlockPos pos = NbtUtils.readBlockPos(shelves.getCompound(i));
+        BlockPos pos = net.minecraft.core.BlockPos.of(shelves.getCompound(i).getLong("pos"));
         this.connectedShelves.add(pos);
       }
     }
@@ -73,7 +73,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
     ListTag shelves = new ListTag();
     for (BlockPos pos : this.connectedShelves) {
-      shelves.add(NbtUtils.writeBlockPos(pos));
+      CompoundTag pTag = new CompoundTag(); pTag.putLong("pos", pos.asLong()); shelves.add(pTag);
     }
     tag.put(NBT_SHELVES, shelves);
     super.saveAdditional(tag,registries);

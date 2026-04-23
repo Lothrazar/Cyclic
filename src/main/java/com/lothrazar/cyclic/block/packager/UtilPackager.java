@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.neoforged.neoforge.common.Tags;
-//import net.minecraftforge.common.Tags;
+//import net.neoforged.neoforge.common.Tags;
 
 /**
  * https://github.com/Lothrazar/Cyclic/commit/2cd2376fd07685414b5a8a2a52250caab8143d9b#diff-f5ee2272c17948b8822c0020ec2b3f35b8dea7ec714d70a11355717c9d3a92f0

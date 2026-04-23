@@ -46,7 +46,7 @@ public class AirAntiGravity extends ItemBaseToggle {
         ItemStackUtil.damageItem(player, stack);
       }
       if (level.isClientSide && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+        net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
   }

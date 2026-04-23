@@ -41,8 +41,8 @@ public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvid
 
   public void tryPlaySound() {
     ItemStack card = this.inventory.getStackInSlot(0);
-    if (card.hasTag() && card.getTag().contains(SoundCard.SOUND_ID) && level instanceof ServerLevel) {
-      String sid = card.getTag().getString(SoundCard.SOUND_ID);
+    if (card.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && card.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(SoundCard.SOUND_ID) && level instanceof ServerLevel) {
+      String sid = card.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(SoundCard.SOUND_ID);
       SoundUtil.playSoundFromServerById((ServerLevel) level, worldPosition, sid);
     }
   }

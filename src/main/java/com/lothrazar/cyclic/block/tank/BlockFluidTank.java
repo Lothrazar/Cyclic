@@ -55,7 +55,7 @@ public class BlockFluidTank extends BlockCyclic {
 
   @Override
   public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    if (!player.isCrouching() && player.getItemInHand(hand).getItem() == this.asItem()
+    if (!player.isCrouching() && player.getMainHandItem().getItem() == this.asItem()
         && (hit.getDirection() == Direction.UP || hit.getDirection() == Direction.DOWN)) {
       //pass to allow quick building up and down
       return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

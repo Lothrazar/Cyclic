@@ -39,7 +39,7 @@ public class BlockPackager extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.PACKAGER.get(), ScreenPackager::new);
+    // MenuScreens.register(MenuTypeRegistry.PACKAGER.get(), ScreenPackager::new);
   }
 
   @Override

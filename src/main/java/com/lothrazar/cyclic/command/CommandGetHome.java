@@ -23,14 +23,8 @@ public class CommandGetHome {
      *
      * -- the location of their Respawn Anchor in the Nether */
     BlockPos respawnPos = player.getRespawnPosition();
-    Optional<Vec3> optional = Optional.empty();
     if (respawnPos != null) {
-      optional = Player.findRespawnPositionAndUseSpawnBlock((ServerLevel) player.level(), respawnPos, 0.0F, true, true);
-    }
-    if (optional.isPresent()) {
-      Vec3 thanksMojang = optional.get();
-      BlockPos bedLocation = new BlockPos((int) thanksMojang.x, (int) thanksMojang.y, (int) thanksMojang.z);
-      ChatUtil.sendFeedback(ctx, ChatUtil.lang("command.cyclic.gethome.yours") + " " + ChatUtil.blockPosToString(bedLocation));
+      ChatUtil.sendFeedback(ctx, ChatUtil.lang("command.cyclic.gethome.yours") + " " + ChatUtil.blockPosToString(respawnPos));
     }
     else {
       ChatUtil.sendFeedback(ctx, "command.cyclic.gethome.bed");

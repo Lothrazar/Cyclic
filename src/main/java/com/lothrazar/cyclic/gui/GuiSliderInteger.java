@@ -71,14 +71,12 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   /**
    * Mouse scrolling
    */
-  @Override
-  public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+  /*
     if (delta != 0) {
       moveSliderAndUpdate((int) delta);
       return true;
     }
-    return super.mouseScrolled(mouseX, mouseY, delta);
-  }
+    */
 
   /**
    * Fires when control is selected, also I call this from screen class whenever mouse is hovered for extra UX
@@ -123,7 +121,7 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
   @Override
   protected void applyValue() { // func_230979_b_();
     int val = getSliderAsInteger();
-    PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.field, val, pos));
+    net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(this.field, val, pos));
   }
 
   @Override

@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
-//import net.minecraftforge.client.gui.widget.ExtendedButton;
+//import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 
 /**
  * not bound to a tile entity unlike ButtonMachine. Textures bound to TextureEnum

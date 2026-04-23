@@ -110,7 +110,7 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     if (filter.isEmpty()) {
       return true; //ya go
     }
-    for (BlockStateMatcher m : BlockstateCard.getSavedStates(level, filter)) {
+    for (BlockStateMatcher m : BlockstateCard.getSavedStates(net.minecraft.world.item.Item.TooltipContext.of(level), filter)) {
       if (m.doesMatch(targetState)) {
         return true; // i am allowed to mine this
       }
@@ -131,13 +131,13 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

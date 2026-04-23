@@ -29,23 +29,15 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   public static final String NBT_STATUS = "onoff";
 
-  public GlowingHelmetItem(ArmorMaterial materialIn, ArmorItem.Type slot, Properties builderIn) {
+  public GlowingHelmetItem(net.minecraft.core.Holder<ArmorMaterial> materialIn, ArmorItem.Type slot, Properties builderIn) {
     super(materialIn, slot, builderIn);
   }
 
-  @Override
   public Rarity getRarity(ItemStack stack) {
     return Rarity.UNCOMMON;
   }
 
-  @Override
-  public void onArmorTick(ItemStack stack, Level world, Player player) {
-    boolean isTurnedOn = this.isOn(stack);
-    removeNightVision(player, isTurnedOn);
-    if (isTurnedOn) {
-      addNightVision(player);
-    }
-  }
+  /* removed onArmorTick */
 
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
@@ -58,7 +50,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   private static void addNightVision(Player player) {
-    player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
+    player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0, false, false, false));
   }
 
   public static void removeNightVision(Player player, boolean hidden) {

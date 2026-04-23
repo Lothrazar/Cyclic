@@ -50,7 +50,7 @@ public class BlockAnvilAuto extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.ANVIL.get(), ScreenAnvil::new);
+    // MenuScreens.register(MenuTypeRegistry.ANVIL.get(), ScreenAnvil::new);
   }
 
   @Override

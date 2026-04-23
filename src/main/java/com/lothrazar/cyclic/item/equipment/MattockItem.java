@@ -19,20 +19,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.ForgeEventFactory;
 
 public class MattockItem extends DiggerItem {
 
   final int radius; //radius 2 is 5x5 area square
 
   public MattockItem(Tiers tr, Properties builder, int radius) {
-    super(5.0F, -3.0F, tr, DataTags.WITH_MATTOCK, builder);
+    super(tr, DataTags.WITH_MATTOCK, builder);
     this.radius = radius;
   }
 
-  @Override
-  public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
+  /*
     Level level = player.level();
     //    this.getTier()
     HitResult ray = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
@@ -51,7 +48,7 @@ public class MattockItem extends DiggerItem {
         }
         if (bsCurrent.destroySpeed >= 0 // -1 is unbreakable
             && player.mayUseItemAt(posCurrent, sideHit, stack)
-            && ForgeEventFactory.doPlayerHarvestCheck(player, bsCurrent, true)
+            && net.neoforged.neoforge.event.EventHooks.doPlayerHarvestCheck(player, bsCurrent, true)
             && this.getDestroySpeed(stack, bsCurrent) > 1
             && (bsCurrent.canHarvestBlock(level, pos, player)
                 || bsCurrent.is(this.getTier().getTag()))) {
@@ -62,7 +59,7 @@ public class MattockItem extends DiggerItem {
           }
           else if (player instanceof ServerPlayer) { //Server side, so this works
             ServerPlayer mp = (ServerPlayer) player;
-            int xpGivenOnDrop = ForgeHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
+            int xpGivenOnDrop = net.neoforged.neoforge.event.EventHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, posCurrent);
             if (xpGivenOnDrop >= 0) {
               blockCurrent.playerDestroy(level, player, posCurrent, bsCurrent, level.getBlockEntity(posCurrent), stack);
               if (blockCurrent.onDestroyedByPlayer(bsCurrent, level, posCurrent, player, true, bsCurrent.getFluidState())
@@ -75,8 +72,7 @@ public class MattockItem extends DiggerItem {
         }
       }
     }
-    return super.onBlockStartBreak(stack, pos, player);
-  }
+    */
 
   private List<BlockPos> getShape(BlockPos pos, int yoff, Direction sideHit) {
     List<BlockPos> shape;

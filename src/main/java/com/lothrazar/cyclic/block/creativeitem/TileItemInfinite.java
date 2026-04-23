@@ -34,14 +34,14 @@ public class TileItemInfinite extends TileBlockEntityCyclic {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.load(tag);
+    super.loadAdditional(tag, registries);
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public void tick() {

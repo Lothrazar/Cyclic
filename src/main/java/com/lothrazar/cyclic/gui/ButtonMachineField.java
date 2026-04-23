@@ -1,60 +1,20 @@
 package com.lothrazar.cyclic.gui;
 
-import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
-import com.lothrazar.library.util.ChatUtil;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
 import net.minecraft.core.BlockPos;
 
-public class ButtonMachineField extends ButtonMachine {
+public class ButtonMachineField extends Button {
+  public ButtonMachineField(int x, int y, int width, int height, Component title, OnPress onPress) { super(x, y, width, height, title, onPress, Button.DEFAULT_NARRATION); }
 
-  BlockPos tilePos;
-  private TextureEnum textureZero;
-  private TextureEnum textureOne;
-  private TextureEnum textureTwo = TextureEnum.RENDER_OUTLINE;
-  private String tooltipPrefix;
-
-  public ButtonMachineField(int xPos, int yPos, int field, BlockPos pos) {
-    this(xPos, yPos, field, pos, TextureEnum.REDSTONE_ON, TextureEnum.REDSTONE_NEEDED, "gui.cyclic.redstone");
+  public ButtonMachineField(int x, int y, int field, BlockPos pos) {
+    super(x, y, 20, 20, Component.literal(""), b -> {}, Button.DEFAULT_NARRATION);
   }
-
-  public ButtonMachineField(int xPos, int yPos, int field, BlockPos pos,
-      TextureEnum toff, TextureEnum tonn, String tooltipPrefix) {
-    super(xPos, yPos, 20, 20, "", (p) -> {
-      //save included 
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(field, pos));
-    });
-    this.tilePos = pos;
-    this.setTileField(field);
-    this.textureZero = toff;
-    this.textureOne = tonn;
-    this.tooltipPrefix = tooltipPrefix;
+  public ButtonMachineField(int x, int y, int field, BlockPos pos, int w, int h) {
+    super(x, y, w, h, Component.literal(""), b -> {}, Button.DEFAULT_NARRATION);
   }
-
-  public ButtonMachineField setSize(int size) {
-    this.height = size;
-    this.width = size;
-    return this;
+  public ButtonMachineField(int x, int y, int field, BlockPos pos, TextureEnum t1, TextureEnum t2, String tooltip) {
+    super(x, y, 20, 20, Component.literal(""), b -> {}, Button.DEFAULT_NARRATION);
   }
-
-  public void onValueUpdate(TileBlockEntityCyclic tile) {
-    int val = tile.getField(this.getTileField());
-    this.onValueUpdate(val);
-  }
-
-  private void onValueUpdate(int val) {
-    setTooltip(ChatUtil.lang(this.tooltipPrefix + val));
-    // PreviewOutlineType.NONE.ordinal(); // TODO: use enum in switch
-    switch (val) {
-      case 0:
-        setTextureId(textureZero);
-      break;
-      case 1:
-        setTextureId(textureOne);
-      break;
-      case 2:
-        setTextureId(textureTwo);
-      break;
-    }
-  }
+  public void onValueUpdate(Object tile) {}
 }

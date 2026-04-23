@@ -45,7 +45,7 @@ public class WandHypnoItem extends ItemBaseCyclic {
 
   private void doAction(ItemStack stack, Level world, Player player) {
     if (!world.isClientSide) {
-      IEnergyStorage storage = CapabilityFixer.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack);//stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ENERGY, null).orElse(null);
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {
         storage.extractEnergy(cost, false);

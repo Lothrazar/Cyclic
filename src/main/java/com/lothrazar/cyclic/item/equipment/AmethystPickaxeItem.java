@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class AmethystPickaxeItem extends PickaxeItem {
 
   public AmethystPickaxeItem(Tier t, int db, float attackspeed, Properties prop) {
-    super(t, db, attackspeed, prop);
+    super(t, prop);
   }
 
   @Override

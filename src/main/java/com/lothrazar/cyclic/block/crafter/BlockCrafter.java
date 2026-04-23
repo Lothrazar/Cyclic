@@ -57,30 +57,8 @@ public class BlockCrafter extends BlockCyclic {
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      BlockEntity tileentity = worldIn.getBlockEntity(pos);
-      if (tileentity != null) {
-        TileCrafter tileCrafter = (TileCrafter) tileentity;
-        tileCrafter.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.PREVIEW).ifPresent(h -> {
-          h.extractItem(0, 64, false);
-        });
-        tileCrafter.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.GRID).ifPresent(h -> {
-          for (int i = 0; i < h.getSlots(); i++) {
-            h.extractItem(i, 64, false);
-          }
-        });
-        tileCrafter.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.INPUT).ifPresent(h -> {
-          for (int i = 0; i < h.getSlots(); i++) {
-            Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), h.getStackInSlot(i));
-          }
-        });
-        tileCrafter.getCapability(ForgeCapabilities.ITEM_HANDLER, TileCrafter.ItemHandlers.OUTPUT).ifPresent(h -> {
-          for (int i = 0; i < h.getSlots(); i++) {
-            Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), h.getStackInSlot(i));
-          }
-        });
-      }
+      worldIn.updateNeighbourForOutputSignal(pos, this);
     }
-    worldIn.updateNeighbourForOutputSignal(pos, this);
     super.onRemove(state, worldIn, pos, newState, isMoving);
   }
 
@@ -101,6 +79,6 @@ public class BlockCrafter extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.CRAFTER.get(), ScreenCrafter::new);
+    // MenuScreens.register(MenuTypeRegistry.CRAFTER.get(), ScreenCrafter::new);
   }
 }

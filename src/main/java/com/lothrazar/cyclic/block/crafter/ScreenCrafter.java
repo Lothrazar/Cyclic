@@ -63,7 +63,7 @@ public class ScreenCrafter extends ScreenBase<ContainerCrafter> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    super.renderBackground(ms);
+    super.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());

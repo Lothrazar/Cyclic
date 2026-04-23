@@ -34,11 +34,11 @@ public class HeartToxicItem extends ItemBaseCyclic {
     //get attribute modif by id
     AttributeModifier oldHealthModifier = healthAttribute.getModifier(AttributesUtil.DEFAULT_ID);
     double addedHealth = 0;
-    if (oldHealthModifier != null && oldHealthModifier.getAmount() <= -18) {
+    if (oldHealthModifier != null && oldHealthModifier.amount() <= -18) {
       addedHealth = -18;
     }
     else {
-      addedHealth = (oldHealthModifier == null) ? -2.0D : oldHealthModifier.getAmount() - 2.0D;
+      addedHealth = (oldHealthModifier == null) ? -2.0D : oldHealthModifier.amount() - 2.0D;
       //actually DO the eating of the thing
       playerIn.getCooldowns().addCooldown(this, COOLDOWN);
       playerIn.getItemInHand(handIn).shrink(1);
@@ -48,7 +48,7 @@ public class HeartToxicItem extends ItemBaseCyclic {
     }
     //replace the modifier on the main attribute
     healthAttribute.removeModifier(AttributesUtil.DEFAULT_ID);
-    AttributeModifier healthModifier = new AttributeModifier(AttributesUtil.DEFAULT_ID, "HP Drain from Cyclic", addedHealth, AttributeModifier.Operation.ADD_VALUE);
+    AttributeModifier healthModifier = new AttributeModifier(AttributesUtil.DEFAULT_ID, addedHealth, AttributeModifier.Operation.ADD_VALUE);
     healthAttribute.addPermanentModifier(healthModifier);
     //
     return super.use(worldIn, playerIn, handIn);

@@ -32,14 +32,14 @@ public class FilterCardItem extends ItemBaseCyclic {
 
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (stack.hasTag()) {
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
       boolean isIgnore = getIsIgnoreList(stack);
       MutableComponent t = Component.translatable("cyclic.screen.filter." + isIgnore);
       t.withStyle(isIgnore ? ChatFormatting.DARK_GRAY : ChatFormatting.DARK_BLUE);
       tooltip.add(t);
       // caps arent synced from server very well
       //
-      CompoundTag stackTag = stack.getOrCreateTag();
+      CompoundTag stackTag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
       if (stackTag.contains("fluidTooltip")) {
         String fluidTooltip = stackTag.getString("fluidTooltip");
         tooltip.add(Component.translatable(fluidTooltip).withStyle(ChatFormatting.AQUA));
@@ -63,34 +63,31 @@ public class FilterCardItem extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
-      NetworkHooks.openScreen((ServerPlayer) playerIn, new ContainerProviderFilterCard(), playerIn.blockPosition());
+      /* playerIn.openMenu(new ContainerProviderFilterCard(), playerIn.blockPosition()); */
     }
     return super.use(worldIn, playerIn, handIn);
   }
 
-  @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new CapabilityProviderFilterCard();
-  }
+
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.FILTER_DATA.get(), ScreenFilterCard::new);
+    // // MenuScreens.register(MenuTypeRegistry.FILTER_DATA.get(), ScreenFilterCard::new);
   }
 
   public static void toggleFilterType(ItemStack filter) {
     boolean prev = getIsIgnoreList(filter);
-    filter.getTag().putBoolean(NBTFILTER, !prev);
+    net.minecraft.nbt.CompoundTag tag = filter.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); tag.putBoolean(NBTFILTER, !prev); filter.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
   }
 
   public static FluidStack getFluidStack(ItemStack filterStack) {
     if (filterStack.getItem() instanceof FilterCardItem == false) {
       return FluidStack.EMPTY; //filter is air, everything allowed
     }
-    IItemHandler myFilter = filterStack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    net.neoforged.neoforge.items.IItemHandler myFilter = filterStack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
     if (myFilter != null) {
       ItemStack bucket = myFilter.getStackInSlot(SLOT_FLUID);
-      IFluidHandler fluidInStack = bucket.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+      net.neoforged.neoforge.fluids.capability.IFluidHandlerItem fluidInStack = bucket.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
       if (fluidInStack != null && fluidInStack.getFluidInTank(0) != null) {
         return fluidInStack.getFluidInTank(0);
       }
@@ -106,7 +103,7 @@ public class FilterCardItem extends ItemBaseCyclic {
     boolean isEmpty = false;
     boolean isMatchingList = false;
     boolean isIgnoreList = getIsIgnoreList(filterStack);
-    IItemHandler myFilter = filterStack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    net.neoforged.neoforge.items.IItemHandler myFilter = filterStack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
     if (myFilter != null) {
       for (int i = 0; i < myFilter.getSlots(); i++) {
         ItemStack filterPtr = myFilter.getStackInSlot(i);
@@ -132,7 +129,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   private static boolean getIsIgnoreList(ItemStack filterStack) {
-    return filterStack.getOrCreateTag().getBoolean(NBTFILTER);
+    return filterStack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getBoolean(NBTFILTER);
   }
 
   public static boolean filterAllowsExtract(ItemStack filterStack, FluidStack fluidInTank) {
@@ -152,14 +149,13 @@ public class FilterCardItem extends ItemBaseCyclic {
   }
 
   // ShareTag for server->client capability data sync
-  @Override
   public CompoundTag getShareTag(ItemStack stack) {
-    CompoundTag nbt = stack.getOrCreateTag();
+    CompoundTag nbt = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
     FluidStack fluidStack = FilterCardItem.getFluidStack(stack);
     if (!fluidStack.isEmpty()) {
       nbt.putString("fluidTooltip", fluidStack.getDisplayName().getString());
     }
-    IItemHandler cap = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    net.neoforged.neoforge.items.IItemHandler cap = stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
     //on server  this runs . also has correct values.
     //set data for sync to client
     if (cap != null) {
@@ -182,14 +178,14 @@ public class FilterCardItem extends ItemBaseCyclic {
     return nbt;
   }
 
-  @Override
   public void readShareTag(ItemStack stack, CompoundTag nbt) {
     if (nbt != null) {
-      CompoundTag stackTag = stack.getOrCreateTag();
+      CompoundTag stackTag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
       stackTag.putString("itemTooltip", nbt.getString("itemTooltip"));
+      stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(stackTag));
       stackTag.putString("fluidTooltip", nbt.getString("fluidTooltip"));
       stackTag.putInt("itemCount", nbt.getInt("itemCount"));
     }
-    super.readShareTag(stack, nbt);
+    
   }
 }

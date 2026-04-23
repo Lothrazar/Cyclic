@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.HarvestUtil;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -174,7 +174,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     directionIsUp = tag.getBoolean("directionIsUp");
     shapeIndex = tag.getInt("shapeIndex");
     energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
-    super.load(tag,registries);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -184,7 +184,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

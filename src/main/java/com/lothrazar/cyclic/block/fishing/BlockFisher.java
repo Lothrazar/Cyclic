@@ -38,7 +38,7 @@ public class BlockFisher extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.FISHER.get(), ScreenFisher::new);
+    // MenuScreens.register(MenuTypeRegistry.FISHER.get(), ScreenFisher::new);
   }
 
   @Override

@@ -44,10 +44,7 @@ public class ScytheBrush extends ItemBaseCyclic {
     super(properties);
   }
 
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-    return enchantment == Enchantments.SILK_TOUCH || super.canApplyAtEnchantingTable(stack, enchantment);
-  }
+  
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
@@ -59,7 +56,7 @@ public class ScytheBrush extends ItemBaseCyclic {
     // send work packet
     int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
     if (context.getLevel().isClientSide) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketScythe(pos, ScytheType.BRUSH, radius)); // line 51
     }
     context.getPlayer().swing(context.getHand());
     ItemStackUtil.damageItem(context.getPlayer(), context.getItemInHand());

@@ -7,7 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class SnowwalkEffect extends CyclicMobEffect {
 
@@ -16,13 +16,13 @@ public class SnowwalkEffect extends CyclicMobEffect {
   }
 
   @Override
-  public void tick(LivingTickEvent event) {
+  public void tick(EntityTickEvent.Pre event) {
     // delete me i guess 
-    LivingEntity living = event.getEntity();
+    if (!(event.getEntity() instanceof LivingEntity living)) return;
     Level level = living.level();
     BlockPos blockpos = living.blockPosition();
     BlockState blockstate = Blocks.SNOW.defaultBlockState();
-    living.getEffect(this).getAmplifier(); // TODO: radius? 
+    living.getEffect(com.lothrazar.cyclic.registry.PotionEffectRegistry.SNOWWALK).getAmplifier(); // TODO: radius? 
     if (level.isEmptyBlock(blockpos) && blockstate.canSurvive(level, blockpos)) {
       //world.getBlockState(blockpos).is(Blocks.AIR)) {
       //is air

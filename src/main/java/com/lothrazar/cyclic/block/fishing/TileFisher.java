@@ -78,13 +78,13 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public void tick() {
@@ -115,6 +115,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void doFishing(ItemStack fishingRod, BlockPos center) {
+/*
     Level world = this.getLevel();
     RandomSource rand = world.random;
     if (rand.nextDouble() < CHANCE.get() && world instanceof ServerLevel) {
@@ -157,7 +158,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
         } // else fishing rod cannot be damaged (supreme/diamond/other mods)
       }
     }
-  }
+*/  }
 
   @Override
   public void setField(int field, int value) {

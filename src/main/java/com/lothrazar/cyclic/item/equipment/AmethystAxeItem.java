@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class AmethystAxeItem extends AxeItem {
 
   public AmethystAxeItem(Tier t, float f, float attackspeed, Properties prop) {
-    super(t, f, attackspeed, prop);
+    super(t, prop);
   }
 
   @Override

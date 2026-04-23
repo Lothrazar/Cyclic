@@ -30,8 +30,8 @@ public class EntityDataCard extends ItemBaseCyclic {
   @Override
 //  @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (stack.hasTag()) {
-      MutableComponent t = Component.translatable(stack.getTag().getString(ENTITY_KEY));
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
+      MutableComponent t = Component.translatable(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(ENTITY_KEY));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }
@@ -43,7 +43,7 @@ public class EntityDataCard extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
     if (player.isCrouching()) {
-      CompoundTag atag = player.getItemInHand(hand).getOrCreateTag();
+      CompoundTag atag = player.getMainHandItem().getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
       atag.put(ENTITY_DATA, player.getPersistentData());
       atag.putString(ENTITY_KEY, "player");
     }
@@ -53,7 +53,7 @@ public class EntityDataCard extends ItemBaseCyclic {
   @Override
   public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
     playerIn.swing(hand);
-    CompoundTag atag = stack.getOrCreateTag();
+    CompoundTag atag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
     atag.put(ENTITY_DATA, target.getPersistentData());
     if (target instanceof Player) {
       atag.putString(ENTITY_KEY, "player");
@@ -62,7 +62,7 @@ public class EntityDataCard extends ItemBaseCyclic {
       String key = EntityType.getKey(target.getType()).toString();
       atag.putString(ENTITY_KEY, key);
     }
-    stack.setTag(atag);
+    stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(atag));
     return super.interactLivingEntity(stack, playerIn, target, hand);
   }
 
@@ -76,7 +76,7 @@ public class EntityDataCard extends ItemBaseCyclic {
 
   private static EntityType<?> getEntityType(ItemStack stack) {
     if (stack.getItem() instanceof EntityDataCard) {
-      final String key = stack.getTag().getString(ENTITY_KEY);
+      final String key = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(ENTITY_KEY);
       return EntityType.byString(key).orElse(null);
     }
     return null;
@@ -84,7 +84,7 @@ public class EntityDataCard extends ItemBaseCyclic {
 
   public static boolean hasEntity(ItemStack stack) {
     if (stack.getItem() instanceof EntityDataCard) {
-      return stack.hasTag() && stack.getTag().contains(ENTITY_KEY);
+      return stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(ENTITY_KEY);
     }
     return false;
   }

@@ -30,7 +30,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -70,7 +70,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   final ItemStackHandler gridCap =  new ItemStackHandler(GRID_SIZE);
   final ItemStackHandler preview = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
-//  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
+// //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
   //
   public static final int IO_NUM_ROWS = 5;
   public static final int IO_NUM_COLS = 2;
@@ -133,7 +133,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     if (timer < 0) {
       timer = 0;
     }
-    Recipe<CraftingContainer> lastValidRecipe = findMatchingRecipe(null);
+    net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe> lastValidRecipe = findMatchingRecipe(null);
     if (lastValidRecipe == null) {
       //reset 
       this.timer = TIMER_FULL;
@@ -141,7 +141,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     }
     else {
       //recipes not null and it matches  
-      ItemStack recipeOutput = lastValidRecipe.getResultItem(level.registryAccess()).copy();
+      ItemStack recipeOutput = lastValidRecipe.value().getResultItem(level.registryAccess()).copy();
       setPreviewSlot(recipeOutput);
       //if we have space for the output, then go ahead
       if (hasFreeSpace(outHandler, recipeOutput)) {
@@ -160,7 +160,12 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
           //get the result item
           depositOutput(recipeOutput, outHandler);
           //stuff like empty buckets happen down here
-          NonNullList<ItemStack> rem = lastValidRecipe.getRemainingItems(craftMatrix);
+          net.minecraft.world.item.crafting.CraftingInput craftingInput = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, java.util.List.of(
+        craftMatrix.getItem(0), craftMatrix.getItem(1), craftMatrix.getItem(2),
+        craftMatrix.getItem(3), craftMatrix.getItem(4), craftMatrix.getItem(5),
+        craftMatrix.getItem(6), craftMatrix.getItem(7), craftMatrix.getItem(8)
+    ));
+          NonNullList<ItemStack> rem = lastValidRecipe.value().getRemainingItems(craftingInput);
           for (int i = 0; i < rem.size(); ++i) {
             ItemStack s = rem.get(i);
             if (!s.isEmpty() && s.getItem() == craftMatrix.getItem(i).getItem()) {
@@ -189,7 +194,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void setPreviewSlot(ItemStack itemStack) {
-    IItemHandler previewHandler = this.preview.orElse(null);
+    IItemHandler previewHandler = this.preview;
     if (previewHandler != null) {
       previewHandler.extractItem(0, 64, false);
       previewHandler.insertItem(0, itemStack, false);
@@ -243,9 +248,9 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   //    //to solve the durability issue?
   //    // https://github.com/Lothrazar/Cyclic/issues/1947
   //  }
-  private boolean doCraft(Recipe<CraftingContainer> lastValidRecipe) {
+  private boolean doCraft(net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe> lastValidRecipe) {
     HashMap<Integer, List<ItemStack>> putbackStacks = new HashMap<>();
-    for (Ingredient ingredient : lastValidRecipe.getIngredients()) {
+    for (Ingredient ingredient : lastValidRecipe.value().getIngredients()) {
       if (ingredient.isEmpty()) {
         continue;
       }
@@ -282,13 +287,18 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
-  private Recipe<CraftingContainer> findMatchingRecipe(ArrayList<ItemStack> itemStacksInGrid) {
+  private net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe> findMatchingRecipe(ArrayList<ItemStack> itemStacksInGrid) {
     for (int i = 0; i < this.gridCap.getSlots(); i++) {
       craftMatrix.setItem(i, this.gridCap.getStackInSlot(i).copy());//fake items anyway. but also jus do a copy
     }
-    List<CraftingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
-    for (CraftingRecipe rec : recipes) {
-      if (rec.matches(craftMatrix, level)) {
+    net.minecraft.world.item.crafting.CraftingInput craftingInput = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, java.util.List.of(
+        craftMatrix.getItem(0), craftMatrix.getItem(1), craftMatrix.getItem(2),
+        craftMatrix.getItem(3), craftMatrix.getItem(4), craftMatrix.getItem(5),
+        craftMatrix.getItem(6), craftMatrix.getItem(7), craftMatrix.getItem(8)
+    ));
+    java.util.List<net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe>> recipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
+    for (net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe> rec : recipes) {
+      if (rec.value().matches(craftingInput, level)) {
         return rec;
       }
     }
@@ -325,7 +335,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
 
-//  public <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers type) {
+// //  // public <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers type) {
 //    if (cap == ForgeCapabilities.ITEM_HANDLER) {
 //      switch (type) {
 //        case INPUT:

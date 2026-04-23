@@ -27,18 +27,18 @@ public class UnbreakableBlock extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    ItemStack heldItemStack = player.getItemInHand(hand);
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    ItemStack heldItemStack = player.getMainHandItem();
     Item heldItem = heldItemStack.getItem();
     if (state.hasProperty(BREAKABLE) &&
-        hand == InteractionHand.MAIN_HAND &&
+        true &&  // was hand check
         heldItem == Items.REDSTONE ||
         heldItem == Items.REDSTONE_TORCH ||
         heldItem == Items.REDSTONE_BLOCK) {
       toggle(state, world, pos);
       return InteractionResult.SUCCESS;
     }
-    return super.use(state, world, pos, player, hand, hit);
+    return super.useWithoutItem(state, world, pos, player, hit);
   }
 
   private void toggle(BlockState state, Level world, BlockPos pos) {

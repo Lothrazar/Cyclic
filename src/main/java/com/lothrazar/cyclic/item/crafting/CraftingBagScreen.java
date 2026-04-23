@@ -19,7 +19,7 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }
@@ -31,16 +31,16 @@ public class CraftingBagScreen extends ScreenBase<CraftingBagContainer> {
     int y = topPos + 62;
     final int size = 14;
     this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_EMPTY, "cyclic.gui.craft.empty", b -> {
-      PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.EMPTY));
     }));
     //
     x += 18;
     this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_BALANCE, "cyclic.gui.craft.balance", b -> {
-      PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREAD));
     }));
     x += 18;
     this.addRenderableWidget(new ButtonTextured(x, y, size, size, TextureEnum.CRAFT_MATCH, "cyclic.gui.craft.match", b -> {
-      PacketRegistry.INSTANCE.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREADMATCH));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketCraftAction(CraftingActionEnum.SPREADMATCH));
     }));
   }
 

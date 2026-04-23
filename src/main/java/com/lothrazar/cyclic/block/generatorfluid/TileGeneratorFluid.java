@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -111,27 +111,28 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   }
 
   private ArrayList<Fluid> indexFluidsFromRecipes() {
-    List<RecipeGeneratorFluid> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
     ArrayList<Fluid> fluids = new ArrayList<>();
-    for (RecipeGeneratorFluid recipe : recipes) {
+    for (var holder : recipes) {
+      RecipeGeneratorFluid recipe = holder.value();
       fluids.add(recipe.getRecipeFluid().getFluid());
-      fluids.addAll(recipe.getFluidsFromTag());
     }
     return fluids;
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+    GeneratorFluidRecipeInput input = new GeneratorFluidRecipeInput(tank.getFluid());
+    if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorFluid> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
-    for (RecipeGeneratorFluid rec : recipes) {
-      if (rec.matches(this, level)) {
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get());
+    for (var holder : recipes) {
+      RecipeGeneratorFluid rec = holder.value();
+      if (rec.matches(input, level)) {
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
-        //  extract
         tank.drain(this.currentRecipe.fluidIng.getAmount(), IFluidHandler.FluidAction.EXECUTE);
         return;
       }

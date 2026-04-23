@@ -34,15 +34,15 @@ public class TileDice extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    tag.putInt("spinningIfZero", spinningIfZero);
-    super.load(tag);
+  public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
+    spinningIfZero = tag.getInt("spinningIfZero");
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    spinningIfZero = tag.getInt("spinningIfZero");
-    super.saveAdditional(tag);
+  public void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
+    tag.putInt("spinningIfZero", spinningIfZero);
+    super.saveAdditional(tag, registries);
   }
 
   public void startSpinning() {

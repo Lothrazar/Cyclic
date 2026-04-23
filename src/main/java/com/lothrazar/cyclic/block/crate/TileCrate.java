@@ -40,12 +40,12 @@ public class TileCrate extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
     tag.put(NBTINV, inventory.serializeNBT(registries));
   }
 

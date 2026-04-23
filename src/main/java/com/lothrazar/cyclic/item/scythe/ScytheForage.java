@@ -49,7 +49,7 @@ public class ScytheForage extends ItemBaseCyclic {
     }
     int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
     if (context.getLevel().isClientSide) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
     }
     context.getPlayer().swing(context.getHand());
     ItemStackUtil.damageItem(context.getPlayer(), context.getItemInHand());

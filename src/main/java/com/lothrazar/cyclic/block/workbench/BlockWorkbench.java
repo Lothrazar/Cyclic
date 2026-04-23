@@ -21,13 +21,13 @@ public class BlockWorkbench extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    return super.use(state, world, pos, player, hand, hit);
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    return super.useWithoutItem(state, world, pos, player, hit);
   }
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.WORKBENCH.get(), ScreenWorkbench::new);
+    // MenuScreens.register(MenuTypeRegistry.WORKBENCH.get(), ScreenWorkbench::new);
   }
 
   @Override

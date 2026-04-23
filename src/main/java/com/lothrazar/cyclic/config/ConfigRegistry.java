@@ -79,20 +79,22 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.*;
 
 public class ConfigRegistry extends ConfigTemplate {
 
-  private static ConfigSpec COMMON_CONFIG;
-  private static ConfigSpec CLIENT_CONFIG;
+  private static ModConfigSpec COMMON_CONFIG;
+  private static ModConfigSpec CLIENT_CONFIG;
 
   public void setupMain() {
-    COMMON_CONFIG.setConfig(setup(ModCyclic.MODID));
+    net.neoforged.fml.ModContainer mc = net.neoforged.fml.ModLoadingContext.get().getActiveContainer();
+    mc.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, COMMON_CONFIG);
   }
 
   public void setupClient() {
-    CLIENT_CONFIG.setConfig(setup(ModCyclic.MODID + "-client"));
-    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigRegistry.CLIENT_CONFIG);
+    net.neoforged.fml.ModContainer mc = net.neoforged.fml.ModLoadingContext.get().getActiveContainer();
+    mc.registerConfig(ModConfig.Type.CLIENT, ConfigRegistry.CLIENT_CONFIG);
   }
 
   // Defaults
@@ -227,29 +229,29 @@ public class ConfigRegistry extends ConfigTemplate {
   }
 
   private static void initConfig() {
-    final ConfigSpec.Builder CFG = builder();
+    final ModConfigSpec.Builder CFG = builder();
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
     CFG.comment(WALL, " Configs make sure players will not be able to craft any in survival "
         + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
         .push("potion");
-    PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment(" Set false to disable the base recipe").define("antigravity.enabled", true);
-    PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment(" Set false to disable the base recipe").define("attack_range.enabled", true);
-    PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
-    PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment(" Set false to disable the base recipe").define("butterfingers.enabled", true);
-    PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment(" Set false to disable the base recipe").define("flight.enabled", true);
-    PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment(" Set false to disable the base recipe").define("frost_walker.enabled", true);
-    PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment(" Set false to disable the base recipe").define("gravity.enabled", true);
-    PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment(" Set false to disable the base recipe").define("haste.enabled", true);
-    PotionRegistry.PotionRecipeConfig.HUNGER = CFG.comment(" Set false to disable the base recipe").define("hunger.enabled", true);
-    PotionRegistry.PotionRecipeConfig.LEVITATION = CFG.comment(" Set false to disable the base recipe").define("levitation.enabled", true);
-    PotionRegistry.PotionRecipeConfig.MAGNETIC = CFG.comment(" Set false to disable the base recipe").define("magnetic.enabled", true);
-    PotionRegistry.PotionRecipeConfig.REACH_DISTANCE = CFG.comment(" Set false to disable the base recipe").define("reach_distance.enabled", true);
-    PotionRegistry.PotionRecipeConfig.RESISTANCE = CFG.comment(" Set false to disable the base recipe").define("resistance.enabled", true);
-    PotionRegistry.PotionRecipeConfig.STUN = CFG.comment(" Set false to disable the base recipe").define("stun.enabled", true);
-    PotionRegistry.PotionRecipeConfig.SWIMSPEED = CFG.comment(" Set false to disable the base recipe").define("swimspeed.enabled", true);
-    PotionRegistry.PotionRecipeConfig.SNOWWALK = CFG.comment(" Set false to disable the base recipe").define("snowwalk.enabled", true);
-    PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment(" Set false to disable the base recipe").define("waterwalk.enabled", true);
-    PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment(" Set false to disable the base recipe").define("antigravity.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment(" Set false to disable the base recipe").define("attack_range.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment(" Set false to disable the base recipe").define("butterfingers.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment(" Set false to disable the base recipe").define("flight.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment(" Set false to disable the base recipe").define("frost_walker.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment(" Set false to disable the base recipe").define("gravity.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment(" Set false to disable the base recipe").define("haste.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.HUNGER = CFG.comment(" Set false to disable the base recipe").define("hunger.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.LEVITATION = CFG.comment(" Set false to disable the base recipe").define("levitation.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.MAGNETIC = CFG.comment(" Set false to disable the base recipe").define("magnetic.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.REACH_DISTANCE = CFG.comment(" Set false to disable the base recipe").define("reach_distance.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.RESISTANCE = CFG.comment(" Set false to disable the base recipe").define("resistance.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.STUN = CFG.comment(" Set false to disable the base recipe").define("stun.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.SWIMSPEED = CFG.comment(" Set false to disable the base recipe").define("swimspeed.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.SNOWWALK = CFG.comment(" Set false to disable the base recipe").define("snowwalk.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment(" Set false to disable the base recipe").define("waterwalk.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
     CFG.pop();
 //    ////////////////////////////////////////////////////////////////// enchantment
 //    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
@@ -432,17 +434,17 @@ public class ConfigRegistry extends ConfigTemplate {
         + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
         + "If you change it to false it will only work if the target is in the same dimension.")
         .define("wireless_transfer_dimensional", true);
-    TileAntiBeacon.HARMFUL_POTIONS = CFG.comment(" If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
-        .define("harmful_potions", true);
-    TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
-        .defineInRange("anti_beacon.radius", 16, 1, 128);
-    TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
-        .defineInRange("anti_beacon.ticks", 200, 20, 9999);
+//     TileAntiBeacon.HARMFUL_POTIONS = CFG.comment(" If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
+//         .define("harmful_potions", true);
+//     TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
+//         .defineInRange("anti_beacon.radius", 16, 1, 128);
+//     TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
+//         .defineInRange("anti_beacon.ticks", 200, 20, 9999);
     //TODO: variant that is (only harmful effects? just like milk that does all effects) ?
-    TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
-        .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",
-            "cyclic:gravity",
-            "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
+//     TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
+//         .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",
+//             "cyclic:gravity",
+//             "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
     //TODO: can potions have TAGS?
     TileCableFluid.BUFFERSIZE = CFG.comment(" How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);
@@ -576,7 +578,7 @@ public class ConfigRegistry extends ConfigTemplate {
   }
 
   private static void initClientConfig() {
-    final ForgeConfigSpec.Builder CFGC = builder();
+    final net.neoforged.neoforge.common.ModConfigSpec.Builder CFGC = builder();
     CFGC.comment(WALL, "Client-side properties", WALL)
         .push(ModCyclic.MODID);
     CFGC.comment(WALL, "Block Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
@@ -653,7 +655,7 @@ public class ConfigRegistry extends ConfigTemplate {
   private static ConfigValue<List<? extends String>> FACADE_IGNORELIST;
 
   public static boolean isFacadeAllowed(ItemStack item) {
-    ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item.getItem());
+    ResourceLocation itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item.getItem());
     if (StringParseUtil.isInList(getFacadeIgnoreList(), itemId)) {
       return false;
     }

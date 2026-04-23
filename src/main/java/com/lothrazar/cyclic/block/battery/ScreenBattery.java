@@ -38,21 +38,21 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     int size = 14;
     btnToggle = addRenderableWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       menu.tile.setFlowing((menu.tile.getFlowing() + 1) % 2);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(Fields.FLOWING.ordinal(), menu.tile.getFlowing(), menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(Fields.FLOWING.ordinal(), menu.tile.getFlowing(), menu.tile.getBlockPos()));
     }));
     x = leftPos + 18;
     y = topPos + 18;
     btnU = addRenderableWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       int f = Fields.U.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
     btnU.setTooltip(ChatUtil.lang("gui.cyclic.flowing.up"));
     y = topPos + 60;
     btnD = addRenderableWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       int f = Fields.D.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
     btnD.setTooltip(ChatUtil.lang("gui.cyclic.flowing.down"));
     int xCenter = leftPos + 80;
@@ -63,7 +63,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     btnN = addRenderableWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       int f = Fields.N.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
     btnN.setTooltip(ChatUtil.lang("gui.cyclic.flowing.north"));
     x = xCenter;
@@ -71,7 +71,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     btnS = addRenderableWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       int f = Fields.S.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
     btnS.setTooltip(ChatUtil.lang("gui.cyclic.flowing.south"));
     //now east west
@@ -80,7 +80,7 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     btnE = addRenderableWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       int f = Fields.E.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
     btnE.setTooltip(ChatUtil.lang("gui.cyclic.flowing.east"));
     x = xCenter - space;
@@ -88,14 +88,14 @@ public class ScreenBattery extends ScreenBase<ContainerBattery> {
     btnW = addRenderableWidget(new ButtonMachine(x, y, size, size, "", (p) -> {
       int f = Fields.W.ordinal();
       menu.tile.setField(f, menu.tile.getField(f) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f, menu.tile.getField(f), menu.tile.getBlockPos()));
     }));
     btnW.setTooltip(ChatUtil.lang("gui.cyclic.flowing.west"));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.getEnergy());

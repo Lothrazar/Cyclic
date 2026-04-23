@@ -22,7 +22,7 @@ public class RenderBeaconRedstone implements BlockEntityRenderer<TileBeaconRedst
     int j = 0;
     for (int k = 0; k < list.size(); ++k) {
       BeaconBlockEntity.BeaconBeamSection beaconblockentity$beaconbeamsection = list.get(k);
-      RenderBeaconPotion.renderBeaconBeam(p_112142_, p_112143_, p_112141_, i, j, k == list.size() - 1 ? 1024 : beaconblockentity$beaconbeamsection.getHeight(), beaconblockentity$beaconbeamsection.getColor());
+      RenderBeaconPotion.renderBeaconBeam(p_112142_, p_112143_, p_112141_, i, j, k == list.size() - 1 ? 1024 : beaconblockentity$beaconbeamsection.getHeight(), new float[]{1.0f, 1.0f, 1.0f});
       j += beaconblockentity$beaconbeamsection.getHeight();
     }
   }

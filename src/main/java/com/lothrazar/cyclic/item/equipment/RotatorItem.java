@@ -15,7 +15,7 @@ public class RotatorItem extends ItemBaseCyclic {
   @Override
   public InteractionResult useOn(UseOnContext context) {
     if (context.getLevel().isClientSide) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketRotateBlock(context.getClickedPos(), context.getClickedFace(), context.getHand()));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketRotateBlock(context.getClickedPos(), context.getClickedFace(), context.getHand()));
       context.getPlayer().swing(context.getHand());
     }
     return super.useOn(context);

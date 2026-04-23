@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 
 public class CraftingStickItem extends ItemBaseCyclic {
 
@@ -21,13 +20,13 @@ public class CraftingStickItem extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-      NetworkHooks.openScreen((ServerPlayer) playerIn, new CraftingStickContainerProvider(slot), buf -> buf.writeInt(slot));
+      ((net.minecraft.server.level.ServerPlayer) playerIn).openMenu(new CraftingStickContainerProvider(slot), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
   }
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.CRAFTING_STICK.get(), CraftingStickScreen::new);
+    // // MenuScreens.register(MenuTypeRegistry.CRAFTING_STICK.get(), CraftingStickScreen::new);
   }
 }

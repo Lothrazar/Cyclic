@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +37,7 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isEdible();
+      return stack.has(net.minecraft.core.component.DataComponents.FOOD);
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
@@ -91,8 +91,8 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
     this.burnTimeMax = 0;
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
-    if (stack.isEdible()) {
-      float foodVal = stack.getItem().getFoodProperties(stack, null).nutrition() + stack.getItem().getFoodProperties(stack, null).getSaturationModifier();
+    if (stack.has(net.minecraft.core.component.DataComponents.FOOD)) {
+      net.minecraft.world.food.FoodProperties food = stack.get(net.minecraft.core.component.DataComponents.FOOD); float foodVal = food != null ? food.nutrition() + food.saturation() : 0;
       int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
       //      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
       // BURN IT

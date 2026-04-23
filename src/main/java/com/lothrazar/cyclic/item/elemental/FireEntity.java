@@ -18,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 public class FireEntity extends ThrowableItemProjectile {
 
@@ -50,8 +49,8 @@ public class FireEntity extends ThrowableItemProjectile {
             && target instanceof LivingEntity) {
           target.hurt(level.damageSources().inFire(), Mth.nextInt(level.random, 3, 5));
           LivingEntity living = (LivingEntity) target;
-          living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN.get(), Const.TICKS_PER_SEC * 4, 1));
-          living.setSecondsOnFire(Mth.nextInt(level.random, 1, 5));
+          living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, Const.TICKS_PER_SEC * 4, 1, false, false, false));
+          living.igniteForSeconds(Mth.nextInt(level.random, 1, 5));
         }
       }
     }
@@ -83,7 +82,7 @@ public class FireEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
+  public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket(net.minecraft.server.level.ServerEntity serverEntity) {
+    return new net.minecraft.network.protocol.game.ClientboundAddEntityPacket(this, serverEntity);
   }
 }

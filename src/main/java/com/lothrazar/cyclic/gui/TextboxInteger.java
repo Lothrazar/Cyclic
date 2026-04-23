@@ -44,7 +44,7 @@ public class TextboxInteger extends EditBox implements IHasTooltip {
   }
 
   private void saveValue() {
-    PacketRegistry.INSTANCE.sendToServer(new PacketTileData(this.tileFieldId, this.getCurrent(), pos));
+    net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(this.tileFieldId, this.getCurrent(), pos));
   }
 
   @Override

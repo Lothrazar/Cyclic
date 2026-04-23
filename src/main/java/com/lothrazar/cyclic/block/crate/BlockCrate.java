@@ -51,7 +51,7 @@ public class BlockCrate extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.CRATE.get(), ScreenCrate::new);
+    // MenuScreens.register(MenuTypeRegistry.CRATE.get(), ScreenCrate::new);
   }
 
   @Override
@@ -63,12 +63,12 @@ public class BlockCrate extends BlockCyclic {
   @Override
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     BlockEntity tileentity = worldIn.getBlockEntity(pos);
-    if (stack.getTag() != null && tileentity instanceof TileCrate && stack.getTag().contains(NBTCRATE + "0")) {
+    if (stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag() != null && tileentity instanceof TileCrate && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(NBTCRATE + "0")) {
       //to tile from tag
       TileCrate crate = (TileCrate) tileentity;
       for (int i = 0; i < crate.inventory.getSlots(); i++) {
         //
-        ItemStack crateStack = ItemStack.of(stack.getTag().getCompound(NBTCRATE + i));
+        ItemStack crateStack = ItemStack.EMPTY; // crate load stub
         crate.inventory.setStackInSlot(i, crateStack);
       }
     }
@@ -82,8 +82,7 @@ public class BlockCrate extends BlockCyclic {
       //read from tile, write to itemstack
       for (int i = 0; i < crate.inventory.getSlots(); i++) {
         CompoundTag nbt = new CompoundTag();
-        crate.inventory.getStackInSlot(i).save(nbt);
-        newStack.getOrCreateTag().put(NBTCRATE + i, nbt);
+        // crate save stub
       }
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);

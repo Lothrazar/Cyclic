@@ -77,7 +77,7 @@ public class ItemBlockPylon extends BlockItem {
   }
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
 //    return new FluidHandlerCapabilityStack(stack, TileExpPylon.CAPACITY);
 //  }
 }

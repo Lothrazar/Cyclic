@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.batteryclay;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -57,13 +57,13 @@ public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvid
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     energy.deserializeNBT(registries, tag.getCompound(NBTENERGY));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

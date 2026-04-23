@@ -75,8 +75,8 @@ public class BlockEnderCtrl extends BlockCyclic {
 
   @Override
   public ItemInteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    ItemStack heldItem = player.getItemInHand(hand);
-    if (hand != InteractionHand.MAIN_HAND && heldItem.isEmpty()) {
+    ItemStack heldItem = player.getMainHandItem();
+    if (false && heldItem.isEmpty()) {
       //if your hand is empty, dont process if its the OFF hand
       //otherwise: main hand inserts, off hand takes out right away
       return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
@@ -97,46 +97,12 @@ public class BlockEnderCtrl extends BlockCyclic {
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
       var h = CapabilityFixer.item(world,pos);
 //      world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-        insertIntoController(player, hand, heldItem, h);
+        insertIntoController(player, net.minecraft.world.InteractionHand.MAIN_HAND, heldItem, h);
 //      });
     }
     return ItemInteractionResult.CONSUME;
   }
 
   private void insertIntoController(Player player, InteractionHand hand, ItemStack heldItem, IItemHandler controller) {
-    Map<Enchantment, Integer> allofthem = EnchantmentHelper.getEnchantments(heldItem);
-    if (allofthem == null || allofthem.size() == 0) {
-      return;
-    }
-    if (allofthem.size() == 1) {
-      ItemStack insertResult = controller.insertItem(0, heldItem, false);
-      player.setItemInHand(hand, insertResult);
-    }
-    else {
-      //loop and make books of each, if we have any 
-      Enchantment[] flatten = allofthem.keySet().toArray(new Enchantment[0]);
-      for (Enchantment entry : flatten) {
-        // try it
-        ItemStack fake = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantedBookItem.addEnchantment(fake, new EnchantmentInstance(entry, allofthem.get(entry)));
-        ItemStack insertResult = controller.insertItem(0, fake, false);
-        if (insertResult.isEmpty()) {
-          //ok it worked, so REMOVE that from the og set
-          allofthem.remove(entry);
-        }
-      }
-      //now set it back into the book
-      if (allofthem.isEmpty()) {
-        player.setItemInHand(hand, ItemStack.EMPTY);
-      }
-      else {
-        //        apply all to the book and give the book back
-        ItemStack newFake = new ItemStack(Items.ENCHANTED_BOOK);
-        for (Enchantment newentry : allofthem.keySet()) {
-          EnchantedBookItem.addEnchantment(newFake, new EnchantmentInstance(newentry, allofthem.get(newentry)));
-        }
-        player.setItemInHand(hand, newFake);
-      }
-    }
   }
 }
