@@ -61,7 +61,9 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     this.burnTime = tag.getInt("burnTime");
     this.burnTimeMax = tag.getInt("burnTimeMax");

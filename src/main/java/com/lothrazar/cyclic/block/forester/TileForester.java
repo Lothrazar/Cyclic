@@ -147,7 +147,9 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.loadAdditional(tag, registries);
   }

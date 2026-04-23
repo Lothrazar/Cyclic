@@ -7,7 +7,6 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
 public class CyclicDataGenerator {
 
   public static class BlockStates extends BlockStateProvider {

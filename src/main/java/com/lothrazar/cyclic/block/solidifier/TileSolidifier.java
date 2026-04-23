@@ -139,7 +139,9 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inputSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     outputSlots.deserializeNBT(registries,tag.getCompound("invoutput"));
     burnTimeMax = tag.getInt("burnTimeMax");

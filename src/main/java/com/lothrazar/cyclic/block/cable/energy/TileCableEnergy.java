@@ -140,7 +140,9 @@ public class TileCableEnergy extends TileCableBase {
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, tag.getInt(f.getSerializedName() + "_incenergy"));
     }
-    energy.deserializeNBT(registries, tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     super.loadAdditional(tag, registries);
   }
 

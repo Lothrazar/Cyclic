@@ -66,6 +66,7 @@ public class ModCyclic {
 
     SoundRegistry.SOUND_EVENTS.register(bus);
     LootModifierRegistry.LOOT.register(bus);
+    BlockRegistry.CREATIVE_MODE_TABS.register(bus);
     NeoForgeMod.enableMilkFluid();
 ///    NeoforgeMod.enableMilkFluid();
   }

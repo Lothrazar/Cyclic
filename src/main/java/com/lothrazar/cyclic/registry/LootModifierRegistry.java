@@ -12,7 +12,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.fml.common.EventBusSubscriber;
 
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
 public class LootModifierRegistry {
 
   public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT = DeferredRegister.create(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ModCyclic.MODID);

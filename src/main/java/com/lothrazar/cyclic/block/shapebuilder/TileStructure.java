@@ -90,7 +90,9 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     int t = tag.getInt("buildType");
     buildType = BuildStructureType.values()[t];

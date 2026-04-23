@@ -24,10 +24,10 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
   public RecipeMelter(NonNullList<Ingredient> ingredientsIn, FluidStack out, EnergyIngredient energy) {
     this.energy = energy;
     ingredients = ingredientsIn;
-    if (ingredients.size() == 1) {
+    while (ingredients.size() < 2) {
       ingredients.add(Ingredient.EMPTY);
     }
-    if (ingredients.size() != 2) {
+    if (ingredients.size() > 2) {
       throw new IllegalArgumentException("Melter recipe must have at most two ingredients");
     }
     this.outFluid = out;

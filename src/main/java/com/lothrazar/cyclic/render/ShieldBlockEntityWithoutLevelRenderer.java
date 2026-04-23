@@ -31,6 +31,11 @@ public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
 
   public ShieldBlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher rd, EntityModelSet ems) {
     super(rd, ems);
+  }
+
+  @Override
+  public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager resourceManager) {
+    EntityModelSet ems = Minecraft.getInstance().getEntityModels();
     this.shieldBody = new ShieldModel(ems.bakeLayer(ModelLayers.SHIELD));
     this.shieldNoPattern = new ShieldModel(ems.bakeLayer(ModelLayers.SHIELD));
   }

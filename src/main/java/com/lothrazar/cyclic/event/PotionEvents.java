@@ -43,7 +43,7 @@ public class PotionEvents {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(EntityTickEvent event) {
+  public void onEntityUpdate(EntityTickEvent.Pre event) {
 /*
     LivingEntity entity = event.getEntity();
     if (entity == null) {

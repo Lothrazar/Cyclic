@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
 public class MaterialRegistry {
 
   //

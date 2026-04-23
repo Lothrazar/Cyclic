@@ -319,7 +319,7 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(EntityTickEvent event) { // was LivingTickEvent
+  public void onEntityUpdate(EntityTickEvent.Pre event) { // was LivingTickEvent
 
     tryItemHorseEnder(event);
     if (event.getEntity() instanceof Player player) {
@@ -339,7 +339,7 @@ public class ItemEvents {
     }
   }
 
-  private void tryItemHorseEnder(EntityTickEvent event) {
+  private void tryItemHorseEnder(EntityTickEvent.Pre event) {
     if(event.getEntity() instanceof LivingEntity liv)
     if (liv.getPersistentData().contains(ItemHorseEnder.NBT_KEYACTIVE)
         && liv.getPersistentData().getInt(ItemHorseEnder.NBT_KEYACTIVE) > 0) {
@@ -558,7 +558,7 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onPlayerPickup(ItemEntityPickupEvent event) {
+  public void onPlayerPickup(net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent.Pre event) {
 /*
     if (event.getEntity() instanceof Player) {
       Player player = event.getEntity();

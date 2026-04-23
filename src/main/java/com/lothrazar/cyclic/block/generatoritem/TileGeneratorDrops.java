@@ -133,7 +133,9 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     burnTime = tag.getInt("burnTime");
     burnTimeMax = tag.getInt("burnTimeMax");

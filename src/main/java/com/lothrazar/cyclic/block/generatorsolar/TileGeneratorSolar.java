@@ -89,7 +89,9 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic implements MenuPro
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     super.loadAdditional(tag,registries);
   }
 

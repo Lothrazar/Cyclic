@@ -152,7 +152,9 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.loadAdditional(tag,registries);
   }

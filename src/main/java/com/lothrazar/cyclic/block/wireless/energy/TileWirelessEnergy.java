@@ -66,7 +66,9 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     //    this.transferRate = tag.getInt("transferRate");
     super.loadAdditional(tag,registries);
   }

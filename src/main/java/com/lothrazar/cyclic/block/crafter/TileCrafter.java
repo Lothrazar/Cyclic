@@ -354,7 +354,9 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound("energy"));
+    if (tag.contains("energy")) {
+      energy.deserializeNBT(registries, tag.get("energy"));
+    }
     inputHandler.deserializeNBT(registries,tag.getCompound("input"));
     outHandler.deserializeNBT(registries,tag.getCompound("output"));
     gridCap.deserializeNBT(registries,tag.getCompound("grid"));

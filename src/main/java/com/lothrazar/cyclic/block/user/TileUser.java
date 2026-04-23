@@ -207,7 +207,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     timerDelay = tag.getInt("delay");
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     userSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     doHitBreak = tag.getBoolean("doBreakBlock");
     entities = tag.getBoolean("entities");

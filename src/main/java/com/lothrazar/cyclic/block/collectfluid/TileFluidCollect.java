@@ -185,7 +185,9 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     }
     shapeIndex = tag.getInt("shapeIndex");
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.loadAdditional(tag, registries);
   }

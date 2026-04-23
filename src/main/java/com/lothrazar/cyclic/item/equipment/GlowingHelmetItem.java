@@ -88,7 +88,7 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
   }
 
   //from ItemEvents- curios slot
-  public static void onEntityUpdate(EntityTickEvent event) {
+  public static void onEntityUpdate(EntityTickEvent.Pre event) {
     //reduce check to only once per second instead  of per tick
     if (event.getEntity().level().getGameTime() % Const.TICKS_PER_SEC == 0 &&
         event.getEntity() instanceof Player player) { //some of the items need an off switch 

@@ -149,7 +149,9 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     batterySlots.deserializeNBT(registries,tag.getCompound(NBTINV + "batt"));
     super.loadAdditional(tag, registries);
   }

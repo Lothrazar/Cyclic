@@ -112,7 +112,9 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV + "gps"));
     this.delay = tag.getInt("delay");

@@ -15,45 +15,63 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 
+@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME, modid = ModCyclic.MODID)
 public class SoundmufflerBlock extends BlockCyclic {
 
   private static final int VOL_REDUCE_PER_BLOCK = 2;
 
   public SoundmufflerBlock(Properties properties) {
     super(properties.strength(1F).sound(SoundType.SCAFFOLDING));
-    NeoForge.EVENT_BUS.register(this);
   }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
-  public void onPlaySound(PlaySoundEvent event) {
+  public static void onPlaySound(PlaySoundEvent event) {
     ClientLevel clientWorld = Minecraft.getInstance().level;
     if (event.getSound() == null || clientWorld == null) {
       return;
     }
     SoundInstance sound = event.getSound();
-    final boolean isPowered = false; // if im NOT powered, im running
-    List<BlockPos> blocks = BlockstatesUtil.findBlocks(clientWorld, new BlockPos((int) sound.getX(), (int) sound.getY(), (int) sound.getZ()), this,
-        ConfigRegistry.SOUND_RADIUS.get(),
-        isPowered);
-    if (blocks == null || blocks.size() == 0) {
+    
+    int radius = ConfigRegistry.SOUND_RADIUS.get();
+    int count = 0;
+    BlockPos start = new BlockPos((int) sound.getX(), (int) sound.getY(), (int) sound.getZ());
+    
+    int xMin = start.getX() - radius;
+    int xMax = start.getX() + radius;
+    int yMin = start.getY() - radius;
+    int yMax = start.getY() + radius;
+    int zMin = start.getZ() - radius;
+    int zMax = start.getZ() + radius;
+    
+    for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
+      for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
+        for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+          BlockPos pos = new BlockPos(xLoop, yLoop, zLoop);
+          if (clientWorld.getBlockState(pos).getBlock() instanceof SoundmufflerBlock) {
+            if (!clientWorld.hasNeighborSignal(pos)) {
+              count++;
+            }
+          }
+        }
+      }
+    }
+    
+    if (count == 0) {
       return;
     }
+    
     float reduce = VOL_REDUCE_PER_BLOCK;
-    float radius = ConfigRegistry.SOUND_RADIUS.get();
-    //the number of nearby blocks informs how much we muffle the sound by
-    //at 6 blocks, it caps off the reduction
-    float volume = (float) (Math.min(reduce / radius, 1.0) / blocks.size());
+    float volume = (float) (Math.min(reduce / radius, 1.0) / count);
     rebuildSoundWithVolume(event, sound, volume);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static void rebuildSoundWithVolume(PlaySoundEvent event, SoundInstance sound, float newVolume) {
     try {
-      //WARNING": DO NOT USE getVolume anywhere here it just crashes
-      //we do use it inside the sound class, but the engine calls that later on, and our factor is tacked in
       SoundVolumeControlled newSound = new SoundVolumeControlled(sound);
       newSound.setVolume(newVolume);
       event.setSound(newSound);

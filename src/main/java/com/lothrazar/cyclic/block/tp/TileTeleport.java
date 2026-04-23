@@ -60,7 +60,9 @@ public class TileTeleport extends TileBlockEntityCyclic implements MenuProvider 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     super.loadAdditional(tag,registries);
   }
 

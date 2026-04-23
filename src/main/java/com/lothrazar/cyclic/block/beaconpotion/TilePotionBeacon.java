@@ -146,7 +146,9 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
     filter.deserializeNBT(registries,tag.getCompound("filter"));
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     /* if (tag.contains("Effects", 9)) {
       ListTag listnbt = tag.getList("Effects", 10);

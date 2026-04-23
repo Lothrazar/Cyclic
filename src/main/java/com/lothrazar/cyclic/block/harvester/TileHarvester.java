@@ -173,7 +173,9 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
     shapeIndex = tag.getInt("shapeIndex");
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     super.loadAdditional(tag, registries);
   }
 

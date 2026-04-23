@@ -29,14 +29,10 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
   public RecipeSolidifier(NonNullList<Ingredient> inList, FluidTagIngredient fluid, ItemStack result, EnergyIngredient energy) {
     this.energy = energy;
     ingredients = inList;
-    if (ingredients.size() == 2) {
+    while (ingredients.size() < 3) {
       ingredients.add(Ingredient.EMPTY);
     }
-    else if (ingredients.size() == 1) {
-      ingredients.add(Ingredient.EMPTY);
-      ingredients.add(Ingredient.EMPTY);
-    }
-    if (ingredients.size() != 3) {
+    if (ingredients.size() > 3) {
       throw new IllegalArgumentException("Solidifier recipe must have at most three ingredients");
     }
     this.fluidIngredient = fluid;
