@@ -30,22 +30,25 @@ public class ItemProjectileDungeon extends ItemBaseCyclic {
     /* shootMe(world, player, ball, 0, ItemBaseCyclic.VELOCITY_MAX); */
     stack.shrink(1);
     SoundUtil.playSound(player, SoundRegistry.DUNGEONFINDER.get(), 0.1F, 1.0F);
-    findTargetLocation(player, ball);
+    findTargetLocation(world, player, ball);
     return super.use(world, player, hand);
   }
 
-  private void findTargetLocation(Player player, EntityDungeonEye entityendereye) {
+  private void findTargetLocation(Level world, Player player, EntityDungeonEye entityendereye) {
     if (entityendereye == null || !entityendereye.isAlive()) {
       return; //something happened! but this never happens
     }
     BlockPos blockpos = LevelWorldUtil.findClosestBlock(player, Blocks.SPAWNER, RANGE.get());
     if (blockpos == null) {
-      ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.notfound") + " " + RANGE.get());
+      if (!world.isClientSide) ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.notfound") + " " + RANGE.get());
       entityendereye.remove(Entity.RemovalReason.DISCARDED);
     }
     else {
-      ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.found"));
+      if (!world.isClientSide) ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.cyclic.spawner_seeker.found"));
       entityendereye.moveTowards(blockpos);
+      if (!world.isClientSide) {
+        world.addFreshEntity(entityendereye);
+      }
     }
   }
 }
