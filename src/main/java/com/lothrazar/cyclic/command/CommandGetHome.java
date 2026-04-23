@@ -1,15 +1,12 @@
 package com.lothrazar.cyclic.command;
 
-import java.util.Optional;
 import com.lothrazar.library.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 
 public class CommandGetHome {
 

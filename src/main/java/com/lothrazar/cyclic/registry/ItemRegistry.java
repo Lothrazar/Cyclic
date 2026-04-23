@@ -114,7 +114,6 @@ import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.registry.MaterialRegistry.ToolMats;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;

@@ -78,7 +78,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     tag.putString("OWNER", entityData.get(OWNER));
     tag.putByte("returning", entityData.get(IS_RETURNING));
     tag.putByte("REDSTONE_TRIGGERED", entityData.get(REDSTONE_TRIGGERED));
-    // boomerangThrown.save(tag); // TODO: save item with component-aware method
+    if (!boomerangThrown.isEmpty()) {
+      tag.put("boomerangItem", boomerangThrown.saveOptional(this.registryAccess()));
+    }
     super.addAdditionalSaveData(tag);
   }
 
@@ -87,7 +89,11 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     entityData.set(OWNER, tag.getString("OWNER"));
     entityData.set(IS_RETURNING, tag.getByte("returning"));
     entityData.set(REDSTONE_TRIGGERED, tag.getByte("REDSTONE_TRIGGERED"));
-    boomerangThrown = ItemStack.EMPTY; // TODO: deserialize item properly
+    if (tag.contains("boomerangItem")) {
+      boomerangThrown = ItemStack.parseOptional(this.registryAccess(), tag.getCompound("boomerangItem"));
+    } else {
+      boomerangThrown = ItemStack.EMPTY;
+    }
     super.readAdditionalSaveData(tag);
   }
 

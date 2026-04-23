@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.fanslab;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.ShapeUtil;

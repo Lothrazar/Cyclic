@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;

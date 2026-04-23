@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.gui.ButtonTextured;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.client.gui.GuiGraphics;

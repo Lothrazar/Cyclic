@@ -11,7 +11,6 @@ import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

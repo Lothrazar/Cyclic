@@ -125,7 +125,7 @@ public class BlockCyclic extends EntityBlockFlib {
       if (!level.isClientSide) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof MenuProvider mp) {
-          player.openMenu(mp);
+          player.openMenu(mp, pos);
 //          NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
         }
         else {

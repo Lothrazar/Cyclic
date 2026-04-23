@@ -26,7 +26,6 @@ import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.world.entity.Entity;
 
 @Mod(ModCyclic.MODID)
 public class ModCyclic {

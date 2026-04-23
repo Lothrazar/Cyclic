@@ -1,12 +1,10 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 

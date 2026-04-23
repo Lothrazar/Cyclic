@@ -1,26 +1,19 @@
 package com.lothrazar.cyclic.fluid;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.fluid.block.XpJuiceFluidBlock;
-import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 
 //Thanks to example https://github.com/MinecraftForge/MinecraftForge/blob/1.15.x/src/test/java/net/minecraftforge/debug/fluid/NewFluidTest.java

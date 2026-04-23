@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.scythe;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.net.PacketHarvesting;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;

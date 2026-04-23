@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
 
 public class PacketPlayerSyncToClient implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
 

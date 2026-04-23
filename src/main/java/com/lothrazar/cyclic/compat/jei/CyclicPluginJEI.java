@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.compat.jei;
 
-import java.util.List;
 import java.util.Objects;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.crusher.ContainerCrusher;
@@ -37,7 +36,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;

@@ -1,10 +1,8 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
 import com.lothrazar.cyclic.capabilities.chunk.ChunkDataStorage;
 import com.lothrazar.cyclic.capabilities.player.PlayerCapabilityStorage;
-import net.minecraft.network.FriendlyByteBuf;
 
 /**
  * Sync Player and Chunk capabilities to client

@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.library.util.RenderTextUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,11 +9,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class EnderShelfRenderer implements BlockEntityRenderer<TileEnderShelf> {
 

@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;

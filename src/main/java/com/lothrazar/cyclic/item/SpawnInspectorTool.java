@@ -16,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.pathfinder.PathComputationType;
 
 public class SpawnInspectorTool extends ItemBaseCyclic {
 

@@ -1,10 +1,8 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

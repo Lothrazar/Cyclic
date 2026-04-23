@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

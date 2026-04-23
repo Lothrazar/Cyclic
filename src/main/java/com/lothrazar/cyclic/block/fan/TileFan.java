@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.PlayerUtil;

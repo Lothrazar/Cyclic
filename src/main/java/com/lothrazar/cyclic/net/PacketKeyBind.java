@@ -23,12 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.food.inventorycake.ContainerProviderCake;
 import com.lothrazar.library.util.ChatUtil;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PacketKeyBind implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {

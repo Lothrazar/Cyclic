@@ -26,7 +26,6 @@ package com.lothrazar.cyclic.item.transporter;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ChatUtil;

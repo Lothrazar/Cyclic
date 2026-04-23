@@ -25,10 +25,8 @@ package com.lothrazar.cyclic.net;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

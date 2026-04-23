@@ -13,7 +13,6 @@ import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 //import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.packet.PacketItemToggle;
 import com.lothrazar.library.util.SoundUtil;

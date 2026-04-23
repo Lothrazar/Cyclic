@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.melter;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -8,7 +7,6 @@ import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

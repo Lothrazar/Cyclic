@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.capabilities.chunk.ChunkDataStorage;
 import com.lothrazar.cyclic.capabilities.player.PlayerCapabilityStorage;
 import com.lothrazar.cyclic.net.PacketSyncManaToClient;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

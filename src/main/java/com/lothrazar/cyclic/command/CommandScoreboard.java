@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.world.scores.Objective;
-import net.minecraft.world.scores.ReadOnlyScoreInfo;
 import net.minecraft.world.scores.ScoreAccess;
 import net.minecraft.world.scores.ScoreHolder;
 import net.minecraft.world.scores.Scoreboard;

@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;

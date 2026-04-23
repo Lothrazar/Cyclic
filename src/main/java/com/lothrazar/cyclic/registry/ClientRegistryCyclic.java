@@ -44,8 +44,6 @@ import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
-import com.lothrazar.cyclic.event.ClientInputEvents;
-import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
@@ -252,7 +250,7 @@ public class ClientRegistryCyclic {
         EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
         //pull the colours from the egg
         for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
-          if (spawneggitem.getType(null) == thing) {
+          if (spawneggitem.getType(spawneggitem.getDefaultInstance()) == thing) {
             return spawneggitem.getColor(tintIndex - 1);
           }
         }

@@ -4,17 +4,13 @@ import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.net.PacketKeyBind;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ChatUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 
 public class ItemCakeInventory extends ItemBaseCyclic {

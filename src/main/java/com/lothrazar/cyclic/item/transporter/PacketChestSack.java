@@ -23,7 +23,6 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.transporter;
 
-import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

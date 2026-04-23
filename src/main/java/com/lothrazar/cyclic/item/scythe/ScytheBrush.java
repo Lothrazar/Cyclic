@@ -24,15 +24,11 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 

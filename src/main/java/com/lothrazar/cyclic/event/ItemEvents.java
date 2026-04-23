@@ -24,7 +24,6 @@ import com.lothrazar.cyclic.net.BlockFacadeMessage;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 //import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
@@ -69,12 +68,10 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.*;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class ItemEvents {
 

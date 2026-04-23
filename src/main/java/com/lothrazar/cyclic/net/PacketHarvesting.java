@@ -23,11 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.util.HarvestUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PacketHarvesting implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {

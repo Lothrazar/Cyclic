@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileString;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;

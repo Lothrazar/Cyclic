@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.neoforged.neoforge.fluids.FluidStack;
 
 public class ContainerMelter extends ContainerBase {
 

@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.gui.ButtonTextured;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketCraftAction;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;

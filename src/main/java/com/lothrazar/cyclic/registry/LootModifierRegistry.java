@@ -6,10 +6,8 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DeferredRegister;
 // import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.fml.common.EventBusSubscriber;
 
 
 public class LootModifierRegistry {

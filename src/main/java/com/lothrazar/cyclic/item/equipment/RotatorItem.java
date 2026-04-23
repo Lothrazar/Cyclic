@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.equipment;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.packet.PacketRotateBlock;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;

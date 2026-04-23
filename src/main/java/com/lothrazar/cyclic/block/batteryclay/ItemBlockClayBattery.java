@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -12,7 +11,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -40,11 +38,6 @@ public class ItemBlockClayBattery extends BlockItem {
       current = storage.getEnergyStored();
       max = storage.getMaxEnergyStored();
     }
-    else if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(ENERGYTT)) {
-      //TODO 1.19 port delete this branch
-      current = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt(ENERGYTT);
-      max = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt(ENERGYTTMAX);
-    }
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
   }
 
@@ -62,12 +55,6 @@ public class ItemBlockClayBattery extends BlockItem {
       current = storage.getEnergyStored();
       energyttmax = storage.getMaxEnergyStored();
       tooltip.add(Component.translatable(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
-    }
-    else if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains(ENERGYTT)) {
-      //TODO 1.19 port  delete this branch
-      current = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt(ENERGYTT);
-      energyttmax = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt(ENERGYTTMAX);
-      tooltip.add(Component.translatable(current + "/" + energyttmax).withStyle(ChatFormatting.BLUE));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }

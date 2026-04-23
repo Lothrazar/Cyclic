@@ -24,7 +24,6 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.util.HarvestUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

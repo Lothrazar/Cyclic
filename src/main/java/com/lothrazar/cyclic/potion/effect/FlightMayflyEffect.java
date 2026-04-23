@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;

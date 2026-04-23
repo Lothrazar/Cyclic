@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.electronwill.nightconfig.core.ConfigSpec;
 import com.lothrazar.cyclic.CyclicLogger;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandleWaterBlock;

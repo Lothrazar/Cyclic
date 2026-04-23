@@ -1,10 +1,8 @@
 package com.lothrazar.cyclic.block.soundmuff;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -14,7 +12,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.fml.common.EventBusSubscriber;
 
 

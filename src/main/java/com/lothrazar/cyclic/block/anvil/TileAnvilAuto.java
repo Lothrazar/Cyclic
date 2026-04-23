@@ -8,7 +8,6 @@ import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,8 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider {

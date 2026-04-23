@@ -13,9 +13,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.living.MobDespawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.SpawnClusterSizeEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 public class BlockSpawnEvents {

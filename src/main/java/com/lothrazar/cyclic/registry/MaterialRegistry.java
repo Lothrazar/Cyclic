@@ -1,18 +1,12 @@
 package com.lothrazar.cyclic.registry;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 // import com.lothrazar.cyclic.material.EmeraldArmorMaterial;
 // import com.lothrazar.cyclic.material.GemArmorMaterial;
 // import com.lothrazar.cyclic.material.GlowingArmorMaterial;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class MaterialRegistry {

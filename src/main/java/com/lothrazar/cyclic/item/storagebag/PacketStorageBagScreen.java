@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
@@ -15,7 +14,6 @@ import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.ShortTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 

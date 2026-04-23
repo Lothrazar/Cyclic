@@ -1,9 +1,6 @@
 package com.lothrazar.cyclic.item.random;
-import com.lothrazar.cyclic.data.CraftingActionEnum;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 public class PacketRandomize implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
   public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<PacketRandomize> TYPE = new Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_randomize"));

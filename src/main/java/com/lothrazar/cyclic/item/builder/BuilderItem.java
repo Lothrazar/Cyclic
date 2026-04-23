@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.item.builder;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

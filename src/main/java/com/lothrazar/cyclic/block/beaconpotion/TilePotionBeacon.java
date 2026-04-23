@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.beaconpotion;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.blamejared.crafttweaker.api.game.Game;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -12,7 +11,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.data.EntityFilterType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +29,6 @@ import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvider {
