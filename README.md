@@ -1,5 +1,8 @@
 # Cyclic
 
+> [!WARNING]  
+> **Disclaimer:** This NeoForge 1.21.1 port was developed and debugged with the assistance of an AI agent. While critical crashes have been fixed and basic functionality verified, it has **not** been thoroughly tested across all edge cases. Proceed with caution on production servers.
+
 Minecraft mod written in Java.
 
 ## ⚠️ Requirements for 1.21.1 Port

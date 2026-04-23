@@ -1,5 +1,8 @@
 # Cyclic: NeoForge 1.21.1 Porting Notes & Technical Summary
 
+> [!WARNING]  
+> **Disclaimer:** This entire port, including the code refactoring and bug fixes documented below, was accomplished with the assistance of an AI agent. While critical rendering and network synchronization crashes have been fully resolved, the mod as a whole has **not been thoroughly tested** for edge cases or obscure gameplay mechanics. Proceed with understanding that some latent bugs may still exist.
+
 This document outlines the comprehensive refactoring, bug fixes, and architectural adaptations performed to stabilize the Cyclic mod on the NeoForge 1.21.1 API. 
 
 ## 🎯 Executive Summary
