@@ -2,7 +2,7 @@
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 
 	"promos": { 
-		"1.20.1-latest":"1.13.5",
+		"1.20.1-latest":"1.13.7",
 		"1.19.2-latest":"1.9.0",
 		"1.19.4-latest":"1.11.0",
 		"1.18.2-latest": "1.8.0",
@@ -194,5 +194,7 @@
 		,"1.13.4": "Flower patches spawned naturally in the world are now 4 times smaller.  Merged Pull request from shermanflima https://github.com/Lothrazar/Cyclic/pull/2455 Fix Dormant Creeper Spore Charm Issues.  Merged Pull request from Gegy that fixes the following: If a Miner fails to harvest a block (in our case, mining an instanced loot chest from Lootr), it would destroy itself. This seems to have been a mistake in the fallback case when the target fails to be mined, forcing the break on itself rather than the target.   Miner destroys itself while in a claimed chunk #2367.  Fluid Collectors when unloaded would lose their size/height settings (unlike Miners).  Miners when unloaded would lose their current mined progress (unlike Fluid Collectors).  The client would crash when trying to render a shapedata block preview without both targets set.  Items in cables could be pushed against an extraction cable in the fallback case where they could not travel anywhere else - this could rarely lead to output items ending up back in input slots in an unexpected way.  Mattocks behave inconsistently when used in a Miner block - as the fake player is placed at the corner of the Miner, the distance and whether in the negative/negative quadrant relative to the Miner would affect whether it applies"
 		,"1.13.5": "Added more config options to control the Growth enchantment"
 		,"1.13.6": "Requires Flib 0.0.15+.  Patch to prevent shape builder crashing the game in preview mode with terrarium blocks #2473.  Change leaves scythe description to use the right tag #2464 (merged from cylian914).  Players can refill their experience and pull of the Pylon by right clicking with an empty bottle, or crouching with an empty hand.  Add a button to Experience Pylon to control when it is gathering from floating experience orbs (inspired by 1.12.2 features).  Fix #2477 fluid cable when extracting with a Filter Data Card inside now correctly filters when extracting fluids in-world and fluids from cauldrons. "
+		,"1.13.7": "Merge pull request #2478 from jamierocks: Add subtitle for doorbell ringing.  Merge pull request #2487 from SanjivanM: Beheading enchantment now makes piglins drop piglin heads.  Merge pull request #2494 from PrincessStellar: Create pt_br.json"
+
 	}
 }
