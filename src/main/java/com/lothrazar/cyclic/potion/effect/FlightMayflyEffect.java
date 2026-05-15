@@ -37,18 +37,18 @@ public class FlightMayflyEffect extends CyclicMobEffect {
     }
   }
 
-//  @Override
-//  public void isPotionApplicable(MobEffectEvent.Applicable event) {
-//    if (event.getEntity() instanceof Player player) {
-//      if (player.isCreative()) { //no creative players should use this to fly
-//        event.setResult(Result.DENY);
-//      }
-//    }
-//    else {
-//      //not a player , so deny
-//      event.setResult(Result.DENY);
-//    }
-//  }
+  @Override
+  public void isPotionApplicable(MobEffectEvent.Applicable event) {
+    if (event.getEntity() instanceof Player player) {
+      if (player.isCreative()) { //no creative players should use this to fly
+        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+      }
+    }
+    else {
+      //not a player, so deny
+      event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+    }
+  }
 
   @Override
   public void onPotionRemove(MobEffectEvent.Remove event) {

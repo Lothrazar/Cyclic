@@ -59,10 +59,14 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<Re
     return icon;
   }
 
-  @SuppressWarnings("removal")
   @Override
-  public IDrawable getBackground() {
-    return gui;
+  public int getWidth() {
+    return gui.getWidth();
+  }
+
+  @Override
+  public int getHeight() {
+    return gui.getHeight();
   }
 
   @Override
@@ -72,6 +76,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<Re
 
   @Override
   public void draw(RecipeHolder<RecipeSolidifier> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
     ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 55, 10, FONT);
     bar.draw(ms, recipe.getEnergy().getEnergyTotal());

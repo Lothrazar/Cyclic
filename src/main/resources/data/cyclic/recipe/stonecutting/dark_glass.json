@@ -3,6 +3,5 @@
   "ingredient": {
     "item": "minecraft:tinted_glass"
   },
-  "result": "cyclic:dark_glass",
-  "count": 1
+  "result": {"id": "cyclic:dark_glass", "count": 1}
 }

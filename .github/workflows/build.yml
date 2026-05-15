@@ -12,11 +12,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 21
           cache: 'gradle'
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: setup
-        run: ./gradlew eclipse
       - name: build
         run: ./gradlew build

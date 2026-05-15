@@ -1,13 +1,14 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.item.storagebag.StorageBagCapability;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import com.lothrazar.cyclic.ModCyclic;
 
-@EventBusSubscriber(modid = ModCyclic.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModCyclic.MODID)
 public class CapabilityRegistry {
 
     @SubscribeEvent
@@ -32,5 +33,10 @@ public class CapabilityRegistry {
                 return null;
             });
         }
+        event.registerItem(
+            Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new StorageBagCapability(stack),
+            ItemRegistry.STORAGE_BAG.get()
+        );
     }
 }

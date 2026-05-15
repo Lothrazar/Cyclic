@@ -15,7 +15,7 @@ import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 
 
-@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME, modid = ModCyclic.MODID)
+@EventBusSubscriber(value = Dist.CLIENT, modid = ModCyclic.MODID)
 public class SoundmufflerBlock extends BlockCyclic {
 
   private static final int VOL_REDUCE_PER_BLOCK = 2;

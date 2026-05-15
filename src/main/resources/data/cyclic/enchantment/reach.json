@@ -1,0 +1,12 @@
+{
+  "description": { "translate": "enchantment.cyclic.reach" },
+  "supported_items": "#minecraft:enchantable/equippable",
+  "primary_items": "#minecraft:enchantable/equippable",
+  "weight": 10,
+  "max_level": 5,
+  "min_cost": { "base": 1, "per_level_above_first": 10 },
+  "max_cost": { "base": 20, "per_level_above_first": 10 },
+  "anvil_cost": 1,
+  "slots": ["head", "chest", "legs", "feet"],
+  "effects": {}
+}

@@ -22,7 +22,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ModCyclic.MODID, value = Dist.CLIENT)
 public class ShieldBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
 
   public static ShieldBlockEntityWithoutLevelRenderer instance;

@@ -46,10 +46,14 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<Reci
     return icon;
   }
 
-  @SuppressWarnings("removal")
   @Override
-  public IDrawable getBackground() {
-    return gui;
+  public int getWidth() {
+    return gui.getWidth();
+  }
+
+  @Override
+  public int getHeight() {
+    return gui.getHeight();
   }
 
   @Override
@@ -59,6 +63,7 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<Reci
 
   @Override
   public void draw(RecipeHolder<RecipeGeneratorFluid> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
     var font = Minecraft.getInstance().font;
     ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);

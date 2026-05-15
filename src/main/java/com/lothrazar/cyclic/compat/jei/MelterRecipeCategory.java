@@ -59,10 +59,14 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<Recipe
     return icon;
   }
 
-  @SuppressWarnings("removal")
   @Override
-  public IDrawable getBackground() {
-    return gui;
+  public int getWidth() {
+    return gui.getWidth();
+  }
+
+  @Override
+  public int getHeight() {
+    return gui.getHeight();
   }
 
   @Override
@@ -72,6 +76,7 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<Recipe
 
   @Override
   public void draw(RecipeHolder<RecipeMelter> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
     ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 58, 9, FONT);
     bar.draw(ms, recipe.getEnergy().getEnergyTotal());

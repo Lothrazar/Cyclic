@@ -1,0 +1,12 @@
+{
+  "description": { "translate": "enchantment.cyclic.curse" },
+  "supported_items": "#minecraft:enchantable/armor",
+  "primary_items": "#minecraft:enchantable/chest_armor",
+  "weight": 2,
+  "max_level": 1,
+  "min_cost": { "base": 15, "per_level_above_first": 0 },
+  "max_cost": { "base": 50, "per_level_above_first": 0 },
+  "anvil_cost": 4,
+  "slots": ["head", "chest", "legs", "feet"],
+  "effects": {}
+}

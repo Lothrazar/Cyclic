@@ -1,0 +1,12 @@
+{
+  "description": { "translate": "enchantment.cyclic.beheading" },
+  "supported_items": "#minecraft:enchantable/sword",
+  "primary_items": "#minecraft:enchantable/sword",
+  "weight": 1,
+  "max_level": 3,
+  "min_cost": { "base": 20, "per_level_above_first": 20 },
+  "max_cost": { "base": 65, "per_level_above_first": 30 },
+  "anvil_cost": 8,
+  "slots": ["mainhand"],
+  "effects": {}
+}

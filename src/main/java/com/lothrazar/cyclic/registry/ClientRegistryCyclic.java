@@ -59,7 +59,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
+@EventBusSubscriber(modid = ModCyclic.MODID)
 public class ClientRegistryCyclic {
 
   //TODO: refactor split into keyboard registry, overlay registry, other renderers below 

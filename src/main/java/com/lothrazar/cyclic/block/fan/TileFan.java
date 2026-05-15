@@ -205,7 +205,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
           && entity instanceof Player p) {
-        net.neoforged.neoforge.network.PacketDistributor.sendToServer(com.lothrazar.library.packet.PacketPlayerFalldamage.INSTANCE);
+        net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
     return moved;

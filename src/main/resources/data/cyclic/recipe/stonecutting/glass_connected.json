@@ -3,6 +3,5 @@
   "ingredient": {
     "item": "minecraft:glass"
   },
-  "result": "cyclic:glass_connected",
-  "count": 1
+  "result": {"id": "cyclic:glass_connected", "count": 1}
 }

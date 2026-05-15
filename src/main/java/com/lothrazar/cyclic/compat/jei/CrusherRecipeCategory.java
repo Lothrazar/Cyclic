@@ -53,10 +53,14 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
     return icon;
   }
 
-  @SuppressWarnings("removal")
   @Override
-  public IDrawable getBackground() {
-    return gui;
+  public int getWidth() {
+    return gui.getWidth();
+  }
+
+  @Override
+  public int getHeight() {
+    return gui.getHeight();
   }
 
   @Override
@@ -66,6 +70,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
 
   @Override
   public void draw(RecipeHolder<RecipeCrusher> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    gui.draw(ms, 0, 0);
     var recipe = recipeHolder.value();
     int x = 78;
     if (recipe.energy.getTicks() < 40) {

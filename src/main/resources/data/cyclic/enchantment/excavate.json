@@ -1,0 +1,12 @@
+{
+  "description": { "translate": "enchantment.cyclic.excavate" },
+  "supported_items": "#minecraft:enchantable/mining",
+  "primary_items": "#minecraft:enchantable/mining",
+  "weight": 2,
+  "max_level": 5,
+  "min_cost": { "base": 15, "per_level_above_first": 15 },
+  "max_cost": { "base": 50, "per_level_above_first": 25 },
+  "anvil_cost": 4,
+  "slots": ["mainhand"],
+  "effects": {}
+}

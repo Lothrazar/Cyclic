@@ -193,10 +193,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private static ItemStackHandler getInventory(ItemStack bag) {
-    if (bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM) != null) {
-      return (ItemStackHandler) bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
-    }
-    return null;
+    var handler = bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
+    return handler instanceof ItemStackHandler ish ? ish : null;
   }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack stack) {
