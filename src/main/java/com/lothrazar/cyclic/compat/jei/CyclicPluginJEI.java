@@ -89,7 +89,10 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(GenitemRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get()));
     registry.addRecipes(GenfluidRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get()));
     registry.addRecipes(CrusherRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get()));
-    registry.addRecipes(PackagerRecipeCategory.TYPE, rm.getAllRecipesFor(RecipeType.CRAFTING));
+    registry.addRecipes(PackagerRecipeCategory.TYPE,
+        rm.getAllRecipesFor(RecipeType.CRAFTING).stream()
+          .filter(h -> com.lothrazar.cyclic.block.packager.UtilPackager.isRecipeValid(h.value(), world.registryAccess()))
+          .toList());
     for (var item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {

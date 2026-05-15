@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -151,7 +152,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
     event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
-//    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
+    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
     //cable renderers
     event.registerBlockEntityRenderer(TileRegistry.ENERGY_PIPE.get(), RenderCableFacade::new);

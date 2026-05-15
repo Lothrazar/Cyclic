@@ -16,7 +16,8 @@ import com.lothrazar.cyclic.block.MetalBarsBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
 import com.lothrazar.cyclic.block.PeatFuelBlock;
 import com.lothrazar.cyclic.block.PressurePlateMetal;
-import com.lothrazar.cyclic.block.MilkSpongeBlock;
+import com.lothrazar.cyclic.block.antipotion.BlockAntiBeacon;
+import com.lothrazar.cyclic.block.antipotion.MilkSpongeBlock;
 import com.lothrazar.cyclic.block.anvil.BlockAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.BlockAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.BlockAnvilVoid;
@@ -119,11 +120,17 @@ import com.lothrazar.cyclic.block.wireless.item.BlockWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -143,13 +150,33 @@ public class BlockRegistry {
 
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB_BLOCKS = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
           .icon(() -> new ItemStack(BlockRegistry.TRASH.get()))
-          .title(Component.translatable("itemGroup."+ModCyclic.MODID))
+          .title(Component.translatable("itemGroup." + ModCyclic.MODID))
           .displayItems((displayParameters, output) -> {
-            List<ItemStack> stacks = ItemRegistry.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get()))
-//                    .filter(stack -> !stack.is(RootsRegistry.MANA_RESEARCH_ICON.get()))
-
-                    .toList();
+            //first add all items (includes blocks that have an item version)
+            List<ItemStack> stacks = ItemRegistry.ITEMS.getEntries().stream()
+                .map(reg -> new ItemStack(reg.get())).toList();
             output.acceptAll(stacks);
+            // all potion and enchantments at the end
+            HolderLookup.Provider lookup = displayParameters.holders();
+            lookup.lookup(Registries.POTION).ifPresent(potionRegistry -> {
+              PotionRegistry.POTIONS.getEntries().forEach(reg -> {
+                potionRegistry.get(reg.getKey()).ifPresent(potionHolder -> {
+                  output.accept(PotionContents.createItemStack(Items.POTION, potionHolder));
+                  output.accept(PotionContents.createItemStack(Items.SPLASH_POTION, potionHolder));
+                  output.accept(PotionContents.createItemStack(Items.LINGERING_POTION, potionHolder));
+                  output.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, potionHolder));
+                });
+              });
+            });
+            lookup.lookup(Registries.ENCHANTMENT).ifPresent(enchantRegistry -> {
+              enchantRegistry.listElements()
+                  .filter(holder -> holder.key().location().getNamespace().equals(ModCyclic.MODID))
+                  .forEach(holder -> {
+                    ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+                    book.enchant(holder, holder.value().getMaxLevel());
+                    output.accept(book);
+                  });
+            });
           }).build());
 
   public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ModCyclic.MODID);
@@ -301,7 +328,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> ANVIL_MAGMA = BLOCKS.register("anvil_magma", () -> new BlockAnvilMagma(Block.Properties.of().sound(SoundType.ANVIL)));
   public static final DeferredBlock<Block> BEACON = BLOCKS.register("beacon", () -> new BlockPotion(Block.Properties.of()));
   public static final DeferredBlock<Block> BEACON_REDSTONE = BLOCKS.register("beacon_redstone", () -> new BlockBeaconRedstone(Block.Properties.of().lightLevel(p -> 4)));
-//  public static final DeferredBlock<BlockAntiBeacon> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of().lightLevel(p -> 2)));
+  public static final DeferredBlock<BlockAntiBeacon> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of().lightLevel(p -> 2)));
   public static final DeferredBlock<Block> SOUNDPROOFING_GHOST = BLOCKS.register("soundproofing_ghost", () -> new SoundmufflerBlockFacade(Block.Properties.of()));
   public static final DeferredBlock<Block> SOUNDPROOFING = BLOCKS.register("soundproofing", () -> new SoundmufflerBlock(Block.Properties.of()));
   public static final DeferredBlock<Block> CLOCK = BLOCKS.register("clock", () -> new BlockRedstoneClock(Block.Properties.of()));

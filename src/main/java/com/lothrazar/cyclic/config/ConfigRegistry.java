@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.LavaSpongeBlock;
 import com.lothrazar.cyclic.block.PeatBlock;
+import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -440,17 +441,17 @@ public class ConfigRegistry {
         + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
         + "If you change it to false it will only work if the target is in the same dimension.")
         .define("wireless_transfer_dimensional", true);
-//     TileAntiBeacon.HARMFUL_POTIONS = CFG.comment(" If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
-//         .define("harmful_potions", true);
-//     TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
-//         .defineInRange("anti_beacon.radius", 16, 1, 128);
-//     TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
-//         .defineInRange("anti_beacon.ticks", 200, 20, 9999);
+     TileAntiBeacon.HARMFUL_POTIONS = CFG.comment(" If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
+         .define("harmful_potions", true);
+     TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
+         .defineInRange("anti_beacon.radius", 16, 1, 128);
+     TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
+         .defineInRange("anti_beacon.ticks", 200, 20, 9999);
     //TODO: variant that is (only harmful effects? just like milk that does all effects) ?
-//     TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
-//         .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",
-//             "cyclic:gravity",
-//             "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
+     TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
+         .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",
+             "cyclic:gravity",
+             "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
     //TODO: can potions have TAGS?
     TileCableFluid.BUFFERSIZE = CFG.comment(" How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);

@@ -69,10 +69,5 @@ public class ModCyclic {
     LootModifierRegistry.LOOT.register(bus);
     BlockRegistry.CREATIVE_MODE_TABS.register(bus);
     NeoForgeMod.enableMilkFluid();
-///    NeoforgeMod.enableMilkFluid();
-  }
-
-  public static void log(String string) {
-    LOGGER.info(string);
   }
 }
