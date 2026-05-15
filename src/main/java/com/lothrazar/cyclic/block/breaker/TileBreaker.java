@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
@@ -110,7 +108,7 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     if (filter.isEmpty()) {
       return true; //ya go
     }
-    for (BlockStateMatcher m : BlockstateCard.getSavedStates(level, filter)) {
+    for (BlockStateMatcher m : BlockstateCard.getSavedStates(net.minecraft.world.item.Item.TooltipContext.of(level), filter)) {
       if (m.doesMatch(targetState)) {
         return true; // i am allowed to mine this
       }
@@ -131,13 +129,13 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override
@@ -166,4 +164,10 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
   public int getEnergyMax() {
     return MAX;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

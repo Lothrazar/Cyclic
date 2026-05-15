@@ -13,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -35,9 +34,8 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-//import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-//import net.minecraftforge.network.NetworkHooks;
-
+//import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+//
 public abstract class CableBase extends BlockCyclic implements SimpleWaterloggedBlock, IBlockFacade {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -125,15 +123,11 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
 
   @Override
   public ItemInteractionResult useItemOn(ItemStack st,BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-    if (hit.getDirection() == null) {
-      return super.useItemOn( st,state, world, pos, player, handIn, hit);
-    }
     if (handIn != InteractionHand.MAIN_HAND) {
-      return super.useItemOn( st,state, world, pos, player, handIn, hit);
+      return super.useItemOn(st, state, world, pos, player, handIn, hit);
     }
     ItemStack stack = player.getItemInHand(handIn);
     if (!stack.is(DataTags.WRENCH)) {
-      //ex
       boolean hasExtractor = false;
       for (Direction side : Direction.values()) {
         EnumConnectType connection = state.getValue(CableBase.FACING_TO_PROPERTY_MAP.get(side));
@@ -143,24 +137,19 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
         }
       }
       if (hasExtractor && (this == BlockRegistry.ITEM_PIPE.get() || this == BlockRegistry.FLUID_PIPE.get())) {
-        //if has extractor
         if (!world.isClientSide) {
           BlockEntity tileEntity = world.getBlockEntity(pos);
           if (tileEntity instanceof MenuProvider) {
-            NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
-          }
-          else {
-            throw new IllegalStateException("Our named container provider is missing!");
+            ((ServerPlayer) player).openMenu((MenuProvider) tileEntity, tileEntity.getBlockPos());
           }
         }
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
       }
-      //ex
-      return super.useItemOn(state, world, pos, player, handIn, hit);
+      return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
     rotateFromWrench(state, world, pos, player, hit);
     player.swing(handIn);
-    return super.useItemOn(state, world, pos, player, handIn, hit);
+    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
   }
 
   public static void crouchClick(PlayerInteractEvent.RightClickBlock event, BlockState state) {

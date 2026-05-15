@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "b b",
+    "bcb",
+    " b "
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:gold_ingot"
+    },
+    "c": {
+      "item": "cyclic:hopper"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:hopper_gold"
+  }
+}

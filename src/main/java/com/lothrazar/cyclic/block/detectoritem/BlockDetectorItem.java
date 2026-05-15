@@ -41,7 +41,7 @@ public class BlockDetectorItem extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.DETECTOR_ITEM.get(), ScreenDetectorItem::new);
+    // MenuScreens.register(MenuTypeRegistry.DETECTOR_ITEM.get(), ScreenDetectorItem::new);
   }
 
   @Override

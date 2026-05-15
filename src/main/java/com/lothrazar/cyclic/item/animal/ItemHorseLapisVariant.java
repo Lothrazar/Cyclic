@@ -29,7 +29,7 @@ import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-//import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+//import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
 public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInteractable {
 
@@ -48,7 +48,7 @@ public class ItemHorseLapisVariant extends ItemBaseCyclic implements IEntityInte
       int seed = event.getLevel().random.nextInt(7);
       //setHorseVariant
       //  access transformers
-      ahorse.getEntityData().set(Horse.DATA_ID_TYPE_VARIANT, (seed | event.getLevel().random.nextInt(5) << 8));
+      // ahorse.getEntityData().set(Horse.DATA_ID_TYPE_VARIANT, (seed | event.getLevel().random.nextInt(5) << 8));
       event.setCanceled(true);
       event.setCancellationResult(InteractionResult.SUCCESS);
       event.getEntity().getCooldowns().addCooldown(this, 10);

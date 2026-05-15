@@ -80,6 +80,6 @@ public class BlockCrateMini extends BlockCyclic implements SimpleWaterloggedBloc
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.CRATE_MINI.get(), ScreenCrateMini::new);
+    // MenuScreens.register(MenuTypeRegistry.CRATE_MINI.get(), ScreenCrateMini::new);
   }
 }

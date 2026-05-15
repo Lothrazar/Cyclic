@@ -1,0 +1,29 @@
+{
+  "type": "cyclic:crusher",
+  "input": {
+    "tag": "c:sandstone"
+  },
+  "energy": {
+    "ticks": 60,
+    "rfpertick": 10
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:sand"
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "c:mod_loaded"
+        },
+        {
+          "item": "cyclic:crusher",
+          "type": "c:item_exists"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

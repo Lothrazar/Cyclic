@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rsr",
+    "scs",
+    "rsr"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:barrel"
+    },
+    "r": {
+      "tag": "minecraft:logs"
+    },
+    "c": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "count": 2,
+    "id": "cyclic:cask"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    " d ",
+    "ggg"
+  ],
+  "key": {
+    "d": {
+      "tag": "minecraft:candles"
+    },
+    "g": {
+      "item": "minecraft:calcite"
+    },
+    "s": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:peace_candle"
+  }
+}

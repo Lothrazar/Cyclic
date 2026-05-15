@@ -53,11 +53,11 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
-      Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix, world);
+      java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING, craftMatrix.asCraftInput(), world);
       if (optional.isPresent()) {
-        CraftingRecipe icraftingrecipe = optional.get();
+        net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.CraftingRecipe> icraftingrecipe = optional.get();
         if (craftResult.setRecipeUsed(world, player, icraftingrecipe)) {
-          itemstack = icraftingrecipe.assemble(craftMatrix, world.registryAccess());
+          itemstack = icraftingrecipe.value().assemble(craftMatrix.asCraftInput(), world.registryAccess());
         }
       }
       craftResult.setItem(0, itemstack);

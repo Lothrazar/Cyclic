@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 60
+  },
+  "mix": {
+    "tag": "c:biomass",
+    "amount": 100
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:grass_block"
+  }
+}

@@ -26,7 +26,7 @@ public class EnderEyeReuseItem extends ItemBaseCyclic {
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
-    ItemStack stack = player.getItemInHand(hand);
+    ItemStack stack = player.getMainHandItem();
     if (!worldIn.isClientSide && worldIn instanceof ServerLevel) {
       ServerLevel sw = (ServerLevel) worldIn;
       BlockPos closestBlockPos = sw.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, player.blockPosition(), MAX_RANGE, false);
@@ -46,7 +46,7 @@ public class EnderEyeReuseItem extends ItemBaseCyclic {
         ItemStackUtil.damageItem(player, stack);
         player.awardStat(Stats.ITEM_USED.get(this));
         player.getCooldowns().addCooldown(stack.getItem(), 10);
-        return InteractionResultHolder.success(player.getItemInHand(hand));
+        return InteractionResultHolder.success(player.getMainHandItem());
       }
     }
     return super.use(worldIn, player, hand);

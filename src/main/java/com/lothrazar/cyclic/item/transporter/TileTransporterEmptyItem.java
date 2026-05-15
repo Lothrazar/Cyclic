@@ -26,7 +26,6 @@ package com.lothrazar.cyclic.item.transporter;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ChatUtil;
@@ -76,7 +75,7 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
     }
     SoundUtil.playSound(player, SoundRegistry.THUNK.get());
     if (world.isClientSide) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketChestSack(pos));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketChestSack(pos));
     }
     return InteractionResult.SUCCESS;
   }
@@ -90,20 +89,20 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
     if (state.getDestroyProgress(player, world, pos) <= 0) {
       return;
     }
-    final CompoundTag tileData = tile.saveWithoutMetadata(); // calls saveAdditional for u
+    final CompoundTag tileData = tile.saveWithoutMetadata(world.registryAccess()); // calls saveAdditional for u
     //thanks for the tip on setting tile entity data from nbt tag:
     //https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
-    //    tile.save(tileData);
+    //    tileData = tile.saveWithFullMetadata(world.registryAccess());
     final CompoundTag itemData = new CompoundTag();
     itemData.putString(TileTransporterItem.KEY_BLOCKNAME, state.getBlock().getDescriptionId());
     itemData.put(TileTransporterItem.KEY_BLOCKTILE, tileData);
     itemData.putString(TileTransporterItem.KEY_BLOCKID, BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString());
     itemData.put(TileTransporterItem.KEY_BLOCKSTATE, NbtUtils.writeBlockState(state));
     InteractionHand hand = InteractionHand.MAIN_HAND;
-    ItemStack held = player.getItemInHand(hand);
+    ItemStack held = player.getMainHandItem();
     if (held == null || held.getItem() instanceof TileTransporterEmptyItem == false) {
       hand = InteractionHand.OFF_HAND;
-      held = player.getItemInHand(hand);
+      held = player.getMainHandItem();
     }
     if (held != null && held.getCount() > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
       if (held.getItem() instanceof TileTransporterEmptyItem) {
@@ -115,7 +114,7 @@ public class TileTransporterEmptyItem extends ItemBaseCyclic {
           return; // and dont drop the full item stack or shrink the empty just end
         }
         ItemStack drop = new ItemStack(ItemRegistry.TILE_TRANSPORTER.get());
-        drop.setTag(itemData);
+        net.minecraft.world.item.component.CustomData.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, drop, itemData);
         ItemStackUtil.dropItemStackMotionless(world, player.blockPosition(), drop);
         if (player.isCreative() == false && held.getCount() > 0) {
           held.shrink(1);

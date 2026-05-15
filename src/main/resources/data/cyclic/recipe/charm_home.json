@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ffq",
+    "ggf",
+    "egf"
+  ],
+  "key": {
+    "f": {
+      "tag": "c:feathers"
+    },
+    "g": {
+      "tag": "c:ingots/gold"
+    },
+    "e": {
+      "item": "minecraft:ender_eye"
+    },
+    "q": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "id": "cyclic:charm_home"
+  }
+}

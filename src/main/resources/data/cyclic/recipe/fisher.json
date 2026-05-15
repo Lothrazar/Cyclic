@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pwp",
+    "wfw",
+    "pwp"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:cobweb"
+    },
+    "p": {
+      "tag": "c:chests/trapped"
+    },
+    "f": {
+      "tag": "c:storage_blocks/copper"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:fisher"
+  }
+}

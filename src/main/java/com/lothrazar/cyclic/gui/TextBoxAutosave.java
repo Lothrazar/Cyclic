@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileString;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
@@ -55,7 +54,7 @@ public class TextBoxAutosave extends EditBox {
   private void saveValue() {
     String current = getValue();
     tile.setFieldString(tileFieldId, current);
-    PacketRegistry.INSTANCE.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
+    net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
   }
 
   private int tileFieldId;

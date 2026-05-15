@@ -23,23 +23,24 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.LaserItem;
-import com.lothrazar.library.packet.PacketFlib;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.network.NetworkEvent;
+public class PacketEntityLaser implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
 
-/**
- * Forge docs suggest using a direct packet to keep capabilities, such as power, in sync with the client according to https://mcforge.readthedocs.io/en/latest/datastorage/capabilities/
- */
-public class PacketEntityLaser extends PacketFlib {
+  public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<PacketEntityLaser> TYPE = new net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_entity_laser"));
+
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, PacketEntityLaser> STREAM_CODEC = net.minecraft.network.codec.StreamCodec.of(PacketEntityLaser::encode, PacketEntityLaser::decode);
+
+
+  @Override
+  public net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private int entityId;
   private boolean crosshair;
@@ -49,15 +50,15 @@ public class PacketEntityLaser extends PacketFlib {
     this.crosshair = cross;
   }
 
-  public static void handle(PacketEntityLaser message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer sender = ctx.get().getSender();
+  public static void handle(PacketEntityLaser message, net.neoforged.neoforge.network.handling.IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      net.minecraft.server.level.ServerPlayer sender = (net.minecraft.server.level.ServerPlayer) ctx.player();
       Level level = sender.level();
       Entity target = level.getEntity(message.entityId);
       //validate also covers delay
       ItemStack stack = LaserItem.getIfHeld(sender);
       if (PacketEntityLaser.canShoot(sender, target, stack)) {
-        IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+        net.neoforged.neoforge.energy.IEnergyStorage storage = stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.ITEM);
         if (storage != null) {
           float dmg = message.crosshair ? ConfigRegistry.LaserItemDamageClose.get() : ConfigRegistry.LaserItemDamageFar.get();
           if (target.hurt(level.damageSources().indirectMagic(sender, sender), dmg)) {
@@ -69,7 +70,7 @@ public class PacketEntityLaser extends PacketFlib {
         //        target.causeFallDamage(0, 0, null);
       }
     });
-    message.done(ctx);
+    
   }
 
   private static boolean canShoot(ServerPlayer sender, Entity target, ItemStack stack) {
@@ -80,16 +81,16 @@ public class PacketEntityLaser extends PacketFlib {
     if (stack.isEmpty()) {
       return false;
     }
-    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    net.neoforged.neoforge.energy.IEnergyStorage storage = stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.ITEM);
     return (storage != null && storage.extractEnergy(ConfigRegistry.LaserItemEnergy.get(), true) == ConfigRegistry.LaserItemEnergy.get());
   }
 
-  public static PacketEntityLaser decode(FriendlyByteBuf buf) {
+  public static PacketEntityLaser decode(net.minecraft.network.RegistryFriendlyByteBuf buf) {
     PacketEntityLaser msg = new PacketEntityLaser(buf.readInt(), buf.readBoolean());
     return msg;
   }
 
-  public static void encode(PacketEntityLaser msg, FriendlyByteBuf buf) {
+  public static void encode(net.minecraft.network.RegistryFriendlyByteBuf buf, PacketEntityLaser msg) {
     buf.writeInt(msg.entityId);
     buf.writeBoolean(msg.crosshair);
   }

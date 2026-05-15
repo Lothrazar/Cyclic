@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ots",
+    "olt",
+    "too"
+  ],
+  "key": {
+    "o": {
+      "tag": "c:cobblestone"
+    },
+    "t": {
+      "item": "minecraft:stick"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "id": "cyclic:slingshot"
+  }
+}

@@ -29,7 +29,7 @@ public class ShapeCard extends ItemBaseCyclic {
 
   public static void setBlockState(ItemStack wand, BlockState target) {
     CompoundTag encoded = NbtUtils.writeBlockState(target);
-    wand.getOrCreateTag().put(BuilderActionType.NBTBLOCKSTATE, encoded);
+    net.minecraft.nbt.CompoundTag tag = wand.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); tag.put(BuilderActionType.NBTBLOCKSTATE, encoded); wand.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
   }
 
   @Override
@@ -39,7 +39,7 @@ public class ShapeCard extends ItemBaseCyclic {
       MutableComponent t = Component.translatable(getDescriptionId() + ".count");
       t.append(shape.getCount() + "");
       tooltip.add(t);
-      BlockState target = BuilderActionType.getBlockState(worldIn, stack);
+      BlockState target = BuilderActionType.getBlockState(null, stack);
       String block = "scepter.cyclic.nothing";
       if (target != null) {
         block = target.getBlock().getDescriptionId();
@@ -61,7 +61,7 @@ public class ShapeCard extends ItemBaseCyclic {
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-    ItemStack stack = player.getItemInHand(hand);
+    ItemStack stack = player.getMainHandItem();
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
       BlockState targetState = BuilderActionType.getBlockState(world, stack);

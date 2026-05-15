@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dcd",
+    " q ",
+    "r r"
+  ],
+  "key": {
+    "r": {
+      "tag": "c:dusts/redstone"
+    },
+    "q": {
+      "tag": "c:gems/quartz"
+    },
+    "c": {
+      "item": "minecraft:observer"
+    },
+    "d": {
+      "tag": "c:gems/lapis"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:detector_item"
+  }
+}

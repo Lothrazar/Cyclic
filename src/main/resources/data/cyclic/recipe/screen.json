@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sfs",
+    "rgb",
+    "iii"
+  ],
+  "key": {
+    "s": {
+      "tag": "c:nuggets/copper"
+    },
+    "f": {
+      "item": "minecraft:anvil"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
+    },
+    "r": {
+      "tag": "c:dyes/red"
+    },
+    "g": {
+      "tag": "c:dyes/green"
+    },
+    "b": {
+      "tag": "c:dyes/blue"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:screen"
+  }
+}

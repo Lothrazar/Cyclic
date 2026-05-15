@@ -41,7 +41,7 @@ public class BlockGeneratorFluid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.GENERATOR_FLUID.get(), ScreenGeneratorFluid::new);
+    // MenuScreens.register(MenuTypeRegistry.GENERATOR_FLUID.get(), ScreenGeneratorFluid::new);
   }
 
   @Override

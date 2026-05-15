@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sts",
+    "tit",
+    "sts"
+  ],
+  "key": {
+    "t": {
+      "item": "minecraft:sponge"
+    },
+    "s": {
+      "item": "minecraft:tuff"
+    },
+    "i": {
+      "item": "minecraft:magma_block"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:sponge_lava"
+  }
+}

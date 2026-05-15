@@ -5,7 +5,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class WaterwalkEffect extends CyclicMobEffect {
 
@@ -14,8 +14,8 @@ public class WaterwalkEffect extends CyclicMobEffect {
   }
 
   @Override
-  public void tick(LivingTickEvent event) {
-    LivingEntity entity = event.getEntity();
+  public void tick(EntityTickEvent.Pre event) {
+    if (!(event.getEntity() instanceof LivingEntity entity)) return;
     //    living.getEffect(this).getAmplifier()
     if (entity.isInWater() || entity.level().getBlockState(entity.blockPosition()).is(Blocks.WATER)) {
       if (entity instanceof Player p) {

@@ -25,17 +25,24 @@ package com.lothrazar.cyclic.net;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.data.CraftingActionEnum;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
-import com.lothrazar.library.packet.PacketFlib;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
 
-public class PacketCraftAction extends PacketFlib {
+public class PacketCraftAction implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+
+  public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<PacketCraftAction> TYPE = new Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_craft_action"));
+
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, PacketCraftAction> STREAM_CODEC = net.minecraft.network.codec.StreamCodec.of(PacketCraftAction::encode, PacketCraftAction::decode);
+
+
+  @Override
+  public net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private CraftingActionEnum action;
 
@@ -43,25 +50,25 @@ public class PacketCraftAction extends PacketFlib {
     action = s;
   }
 
-  public static PacketCraftAction decode(FriendlyByteBuf buf) {
+  public static PacketCraftAction decode(net.minecraft.network.RegistryFriendlyByteBuf buf) {
     return new PacketCraftAction(CraftingActionEnum.values()[buf.readInt()]);
   }
 
-  public static void encode(PacketCraftAction msg, FriendlyByteBuf buf) {
+  public static void encode(net.minecraft.network.RegistryFriendlyByteBuf buf, PacketCraftAction msg) {
     buf.writeInt(msg.action.ordinal());
   }
 
-  public static void handle(PacketCraftAction message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
+  public static void handle(PacketCraftAction message, net.neoforged.neoforge.network.handling.IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
       //rotate type
-      ServerPlayer sender = ctx.get().getSender();
+      net.minecraft.server.level.ServerPlayer sender = (net.minecraft.server.level.ServerPlayer) ctx.player();
       if (sender.containerMenu instanceof IContainerCraftingAction) {
         //do the thing
         IContainerCraftingAction c = (IContainerCraftingAction) sender.containerMenu;
         performAction(c, sender, message.action);
       }
     });
-    message.done(ctx);
+    
   }
 
   private static void performAction(IContainerCraftingAction c, Player player, CraftingActionEnum action) {
@@ -105,7 +112,7 @@ public class PacketCraftAction extends PacketFlib {
       if (tmp.isEmpty() && !onlyExisting) {
         slotTargest.add(i);
       }
-      if (ItemStack.isSameItemSameTags(tmp, biggest)) { // AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
+      if (ItemStack.isSameItemSameComponents(tmp, biggest)) { // AbstractContainerMenu.consideredTheSameItem(tmp, biggest)) {
         slotTargest.add(i);
         totalQuantity += tmp.getCount();
       }

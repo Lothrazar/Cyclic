@@ -11,7 +11,6 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -98,7 +96,7 @@ public class ItemBaseCyclic extends Item {
   }
 
   public float getChargedPercent(ItemStack stack, int chargeTimer) {
-    return BowItem.getPowerForTime(this.getUseDuration(stack) - chargeTimer);
+    return BowItem.getPowerForTime(this.getUseDuration(stack, null) - chargeTimer);
   }
 
   @Override
@@ -153,7 +151,7 @@ public class ItemBaseCyclic extends Item {
   public void registerClient() {}
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, CompoundTag nbt) {
 //    if (this.hasEnergy) {
 //      return new CapabilityProviderEnergyStack(MAX_ENERGY);
 //    }
@@ -161,35 +159,17 @@ public class ItemBaseCyclic extends Item {
 //  }
 
   // ShareTag for server->client capability data sync
-  @Override
-  public CompoundTag getShareTag(ItemStack stack) {
-    if (hasEnergy) {
-      CompoundTag nbt = stack.getOrCreateTag();
-      IEnergyStorage storage =  CapabilityFixer.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
-      //on server  this runs . also has correct values.
-      //set data for sync to client
-      if (storage != null) {
-        nbt.putInt(ENERGYTT, storage.getEnergyStored());
-        nbt.putInt(ENERGYTTMAX, storage.getMaxEnergyStored());
-      }
-      return nbt;
-    }
-    return super.getShareTag(stack);
-  }
+  // @Override
+//   
+//       return nbt;
+//     }
+//     return super.getShareTag(stack);
+//   }
 
   //clientside read tt
-  @Override
-  public void readShareTag(ItemStack stack, CompoundTag nbt) {
-    if (hasEnergy && nbt != null) {
-      final CompoundTag stackTag = stack.getOrCreateTag();
-      final int serverEnergyValue = nbt.getInt(ENERGYTT);
-      stackTag.putInt(ENERGYTT, serverEnergyValue);
-      stackTag.putInt(ENERGYTTMAX, nbt.getInt(ENERGYTTMAX));
-      final IEnergyStorage storage = CapabilityFixer.energy(stack);
-      if (storage instanceof CustomEnergyStorage energy) {
-        energy.setEnergy(serverEnergyValue);
-      }
-    }
-    super.readShareTag(stack, nbt);
-  }
+  // @Override
+//   
+//     }
+//     super.readShareTag(stack, nbt);
+//   }
 }

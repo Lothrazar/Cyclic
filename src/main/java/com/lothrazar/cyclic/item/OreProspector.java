@@ -19,8 +19,8 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.Tags;
-//import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-//import net.minecraftforge.common.Tags;
+//import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
+//import net.neoforged.neoforge.common.Tags;
 
 public class OreProspector extends ItemBaseCyclic {
 
@@ -48,13 +48,13 @@ public class OreProspector extends ItemBaseCyclic {
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
     InteractionHand hand = context.getHand();
-    ItemStack held = player.getItemInHand(hand);
+    ItemStack held = player.getMainHandItem();
     if (player.getCooldowns().isOnCooldown(held.getItem())) {
       return InteractionResult.PASS;
     }
     player.getCooldowns().addCooldown(held.getItem(), CD);
     //first delete old pos
-    held.setTag(null);
+    ItemStackUtil.deleteTag(held);
     BlockPos pos = context.getClickedPos();
     List<BlockPos> shape = ShapeUtil.cubeSquareBase(pos.below(), RANGE.get(), HEIGHT.get());
     List<BlockPos> ores = new ArrayList<>();
@@ -64,15 +64,18 @@ public class OreProspector extends ItemBaseCyclic {
         ores.add(p);
       }
     }
-    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level()));
+    net.minecraft.world.item.component.CustomData customData = held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY);
+    CompoundTag heldTag = customData.copyTag();
+    heldTag.putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level()));
     int i = 0;
     for (BlockPos p : ores) {
       CompoundTag tag = new CompoundTag();
       TagDataUtil.putBlockPos(tag, p);
-      held.getTag().put("tag" + i, tag);
+      heldTag.put("tag" + i, tag);
       i++;
     }
-    held.getTag().putInt(ORESIZE, i);
+    heldTag.putInt(ORESIZE, i);
+    held.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(heldTag));
     player.swing(hand);
     ItemStackUtil.damageItem(player, held);
     ChatUtil.sendStatusMessage(player, "" + i);
@@ -93,14 +96,16 @@ public class OreProspector extends ItemBaseCyclic {
 
   public static ArrayList<BlockPosDim> getPosition(ItemStack item) {
     ArrayList<BlockPosDim> list = new ArrayList<BlockPosDim>();
-    if (!item.hasTag() || !item.getTag().contains(ORESIZE)) {
+    net.minecraft.world.item.component.CustomData customData = item.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY);
+    CompoundTag tag = customData.copyTag();
+    if (!tag.contains(ORESIZE)) {
       return list;
     }
-    int size = item.getTag().getInt(ORESIZE);
-    String dim = item.getTag().getString(NBT_DIM);
+    int size = tag.getInt(ORESIZE);
+    String dim = tag.getString(NBT_DIM);
     for (int i = 0; i < size; i++) {
-      BlockPos pos = TagDataUtil.getBlockPos(item.getTag().getCompound("tag" + i));
-      list.add(new BlockPosDim(pos, dim, item.getTag()));
+      BlockPos pos = TagDataUtil.getBlockPos(tag.getCompound("tag" + i));
+      list.add(new BlockPosDim(pos, dim, tag));
     }
     //    this.read  
     return list;

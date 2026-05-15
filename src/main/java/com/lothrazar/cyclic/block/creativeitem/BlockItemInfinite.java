@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.block.creativeitem;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -31,18 +30,18 @@ public class BlockItemInfinite extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
     if (!world.isClientSide) {
       BlockEntity tileEntity = world.getBlockEntity(pos);
       if (tileEntity instanceof TileItemInfinite) {
         TileItemInfinite tile = (TileItemInfinite) tileEntity;
-        ItemStack stack = player.getItemInHand(hand);
+        ItemStack stack = player.getMainHandItem();
         if (!stack.isEmpty()) {
           tile.inputSlots.setStackInSlot(0, stack);
           return InteractionResult.SUCCESS;
         }
       }
     }
-    return super.use(state, world, pos, player, hand, hit);
+    return super.useWithoutItem(state, world, pos, player, hit);
   }
 }

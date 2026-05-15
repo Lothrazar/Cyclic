@@ -7,8 +7,8 @@ import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerCake extends ContainerBase {
 
@@ -24,7 +24,7 @@ public class ContainerCake extends ContainerBase {
     //copy to this MIRROR inventory
     mirror = new ItemStackHandler(endInv);
     for (int j = 0; j < endInv; j++) {
-      mirror.setStackInSlot(j, datFile.inventory.getStackInSlot(j));
+      mirror.setStackInSlot(j, net.minecraft.world.item.ItemStack.EMPTY); // datFile.inventory.getStackInSlot(j)
       int row = j / 9;
       int col = j % 9;
       int xPos = 8 + col * Const.SQ;
@@ -35,7 +35,7 @@ public class ContainerCake extends ContainerBase {
         public void setChanged() {
           super.setChanged();
           //sync it up with file system vers
-          datFile.inventory.setStackInSlot(this.getSlotIndex(), this.getItem());
+          // datFile.inventory.setStackInSlot(this.getSlotIndex(), this.getItem());
         }
       });
     }

@@ -4,8 +4,6 @@ import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,7 +11,6 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 public class EntityDungeonEye extends ThrowableItemProjectile {
 
@@ -58,7 +55,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
     this.targetY = pos.getY();
     this.targetZ = pos.getZ();
     this.isLost = false;
-    this.shoot(this.targetX, this.targetY, this.targetZ, (this.getGravity()), 0.01F);
+    this.shoot(this.targetX, this.targetY, this.targetZ, (float) (this.getGravity()), 0.01F);
   }
 
   @Override
@@ -160,14 +157,11 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
     }
   }
 
-  @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
-  }
+
 
   @Override
-  protected Item getDefaultItem() {
-    return ItemRegistry.SPAWNER_SEEKER.get();
+  protected net.minecraft.world.item.Item getDefaultItem() {
+    return com.lothrazar.cyclic.registry.ItemRegistry.SPAWNER_SEEKER.get();
   }
 
   @Override

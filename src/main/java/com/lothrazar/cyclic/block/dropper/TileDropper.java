@@ -7,12 +7,11 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -112,12 +111,14 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV + "gps"));
     this.delay = tag.getInt("delay");
     this.dropCount = tag.getInt("dropCount");
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -127,7 +128,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     tag.put(NBTINV + "gps", gpsSlots.serializeNBT(registries));
     tag.putInt("delay", delay);
     tag.putInt("dropCount", dropCount);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private BlockPos getTargetPos() {
@@ -185,4 +186,16 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     shape.add(getTargetPos());
     return shape;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

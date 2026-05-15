@@ -1,12 +1,19 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
 
-public class PacketPlayerSyncToClient extends PacketFlib {
+public class PacketPlayerSyncToClient implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+
+  public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<PacketPlayerSyncToClient> TYPE = new Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_player_sync_to_client"));
+
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, PacketPlayerSyncToClient> STREAM_CODEC = net.minecraft.network.codec.StreamCodec.of(PacketPlayerSyncToClient::encode, PacketPlayerSyncToClient::decode);
+
+
+  @Override
+  public net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private boolean mayfly;
 
@@ -16,22 +23,22 @@ public class PacketPlayerSyncToClient extends PacketFlib {
 
   public PacketPlayerSyncToClient() {}
 
-  public static void handle(PacketPlayerSyncToClient message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
+  public static void handle(PacketPlayerSyncToClient message, net.neoforged.neoforge.network.handling.IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
       Minecraft.getInstance().player.getAbilities().mayfly = message.mayfly;
       if (!message.mayfly) {
         //if not allowed to fly, also cancel flying
         Minecraft.getInstance().player.getAbilities().flying = false;
       }
     });
-    message.done(ctx);
+    
   }
 
-  public static PacketPlayerSyncToClient decode(FriendlyByteBuf buf) {
+  public static PacketPlayerSyncToClient decode(net.minecraft.network.RegistryFriendlyByteBuf buf) {
     return new PacketPlayerSyncToClient(buf.readBoolean());
   }
 
-  public static void encode(PacketPlayerSyncToClient msg, FriendlyByteBuf buf) {
+  public static void encode(net.minecraft.network.RegistryFriendlyByteBuf buf, PacketPlayerSyncToClient msg) {
     buf.writeBoolean(msg.mayfly);
   }
 }

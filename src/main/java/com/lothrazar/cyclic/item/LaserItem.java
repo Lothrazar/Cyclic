@@ -32,7 +32,7 @@ public class LaserItem extends ItemBaseCyclic {
   }
 
   @Override
-  public int getUseDuration(ItemStack stack) {
+  public int getUseDuration(ItemStack stack, net.minecraft.world.entity.LivingEntity entity) {
     return 72000 * 2;
   }
 
@@ -49,11 +49,11 @@ public class LaserItem extends ItemBaseCyclic {
   public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {}
 
   public static void resetStackDamageCool(ItemStack lasercannon, long gametime) {
-    lasercannon.getOrCreateTag().putLong("damagecooldown", gametime);
+    net.minecraft.world.item.component.CustomData.EMPTY.copyTag().putLong("damagecooldown", gametime);
   }
 
   public static int getDamageCooldown(ItemStack lasercannon) {
-    int thisOne = lasercannon.getOrCreateTag().getInt("damagecooldown");
+    int thisOne = net.minecraft.world.item.component.CustomData.EMPTY.copyTag().getInt("damagecooldown");
     return thisOne;
   }
 }

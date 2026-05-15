@@ -51,7 +51,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     y = topPos + 26;
     f = TileHarvester.Fields.HEIGHT.ordinal();
     heightslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 0, TileHarvester.MAX_HEIGHT, menu.tile.getField(f)));
-    heightslider.setTooltip("buildertype.height.tooltip");
+    heightslider.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("buildertype.height.tooltip")));
     y += h + 4;
     f = TileHarvester.Fields.SIZE.ordinal();
     size = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 0, TileHarvester.MAX_SIZE, menu.tile.getField(f)));
@@ -59,7 +59,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
@@ -70,7 +70,7 @@ public class ScreenHarvester extends ScreenBase<ContainerHarvester> {
     btnRedstone.onValueUpdate(menu.tile);
     btnRender.onValueUpdate(menu.tile);
     btnDirection.onValueUpdate(menu.tile);
-    heightslider.setTooltip("buildertype.height.tooltip");
+    heightslider.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("buildertype.height.tooltip")));
     size.setTooltip("cyclic.screen.size" + menu.tile.getField(size.getField()));
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());

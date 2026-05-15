@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:copper_block"
+    }
+  ],
+  "mix": {
+    "tag": "c:wax",
+    "amount": 50
+  },
+  "energy": {
+    "rfpertick": 600,
+    "ticks": 20
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:waxed_copper_block"
+  }
+}

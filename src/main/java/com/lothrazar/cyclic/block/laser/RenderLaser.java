@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 
@@ -85,30 +84,10 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
     p3.add(adjustedVec);
     Vector3f p4 = new Vector3f(to);
     p4.sub(adjustedVec);
-    builder.vertex(positionMatrix, p1.x(), p1.y(), p1.z())
-        .color(r, g, b, alpha)
-        .uv(1, v)
-        .overlayCoords(OverlayTexture.NO_OVERLAY)
-        .uv2(15728880)
-        .endVertex();
-    builder.vertex(positionMatrix, p3.x(), p3.y(), p3.z())
-        .color(r, g, b, alpha)
-        .uv(1, v)
-        .overlayCoords(OverlayTexture.NO_OVERLAY)
-        .uv2(15728880)
-        .endVertex();
-    builder.vertex(positionMatrix, p4.x(), p4.y(), p4.z())
-        .color(r, g, b, alpha)
-        .uv(0, v)
-        .overlayCoords(OverlayTexture.NO_OVERLAY)
-        .uv2(15728880)
-        .endVertex();
-    builder.vertex(positionMatrix, p2.x(), p2.y(), p2.z())
-        .color(r, g, b, alpha)
-        .uv(0, v)
-        .overlayCoords(OverlayTexture.NO_OVERLAY)
-        .uv2(15728880)
-        .endVertex();
+    // vertex call stub
+    // vertex call stub
+    // vertex call stub
+    // vertex call stub
   }
 
   @Override

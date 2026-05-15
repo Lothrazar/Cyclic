@@ -1,9 +1,6 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -60,8 +57,5 @@ public class ConveyorItemEntity extends ItemEntity {
     //Do nothing
   }
 
-  @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return new ClientboundAddEntityPacket(this);
-  }
+  /* removed getAddEntityPacket */
 }

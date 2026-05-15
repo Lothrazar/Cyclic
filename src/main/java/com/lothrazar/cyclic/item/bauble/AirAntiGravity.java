@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.bauble;
 
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
@@ -46,7 +45,7 @@ public class AirAntiGravity extends ItemBaseToggle {
         ItemStackUtil.damageItem(player, stack);
       }
       if (level.isClientSide && player.tickCount % TICKS_FALLDIST_SYNC == 0) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+        net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
   }

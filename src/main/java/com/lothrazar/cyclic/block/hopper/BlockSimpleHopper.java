@@ -77,7 +77,7 @@ public class BlockSimpleHopper extends BlockCyclic {
 
   public static VoxelShape getShapeHopper(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     try {
-      return Blocks.HOPPER.getShape(state, worldIn, pos, context);
+      return net.minecraft.world.phys.shapes.Shapes.block(); // Blocks.HOPPER.getShape is protected
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("An unknown has broken the vanilla hopper, causing compatibility issues", e);
@@ -87,7 +87,7 @@ public class BlockSimpleHopper extends BlockCyclic {
 
   public static VoxelShape getRaytraceShapeHopper(BlockState state, BlockGetter worldIn, BlockPos pos) {
     try {
-      return Blocks.HOPPER.getInteractionShape(state, worldIn, pos);
+      return net.minecraft.world.phys.shapes.Shapes.block(); // Blocks.HOPPER.getInteractionShape is protected
     }
     catch (Exception e) {
       ModCyclic.LOGGER.error("An unknown has broken the vanilla hopper, causing compatibility issues", e);

@@ -28,7 +28,7 @@ public class BlockCrusher extends BlockCyclic {
   @Override
   public void registerClient() {
     //    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    MenuScreens.register(MenuTypeRegistry.CRUSHER.get(), ScreenCrusher::new);
+    // MenuScreens.register(MenuTypeRegistry.CRUSHER.get(), ScreenCrusher::new);
   }
 
   @Override

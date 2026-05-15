@@ -13,15 +13,14 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.living.MobDespawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.SpawnClusterSizeEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 public class BlockSpawnEvents {
 
   @SubscribeEvent
   public void onExplosionEvent(ExplosionEvent.Start event) {
+/*
     Level world = event.getLevel();
     //    Entity exploder = event.getExplosion().getExploder();
     Integer radius = BlockDestruction.RADIUS.get();
@@ -31,10 +30,11 @@ public class BlockSpawnEvents {
       ModCyclic.LOGGER.info(world.isClientSide + " =clinet;Explosion cancelled " + event.getExplosion());
       event.setCanceled(true);
     }
-  }
+*/  }
 
   @SubscribeEvent
   public void onLivingSpawnEvent(MobSpawnEvent.SpawnPlacementCheck event) {
+/*
 
     MobSpawnType res = event.getSpawnType();
     if (res == MobSpawnType.NATURAL ||
@@ -65,8 +65,8 @@ public class BlockSpawnEvents {
       //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
       ) {
         ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by cache-altar " + mob.getType());
-        event.setResult(Result.DENY);
+        event.setResult(net.neoforged.bus.api.Event.Result.DENY);
       }
     }
-  }
+*/  }
 }

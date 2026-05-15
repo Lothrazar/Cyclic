@@ -15,11 +15,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 
 public class SlimeFluidBlock extends LiquidBlock {
 
-  public static class Flowing extends ForgeFlowingFluid.Flowing {
+  public static class Flowing extends BaseFlowingFluid.Flowing {
 
     public Flowing(Properties properties) {
       super(properties);
@@ -36,7 +36,7 @@ public class SlimeFluidBlock extends LiquidBlock {
     }
   }
 
-  public static class Source extends ForgeFlowingFluid.Source {
+  public static class Source extends BaseFlowingFluid.Source {
 
     public Source(Properties properties) {
       super(properties);
@@ -56,7 +56,7 @@ public class SlimeFluidBlock extends LiquidBlock {
   VoxelShape shapes[] = new VoxelShape[16];
 
   public SlimeFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
-    super(supplier, props);
+    super(supplier.get(), props);
     int max = 15; //max of the property LEVEL.getAllowedValues()
     float offset = 0.875F;
     for (int i = 0; i <= max; i++) { //x and z go from [0,1] 

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "cyclic:fireball"
+    },
+    {
+      "item": "minecraft:dark_prismarine"
+    },
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "mix": {
+    "tag": "c:magma",
+    "amount": 2000
+  },
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 120
+  },
+  "result": {
+    "count": 2,
+    "id": "cyclic:fireball_dark"
+  }
+}

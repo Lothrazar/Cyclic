@@ -3,16 +3,14 @@ package com.lothrazar.cyclic.block.beaconpotion;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.blamejared.crafttweaker.api.game.Game;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.data.EntityFilterType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +29,6 @@ import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvider {
@@ -111,14 +108,14 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
       effects.clear();
       ItemStack s = inventory.getStackInSlot(0);
       if (!s.isEmpty()) {
-        List<MobEffectInstance> newEffects = PotionUtils.getMobEffects(s);
-        if (newEffects.size() > 0) {
+        Iterable<net.minecraft.world.effect.MobEffectInstance> newEffects = s.getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS, net.minecraft.world.item.alchemy.PotionContents.EMPTY).getAllEffects();
+        if (newEffects.iterator().hasNext()) {
           pullFromItem(newEffects);
         }
       }
       return;
     } //end of timer/potion checks 
-    updateBeam(level, pos, beamStuff);
+    // updateBeam(level, pos, beamStuff);
   }
 
   @Override
@@ -146,9 +143,11 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
     filter.deserializeNBT(registries,tag.getCompound("filter"));
     this.radius = tag.getInt("radius");
     entityFilter = EntityFilterType.values()[tag.getInt("entityFilter")];
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    if (tag.contains("Effects", 9)) {
+    /* if (tag.contains("Effects", 9)) {
       ListTag listnbt = tag.getList("Effects", 10);
       this.effects.clear();
       for (int i = 0; i < listnbt.size(); ++i) {
@@ -158,7 +157,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
         }
       }
     }
-    super.load(tag);
+    */ super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -166,20 +165,20 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
     tag.put("filter", filter.serializeNBT(registries));
     tag.putInt("radius", radius);
     tag.putInt("entityFilter", entityFilter.ordinal());
-    tag.put(NBTENERGY, energy.serializeNBT());
-    tag.put(NBTINV, inventory.serializeNBT());
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    tag.put(NBTINV, inventory.serializeNBT(registries));
     //
-    if (!this.effects.isEmpty()) {
+    /* if (!this.effects.isEmpty()) {
       ListTag listnbt = new ListTag();
       for (MobEffectInstance effectinstance : this.effects) {
         listnbt.add(effectinstance.save(new CompoundTag()));
       }
       tag.put("Effects", listnbt);
     }
-    super.saveAdditional(tag);
+    */ super.saveAdditional(tag, registries);
   }
 
-  private void pullFromItem(List<MobEffectInstance> newEffects) {
+  private void pullFromItem(Iterable<MobEffectInstance> newEffects) {
     //add new effects
     this.timer = TICKS_PER_DURATION;
     setLitProperty(true);
@@ -236,7 +235,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
    * non-harmful, non-instant
    */
   private boolean isPotionValid(MobEffectInstance eff) {
-    return eff.getEffect().isBeneficial() && !eff.getEffect().isInstantenous();
+    return eff.getEffect().value().isBeneficial() && !eff.getEffect().value().isInstantenous();
   }
 
   @Override
@@ -296,4 +295,16 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   private int getTimerSeconds() {
     return timer / 20;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return filter;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

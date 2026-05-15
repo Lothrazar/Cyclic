@@ -20,7 +20,7 @@ public class BlockShapedata extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.COMPUTER_SHAPE.get(), ScreenShapedata::new);
+    // MenuScreens.register(MenuTypeRegistry.COMPUTER_SHAPE.get(), ScreenShapedata::new);
   }
 
   @Override

@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:chest"
+    }
+  ],
+  "mix": {
+    "tag": "c:wax",
+    "amount": 1000
+  },
+  "energy": {
+    "rfpertick": 2000,
+    "ticks": 80
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:beehive"
+  }
+}

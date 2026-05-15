@@ -1,0 +1,34 @@
+{
+  "type": "cyclic:crusher",
+  "input": {
+    "item": "minecraft:cyan_concrete_powder"
+  },
+  "energy": {
+    "ticks": 60,
+    "rfpertick": 40
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:sand"
+  },
+  "percent": 10,
+  "bonus": {
+    "item": "minecraft:cyan_dye",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "c:mod_loaded"
+        },
+        {
+          "item": "cyclic:crusher",
+          "type": "c:item_exists"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

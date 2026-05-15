@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,7 +46,7 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
   public static ModConfigSpec.IntValue POWERCONF;
   FluidTankBase tank;
-//  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+// //  private final LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   private int shapeIndex = 0; // current index of shape array
   private int radius = 4 * 2;
   private int height = 4;
@@ -185,9 +185,11 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     }
     shapeIndex = tag.getInt("shapeIndex");
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -200,7 +202,7 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("shapeIndex", shapeIndex);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private void incrementShapePtr(List<BlockPos> shape) {
@@ -242,4 +244,16 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     }
     return 0;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

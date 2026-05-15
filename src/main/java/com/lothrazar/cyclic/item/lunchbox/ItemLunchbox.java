@@ -24,25 +24,18 @@
 package com.lothrazar.cyclic.item.lunchbox;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
-import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class ItemLunchbox extends ItemBaseCyclic {
 
@@ -53,13 +46,10 @@ public class ItemLunchbox extends ItemBaseCyclic {
     super(prop.stacksTo(1));
   }
 
-  @Override
-  public Rarity getRarity(ItemStack stack) {
-    return Rarity.UNCOMMON;
-  }
+  
 
   @Override
-  public int getUseDuration(ItemStack st) {
+  public int getUseDuration(ItemStack st, net.minecraft.world.entity.LivingEntity entity) {
     return 34;
   }
 
@@ -71,7 +61,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
   // Show durability if our lunchbox has tagData, meaning it has or had food
   @Override
   public boolean isBarVisible(ItemStack stack) {
-    return stack.hasTag() || super.isBarVisible(stack);
+    return stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) || super.isBarVisible(stack);
   }
 
   //show emptiness in fake durability bar
@@ -82,52 +72,30 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   @Override
   public int getBarWidth(ItemStack stack) {
-    if (!stack.hasTag()) {
+    if (!stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
       return 0;
     }
-    float max = stack.getTag().getInt("count_max");
-    float current = max - stack.getTag().getInt("count_empty");
+    float max = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt("count_max");
+    float current = max - stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getInt("count_empty");
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
     //    }
     //    return super.getBarWidth(stack);
   }
 
-  // ShareTag for server->client capability data sync
-  @Override
-  public CompoundTag getShareTag(ItemStack stack) {
-    CompoundTag nbt = stack.getOrCreateTag();
-    IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-    //on server  this runs . also has correct values.
-    //set data for sync to client
-    if (handler != null) {
-      int empty = ItemStackUtil.countEmptySlots(handler);
-      nbt.putInt("count_empty", empty);
-      nbt.putInt("count_max", handler.getSlots());
-    }
-    return nbt;
-  }
+  
 
-  //clientside read tt
-  @Override
-  public void readShareTag(ItemStack stack, CompoundTag nbt) {
-    if (nbt != null) {
-      CompoundTag stackTag = stack.getOrCreateTag();
-      stackTag.putInt("count_empty", nbt.getInt("count_empty"));
-      stackTag.putInt("count_max", nbt.getInt("count_max"));
-    }
-    super.readShareTag(stack, nbt);
-  }
+  
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
     if (!worldIn.isClientSide && entityLiving instanceof Player player) { // && !player.isCrouching()
-      IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+      IItemHandler handler = stack.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
       if (handler != null) {
         ItemStack found = ItemStack.EMPTY;
         //just go left to right and eat in order
         for (int i = 0; i < handler.getSlots(); i++) {
           ItemStack test = handler.getStackInSlot(i);
-          if (test.isEdible() && !player.getCooldowns().isOnCooldown(test.getItem())) {
+          if (test.has(net.minecraft.core.component.DataComponents.FOOD) && !player.getCooldowns().isOnCooldown(test.getItem())) {
             found = test;
             break;
           }
@@ -135,7 +103,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
         if (!found.isEmpty()) {
           // found is edible and is not on cooldown
           ChatUtil.addServerChatMessage(player, found.getDisplayName());
-          //          entityLiving.eat(worldIn, found); 
+          //          found.getItem().finishUsingItem(found, worldIn, entityLiving); 
           //moved from. eat() to forwarding the .finishUsingItem call
           //allow mods to override finishUsingItem on their own
           //for exmaple artifiacts everlasting beef calls .eat with found.copy() essentially
@@ -150,7 +118,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
     if (player.isCrouching()) {
       if (!worldIn.isClientSide) {
-        NetworkHooks.openScreen((ServerPlayer) player, new ContainerProviderLunchbox(), player.blockPosition());
+        ((ServerPlayer) player).openMenu(new ContainerProviderLunchbox(), player.blockPosition());
       }
       return super.use(worldIn, player, handIn);
     }
@@ -164,20 +132,17 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.LUNCHBOX.get(), ScreenLunchbox::new);
+    // // // MenuScreens.register
   }
 
-  @Override
-  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-    return new CapabilityLunchbox(stack, nbt);
-  }
+
 
   public static void setHoldingEdible(ItemStack box, boolean edible) {
-    box.getOrCreateTag().putBoolean(HOLDING, edible);
+    net.minecraft.world.item.component.CustomData.EMPTY.copyTag().putBoolean(HOLDING, edible);
   }
 
   public static int getColour(ItemStack stack) {
-    if (stack.hasTag() && stack.getTag().getBoolean(HOLDING)) {
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getBoolean(HOLDING)) {
       // green? return 0x00AAAAFF;
       return 0x000000FF; //  0xFFFF0011;
     }
@@ -195,7 +160,7 @@ public class ItemLunchbox extends ItemBaseCyclic {
    *          instance that is doing the insert
    */
   public static void insertFoodIntoLunchbox(ItemStack lunchbox, ItemStack itemFoodMouse, ServerPlayer player) {
-    IItemHandler boxCap = lunchbox.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    IItemHandler boxCap = lunchbox.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.ITEM);
     if (boxCap == null) {
       return;
     }

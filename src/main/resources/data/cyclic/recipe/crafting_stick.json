@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " t",
+    "s "
+  ],
+  "key": {
+    "t": {
+      "item": "minecraft:crafting_table"
+    },
+    "s": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "result": {
+    "id": "cyclic:crafting_stick"
+  }
+}

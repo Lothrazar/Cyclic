@@ -39,7 +39,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
   private boolean directionIsUp = false;
   //radius 7 translates to 15x15 area (center block + 7 each side)
   ItemStackHandler inventory = new ItemStackHandler(2 * 9);
-//  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
+// //  private LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override
@@ -114,7 +114,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -124,7 +124,7 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private int heightWithDirection() {
@@ -192,4 +192,10 @@ public class TileItemCollector extends TileBlockEntityCyclic implements MenuProv
     }
     return 0;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

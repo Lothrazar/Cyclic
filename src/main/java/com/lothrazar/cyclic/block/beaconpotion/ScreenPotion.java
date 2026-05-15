@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.util.ChatUtil;
@@ -36,14 +35,14 @@ public class ScreenPotion extends ScreenBase<ContainerPotion> {
     y += 51;
     btnEntity = addRenderableWidget(new ButtonMachine(x, y, 60, 20, "", (p) -> {
       int f = TilePotionBeacon.Fields.ENTITYTYPE.ordinal();
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());

@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -35,13 +34,13 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     int w = 50, h = 20;
     btnEntity = addRenderableWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetector.Fields.ENTITYTYPE.ordinal();
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     x += 58;
     btnComp = addRenderableWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetector.Fields.GREATERTHAN.ordinal();
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     //sliders
@@ -52,27 +51,27 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     int f = TileDetector.Fields.RANGEX.ordinal();
     GuiSliderInteger red = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    red.setTooltip("cyclic.detector.rangex");
+    red.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("cyclic.detector.rangex")));
     y += h + 1;
     f = TileDetector.Fields.RANGEY.ordinal();
     GuiSliderInteger rangey = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    rangey.setTooltip("cyclic.detector.rangey");
+    rangey.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("cyclic.detector.rangey")));
     y += h + 1;
     f = TileDetector.Fields.RANGEZ.ordinal();
     GuiSliderInteger rangez = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    rangez.setTooltip("cyclic.detector.rangez");
+    rangez.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("cyclic.detector.rangez")));
     y += h + 1;
     f = TileDetector.Fields.LIMIT.ordinal();
     GuiSliderInteger limit = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    limit.setTooltip("cyclic.detector.limit");
+    limit.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("cyclic.detector.limit")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

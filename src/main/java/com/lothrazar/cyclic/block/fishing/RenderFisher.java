@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.fishing;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;

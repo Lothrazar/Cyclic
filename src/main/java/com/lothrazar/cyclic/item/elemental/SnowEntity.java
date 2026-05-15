@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 public class SnowEntity extends ThrowableItemProjectile {
 
@@ -47,7 +46,7 @@ public class SnowEntity extends ThrowableItemProjectile {
         target.hurt(level.damageSources().thrown(this, this.getOwner()), Mth.nextInt(level.random, 2, 5));
         target.hurt(level.damageSources().dryOut(), Mth.nextInt(level.random, 2, 3));
         LivingEntity living = (LivingEntity) target;
-        living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN.get(), 60, 1));
+        living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, 60, 1, false, false, false));
         //        if (world.isAirBlock(living.getPosition()))
         //          this.world.setBlockState(living.getPosition(), Blocks.SNOW.getDefaultState());
       }
@@ -91,7 +90,7 @@ public class SnowEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
+  public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket(net.minecraft.server.level.ServerEntity serverEntity) {
+    return new net.minecraft.network.protocol.game.ClientboundAddEntityPacket(this, serverEntity);
   }
 }

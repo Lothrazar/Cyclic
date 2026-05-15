@@ -35,12 +35,14 @@ public class BlockCableItem extends CableBase {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.ITEM_PIPE.get(), ScreenCableItem::new);
+    // MenuScreens.register(MenuTypeRegistry.ITEM_PIPE.get(), ScreenCableItem::new);
   }
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-    if (ConfigRegistry.CABLE_FACADES.get()) {
+    boolean facadesEnabled = false;
+    try { facadesEnabled = ConfigRegistry.CABLE_FACADES.get(); } catch (Exception e) {}
+    if (facadesEnabled) {
       VoxelShape facade = this.getFacadeShape(state, worldIn, pos, context);
       if (facade != null) {
         return facade;
@@ -108,7 +110,7 @@ public class BlockCableItem extends CableBase {
       //  updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (isItem(stateIn, facing, facingState, world, currentPos, facingPos)) {
+    if (true) { // isItem() stub
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here

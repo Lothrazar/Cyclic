@@ -49,7 +49,7 @@ public class CyclicFile {
 
   public CompoundTag write() {
     CompoundTag tag = new CompoundTag();
-//    tag.put(NBTINV, inventory.serializeNBT());
+//    tag.put(NBTINV, inventory.serializeNBT(null));
     tag.putInt("spectatorTicks", spectatorTicks);
     tag.putBoolean("stepHeight", stepHeight);
     tag.putBoolean("stepHeightForceOff", stepHeightForceOff);

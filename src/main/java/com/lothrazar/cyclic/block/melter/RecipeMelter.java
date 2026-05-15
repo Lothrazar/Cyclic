@@ -1,14 +1,12 @@
 package com.lothrazar.cyclic.block.melter;
 
-import com.google.gson.JsonObject;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
-import com.lothrazar.library.util.RecipeUtil;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -17,29 +15,23 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public class RecipeMelter implements Recipe<TileMelter> {
+public class RecipeMelter implements Recipe<MelterRecipeInput> {
 
-  private final ResourceLocation id;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private FluidStack outFluid;
   private final EnergyIngredient energy;
 
-  public RecipeMelter(ResourceLocation id, NonNullList<Ingredient> ingredientsIn, FluidStack out, EnergyIngredient energy) {
-    this.id = id;
+  public RecipeMelter(NonNullList<Ingredient> ingredientsIn, FluidStack out, EnergyIngredient energy) {
     this.energy = energy;
-    ingredients = ingredientsIn;
-    if (ingredients.size() == 1) {
+    ingredients = NonNullList.create();
+    ingredients.addAll(ingredientsIn);
+    while (ingredients.size() < 2) {
       ingredients.add(Ingredient.EMPTY);
     }
-    if (ingredients.size() != 2) {
+    if (ingredients.size() > 2) {
       throw new IllegalArgumentException("Melter recipe must have at most two ingredients");
     }
     this.outFluid = out;
-  }
-
-  @Override
-  public ResourceLocation getId() {
-    return id;
   }
 
   @Override
@@ -48,23 +40,19 @@ public class RecipeMelter implements Recipe<TileMelter> {
   }
 
   @Override
-  public boolean matches(TileMelter inv, Level worldIn) {
+  public boolean matches(MelterRecipeInput inv, Level worldIn) {
     try {
-      TileMelter tile = inv;
-      //if first one matches check second
-      //if first does not match, fail
-      boolean matchLeft = matches(tile.getStackInputSlot(0), ingredients.get(0));
-      boolean matchRight = matches(tile.getStackInputSlot(1), ingredients.get(1));
+      boolean matchLeft = matches(inv.getItem(0), ingredients.get(0));
+      boolean matchRight = matches(inv.getItem(1), ingredients.get(1));
       return matchLeft && matchRight;
     }
-    catch (ClassCastException e) {
+    catch (Exception e) {
       return false;
     }
   }
 
   public boolean matches(ItemStack current, Ingredient ing) {
     if (ing == Ingredient.EMPTY) {
-      //it must be empty
       return current.isEmpty();
     }
     if (current.isEmpty()) {
@@ -74,8 +62,7 @@ public class RecipeMelter implements Recipe<TileMelter> {
   }
 
   public ItemStack[] ingredientAt(int slot) {
-    Ingredient ing = at(slot);
-    return ing.getItems();
+    return at(slot).getItems();
   }
 
   public Ingredient at(int slot) {
@@ -88,7 +75,7 @@ public class RecipeMelter implements Recipe<TileMelter> {
   }
 
   @Override
-  public ItemStack getResultItem(RegistryAccess ra) {
+  public ItemStack getResultItem(HolderLookup.Provider ra) {
     return ItemStack.EMPTY;
   }
 
@@ -107,7 +94,7 @@ public class RecipeMelter implements Recipe<TileMelter> {
   }
 
   @Override
-  public ItemStack assemble(TileMelter t, RegistryAccess ra) {
+  public ItemStack assemble(MelterRecipeInput t, HolderLookup.Provider ra) {
     return ItemStack.EMPTY;
   }
 
@@ -116,56 +103,36 @@ public class RecipeMelter implements Recipe<TileMelter> {
     return width <= 2 && height <= 1;
   }
 
-  public static class SerializeMelter implements RecipeSerializer<RecipeMelter> {
-
-    public SerializeMelter() {}
-
-    /**
-     * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
-     */
-    @Override
-    public RecipeMelter fromJson(ResourceLocation recipeId, JsonObject json) {
-      RecipeMelter r = null;
-      try {
-        NonNullList<Ingredient> list = RecipeUtil.getIngredientsArray(json);
-        JsonObject result = json.get("result").getAsJsonObject();
-        FluidStack fluid = RecipeUtil.getFluid(result);
-        r = new RecipeMelter(recipeId, list, fluid, new EnergyIngredient(json));
-      }
-      catch (Exception e) {
-        ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
-      }
-      return r;
-    }
-
-    @Override
-    public RecipeMelter fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
-      NonNullList<Ingredient> ins = NonNullList.create();
-      // ing, ing, fluid, (int,int)
-      ins.add(Ingredient.fromNetwork(buf));
-      ins.add(Ingredient.fromNetwork(buf));
-      return new RecipeMelter(recipeId, ins, FluidStack.readFromPacket(buf),
-          new EnergyIngredient(buf.readInt(), buf.readInt()));
-    }
-
-    @Override
-    public void toNetwork(FriendlyByteBuf buf, RecipeMelter recipe) {
-      //ing, ing, fluid, (int,int)
-      Ingredient zero = recipe.ingredients.get(0);
-      Ingredient one = recipe.ingredients.get(1);
-      zero.toNetwork(buf);
-      one.toNetwork(buf);
-      recipe.outFluid.writeToPacket(buf);
-      buf.writeInt(recipe.energy.getRfPertick());
-      buf.writeInt(recipe.energy.getTicks());
-    }
-  }
-
   public int getEnergyCost() {
     return this.energy.getEnergyTotal();
   }
 
   public EnergyIngredient getEnergy() {
     return energy;
+  }
+
+  public static class SerializeMelter implements RecipeSerializer<RecipeMelter> {
+
+    public static final MapCodec<RecipeMelter> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+        Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
+        FluidStack.CODEC.fieldOf("result").forGetter(r -> r.getRecipeFluid()),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
+    ).apply(instance, (ingredients, fluid, energy) -> new RecipeMelter(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, energy)));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeMelter> STREAM_CODEC = StreamCodec.composite(
+        Ingredient.CONTENTS_STREAM_CODEC.apply(net.minecraft.network.codec.ByteBufCodecs.list()), r -> r.getIngredients(),
+        FluidStack.OPTIONAL_STREAM_CODEC, r -> r.getRecipeFluid(),
+        EnergyIngredient.STREAM_CODEC, r -> r.getEnergy(),
+        (ingredients, fluid, energy) -> new RecipeMelter(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, energy)
+    );
+
+    @Override
+    public MapCodec<RecipeMelter> codec() {
+      return CODEC;
+    }
+
+    @Override
+    public StreamCodec<RegistryFriendlyByteBuf, RecipeMelter> streamCodec() {
+      return STREAM_CODEC;
+    }
   }
 }

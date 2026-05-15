@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " fp",
+    " sf",
+    "s  "
+  ],
+  "key": {
+    "s": {
+      "item": "cyclic:gem_amber"
+    },
+    "f": {
+      "tag": "c:storage_blocks/flint"
+    },
+    "p": {
+      "tag": "c:glass/purple"
+    }
+  },
+  "result": {
+    "id": "cyclic:spawn_inspector"
+  }
+}

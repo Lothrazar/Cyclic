@@ -1,5 +1,5 @@
 {
   "parent": "forge:item/bucket_drip",
-  "loader": "forge:fluid_container",
+  "loader": "neoforge:fluid_container",
   "fluid": "cyclic:slime"
 }

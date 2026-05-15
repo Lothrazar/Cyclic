@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "isi",
+    "sqs",
+    "isi"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:nuggets/copper"
+    },
+    "q": {
+      "item": "cyclic:lever_remote"
+    },
+    "s": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:wireless_transmitter"
+  }
+}

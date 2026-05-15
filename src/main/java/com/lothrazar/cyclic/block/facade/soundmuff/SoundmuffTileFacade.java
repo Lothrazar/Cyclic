@@ -25,21 +25,21 @@ public class SoundmuffTileFacade extends TileBlockEntityCyclic implements ITileF
   @Override
   public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,HolderLookup.Provider registries) {
     if (pkt.getTag().contains(NBT_FACADE)) {
-      this.load(pkt.getTag());
+      this.loadAdditional(pkt.getTag(), registries);
       super.onDataPacket(net, pkt,registries);
     }
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
     this.loadFacade(tag);
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
     this.saveFacade(tag);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

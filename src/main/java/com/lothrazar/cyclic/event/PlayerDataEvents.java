@@ -59,7 +59,7 @@ public class PlayerDataEvents {
     if (mctomb.exists()) {
       try {
         FileInputStream fileinputstream = new FileInputStream(mctomb);
-        CompoundTag data = NbtIo.readCompressed(fileinputstream);
+        CompoundTag data = NbtIo.readCompressed(fileinputstream, net.minecraft.nbt.NbtAccounter.unlimitedHeap());
         fileinputstream.close();
         CyclicFile dataLoaded = new CyclicFile(player.getUUID());
         dataLoaded.read(data);

@@ -1,19 +1,14 @@
 package com.lothrazar.cyclic.block.endershelf;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient.SyncPacketType;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.EnchantUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -111,12 +106,11 @@ public class EnderShelfItemHandler extends ItemStackHandler {
       this.enchantmentIdCache[slot] = "";
     }
     else {
-      ListTag chantsIn = EnchantedBookItem.getEnchantments(stackIn);
-      this.enchantmentIdCache[slot] = ((CompoundTag) chantsIn.get(0)).getString("id");
-      Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(chantsIn);
-      for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-        nameCache[slot] = entry.getKey().getFullname(entry.getValue()).getString();
-        break;
+      net.minecraft.world.item.enchantment.ItemEnchantments chantsIn = stackIn.getOrDefault(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
+      if (!chantsIn.isEmpty()) {
+        var entry = chantsIn.entrySet().iterator().next();
+        this.enchantmentIdCache[slot] = entry.getKey().unwrapKey().map(k -> k.location().toString()).orElse("");
+        nameCache[slot] = net.minecraft.world.item.enchantment.Enchantment.getFullname(entry.getKey(), entry.getIntValue()).getString();
       }
     }
   }
@@ -126,7 +120,7 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     if (stackIn.getItem() != Items.ENCHANTED_BOOK) {
       return false;
     }
-    ListTag chantsIn = EnchantedBookItem.getEnchantments(stackIn);
+    net.minecraft.world.item.enchantment.ItemEnchantments chantsIn = stackIn.getOrDefault(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
     if (chantsIn.size() != 1) {
       return false;
     }
@@ -138,9 +132,9 @@ public class EnderShelfItemHandler extends ItemStackHandler {
     //target slot is also not empty, enchants must match
     ItemStack stackHere = this.getStackInSlot(slot);
     //
-    if (this.enchantmentIdCache[slot] != null || !this.enchantmentIdCache[slot].isEmpty()) {
-      //      ModCyclic.LOGGER.info("match on id cache");
-      boolean match = this.enchantmentIdCache[slot].equals(((CompoundTag) chantsIn.get(0)).getString("id"));
+    if (this.enchantmentIdCache[slot] != null && !this.enchantmentIdCache[slot].isEmpty()) {
+      var entry = chantsIn.entrySet().iterator().next();
+      boolean match = this.enchantmentIdCache[slot].equals(entry.getKey().unwrapKey().map(k -> k.location().toString()).orElse(""));
       return match;
     }
     //else no cache, old way

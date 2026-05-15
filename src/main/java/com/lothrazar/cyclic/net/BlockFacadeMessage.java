@@ -1,17 +1,25 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.facade.IBlockFacade;
 import com.lothrazar.cyclic.block.facade.ITileFacade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkEvent;
 
-public class BlockFacadeMessage {
+public class BlockFacadeMessage implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+
+  public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<BlockFacadeMessage> TYPE = new Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "block_facade_message"));
+
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, BlockFacadeMessage> STREAM_CODEC = net.minecraft.network.codec.StreamCodec.of(BlockFacadeMessage::encode, BlockFacadeMessage::decode);
+
+
+  @Override
+  public net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private BlockPos pos;
   private boolean erase = false;
@@ -31,9 +39,9 @@ public class BlockFacadeMessage {
     blockStateTag = new CompoundTag();
   }
 
-  public static void handle(BlockFacadeMessage message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer player = ctx.get().getSender();
+  public static void handle(BlockFacadeMessage message, net.neoforged.neoforge.network.handling.IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer player = (ServerPlayer) ctx.player();
       ServerLevel serverWorld = (ServerLevel) player.level();
       BlockState bs = serverWorld.getBlockState(message.pos);
       if (bs.getBlock() instanceof IBlockFacade facadeBlock) {
@@ -51,10 +59,10 @@ public class BlockFacadeMessage {
         serverWorld.blockUpdated(message.pos, bs.getBlock());
       }
     });
-    ctx.get().setPacketHandled(true);
+    // ctx.setPacketHandled(true);
   }
 
-  public static BlockFacadeMessage decode(FriendlyByteBuf buf) {
+  public static BlockFacadeMessage decode(net.minecraft.network.RegistryFriendlyByteBuf buf) {
     BlockFacadeMessage message = new BlockFacadeMessage();
     message.erase = buf.readBoolean();
     message.pos = buf.readBlockPos();
@@ -62,7 +70,7 @@ public class BlockFacadeMessage {
     return message;
   }
 
-  public static void encode(BlockFacadeMessage msg, FriendlyByteBuf buf) {
+  public static void encode(net.minecraft.network.RegistryFriendlyByteBuf buf, BlockFacadeMessage msg) {
     buf.writeBoolean(msg.erase);
     buf.writeBlockPos(msg.pos);
     buf.writeNbt(msg.blockStateTag);

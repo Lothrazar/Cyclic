@@ -1,14 +1,12 @@
 package com.lothrazar.cyclic.block.melter;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -72,7 +70,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     energy.extractEnergy(cost, false);
-    if (currentRecipe == null || !currentRecipe.matches(this, level)) {
+    if (currentRecipe == null || !currentRecipe.matches(new MelterRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1)), level)) {
       this.findMatchingRecipe();
       if (currentRecipe == null) {
         this.timer = 0;
@@ -132,7 +130,9 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     burnTimeMax = tag.getInt("burnTimeMax");
     super.loadAdditional(tag,registries);
@@ -168,19 +168,20 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+    MelterRecipeInput input = new MelterRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
+    if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
     currentRecipe = null;
     this.burnTimeMax = 0;
     this.timer = 0;
-    List<RecipeMelter> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER.get());
-    for (RecipeMelter rec : recipes) {
-      if (rec.matches(this, level)) {
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.MELTER.get());
+    for (var holder : recipes) {
+      RecipeMelter rec = holder.value();
+      if (rec.matches(input, level)) {
         if (this.tank.getFluid() != null && !this.tank.getFluid().isEmpty()) {
           if (rec.getRecipeFluid().getFluid() != this.tank.getFluid().getFluid()) {
             continue;
-            //fluid wont fit
           }
         }
         currentRecipe = rec;
@@ -192,10 +193,10 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private boolean tryProcessRecipe() {
+    MelterRecipeInput input = new MelterRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()
-        && currentRecipe.matches(this, level)) {
-      //ok it has room for all the fluid none will be wasted
+        && currentRecipe.matches(input, level)) {
       inventory.getStackInSlot(0).shrink(1);
       inventory.getStackInSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.EXECUTE);
@@ -204,4 +205,16 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     }
     return false;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

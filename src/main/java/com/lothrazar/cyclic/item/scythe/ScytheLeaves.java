@@ -24,15 +24,11 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ScytheLeaves extends ItemBaseCyclic {
@@ -43,10 +39,7 @@ public class ScytheLeaves extends ItemBaseCyclic {
     super(properties);
   }
 
-  @Override
-  public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-    return enchantment == Enchantments.SILK_TOUCH || super.canApplyAtEnchantingTable(stack, enchantment);
-  }
+  
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
@@ -57,7 +50,7 @@ public class ScytheLeaves extends ItemBaseCyclic {
     }
     int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
     if (context.getLevel().isClientSide) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.LEAVES, radius));
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketScythe(pos, ScytheType.LEAVES, radius));
     }
     context.getPlayer().swing(context.getHand());
     ItemStackUtil.damageItem(context.getPlayer(), context.getItemInHand());

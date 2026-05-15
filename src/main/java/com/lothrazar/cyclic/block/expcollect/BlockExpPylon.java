@@ -24,7 +24,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
 public class BlockExpPylon extends BlockCyclic {
 
@@ -41,7 +40,7 @@ public class BlockExpPylon extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.EXPERIENCE_PYLON.get(), ScreenExpPylon::new);
+    // MenuScreens.register(MenuTypeRegistry.EXPERIENCE_PYLON.get(), ScreenExpPylon::new);
   }
 
   @Override

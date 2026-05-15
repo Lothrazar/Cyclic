@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -227,8 +226,8 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    ItemStack heldStack = player.getItemInHand(hand);
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    ItemStack heldStack = player.getMainHandItem();
     Item heldItem = heldStack.getItem();
     if (heldItem instanceof DyeItem) {
       //
@@ -255,7 +254,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
         return InteractionResult.SUCCESS;
       }
     }
-    return super.use(state, world, pos, player, hand, hit);
+    return super.useWithoutItem(state, world, pos, player, hit);
   }
 
   private BlockState getClosestConnected(Level world, BlockPos pos) {

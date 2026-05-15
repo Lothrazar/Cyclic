@@ -81,7 +81,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     final BlockPos target = this.worldPosition.relative(extractSide); // .offset(
     final Direction incomingSide = extractSide.getOpposite();
     //when draining from a tank (instead of a source/waterlogged block) check the filter
-    final IFluidHandler tankTarget = FluidHelpers.getTank(level, target, incomingSide);
+    final IFluidHandler tankTarget = com.lothrazar.cyclic.fixers.CapabilityFixer.fluid(level, target, incomingSide);
     if (tankTarget != null
         && tankTarget.getTanks() > 0
         && !FilterCardItem.filterAllowsExtract(filter.getStackInSlot(0), tankTarget.getFluidInTank(0))) {
@@ -129,7 +129,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
   //
   //
 //  @Override
-//  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+// //  // public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 //    if (side != null && cap == ForgeCapabilities.FLUID_HANDLER) {
 //      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
 //        return flow.get(side).cast();
@@ -148,7 +148,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
         fluidh.readFromNBT(registries,tag.getCompound("fluid" + dir.toString()));
       }
     }
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -159,11 +159,11 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
       fluidh = flow.get(dir);//.orElse(null);
       CompoundTag fluidtag = new CompoundTag();
       if (fluidh != null) {
-        fluidh.writeToNBT(fluidtag);
+        fluidh.writeToNBT(registries, fluidtag);
       }
       tag.put("fluid" + dir.toString(), fluidtag);
     }
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override
@@ -182,5 +182,13 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
   @Override
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerCableFluid(i, level, worldPosition, playerInventory, playerEntity);
+  }
+
+  @Override
+  public net.neoforged.neoforge.fluids.capability.IFluidHandler getFluidHandler(net.minecraft.core.Direction side) {
+    if (side != null && !CableBase.isCableBlocked(this.getBlockState(), side)) {
+      return flow.get(side);
+    }
+    return null;
   }
 }

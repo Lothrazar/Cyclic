@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Client",
+      "presentation": {
+        "group": "Mod Development - Cyclic_Port_Test",
+        "order": 0
+      },
+      "projectName": "Cyclic_Port_Test",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/clientRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/clientRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcyclic%%/Users/stanislav/Desktop/майн/Cyclic_Port_Test/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Data",
+      "presentation": {
+        "group": "Mod Development - Cyclic_Port_Test",
+        "order": 1
+      },
+      "projectName": "Cyclic_Port_Test",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/dataRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/dataRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcyclic%%/Users/stanislav/Desktop/майн/Cyclic_Port_Test/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "GameTestServer",
+      "presentation": {
+        "group": "Mod Development - Cyclic_Port_Test",
+        "order": 2
+      },
+      "projectName": "Cyclic_Port_Test",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/gameTestServerRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/gameTestServerRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcyclic%%/Users/stanislav/Desktop/майн/Cyclic_Port_Test/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Server",
+      "presentation": {
+        "group": "Mod Development - Cyclic_Port_Test",
+        "order": 3
+      },
+      "projectName": "Cyclic_Port_Test",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/serverRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/stanislav/Desktop/майн/Cyclic_Port_Test/build/moddev/serverRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcyclic%%/Users/stanislav/Desktop/майн/Cyclic_Port_Test/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    }
+  ]
+}

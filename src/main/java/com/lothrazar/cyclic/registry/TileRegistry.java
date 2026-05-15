@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
+// import com.lothrazar.cyclic.block.antipotion.TileAntiBeacon;
 import com.lothrazar.cyclic.block.anvil.TileAnvilAuto;
 import com.lothrazar.cyclic.block.anvilmagma.TileAnvilMagma;
 import com.lothrazar.cyclic.block.anvilvoid.TileAnvilVoid;
@@ -91,7 +91,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class TileRegistry {
 
@@ -179,7 +178,7 @@ public class TileRegistry {
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileEnderCtrl>> ENDER_CONTROLLER = TILES.register("ender_controller", () -> BlockEntityType.Builder.of(TileEnderCtrl::new, BlockRegistry.ENDER_CONTROLLER.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileWorkbench>> WORKBENCH = TILES.register("workbench", () -> BlockEntityType.Builder.of(TileWorkbench::new, BlockRegistry.WORKBENCH.get()).build(null));
   //
-  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileAntiBeacon>> ANTI_BEACON = TILES.register("anti_beacon", () -> BlockEntityType.Builder.of(TileAntiBeacon::new, BlockRegistry.ANTI_BEACON.get()).build(null));
+//  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileAntiBeacon>> ANTI_BEACON = TILES.register("anti_beacon", () -> BlockEntityType.Builder.of(TileAntiBeacon::new, BlockRegistry.ANTI_BEACON.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileBeaconRedstone>> BEACON_REDSTONE = TILES.register("beacon_redstone", () -> BlockEntityType.Builder.of(TileBeaconRedstone::new, BlockRegistry.BEACON_REDSTONE.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TilePeace>> PEACE_CANDLE = TILES.register("peace_candle", () -> BlockEntityType.Builder.of(TilePeace::new, BlockRegistry.PEACE_CANDLE.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileAltar>> NO_SOLICITING = TILES.register("no_soliciting", () -> BlockEntityType.Builder.of(TileAltar::new, BlockRegistry.NO_SOLICITING.get()).build(null));

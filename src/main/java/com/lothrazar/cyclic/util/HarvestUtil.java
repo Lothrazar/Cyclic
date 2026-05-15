@@ -29,7 +29,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class HarvestUtil {
 
@@ -67,7 +66,11 @@ public class HarvestUtil {
       }
       else {
         //harvest block with player context: better mod compatibility
-        if (type == ScytheType.BRUSH && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player) > 0) {
+        if (type == ScytheType.BRUSH && player.level() instanceof net.minecraft.server.level.ServerLevel sl
+            && net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentLevel(
+                sl.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                    .getHolderOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH),
+                player) > 0) {
           //only brush needed silk override, tree leaves worked regardless
           ItemStackUtil.drop(world, posCurrent, blockState.getBlock());
         }
@@ -164,11 +167,11 @@ public class HarvestUtil {
 
   public static IntegerProperty getAgeProp(BlockState blockState) {
     if (blockState.getBlock() instanceof CropBlock crops) {
-      //better mod compatibility if they dont use 'age'
-      return crops.getAgeProperty();
+      // getAgeProperty is protected so we use reflection or fall through to name-based search
+      // return crops.getAgeProperty();
     }
     String age = CropBlock.AGE.getName();
-    ResourceLocation bid = ForgeRegistries.BLOCKS.getKey(blockState.getBlock());
+    ResourceLocation bid = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(blockState.getBlock());
     if (CompatConstants.RESYNTH.equalsIgnoreCase(bid.getNamespace())) {
       //some silly old mods dont use age for compatibility
       // https://github.com/Resynth-Minecraft-Mod/Resynth-Mod/blob/a9f47439d103c1c17ca7a4ffd05c2dc0397e5e5f/src/main/java/com/ki11erwolf/resynth/plant/block/BlockBiochemicalPlant.java#L59

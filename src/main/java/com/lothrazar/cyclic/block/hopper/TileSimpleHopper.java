@@ -107,4 +107,13 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
   public double getLevelZ() {
     return this.getBlockPos().getZ();
   }
+
+  @Override
+  public boolean isGridAligned() { return true; }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

@@ -18,17 +18,18 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorItem> {
+public class GenitemRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeGeneratorItem>> {
 
   private static final int FONT = 0xFFFFFFFF;
-  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "generator_item");
-  static final RecipeType<RecipeGeneratorItem> TYPE = new RecipeType<>(ID, RecipeGeneratorItem.class);
+  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "generator_item");
+  static final RecipeType<RecipeHolder<RecipeGeneratorItem>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
 
   public GenitemRecipeCategory(IGuiHelper helper) {
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/generator_item.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
+    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/generator_item.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.GENERATOR_ITEM.get()));
   }
 
@@ -42,18 +43,20 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;
   }
 
   @Override
-  public RecipeType<RecipeGeneratorItem> getRecipeType() {
+  public RecipeType<RecipeHolder<RecipeGeneratorItem>> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeGeneratorItem recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeGeneratorItem> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    var recipe = recipeHolder.value();
     var font = Minecraft.getInstance().font;
     ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
     ms.drawString(font, recipe.getRfPertick() + " RF/t", 60, 10, FONT);
@@ -61,7 +64,8 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeGeneratorIte
   }
 
   @Override
-  public void setRecipe(IRecipeLayoutBuilder builder, RecipeGeneratorItem recipe, IFocusGroup focuses) {
+  public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeGeneratorItem> recipeHolder, IFocusGroup focuses) {
+    RecipeGeneratorItem recipe = recipeHolder.value();
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(recipe.at(0));
   }
   //  @Override

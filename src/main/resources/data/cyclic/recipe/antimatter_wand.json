@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    " s ",
+    "gsg"
+  ],
+  "key": {
+    "b": {
+      "tag": "c:dyes/blue"
+    },
+    "s": {
+      "item": "minecraft:sponge"
+    },
+    "g": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:antimatter_wand"
+  }
+}

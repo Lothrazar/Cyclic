@@ -1,0 +1,31 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/cobblestone"
+    },
+    {
+      "item": "minecraft:book",
+      "count": 1
+    }
+  ],
+  "result": {
+    "type": "c:nbt",
+    "count": 1,
+    "nbt": {
+      "patchouli:book": "cyclic:guide_book"
+    },
+    "id": "patchouli:guide_book"
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "patchouli",
+          "type": "c:mod_loaded"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

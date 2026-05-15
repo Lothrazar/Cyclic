@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "minecraft:blackstone"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    }
+  ],
+  "mix": {
+    "id": "minecraft:lava",
+    "amount": 100
+  },
+  "energy": {
+    "ticks": 640,
+    "rfpertick": 100
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:gilded_blackstone"
+  }
+}

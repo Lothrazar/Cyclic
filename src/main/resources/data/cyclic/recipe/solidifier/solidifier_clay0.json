@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:terracotta"
+    }
+  ],
+  "mix": {
+    "id": "minecraft:water",
+    "amount": 25
+  },
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 60
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:clay"
+  }
+}

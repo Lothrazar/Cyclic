@@ -7,6 +7,6 @@ import net.minecraft.world.level.material.FlowingFluid;
 public class XpJuiceFluidBlock extends LiquidBlock {
 
   public XpJuiceFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
-    super(supplier, props);
+    super(supplier.get(), props);
   }
 }

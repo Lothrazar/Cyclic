@@ -11,11 +11,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
@@ -67,7 +65,7 @@ public class ItemBlockCask extends BlockItem {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null && !fs.isEmpty()) {
         MutableComponent t = Component.translatable(
-            fs.getDisplayName().getString()
+            fs.getHoverName().getString()
                 + " " + fs.getAmount()
                 + "/" + storage.getTankCapacity(0));
         t.withStyle(ChatFormatting.GRAY);
@@ -79,7 +77,7 @@ public class ItemBlockCask extends BlockItem {
   }
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
 //    return new FluidHandlerCapabilityStack(stack, TileCask.CAPACITY);
 //  }
 }

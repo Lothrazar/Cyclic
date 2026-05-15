@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gag",
+    "fsf",
+    "gag"
+  ],
+  "key": {
+    "s": {
+      "tag": "c:storage_blocks/flint"
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "f": {
+      "item": "minecraft:gunpowder"
+    },
+    "a": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "id": "cyclic:charm_stealthpotion"
+  }
+}

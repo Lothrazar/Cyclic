@@ -78,10 +78,11 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
 //    }
 //  }
 
-//  @Override
-//  public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-//    return state.getValue(AGE) < MAX_AGE;
-//  }
+
+  @Override
+  public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state) {
+    return state.getValue(AGE) < MAX_AGE;
+  }
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

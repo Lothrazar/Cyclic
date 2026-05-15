@@ -23,17 +23,24 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkEvent;
 
-public class PacketRecordSound extends PacketFlib {
+public class PacketRecordSound implements net.minecraft.network.protocol.common.custom.CustomPacketPayload {
+
+  public static final net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<PacketRecordSound> TYPE = new Type<>(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_record_sound"));
+
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, PacketRecordSound> STREAM_CODEC = net.minecraft.network.codec.StreamCodec.of(PacketRecordSound::encode, PacketRecordSound::decode);
+
+
+  @Override
+  public net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type<? extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private String sound;
   private BlockPos pos;
@@ -43,13 +50,13 @@ public class PacketRecordSound extends PacketFlib {
     pos = n;
   }
 
-  public static PacketRecordSound decode(FriendlyByteBuf buf) {
+  public static PacketRecordSound decode(net.minecraft.network.RegistryFriendlyByteBuf buf) {
     String s = buf.readUtf();
     CompoundTag tags = buf.readNbt();
     return new PacketRecordSound(s, new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z")));
   }
 
-  public static void encode(PacketRecordSound msg, FriendlyByteBuf buf) {
+  public static void encode(net.minecraft.network.RegistryFriendlyByteBuf buf, PacketRecordSound msg) {
     buf.writeUtf(msg.sound);
     CompoundTag tags = new CompoundTag();
     tags.putInt("x", msg.pos.getX());
@@ -58,15 +65,15 @@ public class PacketRecordSound extends PacketFlib {
     buf.writeNbt(tags);
   }
 
-  public static void handle(PacketRecordSound message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
+  public static void handle(PacketRecordSound message, net.neoforged.neoforge.network.handling.IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
       //rotate type
-      ServerPlayer sender = ctx.get().getSender();
+      net.minecraft.server.level.ServerPlayer sender = (net.minecraft.server.level.ServerPlayer) ctx.player();
       BlockEntity tile = sender.level().getBlockEntity(message.pos);
       if (tile instanceof TileSoundRecorder) {
         ((TileSoundRecorder) tile).onSoundHeard(message.sound);
       }
     });
-    message.done(ctx);
+    
   }
 }

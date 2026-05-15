@@ -53,7 +53,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.getEnergy());
@@ -65,7 +65,7 @@ public class ScreenForester extends ScreenBase<ContainerForester> {
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(menu.tile);
     btnRender.onValueUpdate(menu.tile);
-    heightslider.setTooltip("buildertype.height.tooltip");
+    heightslider.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("buildertype.height.tooltip")));
     size.setTooltip("cyclic.screen.size" + menu.tile.getField(size.getField()));
   }
 

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s",
+    "t"
+  ],
+  "key": {
+    "s": {
+      "item": "cyclic:fireball"
+    },
+    "t": {
+      "item": "cyclic:spikes_iron"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:spikes_fire"
+  }
+}

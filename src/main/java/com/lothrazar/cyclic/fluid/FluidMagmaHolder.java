@@ -17,15 +17,15 @@ import net.minecraft.world.level.material.FlowingFluid;
 public class FluidMagmaHolder {
 
   private static final String id = "magma";
-//  private static final ResourceLocation FLUID_STILL = new ResourceLocation("minecraft:block/" + id);
+//  private static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath("minecraft:block/" + id);
 //  public static final int COLOR = 0x4B261F;
-//  public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new MagmaFluidBlock.Source(makeProperties()));
-//  public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new MagmaFluidBlock.Flowing(makeProperties()));
-//  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel((p_235456_0_) -> {
+//  public static java.util.function.Supplier<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new MagmaFluidBlock.Source(makeProperties()));
+//  public static java.util.function.Supplier<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new MagmaFluidBlock.Flowing(makeProperties()));
+//  public static java.util.function.Supplier<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel((p_235456_0_) -> {
 //    return 8;
 //  }).noLootTable()));
-//  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(id + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-//  public static RegistryObject<FluidType> test_fluid_type = FluidRegistry.FLUID_TYPES.register(id, () -> new FluidType(FluidType.Properties.create()) {
+//  public static java.util.function.Supplier<Item> BUCKET = ItemRegistry.ITEMS.register(id + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+//  public static java.util.function.Supplier<FluidType> test_fluid_type = FluidRegistry.FLUID_TYPES.register(id, () -> new FluidType(FluidType.Properties.create()) {
 //
 //    @Override
 //    public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
@@ -41,8 +41,7 @@ public class FluidMagmaHolder {
 //          return FLUID_STILL;
 //        }
 //
-//        //        @Nullable
-//        @Override
+//        //        //        @Override
 //        public ResourceLocation getOverlayTexture() {
 //          return null;
 //        }
@@ -50,8 +49,8 @@ public class FluidMagmaHolder {
 //    }
 //  });
 //
-//  private static ForgeFlowingFluid.Properties makeProperties() {
-//    return new ForgeFlowingFluid.Properties(test_fluid_type, STILL, FLOWING)
+//  private static BaseFlowingFluid.Properties makeProperties() {
+//    return new BaseFlowingFluid.Properties(test_fluid_type, STILL, FLOWING)
 //        .bucket(BUCKET)
 //        .block(BLOCK);
 //  }

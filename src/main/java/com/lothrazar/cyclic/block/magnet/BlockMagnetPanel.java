@@ -7,7 +7,6 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -43,14 +42,13 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-    if (hand == InteractionHand.MAIN_HAND) {
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
+    {
       world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
       SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
       ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
       return InteractionResult.SUCCESS;
     }
-    return super.use(state, world, pos, player, hand, result);
   }
 
   @Override

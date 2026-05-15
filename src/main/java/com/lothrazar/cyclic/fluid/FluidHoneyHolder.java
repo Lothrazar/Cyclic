@@ -15,15 +15,15 @@ import net.minecraft.world.level.material.FlowingFluid;
 public class FluidHoneyHolder {
 
   private static final String id = "honey";
-//  private static final ResourceLocation FLUID_FLOWING = new ResourceLocation("minecraft:block/" + id + "_block_side");
-//  private static final ResourceLocation FLUID_STILL = new ResourceLocation("minecraft:block/" + id + "_block_top");
+//  private static final ResourceLocation FLUID_FLOWING = ResourceLocation.fromNamespaceAndPath("minecraft:block/" + id + "_block_side");
+//  private static final ResourceLocation FLUID_STILL = ResourceLocation.parse("minecraft:block/" + id + "_block_top");
 //  public static final int COLOR = 0xFFCE5D;
-//  public static RegistryObject<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(makeProperties()));
-//  public static RegistryObject<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(makeProperties()));
-//  public static RegistryObject<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new HoneyFluidBlock(STILL, Block.Properties.of().liquid()
+//  public static java.util.function.Supplier<FlowingFluid> STILL = FluidRegistry.FLUIDS.register(id, () -> new BaseFlowingFluid.Source(makeProperties()));
+//  public static java.util.function.Supplier<FlowingFluid> FLOWING = FluidRegistry.FLUIDS.register(id + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
+//  public static java.util.function.Supplier<LiquidBlock> BLOCK = BlockRegistry.BLOCKS.register(id + "_block", () -> new HoneyFluidBlock(STILL, Block.Properties.of().liquid()
 //      .noCollission().strength(100.0F).noLootTable()));
-//  public static RegistryObject<Item> BUCKET = ItemRegistry.ITEMS.register(id + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-//  public static RegistryObject<FluidType> test_fluid_type = FluidRegistry.FLUID_TYPES.register(id, () -> new FluidType(FluidType.Properties.create()) {
+//  public static java.util.function.Supplier<Item> BUCKET = ItemRegistry.ITEMS.register(id + "_bucket", () -> new BucketItem(STILL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+//  public static java.util.function.Supplier<FluidType> test_fluid_type = FluidRegistry.FLUID_TYPES.register(id, () -> new FluidType(FluidType.Properties.create()) {
 //
 //    @Override
 //    public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
@@ -39,8 +39,7 @@ public class FluidHoneyHolder {
 //          return FLUID_FLOWING;
 //        }
 //
-//        //        @Nullable
-//        @Override
+//        //        //        @Override
 //        public ResourceLocation getOverlayTexture() {
 //          return null;
 //        }
@@ -48,8 +47,8 @@ public class FluidHoneyHolder {
 //    }
 //  });
 //
-//  private static ForgeFlowingFluid.Properties makeProperties() {
-//    return new ForgeFlowingFluid.Properties(test_fluid_type, STILL, FLOWING)
+//  private static BaseFlowingFluid.Properties makeProperties() {
+//    return new BaseFlowingFluid.Properties(test_fluid_type, STILL, FLOWING)
 //        .bucket(BUCKET)
 //        .block(BLOCK);
 //  }

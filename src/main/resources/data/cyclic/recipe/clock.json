@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iri",
+    "rqr",
+    "iri"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:nuggets/iron"
+    },
+    "r": {
+      "tag": "c:dusts/redstone"
+    },
+    "q": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:clock"
+  }
+}

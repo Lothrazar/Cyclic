@@ -17,7 +17,7 @@ public class EdibleSpecItem extends ItemBaseCyclic {
   public static ModConfigSpec.IntValue TICKS;
 
   public EdibleSpecItem(Properties properties) {
-    super(properties.rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(1).saturationMod(0).alwaysEat().build()));
+    super(properties.rarity(Rarity.EPIC).food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(1).saturationModifier(0).build()));
   }
 
   @Override

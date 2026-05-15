@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.HarvestUtil;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -173,8 +173,10 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     height = tag.getInt("height");
     directionIsUp = tag.getBoolean("directionIsUp");
     shapeIndex = tag.getInt("shapeIndex");
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
-    super.load(tag,registries);
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -184,7 +186,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     tag.putInt("height", height);
     tag.putBoolean("directionIsUp", directionIsUp);
     tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+    super.saveAdditional(tag, registries);
   }
 
   @Override
@@ -196,4 +198,10 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerHarvester(i, level, worldPosition, playerInventory, playerEntity);
   }
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

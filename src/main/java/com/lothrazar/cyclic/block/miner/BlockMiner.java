@@ -37,7 +37,7 @@ public class BlockMiner extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.MINER.get(), ScreenMiner::new);
+    // MenuScreens.register(MenuTypeRegistry.MINER.get(), ScreenMiner::new);
   }
 
   @Override

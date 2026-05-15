@@ -2,14 +2,13 @@ package com.lothrazar.cyclic.potion.effect;
 
 import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+// import net.neoforged.bus.api.Event.Result;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class FlightMayflyEffect extends CyclicMobEffect {
 
@@ -25,7 +24,7 @@ public class FlightMayflyEffect extends CyclicMobEffect {
         sp.getAbilities().flying = false;
       }
       //sync to client
-      PacketRegistry.INSTANCE.sendTo(new PacketPlayerSyncToClient(mayflyIn), sp.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+      PacketDistributor.sendToPlayer(sp, new PacketPlayerSyncToClient(mayflyIn));
     }
   }
 
@@ -38,18 +37,18 @@ public class FlightMayflyEffect extends CyclicMobEffect {
     }
   }
 
-  @Override
-  public void isPotionApplicable(MobEffectEvent.Applicable event) {
-    if (event.getEntity() instanceof Player player) {
-      if (player.isCreative()) { //no creative players should use this to fly
-        event.setResult(Result.DENY);
-      }
-    }
-    else {
-      //not a player , so deny
-      event.setResult(Result.DENY);
-    }
-  }
+//  @Override
+//  public void isPotionApplicable(MobEffectEvent.Applicable event) {
+//    if (event.getEntity() instanceof Player player) {
+//      if (player.isCreative()) { //no creative players should use this to fly
+//        event.setResult(Result.DENY);
+//      }
+//    }
+//    else {
+//      //not a player , so deny
+//      event.setResult(Result.DENY);
+//    }
+//  }
 
   @Override
   public void onPotionRemove(MobEffectEvent.Remove event) {

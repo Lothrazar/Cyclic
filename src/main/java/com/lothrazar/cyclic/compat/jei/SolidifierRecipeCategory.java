@@ -25,13 +25,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifier> {
+public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeSolidifier>> {
 
   private static final int FONT = 0xFFFFFFFF;
   private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "solidifier");
-  static final RecipeType<RecipeSolidifier> TYPE = new RecipeType<>(ID, RecipeSolidifier.class);
+  static final RecipeType<RecipeHolder<RecipeSolidifier>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
   private Font font;
@@ -58,18 +59,20 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;
   }
 
   @Override
-  public RecipeType<RecipeSolidifier> getRecipeType() {
+  public RecipeType<RecipeHolder<RecipeSolidifier>> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeSolidifier recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeSolidifier> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    var recipe = recipeHolder.value();
     ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 55, 10, FONT);
     bar.draw(ms, recipe.getEnergy().getEnergyTotal());
     progress.draw(ms, 0);
@@ -78,7 +81,8 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeSolidifie
   }
 
   @Override
-  public void setRecipe(IRecipeLayoutBuilder builder, RecipeSolidifier recipe, IFocusGroup focuses) {
+  public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeSolidifier> recipeHolder, IFocusGroup focuses) {
+    RecipeSolidifier recipe = recipeHolder.value();
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 7).addIngredients(recipe.at(0));
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 25).addIngredients(recipe.at(1));
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 43).addIngredients(recipe.at(2));

@@ -35,7 +35,7 @@ public class LeverRemote extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     BlockPos pointer = TagDataUtil.getItemStackBlockPos(stack);
     if (pointer != null) {
-      int dimensionTarget = stack.getOrCreateTag().getInt("LeverDim");
+      int dimensionTarget = net.minecraft.world.item.component.CustomData.EMPTY.copyTag().getInt("LeverDim");
       tooltip.add(Component.translatable(ChatFormatting.RED + ChatUtil.blockPosToString(pointer) + " [" + dimensionTarget + "]"));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
@@ -67,7 +67,7 @@ public class LeverRemote extends ItemBaseCyclic {
     if (world.getBlockState(pos).getBlock() instanceof LeverBlock) {
       TagDataUtil.setItemStackBlockPos(stack, pos);
       //and save dimension
-      stack.getOrCreateTag().putString("LeverDim", LevelWorldUtil.dimensionToString(player.level()));
+      net.minecraft.world.item.component.CustomData.EMPTY.copyTag().putString("LeverDim", LevelWorldUtil.dimensionToString(player.level()));
       //      UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
       if (world.isClientSide) {
         ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".saved");
@@ -97,7 +97,7 @@ public class LeverRemote extends ItemBaseCyclic {
       }
       return false;
     }
-    String dimensionTarget = stack.getOrCreateTag().getString("LeverDim");
+    String dimensionTarget = net.minecraft.world.item.component.CustomData.EMPTY.copyTag().getString("LeverDim");
     //check if we can avoid crossing dimensions
     String currentDim = LevelWorldUtil.dimensionToString(player.level());
     if (dimensionTarget.equalsIgnoreCase(currentDim)) { //same dim eh

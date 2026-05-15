@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:dead_horn_coral_fan"
+    },
+    {
+      "item": "minecraft:horn_coral_fan"
+    },
+    {
+      "item": "minecraft:dead_horn_coral_fan"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 160
+  },
+  "mix": {
+    "id": "minecraft:water",
+    "amount": 100
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:horn_coral_fan"
+  }
+}

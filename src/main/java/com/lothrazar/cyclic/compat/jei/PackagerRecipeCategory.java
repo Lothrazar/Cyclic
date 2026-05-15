@@ -18,19 +18,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
+public class PackagerRecipeCategory implements IRecipeCategory<RecipeHolder<CraftingRecipe>> {
 
-  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "packager");
-  static final RecipeType<CraftingRecipe> TYPE = new RecipeType<>(ID, CraftingRecipe.class);
+  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packager");
+  static final RecipeType<RecipeHolder<CraftingRecipe>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   Minecraft instance; // since we call on this so often for recipe validatoin, cache one copy of it for the duration
   private IDrawable gui;
   private IDrawable icon;
 
   public PackagerRecipeCategory(IGuiHelper helper) {
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/packager.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
+    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/packager.png"), 0, 0, 118, 32).setTextureSize(118, 32).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.PACKAGER.get()));
     instance = Minecraft.getInstance();
   }
@@ -45,23 +47,25 @@ public class PackagerRecipeCategory implements IRecipeCategory<CraftingRecipe> {
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;
   }
 
   @Override
-  public RecipeType<CraftingRecipe> getRecipeType() {
+  public RecipeType<RecipeHolder<CraftingRecipe>> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public boolean isHandled(CraftingRecipe recipe) {
-    return UtilPackager.isRecipeValid(recipe, instance.level.registryAccess());
+  public boolean isHandled(RecipeHolder<CraftingRecipe> recipeHolder) {
+    return UtilPackager.isRecipeValid(recipeHolder.value(), instance.level.registryAccess());
   }
 
   @Override
-  public void setRecipe(IRecipeLayoutBuilder builder, CraftingRecipe recipe, IFocusGroup focuses) {
+  public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CraftingRecipe> recipeHolder, IFocusGroup focuses) {
+    CraftingRecipe recipe = recipeHolder.value();
     if (recipe.getIngredients().size() == 0) {
       return;
     }

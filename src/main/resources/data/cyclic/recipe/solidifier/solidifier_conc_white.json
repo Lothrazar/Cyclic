@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:white_concrete_powder"
+    },
+    {
+      "item": "minecraft:white_concrete_powder"
+    },
+    {
+      "item": "minecraft:white_concrete_powder"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 40
+  },
+  "mix": {
+    "id": "minecraft:water",
+    "amount": 10
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:white_concrete"
+  }
+}

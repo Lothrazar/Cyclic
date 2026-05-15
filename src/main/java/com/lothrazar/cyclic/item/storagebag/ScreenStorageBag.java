@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.storagebag;
 import java.util.LinkedList;
 import java.util.List;
 import com.lothrazar.cyclic.gui.ScreenBase;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +10,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
+import net.minecraft.client.gui.components.Button;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
@@ -26,7 +25,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   @Override
   protected void init() {
     super.init();
-    CompoundTag nbt = this.menu.bag.getOrCreateTag();
+    CompoundTag nbt = ItemStorageBag.getCustomData(this.menu.bag);
     ToggleButton pickup = new ToggleButton(leftPos - 18, topPos + BUTTON_OFFSET_Y,
         nbt, StringTag.valueOf("pickup_mode"), StringTag.valueOf("nothing"),
         Component.translatable("item.cyclic.storage_bag.disabled.button"),
@@ -74,7 +73,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
 
   @Override
   public void render(GuiGraphics gg, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(gg);
+    super.renderBackground(gg, mouseX, mouseY, partialTicks);
     super.render(gg, mouseX, mouseY, partialTicks);
     this.renderTooltip(gg, mouseX, mouseY);
   }
@@ -90,7 +89,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     gg.blit(TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);//todo; use screenbase?
   }
 
-  private class ToggleButton extends ExtendedButton {
+  private class ToggleButton extends Button {
 
     List<Component> titles;
     List<Component> tooltips;
@@ -100,7 +99,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
     int index;
 
     public ToggleButton(int x, int y, CompoundTag nbt, StringTag key, Tag defaultValue, Component defaultTitle, Component defaultTooltip) {
-      super(x, y, 0, 20, defaultTitle, (p -> {}));
+      super(x, y, 0, 20, defaultTitle, (p -> {}), Button.DEFAULT_NARRATION);
       this.width = ScreenStorageBag.this.font.width(defaultTitle.getString()) + 8;
       index = 0;
       titles = new LinkedList<>();
@@ -125,7 +124,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
         index = 0;
       }
       this.setMessage(titles.get(index));
-      PacketRegistry.INSTANCE.sendToServer(new PacketStorageBagScreen(
+      net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketStorageBagScreen(
           ScreenStorageBag.this.menu.bag, ScreenStorageBag.this.menu.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
 

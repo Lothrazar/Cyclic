@@ -29,7 +29,7 @@ public class MilkBottle extends ItemBaseCyclic {
       CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, drink);
     }
     if (!world.isClientSide && drink.getItem() == this) {
-      entity.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
+      entity.removeAllEffects();
     }
     if (player != null) {
       player.awardStat(Stats.ITEM_USED.get(this));
@@ -51,7 +51,7 @@ public class MilkBottle extends ItemBaseCyclic {
   }
 
   @Override
-  public int getUseDuration(ItemStack st) {
+  public int getUseDuration(ItemStack st, LivingEntity entity) {
     return 34;
   }
 

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:sponge"
+    },
+    {
+      "tag": "c:dyes/magenta"
+    },
+    {
+      "item": "minecraft:sponge"
+    }
+  ],
+  "mix": {
+    "tag": "c:milk",
+    "amount": 100
+  },
+  "energy": {
+    "rfpertick": 2000,
+    "ticks": 80
+  },
+  "result": {
+    "count": 2,
+    "id": "cyclic:sponge_milk"
+  }
+}

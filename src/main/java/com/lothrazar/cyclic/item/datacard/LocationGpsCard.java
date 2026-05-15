@@ -17,10 +17,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class LocationGpsCard extends ItemBaseCyclic {
@@ -34,7 +34,7 @@ public class LocationGpsCard extends ItemBaseCyclic {
 
   @Override
 //  @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     BlockPosDim dim = getPosition(stack);
     if (dim != null) {
       tooltip.add(Component.translatable(dim.toString()).withStyle(ChatFormatting.GRAY));
@@ -66,17 +66,17 @@ public class LocationGpsCard extends ItemBaseCyclic {
     }
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
-    ItemStack held = player.getItemInHand(hand);
+    ItemStack held = player.getMainHandItem();
     TagDataUtil.setItemStackBlockPos(held, pos);
-    held.getOrCreateTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level()));
+    held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().putString(NBT_DIM, LevelWorldUtil.dimensionToString(player.level()));
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
     ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.location.saved") + ChatUtil.blockPosToString(pos));
     // fl
     Vec3 vec = context.getClickLocation();
-    held.getOrCreateTag().putDouble("hitx", vec.x - pos.getX());
-    held.getOrCreateTag().putDouble("hity", vec.y - pos.getY());
-    held.getOrCreateTag().putDouble("hitz", vec.z - pos.getZ());
+    held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().putDouble("hitx", vec.x - pos.getX());
+    held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().putDouble("hity", vec.y - pos.getY());
+    held.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().putDouble("hitz", vec.z - pos.getZ());
     return InteractionResult.SUCCESS;
   }
 
@@ -86,7 +86,7 @@ public class LocationGpsCard extends ItemBaseCyclic {
       return null;
     }
     //    this.read 
-    CompoundTag tag = item.getOrCreateTag();
+    CompoundTag tag = item.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
     item.getHoverName();
     BlockPosDim dim = new BlockPosDim(pos, tag.getString(NBT_DIM), tag);
     try {

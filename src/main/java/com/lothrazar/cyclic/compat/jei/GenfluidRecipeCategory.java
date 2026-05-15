@@ -20,13 +20,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFluid> {
+public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeGeneratorFluid>> {
 
   private static final int FONT = 0xFFFFFFFF;
   static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "generator_fluid");
-  static final RecipeType<RecipeGeneratorFluid> TYPE = new RecipeType<>(ID, RecipeGeneratorFluid.class);
+  static final RecipeType<RecipeHolder<RecipeGeneratorFluid>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
 
@@ -45,18 +46,20 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
     return icon;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public IDrawable getBackground() {
     return gui;
   }
 
   @Override
-  public RecipeType<RecipeGeneratorFluid> getRecipeType() {
+  public RecipeType<RecipeHolder<RecipeGeneratorFluid>> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeGeneratorFluid recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeGeneratorFluid> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    var recipe = recipeHolder.value();
     var font = Minecraft.getInstance().font;
     ms.drawString(font, recipe.getTicks() + " t", 60, 0, FONT);
     ms.drawString(font, recipe.getRfpertick() + " RF/t", 60, 10, FONT);
@@ -65,7 +68,8 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeGeneratorFl
   }
 
   @Override
-  public void setRecipe(IRecipeLayoutBuilder builder, RecipeGeneratorFluid recipe, IFocusGroup focuses) {
+  public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeGeneratorFluid> recipeHolder, IFocusGroup focuses) {
+    RecipeGeneratorFluid recipe = recipeHolder.value();
     List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }

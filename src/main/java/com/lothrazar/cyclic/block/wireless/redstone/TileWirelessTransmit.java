@@ -171,4 +171,10 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
   public float getThick() {
     return 0.065F;
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
 }

@@ -86,7 +86,12 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingInput, CraftingRe
 
   @Override
   public boolean recipeMatches(RecipeHolder recipeIn) {
-    return recipeIn.value().matches(this.craftMatrix, this.player.level());
+    CraftingInput craftingInput = CraftingInput.of(3, 3, java.util.List.of(
+        this.craftMatrix.getItem(0), this.craftMatrix.getItem(1), this.craftMatrix.getItem(2),
+        this.craftMatrix.getItem(3), this.craftMatrix.getItem(4), this.craftMatrix.getItem(5),
+        this.craftMatrix.getItem(6), this.craftMatrix.getItem(7), this.craftMatrix.getItem(8)
+    ));
+    return ((net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe>)recipeIn).value().matches(craftingInput, this.player.level());
   }
 
   @Override
@@ -183,11 +188,16 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingInput, CraftingRe
     if (!world.isClientSide) {
       ServerPlayer sp = (ServerPlayer) player;
       ItemStack itemstack = ItemStack.EMPTY;
-      Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, inventory, world);
+      CraftingInput craftingInput = CraftingInput.of(3, 3, java.util.List.of(
+          inventory.getItem(0), inventory.getItem(1), inventory.getItem(2),
+          inventory.getItem(3), inventory.getItem(4), inventory.getItem(5),
+          inventory.getItem(6), inventory.getItem(7), inventory.getItem(8)
+      ));
+      Optional<net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftingInput, world);
       if (optional.isPresent()) {
-        CraftingRecipe recipe = optional.get();
+        net.minecraft.world.item.crafting.RecipeHolder<CraftingRecipe> recipe = optional.get();
         if (inventoryResult.setRecipeUsed(world, sp, recipe)) {
-          itemstack = recipe.assemble(inventory, world.registryAccess());
+          itemstack = recipe.value().assemble(craftingInput, world.registryAccess());
         }
       }
       inventoryResult.setItem(0, itemstack);

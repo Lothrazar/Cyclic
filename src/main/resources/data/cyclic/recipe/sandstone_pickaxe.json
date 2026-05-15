@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    " d ",
+    " d "
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:stick"
+    },
+    "c": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:sandstone_pickaxe"
+  }
+}

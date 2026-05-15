@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pip",
+    "cbc",
+    "pip"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:target"
+    },
+    "i": {
+      "item": "minecraft:cake"
+    },
+    "b": {
+      "tag": "c:nuggets/copper"
+    },
+    "c": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "result": {
+    "id": "cyclic:generator_food"
+  }
+}

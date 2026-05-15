@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    " d ",
+    " d "
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "c": {
+      "item": "cyclic:gem_obsidian"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:crystal_pickaxe"
+  }
+}

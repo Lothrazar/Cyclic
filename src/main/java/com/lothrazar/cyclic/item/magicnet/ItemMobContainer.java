@@ -31,8 +31,8 @@ public class ItemMobContainer extends ItemBaseCyclic {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (stack.hasTag()) {
-      MutableComponent t = Component.translatable(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
+      MutableComponent t = Component.translatable(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID));
       t.withStyle(ChatFormatting.GRAY);
       tooltip.add(t);
     }
@@ -45,7 +45,7 @@ public class ItemMobContainer extends ItemBaseCyclic {
   public InteractionResult useOn(UseOnContext context) {
     Player player = context.getPlayer();
     ItemStack stack = player.getItemInHand(context.getHand());
-    if (stack.hasTag() == false) {
+    if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) == false) {
       return InteractionResult.PASS;
     }
     BlockPos pos = context.getClickedPos();
@@ -55,14 +55,14 @@ public class ItemMobContainer extends ItemBaseCyclic {
     Level world = context.getLevel();
     SoundUtil.playSound(player, SoundRegistry.MONSTER_BALL_RELEASE.get(), 0.3F, 1F);
     if (!world.isClientSide) {
-      Entity entity = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
+      Entity entity = BuiltInRegistries.ENTITY_TYPE.get(net.minecraft.resources.ResourceLocation.parse(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)))
           .create(world);
       //    entity.egg
-      entity.load(stack.getTag());
+      entity.load(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag());
       entity.setPos(pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5);
       if (world.addFreshEntity(entity)) {
         //eat up that stack
-        stack.setTag(null);
+        stack.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
         stack.shrink(1);
         if (stack.isEmpty()) {
           player.setItemInHand(context.getHand(), ItemStack.EMPTY);

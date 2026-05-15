@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "rrr",
+    "rrr"
+  ],
+  "key": {
+    "r": {
+      "tag": "c:nuggets/netherite"
+    }
+  },
+  "result": {
+    "count": 16,
+    "id": "cyclic:netherite_bars"
+  }
+}

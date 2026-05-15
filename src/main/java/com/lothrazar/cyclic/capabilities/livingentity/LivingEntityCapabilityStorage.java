@@ -26,7 +26,7 @@ public class LivingEntityCapabilityStorage {
 
   public void loadNBTData(CompoundTag compound) {
     if (compound.contains("closestAntiBeaconPosition")) {
-      closestAntiBeaconPosition = NbtUtils.readBlockPos(compound.getCompound("closestAntiBeaconPosition"));
+      closestAntiBeaconPosition = NbtUtils.readBlockPos(compound, "closestAntiBeaconPosition").orElse(null);
     }
   }
 }

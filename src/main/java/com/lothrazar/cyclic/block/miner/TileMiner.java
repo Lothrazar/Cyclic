@@ -11,7 +11,7 @@ import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -30,7 +30,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.util.FakePlayer;
@@ -110,7 +109,9 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     isCurrentlyMining = tag.getBoolean("isCurrentlyMining");
     shapeIndex = tag.getInt("shapeIndex");
     directionIsUp = tag.getBoolean("directionIsUp");
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.loadAdditional(tag,registries);
   }
@@ -226,7 +227,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     //is this valid
     BlockState targetState = level.getBlockState(targetPos);
 
-    if (targetState.destroySpeed < 0) {
+    if (targetState.getDestroySpeed(level, targetPos) < 0) {
       return false; //unbreakable 
     }
     //check the tag ignore list so modpack/datapack can filter this
@@ -259,7 +260,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     if (filter.isEmpty()) {
       return true; //ya go
     }
-    for (BlockStateMatcher m : BlockstateCard.getSavedStates(level, filter)) {
+    for (BlockStateMatcher m : BlockstateCard.getSavedStates(net.minecraft.world.item.Item.TooltipContext.of(level), filter)) {
       if (m.doesMatch(targetState)) {
         return true; // i am allowed to mine this
       }
@@ -352,4 +353,16 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
       break;
     }
   }
+
+  @Override
+  public net.neoforged.neoforge.items.IItemHandler getItemHandler(net.minecraft.core.Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public net.neoforged.neoforge.energy.IEnergyStorage getEnergyHandler(net.minecraft.core.Direction side) {
+    return energy;
+  }
+
 }

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "ggg",
+    "iii"
+  ],
+  "key": {
+    "s": {
+      "tag": "c:slimeballs"
+    },
+    "g": {
+      "item": "minecraft:repeater"
+    },
+    "i": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "cyclic:plate_launch_redstone"
+  }
+}

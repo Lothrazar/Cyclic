@@ -26,7 +26,7 @@ public class BlockPlacerFluid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.PLACER_FLUID.get(), ScreenPlacerFluid::new);
+    // MenuScreens.register(MenuTypeRegistry.PLACER_FLUID.get(), ScreenPlacerFluid::new);
   }
 
   @Override

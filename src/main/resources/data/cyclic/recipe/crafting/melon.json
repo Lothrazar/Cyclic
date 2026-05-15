@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:melon"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "minecraft:melon_slice"
+  }
+}

@@ -14,15 +14,15 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
     this.loadFacade(tag);
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
     this.saveFacade(tag);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private CompoundTag facadeState = null;

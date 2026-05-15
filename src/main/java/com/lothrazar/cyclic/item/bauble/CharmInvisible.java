@@ -27,9 +27,7 @@ public class CharmInvisible extends ItemBaseToggle {
     if (worldIn.getGameTime() % 20 == 0 && entityIn instanceof LivingEntity) {
       LivingEntity living = (LivingEntity) entityIn;
       if (living.getEffect(MobEffects.INVISIBILITY) == null) {
-        MobEffectInstance eff = new MobEffectInstance(MobEffects.INVISIBILITY, 20 * seconds, 0);
-        eff.showIcon = false;
-        eff.visible = false;
+        MobEffectInstance eff = new MobEffectInstance(MobEffects.INVISIBILITY, 20 * seconds, 0, false, false, false);
         living.addEffect(eff);
         ItemStackUtil.damageItem(living, stack);
       }

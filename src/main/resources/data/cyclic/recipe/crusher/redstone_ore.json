@@ -1,0 +1,34 @@
+{
+  "type": "cyclic:crusher",
+  "input": {
+    "tag": "c:ores/redstone"
+  },
+  "energy": {
+    "ticks": 300,
+    "rfpertick": 20
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:redstone"
+  },
+  "percent": 60,
+  "bonus": {
+    "item": "minecraft:redstone",
+    "count": 6
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "c:mod_loaded"
+        },
+        {
+          "item": "cyclic:crusher",
+          "type": "c:item_exists"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

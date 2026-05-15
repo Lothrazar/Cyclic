@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "key": {
+    "c": {
+      "tag": "c:nuggets/copper"
+    },
+    "b": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    },
+    "a": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:battery"
+  }
+}

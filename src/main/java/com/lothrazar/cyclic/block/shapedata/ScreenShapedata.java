@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -39,11 +38,11 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
       ButtonMachine btnShape = addRenderableWidget(new ButtonMachine(x, y, width, 20,
           shape.name(), (p) -> {
             //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-            PacketRegistry.INSTANCE.sendToServer(
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(
                 new PacketTileData(Fields.COMMAND.ordinal(),
                     shape.ordinal(), menu.tile.getBlockPos()));
           }));
-      btnShape.setTooltip("block.cyclic.computer_shape.command");
+      btnShape.setTooltip(net.minecraft.client.gui.components.Tooltip.create(net.minecraft.network.chat.Component.translatable("block.cyclic.computer_shape.command")));
       map.put(shape, btnShape);
       y += 20;
       //
@@ -56,7 +55,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

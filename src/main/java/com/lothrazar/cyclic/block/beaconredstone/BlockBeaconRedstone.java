@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,11 +20,6 @@ public class BlockBeaconRedstone extends BlockCyclic {
 
   public BlockBeaconRedstone(Properties properties) {
     super(properties.randomTicks().strength(0.7F).noOcclusion());
-  }
-
-  @Override
-  public float[] getBeaconColorMultiplier(BlockState state, LevelReader level, BlockPos pos, BlockPos beaconPos) {
-    return COLOR;
   }
 
   @Override

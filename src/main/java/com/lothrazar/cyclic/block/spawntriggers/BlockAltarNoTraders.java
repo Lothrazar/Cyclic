@@ -9,7 +9,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -64,14 +63,11 @@ public class BlockAltarNoTraders extends BlockCyclic implements SimpleWaterlogge
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-    if (hand == InteractionHand.MAIN_HAND) { //  && player.getItemInHand(hand).isEmpty()
-      world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
+  public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
+    world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
       SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
       ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
-      return InteractionResult.SUCCESS;
-    }
-    return super.use(state, world, pos, player, hand, result);
+      return net.minecraft.world.InteractionResult.SUCCESS;
   }
 
   @Override

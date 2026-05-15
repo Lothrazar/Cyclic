@@ -14,7 +14,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
+// import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
 import com.lothrazar.cyclic.block.beaconredstone.RenderBeaconRedstone;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
@@ -44,8 +44,6 @@ import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
-import com.lothrazar.cyclic.event.ClientInputEvents;
-import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
@@ -138,7 +136,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
     event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
-    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
+//    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
     //cable renderers
     event.registerBlockEntityRenderer(TileRegistry.ENERGY_PIPE.get(), RenderCableFacade::new);
@@ -165,8 +163,67 @@ public class ClientRegistryCyclic {
 
   @SubscribeEvent
   public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-    //    net.minecraftforge.client.ClientRegistry.registerKeyBinding(CAKE);
+    //    net.neoforged.neoforge.client.ClientRegistry.registerKeyBinding(CAKE);
     event.register(CAKE);
+  }
+
+  @SubscribeEvent
+  public static void onRegisterMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
+    event.register(MenuTypeRegistry.STORAGE_BAG.get(), com.lothrazar.cyclic.item.storagebag.ScreenStorageBag::new);
+    event.register(MenuTypeRegistry.CRAFTING_BAG.get(), com.lothrazar.cyclic.item.crafting.CraftingBagScreen::new);
+    event.register(MenuTypeRegistry.CRAFTING_STICK.get(), com.lothrazar.cyclic.item.crafting.simple.CraftingStickScreen::new);
+    event.register(MenuTypeRegistry.FILTER_DATA.get(), com.lothrazar.cyclic.item.datacard.filter.ScreenFilterCard::new);
+    event.register(MenuTypeRegistry.DROPPER.get(), com.lothrazar.cyclic.block.dropper.ScreenDropper::new);
+    event.register(MenuTypeRegistry.FISHER.get(), com.lothrazar.cyclic.block.fishing.ScreenFisher::new);
+    event.register(MenuTypeRegistry.DETECTOR_ITEM.get(), com.lothrazar.cyclic.block.detectoritem.ScreenDetectorItem::new);
+    event.register(MenuTypeRegistry.GENERATOR_DROPS.get(), com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops::new);
+    event.register(MenuTypeRegistry.BREAKER.get(), com.lothrazar.cyclic.block.breaker.ScreenBreaker::new);
+    event.register(MenuTypeRegistry.GENERATOR_FOOD.get(), com.lothrazar.cyclic.block.generatorfood.ScreenGeneratorFood::new);
+    event.register(MenuTypeRegistry.SOLIDIFIER.get(), com.lothrazar.cyclic.block.solidifier.ScreenSolidifier::new);
+    event.register(MenuTypeRegistry.HARVESTER.get(), com.lothrazar.cyclic.block.harvester.ScreenHarvester::new);
+    event.register(MenuTypeRegistry.DETECTOR_ENTITY.get(), com.lothrazar.cyclic.block.detectorentity.ScreenDetector::new);
+    event.register(MenuTypeRegistry.STRUCTURE.get(), com.lothrazar.cyclic.block.shapebuilder.ScreenStructure::new);
+    event.register(MenuTypeRegistry.CRATE_MINI.get(), com.lothrazar.cyclic.block.cratemini.ScreenCrateMini::new);
+    event.register(MenuTypeRegistry.COLLECTOR_FLUID.get(), com.lothrazar.cyclic.block.collectfluid.ScreenFluidCollect::new);
+    event.register(MenuTypeRegistry.CRUSHER.get(), com.lothrazar.cyclic.block.crusher.ScreenCrusher::new);
+    event.register(MenuTypeRegistry.PLACER.get(), com.lothrazar.cyclic.block.placer.ScreenPlacer::new);
+    event.register(MenuTypeRegistry.MELTER.get(), com.lothrazar.cyclic.block.melter.ScreenMelter::new);
+    event.register(MenuTypeRegistry.ANVIL_VOID.get(), com.lothrazar.cyclic.block.anvilvoid.ScreenAnvilVoid::new);
+    event.register(MenuTypeRegistry.TELEPORT.get(), com.lothrazar.cyclic.block.tp.ScreenTeleport::new);
+    event.register(MenuTypeRegistry.USER.get(), com.lothrazar.cyclic.block.user.ScreenUser::new);
+    event.register(MenuTypeRegistry.EXPERIENCE_PYLON.get(), com.lothrazar.cyclic.block.expcollect.ScreenExpPylon::new);
+    event.register(MenuTypeRegistry.UNCRAFTER.get(), com.lothrazar.cyclic.block.uncrafter.ScreenUncraft::new);
+    event.register(MenuTypeRegistry.GENERATOR_FLUID.get(), com.lothrazar.cyclic.block.generatorfluid.ScreenGeneratorFluid::new);
+    event.register(MenuTypeRegistry.DISENCHANTER.get(), com.lothrazar.cyclic.block.disenchant.ScreenDisenchant::new);
+    event.register(MenuTypeRegistry.LASER.get(), com.lothrazar.cyclic.block.laser.ScreenLaser::new);
+    event.register(MenuTypeRegistry.GENERATOR_FUEL.get(), com.lothrazar.cyclic.block.generatorfuel.ScreenGeneratorFuel::new);
+    event.register(MenuTypeRegistry.CRATE.get(), com.lothrazar.cyclic.block.crate.ScreenCrate::new);
+    event.register(MenuTypeRegistry.WORKBENCH.get(), com.lothrazar.cyclic.block.workbench.ScreenWorkbench::new);
+    event.register(MenuTypeRegistry.SOUND_RECORDER.get(), com.lothrazar.cyclic.block.soundrecord.ScreenSoundRecorder::new);
+    event.register(MenuTypeRegistry.FLUID_PIPE.get(), com.lothrazar.cyclic.block.cable.fluid.ScreenCableFluid::new);
+    event.register(MenuTypeRegistry.ITEM_PIPE.get(), com.lothrazar.cyclic.block.cable.item.ScreenCableItem::new);
+    event.register(MenuTypeRegistry.WIRELESS_ENERGY.get(), com.lothrazar.cyclic.block.wireless.energy.ScreenWirelessEnergy::new);
+    event.register(MenuTypeRegistry.WIRELESS_TRANSMITTER.get(), com.lothrazar.cyclic.block.wireless.redstone.ScreenTransmit::new);
+    event.register(MenuTypeRegistry.WIRELESS_FLUID.get(), com.lothrazar.cyclic.block.wireless.fluid.ScreenWirelessFluid::new);
+    event.register(MenuTypeRegistry.WIRELESS_ITEM.get(), com.lothrazar.cyclic.block.wireless.item.ScreenWirelessItem::new);
+    event.register(MenuTypeRegistry.SCREEN.get(), com.lothrazar.cyclic.block.screen.ScreenScreentext::new);
+    event.register(MenuTypeRegistry.PACKAGER.get(), com.lothrazar.cyclic.block.packager.ScreenPackager::new);
+    event.register(MenuTypeRegistry.FORESTER.get(), com.lothrazar.cyclic.block.forester.ScreenForester::new);
+    event.register(MenuTypeRegistry.FAN.get(), com.lothrazar.cyclic.block.fan.ScreenFan::new);
+    event.register(MenuTypeRegistry.ANVIL_MAGMA.get(), com.lothrazar.cyclic.block.anvilmagma.ScreenAnvilMagma::new);
+    event.register(MenuTypeRegistry.CRAFTER.get(), com.lothrazar.cyclic.block.crafter.ScreenCrafter::new);
+    event.register(MenuTypeRegistry.BATTERY.get(), com.lothrazar.cyclic.block.battery.ScreenBattery::new);
+    event.register(MenuTypeRegistry.COLLECTOR.get(), com.lothrazar.cyclic.block.collectitem.ScreenItemCollector::new);
+    event.register(MenuTypeRegistry.BEACON.get(), com.lothrazar.cyclic.block.beaconpotion.ScreenPotion::new);
+    event.register(MenuTypeRegistry.ANVIL.get(), com.lothrazar.cyclic.block.anvil.ScreenAnvil::new);
+    event.register(MenuTypeRegistry.PEAT_FARM.get(), com.lothrazar.cyclic.block.peatfarm.ScreenPeatFarm::new);
+    event.register(MenuTypeRegistry.PLACER_FLUID.get(), com.lothrazar.cyclic.block.placerfluid.ScreenPlacerFluid::new);
+    event.register(MenuTypeRegistry.BATTERY_CLAY.get(), com.lothrazar.cyclic.block.batteryclay.ScreenClayBattery::new);
+    event.register(MenuTypeRegistry.CLOCK.get(), com.lothrazar.cyclic.block.clock.ScreenClock::new);
+    event.register(MenuTypeRegistry.GENERATOR_SOLAR.get(), com.lothrazar.cyclic.block.generatorsolar.ScreenGeneratorSolar::new);
+    event.register(MenuTypeRegistry.SOUND_PLAYER.get(), com.lothrazar.cyclic.block.soundplay.ScreenSoundPlayer::new);
+    event.register(MenuTypeRegistry.COMPUTER_SHAPE.get(), com.lothrazar.cyclic.block.shapedata.ScreenShapedata::new);
+    event.register(MenuTypeRegistry.MINER.get(), com.lothrazar.cyclic.block.miner.ScreenMiner::new);
   }
 
   @OnlyIn(Dist.CLIENT)
@@ -188,12 +245,12 @@ public class ClientRegistryCyclic {
     }, ItemRegistry.STORAGE_BAG.get());
     //
     event.register((stack, tintIndex) -> {
-      if (stack.hasTag() && tintIndex > 0) {
+      if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && tintIndex > 0) {
         //what entity is inside
-        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
+        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
         //pull the colours from the egg
         for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
-          if (spawneggitem.getType(null) == thing) {
+          if (spawneggitem.getType(spawneggitem.getDefaultInstance()) == thing) {
             return spawneggitem.getColor(tintIndex - 1);
           }
         }
