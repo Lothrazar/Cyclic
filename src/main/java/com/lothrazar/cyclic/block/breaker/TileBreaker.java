@@ -43,7 +43,7 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem() == ItemRegistry.STATECARD.get();
+      return stack.getItem() == ItemRegistry.BLOCKSTATE_DATA.get();
     }
   };
 

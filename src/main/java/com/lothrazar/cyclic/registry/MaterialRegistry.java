@@ -71,7 +71,7 @@ public class MaterialRegistry {
         25, // enchantment value (from ArmorMaterials.GOLD)
         SoundEvents.ARMOR_EQUIP_DIAMOND,
         () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get()),
-        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "gem_obsidian"))),
+        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "crystal"))),
         6.0F, // toughness
         0.2F  // knockback resistance (Netherite is 0.1)
     ));

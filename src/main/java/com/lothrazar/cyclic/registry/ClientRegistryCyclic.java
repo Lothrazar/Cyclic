@@ -67,6 +67,9 @@ import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import com.lothrazar.cyclic.render.ShieldBlockEntityWithoutLevelRenderer;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
@@ -78,7 +81,6 @@ import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 @EventBusSubscriber(modid = ModCyclic.MODID)
 public class ClientRegistryCyclic {
 
-  //TODO: refactor split into keyboard registry, overlay registry, other renderers below 
   public static final KeyMapping CAKE = new KeyMapping("key." + ModCyclic.MODID + ".cake", new IKeyConflictContext() {
 
     @Override
@@ -157,7 +159,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.FLUID_PIPE.get(), RenderCableFacade::new);
   }
 
-  @SuppressWarnings("deprecation") //shield itemproperty
+  @SuppressWarnings("deprecation")
   private static void initShields() {
     //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
     ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
@@ -200,6 +202,14 @@ public class ClientRegistryCyclic {
       @Override public ResourceLocation getFlowingTexture() { return FluidHoneyHolder.FLUID_FLOWING; }
       @Override public int getTintColor() { return FluidHoneyHolder.COLOR | 0xFF000000; }
     }, FluidHoneyHolder.TYPE.get());
+    IClientItemExtensions shieldExt = new IClientItemExtensions() {
+      @Override
+      public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+        return ShieldBlockEntityWithoutLevelRenderer.instance;
+      }
+    };
+    event.registerItem(shieldExt, ItemRegistry.SHIELD_WOOD.get(), ItemRegistry.SHIELD_LEATHER.get(),
+        ItemRegistry.SHIELD_FLINT.get(), ItemRegistry.SHIELD_BONE.get(), ItemRegistry.SHIELD_OBSIDIAN.get());
   }
 
   @SubscribeEvent

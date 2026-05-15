@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.cable;
 
 import java.util.Map;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.facade.IBlockFacade;
 import com.lothrazar.cyclic.data.DataTags;
@@ -193,10 +194,12 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
       if (player.isCrouching()) {
         switch (status) {
           case BLOCKED:
+            ModCyclic.LOGGER.debug("Crouching set to NONE from blocked");
             newState = state.setValue(prop, EnumConnectType.NONE);
             updatePost = true;
           break;
           default: //anything to blocked
+            ModCyclic.LOGGER.debug("Crouching set  BLOCKED");
             newState = state.setValue(prop, EnumConnectType.BLOCKED);
           break;
         }
@@ -204,17 +207,20 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
       else { // non-crouching flow
         switch (status) {
           case BLOCKED:
+            ModCyclic.LOGGER.debug("NOT Crouching from  BLOCKED into NONE");
             newState = state.setValue(prop, EnumConnectType.NONE);
             updatePost = true;
           break;
           case INVENTORY: // inventory normal
+            ModCyclic.LOGGER.debug("NOT Crouching from  INVENTORY into CABLE");
             newState = state.setValue(prop, EnumConnectType.CABLE);//to extract
             updatePost = true;
           break;
           case NONE: // no connection
           //if its none stay teh same 
           break;
-          case CABLE: // extract 
+          case CABLE: // extract
+            ModCyclic.LOGGER.debug("NOT Crouching from  CABLE into INVENTORY");
             newState = state.setValue(prop, EnumConnectType.INVENTORY);
           break;
         }

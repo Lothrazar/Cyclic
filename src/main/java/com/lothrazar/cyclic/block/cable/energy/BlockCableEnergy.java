@@ -80,9 +80,9 @@ public class BlockCableEnergy extends CableBase {
       //      updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (true) { // isEnergy() stub - always connect
+    if (world instanceof Level && CapabilityFixer.isEnergy(facing, (Level) world, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
-      if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
+      if (world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
         ((Level) world).setBlockAndUpdate(currentPos, with);
       }

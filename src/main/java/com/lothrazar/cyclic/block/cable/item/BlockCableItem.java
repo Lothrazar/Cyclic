@@ -110,9 +110,9 @@ public class BlockCableItem extends CableBase {
       //  updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (true) { // isItem() stub
+    if (world instanceof Level && CapabilityFixer.isItem(facing, (Level) world, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
-      if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
+      if (world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
         ((Level) world).setBlockAndUpdate(currentPos, with);
       }

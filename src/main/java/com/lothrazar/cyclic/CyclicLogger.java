@@ -26,4 +26,8 @@ public class CyclicLogger {
       logger.info(string);
     }
   }
+
+  public void debug(String string , Object... e) {
+    logger.debug(string, e);
+  }
 }

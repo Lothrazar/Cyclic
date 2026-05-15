@@ -71,7 +71,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      if (slot == SLOT_FILTER && stack.getItem() != ItemRegistry.STATECARD.get()) {
+      if (slot == SLOT_FILTER && stack.getItem() != ItemRegistry.BLOCKSTATE_DATA.get()) {
         return false;
       }
       return true;
