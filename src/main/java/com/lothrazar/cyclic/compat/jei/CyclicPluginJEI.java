@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.compat.jei;
 
-import java.util.List;
 import java.util.Objects;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.crusher.ContainerCrusher;
@@ -37,7 +36,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -86,12 +84,12 @@ public class CyclicPluginJEI implements IModPlugin {
     ClientLevel world = Objects.requireNonNull(Minecraft.getInstance().level);
     RecipeManager rm = world.getRecipeManager();
     registry.addRecipes(RecipeTypes.CRAFTING, rm.getAllRecipesFor(RecipeType.CRAFTING));
-    registry.addRecipes(MelterRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.MELTER.get())));
-    registry.addRecipes(SolidifierRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.SOLID.get())));
-    registry.addRecipes(GenitemRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get())));
-    registry.addRecipes(GenfluidRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get())));
-    registry.addRecipes(CrusherRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get())));
-    registry.addRecipes(PackagerRecipeCategory.TYPE, List.copyOf(rm.getAllRecipesFor(RecipeType.CRAFTING)));
+    registry.addRecipes(MelterRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.MELTER.get()));
+    registry.addRecipes(SolidifierRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.SOLID.get()));
+    registry.addRecipes(GenitemRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get()));
+    registry.addRecipes(GenfluidRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.GENERATOR_FLUID.get()));
+    registry.addRecipes(CrusherRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get()));
+    registry.addRecipes(PackagerRecipeCategory.TYPE, rm.getAllRecipesFor(RecipeType.CRAFTING));
     for (var item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());
       if (!st.isEmpty() && (st.getItem() instanceof BucketItem == false)) {

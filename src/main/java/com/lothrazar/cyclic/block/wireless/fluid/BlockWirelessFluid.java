@@ -47,7 +47,7 @@ public class BlockWirelessFluid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.WIRELESS_FLUID.get(), ScreenWirelessFluid::new);
+    // MenuScreens.register(MenuTypeRegistry.WIRELESS_FLUID.get(), ScreenWirelessFluid::new);
   }
 
   @Override

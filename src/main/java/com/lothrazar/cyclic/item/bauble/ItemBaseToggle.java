@@ -11,9 +11,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.Level;
 
 
 public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
@@ -42,19 +46,29 @@ public class ItemBaseToggle extends ItemBaseCyclic implements IHasClickToggle {
   }
 
   @Override
+  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    ItemStack itemstack = player.getItemInHand(hand);
+    if (!level.isClientSide) {
+      this.toggle(player, itemstack);
+    }
+    return InteractionResultHolder.success(itemstack);
+  }
+
+  @Override
   public void toggle(Player player, ItemStack held) {
-    CompoundTag tag = held.getOrCreateTag();
+    CustomData customData = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+    CompoundTag tag = customData.copyTag();
     tag.putInt(NBT_STATUS, (tag.getInt(NBT_STATUS) + 1) % 2);
-    held.setTag(tag);
+    held.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
   }
 
   @Override
   public boolean isOn(ItemStack held) {
-    if (held.getTag() == null) {
-      return false;
+    CustomData customData = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+    if (customData.isEmpty() || !customData.copyTag().contains(NBT_STATUS)) {
+      return true; // Default to ON for newly crafted items
     }
-    return held.getTag().getInt(NBT_STATUS) == 0; //its flipped as 0 on, 1 off becuase! because we want teh default to be ON. so player can craft and use right away. 
-    //aka pickup and use instantly.  and then turning it off is optional later
+    return customData.copyTag().getInt(NBT_STATUS) == 0; // 0 is ON, 1 is OFF
   }
 
   @Override

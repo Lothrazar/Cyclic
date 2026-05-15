@@ -101,22 +101,22 @@ public class FluidHelpers {
     BlockState targetState = level.getBlockState(posTarget);
     if (targetState.getBlock() == Blocks.CAULDRON) {
       //cauldron is hardcoded mojang with two fluids
-      FluidStack simulate = tank.drain(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
+      FluidStack simulate = tank.drain(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simulate.getAmount() == FluidAttributes.BUCKET_VOLUME) {
         //we are able to fill the tank
         if (level.setBlock(posTarget, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3), 3)) {
           //we filled the cauldron, so now drain with execute
-          tank.drain(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
+          tank.drain(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
           return true;
         }
       }
       //try the same thing with lava
-      simulate = tank.drain(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
+      simulate = tank.drain(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simulate.getAmount() == FluidAttributes.BUCKET_VOLUME) {
         //we are able to fill the tank
         if (level.setBlock(posTarget, Blocks.LAVA_CAULDRON.defaultBlockState(), 3)) {
           //we filled the cauldron, so now drain with execute
-          tank.drain(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
+          tank.drain(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
           return true;
         }
       }
@@ -145,33 +145,33 @@ public class FluidHelpers {
     FluidState fluidState = level.getFluidState(posTarget);
     if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
       //for waterlogged it is hardcoded to water
-      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      int simFill = tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simFill == FluidAttributes.BUCKET_VOLUME
           && level.setBlockAndUpdate(posTarget, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
-        tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
       }
     }
     else if (targetState.getBlock() == Blocks.WATER_CAULDRON && targetState.getValue(LayeredCauldronBlock.LEVEL) >= 3) {
-      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      int simFill = tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simFill == FluidAttributes.BUCKET_VOLUME
           && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
-        tank.fill(new FluidStack(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
       }
     }
     else if (targetState.getBlock() == Blocks.LAVA_CAULDRON) {
       //copypasta of water cauldron code
-      int simFill = tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      int simFill = tank.fill(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simFill == FluidAttributes.BUCKET_VOLUME
           && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
-        tank.fill(new FluidStack(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        tank.fill(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
       }
     }
     else if (fluidState != null && fluidState.isSource() && fluidState.getType() != null) { // from ze world
       //not just water. any fluid source block
-      int simFill = tank.fill(new FluidStack(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAttributes.BUCKET_VOLUME), FluidAction.SIMULATE);
+      int simFill = tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
       if (simFill == FluidAttributes.BUCKET_VOLUME
           && level.setBlockAndUpdate(posTarget, Blocks.AIR.defaultBlockState())) {
-        tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), FluidAction.EXECUTE);
+        tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
       }
     }
   }

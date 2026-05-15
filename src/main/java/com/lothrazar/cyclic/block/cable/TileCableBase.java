@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.HolderLookup;
 
 public abstract class TileCableBase extends TileBlockEntityCyclic implements ITileFacade {
 
@@ -14,15 +15,15 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     this.loadFacade(tag);
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     this.saveFacade(tag);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private CompoundTag facadeState = null;

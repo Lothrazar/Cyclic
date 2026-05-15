@@ -1,18 +1,30 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketTileInventoryToClient implements PacketFlib {
+public class PacketTileInventoryToClient implements CustomPacketPayload {
+
+  public static final CustomPacketPayload.Type<PacketTileInventoryToClient> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_tile_inventory_to_client"));
+
+  public static final StreamCodec<RegistryFriendlyByteBuf, PacketTileInventoryToClient> STREAM_CODEC = StreamCodec.of(PacketTileInventoryToClient::encode, PacketTileInventoryToClient::decode);
+
+
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private BlockPos blockPos;
   private int slot;
@@ -33,10 +45,10 @@ public class PacketTileInventoryToClient implements PacketFlib {
   public PacketTileInventoryToClient() {}
 
   @SuppressWarnings("unused")
-  public static void handle(PacketTileInventoryToClient message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
+  public static void handle(PacketTileInventoryToClient message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
       if (Minecraft.getInstance().level == null) {
-        message.done(ctx);
+        
         return;
       }
       BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(message.blockPos);
@@ -59,22 +71,22 @@ public class PacketTileInventoryToClient implements PacketFlib {
 //        });
       }
     });
-    message.done(ctx);
+    
   }
 
-  public static PacketTileInventoryToClient decode(FriendlyByteBuf buf) {
+  public static PacketTileInventoryToClient decode(RegistryFriendlyByteBuf buf) {
     PacketTileInventoryToClient p = new PacketTileInventoryToClient();
     p.blockPos = buf.readBlockPos();
     p.slot = buf.readInt();
-    p.itemStack = buf.readItem();
+    p.itemStack = ItemStack.STREAM_CODEC.decode(buf);
     p.type = buf.readEnum(SyncPacketType.class);
     return p;
   }
 
-  public static void encode(PacketTileInventoryToClient msg, FriendlyByteBuf buf) {
+  public static void encode(RegistryFriendlyByteBuf buf, PacketTileInventoryToClient msg) {
     buf.writeBlockPos(msg.blockPos);
     buf.writeInt(msg.slot);
-    buf.writeItem(msg.itemStack);
+    ItemStack.STREAM_CODEC.encode(buf, msg.itemStack);
     buf.writeEnum(msg.type);
   }
 }

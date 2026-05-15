@@ -1,11 +1,8 @@
 package com.lothrazar.cyclic.block.tp;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.library.core.BlockPosDim;
-import com.lothrazar.library.dim.DimensionTransit;
 import com.lothrazar.library.util.LevelWorldUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,7 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -77,7 +73,7 @@ public class BlockTeleport extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.TELEPORT.get(), ScreenTeleport::new);
+    // MenuScreens.register(MenuTypeRegistry.TELEPORT.get(), ScreenTeleport::new);
   }
 
   @Override

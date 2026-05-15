@@ -8,11 +8,8 @@ import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidWaxHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 

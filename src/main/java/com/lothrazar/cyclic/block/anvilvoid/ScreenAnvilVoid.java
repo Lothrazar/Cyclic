@@ -33,7 +33,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     btnRedstone.onValueUpdate(menu.tile);

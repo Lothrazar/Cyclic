@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rlr",
+    "gqg",
+    "hhh"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:quartz"
+    },
+    "g": {
+      "tag": "c:glass/colorless"
+    },
+    "r": {
+      "tag": "c:storage_blocks/lapis"
+    },
+    "h": {
+      "item": "cyclic:obsidian_pressure_plate"
+    },
+    "q": {
+      "tag": "c:storage_blocks/cobblestone"
+    }
+  },
+  "result": {
+    "id": "cyclic:solidifier"
+  }
+}

@@ -23,16 +23,28 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.util.HarvestUtil;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketHarvesting extends PacketFlib {
+public class PacketHarvesting implements CustomPacketPayload {
+
+  public static final CustomPacketPayload.Type<PacketHarvesting> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_harvesting"));
+
+  public static final StreamCodec<RegistryFriendlyByteBuf, PacketHarvesting> STREAM_CODEC = StreamCodec.of(PacketHarvesting::encode, PacketHarvesting::decode);
+
+
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   BlockPos pos;
   int radius;
@@ -42,12 +54,12 @@ public class PacketHarvesting extends PacketFlib {
     this.radius = radius;
   }
 
-  public static PacketHarvesting decode(FriendlyByteBuf buf) {
+  public static PacketHarvesting decode(RegistryFriendlyByteBuf buf) {
     CompoundTag tags = buf.readNbt();
     return new PacketHarvesting(new BlockPos(tags.getInt("x"), tags.getInt("y"), tags.getInt("z")), buf.readInt());
   }
 
-  public static void encode(PacketHarvesting msg, FriendlyByteBuf buf) {
+  public static void encode(RegistryFriendlyByteBuf buf, PacketHarvesting msg) {
     CompoundTag tags = new CompoundTag();
     tags.putInt("x", msg.pos.getX());
     tags.putInt("y", msg.pos.getY());
@@ -56,11 +68,11 @@ public class PacketHarvesting extends PacketFlib {
     buf.writeInt(msg.radius);
   }
 
-  public static void handle(PacketHarvesting message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer sender = ctx.get().getSender();
+  public static void handle(PacketHarvesting message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer sender = (ServerPlayer) ctx.player();
       HarvestUtil.harvestShape(sender.level(), message.pos, message.radius);
     });
-    message.done(ctx);
+    
   }
 }

@@ -74,6 +74,6 @@ public class BlockSolidifier extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.SOLIDIFIER.get(), ScreenSolidifier::new);
+    // MenuScreens.register(MenuTypeRegistry.SOLIDIFIER.get(), ScreenSolidifier::new);
   }
 }

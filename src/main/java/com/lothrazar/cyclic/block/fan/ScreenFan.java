@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenFan extends ScreenBase<ContainerFan> {
 
@@ -36,19 +37,19 @@ public class ScreenFan extends ScreenBase<ContainerFan> {
     y = topPos + 30;
     GuiSliderInteger speedsl = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, TileFan.MAX_SPEED, menu.tile.getField(f)));
-    speedsl.setTooltip("cyclic.fan.speed");
+    speedsl.setTooltip(Tooltip.create(Component.translatable("cyclic.fan.speed")));
     //    
     f = TileFan.Fields.RANGE.ordinal();
     x = leftPos + 8;
     y = topPos + 54;
     GuiSliderInteger rangesl = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, TileFan.MAX_RANGE, menu.tile.getField(f)));
-    rangesl.setTooltip("cyclic.fan.range");
+    rangesl.setTooltip(Tooltip.create(Component.translatable("cyclic.fan.range")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

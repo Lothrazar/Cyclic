@@ -37,6 +37,6 @@ public class BlockUncraft extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.UNCRAFTER.get(), ScreenUncraft::new);
+    // MenuScreens.register(MenuTypeRegistry.UNCRAFTER.get(), ScreenUncraft::new);
   }
 }

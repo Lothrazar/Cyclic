@@ -9,6 +9,7 @@ import com.lothrazar.library.core.Const;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
 
@@ -48,18 +49,18 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
     f = TileItemCollector.Fields.HEIGHT.ordinal();
     heightslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, TileItemCollector.Fields.HEIGHT.ordinal(), menu.tile.getBlockPos(),
         0, TileItemCollector.MAX_HEIGHT, menu.tile.getField(f)));
-    heightslider.setTooltip("buildertype.height.tooltip");
+    heightslider.setTooltip(Tooltip.create(Component.translatable("buildertype.height.tooltip")));
     //then size
     f = TileItemCollector.Fields.SIZE.ordinal();
     y += h + 4;
     sizeSlider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, TileItemCollector.Fields.SIZE.ordinal(),
         menu.tile.getBlockPos(), 0, TileItemCollector.MAX_SIZE, menu.tile.getField(f)));
-    sizeSlider.setTooltip("buildertype.size.tooltip");
+    sizeSlider.setTooltip(Tooltip.create(Component.translatable("buildertype.size.tooltip")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

@@ -25,13 +25,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
+public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeMelter>> {
 
   private static final int FONT = 0xFFFFFFFF;
   private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "melter");
-  static final RecipeType<RecipeMelter> TYPE = new RecipeType<>(ID, RecipeMelter.class);
+  static final RecipeType<RecipeHolder<RecipeMelter>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
   private Font font;
@@ -59,17 +60,24 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   }
 
   @Override
-  public IDrawable getBackground() {
-    return gui;
+  public int getWidth() {
+    return gui.getWidth();
   }
 
   @Override
-  public RecipeType<RecipeMelter> getRecipeType() {
+  public int getHeight() {
+    return gui.getHeight();
+  }
+
+  @Override
+  public RecipeType<RecipeHolder<RecipeMelter>> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeMelter recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeMelter> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    gui.draw(ms, 0, 0);
+    var recipe = recipeHolder.value();
     ms.drawString(font, recipe.getEnergy().getRfPertick() + " RF/t", 58, 9, FONT);
     bar.draw(ms, recipe.getEnergy().getEnergyTotal());
     progress.draw(ms, 0);
@@ -78,7 +86,8 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeMelter> {
   }
 
   @Override
-  public void setRecipe(IRecipeLayoutBuilder builder, RecipeMelter recipe, IFocusGroup focuses) {
+  public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeMelter> recipeHolder, IFocusGroup focuses) {
+    RecipeMelter recipe = recipeHolder.value();
     builder.addSlot(RecipeIngredientRole.INPUT, 4, 19).addIngredients(recipe.at(0));
     builder.addSlot(RecipeIngredientRole.INPUT, 22, 19).addIngredients(recipe.at(1));
     List<FluidStack> matchingFluids = List.of(recipe.getRecipeFluid());

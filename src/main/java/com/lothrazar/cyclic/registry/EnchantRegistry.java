@@ -1,63 +1,46 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
-import com.lothrazar.cyclic.enchant.BeekeeperEnchant;
-import com.lothrazar.cyclic.enchant.BeheadingEnchant;
-import com.lothrazar.cyclic.enchant.DisarmEnchant;
-import com.lothrazar.cyclic.enchant.EnderPearlEnchant;
-import com.lothrazar.cyclic.enchant.ExcavationEnchant;
-import com.lothrazar.cyclic.enchant.GloomCurseEnchant;
-import com.lothrazar.cyclic.enchant.GrowthEnchant;
-import com.lothrazar.cyclic.enchant.LastStandEnchant;
-import com.lothrazar.cyclic.enchant.LifeLeechEnchant;
-import com.lothrazar.cyclic.enchant.MagnetEnchant;
-import com.lothrazar.cyclic.enchant.MultiBowEnchant;
-import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
-import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
-import com.lothrazar.cyclic.enchant.ReachEnchant;
-import com.lothrazar.cyclic.enchant.SteadyEnchant;
-import com.lothrazar.cyclic.enchant.StepEnchant;
-import com.lothrazar.cyclic.enchant.TravellerEnchant;
-import com.lothrazar.cyclic.enchant.VenomEnchant;
-import com.lothrazar.cyclic.enchant.XpEnchant;
-import com.lothrazar.library.enchant.EnchantmentFlib;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
-
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
 public class EnchantRegistry {
 
-  public static final DeferredRegister ENCHANTMENTS  = DeferredRegister.create(Registries.ENCHANTMENT, ModCyclic.MODID);
+  public static final ResourceKey<Enchantment> AUTO_SMELT = key("auto_smelt");
+  public static final ResourceKey<Enchantment> BEEKEEPER = key("beekeeper");
+  public static final ResourceKey<Enchantment> BEHEADING = key("beheading");
+  public static final ResourceKey<Enchantment> DISARM = key("disarm");
+  public static final ResourceKey<Enchantment> PEARL = key("ender");
+  public static final ResourceKey<Enchantment> EXCAVATE = key("excavate");
+  public static final ResourceKey<Enchantment> CURSE = key("curse");
+  public static final ResourceKey<Enchantment> GROWTH = key("growth");
+  public static final ResourceKey<Enchantment> STAND = key("laststand");
+  public static final ResourceKey<Enchantment> LIFELEECH = key("life_leech");
+  public static final ResourceKey<Enchantment> MAGNET = key("magnet");
+  public static final ResourceKey<Enchantment> MULTIBOW = key("multishot");
+  public static final ResourceKey<Enchantment> LAUNCH = key("launch");
+  public static final ResourceKey<Enchantment> QUICKDRAW = key("quickshot");
+  public static final ResourceKey<Enchantment> REACH = key("reach");
+  public static final ResourceKey<Enchantment> STEADY = key("steady");
+  public static final ResourceKey<Enchantment> STEP = key("step");
+  public static final ResourceKey<Enchantment> TRAVELLER = key("traveler");
+  public static final ResourceKey<Enchantment> VENOM = key("venom");
+  public static final ResourceKey<Enchantment> EXPERIENCE_BOOST = key("experience_boost");
 
-  private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
+  private static ResourceKey<Enchantment> key(String name) {
+    return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, name));
+  }
 
-//  public static final RegistryObject<TravellerEnchant> TRAVELLER = ENCHANTMENTS.register(TravellerEnchant.ID, () -> new TravellerEnchant());
-//  public static final RegistryObject<MultiBowEnchant> MULTIBOW = ENCHANTMENTS.register(MultiBowEnchant.ID, () -> new MultiBowEnchant(Enchantment.Rarity.COMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<ExcavationEnchant> EXCAVATE = ENCHANTMENTS.register(ExcavationEnchant.ID, () -> new ExcavationEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<EnchantmentFlib> EXPERIENCE_BOOST = ENCHANTMENTS.register(XpEnchant.ID, () -> new XpEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<MultiJumpEnchant> LAUNCH = ENCHANTMENTS.register(MultiJumpEnchant.ID, () -> new MultiJumpEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.FEET }));
-//  public static final RegistryObject<SteadyEnchant> STEADY = ENCHANTMENTS.register(SteadyEnchant.ID, () -> new SteadyEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS }));
-//  public static final RegistryObject<BeheadingEnchant> BEHEADING = ENCHANTMENTS.register(BeheadingEnchant.ID, () -> new BeheadingEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<GrowthEnchant> GROWTH = ENCHANTMENTS.register(GrowthEnchant.ID, () -> new GrowthEnchant(Enchantment.Rarity.COMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<LifeLeechEnchant> LIFELEECH = ENCHANTMENTS.register(LifeLeechEnchant.ID, () -> new LifeLeechEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<MagnetEnchant> MAGNET = ENCHANTMENTS.register(MagnetEnchant.ID, () -> new MagnetEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<QuickdrawEnchant> QUICKDRAW = ENCHANTMENTS.register(QuickdrawEnchant.ID, () -> new QuickdrawEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<ReachEnchant> REACH = ENCHANTMENTS.register(ReachEnchant.ID, () -> new ReachEnchant(Enchantment.Rarity.COMMON, EnchantmentCategory.WEARABLE, ARMOR_SLOTS));
-//  public static final RegistryObject<StepEnchant> STEP = ENCHANTMENTS.register(StepEnchant.ID, () -> new StepEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS));
-//  public static final RegistryObject<VenomEnchant> VENOM = ENCHANTMENTS.register(VenomEnchant.ID, () -> new VenomEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<AutoSmeltEnchant> AUTOSMELT = ENCHANTMENTS.register(AutoSmeltEnchant.ID, () -> new AutoSmeltEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<DisarmEnchant> DISARM = ENCHANTMENTS.register(DisarmEnchant.ID, () -> new DisarmEnchant(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<GloomCurseEnchant> CURSE = ENCHANTMENTS.register(GloomCurseEnchant.ID, () -> new GloomCurseEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR, EquipmentSlot.CHEST));
-//  public static final RegistryObject<EnderPearlEnchant> PEARL = ENCHANTMENTS.register(EnderPearlEnchant.ID, () -> new EnderPearlEnchant(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND));
-//  public static final RegistryObject<BeekeeperEnchant> BEEKEEPER = ENCHANTMENTS.register(BeekeeperEnchant.ID, () -> new BeekeeperEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR_HEAD, EquipmentSlot.HEAD));
-//  public static final RegistryObject<LastStandEnchant> STAND = ENCHANTMENTS.register(LastStandEnchant.ID, () -> new LastStandEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR_LEGS, EquipmentSlot.LEGS));
+  public static Holder<Enchantment> holder(ResourceKey<Enchantment> key, Level level) {
+    return level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(key);
+  }
+
+  public static Holder<Enchantment> holder(ResourceKey<Enchantment> key, LivingEntity entity) {
+    return holder(key, entity.level());
+  }
 }

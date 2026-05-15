@@ -1,0 +1,19 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "tag": "c:stone"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 160
+  },
+  "result": {
+    "id": "minecraft:lava",
+    "amount": 1000
+  }
+}

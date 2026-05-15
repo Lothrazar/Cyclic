@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:fire_charge"
+  },
+  "result": {
+    "id": "cyclic:fireball"
+  },
+  "experience": 0.38,
+  "cookingtime": 400
+}

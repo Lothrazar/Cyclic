@@ -3,12 +3,9 @@ package com.lothrazar.cyclic.capabilities;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import javax.annotation.Nonnull;
 import com.lothrazar.cyclic.capabilities.chunk.ChunkDataStorage;
-import com.lothrazar.cyclic.capabilities.player.PlayerCapProvider;
 import com.lothrazar.cyclic.capabilities.player.PlayerCapabilityStorage;
 import com.lothrazar.cyclic.net.PacketSyncManaToClient;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -19,7 +16,8 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
-import net.minecraftforge.network.PacketDistributor;
+import net.minecraft.core.HolderLookup;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 //
 // mcjty https://wiki.mcjty.eu/modding/index.php?title=Tutorial_1.18_Episode_7
@@ -44,7 +42,7 @@ public class CyclicWorldSavedData extends SavedData {
   }
 
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
     ListTag list = new ListTag();
     chunkPosData.forEach((chunkPos, mana) -> {
       CompoundTag manaTag = new CompoundTag();
@@ -58,7 +56,6 @@ public class CyclicWorldSavedData extends SavedData {
   }
 
   // This function can be used to get access to the mana manager for a given level. It can only be called server-side!
-  @Nonnull
   public static CyclicWorldSavedData get(Level level) {
     if (level.isClientSide) {
       throw new RuntimeException("Don't access this client-side!");
@@ -68,7 +65,10 @@ public class CyclicWorldSavedData extends SavedData {
     // Get the mana manager if it already exists. Otherwise create a new one. Note that both
     // invocations of ManaManager::new actually refer to a different constructor. One without parameters
     // and the other with a CompoundTag parameter
-    return storage.computeIfAbsent(CyclicWorldSavedData::new, CyclicWorldSavedData::new, "data");
+    return storage.computeIfAbsent(
+        new SavedData.Factory<>(CyclicWorldSavedData::new, (tag, provider) -> new CyclicWorldSavedData(tag)),
+        "cyclic_data"
+    );
   }
 
   private ChunkDataStorage getDataForPos(BlockPos pos) {
@@ -104,15 +104,15 @@ public class CyclicWorldSavedData extends SavedData {
       level.players().forEach(p -> {
         if (p instanceof ServerPlayer serverPlayer) {
           //sync players own DATA
-          PlayerCapabilityStorage playerData = serverPlayer.getCapability(PlayerCapProvider.CYCLIC_PLAYER).orElse(null);
+          // PlayerCapabilityStorage playerData = serverPlayer.getCapability(PlayerCapProvider.CYCLIC_PLAYER).orElse(null);
           ChunkDataStorage chunkData = getDataForPos(serverPlayer.blockPosition());
           //
           //
           //and at the same time, get data for the CHUNK you are in and sync at the same time
           //do both instead of once
           //send playerData and chunkData to client 
-          PacketRegistry.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
-              new PacketSyncManaToClient(playerData, chunkData));
+          PacketDistributor.sendToPlayer(serverPlayer,
+              new PacketSyncManaToClient(new PlayerCapabilityStorage(), chunkData));
         }
       });
     }

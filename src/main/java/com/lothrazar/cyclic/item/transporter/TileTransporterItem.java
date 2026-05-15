@@ -34,6 +34,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
 
 
 public class TileTransporterItem extends ItemBaseCyclic {
@@ -72,9 +74,9 @@ public class TileTransporterItem extends ItemBaseCyclic {
   }
 
   private boolean placeStoredTileEntity(Player player, ItemStack heldChestSack, BlockPos pos) {
-    CompoundTag itemData = heldChestSack.getOrCreateTag();
+    CompoundTag itemData = heldChestSack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     ResourceLocation res =   ResourceLocation.parse(itemData.getString(KEY_BLOCKID));
-    Block block = BuiltInRegistries.BLOCK.getValue(res);
+    Block block = BuiltInRegistries.BLOCK.get(res);
     if (block == null) {
       heldChestSack = ItemStack.EMPTY;
       ChatUtil.addChatMessage(player, "Invalid block id " + res);
@@ -97,7 +99,7 @@ public class TileTransporterItem extends ItemBaseCyclic {
         tileData.putInt("x", pos.getX());
         tileData.putInt("y", pos.getY());
         tileData.putInt("z", pos.getZ());
-        tile.load(tileData); // can cause errors in 3rd party mod
+        tile.loadWithComponents(tileData, world.registryAccess()); // can cause errors in 3rd party mod
         //example at extracells.tileentity.TileEntityFluidFiller.func_145839_a(TileEntityFluidFiller.java:302) ~
         tile.setChanged();
         world.blockEntityChanged(pos);
@@ -111,15 +113,15 @@ public class TileTransporterItem extends ItemBaseCyclic {
       return false;
     }
     heldChestSack = ItemStack.EMPTY;
-    heldChestSack.setTag(null);
+    heldChestSack.remove(DataComponents.CUSTOM_DATA);
     return true;
   }
 
   @OnlyIn(Dist.CLIENT)
   @Override
   public void appendHoverText(ItemStack itemStack, Item.TooltipContext worldIn, List<Component> list, TooltipFlag flagIn) {
-    if (itemStack.getTag() != null && itemStack.getTag().contains(KEY_BLOCKNAME)) {
-      String blockname = itemStack.getTag().getString(KEY_BLOCKNAME);
+    if (itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null && itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(KEY_BLOCKNAME)) {
+      String blockname = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
         MutableComponent t = Component.translatable(ChatUtil.lang(blockname));
         t.withStyle(ChatFormatting.DARK_GREEN);
@@ -136,6 +138,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
   @Override
   @OnlyIn(Dist.CLIENT)
   public boolean isFoil(ItemStack stack) {
-    return stack.hasTag();
+    return stack.has(DataComponents.CUSTOM_DATA);
   }
 }

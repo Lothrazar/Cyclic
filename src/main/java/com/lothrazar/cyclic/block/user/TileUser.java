@@ -6,10 +6,9 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,6 +27,9 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -207,7 +209,9 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     timerDelay = tag.getInt("delay");
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     userSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     doHitBreak = tag.getBoolean("doBreakBlock");
     entities = tag.getBoolean("entities");
@@ -233,4 +237,16 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider {
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerUser(i, level, worldPosition, playerInventory, playerEntity);
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return userSlots;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

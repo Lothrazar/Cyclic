@@ -40,7 +40,7 @@ public class BlockAnvilVoid extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.ANVIL_VOID.get(), ScreenAnvilVoid::new);
+    // MenuScreens.register(MenuTypeRegistry.ANVIL_VOID.get(), ScreenAnvilVoid::new);
   }
 
   @Override

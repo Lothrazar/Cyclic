@@ -1,17 +1,29 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketTileData extends PacketFlib {
+public class PacketTileData implements CustomPacketPayload {
+
+  public static final CustomPacketPayload.Type<PacketTileData> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_tile_data"));
+
+  public static final StreamCodec<RegistryFriendlyByteBuf, PacketTileData> STREAM_CODEC = StreamCodec.of(PacketTileData::encode, PacketTileData::decode);
+
+
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private int field;
   private int value;
@@ -40,9 +52,9 @@ public class PacketTileData extends PacketFlib {
 
   public PacketTileData() {}
 
-  public static void handle(PacketTileData message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer player = ctx.get().getSender();
+  public static void handle(PacketTileData message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer player = (ServerPlayer) ctx.player();
       Level world = player.getCommandSenderWorld();
       BlockEntity tile = world.getBlockEntity(message.pos);
       if (tile instanceof TileBlockEntityCyclic) {
@@ -58,10 +70,10 @@ public class PacketTileData extends PacketFlib {
         base.setChanged();
       }
     });
-    message.done(ctx);
+    
   }
 
-  public static PacketTileData decode(FriendlyByteBuf buf) {
+  public static PacketTileData decode(RegistryFriendlyByteBuf buf) {
     PacketTileData p = new PacketTileData();
     p.field = buf.readInt();
     p.value = buf.readInt();
@@ -71,7 +83,7 @@ public class PacketTileData extends PacketFlib {
     return p;
   }
 
-  public static void encode(PacketTileData msg, FriendlyByteBuf buf) {
+  public static void encode(RegistryFriendlyByteBuf buf, PacketTileData msg) {
     buf.writeInt(msg.field);
     buf.writeInt(msg.value);
     CompoundTag tags = new CompoundTag();

@@ -3,12 +3,13 @@ package com.lothrazar.cyclic.event;
 import com.lothrazar.cyclic.potion.CyclicMobEffect;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-//import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-//import net.minecraftforge.event.entity.living.MobEffectEvent;
+//import net.neoforged.neoforge.event.entity.living.LivingEvent.LivingTickEvent;
+//import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 //import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PotionEvents {
@@ -25,7 +26,7 @@ public class PotionEvents {
     if (event.getEffectInstance().getEffect() instanceof CyclicMobEffect self) {
       self.isPotionApplicable(event);
     }
-    BlockRegistry.ANTI_BEACON.get().isPotionApplicable(event);
+    // BlockRegistry.ANTI_BEACON.get().isPotionApplicable(event);
   }
 
   @SubscribeEvent
@@ -43,13 +44,12 @@ public class PotionEvents {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(EntityTickEvent event) {
-    LivingEntity entity = event.getEntity();
-    if (entity == null) {
+  public void onEntityUpdate(EntityTickEvent.Pre event) {
+    if (!(event.getEntity() instanceof LivingEntity entity)) {
       return;
     }
     for (CyclicMobEffect effect : PotionEffectRegistry.EFFECTS) {
-      if (effect != null && entity.hasEffect(effect)) {
+      if (effect != null && entity.hasEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect))) {
         effect.tick(event);
       }
     }

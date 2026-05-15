@@ -26,7 +26,7 @@ public class BlockFluidCollect extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.COLLECTOR_FLUID.get(), ScreenFluidCollect::new);
+    // MenuScreens.register(MenuTypeRegistry.COLLECTOR_FLUID.get(), ScreenFluidCollect::new);
   }
 
   @Override

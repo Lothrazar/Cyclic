@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "n",
+    "i",
+    "n"
+  ],
+  "key": {
+    "n": {
+      "tag": "c:nuggets/gold"
+    },
+    "i": {
+      "tag": "c:ingots/gold"
+    }
+  },
+  "result": {
+    "count": 2,
+    "id": "cyclic:gold_chain"
+  }
+}

@@ -1,15 +1,13 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -26,6 +24,9 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -139,7 +140,9 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tank.readFromNBT(registries,tag.getCompound(NBTFLUID));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inputSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     outputSlots.deserializeNBT(registries,tag.getCompound("invoutput"));
     burnTimeMax = tag.getInt("burnTimeMax");
@@ -173,15 +176,18 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+    SolidifierRecipeInput input = new SolidifierRecipeInput(
+        inputSlots.getStackInSlot(0), inputSlots.getStackInSlot(1), inputSlots.getStackInSlot(2), tank.getFluid());
+    if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
     currentRecipe = null;
     this.burnTimeMax = 0;
     this.timer = 0;
-    List<RecipeSolidifier> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID.get());
-    for (RecipeSolidifier rec : recipes) {
-      if (rec.matches(this, level)) {
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.SOLID.get());
+    for (var holder : recipes) {
+      RecipeSolidifier rec = holder.value();
+      if (rec.matches(input, level)) {
         currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getEnergy().getTicks();
         this.timer = this.burnTimeMax;
@@ -213,4 +219,16 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   public ItemStack getStackInputSlot(int slot) {
     return inputSlots.getStackInSlot(slot);
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

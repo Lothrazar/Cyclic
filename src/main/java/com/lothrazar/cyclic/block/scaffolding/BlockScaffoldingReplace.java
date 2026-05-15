@@ -43,8 +43,8 @@ public class BlockScaffoldingReplace extends BlockScaffolding {
 
   @Override
   @Deprecated
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    ItemStack heldItem = player.getItemInHand(hand);
+  public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    ItemStack heldItem = player.getMainHandItem();
     if (heldItem.isEmpty()) {
       return InteractionResult.SUCCESS;
     }
@@ -52,7 +52,7 @@ public class BlockScaffoldingReplace extends BlockScaffolding {
     if (b != null && b != Blocks.AIR && !(b instanceof BlockScaffolding)
         && world.getBlockState(pos).getBlock() == this) {
       world.destroyBlock(pos, true);
-      UseOnContext context = new UseOnContext(player, hand, hit);
+      UseOnContext context = new UseOnContext(player, InteractionHand.MAIN_HAND, hit);
       heldItem.useOn(context);
       return InteractionResult.SUCCESS;
       //to cancel event chains

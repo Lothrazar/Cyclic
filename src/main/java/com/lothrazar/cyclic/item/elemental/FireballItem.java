@@ -8,8 +8,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 public class FireballItem extends ItemBaseCyclic {
@@ -34,7 +32,7 @@ public class FireballItem extends ItemBaseCyclic {
     if (player.getItemInHand(InteractionHand.MAIN_HAND).is(ItemRegistry.FIREBALL_ORANGE.get())) {
       //hurt
       //not if youre on fire
-      int fireProt = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_PROTECTION, player);
+      int fireProt = 0; // fireProt lookup disabled
       if (fireProt == 0 &&
           !player.isOnFire() &&
           player.level().random.nextDouble() < 0.03) {

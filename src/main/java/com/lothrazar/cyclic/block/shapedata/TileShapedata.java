@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.block.shapedata;
 
 import java.util.List;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
@@ -13,7 +12,6 @@ import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,8 +23,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -67,6 +68,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
    * @param cmd
    */
   public void execute(StructCommands cmd) {
+/*
     ItemStack shapeCard = inventory.getStackInSlot(SLOT_CARD);
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
@@ -113,7 +115,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
         }
       break;
     }
-  }
+*/  }
 
   public TileShapedata(BlockPos pos, BlockState state) {
     super(TileRegistry.COMPUTER_SHAPE.get(), pos, state);
@@ -140,7 +142,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    inventory.deserializeNBT(tag.getCompound(NBTINV));
+    ((ItemStackHandler)inventory).deserializeNBT(registries, tag.getCompound(NBTINV));
     if (tag.contains("copiedShape")) {
       CompoundTag cs = (CompoundTag) tag.get("copiedShape");
       this.copiedShape = RelativeShape.read(cs);
@@ -156,7 +158,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       CompoundTag copiedShapeTags = this.copiedShape.write(new CompoundTag());
       tag.put("copiedShape", copiedShapeTags);
     }
-    tag.put(NBTINV, inventory.serializeNBT(registries));
+    tag.put(NBTINV, ((ItemStackHandler)inventory).serializeNBT(registries));
     super.saveAdditional(tag,registries);
   }
 
@@ -178,8 +180,8 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
     if (stack.isEmpty()) {
       return false;
     }
-    boolean cardEmpty = stack.getTag() == null
-        || !stack.getTag().getBoolean(RelativeShape.VALID_SHAPE);
+    boolean cardEmpty = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() == null
+        || !stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(RelativeShape.VALID_SHAPE);
     BlockPos invA = getTarget(SLOT_A);
     BlockPos invB = getTarget(SLOT_B);
     boolean hasTargets = invA != null && invB != null;
@@ -199,7 +201,6 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
     return true;
   }
 
-  @Nullable
   public BlockPos getTarget(int s) {
     ItemStack stackA = inventory.getStackInSlot(s);
     BlockPosDim loc = LocationGpsCard.getPosition(stackA);
@@ -237,4 +238,10 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       break;
     }
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
 }

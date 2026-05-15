@@ -4,10 +4,9 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,6 +20,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.food.FoodProperties;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -37,7 +41,7 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.isEdible();
+      return stack.has(DataComponents.FOOD);
     }
   };
   ItemStackHandler outputSlots = new ItemStackHandler(0);
@@ -91,8 +95,8 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
     this.burnTimeMax = 0;
     //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
-    if (stack.isEdible()) {
-      float foodVal = stack.getItem().getFoodProperties(stack, null).nutrition() + stack.getItem().getFoodProperties(stack, null).getSaturationModifier();
+    if (stack.has(DataComponents.FOOD)) {
+      FoodProperties food = stack.get(DataComponents.FOOD); float foodVal = food != null ? food.nutrition() + food.saturation() : 0;
       int burnTimeTicks = (int) (TICKS_PER_FOOD.get() * foodVal);
       //      int testTotal = RF_PER_TICK.get() * burnTimeTicks;
       // BURN IT
@@ -118,7 +122,9 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.loadAdditional(tag,registries);
   }
@@ -166,4 +172,16 @@ public class TileGeneratorFood extends TileBlockEntityCyclic implements MenuProv
   public int getEnergyMax() {
     return TileGeneratorFood.MAX;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

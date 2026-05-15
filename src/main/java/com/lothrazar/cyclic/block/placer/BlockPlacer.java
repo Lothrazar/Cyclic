@@ -37,7 +37,7 @@ public class BlockPlacer extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.PLACER.get(), ScreenPlacer::new);
+    // MenuScreens.register(MenuTypeRegistry.PLACER.get(), ScreenPlacer::new);
   }
 
   @Override

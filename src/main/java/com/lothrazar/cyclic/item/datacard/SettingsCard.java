@@ -17,9 +17,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
 
 public class SettingsCard extends ItemBaseCyclic {
 
@@ -34,7 +35,7 @@ public class SettingsCard extends ItemBaseCyclic {
 //  @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    CompoundTag stackdata = stack.getOrCreateTag();
+    CompoundTag stackdata = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (stackdata.contains(NBT_ID)) {
       String tiledataID = stackdata.getString(NBT_ID);
       MutableComponent t = Component.translatable("[" + tiledataID + "]");
@@ -49,30 +50,30 @@ public class SettingsCard extends ItemBaseCyclic {
     InteractionHand hand = context.getHand();
     BlockPos pos = context.getClickedPos();
     //    Direction side = context.getFace();
-    ItemStack held = player.getItemInHand(hand);
+    ItemStack held = player.getMainHandItem();
     player.swing(hand);
     BlockEntity tile = player.level().getBlockEntity(pos);
     //am i doing a READ or a WRITE
     if (player.level().getBlockState(pos).getBlock() == Blocks.BEDROCK) {
       //      Blocks.BEDROCK.isu
-      held.setTag(null); //clear
+      held.remove(DataComponents.CUSTOM_DATA); //clear
       ChatUtil.addChatMessage(player, getDescriptionId() + ".deleted");
     }
     //
-    CompoundTag stackdata = held.getOrCreateTag();
+    CompoundTag stackdata = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (stackdata == null || stackdata.isEmpty()) {
       //do read from tile
       if (tile instanceof TileBlockEntityCyclic) {
         //for now, only do cyclic tile entities
         //in future / intheory could be any TE from any mod / vanilla . but thats broken
-        CompoundTag tiledata = tile.serializeNBT();
+        CompoundTag tiledata = tile.saveWithoutMetadata(tile.getLevel().registryAccess());
         //cleanup
         String[] wipers = new String[] { "x", "y", "z", "input", "output", "ForgeData", "ForgeCaps", "inv", "inventory", "energy", "fluid", "timer", "filter" };
         for (String wipe : wipers) {
           tiledata.remove(wipe);
         }
         tiledata.putBoolean(NBT_SETSAVED, true);
-        held.setTag(tiledata);
+        held.set(DataComponents.CUSTOM_DATA, CustomData.of(tiledata));
         ChatUtil.addChatMessage(player, getDescriptionId() + ".savednew");
       }
     }
@@ -82,7 +83,7 @@ public class SettingsCard extends ItemBaseCyclic {
       if (tile instanceof TileBlockEntityCyclic) {
         //for now, only do cyclic tile entities
         //WRITE TO TILE from my stackdata
-        CompoundTag tiledata = tile.serializeNBT();
+        CompoundTag tiledata = tile.saveWithoutMetadata(tile.getLevel().registryAccess());
         String tiledataID = stackdata.getString(NBT_ID);
         //go merge and let it read
         if (tiledataID.equalsIgnoreCase(stackdataID)) {
@@ -90,7 +91,7 @@ public class SettingsCard extends ItemBaseCyclic {
           stackdata.remove(NBT_SETSAVED);
           stackdata.remove(NBT_ID);
           tiledata = tiledata.merge(stackdata);
-          tile.load(tiledata);
+          tile.loadCustomOnly(tiledata, player.level().registryAccess());
           ChatUtil.addChatMessage(player, getDescriptionId() + ".written");
         }
       }

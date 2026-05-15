@@ -12,11 +12,10 @@ import org.apache.logging.log4j.LogManager;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.CapabilityRegistry;
 import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
-import com.lothrazar.cyclic.registry.EnchantRegistry;
+
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.EventRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
@@ -27,7 +26,6 @@ import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.world.entity.Entity;
 
 @Mod(ModCyclic.MODID)
 public class ModCyclic {
@@ -37,7 +35,10 @@ public class ModCyclic {
 
   public ModCyclic(IEventBus bus, Dist dist, ModContainer container) {
 
+    com.lothrazar.cyclic.registry.MaterialRegistry.ARMOR_MATERIALS.register(bus);
+    com.lothrazar.cyclic.registry.MaterialRegistry.setup();
     bus.addListener(EventRegistry::setup);
+    bus.addListener(com.lothrazar.cyclic.registry.PacketRegistry::setup);
     if (dist.isClient()) {
 
       bus.addListener(ClientRegistryCyclic::setupClient);
@@ -51,23 +52,22 @@ public class ModCyclic {
     cfg.setupMain();
     cfg.setupClient();
     DataTags.setup();
-//    NeoForge.EVENT_BUS.addGenericListener(Entity.class, CapabilityRegistry::onAttachCapabilitiesPlayer); // TODO:
-    NeoForge.EVENT_BUS.register(new CapabilityRegistry());
     NeoForge.EVENT_BUS.register(new CommandRegistry());
     BlockRegistry.BLOCKS.register(bus);
     ItemRegistry.ITEMS.register(bus);
     TileRegistry.TILES.register(bus);
     FluidRegistry.FLUID_TYPES.register(bus);
-    FluidRegistry.FLUIDS.register(bus);
+    FluidRegistry.FLUID.register(bus);
     MenuTypeRegistry.CONTAINERS.register(bus);
     CyclicRecipeType.RECIPE_TYPES.register(bus);
     CyclicRecipeType.RECIPE_SERIALIZERS.register(bus);
     EntityRegistry.ENTITIES.register(bus);
     PotionRegistry.POTIONS.register(bus);
     PotionEffectRegistry.MOB_EFFECTS.register(bus);
-    EnchantRegistry.ENCHANTMENTS.register(bus);
+
     SoundRegistry.SOUND_EVENTS.register(bus);
     LootModifierRegistry.LOOT.register(bus);
+    BlockRegistry.CREATIVE_MODE_TABS.register(bus);
     NeoForgeMod.enableMilkFluid();
 ///    NeoforgeMod.enableMilkFluid();
   }

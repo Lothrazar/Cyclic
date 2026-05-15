@@ -10,7 +10,6 @@ import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +30,6 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
 public class BlockFluidTank extends BlockCyclic {
 
@@ -55,7 +53,7 @@ public class BlockFluidTank extends BlockCyclic {
 
   @Override
   public ItemInteractionResult useItemOn(ItemStack st, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    if (!player.isCrouching() && player.getItemInHand(hand).getItem() == this.asItem()
+    if (!player.isCrouching() && player.getMainHandItem().getItem() == this.asItem()
         && (hit.getDirection() == Direction.UP || hit.getDirection() == Direction.DOWN)) {
       //pass to allow quick building up and down
       return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

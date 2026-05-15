@@ -9,7 +9,7 @@ import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.minecraft.core.HolderLookup;
 
 public class TileCableEnergy extends TileCableBase {
 
@@ -26,7 +27,7 @@ public class TileCableEnergy extends TileCableBase {
   public static ModConfigSpec.IntValue BUFFERSIZE;
   public static ModConfigSpec.IntValue TRANSFER_RATE;
   //  
-  //  private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> flow = new ConcurrentHashMap<>();
+  // //  private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> flow = new ConcurrentHashMap<>();
   private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
   private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
 
@@ -119,7 +120,7 @@ public class TileCableEnergy extends TileCableBase {
   }
 
 //  @Override
-//  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+// //  // public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 //    if (cap == ForgeCapabilities.ENERGY) {
 //      //
 //      //
@@ -136,21 +137,23 @@ public class TileCableEnergy extends TileCableBase {
 //  }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, tag.getInt(f.getSerializedName() + "_incenergy"));
     }
-    energy.deserializeNBT(tag.getCompound(NBTENERGY));
-    super.load(tag);
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {
       tag.putInt(f.getSerializedName() + "_incenergy", mapIncomingEnergy.get(f));
     }
-    tag.put(NBTENERGY, energy.serializeNBT());
-    super.saveAdditional(tag);
+    tag.put(NBTENERGY, energy.serializeNBT(registries));
+    super.saveAdditional(tag, registries);
   }
 
   private static final int TIMER_SIDE_INPUT = 15;
@@ -183,4 +186,13 @@ public class TileCableEnergy extends TileCableBase {
       energyLastSynced = currentEnergy;
     }
   }
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    if (side != null && !CableBase.isCableBlocked(this.getBlockState(), side)) {
+      return energy;
+    }
+    return null;
+  }
+
 }

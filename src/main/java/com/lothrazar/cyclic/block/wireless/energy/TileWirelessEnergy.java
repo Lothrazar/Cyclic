@@ -8,11 +8,10 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,6 +24,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -66,7 +68,9 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     gpsSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     //    this.transferRate = tag.getInt("transferRate");
     super.loadAdditional(tag,registries);
   }
@@ -164,4 +168,16 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
   public float getThick() {
     return 0.065F;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return gpsSlots;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.PlayerUtil;
@@ -27,6 +26,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -206,18 +207,18 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
           && entity instanceof Player p) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
     return moved;
   }
 
   @Override
-  public void load(CompoundTag tag, HolderLookup.Provider registries) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     filter.deserializeNBT(registries,tag.getCompound("filter"));
     speed = tag.getInt("speed");
     range = tag.getInt("range");
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -225,7 +226,7 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
     tag.put("filter", filter.serializeNBT(registries));
     tag.putInt("speed", speed);
     tag.putInt("range", range);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override
@@ -273,4 +274,10 @@ public class TileFan extends TileBlockEntityCyclic implements MenuProvider {
       break;
     }
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return filter;
+  }
+
 }

@@ -7,7 +7,6 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -19,6 +18,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -41,8 +44,8 @@ public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvid
 
   public void tryPlaySound() {
     ItemStack card = this.inventory.getStackInSlot(0);
-    if (card.hasTag() && card.getTag().contains(SoundCard.SOUND_ID) && level instanceof ServerLevel) {
-      String sid = card.getTag().getString(SoundCard.SOUND_ID);
+    if (card.has(DataComponents.CUSTOM_DATA) && card.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(SoundCard.SOUND_ID) && level instanceof ServerLevel) {
+      String sid = card.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(SoundCard.SOUND_ID);
       SoundUtil.playSoundFromServerById((ServerLevel) level, worldPosition, sid);
     }
   }
@@ -76,4 +79,10 @@ public class TileSoundPlayer extends TileBlockEntityCyclic implements MenuProvid
   public int getField(int field) {
     return 0;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
 }

@@ -14,6 +14,7 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.minecraft.nbt.NbtAccounter;
 
 public class PlayerDataEvents {
 
@@ -59,7 +60,7 @@ public class PlayerDataEvents {
     if (mctomb.exists()) {
       try {
         FileInputStream fileinputstream = new FileInputStream(mctomb);
-        CompoundTag data = NbtIo.readCompressed(fileinputstream);
+        CompoundTag data = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
         fileinputstream.close();
         CyclicFile dataLoaded = new CyclicFile(player.getUUID());
         dataLoaded.read(data);

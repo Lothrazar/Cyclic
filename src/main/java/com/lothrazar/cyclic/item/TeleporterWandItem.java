@@ -38,7 +38,7 @@ public class TeleporterWandItem extends ItemBaseCyclic {
   }
 
   @Override
-  public int getUseDuration(ItemStack stack) {
+  public int getUseDuration(ItemStack stack, LivingEntity entity) {
     return TICKS_USING; //bow has 72000
   }
 

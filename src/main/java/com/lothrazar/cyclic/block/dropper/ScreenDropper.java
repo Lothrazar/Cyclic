@@ -9,6 +9,7 @@ import com.lothrazar.library.gui.EnergyBar;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenDropper extends ScreenBase<ContainerDropper> {
 
@@ -41,17 +42,17 @@ public class ScreenDropper extends ScreenBase<ContainerDropper> {
     int f = TileDropper.Fields.DROPCOUNT.ordinal();
     GuiSliderInteger dropcount = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
-    dropcount.setTooltip("cyclic.dropper.count");
+    dropcount.setTooltip(Tooltip.create(Component.translatable("cyclic.dropper.count")));
     y += h + 1;
     f = TileDropper.Fields.DELAY.ordinal();
     GuiSliderInteger delaysli = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 500, menu.tile.getField(f)));
-    delaysli.setTooltip("cyclic.dropper.delay");
+    delaysli.setTooltip(Tooltip.create(Component.translatable("cyclic.dropper.delay")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.getEnergy());

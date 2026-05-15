@@ -1,14 +1,12 @@
 package com.lothrazar.cyclic.block.crusher;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -20,6 +18,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -61,7 +62,9 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     this.burnTime = tag.getInt("burnTime");
     this.burnTimeMax = tag.getInt("burnTimeMax");
@@ -74,7 +77,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
     tag.putInt("burnTimeMax", burnTimeMax);
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public void tick() {
@@ -135,13 +138,15 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+    CrusherRecipeInput input = new CrusherRecipeInput(inputSlots.getStackInSlot(0));
+    if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeCrusher> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
-    for (RecipeCrusher rec : recipes) {
-      if (rec.matches(this, level)) {
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.CRUSHER.get());
+    for (var holder : recipes) {
+      RecipeCrusher rec = holder.value();
+      if (rec.matches(input, level)) {
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.energy.getTicks();
         this.burnTime = this.burnTimeMax;
@@ -178,4 +183,16 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider {
       break;
     }
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

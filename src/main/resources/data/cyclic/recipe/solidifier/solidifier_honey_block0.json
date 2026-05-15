@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 100
+  },
+  "mix": {
+    "tag": "c:honey",
+    "amount": 1000
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:honey_block"
+  }
+}

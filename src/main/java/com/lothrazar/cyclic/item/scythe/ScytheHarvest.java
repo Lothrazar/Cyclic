@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.scythe;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.net.PacketHarvesting;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -12,6 +11,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScytheHarvest extends ItemBaseCyclic {
 
@@ -35,7 +35,7 @@ public class ScytheHarvest extends ItemBaseCyclic {
     Player player = context.getPlayer();
     if (player.level().isClientSide) {
       int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
-      PacketRegistry.INSTANCE.sendToServer(new PacketHarvesting(pos, radius));
+      PacketDistributor.sendToServer(new PacketHarvesting(pos, radius));
     }
     player.swing(context.getHand());
     ItemStackUtil.damageItem(player, context.getItemInHand());

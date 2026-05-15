@@ -37,7 +37,7 @@ public class SpikesDiamond extends SpikesBlock {
       }
       if (tile.getTimer() == 1) {
         //public net.minecraft.entity.LivingEntity attackStrengthTicker # ticksSinceLastSwing
-        tile.fakePlayer.get().attackStrengthTicker = (int) tile.fakePlayer.get().getCurrentItemAttackStrengthDelay();
+        // tile.fakePlayer.get().attackStrengthTicker = ... // protected in 1.21.1
         tile.fakePlayer.get().attack(entity);
         tile.fakePlayer.get().resetAttackStrengthTicker();
       }

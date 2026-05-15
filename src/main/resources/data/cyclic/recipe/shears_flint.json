@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "f ",
+    " f"
+  ],
+  "key": {
+    "f": {
+      "item": "minecraft:flint"
+    }
+  },
+  "result": {
+    "id": "cyclic:shears_flint"
+  }
+}

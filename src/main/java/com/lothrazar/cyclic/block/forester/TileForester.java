@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,6 +35,9 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.registries.Registries;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileForester extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -147,9 +150,11 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     height = tag.getInt("height");
     shapeIndex = tag.getInt("shapeIndex");
     radius = tag.getInt("radius");
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -159,7 +164,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.putInt("radius", radius);
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   /**
@@ -172,7 +177,7 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
     TileBlockEntityCyclic.tryEquipItem(inventory, fakePlayer, 0, InteractionHand.OFF_HAND);
     if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
       ItemStack tool = new ItemStack(Items.DIAMOND_AXE);
-      tool.enchant(Enchantments.FORTUNE, 3);
+      tool.enchant(level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(Enchantments.FORTUNE), 3);
       TileBlockEntityCyclic.tryEquipItem(tool, fakePlayer, InteractionHand.MAIN_HAND);
     }
   }
@@ -270,4 +275,16 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
   public boolean hasSapling() {
     return !this.inventory.getStackInSlot(0).isEmpty();
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

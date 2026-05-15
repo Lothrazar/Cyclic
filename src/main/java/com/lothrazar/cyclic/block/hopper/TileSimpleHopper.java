@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 
 public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
@@ -107,4 +108,13 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
   public double getLevelZ() {
     return this.getBlockPos().getZ();
   }
+
+  @Override
+  public boolean isGridAligned() { return true; }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
 }

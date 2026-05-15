@@ -6,12 +6,13 @@ import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
 
@@ -33,7 +34,7 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     x += 22;
     btnComp = addRenderableWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
       int f = TileDetectorItem.Fields.GREATERTHAN.ordinal();
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f,
+      PacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     //x 
@@ -45,29 +46,29 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     int f = TileDetectorItem.Fields.RANGEX.ordinal();
     GuiSliderInteger red = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    red.setTooltip("cyclic.detector.rangex");
+    red.setTooltip(Tooltip.create(Component.translatable("cyclic.detector.rangex")));
     //
     y += h + 1;
     f = TileDetectorItem.Fields.RANGEY.ordinal();
     GuiSliderInteger rangey = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    rangey.setTooltip("cyclic.detector.rangey");
+    rangey.setTooltip(Tooltip.create(Component.translatable("cyclic.detector.rangey")));
     y += h + 1;
     f = TileDetectorItem.Fields.RANGEZ.ordinal();
     GuiSliderInteger rangez = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    rangez.setTooltip("cyclic.detector.rangez");
+    rangez.setTooltip(Tooltip.create(Component.translatable("cyclic.detector.rangez")));
     //
     y += h + 1;
     f = TileDetectorItem.Fields.LIMIT.ordinal();
     GuiSliderInteger limitsl = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
-    limitsl.setTooltip("cyclic.detector.limit");
+    limitsl.setTooltip(Tooltip.create(Component.translatable("cyclic.detector.limit")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

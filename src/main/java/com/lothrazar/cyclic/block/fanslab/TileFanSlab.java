@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block.fanslab;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.ShapeUtil;
@@ -15,6 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.core.HolderLookup;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class TileFanSlab extends TileBlockEntityCyclic {
 
@@ -143,7 +144,7 @@ public class TileFanSlab extends TileBlockEntityCyclic {
       default:
       break;
     }
-    AABB region = new AABB(start, end);
+    AABB region = new AABB(start.getX(), start.getY(), start.getZ(), end.getX() + 1, end.getY() + 1, end.getZ() + 1);
     List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
     int moved = 0;
     final boolean doPush = true;
@@ -186,24 +187,24 @@ public class TileFanSlab extends TileBlockEntityCyclic {
       entity.setDeltaMovement(newx, newy, newz);
       if (level.isClientSide && entity.tickCount % PacketPlayerFalldamage.TICKS_FALLDIST_SYNC == 0
           && entity instanceof Player) {
-        PacketRegistry.INSTANCE.sendToServer(new PacketPlayerFalldamage());
+        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
       }
     }
     return moved;
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     speed = tag.getInt("speed");
     range = tag.getInt("range");
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("speed", speed);
     tag.putInt("range", range);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

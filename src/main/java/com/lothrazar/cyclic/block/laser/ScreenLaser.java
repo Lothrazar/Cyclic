@@ -5,12 +5,13 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScreenLaser extends ScreenBase<ContainerLaser> {
 
@@ -37,27 +38,27 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
     int f = TileLaser.Fields.RED.ordinal();
     GuiSliderInteger red = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
-    red.setTooltip("cyclic.screen.red");
+    red.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.red")));
     y += h + 1;
     f = TileLaser.Fields.GREEN.ordinal();
     GuiSliderInteger green = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
-    green.setTooltip("cyclic.screen.green");
+    green.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.green")));
     y += h + 1;
     f = TileLaser.Fields.BLUE.ordinal();
     GuiSliderInteger blue = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 255, menu.tile.getField(f)));
-    blue.setTooltip("cyclic.screen.blue");
+    blue.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.blue")));
     y += h + 1;
     f = TileLaser.Fields.ALPHA.ordinal();
     GuiSliderInteger alpha = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 100, menu.tile.getField(f)));
-    alpha.setTooltip("cyclic.screen.alpha");
+    alpha.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.alpha")));
     y += h + 1;
     f = TileLaser.Fields.THICK.ordinal();
     GuiSliderInteger thick = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 20, menu.tile.getField(f)));
-    thick.setTooltip("cyclic.screen.thick");
+    thick.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.thick")));
     //
     //
     //
@@ -67,30 +68,30 @@ public class ScreenLaser extends ScreenBase<ContainerLaser> {
     btnX = addRenderableWidget(new ButtonMachine(x, y, w, 20, "X", (p) -> {
       final int fl = TileLaser.Fields.XOFF.ordinal();
       menu.tile.setField(fl, menu.tile.getField(fl) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
+      PacketDistributor.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
     }));
-    btnX.setTooltip("button.offsetx.tooltip");
+    btnX.setTooltip(Tooltip.create(Component.translatable("button.offsetx.tooltip")));
     //
     x += w + 2;
     btnY = addRenderableWidget(new ButtonMachine(x, y, w, 20, "Y", (p) -> {
       final int fl = TileLaser.Fields.YOFF.ordinal();
       menu.tile.setField(fl, menu.tile.getField(fl) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
+      PacketDistributor.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
     }));
-    btnY.setTooltip("button.offsety.tooltip");
+    btnY.setTooltip(Tooltip.create(Component.translatable("button.offsety.tooltip")));
     //
     x += w + 2;
     btnZ = addRenderableWidget(new ButtonMachine(x, y, w, 20, "z", (p) -> {
       final int fl = TileLaser.Fields.ZOFF.ordinal();
       menu.tile.setField(fl, menu.tile.getField(fl) + 1);
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
+      PacketDistributor.sendToServer(new PacketTileData(fl, menu.tile.getField(fl), menu.tile.getBlockPos()));
     }));
-    btnZ.setTooltip("button.offsetz.tooltip");
+    btnZ.setTooltip(Tooltip.create(Component.translatable("button.offsetz.tooltip")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

@@ -23,16 +23,28 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.transporter;
 
-import java.util.function.Supplier;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketChestSack extends PacketFlib {
+public class PacketChestSack implements CustomPacketPayload {
+
+  public static final CustomPacketPayload.Type<PacketChestSack> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_chest_sack"));
+
+  public static final StreamCodec<FriendlyByteBuf, PacketChestSack> STREAM_CODEC = StreamCodec.of(PacketChestSack::encode, PacketChestSack::decode);
+
+
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private BlockPos pos;
 
@@ -44,18 +56,18 @@ public class PacketChestSack extends PacketFlib {
     return new PacketChestSack(buf.readBlockPos());
   }
 
-  public static void encode(PacketChestSack msg, FriendlyByteBuf buf) {
+  public static void encode(FriendlyByteBuf buf, PacketChestSack msg) {
     buf.writeBlockPos(msg.pos);
   }
 
-  public static void handle(PacketChestSack message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer player = ctx.get().getSender();
+  public static void handle(PacketChestSack message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer player = (ServerPlayer) ctx.player();
       BlockPos position = message.pos;
       Level world = player.getCommandSenderWorld();
       BlockEntity tile = world.getBlockEntity(position);
       TileTransporterEmptyItem.gatherTileEntity(position, player, world, tile);
     });
-    message.done(ctx);
+    
   }
 }

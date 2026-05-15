@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cc"
+  ],
+  "key": {
+    "c": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:copper_pressure_plate"
+  }
+}

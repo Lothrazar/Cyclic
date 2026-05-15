@@ -11,9 +11,8 @@ import com.lothrazar.cyclic.item.food.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
-import com.lothrazar.cyclic.registry.EnchantRegistry;
+//import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.packet.PacketItemToggle;
 import com.lothrazar.library.util.SoundUtil;
@@ -29,12 +28,13 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ClientInputEvents {
 
   @SubscribeEvent
   public void onKeyInput(InputEvent.Key event) {
-    EnchantRegistry.LAUNCH.get().onKeyInput(Minecraft.getInstance().player);
+    // EnchantRegistry.LAUNCH.get().onKeyInput(Minecraft.getInstance().player);
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
     }
@@ -47,8 +47,8 @@ public class ClientInputEvents {
       //
       event.setCanceled(true);
       if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
-        boolean isDown = event.getScrollDelta() < 0;
-        PacketRegistry.INSTANCE.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
+        boolean isDown = event.getScrollDeltaY() < 0;
+        // net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
       }
     }
   }
@@ -94,8 +94,8 @@ public class ClientInputEvents {
               // this is important. opening screens is on the other event
               // send the slot and info to the server to process with the lunchbox
               int slotId = gui.getSlotUnderMouse().getContainerSlot();
-              SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.get());
-              PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotId, stackTarget.getItem()));
+              SoundUtil.playSound(mc.player, SoundEvents.UI_BUTTON_CLICK.value());
+              PacketDistributor.sendToServer(new PacketItemGui(slotId, stackTarget.getItem()));
               event.setCanceled(true);
             }
           }
@@ -117,21 +117,21 @@ public class ClientInputEvents {
         Slot slotHit = gui.getSlotUnderMouse();
         ItemStack maybeCharm = slotHit.getItem();
         if (maybeCharm.getItem() instanceof IHasClickToggle) {
-          PacketRegistry.INSTANCE.sendToServer(new PacketItemToggle(slotHit.index));
+          PacketDistributor.sendToServer(new PacketItemToggle(slotHit.index));
           event.setCanceled(true);
           //            UtilSound.playSound(ModCyclic.proxy.getClientPlayer(), SoundEvents.UI_BUTTON_CLICK);
         }
         else if (maybeCharm.getItem() instanceof ItemStorageBag
             || maybeCharm.getItem() instanceof CraftingStickItem
             || maybeCharm.getItem() instanceof CraftingBagItem) {
-              PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
+              PacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
               event.setCanceled(true);
             }
         else if (maybeCharm.getItem() instanceof ItemLunchbox) {
           // if you have an EMPTY hand, use this to open the GUI screen of the lunchbox
           ItemStack maybeFood = mc.player.containerMenu.getCarried();
           if (maybeFood.isEmpty()) {
-            PacketRegistry.INSTANCE.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
+            PacketDistributor.sendToServer(new PacketItemGui(slotHit.index, maybeCharm.getItem()));
             event.setCanceled(true);
           }
         }

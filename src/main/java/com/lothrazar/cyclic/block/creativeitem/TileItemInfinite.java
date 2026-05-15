@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -12,6 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.items.IItemHandler;
 
 
 public class TileItemInfinite extends TileBlockEntityCyclic {
@@ -34,14 +35,14 @@ public class TileItemInfinite extends TileBlockEntityCyclic {
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.load(tag);
+    super.loadAdditional(tag, registries);
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public void tick() {
@@ -58,4 +59,10 @@ public class TileItemInfinite extends TileBlockEntityCyclic {
   public int getField(int field) {
     return 0;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inputSlots;
+  }
+
 }

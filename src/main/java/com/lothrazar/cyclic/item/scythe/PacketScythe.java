@@ -24,16 +24,28 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import java.util.List;
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.util.HarvestUtil;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketScythe extends PacketFlib {
+public class PacketScythe implements CustomPacketPayload {
+
+  public static final CustomPacketPayload.Type<PacketScythe> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_scythe"));
+
+  public static final StreamCodec<FriendlyByteBuf, PacketScythe> STREAM_CODEC = StreamCodec.of(PacketScythe::encode, PacketScythe::decode);
+
+
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private BlockPos pos;
   private ScytheType type;
@@ -47,16 +59,16 @@ public class PacketScythe extends PacketFlib {
     radius = r;
   }
 
-  public static void handle(PacketScythe message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer player = ctx.get().getSender();
+  public static void handle(PacketScythe message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer player = (ServerPlayer) ctx.player();
       Level world = player.getCommandSenderWorld();
       List<BlockPos> shape = ScytheType.getShape(message.pos, message.radius);
       for (BlockPos posCurrent : shape) {
         HarvestUtil.harvestByScytheType(world, player, posCurrent, message.type);
       }
     });
-    message.done(ctx);
+    
   }
 
   public static PacketScythe decode(FriendlyByteBuf buf) {
@@ -64,7 +76,7 @@ public class PacketScythe extends PacketFlib {
     return p;
   }
 
-  public static void encode(PacketScythe msg, FriendlyByteBuf buf) {
+  public static void encode(FriendlyByteBuf buf, PacketScythe msg) {
     buf.writeBlockPos(msg.pos);
     buf.writeInt(msg.type.ordinal());
     buf.writeInt(msg.radius);

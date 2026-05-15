@@ -13,6 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileWorkbench extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -53,4 +55,10 @@ public class TileWorkbench extends TileBlockEntityCyclic implements MenuProvider
   public int getField(int field) {
     return 0;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
 }

@@ -9,11 +9,9 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -61,7 +59,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
     if (tag.contains(NBT_SHELVES)) {
       ListTag shelves = tag.getList(NBT_SHELVES, Tag.TAG_COMPOUND);
       for (int i = 0; i < shelves.size(); i++) {
-        BlockPos pos = NbtUtils.readBlockPos(shelves.getCompound(i));
+        BlockPos pos = BlockPos.of(shelves.getCompound(i).getLong("pos"));
         this.connectedShelves.add(pos);
       }
     }
@@ -73,7 +71,7 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
     tag.putInt("RenderTextType", this.renderStyle.ordinal());
     ListTag shelves = new ListTag();
     for (BlockPos pos : this.connectedShelves) {
-      shelves.add(NbtUtils.writeBlockPos(pos));
+      CompoundTag pTag = new CompoundTag(); pTag.putLong("pos", pos.asLong()); shelves.add(pTag);
     }
     tag.put(NBT_SHELVES, shelves);
     super.saveAdditional(tag,registries);

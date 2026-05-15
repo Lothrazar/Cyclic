@@ -11,7 +11,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -77,7 +76,7 @@ public class ItemBlockPylon extends BlockItem {
   }
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
 //    return new FluidHandlerCapabilityStack(stack, TileExpPylon.CAPACITY);
 //  }
 }

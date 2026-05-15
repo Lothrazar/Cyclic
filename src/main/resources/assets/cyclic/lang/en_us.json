@@ -1,7 +1,6 @@
 {
   "_comments": "Thanks to https://tterrag.com/lang2json/",
-  "itemGroup.cyclic": "Cyclic Blocks",
-  "itemGroup.cyclicitems": "Cyclic Items",
+  "itemGroup.cyclic": "Cyclic",
   "curios.identifier.quiver": "Quiver",
   "curios.identifier.feet": "Feet",
   "curios.identifier.charm": "Charm",

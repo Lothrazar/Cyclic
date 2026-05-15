@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class CraftingStickContainer extends ContainerBase implements IContainerCraftingAction {
 
@@ -53,11 +54,11 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
-      Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix, world);
+      java.util.Optional<RecipeHolder<CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix.asCraftInput(), world);
       if (optional.isPresent()) {
-        CraftingRecipe icraftingrecipe = optional.get();
+        RecipeHolder<CraftingRecipe> icraftingrecipe = optional.get();
         if (craftResult.setRecipeUsed(world, player, icraftingrecipe)) {
-          itemstack = icraftingrecipe.assemble(craftMatrix, world.registryAccess());
+          itemstack = icraftingrecipe.value().assemble(craftMatrix.asCraftInput(), world.registryAccess());
         }
       }
       craftResult.setItem(0, itemstack);

@@ -8,13 +8,16 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraft.client.gui.LayeredDraw;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
+// import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
 import com.lothrazar.cyclic.block.beaconredstone.RenderBeaconRedstone;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
@@ -44,8 +47,6 @@ import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
-import com.lothrazar.cyclic.event.ClientInputEvents;
-import com.lothrazar.cyclic.event.EventRender;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
@@ -59,9 +60,22 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
+import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
+import com.lothrazar.cyclic.fluid.FluidWaxHolder;
+import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = ModCyclic.MODID)
+@EventBusSubscriber(modid = ModCyclic.MODID)
 public class ClientRegistryCyclic {
 
   //TODO: refactor split into keyboard registry, overlay registry, other renderers below 
@@ -79,23 +93,20 @@ public class ClientRegistryCyclic {
       return this == other || KeyConflictContext.IN_GAME == other;
     }
   }, InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_X), "key." + ModCyclic.MODID + ".category");
-  //IIngameOverlay
-//  public static final IGuiOverlay HUD_MANA = (gui, poseStack, partialTicks, width, height) -> {
-//    //cancel if turned off
-//    if (!FeatureRegistry.PLAYER_RENDER_CAPS) {
-//      return;
-//    }
-//    //ok go
-//    if (Minecraft.getInstance().player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
-//      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
-//      int x = 10; // ManaConfig.MANA_HUD_X.get();
-//      int y = 10; // ManaConfig.MANA_HUD_Y.get(); //TODO: client-config
-//      if (x >= 0 && y >= 0) {
-//        poseStack.drawString(gui.getFont(), toDisplay, x, y, 0xFF0000);
-//        //        gui.getFont().draw(poseStack, toDisplay, x, y, 0xFF0000); // client config color
-//      }
-//    }
-//  };
+  public static final LayeredDraw.Layer HUD_MANA = (guiGraphics, deltaTracker) -> {
+    if (!FeatureRegistry.PLAYER_RENDER_CAPS) {
+      return;
+    }
+    LocalPlayer player = Minecraft.getInstance().player;
+    if (player != null && player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
+      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
+      int x = 10;
+      int y = 10;
+      if (x >= 0 && y >= 0) {
+        guiGraphics.drawString(Minecraft.getInstance().font, toDisplay, x, y, 0xFF0000);
+      }
+    }
+  };
 
   public ClientRegistryCyclic() {
     //fired by mod constructor  DistExecutor.safeRunForDist
@@ -138,7 +149,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
     event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
-    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
+//    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
     //cable renderers
     event.registerBlockEntityRenderer(TileRegistry.ENERGY_PIPE.get(), RenderCableFacade::new);
@@ -149,7 +160,7 @@ public class ClientRegistryCyclic {
   @SuppressWarnings("deprecation") //shield itemproperty
   private static void initShields() {
     //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()
-    net.minecraft.client.renderer.item.ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
+    ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
     ItemProperties.register(ItemRegistry.SHIELD_WOOD.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_LEATHER.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
@@ -157,16 +168,109 @@ public class ClientRegistryCyclic {
     ItemProperties.register(ItemRegistry.SHIELD_OBSIDIAN.get(), ShieldCyclicItem.BLOCKING, blockFn);
   }
 
-  //    OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "data", HUD_MANA);
-//  @SubscribeEvent
-//  public static void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
-//    event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), ModCyclic.MODID, HUD_MANA);
-//  }
+  @SubscribeEvent
+  public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
+    event.registerFluidType(new IClientFluidTypeExtensions() {
+      @Override public ResourceLocation getStillTexture() { return FluidXpJuiceHolder.FLUID_STILL; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidXpJuiceHolder.FLUID_FLOWING; }
+      @Override public int getTintColor() { return FluidXpJuiceHolder.COLOR | 0xFF000000; }
+    }, FluidXpJuiceHolder.TYPE.get());
+    event.registerFluidType(new IClientFluidTypeExtensions() {
+      @Override public ResourceLocation getStillTexture() { return FluidMagmaHolder.FLUID_STILL; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidMagmaHolder.FLUID_STILL; }
+      @Override public int getTintColor() { return FluidMagmaHolder.COLOR | 0xFF000000; }
+    }, FluidMagmaHolder.TYPE.get());
+    event.registerFluidType(new IClientFluidTypeExtensions() {
+      @Override public ResourceLocation getStillTexture() { return FluidSlimeHolder.FLUID_STILL; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidSlimeHolder.FLUID_FLOWING; }
+      @Override public int getTintColor() { return FluidSlimeHolder.COLOR | 0xFF000000; }
+    }, FluidSlimeHolder.TYPE.get());
+    event.registerFluidType(new IClientFluidTypeExtensions() {
+      @Override public ResourceLocation getStillTexture() { return FluidWaxHolder.FLUID_STILL; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidWaxHolder.FLUID_FLOWING; }
+      @Override public int getTintColor() { return FluidWaxHolder.COLOR | 0xFF000000; }
+    }, FluidWaxHolder.TYPE.get());
+    event.registerFluidType(new IClientFluidTypeExtensions() {
+      @Override public ResourceLocation getStillTexture() { return FluidBiomassHolder.FLUID_STILL; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidBiomassHolder.FLUID_FLOWING; }
+      @Override public int getTintColor() { return FluidBiomassHolder.COLOR | 0xFF000000; }
+    }, FluidBiomassHolder.TYPE.get());
+    event.registerFluidType(new IClientFluidTypeExtensions() {
+      @Override public ResourceLocation getStillTexture() { return FluidHoneyHolder.FLUID_STILL; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidHoneyHolder.FLUID_FLOWING; }
+      @Override public int getTintColor() { return FluidHoneyHolder.COLOR | 0xFF000000; }
+    }, FluidHoneyHolder.TYPE.get());
+  }
+
+  @SubscribeEvent
+  public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {
+    // TODO: possibly unused
+    event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID,"hud_mana"), HUD_MANA);
+  }
 
   @SubscribeEvent
   public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-    //    net.minecraftforge.client.ClientRegistry.registerKeyBinding(CAKE);
+    //    net.neoforged.neoforge.client.ClientRegistry.registerKeyBinding(CAKE);
     event.register(CAKE);
+  }
+
+  @SubscribeEvent
+  public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
+    event.register(MenuTypeRegistry.STORAGE_BAG.get(), com.lothrazar.cyclic.item.storagebag.ScreenStorageBag::new);
+    event.register(MenuTypeRegistry.CRAFTING_BAG.get(), com.lothrazar.cyclic.item.crafting.CraftingBagScreen::new);
+    event.register(MenuTypeRegistry.CRAFTING_STICK.get(), com.lothrazar.cyclic.item.crafting.simple.CraftingStickScreen::new);
+    event.register(MenuTypeRegistry.FILTER_DATA.get(), com.lothrazar.cyclic.item.datacard.filter.ScreenFilterCard::new);
+    event.register(MenuTypeRegistry.DROPPER.get(), com.lothrazar.cyclic.block.dropper.ScreenDropper::new);
+    event.register(MenuTypeRegistry.FISHER.get(), com.lothrazar.cyclic.block.fishing.ScreenFisher::new);
+    event.register(MenuTypeRegistry.DETECTOR_ITEM.get(), com.lothrazar.cyclic.block.detectoritem.ScreenDetectorItem::new);
+    event.register(MenuTypeRegistry.GENERATOR_DROPS.get(), com.lothrazar.cyclic.block.generatoritem.ScreenGeneratorDrops::new);
+    event.register(MenuTypeRegistry.BREAKER.get(), com.lothrazar.cyclic.block.breaker.ScreenBreaker::new);
+    event.register(MenuTypeRegistry.GENERATOR_FOOD.get(), com.lothrazar.cyclic.block.generatorfood.ScreenGeneratorFood::new);
+    event.register(MenuTypeRegistry.SOLIDIFIER.get(), com.lothrazar.cyclic.block.solidifier.ScreenSolidifier::new);
+    event.register(MenuTypeRegistry.HARVESTER.get(), com.lothrazar.cyclic.block.harvester.ScreenHarvester::new);
+    event.register(MenuTypeRegistry.DETECTOR_ENTITY.get(), com.lothrazar.cyclic.block.detectorentity.ScreenDetector::new);
+    event.register(MenuTypeRegistry.STRUCTURE.get(), com.lothrazar.cyclic.block.shapebuilder.ScreenStructure::new);
+    event.register(MenuTypeRegistry.CRATE_MINI.get(), com.lothrazar.cyclic.block.cratemini.ScreenCrateMini::new);
+    event.register(MenuTypeRegistry.COLLECTOR_FLUID.get(), com.lothrazar.cyclic.block.collectfluid.ScreenFluidCollect::new);
+    event.register(MenuTypeRegistry.CRUSHER.get(), com.lothrazar.cyclic.block.crusher.ScreenCrusher::new);
+    event.register(MenuTypeRegistry.PLACER.get(), com.lothrazar.cyclic.block.placer.ScreenPlacer::new);
+    event.register(MenuTypeRegistry.MELTER.get(), com.lothrazar.cyclic.block.melter.ScreenMelter::new);
+    event.register(MenuTypeRegistry.ANVIL_VOID.get(), com.lothrazar.cyclic.block.anvilvoid.ScreenAnvilVoid::new);
+    event.register(MenuTypeRegistry.TELEPORT.get(), com.lothrazar.cyclic.block.tp.ScreenTeleport::new);
+    event.register(MenuTypeRegistry.USER.get(), com.lothrazar.cyclic.block.user.ScreenUser::new);
+    event.register(MenuTypeRegistry.EXPERIENCE_PYLON.get(), com.lothrazar.cyclic.block.expcollect.ScreenExpPylon::new);
+    event.register(MenuTypeRegistry.UNCRAFTER.get(), com.lothrazar.cyclic.block.uncrafter.ScreenUncraft::new);
+    event.register(MenuTypeRegistry.GENERATOR_FLUID.get(), com.lothrazar.cyclic.block.generatorfluid.ScreenGeneratorFluid::new);
+    event.register(MenuTypeRegistry.DISENCHANTER.get(), com.lothrazar.cyclic.block.disenchant.ScreenDisenchant::new);
+    event.register(MenuTypeRegistry.LASER.get(), com.lothrazar.cyclic.block.laser.ScreenLaser::new);
+    event.register(MenuTypeRegistry.GENERATOR_FUEL.get(), com.lothrazar.cyclic.block.generatorfuel.ScreenGeneratorFuel::new);
+    event.register(MenuTypeRegistry.CRATE.get(), com.lothrazar.cyclic.block.crate.ScreenCrate::new);
+    event.register(MenuTypeRegistry.WORKBENCH.get(), com.lothrazar.cyclic.block.workbench.ScreenWorkbench::new);
+    event.register(MenuTypeRegistry.SOUND_RECORDER.get(), com.lothrazar.cyclic.block.soundrecord.ScreenSoundRecorder::new);
+    event.register(MenuTypeRegistry.FLUID_PIPE.get(), com.lothrazar.cyclic.block.cable.fluid.ScreenCableFluid::new);
+    event.register(MenuTypeRegistry.ITEM_PIPE.get(), com.lothrazar.cyclic.block.cable.item.ScreenCableItem::new);
+    event.register(MenuTypeRegistry.WIRELESS_ENERGY.get(), com.lothrazar.cyclic.block.wireless.energy.ScreenWirelessEnergy::new);
+    event.register(MenuTypeRegistry.WIRELESS_TRANSMITTER.get(), com.lothrazar.cyclic.block.wireless.redstone.ScreenTransmit::new);
+    event.register(MenuTypeRegistry.WIRELESS_FLUID.get(), com.lothrazar.cyclic.block.wireless.fluid.ScreenWirelessFluid::new);
+    event.register(MenuTypeRegistry.WIRELESS_ITEM.get(), com.lothrazar.cyclic.block.wireless.item.ScreenWirelessItem::new);
+    event.register(MenuTypeRegistry.SCREEN.get(), com.lothrazar.cyclic.block.screen.ScreenScreentext::new);
+    event.register(MenuTypeRegistry.PACKAGER.get(), com.lothrazar.cyclic.block.packager.ScreenPackager::new);
+    event.register(MenuTypeRegistry.FORESTER.get(), com.lothrazar.cyclic.block.forester.ScreenForester::new);
+    event.register(MenuTypeRegistry.FAN.get(), com.lothrazar.cyclic.block.fan.ScreenFan::new);
+    event.register(MenuTypeRegistry.ANVIL_MAGMA.get(), com.lothrazar.cyclic.block.anvilmagma.ScreenAnvilMagma::new);
+    event.register(MenuTypeRegistry.CRAFTER.get(), com.lothrazar.cyclic.block.crafter.ScreenCrafter::new);
+    event.register(MenuTypeRegistry.BATTERY.get(), com.lothrazar.cyclic.block.battery.ScreenBattery::new);
+    event.register(MenuTypeRegistry.COLLECTOR.get(), com.lothrazar.cyclic.block.collectitem.ScreenItemCollector::new);
+    event.register(MenuTypeRegistry.BEACON.get(), com.lothrazar.cyclic.block.beaconpotion.ScreenPotion::new);
+    event.register(MenuTypeRegistry.ANVIL.get(), com.lothrazar.cyclic.block.anvil.ScreenAnvil::new);
+    event.register(MenuTypeRegistry.PEAT_FARM.get(), com.lothrazar.cyclic.block.peatfarm.ScreenPeatFarm::new);
+    event.register(MenuTypeRegistry.PLACER_FLUID.get(), com.lothrazar.cyclic.block.placerfluid.ScreenPlacerFluid::new);
+    event.register(MenuTypeRegistry.BATTERY_CLAY.get(), com.lothrazar.cyclic.block.batteryclay.ScreenClayBattery::new);
+    event.register(MenuTypeRegistry.CLOCK.get(), com.lothrazar.cyclic.block.clock.ScreenClock::new);
+    event.register(MenuTypeRegistry.GENERATOR_SOLAR.get(), com.lothrazar.cyclic.block.generatorsolar.ScreenGeneratorSolar::new);
+    event.register(MenuTypeRegistry.SOUND_PLAYER.get(), com.lothrazar.cyclic.block.soundplay.ScreenSoundPlayer::new);
+    event.register(MenuTypeRegistry.COMPUTER_SHAPE.get(), com.lothrazar.cyclic.block.shapedata.ScreenShapedata::new);
+    event.register(MenuTypeRegistry.MINER.get(), com.lothrazar.cyclic.block.miner.ScreenMiner::new);
   }
 
   @OnlyIn(Dist.CLIENT)
@@ -188,12 +292,12 @@ public class ClientRegistryCyclic {
     }, ItemRegistry.STORAGE_BAG.get());
     //
     event.register((stack, tintIndex) -> {
-      if (stack.hasTag() && tintIndex > 0) {
+      if (stack.has(DataComponents.CUSTOM_DATA) && tintIndex > 0) {
         //what entity is inside
-        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(stack.getTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
+        EntityType<?> thing = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(EntityMagicNetEmpty.NBT_ENTITYID)));
         //pull the colours from the egg
         for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
-          if (spawneggitem.getType(null) == thing) {
+          if (spawneggitem.getType(spawneggitem.getDefaultInstance()) == thing) {
             return spawneggitem.getColor(tintIndex - 1);
           }
         }

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:melon_slice"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "minecraft:melon_slice"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 100
+  },
+  "mix": {
+    "tag": "c:honey",
+    "amount": 100
+  },
+  "result": {
+    "count": 2,
+    "id": "minecraft:glistering_melon_slice"
+  }
+}

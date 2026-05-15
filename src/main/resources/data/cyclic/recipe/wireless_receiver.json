@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "isi",
+    "sqs",
+    "isi"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:nuggets/copper"
+    },
+    "q": {
+      "item": "minecraft:bone_block"
+    },
+    "s": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:wireless_receiver"
+  }
+}

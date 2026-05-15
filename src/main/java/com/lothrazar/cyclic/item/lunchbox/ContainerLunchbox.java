@@ -8,8 +8,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class ContainerLunchbox extends ContainerBase {
 
@@ -39,15 +40,16 @@ public class ContainerLunchbox extends ContainerBase {
     }
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-      this.slotCount = h.getSlots();
-      this.endInv = h.getSlots();
-      for (int j = 0; j < h.getSlots(); j++) {
-        this.addSlot(new SlotItemHandler(h, j,
-            26 + j * Const.SQ,
-            36));
+      IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+      if (h != null) {
+        this.slotCount = h.getSlots();
+        this.endInv = h.getSlots();
+        for (int j = 0; j < h.getSlots(); j++) {
+          this.addSlot(new SlotItemHandler(h, j,
+              26 + j * Const.SQ,
+              36));
+        }
       }
-    });
     layoutPlayerInventorySlots(8, 84);
   }
 

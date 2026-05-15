@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -171,4 +173,10 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
   public float getThick() {
     return 0.065F;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
 }

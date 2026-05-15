@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.core.HolderLookup;
 
 public class TileScreentext extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -41,10 +42,11 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
         ((blue & 0xFF) << 0);
   }
 
+  /* 
   @Override
   public AABB getRenderBoundingBox() {
     return BlockEntity.INFINITE_EXTENT_AABB;
-  }
+  } */
 
   @Override
   public Component getDisplayName() {
@@ -57,7 +59,7 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
   }
 
   @Override
-  public void load(CompoundTag tags) {
+  public void loadAdditional(CompoundTag tags, HolderLookup.Provider registries) {
     text = new String[STRINGS];
     for (int i = 0; i < STRINGS; i++) {
       text[i] = tags.getString("text" + i);
@@ -69,11 +71,11 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
     fontSize = tags.getInt("font");
     offset = tags.getInt("offset");
     dropShadow = tags.getBoolean("dropShadow");
-    super.load(tags);
+    super.loadAdditional(tags, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (int i = 0; i < STRINGS; i++) {
       if (text[i] != null) {
         tag.putString("text" + i, text[i]);
@@ -86,7 +88,7 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
     tag.putInt("font", fontSize);
     tag.putInt("offset", offset);
     tag.putBoolean("dropShadow", dropShadow);
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override

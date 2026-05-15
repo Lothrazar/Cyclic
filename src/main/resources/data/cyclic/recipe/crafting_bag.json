@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "is",
+    "ti"
+  ],
+  "key": {
+    "t": {
+      "item": "cyclic:crafting_stick"
+    },
+    "s": {
+      "tag": "c:chests/wooden"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "result": {
+    "id": "cyclic:crafting_bag"
+  }
+}

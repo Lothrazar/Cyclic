@@ -11,7 +11,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -53,10 +52,7 @@ public class ItemBlockTank extends BlockItem {
   }
 
   public static FluidStack copyFluidFromStack(ItemStack stack) {
-    if (stack.getTag() != null) {
-      FluidHandlerCapabilityStack handler = new FluidHandlerCapabilityStack(stack, TileTank.CAPACITY);
-      return handler.getFluid();
-    }
+    // FluidHandlerCapabilityStack removed in 1.21.1
     return null;
   }
 
@@ -86,7 +82,7 @@ public class ItemBlockTank extends BlockItem {
   }
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
 //    return new FluidHandlerCapabilityStack(stack, TileTank.CAPACITY);
 //  }
 }

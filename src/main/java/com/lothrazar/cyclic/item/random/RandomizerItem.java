@@ -45,7 +45,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     if (player.level().isClientSide) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketRandomize(pos, side, context.getHand()));
+      // PacketRegistry.INSTANCE.sendToServer
     }
     EntityUtil.setCooldownItem(player, this, COOLDOWN);
     return super.useOn(context);

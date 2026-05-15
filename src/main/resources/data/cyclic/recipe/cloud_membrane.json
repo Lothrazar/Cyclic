@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cmc",
+    "mcm",
+    "cmc"
+  ],
+  "key": {
+    "m": {
+      "item": "cyclic:membrane"
+    },
+    "c": {
+      "item": "cyclic:cloud"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:cloud_membrane"
+  }
+}

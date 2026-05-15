@@ -8,13 +8,14 @@ import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
@@ -47,12 +48,12 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     y = topPos + 82;
     GuiSliderInteger durationslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, TileStructure.MAX_HEIGHT, menu.tile.getField(f)));
-    durationslider.setTooltip("buildertype.height.tooltip");
+    durationslider.setTooltip(Tooltip.create(Component.translatable("buildertype.height.tooltip")));
     y += 21;
     f = TileStructure.Fields.SIZE.ordinal();
     GuiSliderInteger sizeslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
-    sizeslider.setTooltip("buildertype.size.tooltip");
+    sizeslider.setTooltip(Tooltip.create(Component.translatable("buildertype.size.tooltip")));
     //
     //
     //    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
@@ -83,7 +84,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
       ButtonMachine btnShape = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize,
           shapeName.substring(0, 2), (p) -> {
             //      container.tile.setFlowing((container.getFlowing() + 1) % 2);
-            PacketRegistry.INSTANCE.sendToServer(
+            PacketDistributor.sendToServer(
                 new PacketTileData(fld.ordinal(),
                     shape.ordinal(), menu.tile.getBlockPos()));
           }));
@@ -96,7 +97,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.getEnergy());

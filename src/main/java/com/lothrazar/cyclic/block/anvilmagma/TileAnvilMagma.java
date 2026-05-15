@@ -4,13 +4,11 @@ import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,6 +26,9 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -113,7 +114,7 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   public Predicate<FluidStack> isFluidValid() {
     return p -> {
       Fluid fluid = p.getFluid();
-      return fluid == FluidMagmaHolder.STILL.get();
+      return fluid == Fluids.LAVA;
     };
   }
 
@@ -176,4 +177,10 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
   public FluidStack getFluid() {
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inputSlots;
+  }
+
 }

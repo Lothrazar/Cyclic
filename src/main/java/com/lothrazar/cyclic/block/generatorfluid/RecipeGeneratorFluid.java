@@ -1,18 +1,16 @@
 package com.lothrazar.cyclic.block.generatorfluid;
 
 import java.util.List;
-import com.google.gson.JsonObject;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
 import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
 import com.lothrazar.library.util.RecipeUtil;
-import net.minecraft.core.HolderSet;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
@@ -23,16 +21,16 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.codec.ByteBufCodecs;
 
-public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
+public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
 
-  private final ResourceLocation id;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   public final FluidTagIngredient fluidIng;
   private final EnergyIngredient energy;
 
-  public RecipeGeneratorFluid(ResourceLocation id, FluidTagIngredient in, EnergyIngredient energy) {
-    this.id = id;
+  public RecipeGeneratorFluid(FluidTagIngredient in, EnergyIngredient energy) {
     this.fluidIng = in;
     this.energy = energy;
   }
@@ -43,7 +41,7 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
   }
 
   @Override
-  public ItemStack assemble(TileGeneratorFluid inv, RegistryAccess ra) {
+  public ItemStack assemble(GeneratorFluidRecipeInput inv, HolderLookup.Provider ra) {
     return ItemStack.EMPTY;
   }
 
@@ -53,63 +51,31 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
   }
 
   @Override
-  public ItemStack getResultItem(RegistryAccess ra) {
+  public ItemStack getResultItem(HolderLookup.Provider ra) {
     return ItemStack.EMPTY;
   }
 
-  @Override
-  public ResourceLocation getId() {
-    return id;
-  }
-
-  //  @Override
   public FluidStack getRecipeFluid() {
     return fluidIng.getFluidStack();
   }
 
   @Deprecated
   public List<Fluid> getFluidsFromTag() {
-    TagKey<Fluid> tag =  TagKey.create(Registries.FLUID, ResourceLocation.parse(this.fluidIng.getTag()));
-//    BuiltInRegistries.FLUID.getOrCreateTag(ResourceLocation.parse(this.fluidIng.getTag())  );
-//    BuiltInRegistries.FLUID.getOrCreateTag()
-    HolderSet.Named<Fluid> what = BuiltInRegistries.FLUID.getTag(tag).orElse(null);
-//    what.contains()
-//    List<Fluid> list = BuiltInRegistries.FLUID.getTag(tag).stream().toList();
     return null;
   }
+
   public TagKey<Fluid> getTag() {
-    TagKey<Fluid> tag =  TagKey.create(Registries.FLUID, ResourceLocation.parse(this.fluidIng.getTag()));
-
-//    HolderSet.Named<Fluid> namedTag = BuiltInRegistries.FLUID.getTag(tag).orElse(null);
-    return tag;
+    return TagKey.create(Registries.FLUID, ResourceLocation.parse(this.fluidIng.getTag()));
   }
-
 
   @Override
-  public boolean matches(TileGeneratorFluid inv, Level worldIn) {
+  public boolean matches(GeneratorFluidRecipeInput inv, Level worldIn) {
     try {
-      TileGeneratorFluid tile = inv;
-      return RecipeUtil.matchFluid(tile.getFluid(), this.fluidIng);
+      return RecipeUtil.matchFluid(inv.getFluid(), this.fluidIng);
     }
-    catch (ClassCastException e) {
+    catch (Exception e) {
       return false;
     }
-  }
-
-  public boolean matches(ItemStack current, Ingredient ing) {
-    if (ing == Ingredient.EMPTY) {
-      //it must be empty
-      return current.isEmpty();
-    }
-    if (current.isEmpty()) {
-      return ing == Ingredient.EMPTY;
-    }
-    return ing.test(current);
-  }
-
-  public ItemStack[] ingredientAt(int slot) {
-    Ingredient ing = ingredients.get(slot);
-    return ing.getItems();
   }
 
   @Override
@@ -141,37 +107,29 @@ public class RecipeGeneratorFluid implements Recipe<TileGeneratorFluid> {
 
   public static class SerializeGenerateFluid implements RecipeSerializer<RecipeGeneratorFluid> {
 
-    public SerializeGenerateFluid() {}
+    public static final MapCodec<RecipeGeneratorFluid> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+        FluidTagIngredient.CODEC.fieldOf("fluid").forGetter(r -> r.fluidIng),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfpertick(), r.getTicks()))
+    ).apply(instance, RecipeGeneratorFluid::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorFluid> STREAM_CODEC = StreamCodec.composite(
+        StreamCodec.composite(
+            FluidStack.OPTIONAL_STREAM_CODEC, f -> f.getFluidStack() == null ? FluidStack.EMPTY : f.getFluidStack(),
+            ByteBufCodecs.STRING_UTF8, f -> f.getTag() == null ? "" : f.getTag(),
+            ByteBufCodecs.INT, f -> f.getAmount(),
+            (fs, tag, amount) -> new FluidTagIngredient(fs, tag.isEmpty() ? null : tag, amount)
+        ), r -> r.fluidIng,
+        EnergyIngredient.STREAM_CODEC, r -> new EnergyIngredient(r.getRfpertick(), r.getTicks()),
+        RecipeGeneratorFluid::new
+    );
 
-    /**
-     * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
-     */
     @Override
-    public RecipeGeneratorFluid fromJson(ResourceLocation recipeId, JsonObject json) {
-      RecipeGeneratorFluid r = null;
-      try {
-        //        Ingredient inputFirst = Ingredient.deserialize(JSONUtils.getJsonObject(json, "fuel"));
-        FluidTagIngredient fs = RecipeUtil.parseFluid(json, "fuel");
-        r = new RecipeGeneratorFluid(recipeId, fs, new EnergyIngredient(json));
-      }
-      catch (Exception e) {
-        ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
-      }
-      return r;
+    public MapCodec<RecipeGeneratorFluid> codec() {
+      return CODEC;
     }
 
     @Override
-    public RecipeGeneratorFluid fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-      return new RecipeGeneratorFluid(recipeId,
-          FluidTagIngredient.readFromPacket(buffer),
-          new EnergyIngredient(buffer.readInt(), buffer.readInt()));
-    }
-
-    @Override
-    public void toNetwork(FriendlyByteBuf buffer, RecipeGeneratorFluid recipe) {
-      recipe.fluidIng.writeToPacket(buffer);
-      buffer.writeInt(recipe.energy.getRfPertick());
-      buffer.writeInt(recipe.energy.getTicks());
+    public StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorFluid> streamCodec() {
+      return STREAM_CODEC;
     }
   }
 }

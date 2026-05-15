@@ -39,7 +39,7 @@ public class BlockAnvilMagma extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.ANVIL_MAGMA.get(), ScreenAnvilMagma::new);
+    // MenuScreens.register(MenuTypeRegistry.ANVIL_MAGMA.get(), ScreenAnvilMagma::new);
   }
 
   @Override

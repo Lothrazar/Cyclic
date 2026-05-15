@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gg",
+    "gg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:tinted_glass"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:dark_glass"
+  }
+}

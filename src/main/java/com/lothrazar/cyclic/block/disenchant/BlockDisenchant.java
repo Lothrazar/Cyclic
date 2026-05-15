@@ -73,7 +73,7 @@ public class BlockDisenchant extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.DISENCHANTER.get(), ScreenDisenchant::new);
+    // MenuScreens.register(MenuTypeRegistry.DISENCHANTER.get(), ScreenDisenchant::new);
   }
 
   @Override

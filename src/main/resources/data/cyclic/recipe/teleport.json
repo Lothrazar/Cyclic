@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "ege",
+    "ccc"
+  ],
+  "key": {
+    "e": {
+      "item": "minecraft:end_stone"
+    },
+    "c": {
+      "item": "minecraft:calcite"
+    },
+    "g": {
+      "item": "cyclic:gem_obsidian"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:teleport"
+  }
+}

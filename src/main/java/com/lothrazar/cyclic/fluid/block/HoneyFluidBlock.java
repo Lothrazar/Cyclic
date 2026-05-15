@@ -14,17 +14,17 @@ import net.minecraft.world.level.material.FlowingFluid;
 public class HoneyFluidBlock extends LiquidBlock {
 
   public HoneyFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
-    super(supplier, props);
+    super(supplier.get(), props);
   }
 
   @SuppressWarnings("deprecation")
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (!worldIn.isClientSide && entityIn instanceof LivingEntity ent) {
-      ent.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0));
-      ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
-      ent.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 5));
-      ent.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 5));
+      ent.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0, false, false, false));
+      ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, false, false, false));
+      ent.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 5, false, false, false));
+      ent.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 40, 5, false, false, false));
     }
     super.entityInside(state, worldIn, pos, entityIn);
   }

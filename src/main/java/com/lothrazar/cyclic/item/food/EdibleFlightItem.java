@@ -33,10 +33,10 @@ public class EdibleFlightItem extends AppleBuffs {
 
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entity) {
-    final var flight = PotionEffectRegistry.FLIGHT.get();
+    final var flight = com.lothrazar.cyclic.registry.PotionEffectRegistry.FLIGHT;
     if (entity.hasEffect(flight)) {
       MobEffectInstance currentEff = entity.getEffect(flight);
-      currentEff.update(new MobEffectInstance(PotionEffectRegistry.FLIGHT.get(), currentEff.getDuration() + TICKS.get())); // update to merge together new and existing timers
+      currentEff.update(new MobEffectInstance(com.lothrazar.cyclic.registry.PotionEffectRegistry.FLIGHT, currentEff.getDuration() + TICKS.get())); // update to merge together new and existing timers
     }
     else {
       entity.addEffect(new MobEffectInstance(flight, TICKS.get()));

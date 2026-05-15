@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:egg"
+    },
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:egg"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 100
+  },
+  "mix": {
+    "tag": "c:honey",
+    "amount": 500
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:cake"
+  }
+}

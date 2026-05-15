@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.core.HolderLookup;
 
 public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -90,10 +91,12 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
     }
   }
 
+  /* 
   @Override
   public AABB getRenderBoundingBox() {
     return BlockEntity.INFINITE_EXTENT_AABB;
   }
+  */
 
   @Override
   public Component getDisplayName() {
@@ -197,7 +200,7 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     this.rangeX = tag.getInt("ox");
     this.rangeY = tag.getInt("oy");
     this.rangeZ = tag.getInt("oz");
@@ -206,17 +209,17 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
     if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
     }
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("ox", rangeX);
     tag.putInt("oy", rangeY);
     tag.putInt("oz", rangeZ);
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public List<BlockPos> getShapeHollow() {

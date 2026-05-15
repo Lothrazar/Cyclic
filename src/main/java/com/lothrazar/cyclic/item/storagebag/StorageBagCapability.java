@@ -1,44 +1,34 @@
 package com.lothrazar.cyclic.item.storagebag;
 
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
-public class StorageBagCapability implements ICapabilitySerializable<CompoundTag> {
+public class StorageBagCapability extends ItemStackHandler {
 
-  ItemStackHandler invo = new ItemStackHandler(ItemStorageBag.SLOTS) {
+  private static final String NBT_KEY = "items";
+  private final ItemStack bagStack;
 
-    @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
-      return !(stack.getItem() instanceof ItemStorageBag) && super.isItemValid(slot, stack);
+  public StorageBagCapability(ItemStack bagStack) {
+    super(ItemStorageBag.SLOTS);
+    this.bagStack = bagStack;
+    var server = ServerLifecycleHooks.getCurrentServer();
+    if (server != null) {
+      CompoundTag data = ItemStorageBag.getCustomData(bagStack);
+      if (data.contains(NBT_KEY)) {
+        deserializeNBT(server.registryAccess(), data.getCompound(NBT_KEY));
+      }
     }
-  };
-  private final LazyOptional<ItemStackHandler> inventoryCap = LazyOptional.of(() -> invo);
-
-  public StorageBagCapability(ItemStack stack, CompoundTag nbt) {
-    //
   }
 
   @Override
-  public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-      return inventoryCap.cast();
+  protected void onContentsChanged(int slot) {
+    var server = ServerLifecycleHooks.getCurrentServer();
+    if (server != null) {
+      CompoundTag data = ItemStorageBag.getCustomData(bagStack);
+      data.put(NBT_KEY, serializeNBT(server.registryAccess()));
+      ItemStorageBag.setCustomData(bagStack, data);
     }
-    return LazyOptional.empty();
-  }
-
-  @Override
-  public CompoundTag serializeNBT() {
-    return invo.serializeNBT();
-  }
-
-  @Override
-  public void deserializeNBT(CompoundTag nbt) {
-    invo.deserializeNBT(nbt);
   }
 }

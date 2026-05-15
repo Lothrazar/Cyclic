@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.HolderLookup;
 
 public class TileBeaconRedstone extends TileBlockEntityCyclic {
 
@@ -28,7 +29,7 @@ public class TileBeaconRedstone extends TileBlockEntityCyclic {
   }
 
   private void tick(Level level, BlockPos blockPos) {
-    updateBeam(level, blockPos, beamStuff);
+    // updateBeam(level, blockPos, beamStuff);
   }
 
   @Override
@@ -50,12 +51,12 @@ public class TileBeaconRedstone extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    super.load(tag);
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    super.saveAdditional(tag);
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.saveAdditional(tag, registries);
   }
 }

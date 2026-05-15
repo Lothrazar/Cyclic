@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
-import javax.annotation.Nonnull;
 
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.gui.ContainerBase;
@@ -25,7 +24,7 @@ public class ContainerFilterCard extends ContainerBase {
     super(MenuTypeRegistry.FILTER_DATA.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.endInv = CapabilityProviderFilterCard.SLOTS;
+    this.endInv = 9;
     if (player.getMainHandItem().getItem() instanceof FilterCardItem) {
       this.bag = player.getMainHandItem();
       this.slot = player.getInventory().selected;
@@ -35,8 +34,8 @@ public class ContainerFilterCard extends ContainerBase {
       this.slot = 40;
     }
     //
-    //    this.nbt = bag.getOrCreateTag();
-//    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    //    this.nbt = bag.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+//    bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ITEM_HANDLER).ifPresent(h -> {
       var h = CapabilityFixer.item(bag);
       this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
@@ -47,7 +46,7 @@ public class ContainerFilterCard extends ContainerBase {
         this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
 
           @Override
-          public boolean mayPlace(@Nonnull ItemStack stack) {
+          public boolean mayPlace(ItemStack stack) {
             if (stack.getItem() == ItemRegistry.FILTER_DATA.get()) {
               return false;
             }

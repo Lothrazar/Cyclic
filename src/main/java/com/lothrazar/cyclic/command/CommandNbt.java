@@ -15,8 +15,8 @@ public class CommandNbt {
   public static int executePrintNbt(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
     ItemStack held = player.getMainHandItem();
-    if (held.hasTag()) {
-      ChatUtil.sendFeedback(ctx, held.getTag().toString());
+    if (!held.getComponentsPatch().isEmpty()) {
+      ChatUtil.sendFeedback(ctx, held.getComponentsPatch().toString());
     }
     else {
       ChatUtil.sendFeedback(ctx, "command.cyclic.nbtprint.null");

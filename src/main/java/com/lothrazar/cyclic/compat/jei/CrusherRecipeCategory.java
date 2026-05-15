@@ -21,12 +21,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
+public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeCrusher>> {
 
   private static final int FONT = 0xFFFFFFFF;
-  private static final ResourceLocation ID = new ResourceLocation(ModCyclic.MODID, "crusher");
-  static final RecipeType<RecipeCrusher> TYPE = new RecipeType<>(ID, RecipeCrusher.class);
+  private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "crusher");
+  static final RecipeType<RecipeHolder<RecipeCrusher>> TYPE = new RecipeType<>(ID, (Class)RecipeHolder.class);
   private IDrawable gui;
   private IDrawable icon;
   private Font font;
@@ -34,7 +35,7 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
 
   public CrusherRecipeCategory(IGuiHelper helper) {
     font = Minecraft.getInstance().font;
-    gui = helper.drawableBuilder(new ResourceLocation(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
+    gui = helper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/jei/crusher.png"), 0, 0, 155, 49).setTextureSize(155, 49).build();
     icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.CRUSHER.get()));
     bar = new EnergyBar(font, TileSolidifier.MAX);
     bar.setHeight(48);
@@ -53,17 +54,24 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   }
 
   @Override
-  public IDrawable getBackground() {
-    return gui;
+  public int getWidth() {
+    return gui.getWidth();
   }
 
   @Override
-  public RecipeType<RecipeCrusher> getRecipeType() {
+  public int getHeight() {
+    return gui.getHeight();
+  }
+
+  @Override
+  public RecipeType<RecipeHolder<RecipeCrusher>> getRecipeType() {
     return TYPE;
   }
 
   @Override
-  public void draw(RecipeCrusher recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+  public void draw(RecipeHolder<RecipeCrusher> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics ms, double mouseX, double mouseY) {
+    gui.draw(ms, 0, 0);
+    var recipe = recipeHolder.value();
     int x = 78;
     if (recipe.energy.getTicks() < 40) {
       ms.drawString(font, recipe.energy.getTicks() + " t", x, 6, FONT);
@@ -81,7 +89,8 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeCrusher> {
   }
 
   @Override
-  public void setRecipe(IRecipeLayoutBuilder builder, RecipeCrusher recipe, IFocusGroup focuses) {
+  public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeCrusher> recipeHolder, IFocusGroup focuses) {
+    RecipeCrusher recipe = recipeHolder.value();
     builder.addSlot(RecipeIngredientRole.INPUT, 3, 14).addIngredients(recipe.at(0));
     builder.addSlot(RecipeIngredientRole.OUTPUT, 35, 6).addItemStack(recipe.result);
     if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {

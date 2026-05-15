@@ -21,7 +21,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.server.level.ServerEntity;
 
 public class DarkFireEntity extends ThrowableItemProjectile {
 
@@ -50,7 +51,7 @@ public class DarkFireEntity extends ThrowableItemProjectile {
         if (!level().isClientSide && target.isOnFire() == false
             && target instanceof LivingEntity living) {
           living.hurt(level().damageSources().magic(), Mth.nextInt(level().random, 3, 5));
-          living.addEffect(new MobEffectInstance(MobEffects.WITHER, Const.TICKS_PER_SEC * 5, 1));
+          living.addEffect(new MobEffectInstance(MobEffects.WITHER, Const.TICKS_PER_SEC * 5, 1, false, false, false));
         }
       }
     }
@@ -82,7 +83,7 @@ public class DarkFireEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
+  public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity serverEntity) {
+    return new ClientboundAddEntityPacket(this, serverEntity);
   }
 }

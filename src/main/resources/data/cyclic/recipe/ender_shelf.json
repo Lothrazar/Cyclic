@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ppp",
+    "bbb",
+    "ppp"
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:purpur_block"
+    },
+    "b": {
+      "tag": "c:bookshelves"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:ender_shelf"
+  }
+}

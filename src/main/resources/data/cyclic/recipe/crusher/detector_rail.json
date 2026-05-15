@@ -1,0 +1,34 @@
+{
+  "type": "cyclic:crusher",
+  "input": {
+    "item": "minecraft:powered_rail"
+  },
+  "energy": {
+    "ticks": 100,
+    "rfpertick": 20
+  },
+  "result": {
+    "count": 9,
+    "id": "minecraft:iron_nugget"
+  },
+  "percent": 5,
+  "bonus": {
+    "item": "minecraft:redstone",
+    "count": 1
+  },
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "cyclic",
+          "type": "c:mod_loaded"
+        },
+        {
+          "item": "cyclic:crusher",
+          "type": "c:item_exists"
+        }
+      ],
+      "type": "c:and"
+    }
+  ]
+}

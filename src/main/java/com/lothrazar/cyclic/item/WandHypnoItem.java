@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 public class WandHypnoItem extends ItemBaseCyclic {
 
@@ -45,7 +46,7 @@ public class WandHypnoItem extends ItemBaseCyclic {
 
   private void doAction(ItemStack stack, Level world, Player player) {
     if (!world.isClientSide) {
-      IEnergyStorage storage = CapabilityFixer.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      IEnergyStorage storage = CapabilityFixer.energy(stack);//stack.getCapability(Capabilities.ENERGY, null).orElse(null);
       final int cost = COST.get();
       if (storage != null && storage.extractEnergy(cost, true) == cost) {
         storage.extractEnergy(cost, false);

@@ -21,18 +21,18 @@ public class CraftingBagItem extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-      NetworkHooks.openScreen((ServerPlayer) playerIn, new CraftingBagContainerProvider(slot), buf -> buf.writeInt(slot));
+      ((ServerPlayer) playerIn).openMenu(new CraftingBagContainerProvider(slot), buf -> buf.writeInt(slot));
     }
     return super.use(worldIn, playerIn, handIn);
   }
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.CRAFTING_BAG.get(), CraftingBagScreen::new);
+    // // MenuScreens.register(MenuTypeRegistry.CRAFTING_BAG.get(), CraftingBagScreen::new);
   }
 
 //  @Override
 //  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-//    return new CraftingBagCapabilityProvider();
+//    return null;
 //  }
 }

@@ -26,7 +26,7 @@ public class SlingshotItem extends ItemBaseCyclic {
   }
 
   @Override
-  public int getUseDuration(ItemStack stack) {
+  public int getUseDuration(ItemStack stack, LivingEntity entity) {
     return TICKS_USING; //bow has 72000
   }
 
@@ -39,7 +39,7 @@ public class SlingshotItem extends ItemBaseCyclic {
 
   @Override
   public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
-    int charge = this.getUseDuration(stack) - chargeTimer;
+    int charge = this.getUseDuration(stack, entity) - chargeTimer;
     float percentageCharged = BowItem.getPowerForTime(charge); //never zero, its from [0.03,1];
     if (percentageCharged < 0.1) {
       return; //not enough force to go with any realistic path 

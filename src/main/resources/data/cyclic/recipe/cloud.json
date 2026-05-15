@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cmc",
+    "cpc",
+    "cmc"
+  ],
+  "key": {
+    "m": {
+      "item": "minecraft:cobweb"
+    },
+    "p": {
+      "item": "minecraft:sea_pickle"
+    },
+    "c": {
+      "item": "minecraft:snowball"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:cloud"
+  }
+}

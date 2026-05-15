@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.electronwill.nightconfig.core.ConfigSpec;
 import com.lothrazar.cyclic.CyclicLogger;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
@@ -72,27 +71,29 @@ import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
-import com.lothrazar.cyclic.registry.PotionRegistry;
-import com.lothrazar.library.config.ConfigTemplate;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.*;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
 
-public class ConfigRegistry extends ConfigTemplate {
+public class ConfigRegistry {
 
-  private static ConfigSpec COMMON_CONFIG;
-  private static ConfigSpec CLIENT_CONFIG;
+  private static ModConfigSpec COMMON_CONFIG;
+  private static ModConfigSpec CLIENT_CONFIG;
 
   public void setupMain() {
-    COMMON_CONFIG.setConfig(setup(ModCyclic.MODID));
+    ModContainer mc = ModLoadingContext.get().getActiveContainer();
+    mc.registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
   }
 
   public void setupClient() {
-    CLIENT_CONFIG.setConfig(setup(ModCyclic.MODID + "-client"));
-    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigRegistry.CLIENT_CONFIG);
+    ModContainer mc = ModLoadingContext.get().getActiveContainer();
+    mc.registerConfig(ModConfig.Type.CLIENT, ConfigRegistry.CLIENT_CONFIG);
   }
 
   // Defaults
@@ -227,69 +228,73 @@ public class ConfigRegistry extends ConfigTemplate {
   }
 
   private static void initConfig() {
-    final ConfigSpec.Builder CFG = builder();
+    final ModConfigSpec.Builder CFG = new ModConfigSpec.Builder();
     CFG.comment(WALL, "Features with configurable properties are split into categories", WALL).push(ModCyclic.MODID);
     CFG.comment(WALL, " Configs make sure players will not be able to craft any in survival "
         + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
         .push("potion");
-    PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment(" Set false to disable the base recipe").define("antigravity.enabled", true);
-    PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment(" Set false to disable the base recipe").define("attack_range.enabled", true);
-    PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
-    PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment(" Set false to disable the base recipe").define("butterfingers.enabled", true);
-    PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment(" Set false to disable the base recipe").define("flight.enabled", true);
-    PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment(" Set false to disable the base recipe").define("frost_walker.enabled", true);
-    PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment(" Set false to disable the base recipe").define("gravity.enabled", true);
-    PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment(" Set false to disable the base recipe").define("haste.enabled", true);
-    PotionRegistry.PotionRecipeConfig.HUNGER = CFG.comment(" Set false to disable the base recipe").define("hunger.enabled", true);
-    PotionRegistry.PotionRecipeConfig.LEVITATION = CFG.comment(" Set false to disable the base recipe").define("levitation.enabled", true);
-    PotionRegistry.PotionRecipeConfig.MAGNETIC = CFG.comment(" Set false to disable the base recipe").define("magnetic.enabled", true);
-    PotionRegistry.PotionRecipeConfig.REACH_DISTANCE = CFG.comment(" Set false to disable the base recipe").define("reach_distance.enabled", true);
-    PotionRegistry.PotionRecipeConfig.RESISTANCE = CFG.comment(" Set false to disable the base recipe").define("resistance.enabled", true);
-    PotionRegistry.PotionRecipeConfig.STUN = CFG.comment(" Set false to disable the base recipe").define("stun.enabled", true);
-    PotionRegistry.PotionRecipeConfig.SWIMSPEED = CFG.comment(" Set false to disable the base recipe").define("swimspeed.enabled", true);
-    PotionRegistry.PotionRecipeConfig.SNOWWALK = CFG.comment(" Set false to disable the base recipe").define("snowwalk.enabled", true);
-    PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment(" Set false to disable the base recipe").define("waterwalk.enabled", true);
-    PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment(" Set false to disable the base recipe").define("antigravity.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment(" Set false to disable the base recipe").define("attack_range.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment(" Set false to disable the base recipe").define("butterfingers.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment(" Set false to disable the base recipe").define("flight.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment(" Set false to disable the base recipe").define("frost_walker.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment(" Set false to disable the base recipe").define("gravity.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment(" Set false to disable the base recipe").define("haste.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.HUNGER = CFG.comment(" Set false to disable the base recipe").define("hunger.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.LEVITATION = CFG.comment(" Set false to disable the base recipe").define("levitation.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.MAGNETIC = CFG.comment(" Set false to disable the base recipe").define("magnetic.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.REACH_DISTANCE = CFG.comment(" Set false to disable the base recipe").define("reach_distance.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.RESISTANCE = CFG.comment(" Set false to disable the base recipe").define("resistance.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.STUN = CFG.comment(" Set false to disable the base recipe").define("stun.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.SWIMSPEED = CFG.comment(" Set false to disable the base recipe").define("swimspeed.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.SNOWWALK = CFG.comment(" Set false to disable the base recipe").define("snowwalk.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.WATERWALK = CFG.comment(" Set false to disable the base recipe").define("waterwalk.enabled", true);
+//     PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
     CFG.pop();
-//    ////////////////////////////////////////////////////////////////// enchantment
-//    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
-//        .push("enchantment");
-//    AutoSmeltEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", true);
-//    BeekeeperEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
-//    BeheadingEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeheadingEnchant.ID + ".enabled", true);
-//    GLOOM_IGNORE_LIST = CFG.comment(" Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these")
-//        .defineList(GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
-//            it -> it instanceof String);
-//    BEHEADING_SKINS = CFG.comment(" Beheading enchant add player skin head drop, add any mob id and any skin")
-//        .defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
-//    BeheadingEnchant.PERCDROP = CFG.comment(" Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
-//    BeheadingEnchant.PERCPERLEVEL = CFG.comment(" Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
-//    GloomCurseEnchant.CFG = CFG.comment(" (Gloom) Set false to stop enchantment from working").define(GloomCurseEnchant.ID + ".enabled", true);
-//    DisarmEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
-//    ExcavationEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
-//    GrowthEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
-//    GrowthEnchant.RADIUSFACTOR = CFG.comment(" Radius per level.  size around player to perform growth logic").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
-//    MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
-//    LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
-//    MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
-//    MultiBowEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MultiBowEnchant.ID + ".enabled", true);
-//    EnderPearlEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(EnderPearlEnchant.ID + ".enabled", true);
-//    QuickdrawEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(QuickdrawEnchant.ID + ".enabled", true);
-//    ReachEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ReachEnchant.ID + ".enabled", true);
-//    StepEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(StepEnchant.ID + ".enabled", true);
-//    SteadyEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(SteadyEnchant.ID + ".enabled", true);
-//    LastStandEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LastStandEnchant.ID + ".enabled", true);
-//    LastStandEnchant.COST = CFG.comment(" Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
-//    LastStandEnchant.ABS = CFG.comment(" How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);
-//    LastStandEnchant.COOLDOWN = CFG.comment(" How many ticks of cooldown, 0 to disable").defineInRange(LastStandEnchant.ID + ".cooldown", 20, 0, 99999);
-//    TravellerEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(TravellerEnchant.ID + ".enabled", true);
-//    VenomEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(VenomEnchant.ID + ".enabled", true);
-//    XpEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(XpEnchant.ID + ".enabled", true);
-//    DisarmEnchant.PERCENTPERLEVEL = CFG.comment(" Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
-//    DISARM_IGNORE_LIST = CFG.comment(" Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
-//        .defineList(DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
-//            it -> it instanceof String);
-//    CFG.pop(); //enchantment
+    ////////////////////////////////////////////////////////////////// enchantment
+    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
+        .push("enchantment");
+    com.lothrazar.cyclic.enchant.AutoSmeltEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.AutoSmeltEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.BeekeeperEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.BeekeeperEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.BeheadingEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".enabled", true);
+    GLOOM_IGNORE_LIST = CFG.comment(" Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these")
+        .defineList(com.lothrazar.cyclic.enchant.GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
+            it -> it instanceof String);
+    BEHEADING_SKINS = CFG.comment(" Beheading enchant add player skin head drop, add any mob id and any skin")
+        .defineList(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
+    com.lothrazar.cyclic.enchant.BeheadingEnchant.PERCDROP = CFG.comment(" Base perecentage chance to drop a head on kill").defineInRange(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".percent", 20, 1, 99);
+    com.lothrazar.cyclic.enchant.BeheadingEnchant.PERCPERLEVEL = CFG.comment(" Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".per_level", 25, 1, 99);
+    com.lothrazar.cyclic.enchant.GloomCurseEnchant.CFG = CFG.comment(" (Gloom) Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.GloomCurseEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.DisarmEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.DisarmEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.ExcavationEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.ExcavationEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.GrowthEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.GrowthEnchant.RADIUS_FACTOR = CFG.comment(" Radius per level. Size around player to perform growth logic").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".radius", 2, 1, 16);
+    com.lothrazar.cyclic.enchant.GrowthEnchant.LIMIT_FACTOR = CFG.comment(" Max blocks to grow per tick per level").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".limit", 3, 1, 64);
+    com.lothrazar.cyclic.enchant.GrowthEnchant.HEIGHT = CFG.comment(" Height of the growth region in blocks").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".height", 2, 1, 16);
+    com.lothrazar.cyclic.enchant.GrowthEnchant.ODDS = CFG.comment(" Percent chance per block per tick to attempt growth").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".odds", 50, 1, 100);
+    com.lothrazar.cyclic.enchant.GrowthEnchant.PLAYER_ONLY = CFG.comment(" If true, only players trigger growth (not mobs holding hoes)").define(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".player_only", true);
+    com.lothrazar.cyclic.enchant.MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(com.lothrazar.cyclic.enchant.MultiJumpEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.LifeLeechEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.MagnetEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.MultiBowEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.MultiBowEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.EnderPearlEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.EnderPearlEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.QuickdrawEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.QuickdrawEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.ReachEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.ReachEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.StepEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.StepEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.SteadyEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.SteadyEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.LastStandEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.LastStandEnchant.COST = CFG.comment(" Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
+    com.lothrazar.cyclic.enchant.LastStandEnchant.ABS = CFG.comment(" How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);
+    com.lothrazar.cyclic.enchant.LastStandEnchant.COOLDOWN = CFG.comment(" How many ticks of cooldown, 0 to disable").defineInRange(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".cooldown", 20, 0, 99999);
+    com.lothrazar.cyclic.enchant.TravellerEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.TravellerEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.VenomEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.VenomEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.XpEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.XpEnchant.ID + ".enabled", true);
+    com.lothrazar.cyclic.enchant.DisarmEnchant.PERCENTPERLEVEL = CFG.comment(" Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(com.lothrazar.cyclic.enchant.DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
+    DISARM_IGNORE_LIST = CFG.comment(" Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
+        .defineList(com.lothrazar.cyclic.enchant.DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
+            it -> it instanceof String);
+    CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
     GENERATE_FLOWERS = CFG.comment(" Do the four generate in the world. "
         + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "
@@ -432,17 +437,17 @@ public class ConfigRegistry extends ConfigTemplate {
         + "This affects blocks cyclic:wireless_energy, cyclic:wireless_item, cyclic:wireless_fluid, cyclic:wireless_transmitter; "
         + "If you change it to false it will only work if the target is in the same dimension.")
         .define("wireless_transfer_dimensional", true);
-    TileAntiBeacon.HARMFUL_POTIONS = CFG.comment(" If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
-        .define("harmful_potions", true);
-    TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
-        .defineInRange("anti_beacon.radius", 16, 1, 128);
-    TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
-        .defineInRange("anti_beacon.ticks", 200, 20, 9999);
+//     TileAntiBeacon.HARMFUL_POTIONS = CFG.comment(" If true, then all potions marked as harmful/negative will be used in addition to the 'anti_beacon.potion_list' for cures and immunities  (used by both sponge and artemisbeacon).")
+//         .define("harmful_potions", true);
+//     TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
+//         .defineInRange("anti_beacon.radius", 16, 1, 128);
+//     TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
+//         .defineInRange("anti_beacon.ticks", 200, 20, 9999);
     //TODO: variant that is (only harmful effects? just like milk that does all effects) ?
-    TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
-        .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",
-            "cyclic:gravity",
-            "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
+//     TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. supports wildcard such as 'cyclic:*'. (This list is is used even if harmful_potions=false or true both)")
+//         .defineList("anti_beacon.potion_list", Arrays.asList("minecraft:poison", "minecraft:*_poison", "minecraft:wither",
+//             "cyclic:gravity",
+//             "minecraft:weakness", "minecraft:slowness"), it -> it instanceof String);
     //TODO: can potions have TAGS?
     TileCableFluid.BUFFERSIZE = CFG.comment(" How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);
@@ -576,7 +581,7 @@ public class ConfigRegistry extends ConfigTemplate {
   }
 
   private static void initClientConfig() {
-    final ForgeConfigSpec.Builder CFGC = builder();
+    final ModConfigSpec.Builder CFGC = new ModConfigSpec.Builder();
     CFGC.comment(WALL, "Client-side properties", WALL)
         .push(ModCyclic.MODID);
     CFGC.comment(WALL, "Block Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
@@ -653,7 +658,7 @@ public class ConfigRegistry extends ConfigTemplate {
   private static ConfigValue<List<? extends String>> FACADE_IGNORELIST;
 
   public static boolean isFacadeAllowed(ItemStack item) {
-    ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item.getItem());
+    ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item.getItem());
     if (StringParseUtil.isInList(getFacadeIgnoreList(), itemId)) {
       return false;
     }

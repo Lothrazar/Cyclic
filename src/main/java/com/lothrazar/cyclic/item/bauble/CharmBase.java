@@ -27,6 +27,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class CharmBase extends ItemBaseToggle {
 
@@ -72,7 +74,7 @@ public abstract class CharmBase extends ItemBaseToggle {
 
   private void tryWingTick(ItemStack stack, Entity entityIn, LivingEntity living) {
     if (this.wingCharm && living.fallDistance > FALLDISTANCELIMIT && !living.hasEffect(MobEffects.SLOW_FALLING)) {
-      MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, FALLDISTANCESECONDS * Const.TICKS_PER_SEC, Const.Potions.I);
+      MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, FALLDISTANCESECONDS * Const.TICKS_PER_SEC, Const.Potions.I, false, false, false);
       living.addEffect(eff);
       ItemStackUtil.damageItem(living, stack);
       SoundUtil.playSound(living, SoundEvents.LADDER_FALL);
@@ -81,8 +83,7 @@ public abstract class CharmBase extends ItemBaseToggle {
 
   private void tryFireTick(ItemStack stack, LivingEntity living) {
     if (this.fireProt && living.isOnFire() && !living.hasEffect(MobEffects.FIRE_RESISTANCE)) { // do nothing if you already have
-      MobEffectInstance eff = new MobEffectInstance(MobEffects.FIRE_RESISTANCE, FIREPROTSECONDS * Const.TICKS_PER_SEC, Const.Potions.I);
-      eff.visible = false;
+      MobEffectInstance eff = new MobEffectInstance(MobEffects.FIRE_RESISTANCE, FIREPROTSECONDS * Const.TICKS_PER_SEC, Const.Potions.I, false, false, false);
       living.addEffect(eff);
       ItemStackUtil.damageItem(living, stack);
       SoundUtil.playSound(living, SoundEvents.FIRE_EXTINGUISH);
@@ -117,22 +118,22 @@ public abstract class CharmBase extends ItemBaseToggle {
     }
   }
 
-  private static void toggleAttribute(Player player, Item charm, Attribute attr, UUID id, float factor, int flatIncrease, Operation op) {
+  private static void toggleAttribute(Player player, Item charm, Holder<Attribute> attr, UUID id, float factor, int flatIncrease, Operation op) {
     ItemStack charmStack = CharmUtil.getIfEnabled(player, charm);
     AttributeInstance attrPlayer = player.getAttribute(attr);
-    AttributeModifier oldValue = attrPlayer.getModifier(id);
+    AttributeModifier oldValue = attrPlayer.getModifier(ResourceLocation.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
     if (charmStack.isEmpty()) {
       ///i am NOT holding it. OR im holding but its OFF
       //remove my modifier
       if (oldValue != null) {
-        attrPlayer.removeModifier(id);
+        attrPlayer.removeModifier(ResourceLocation.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)));
       }
     }
     else { // im   holding it AND its enabled
       if (oldValue == null) {
         /// add new
         double baseVal = attrPlayer.getBaseValue();
-        AttributeModifier newValue = new AttributeModifier(id, "Bonus from " + ModCyclic.MODID, baseVal * factor + flatIncrease, op);
+        AttributeModifier newValue = new AttributeModifier(ResourceLocation.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)), baseVal * factor + flatIncrease, op);
         attrPlayer.addPermanentModifier(newValue);
         //        ModCyclic.LOGGER.info(baseSpeed + " becinesNEW value " + newValue.getAmount() + " -> " + attrPlayer.getValue());
         ItemStackUtil.damageItem(player, charmStack);
@@ -146,19 +147,19 @@ public abstract class CharmBase extends ItemBaseToggle {
   static final AttributeModifier.Operation MUL = Operation.ADD_MULTIPLIED_BASE;
 
   static void charmSpeed(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED.value(), ID_SPEED, ConfigRegistry.CHARM_SPEED.get().floatValue(), 0, ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_SPEED.get(), Attributes.MOVEMENT_SPEED, ID_SPEED, ConfigRegistry.CHARM_SPEED.get().floatValue(), 0, ADD);
   }
 
   static void charmLuck(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK.value(), ID_LUCK, 0, ConfigRegistry.CHARM_LUCK.get(), ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_LUCK.get(), Attributes.LUCK, ID_LUCK, 0, ConfigRegistry.CHARM_LUCK.get(), ADD);
   }
 
   static void charmAttackSpeed(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED.value(), ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACKSPEED.get().floatValue(), 0, ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACKSPEED.get().floatValue(), 0, ADD);
   }
 
   static void charmSwimming(Player player) {
-    toggleAttribute(player, ItemRegistry.FLIPPERS.get(), NeoForgeMod.SWIM_SPEED.get(), ID_SPEED, 3, 0, MUL);
+    toggleAttribute(player, ItemRegistry.FLIPPERS.get(), NeoForgeMod.SWIM_SPEED, ID_SPEED, 3, 0, MUL);
   }
 
   static void charmGravity(Player player) {
@@ -169,7 +170,7 @@ public abstract class CharmBase extends ItemBaseToggle {
   static void charmExpSpeed(Player player) {
     ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSPEED.get());
     if (!charmStack.isEmpty()) {
-      player.takeXpDelay = 0;
+      // player.takeXpDelay = 0; // TODO: use reflection or event
     }
   }
 

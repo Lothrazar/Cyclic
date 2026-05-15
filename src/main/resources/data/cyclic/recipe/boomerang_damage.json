@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " fd",
+    "dgf",
+    " fd"
+  ],
+  "key": {
+    "d": {
+      "tag": "c:nuggets/copper"
+    },
+    "g": {
+      "item": "minecraft:flint"
+    },
+    "f": {
+      "item": "minecraft:purple_concrete"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:boomerang_damage"
+  }
+}

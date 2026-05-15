@@ -23,18 +23,30 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.event.PlayerDataEvents;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.food.inventorycake.ContainerProviderCake;
-import com.lothrazar.library.packet.PacketFlib;
 import com.lothrazar.library.util.ChatUtil;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketKeyBind extends PacketFlib {
+public class PacketKeyBind implements CustomPacketPayload {
+
+  public static final CustomPacketPayload.Type<PacketKeyBind> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_key_bind"));
+
+  public static final StreamCodec<RegistryFriendlyByteBuf, PacketKeyBind> STREAM_CODEC =
+      StreamCodec.of(PacketKeyBind::encode, PacketKeyBind::decode);
+
+
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private String action;
 
@@ -42,23 +54,23 @@ public class PacketKeyBind extends PacketFlib {
     action = s;
   }
 
-  public static PacketKeyBind decode(FriendlyByteBuf buf) {
+  public static PacketKeyBind decode(RegistryFriendlyByteBuf buf) {
     return new PacketKeyBind(buf.readUtf());
   }
 
-  public static void encode(PacketKeyBind msg, FriendlyByteBuf buf) {
+  public static void encode(RegistryFriendlyByteBuf buf, PacketKeyBind msg) {
     buf.writeUtf(msg.action);
   }
 
-  public static void handle(PacketKeyBind message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
+  public static void handle(PacketKeyBind message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
       //      ContainerCraf
       //rotate type
-      ServerPlayer sender = ctx.get().getSender();
+      ServerPlayer sender = (ServerPlayer) ctx.player();
       // datfile
       CyclicFile datFile = PlayerDataEvents.getOrCreate(sender);
       if (datFile.storageVisible) {
-        NetworkHooks.openScreen(sender, new ContainerProviderCake(), sender.blockPosition());
+        sender.openMenu(new ContainerProviderCake());
       }
       else {
         ChatUtil.addServerChatMessage(sender, "cyclic.unlocks.extended.locked");
@@ -67,6 +79,6 @@ public class PacketKeyBind extends PacketFlib {
         //          NetworkHooks.openGui(sender, new CraftingStickContainerProvider(null), sender.blockPosition());
       }
     });
-    message.done(ctx);
+    
   }
 }

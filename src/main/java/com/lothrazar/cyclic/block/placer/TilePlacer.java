@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TilePlacer extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -111,4 +112,10 @@ public class TilePlacer extends TileBlockEntityCyclic implements MenuProvider {
     }
     return 0;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
 }

@@ -12,7 +12,6 @@ import com.lothrazar.library.util.FluidHelpersUtil;
 import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -82,7 +81,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     if (legacy > 0) {
       tank.setFluid(new FluidStack(FluidXpJuiceHolder.STILL.get(), legacy * FLUID_PER_EXP));
     }
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -91,7 +90,7 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
     tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);
     tag.putInt("storedXp", getStoredXp());
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private void collectPlayerExperience() {

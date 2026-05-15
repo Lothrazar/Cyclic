@@ -18,7 +18,7 @@ public class BlockLaser extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.LASER.get(), ScreenLaser::new);
+    // MenuScreens.register(MenuTypeRegistry.LASER.get(), ScreenLaser::new);
   }
 
   @Override

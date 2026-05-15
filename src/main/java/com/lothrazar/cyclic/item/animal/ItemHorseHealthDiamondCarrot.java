@@ -30,7 +30,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-//import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+//import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
 public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEntityInteractable {
 

@@ -55,7 +55,7 @@ public class BlockRedstoneClock extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.CLOCK.get(), ScreenClock::new);
+    // MenuScreens.register(MenuTypeRegistry.CLOCK.get(), ScreenClock::new);
   }
 
   @Override

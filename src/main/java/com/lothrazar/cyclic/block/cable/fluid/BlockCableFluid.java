@@ -52,13 +52,14 @@ public class BlockCableFluid extends CableBase {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.FLUID_PIPE.get(), ScreenCableFluid::new);
+    // MenuScreens.register(MenuTypeRegistry.FLUID_PIPE.get(), ScreenCableFluid::new);
   }
 
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-    super.appendHoverText();
-    if (ConfigRegistry.CABLE_FACADES.get()) {
+    boolean facadesEnabled = false;
+    try { facadesEnabled = ConfigRegistry.CABLE_FACADES.get(); } catch (Exception e) {}
+    if (facadesEnabled) {
       var facade = this.getFacadeShape(state, worldIn, pos, context);
       if (facade != null) {
         return facade;

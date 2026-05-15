@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:tinted_glass"
+  },
+  "result": {"id": "cyclic:dark_glass", "count": 1}
+}

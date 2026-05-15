@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -20,6 +19,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 
 public class BlockSoundRecorder extends BlockCyclic {
@@ -32,7 +32,7 @@ public class BlockSoundRecorder extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.SOUND_RECORDER.get(), ScreenSoundRecorder::new);
+    // MenuScreens.register(MenuTypeRegistry.SOUND_RECORDER.get(), ScreenSoundRecorder::new);
   }
 
   @Override
@@ -53,7 +53,7 @@ public class BlockSoundRecorder extends BlockCyclic {
         ConfigRegistry.RECORDER_RADIUS.get(), isPowered);
     for (BlockPos nearby : blocks) {
       String sid = event.getSound().getLocation().toString();
-      PacketRegistry.INSTANCE.sendToServer(new PacketRecordSound(sid, nearby));
+      PacketDistributor.sendToServer(new PacketRecordSound(sid, nearby));
       //hack save to client. otherwise have to hard sync or reload world
       BlockEntity tile = clientWorld.getBlockEntity(nearby);
       if (tile instanceof TileSoundRecorder) {

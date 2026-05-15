@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.TexturedProgress;
@@ -13,6 +12,7 @@ import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScreenGeneratorDrops extends ScreenBase<ContainerGeneratorDrops> {
 
@@ -30,7 +30,7 @@ public class ScreenGeneratorDrops extends ScreenBase<ContainerGeneratorDrops> {
     super.init();
     this.energy = new EnergyBar(this.font, TileGeneratorDrops.MAX);
     this.progress = new TexturedProgress(this.font, 76, 60, TextureRegistry.MAT_PROG);
-    energy.visible = true; //TileGeneratorFuel.POWERCONF.get() > 0;
+    // energy.visible = true; // private in 1.21.1 //TileGeneratorFuel.POWERCONF.get() > 0;
     progress.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = energy.guiTop = topPos;
     int x, y;
@@ -42,13 +42,13 @@ public class ScreenGeneratorDrops extends ScreenBase<ContainerGeneratorDrops> {
     btnToggle = addRenderableWidget(new ButtonMachine(x, y, 14, 14, "", (p) -> {
       int f = TileGeneratorDrops.Fields.FLOWING.ordinal();
       int tog = (menu.tile.getField(f) + 1) % 2;
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));
+      PacketDistributor.sendToServer(new PacketTileData(f, tog, menu.tile.getBlockPos()));
     }));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());

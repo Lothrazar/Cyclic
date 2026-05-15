@@ -1,29 +1,27 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
-import com.google.gson.JsonObject;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
+public class RecipeGeneratorItem implements Recipe<RecipeInput> {
 
-  private final ResourceLocation id;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private final EnergyIngredient energy;
 
-  public RecipeGeneratorItem(ResourceLocation id, Ingredient in, EnergyIngredient energy) {
-    this.id = id;
+  public RecipeGeneratorItem(Ingredient in, EnergyIngredient energy) {
     ingredients.add(in);
     this.energy = energy;
   }
@@ -34,12 +32,7 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
   }
 
   @Override
-  public ResourceLocation getId() {
-    return id;
-  }
-
-  @Override
-  public ItemStack assemble(TileGeneratorDrops inv, RegistryAccess ra) {
+  public ItemStack assemble(RecipeInput inv, HolderLookup.Provider ra) {
     return ItemStack.EMPTY;
   }
 
@@ -54,19 +47,17 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
   }
 
   @Override
-  public boolean matches(TileGeneratorDrops inv, Level worldIn) {
+  public boolean matches(RecipeInput inv, Level worldIn) {
     try {
-      TileGeneratorDrops tile = inv;
-      return matches(tile.inputSlots.getStackInSlot(0), ingredients.get(0));
+      return matches(inv.getItem(0), ingredients.get(0));
     }
-    catch (ClassCastException e) {
+    catch (Exception e) {
       return false;
     }
   }
 
   public boolean matches(ItemStack current, Ingredient ing) {
     if (ing == Ingredient.EMPTY) {
-      //it must be empty
       return current.isEmpty();
     }
     if (current.isEmpty()) {
@@ -76,8 +67,7 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
   }
 
   public ItemStack[] ingredientAt(int slot) {
-    Ingredient ing = at(slot);
-    return ing.getItems();
+    return at(slot).getItems();
   }
 
   public Ingredient at(int slot) {
@@ -90,7 +80,7 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
   }
 
   @Override
-  public ItemStack getResultItem(RegistryAccess ra) {
+  public ItemStack getResultItem(HolderLookup.Provider ra) {
     return ItemStack.EMPTY;
   }
 
@@ -118,38 +108,24 @@ public class RecipeGeneratorItem implements Recipe<TileGeneratorDrops> {
 
   public static class SerializeGenerateItem implements RecipeSerializer<RecipeGeneratorItem> {
 
-    public SerializeGenerateItem() {}
+    public static final MapCodec<RecipeGeneratorItem> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+        Ingredient.CODEC.fieldOf("ingredient").forGetter(r -> r.at(0)),
+        EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()))
+    ).apply(instance, RecipeGeneratorItem::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> STREAM_CODEC = StreamCodec.composite(
+        Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
+        EnergyIngredient.STREAM_CODEC, r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()),
+        RecipeGeneratorItem::new
+    );
 
-    /**
-     * The fluid stuff i was helped out a ton by looking at this https://github.com/mekanism/Mekanism/blob/921d10be54f97518c1f0cb5a6fc64bf47d5e6773/src/api/java/mekanism/api/SerializerHelper.java#L129
-     */
     @Override
-    public RecipeGeneratorItem fromJson(ResourceLocation recipeId, JsonObject json) {
-      RecipeGeneratorItem r = null;
-      try {
-        Ingredient inputFirst = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "fuel"));
-        r = new RecipeGeneratorItem(recipeId, inputFirst, new EnergyIngredient(json));
-      }
-      catch (Exception e) {
-        ModCyclic.LOGGER.error("Error loading recipe " + recipeId, e);
-      }
-      return r;
+    public MapCodec<RecipeGeneratorItem> codec() {
+      return CODEC;
     }
 
     @Override
-    public RecipeGeneratorItem fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-      RecipeGeneratorItem r = new RecipeGeneratorItem(recipeId, Ingredient.fromNetwork(buffer),
-          new EnergyIngredient(buffer.readInt(), buffer.readInt()));
-      //server reading recipe from client or vice/versa 
-      return r;
-    }
-
-    @Override
-    public void toNetwork(FriendlyByteBuf buffer, RecipeGeneratorItem recipe) {
-      Ingredient zero = recipe.ingredients.get(0);
-      zero.toNetwork(buffer);
-      buffer.writeInt(recipe.energy.getTicks());
-      buffer.writeInt(recipe.energy.getRfPertick());
+    public StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> streamCodec() {
+      return STREAM_CODEC;
     }
   }
 }

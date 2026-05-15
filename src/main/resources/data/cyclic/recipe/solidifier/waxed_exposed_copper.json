@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:exposed_copper"
+    }
+  ],
+  "mix": {
+    "tag": "c:wax",
+    "amount": 50
+  },
+  "energy": {
+    "rfpertick": 600,
+    "ticks": 20
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:waxed_exposed_copper"
+  }
+}

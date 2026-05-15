@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import static com.lothrazar.cyclic.block.BlockCyclic.LIT;
+import net.minecraft.core.HolderLookup;
 
 public class TileInsertingMagnet extends TileBlockEntityCyclic {
 
@@ -30,13 +31,13 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    super.load(tag);
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    super.saveAdditional(tag);
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.saveAdditional(tag, registries);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileInsertingMagnet e) {

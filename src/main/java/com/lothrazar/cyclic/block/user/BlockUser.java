@@ -26,7 +26,7 @@ public class BlockUser extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.USER.get(), ScreenUser::new);
+    // MenuScreens.register(MenuTypeRegistry.USER.get(), ScreenUser::new);
   }
 
   @Override

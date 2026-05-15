@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " gi",
+    " ig",
+    "o  "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "g": {
+      "tag": "c:nuggets/gold"
+    },
+    "o": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:replace_scepter"
+  }
+}

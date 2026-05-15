@@ -5,7 +5,7 @@ import java.util.Map;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class TileBatteryInfinite extends TileBlockEntityCyclic {
 
@@ -52,8 +53,10 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
-    super.load(tag);
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -62,7 +65,7 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
       tag.putBoolean("flow_" + f.getName(), poweredSides.get(f));
     }
     tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileBatteryInfinite e) {
@@ -129,4 +132,10 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
       break;
     }
   }
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

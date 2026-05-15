@@ -11,7 +11,7 @@ public class PlayerAbilityEvents {
   private static final int DISABLE_OFFSET = 6;
 
   @SubscribeEvent
-  public void onEntityUpdate(EntityTickEvent event) {
+  public void onEntityUpdate(EntityTickEvent.Pre event) {
     if (event.getEntity() instanceof Player player) {
       FireballItem.tickHoldingFireball(player);
       CyclicFile datFile = PlayerDataEvents.getOrCreate(player);

@@ -9,7 +9,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -22,6 +21,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileWirelessItem extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -159,4 +160,10 @@ public class TileWirelessItem extends TileBlockEntityCyclic implements MenuProvi
   public float getThick() {
     return 0.065F;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
+  }
+
 }

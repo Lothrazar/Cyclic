@@ -1,14 +1,13 @@
 package com.lothrazar.cyclic.item.food;
 
-import java.util.Iterator;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraft.core.Holder;
+import net.minecraft.world.effect.MobEffect;
+
 
 public class AppleChocolate extends ItemBaseCyclic {
 
@@ -25,22 +24,15 @@ public class AppleChocolate extends ItemBaseCyclic {
 
   private boolean curePotionEffects(LivingEntity entityLiving, ItemStack curativeItem) {
     boolean ret = false;
-    Iterator<MobEffectInstance> itr = entityLiving.getActiveEffectsMap().values().iterator();
-    while (itr.hasNext()) {
-      MobEffectInstance effect = itr.next();
-      if (MinecraftForge.EVENT_BUS.post(new MobEffectEvent.Remove(entityLiving, effect))) {
-        continue;
+    java.util.List<Holder<MobEffect>> toRemove = new java.util.ArrayList<>();
+    for (MobEffectInstance effect : entityLiving.getActiveEffects()) {
+      if (!effect.getEffect().value().isInstantenous()) { // approximation for not beneficial since isBeneficial is gone or changed
+        toRemove.add(effect.getEffect());
       }
-      if (effect.getEffect().isBeneficial() == false) {
-        //dont remove beneficial potions though such as speed, fire prot, night vision 
-        effect.getEffect().removeAttributeModifiers(entityLiving, entityLiving.getAttributes(), effect.getAmplifier());
-        itr.remove();
-        ret = true;
-        entityLiving.effectsDirty = true;
-        if (entityLiving instanceof Player) {
-          ((Player) entityLiving).getCooldowns().addCooldown(this, 30);
-        }
-      }
+    }
+    for (Holder<MobEffect> e : toRemove) {
+      entityLiving.removeEffect(e);
+      ret = true;
     }
     return ret;
   }

@@ -37,7 +37,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.server.level.ServerEntity;
 
 public class BoomerangEntity extends ThrowableItemProjectile {
 
@@ -50,11 +51,11 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  protected void defineSynchedData() {
-    super.defineSynchedData();
-    this.entityData.define(IS_RETURNING, (byte) 0);
-    this.entityData.define(REDSTONE_TRIGGERED, (byte) 0);
-    this.entityData.define(OWNER, "");
+  protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    super.defineSynchedData(builder);
+    builder.define(IS_RETURNING, (byte) 0);
+    builder.define(REDSTONE_TRIGGERED, (byte) 0);
+    builder.define(OWNER, "");
   }
 
   private static final int STUN_SECONDS = 7;
@@ -79,7 +80,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     tag.putString("OWNER", entityData.get(OWNER));
     tag.putByte("returning", entityData.get(IS_RETURNING));
     tag.putByte("REDSTONE_TRIGGERED", entityData.get(REDSTONE_TRIGGERED));
-    boomerangThrown.save(tag);
+    if (!boomerangThrown.isEmpty()) {
+      tag.put("boomerangItem", boomerangThrown.saveOptional(this.registryAccess()));
+    }
     super.addAdditionalSaveData(tag);
   }
 
@@ -88,7 +91,11 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     entityData.set(OWNER, tag.getString("OWNER"));
     entityData.set(IS_RETURNING, tag.getByte("returning"));
     entityData.set(REDSTONE_TRIGGERED, tag.getByte("REDSTONE_TRIGGERED"));
-    boomerangThrown = ItemStack.of(tag);
+    if (tag.contains("boomerangItem")) {
+      boomerangThrown = ItemStack.parseOptional(this.registryAccess(), tag.getCompound("boomerangItem"));
+    } else {
+      boomerangThrown = ItemStack.EMPTY;
+    }
     super.readAdditionalSaveData(tag);
   }
 
@@ -144,9 +151,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
       try {
         BlockState blockState = level().getBlockState(pos);
         Block block = blockState.getBlock();
-        InteractionResult t = block.use(blockState, level(), pos, (Player) owner, InteractionHand.MAIN_HAND, null);
-        boolean hasTriggered = t == InteractionResult.SUCCESS; //block.onBlockActivated(world, pos, blockState,
-        //            (PlayerEntity) this.owner, Hand.MAIN_HAND, Direction.UP, 0.5F, 0.5F, 0.5F);
+        BlockHitResult hitResult = new BlockHitResult(new Vec3(pos.getX(), pos.getY(), pos.getZ()), Direction.UP, pos, false);
+        InteractionResult t = blockState.useWithoutItem(level(), (Player) owner, hitResult);
+        boolean hasTriggered = t == InteractionResult.SUCCESS;
         if (hasTriggered) {
           this.setRedstoneHasTriggered();
         }
@@ -286,8 +293,8 @@ public class BoomerangEntity extends ThrowableItemProjectile {
         if (entityHit != owner && entityHit instanceof LivingEntity
             && !(entityHit instanceof Player)) {
           LivingEntity live = (LivingEntity) entityHit;
-          if (live.hasEffect(PotionEffectRegistry.STUN.get()) == false) {
-            live.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN.get(), STUN_SECONDS * 20, 1));
+          if (!live.hasEffect(PotionEffectRegistry.STUN)) {
+            live.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, STUN_SECONDS * 20, 1, false, false, false));
             SoundUtil.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }
@@ -298,7 +305,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  protected float getGravity() {
+  protected double getDefaultGravity() {
     return -1 * 0.02F;
   }
 
@@ -308,7 +315,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
+  public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity serverEntity) {
+    return new ClientboundAddEntityPacket(this, serverEntity);
   }
 }

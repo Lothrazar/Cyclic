@@ -17,6 +17,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.HolderLookup;
 
 public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -106,7 +107,7 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
   }
 
   @Override
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     delay = tag.getInt("redstone_delay");
     duration = tag.getInt("redstone_duration");
     power = tag.getInt("redstone_power");
@@ -116,18 +117,18 @@ public class TileRedstoneClock extends TileBlockEntityCyclic implements MenuProv
     if (this.detectAllOff()) {
       this.facingResetAllOn(); //fix legacy data for one
     }
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.putInt("redstone_delay", delay);
     tag.putInt("redstone_duration", duration);
     tag.putInt("redstone_power", power);
     for (Direction f : Direction.values()) {
       tag.putBoolean(f.getName(), poweredSides.get(f));
     }
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   private void updateMyState() throws IllegalArgumentException {

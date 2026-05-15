@@ -27,6 +27,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.item.component.CustomData;
 
 
 public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
@@ -67,7 +68,7 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     Level world = context.getLevel();
     Direction face = context.getClickedFace();
     ItemStack itemstack = context.getItemInHand();
-    EvaporateMode fluidMode = EvaporateMode.values()[itemstack.getOrCreateTag().getInt(NBT_MODE)];
+    EvaporateMode fluidMode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getInt(NBT_MODE)];
     List<BlockPos> area = ShapeUtil.cubeSquareBase(pos.relative(face), SIZE, 1);
     //    AtomicBoolean removed = new AtomicBoolean(false);
     switch (fluidMode) {
@@ -123,12 +124,12 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
 
   @Override
   public void onCraftedBy(ItemStack stack, Level worldIn, Player playerIn) {
-    stack.getOrCreateTag().putInt(NBT_MODE, EvaporateMode.WATER.ordinal());
+    CustomData.EMPTY.copyTag().putInt(NBT_MODE, EvaporateMode.WATER.ordinal());
     super.onCraftedBy(stack, worldIn, playerIn);
   }
 
   private static MutableComponent getModeTooltip(ItemStack stack) {
-    EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
+    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getInt(NBT_MODE)];
     return Component.translatable("item.cyclic.antimatter_wand.tooltip0",
         Component.translatable(String.format("item.cyclic.antimatter_wand.mode.%s",
             mode.getSerializedName())));
@@ -138,8 +139,8 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
     if (player.getCooldowns().isOnCooldown(stack.getItem())) {
       return;
     }
-    EvaporateMode mode = EvaporateMode.values()[stack.getOrCreateTag().getInt(NBT_MODE)];
-    stack.getOrCreateTag().putInt(NBT_MODE, mode.getNext().ordinal());
+    EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getInt(NBT_MODE)];
+    CustomData.EMPTY.copyTag().putInt(NBT_MODE, mode.getNext().ordinal());
     player.getCooldowns().addCooldown(stack.getItem(), COOLDOWN);
     if (player.level().isClientSide) {
       player.displayClientMessage(getModeTooltip(stack), true);

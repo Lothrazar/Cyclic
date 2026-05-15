@@ -31,7 +31,7 @@ public class RenderBeaconPotion implements BlockEntityRenderer<TilePotionBeacon>
     int j = 0;
     for (int k = 0; k < list.size(); ++k) {
       BeaconBlockEntity.BeaconBeamSection beaconblockentity$beaconbeamsection = list.get(k);
-      renderBeaconBeam(p_112142_, p_112143_, p_112141_, i, j, k == list.size() - 1 ? 1024 : beaconblockentity$beaconbeamsection.getHeight(), beaconblockentity$beaconbeamsection.getColor());
+      renderBeaconBeam(p_112142_, p_112143_, p_112141_, i, j, k == list.size() - 1 ? 1024 : beaconblockentity$beaconbeamsection.getHeight(), new float[]{1.0f, 1.0f, 1.0f});
       j += beaconblockentity$beaconbeamsection.getHeight();
     }
   }
@@ -89,7 +89,7 @@ public class RenderBeaconPotion implements BlockEntityRenderer<TilePotionBeacon>
   }
 
   public static void addVertex(Matrix4f p_112107_, Matrix3f p_112108_, VertexConsumer p_112109_, float p_112110_, float p_112111_, float p_112112_, float p_112113_, int p_112114_, float p_112115_, float p_112116_, float p_112117_, float p_112118_) {
-    p_112109_.vertex(p_112107_, p_112115_, p_112114_, p_112116_).color(p_112110_, p_112111_, p_112112_, p_112113_).uv(p_112117_, p_112118_).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(p_112108_, 0.0F, 1.0F, 0.0F).endVertex();
+    p_112109_.addVertex(p_112107_, p_112115_, p_112114_, p_112116_).setColor(p_112110_, p_112111_, p_112112_, p_112113_).setUv(p_112117_, p_112118_).setOverlay(OverlayTexture.NO_OVERLAY).setLight(15728880).setNormal(0.0F, 1.0F, 0.0F);
   }
 
   public boolean shouldRenderOffScreen(BeaconBlockEntity p_112138_) {

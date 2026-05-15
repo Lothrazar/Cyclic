@@ -26,7 +26,7 @@ public class BlockBreaker extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.BREAKER.get(), ScreenBreaker::new);
+    // MenuScreens.register(MenuTypeRegistry.BREAKER.get(), ScreenBreaker::new);
   }
 
   @Override

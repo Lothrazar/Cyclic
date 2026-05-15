@@ -24,13 +24,13 @@
 package com.lothrazar.cyclic.item.scythe;
 
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScytheForage extends ItemBaseCyclic {
 
@@ -49,7 +49,7 @@ public class ScytheForage extends ItemBaseCyclic {
     }
     int radius = (context.getPlayer().isCrouching()) ? RADIUS.get() / 2 : RADIUS.get();
     if (context.getLevel().isClientSide) {
-      PacketRegistry.INSTANCE.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
+      PacketDistributor.sendToServer(new PacketScythe(pos, ScytheType.FORAGE, radius));
     }
     context.getPlayer().swing(context.getHand());
     ItemStackUtil.damageItem(context.getPlayer(), context.getItemInHand());

@@ -4,11 +4,11 @@ import com.lothrazar.cyclic.gui.ButtonMachine;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.net.PacketTileData;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
 
@@ -27,7 +27,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
     final String pf = "block.cyclic.sound_recorder.";
     ButtonMachine buttonClear = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize, TextureEnum.CRAFT_EMPTY, TileSoundRecorder.Fields.CLEARALL.ordinal(), (p) -> {
       menu.tile.clearSounds();
-      PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.CLEARALL.ordinal(), 1, menu.tile.getBlockPos()));
+      PacketDistributor.sendToServer(new PacketTileData(TileSoundRecorder.Fields.CLEARALL.ordinal(), 1, menu.tile.getBlockPos()));
     }));
     buttonClear.xOffset = -3;
     buttonClear.yOffset = -2;
@@ -38,7 +38,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
       ButtonMachine btnSave = addRenderableWidget(new ButtonMachine(x, y, bsize, bsize,
           TextureEnum.RENDER_SHOW, i, (p) -> {
             int soundIndex = ((ButtonMachine) p).getTileField();
-            PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.SAVE.ordinal(), soundIndex, menu.tile.getBlockPos()));
+            PacketDistributor.sendToServer(new PacketTileData(TileSoundRecorder.Fields.SAVE.ordinal(), soundIndex, menu.tile.getBlockPos()));
           }));
       //      btnSave.active = !container.tile.inputSlots.getStackInSlot(0).isEmpty();
       btnSave.xOffset = 2;
@@ -49,7 +49,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
           TextureEnum.POWER_STOP, i, (p) -> {
             int soundIndex = ((ButtonMachine) p).getTileField();
             menu.tile.ignoreSound(soundIndex);
-            PacketRegistry.INSTANCE.sendToServer(new PacketTileData(TileSoundRecorder.Fields.IGNORE.ordinal(), soundIndex, menu.tile.getBlockPos()));
+            PacketDistributor.sendToServer(new PacketTileData(TileSoundRecorder.Fields.IGNORE.ordinal(), soundIndex, menu.tile.getBlockPos()));
           }));
       btnIgnore.xOffset = -1;
       btnIgnore.yOffset = -1;
@@ -62,7 +62,7 @@ public class ScreenSoundRecorder extends ScreenBase<ContainerSoundRecorder> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

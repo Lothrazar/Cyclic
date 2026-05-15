@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.UtilDirection;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -149,9 +150,11 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     for (Direction f : Direction.values()) {
       poweredSides.put(f, tag.getBoolean("flow_" + f.getName()));
     }
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     batterySlots.deserializeNBT(registries,tag.getCompound(NBTINV + "batt"));
-    super.load(tag);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -162,7 +165,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     tag.put(NBTINV + "batt", batterySlots.serializeNBT(registries));
     tag.putInt("flowing", getFlowing());
     tag.put(NBTENERGY, energy.serializeNBT(registries));
-    super.saveAdditional(tag);
+    super.saveAdditional(tag, registries);
   }
 
   @Override
@@ -238,4 +241,16 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
       break;
     }
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return batterySlots;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

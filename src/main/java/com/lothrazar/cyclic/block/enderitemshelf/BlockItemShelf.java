@@ -27,6 +27,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
 
 public class BlockItemShelf extends BlockCyclic {
 
@@ -65,18 +67,13 @@ public class BlockItemShelf extends BlockCyclic {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    ItemStack heldItem = player.getItemInHand(hand);
-    if (hand != InteractionHand.MAIN_HAND) {
-      //if your hand is empty, dont process if its the OFF hand
-      //otherwise: main hand inserts, off hand takes out right away
-      return InteractionResult.PASS;
-    }
+  public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+    ItemStack heldItem = player.getMainHandItem();
     TileItemShelf shelf = getTileEntity(world, pos);
     if (heldItem.is(DataTags.WRENCH)) {
       //wrench tag
       shelf.toggleShowText();
-      player.swing(hand);
+      player.swing(InteractionHand.MAIN_HAND);
       return InteractionResult.PASS;
     }
     Direction face = hit.getDirection();
@@ -93,8 +90,8 @@ public class BlockItemShelf extends BlockCyclic {
         ItemStack remaining = shelf.inventory.insertItem(slot, heldItem, false);
         shelf.updateComparatorOutputLevel();
         if (remaining.isEmpty() || remaining.getCount() != shelfStack.getCount()) {
-          player.setItemInHand(hand, remaining);
-          player.swing(hand);
+          player.setItemInHand(InteractionHand.MAIN_HAND, remaining);
+          player.swing(InteractionHand.MAIN_HAND);
           SoundUtil.playSound(player, SoundRegistry.CRACKLE.get(), oldEmpty ? 0.3F : 0.1F, 0.3F);
           //          UtilSound.playSound(player, SoundRegistry.POW, 0.06F, 0.3F);
           //          UtilSound.playSound(player, SoundRegistry.GUITAR, 0.1F, 0.3F);
@@ -105,8 +102,8 @@ public class BlockItemShelf extends BlockCyclic {
         //withdraw direct to players empty hand
         int q = player.isCrouching() ? 1 : 64;
         ItemStack retrieved = shelf.inventory.extractItem(slot, q, false);
-        player.setItemInHand(hand, retrieved);
-        player.swing(hand);
+        player.setItemInHand(InteractionHand.MAIN_HAND, retrieved);
+        player.swing(InteractionHand.MAIN_HAND);
         shelf.updateComparatorOutputLevel();
       }
       if (!shelfStack.isEmpty() && !heldItem.isEmpty()) {
@@ -115,8 +112,8 @@ public class BlockItemShelf extends BlockCyclic {
         //        ItemStack forPlayer = shelfStack.copy();
         //extract all from shelf
         ItemStack forPlayer = shelf.inventory.extractItem(slot, 64, false);
-        player.setItemInHand(hand, forPlayer);
-        player.swing(hand);
+        player.setItemInHand(InteractionHand.MAIN_HAND, forPlayer);
+        player.swing(InteractionHand.MAIN_HAND);
         shelf.inventory.insertItem(slot, forShelf, false);
         shelf.updateComparatorOutputLevel();
       }
@@ -143,9 +140,9 @@ public class BlockItemShelf extends BlockCyclic {
     }
     BlockEntity tileentity = world.getBlockEntity(pos);
     TileItemShelf shelf = (TileItemShelf) tileentity;
-    if (stack.getTag() != null) {
+    if (stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null) {
       //to tile from tag 
-      shelf.inventory.deserializeNBT(stack.getTag());
+      shelf.inventory.deserializeNBT(null, stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
     }
   }
 
@@ -155,9 +152,9 @@ public class BlockItemShelf extends BlockCyclic {
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileItemShelf) {
       TileItemShelf shelf = (TileItemShelf) tileentity;
-      CompoundTag tileData = shelf.inventory.serializeNBT();
+      CompoundTag tileData = shelf.inventory.serializeNBT(null);
       //read from tile, write to itemstack 
-      newStack.setTag(tileData);
+      // newStack.setTag(tileData); // disabled: use DataComponents in 1.21.1
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);
   }

@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
 
@@ -57,12 +58,12 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     f = TileScreentext.Fields.OFFSET.ordinal();
     GuiSliderInteger offset = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 10, menu.tile.getField(f)));
-    red.setTooltip("cyclic.screen.red");
-    green.setTooltip("cyclic.screen.green");
-    blue.setTooltip("cyclic.screen.blue");
-    font.setTooltip("cyclic.screen.font");
-    offset.setTooltip("cyclic.screen.offset");
-    pad.setTooltip("cyclic.screen.padding");
+    red.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.red")));
+    green.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.green")));
+    blue.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.blue")));
+    font.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.font")));
+    offset.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.offset")));
+    pad.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.padding")));
   }
   //  @Override
   //  public void tick() {
@@ -71,7 +72,7 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
   }

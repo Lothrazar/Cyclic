@@ -74,6 +74,6 @@ public class BlockMelter extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.MELTER.get(), ScreenMelter::new);
+    // MenuScreens.register(MenuTypeRegistry.MELTER.get(), ScreenMelter::new);
   }
 }

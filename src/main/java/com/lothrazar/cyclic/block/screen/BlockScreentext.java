@@ -31,7 +31,7 @@ public class BlockScreentext extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.SCREEN.get(), ScreenScreentext::new);
+    // MenuScreens.register(MenuTypeRegistry.SCREEN.get(), ScreenScreentext::new);
   }
 
   @Override

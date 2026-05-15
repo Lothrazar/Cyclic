@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sbs",
+    "ooo"
+  ],
+  "key": {
+    "b": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "s": {
+      "tag": "c:glass/colorless"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:laser"
+  }
+}

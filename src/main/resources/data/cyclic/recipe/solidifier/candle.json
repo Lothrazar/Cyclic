@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "mix": {
+    "tag": "c:wax",
+    "amount": 200
+  },
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 120
+  },
+  "result": {
+    "count": 2,
+    "id": "minecraft:candle"
+  }
+}

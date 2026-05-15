@@ -1,0 +1,75 @@
+# This is an example neoforge.mods.toml file. It contains the data relating to the loading mods.
+# There are several mandatory fields (#mandatory), and many more that are optional (#optional).
+# The overall format is standard TOML format, v0.5.0.
+# Note that there are a couple of TOML lists in this file.
+# Find more information on toml format here:  https://github.com/toml-lang/toml
+# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+modLoader="javafml" #mandatory
+license="${mod_license}"
+
+# A version range to match for said mod loader - for regular FML @Mod it will be the FML version. This is currently 2.
+loaderVersion="${loader_version_range}" #mandatory
+
+# A URL to refer people to when problems occur with this mod
+issueTrackerURL="https://github.com/Lothrazar/${mod_id}/issues" #optional
+# A list of mods - how many allowed here is determined by the individual mod loader
+[[mods]] #mandatory
+# The modid of the mod
+modId="${mod_id}" #mandatory
+# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
+version="${mod_version}" #mandatory
+ # A display name for the mod
+
+displayName="${mod_name}" #mandatory
+# A URL to query for updates for this mod. See the JSON update specification <here>
+# updateJSONURL="https://raw.githubusercontent.com/Lothrazar/${mod_id}/trunk/${minecraft_version}/update.json" #optional
+# A URL for the "homepage" for this mod, displayed in the mod UI # replace with your website
+displayURL="https://www.curseforge.com/minecraft/mc-mods/${curse_slug}"
+
+# A file name (in the root of the mod JAR) containing a logo for display
+logoFile="logoFile.png" #optional
+
+# A text field displayed in the mod UI
+authors="${mod_authors}" #optional
+# The description text for the mod (multi line!) (#mandatory)
+
+description='''
+${mod_description}
+'''
+# The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
+#[[mixins]]
+#config="${mod_id}.mixins.json"
+
+#[features.${mod_id}]
+#openGLVersion="[3.2,)"
+
+# The [[accessTransformers]] block allows you to declare where your AT file is.
+# If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg
+[[accessTransformers]]
+    file="META-INF/accesstransformer.cfg"
+
+# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+[[dependencies.${mod_id}]] #optional
+    # the modid of the dependency
+    modId="neoforge" #mandatory
+    # Does this dependency have to exist - if not, ordering below must be specified
+    type="required" # was mandatory=true
+    # The version range of the dependency
+    versionRange="[${neo_version},)" #mandatory
+    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    ordering="NONE"
+    # Side this dependency is applied on - BOTH, CLIENT or SERVER
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required" # was mandatory=true
+    versionRange="[${minecraft_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="flib"
+    type="required"
+    versionRange="[${flib_version},)"
+    ordering="NONE"
+    side="BOTH"

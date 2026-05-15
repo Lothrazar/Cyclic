@@ -27,7 +27,7 @@ public class DoorbellButton extends ButtonBlock implements SimpleWaterloggedBloc
   public static final int POWERLVL = 1;
 
   public DoorbellButton(Properties properties) {
-    super(properties.strength(0.5F).lightLevel(s -> s.getValue(POWERED) ? LIGHTLVL : 0), BlockSetType.STONE, 30, true);
+    super(BlockSetType.STONE, 30, properties.strength(0.5F).lightLevel(s -> s.getValue(POWERED) ? LIGHTLVL : 0));
     registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
   }
 

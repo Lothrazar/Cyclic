@@ -18,11 +18,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.component.CustomData;
 
 public class BlockstateCard extends ItemBaseCyclic {
 
@@ -36,7 +36,7 @@ public class BlockstateCard extends ItemBaseCyclic {
 
   @Override
   public void appendHoverText(ItemStack held, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
+    if (held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null && held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(STATESTAG)) {
       for (BlockStateMatcher m : getSavedStates(worldIn, held)) {
         BlockState st = m.getState();
         ChatFormatting c = m.isExactProperties() ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.DARK_PURPLE;
@@ -52,14 +52,14 @@ public class BlockstateCard extends ItemBaseCyclic {
     }
   }
 
-  public static List<BlockStateMatcher> getSavedStates(Level worldIn, ItemStack held) {
+  public static List<BlockStateMatcher> getSavedStates(Item.TooltipContext worldIn, ItemStack held) {
     List<BlockStateMatcher> st = new ArrayList<>();
-    if (held.getTag() != null && held.getTag().contains(STATESTAG)) {
+    if (held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null && held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(STATESTAG)) {
       //get it
-      ListTag stateTags = held.getTag().getList(STATESTAG, 10);
+      ListTag stateTags = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getList(STATESTAG, 10);
       for (int i = 0; i < stateTags.size(); ++i) {
         CompoundTag currTag = stateTags.getCompound(i);
-        BlockState stateFound = NbtUtils.readBlockState(worldIn.holderLookup(Registries.BLOCK), currTag);
+        BlockState stateFound = NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), currTag);
         if (stateFound != null && !stateFound.isAir()) {
           BlockStateMatcher matcher = new BlockStateMatcher();
           matcher.setState(stateFound);
@@ -93,13 +93,13 @@ public class BlockstateCard extends ItemBaseCyclic {
     Player player = context.getPlayer();
     InteractionHand hand = context.getHand();
     BlockPos pos = context.getClickedPos();
-    ItemStack held = player.getItemInHand(hand);
+    ItemStack held = player.getMainHandItem();
     BlockState state = context.getLevel().getBlockState(pos);
     CompoundTag stateTag = NbtUtils.writeBlockState(state);
     ListTag stateTags = null;
-    if (held.getOrCreateTag().contains(STATESTAG)) {
+    if (held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(STATESTAG)) {
       //get it
-      stateTags = held.getOrCreateTag().getList(STATESTAG, 10);
+      stateTags = held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getList(STATESTAG, 10);
     }
     else {
       stateTags = new ListTag();
@@ -118,7 +118,7 @@ public class BlockstateCard extends ItemBaseCyclic {
     //is crouching: do exact state is false, do only block
     stateTag.putBoolean(EXACT_TAG, !player.isCrouching());
     stateTags.add(stateTag);
-    held.getOrCreateTag().put(STATESTAG, stateTags);
+    held.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().put(STATESTAG, stateTags);
     player.swing(hand);
     return InteractionResult.SUCCESS;
   }

@@ -33,7 +33,7 @@ public class BlockGeneratorSolar extends BlockCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.GENERATOR_SOLAR.get(), ScreenGeneratorSolar::new);
+    // MenuScreens.register(MenuTypeRegistry.GENERATOR_SOLAR.get(), ScreenGeneratorSolar::new);
   }
 
   @Override

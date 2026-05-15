@@ -117,7 +117,7 @@ public class BlockCyclic extends EntityBlockFlib {
           }
         }
       }
-      if (FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()) { // reverted to how 1.16.5 does it fix sapphys bug
+      if (FluidUtil.getFluidHandler(player.getMainHandItem()).isPresent()) { // reverted to how 1.16.5 does it fix sapphys bug
         return ItemInteractionResult.SUCCESS;
       }
     }
@@ -125,7 +125,7 @@ public class BlockCyclic extends EntityBlockFlib {
       if (!level.isClientSide) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof MenuProvider mp) {
-          player.openMenu(mp);
+          player.openMenu(mp, pos);
 //          NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
         }
         else {
@@ -135,6 +135,22 @@ public class BlockCyclic extends EntityBlockFlib {
       return ItemInteractionResult.SUCCESS;
     }
     return super.useItemOn(st,state, level, pos, player, hand, hit);
+  }
+
+  @Override
+  protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    if (this.hasGui) {
+      if (!level.isClientSide) {
+        BlockEntity tileEntity = level.getBlockEntity(pos);
+        if (tileEntity instanceof MenuProvider mp) {
+          player.openMenu(mp, pos);
+        } else {
+          throw new IllegalStateException("Our named container provider is missing!");
+        }
+      }
+      return InteractionResult.SUCCESS;
+    }
+    return super.useWithoutItem(state, level, pos, player, hit);
   }
 
   private void displayClientFluidMessage(Player player, IFluidHandler handler) {

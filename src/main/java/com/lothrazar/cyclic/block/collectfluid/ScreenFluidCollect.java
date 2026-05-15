@@ -11,6 +11,7 @@ import com.lothrazar.library.gui.FluidBar;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.gui.components.Tooltip;
 
 public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
@@ -45,19 +46,19 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     int f = TileFluidCollect.Fields.HEIGHT.ordinal();
     GuiSliderInteger height = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileFluidCollect.MAX_HEIGHT, menu.tile.getField(f)));
-    height.setTooltip("buildertype.height.tooltip");
+    height.setTooltip(Tooltip.create(Component.translatable("buildertype.height.tooltip")));
     y += h + 1;
     //
     //
     f = TileFluidCollect.Fields.SIZE.ordinal();
     GuiSliderInteger size = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileMiner.MAX_SIZE, menu.tile.getField(f)));
-    size.setTooltip("buildertype.size.tooltip");
+    size.setTooltip(Tooltip.create(Component.translatable("buildertype.size.tooltip")));
   }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(ms);
+    this.renderBackground(ms, mouseX, mouseY, partialTicks);
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     fluid.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getFluid());

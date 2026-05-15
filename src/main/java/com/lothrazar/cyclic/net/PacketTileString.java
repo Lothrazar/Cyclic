@@ -1,18 +1,30 @@
 package com.lothrazar.cyclic.net;
 
-import java.util.function.Supplier;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.library.packet.PacketFlib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PacketTileString extends PacketFlib {
+public class PacketTileString implements CustomPacketPayload {
+
+  public static final CustomPacketPayload.Type<PacketTileString> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_tile_string"));
+
+  public static final StreamCodec<RegistryFriendlyByteBuf, PacketTileString> STREAM_CODEC = StreamCodec.of(PacketTileString::encode, PacketTileString::decode);
+
+
+  @Override
+  public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
 
   private int field;
   private String value;
@@ -27,9 +39,9 @@ public class PacketTileString extends PacketFlib {
 
   public PacketTileString() {}
 
-  public static void handle(PacketTileString message, Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      ServerPlayer player = ctx.get().getSender();
+  public static void handle(PacketTileString message, IPayloadContext ctx) {
+    ctx.enqueueWork(() -> {
+      ServerPlayer player = (ServerPlayer) ctx.player();
       Level world = player.getCommandSenderWorld();
       BlockEntity tile = world.getBlockEntity(message.pos);
       if (tile instanceof TileBlockEntityCyclic) {
@@ -39,10 +51,10 @@ public class PacketTileString extends PacketFlib {
         world.sendBlockUpdated(message.pos, oldState, oldState, 3);
       }
     });
-    message.done(ctx);
+    
   }
 
-  public static PacketTileString decode(FriendlyByteBuf buf) {
+  public static PacketTileString decode(RegistryFriendlyByteBuf buf) {
     PacketTileString p = new PacketTileString();
     p.field = buf.readInt();
     CompoundTag tags = buf.readNbt();
@@ -52,7 +64,7 @@ public class PacketTileString extends PacketFlib {
     return p;
   }
 
-  public static void encode(PacketTileString msg, FriendlyByteBuf buf) {
+  public static void encode(RegistryFriendlyByteBuf buf, PacketTileString msg) {
     buf.writeInt(msg.field);
     CompoundTag tags = new CompoundTag();
     tags.putInt("x", msg.pos.getX());

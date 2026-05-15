@@ -23,6 +23,8 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 public class CraftingBagContainer extends ContainerBase implements IContainerCraftingAction {
 
@@ -59,7 +61,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
         });
       }
     }
-//    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+//    bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ITEM_HANDLER).ifPresent(h -> {
     var h= CapabilityFixer.item(bag);
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
@@ -76,7 +78,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     super.removed(playerIn);
     this.craftResult.setItem(0, ItemStack.EMPTY);
     if (playerIn.level().isClientSide == false) {
-      IItemHandler handler = CapabilityFixer.item(bag);//bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+      IItemHandler handler = CapabilityFixer.item(bag);//bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
       if (handler != null)
         for (int i = 0; i < 9; i++) {
           ItemStack crafty = this.craftMatrix.getItem(i);
@@ -92,11 +94,11 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     if (!world.isClientSide) {
       ServerPlayer player = (ServerPlayer) playerInventory.player;
       ItemStack itemstack = ItemStack.EMPTY;
-      Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix, world);
+      java.util.Optional<RecipeHolder<CraftingRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftMatrix.asCraftInput(), world);
       if (optional.isPresent()) {
-        CraftingRecipe icraftingrecipe = optional.get();
+        RecipeHolder<CraftingRecipe> icraftingrecipe = optional.get();
         if (craftResult.setRecipeUsed(world, player, icraftingrecipe)) {
-          itemstack = icraftingrecipe.assemble(craftMatrix, world.registryAccess());
+          itemstack = icraftingrecipe.value().assemble(craftMatrix.asCraftInput(), world.registryAccess());
         }
       }
       craftResult.setItem(0, itemstack);

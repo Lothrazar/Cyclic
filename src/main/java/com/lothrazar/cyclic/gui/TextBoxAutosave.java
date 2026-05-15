@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.net.PacketTileString;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class TextBoxAutosave extends EditBox {
 
@@ -55,7 +55,7 @@ public class TextBoxAutosave extends EditBox {
   private void saveValue() {
     String current = getValue();
     tile.setFieldString(tileFieldId, current);
-    PacketRegistry.INSTANCE.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
+    PacketDistributor.sendToServer(new PacketTileString(this.tileFieldId, current, pos));
   }
 
   private int tileFieldId;

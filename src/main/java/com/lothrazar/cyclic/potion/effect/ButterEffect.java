@@ -20,7 +20,7 @@ public class ButterEffect extends CyclicMobEffect {
   }
 
   @Override
-  public void tick(EntityTickEvent event) {
+  public void tick(EntityTickEvent.Pre event) {
     // delete me i guess
     if(event.getEntity() instanceof LivingEntity living) {
       var level = living.level();
@@ -29,7 +29,7 @@ public class ButterEffect extends CyclicMobEffect {
       }
       List<EquipmentSlot> slots = null;
       if (!living.onGround() || living.isSprinting()) {
-        int amplifier = living.getEffect(this).getAmplifier();
+        int amplifier = living.getEffect(com.lothrazar.cyclic.registry.PotionEffectRegistry.BUTTERFINGERS).getAmplifier();
         //sprinting or jumping or something
         if (amplifier == Const.Potions.I) {
           slots = Arrays.asList(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);

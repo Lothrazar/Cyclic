@@ -16,7 +16,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.server.level.ServerEntity;
 
 public class StoneEntity extends ThrowableItemProjectile {
 
@@ -49,9 +50,7 @@ public class StoneEntity extends ThrowableItemProjectile {
         target.hurt(level.damageSources().thrown(this, owner), Mth.nextInt(level.random, 2, 6));
         if (level.random.nextDouble() < CHANCE_STUN && !level.isClientSide && target instanceof LivingEntity) {
           LivingEntity living = (LivingEntity) target;
-          MobEffectInstance effect = new MobEffectInstance(PotionEffectRegistry.STUN.get(), Const.TICKS_PER_SEC * 2, 1);
-          effect.visible = false;
-          living.addEffect(effect);
+          living.addEffect(new MobEffectInstance(com.lothrazar.cyclic.registry.PotionEffectRegistry.STUN, Const.TICKS_PER_SEC * 2, 1, false, false, false));
         }
       }
     }
@@ -59,7 +58,7 @@ public class StoneEntity extends ThrowableItemProjectile {
   }
 
   @Override
-  public Packet<ClientGamePacketListener> getAddEntityPacket() {
-    return NetworkHooks.getEntitySpawningPacket(this);
+  public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity serverEntity) {
+    return new ClientboundAddEntityPacket(this, serverEntity);
   }
 }

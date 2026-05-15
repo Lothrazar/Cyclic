@@ -30,14 +30,21 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 public class ItemStorageBag extends ItemBaseCyclic {
+  public static CompoundTag getCustomData(ItemStack stack) {
+    return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+  }
+  public static void setCustomData(ItemStack stack, CompoundTag tag) {
+    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+  }
+
 
   private static final String NBT_COLOUR = "COLOUR";
   public static final int REFILL_TICKS = 4;
@@ -52,18 +59,18 @@ public class ItemStorageBag extends ItemBaseCyclic {
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
       int slot = handIn == InteractionHand.MAIN_HAND ? playerIn.getInventory().selected : 40;
-      NetworkHooks.openScreen((ServerPlayer) playerIn, new StorageBagContainerProvider(slot), buf -> buf.writeInt(slot));
+      ((ServerPlayer) playerIn).openMenu(new StorageBagContainerProvider(slot), buf -> buf.writeInt(slot));
     }
     return super.use(worldIn, playerIn, handIn);
   }
 
   public static void setColour(ItemStack stack, DyeColor col) {
-    CompoundTag tags = stack.getOrCreateTag();
+    CompoundTag tags = getCustomData(stack);
     tags.putInt(NBT_COLOUR, col.getTextColor()); // getColorValue
   }
 
   public static int getColour(ItemStack stack) {
-    CompoundTag tags = stack.getOrCreateTag();
+    CompoundTag tags = getCustomData(stack);
     if (tags.contains(NBT_COLOUR) == false) {
       return DyeColor.BROWN.getTextColor(); //BROWN as default for normal look
     }
@@ -82,8 +89,8 @@ public class ItemStorageBag extends ItemBaseCyclic {
       return InteractionResult.PASS;
     }
     ItemStackHandler handler = getInventory(bag);
-    if (handler != null && te != null && te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).isPresent()) {
-      IItemHandler teHandler = te.getCapability(ForgeCapabilities.ITEM_HANDLER, face).orElse(null);
+    if (handler != null) {
+      IItemHandler teHandler = world.getCapability(Capabilities.ItemHandler.BLOCK, pos, face);
       Set<Item> itemsInTargetInventory = new HashSet<>();
       if (teHandler != null) {
         for (int j = 0; j < teHandler.getSlots(); j++) {
@@ -92,7 +99,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
       }
       for (int i = 0; i < handler.getSlots(); i++) {
         ItemStack stack = handler.getStackInSlot(i);
-        ItemStack remaining = ItemHandlerHelper.copyStackWithSize(stack, stack.getCount());
+        ItemStack remaining = stack.copy();
         if (!stack.isEmpty()) {
           if (mode == DepositMode.DUMP || (mode == DepositMode.MERGE && itemsInTargetInventory.contains(stack.getItem()))) {
             remaining = ItemHandlerHelper.insertItem(teHandler, stack, false);
@@ -109,7 +116,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   @Override
   public void appendHoverText(ItemStack stack,  Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    CompoundTag nbt = stack.getOrCreateTag();
+    CompoundTag nbt = getCustomData(stack);
     String pickupMode = nbt.getString(PickupMode.NBT);
     String depositMode = nbt.getString("deposit_mode");
     String refillMode = nbt.getString("refill_mode");
@@ -135,11 +142,11 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   @Override
   public void registerClient() {
-    MenuScreens.register(MenuTypeRegistry.STORAGE_BAG.get(), ScreenStorageBag::new);
+    // // MenuScreens.register(MenuTypeRegistry.STORAGE_BAG.get(), ScreenStorageBag::new); // TODO: use RegisterMenuScreensEvent
   }
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, CompoundTag nbt) {
 //    return new StorageBagCapability(stack, nbt);
 //  }
 
@@ -189,22 +196,20 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private static ItemStackHandler getInventory(ItemStack bag) {
-    if (bag.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
-      return (ItemStackHandler) bag.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve().get();
-    }
-    return null;
+    var handler = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    return handler instanceof ItemStackHandler ish ? ish : null;
   }
 
   public static ItemStack tryInsert(ItemStack bag, ItemStack stack) {
-    AtomicReference<ItemStack> returnStack = new AtomicReference<>(ItemHandlerHelper.copyStackWithSize(stack, stack.getCount()));
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    AtomicReference<ItemStack> returnStack = new AtomicReference<>(stack.copy());
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
       returnStack.set(ItemHandlerHelper.insertItem(h, stack, false));
-    });
+    }
     return returnStack.get();
   }
 
   public static ItemStack tryFilteredInsert(ItemStack bag, ItemStack stack) {
-    if (bag.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent() && bagHasItem(bag, stack)) {
+    if (bag.getCapability(Capabilities.ItemHandler.ITEM) != null && bagHasItem(bag, stack)) {
       return tryInsert(bag, stack);
     }
     return stack;
@@ -212,43 +217,43 @@ public class ItemStorageBag extends ItemBaseCyclic {
 
   private static boolean bagHasItem(ItemStack bag, ItemStack stack) {
     AtomicBoolean hasItem = new AtomicBoolean(false);
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           hasItem.set(true);
         }
       }
-    });
+    }
     return hasItem.get();
   }
 
   //unused but possibly useful
   public static int getFirstSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
       for (int i = 0; i < h.getSlots(); i++) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);
         }
       }
-    });
+    }
     return slot.get();
   }
 
   private static int getLastSlotWithStack(ItemStack bag, ItemStack stack) {
     AtomicInteger slot = new AtomicInteger(-1);
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM); if (h != null) {
       for (int i = h.getSlots() - 1; i >= 0; i--) {
         if (h.getStackInSlot(i).getItem() == stack.getItem()) {
           slot.set(i);
         }
       }
-    });
+    }
     return slot.get();
   }
 
   public static PickupMode getPickupMode(ItemStack stack) {
-    String mode = stack.getOrCreateTag().getString(PickupMode.NBT);
+    String mode = getCustomData(stack).getString(PickupMode.NBT);
     for (int i = 0; i < PickupMode.values().length; i++) {
       if (mode.equals(PickupMode.values()[i].getSerializedName())) {
         return PickupMode.values()[i];
@@ -258,7 +263,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private static DepositMode getDepositMode(ItemStack stack) {
-    String mode = stack.getOrCreateTag().getString(DepositMode.NBT);
+    String mode = getCustomData(stack).getString(DepositMode.NBT);
     for (int i = 0; i < DepositMode.values().length; i++) {
       if (mode.equals(DepositMode.values()[i].getSerializedName())) {
         return DepositMode.values()[i];
@@ -268,7 +273,7 @@ public class ItemStorageBag extends ItemBaseCyclic {
   }
 
   private static RefillMode getRefillMode(ItemStack stack) {
-    String mode = stack.getOrCreateTag().getAsString();
+    String mode = getCustomData(stack).getAsString();
     for (int i = 0; i < RefillMode.values().length; i++) {
       if (mode.equals(RefillMode.values()[i].getSerializedName())) {
         return RefillMode.values()[i];
@@ -305,6 +310,6 @@ public class ItemStorageBag extends ItemBaseCyclic {
     if (myBag.isEmpty()) {
       return;
     }
-    myBag.getOrCreateTag().putLong("ts", System.currentTimeMillis());
+    CustomData.update(DataComponents.CUSTOM_DATA, myBag, tag -> tag.putLong("ts", System.currentTimeMillis()));
   }
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.HolderLookup;
 
 public class TileDice extends TileBlockEntityCyclic {
 
@@ -34,15 +35,15 @@ public class TileDice extends TileBlockEntityCyclic {
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    tag.putInt("spinningIfZero", spinningIfZero);
-    super.load(tag);
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    spinningIfZero = tag.getInt("spinningIfZero");
+    super.loadAdditional(tag, registries);
   }
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    spinningIfZero = tag.getInt("spinningIfZero");
-    super.saveAdditional(tag);
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    tag.putInt("spinningIfZero", spinningIfZero);
+    super.saveAdditional(tag, registries);
   }
 
   public void startSpinning() {

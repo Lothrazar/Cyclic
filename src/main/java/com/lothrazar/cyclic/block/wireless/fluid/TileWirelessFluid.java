@@ -10,7 +10,6 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.core.BlockPosDim;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,6 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -37,7 +38,7 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidType.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, f -> true);
-//  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+// //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   public ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override
@@ -177,4 +178,10 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   public float getThick() {
     return 0.065F;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return gpsSlots;
+  }
+
 }

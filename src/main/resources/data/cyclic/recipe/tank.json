@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "igi",
+    "gog",
+    "igi"
+  ],
+  "key": {
+    "o": {
+      "item": "cyclic:cask"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    },
+    "g": {
+      "tag": "c:glass/colorless"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:tank"
+  }
+}

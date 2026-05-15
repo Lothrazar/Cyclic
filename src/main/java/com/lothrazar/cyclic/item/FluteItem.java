@@ -46,6 +46,8 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
 
 
 public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
@@ -63,8 +65,8 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
     ItemStack itemstack = player.getItemInHand(handIn);
     //    playerIn.startUsingItem(handIn);
     if (!player.getCooldowns().isOnCooldown(this) &&
-        itemstack.hasTag() && itemstack.getTag().contains(EntityMagicNetEmpty.NBT_ENTITYID)) {
-      int id = itemstack.getTag().getInt(UNIQUEMAGIC);
+        itemstack.has(DataComponents.CUSTOM_DATA) && itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(EntityMagicNetEmpty.NBT_ENTITYID)) {
+      int id = itemstack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(UNIQUEMAGIC);
       Entity found = worldIn.getEntity(id);
       if (found instanceof LivingEntity living) {
         boolean success = EntityUtil.enderTeleportEvent(living, worldIn, player.blockPosition());
@@ -81,15 +83,15 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
   @Override
   @OnlyIn(Dist.CLIENT)
   public boolean isFoil(ItemStack stack) {
-    return stack.hasTag() && stack.getTag().contains(UNIQUEMAGIC);
+    return stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(UNIQUEMAGIC);
   }
 
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    if (stack.hasTag() && stack.getTag().contains(FLUTENAME)) {
-      tooltip.add(Component.translatable(stack.getTag().getString(FLUTENAME)).withStyle(ChatFormatting.LIGHT_PURPLE));
+    if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(FLUTENAME)) {
+      tooltip.add(Component.translatable(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(FLUTENAME)).withStyle(ChatFormatting.LIGHT_PURPLE));
     }
   }
 
@@ -101,9 +103,9 @@ public class FluteItem extends ItemBaseCyclic implements IEntityInteractable {
         && !player.getCooldowns().isOnCooldown(this)
         && EntityUtil.haveSameDimension(target, player)) {
       String id = EntityType.getKey(target.getType()).toString();
-      event.getItemStack().getOrCreateTag().putString(FLUTENAME, target.getDisplayName().getString());
-      event.getItemStack().getOrCreateTag().putString(EntityMagicNetEmpty.NBT_ENTITYID, id);
-      event.getItemStack().getOrCreateTag().putInt(UNIQUEMAGIC, target.getId());
+      CustomData.update(DataComponents.CUSTOM_DATA, event.getItemStack(), t -> t.putString(FLUTENAME, target.getDisplayName().getString()));
+      CustomData.update(DataComponents.CUSTOM_DATA, event.getItemStack(), t -> t.putString(EntityMagicNetEmpty.NBT_ENTITYID, id));
+      CustomData.update(DataComponents.CUSTOM_DATA, event.getItemStack(), t -> t.putInt(UNIQUEMAGIC, target.getId()));
       player.getCooldowns().addCooldown(this, CD);
       player.swing(event.getHand());
       ChatUtil.addChatMessage(player, "item.cyclic.flute_summoning.saved");

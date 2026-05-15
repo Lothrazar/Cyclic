@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.lothrazar.cyclic.fixers.CapabilityFixer;
 import com.lothrazar.cyclic.registry.TextureRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -12,7 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -40,11 +39,6 @@ public class ItemBlockBattery extends BlockItem {
       current = storage.getEnergyStored();
       max = storage.getMaxEnergyStored();
     }
-    else if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
-      //TODO 1.19 port delete this branch
-      current = stack.getTag().getInt(ENERGYTT);
-      max = stack.getTag().getInt(ENERGYTTMAX);
-    }
     return (max == 0) ? 0 : Math.round(13.0F * current / max);
   }
 
@@ -63,47 +57,13 @@ public class ItemBlockBattery extends BlockItem {
       energyttmax = storage.getMaxEnergyStored();
       tooltip.add(Component.translatable(current + "/" + energyttmax).withStyle(ChatFormatting.RED));
     }
-    else if (stack.hasTag() && stack.getTag().contains(ENERGYTT)) {
-      //TODO 1.19 port  delete this branch
-      current = stack.getTag().getInt(ENERGYTT);
-      energyttmax = stack.getTag().getInt(ENERGYTTMAX);
-      tooltip.add(Component.translatable(current + "/" + energyttmax).withStyle(ChatFormatting.BLUE));
-    }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
 //  @Override
-//  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+//  // public Object initCapabilities(ItemStack stack, CompoundTag nbt) {
 //    return new CapabilityProviderEnergyStack(TileBattery.MAX.get());
 //  }
 
-  // ShareTag for server->client capability data sync
-  @Override
-  public CompoundTag getShareTag(ItemStack stack) {
-    CompoundTag nbt = stack.getOrCreateTag();
-    IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
-    //on server  this runs . also has correct values.
-    //set data for sync to client
-    if (storage != null) {
-      nbt.putInt(ENERGYTT, storage.getEnergyStored());
-      nbt.putInt(ENERGYTTMAX, storage.getMaxEnergyStored());
-    }
-    return nbt;
   }
 
-  //clientside read tt
-  @Override
-  public void readShareTag(ItemStack stack, CompoundTag nbt) {
-    if (nbt != null) {
-      CompoundTag stackTag = stack.getOrCreateTag();
-      final int serverEnergyValue = nbt.getInt(ENERGYTT);
-      stackTag.putInt(ENERGYTT, serverEnergyValue);
-      stackTag.putInt(ENERGYTTMAX, nbt.getInt(ENERGYTTMAX));
-      final IEnergyStorage storage = stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
-      if (storage instanceof CustomEnergyStorage energy) {
-        energy.setEnergy(serverEnergyValue);
-      }
-    }
-    super.readShareTag(stack, nbt);
-  }
-}

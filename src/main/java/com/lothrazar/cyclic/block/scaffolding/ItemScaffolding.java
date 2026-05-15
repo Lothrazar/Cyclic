@@ -81,7 +81,7 @@ public class ItemScaffolding extends BlockItem {
       }
     }
     if (worldIn.isClientSide == false && worldIn.isEmptyBlock(pos)) {
-      ItemStack stac = player.getItemInHand(hand);
+      ItemStack stac = player.getMainHandItem();
       if (worldIn.setBlockAndUpdate(pos, Block.byItem(this).defaultBlockState())) {
         ItemStackUtil.shrink(player, stac);
       }

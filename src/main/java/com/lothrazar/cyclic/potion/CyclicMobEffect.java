@@ -3,8 +3,8 @@ package com.lothrazar.cyclic.potion;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 public class CyclicMobEffect extends MobEffect {
 
@@ -13,7 +13,7 @@ public class CyclicMobEffect extends MobEffect {
     PotionEffectRegistry.EFFECTS.add(this);
   }
 
-  public void tick(LivingTickEvent event) {}
+  public void tick(EntityTickEvent.Pre event) {}
 
   public void onPotionAdded(MobEffectEvent.Added event) {}
 

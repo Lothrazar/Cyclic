@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dgd",
+    "fbf",
+    "gag"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "d": {
+      "item": "minecraft:lime_concrete_powder"
+    },
+    "f": {
+      "item": "cyclic:fireball"
+    },
+    "a": {
+      "tag": "c:storage_blocks/ender_pearl"
+    },
+    "b": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "id": "cyclic:charm_creeper"
+  }
+}

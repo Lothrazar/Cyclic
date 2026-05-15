@@ -47,13 +47,13 @@ public class CloudBlock extends BlockCyclic {
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
     if (!worldIn.isClientSide && entityIn instanceof LivingEntity) {
       LivingEntity e = (LivingEntity) entityIn;
-      MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 5);
-      eff.visible = false;
-      eff.showIcon = false;
+      MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 5, false, false, false);
+      // eff.visible = false; // private in 1.21.1
+      // eff.showIcon = false; // private in 1.21.1
       e.addEffect(eff);
-      eff = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 5);
-      eff.visible = false;
-      eff.showIcon = false;
+      eff = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 5, false, false, false);
+      // eff.visible = false; // private in 1.21.1
+      // eff.showIcon = false; // private in 1.21.1
       e.addEffect(eff);
     }
   }

@@ -1,15 +1,13 @@
 package com.lothrazar.cyclic.block.generatoritem;
 
-import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.cap.CustomEnergyStorage;
+import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -22,6 +20,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -98,20 +100,23 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   }
 
   private void findMatchingRecipe() {
-    if (currentRecipe != null && currentRecipe.matches(this, level)) {
+    RecipeInput input = new RecipeInput() {
+      @Override public ItemStack getItem(int i) { return i == 0 ? inputSlots.getStackInSlot(0) : ItemStack.EMPTY; }
+      @Override public int size() { return 1; }
+    };
+    if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
     currentRecipe = null;
-    List<RecipeGeneratorItem> recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get());
-    for (RecipeGeneratorItem rec : recipes) {
-      if (rec.matches(this, level)) {
+    var recipes = level.getRecipeManager().getAllRecipesFor(CyclicRecipeType.GENERATOR_ITEM.get());
+    for (var holder : recipes) {
+      RecipeGeneratorItem rec = holder.value();
+      if (rec.matches(input, level)) {
         this.burnTimeMax = rec.getTicks();
         this.burnTime = this.burnTimeMax;
         this.burnPerTick = rec.getRfPertick();
         this.currentRecipe = rec;
-        final int slot = 0;
-        final int qty = 1;
-        this.inputSlots.extractItem(slot, qty, false);
+        this.inputSlots.extractItem(0, 1, false);
         updateComparatorOutputLevel();
         return;
       }
@@ -130,7 +135,9 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    energy.deserializeNBT(registries,tag.getCompound(NBTENERGY));
+    if (tag.contains(NBTENERGY)) {
+      energy.deserializeNBT(registries, tag.get(NBTENERGY));
+    }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     burnTime = tag.getInt("burnTime");
     burnTimeMax = tag.getInt("burnTimeMax");
@@ -184,4 +191,16 @@ public class TileGeneratorDrops extends TileBlockEntityCyclic implements MenuPro
   public int getEnergyMax() {
     return TileGeneratorDrops.MAX;
   }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inputSlots;
+  }
+
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
+  }
+
 }

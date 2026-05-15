@@ -9,8 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class ContainerStorageBag extends ContainerBase {
 
@@ -29,7 +30,8 @@ public class ContainerStorageBag extends ContainerBase {
     if (bag.isEmpty()) {
       this.bag = super.findBag(ItemRegistry.STORAGE_BAG.get());
     }
-    bag.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+    IItemHandler h = bag.getCapability(Capabilities.ItemHandler.ITEM);
+    if (h != null) {
       this.slotCount = h.getSlots();
       this.endInv = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
@@ -46,7 +48,7 @@ public class ContainerStorageBag extends ContainerBase {
           }
         });
       }
-    });
+    }
     layoutPlayerInventorySlots(8, 174);
   }
 

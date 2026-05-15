@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "r r",
+    "gsg",
+    "ccc"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:calcite"
+    },
+    "s": {
+      "item": "cyclic:gem_obsidian"
+    },
+    "g": {
+      "tag": "c:nuggets/netherite"
+    },
+    "r": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:uncrafter"
+  }
+}

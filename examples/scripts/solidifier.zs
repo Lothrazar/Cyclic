@@ -14,7 +14,7 @@ solidifier.addRecipe("megaman1", [<item:minecraft:sand>,<item:minecraft:birch_tr
 // run /ct dump tag 
 // to see all registered fluid tags
 
-solidifier.addRecipe("megaman2", [<item:minecraft:sand>,<item:minecraft:spruce_trapdoor>,<item:minecraft:sand>], "forge:wax", 100, <item:minecraft:iron_hoe>, 300, 100);
+solidifier.addRecipe("megaman2", [<item:minecraft:sand>,<item:minecraft:spruce_trapdoor>,<item:minecraft:sand>], "neoforge:wax", 100, <item:minecraft:iron_hoe>, 300, 100);
 
 solidifier.addRecipe("megaman3", [<item:minecraft:sand>,<item:minecraft:oak_trapdoor>,<item:minecraft:sand>], "minecraft:lava", 100, <item:minecraft:iron_sword>, 300, 100);
 
