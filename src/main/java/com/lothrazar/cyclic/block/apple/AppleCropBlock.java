@@ -19,7 +19,8 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.NeoForgeEventHandler;
+import net.neoforged.neoforge.event.level.block.CropGrowEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 
 public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
@@ -68,15 +69,23 @@ public class AppleCropBlock extends BlockCyclic implements BonemealableBlock {
     return worldIn.getBlockState(pos.above()).is(BlockTags.LEAVES);
   }
 
-//  @Override
-//  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-//    int age = state.getValue(AGE);
-//    if (age < MAX_AGE && NeoForgeEventHandler.onCropsGrowPre(worldIn, pos, state, worldIn.random.nextInt(5) == 0)) {
-//      worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(age + 1)), 2);
-//      // this.grow(worldIn, random, pos, state);
-//      ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-//    }
-//  }
+  @Override
+  public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
+    int age = state.getValue(AGE);
+    if (age >= MAX_AGE) {
+      return;
+    }
+    CropGrowEvent.Pre pre = new CropGrowEvent.Pre(worldIn, pos, state);
+    NeoForge.EVENT_BUS.post(pre);
+    boolean defaultGrow = random.nextInt(5) == 0;
+    boolean grow = pre.getResult() == CropGrowEvent.Pre.Result.GROW
+        || (pre.getResult() == CropGrowEvent.Pre.Result.DEFAULT && defaultGrow);
+    if (grow) {
+      BlockState newState = state.setValue(AGE, Integer.valueOf(age + 1));
+      worldIn.setBlock(pos, newState, 2);
+      NeoForge.EVENT_BUS.post(new CropGrowEvent.Post(worldIn, pos, state, newState));
+    }
+  }
 
 
   @Override

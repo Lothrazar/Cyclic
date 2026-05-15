@@ -10,6 +10,7 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -331,24 +332,13 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
     world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, facing).setValue(SPEED, speed).setValue(TYPE, type).setValue(COLOUR, col), 2);
     super.setPlacedBy(world, pos, state, placer, stack);
   }
-  //  @Override
-  //  public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-  //    if (!world.isRemote && entity instanceof ItemEntity && !(entity instanceof ConveyorItemEntity)) {
-  //      ItemEntity e = (ItemEntity) entity;
-  //      //I wanted to make it a custom entity that will just ride on the conveyor somewhat stationary but it's proving problematic
-  //      //ConveyorItemEntity c = new ConveyorItemEntity(world, e.getPosX(), e.getPosY(), e.getPosZ(), e.getItem());
-  //      //ItemEntity e2 = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PUMPKIN, 1));
-  //      //world.addEntity(e2);
-  //      //world.addEntity(c);
-  //      //c.setThrowerId(e.getThrowerId());
-  //      //c.setMotion(e.getMotion());
-  //      //c.setNoDespawn();
-  //      //c.setDefaultPickupDelay();
-  //      //e.setItem(ItemStack.EMPTY);
-  //      //e.remove();
-  //    }
-  //    super.onEntityCollision(state, world, pos, entity);
-  //  }
+  @Override
+  public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+    if (!world.isClientSide) {
+      TileConveyor.makeEntitiesTravel(entity, state, pos, world);
+    }
+    super.entityInside(state, world, pos, entity);
+  }
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

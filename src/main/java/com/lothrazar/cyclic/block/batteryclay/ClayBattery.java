@@ -88,16 +88,12 @@ public class ClayBattery extends BlockCyclic {
     }
     super.setPlacedBy(world, pos, state, placer, stack);
   }
-  //
-  //  @Override
-  //  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-  //    if (state.getBlock() != newState.getBlock()) {
-  //      TileClayBattery tileentity = (TileClayBattery) worldIn.getBlockEntity(pos);
-  //      //      if (tileentity != null && tileentity.batterySlots != null) {
-  //      //        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.batterySlots.getStackInSlot(0));
-  //      //      }
-  //      worldIn.updateNeighbourForOutputSignal(pos, this);
-  //    }
-  //    super.onRemove(state, worldIn, pos, newState, isMoving);
-  //  }
+
+  @Override
+  public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    if (state.getBlock() != newState.getBlock()) {
+      worldIn.updateNeighbourForOutputSignal(pos, this);
+    }
+    super.onRemove(state, worldIn, pos, newState, isMoving);
+  }
 }

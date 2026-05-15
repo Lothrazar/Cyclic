@@ -57,7 +57,7 @@ public class GloomCurseEnchant {
       Collections.shuffle(negativeEffects);
       int appliedEffects = 0;
       for (MobEffect effect : negativeEffects) {
-        if (effect == null) continue;
+        if (effect == null) {continue;}
         ResourceLocation effectKey = BuiltInRegistries.MOB_EFFECT.getKey(effect);
         if (StringParseUtil.isInList(ConfigRegistry.getGloomIgnoreList(), effectKey)) {
           ModCyclic.LOGGER.info("Gloom(curse) effect cannot apply " + effectKey);
@@ -66,7 +66,7 @@ public class GloomCurseEnchant {
         if (appliedEffects < MIN_EFFECTS || BASE_APPLY_CHANCE > user.level().random.nextDouble()) {
           livingAttacker.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect), EFFECT_DURATION));
           appliedEffects++;
-          if (appliedEffects >= MAX_EFFECTS) break;
+          if (appliedEffects >= MAX_EFFECTS) {break;}
         }
       }
     }
