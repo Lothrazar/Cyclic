@@ -3,5 +3,5 @@
 dependencies {
 // TODO: once botania is ported, we can re enable here
  // compileOnly "vazkii.botania:Botania:[VERSION]:api"
-
+  implementation "local.mods:flib:${minecraft_version}-${flib_version}"
 }

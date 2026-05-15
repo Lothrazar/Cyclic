@@ -166,11 +166,22 @@
 			enabled = true
 
 		[cyclic.enchantment.growth]
-			# Radius per level.  size around player to perform growth logic
+			# Max number of crops grown per growth per level. Actual is (level * this + 4 bonus when its raining) 
+			#Range: 1 ~ 16
+			limit = 4
+			# If true only players can use this (false allows anything with hands ie armor stands, zombies, etc)  
+			player_only = false
+			# Radius increase per level.  Actual radius is (this * level + 1)
 			#Range: 1 ~ 16
 			radius = 2
+			# Chance of trying to grow per tick / 100
+			#Range: 1 ~ 100
+			percent = 4
 			# Set false to stop enchantment from working
 			enabled = true
+			# Height of growth enchantment range
+			#Range: 0 ~ 16
+			height = 2
 
 		[cyclic.enchantment.step]
 			# Set false to stop enchantment from working
@@ -517,7 +528,7 @@
 		[cyclic.blocks.facades]
 			#
 			#  These blocks are not allowed to be used as Facades for blocks because they look weird (used by cables and Glowstone Facade and Soundproofing Facade and others).  If you want to ignore one entire mod use an entry like this : storagenetwork:* 
-			itemsNotAllowed = ["minecraft:ladder", "minecraft:double_plant", "minecraft:waterlily", "minecraft:torch", "minecraft:*_torch", "minecraft:redstone", "minecraft:iron_bars", "minecraft:chest", "minecraft:ender_chest", "minecraft:sculk_vein", "minecraft:string", "minecraft:vine", "minecraft:rail", "minecraft:*_rail", "minecraft:brewing_stand", "minecraft:*_dripleaf", "minecraft:*_pane", "minecraft:*_sapling", "minecraft:*_sign", "minecraft:*_door", "minecraft:*_banner", "minecraft:*_shulker_box", "cyclic:*_pipe", "cyclic:*_bars", "storagenetwork:*"]
+			itemsNotAllowed = ["minecraft:double_plant", "minecraft:waterlily", "minecraft:torch", "minecraft:*_torch", "minecraft:redstone", "minecraft:iron_bars", "minecraft:chest", "minecraft:ender_chest", "minecraft:sculk_vein", "minecraft:string", "minecraft:vine", "minecraft:brewing_stand", "minecraft:*_dripleaf", "minecraft:*_pane", "minecraft:*_sapling", "minecraft:*_sign", "minecraft:*_door", "minecraft:*_banner", "minecraft:*_shulker_box", "storagenetwork:*"]
 
 			[cyclic.blocks.facades.cables]
 				#
@@ -534,7 +545,7 @@
 	#####################################################################################
 	[cyclic.logging]
 		# Unblock info logs; very spammy; can be useful for testing certain issues
-		info = true
+		info = false
 
 	#####################################################################################
 	# Item specific configs

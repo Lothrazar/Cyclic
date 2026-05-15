@@ -20,10 +20,14 @@ public class GrowthUtil {
       return false;
     }
     if (bState.getBlock() instanceof BonemealableBlock crop) {
-      // isValidBonemealTarget signature changed in 1.21: (LevelReader, BlockPos, BlockState)
-      if (!crop.isValidBonemealTarget(world, current, bState)) {
-        ModCyclic.LOGGER.info("terra-grow canUseBonemeal is false  " + bState.getBlock());
-        return false;
+      //      BonemealableBlock crop = ((BonemealableBlock) bState.getBlock());
+      //      if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide)) { // canCrow
+      //        ModCyclic.LOGGER.info("terra-grow crop cannot grow right now " + bState.getBlock());
+      //        return false; //cant grow, or cant bonemeal. no
+      //      }
+      if (!crop.isValidBonemealTarget(world, current, bState)) {//canUseBonemeal // canGrow
+        // ModCyclic.LOGGER.info("terra-grow canUseBonemeal is false  " + bState.getBlock());
+        return false; //cant grow, or cant bonemeal. no
       }
     }
     return true;

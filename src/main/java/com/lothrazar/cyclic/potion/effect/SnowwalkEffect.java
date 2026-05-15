@@ -18,7 +18,7 @@ public class SnowwalkEffect extends CyclicMobEffect {
   @Override
   public void tick(EntityTickEvent.Pre event) {
     // delete me i guess 
-    if (!(event.getEntity() instanceof LivingEntity living)) return;
+    if (!(event.getEntity() instanceof LivingEntity living)) { return; }
     Level level = living.level();
     BlockPos blockpos = living.blockPosition();
     BlockState blockstate = Blocks.SNOW.defaultBlockState();

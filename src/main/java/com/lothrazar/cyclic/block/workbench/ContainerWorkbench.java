@@ -85,13 +85,13 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingInput, CraftingRe
   }
 
   @Override
-  public boolean recipeMatches(RecipeHolder recipeIn) {
+  public boolean recipeMatches(RecipeHolder<CraftingRecipe> recipeIn) {
     CraftingInput craftingInput = CraftingInput.of(3, 3, java.util.List.of(
         this.craftMatrix.getItem(0), this.craftMatrix.getItem(1), this.craftMatrix.getItem(2),
         this.craftMatrix.getItem(3), this.craftMatrix.getItem(4), this.craftMatrix.getItem(5),
         this.craftMatrix.getItem(6), this.craftMatrix.getItem(7), this.craftMatrix.getItem(8)
     ));
-    return ((RecipeHolder<CraftingRecipe>)recipeIn).value().matches(craftingInput, this.player.level());
+    return recipeIn.value().matches(craftingInput, this.player.level());
   }
 
   @Override

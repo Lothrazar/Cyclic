@@ -37,15 +37,15 @@ public class DisarmEnchant {
 
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
-    if (!isEnabled()) return;
-    if (!(event.getTarget() instanceof LivingEntity livingTarget)) return;
+    if (!isEnabled()) { return; }
+    if (!(event.getTarget() instanceof LivingEntity livingTarget)) { return; }
     LivingEntity user = event.getEntity();
     int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.DISARM, user), user);
-    if (level <= 0) return;
-    if (!canDisarm(livingTarget)) return;
+    if (level <= 0) { return; }
+    if (!canDisarm(livingTarget)) { return; }
     List<ItemStack> toDisarm = new ArrayList<>();
     livingTarget.getHandSlots().forEach(itemStack -> {
-      if (!(itemStack.getItem() instanceof SwordItem)) return;
+      if (!(itemStack.getItem() instanceof SwordItem)) { return; }
       if (getChanceToDisarm(level) > user.level().random.nextDouble()) {
         toDisarm.add(itemStack);
       }

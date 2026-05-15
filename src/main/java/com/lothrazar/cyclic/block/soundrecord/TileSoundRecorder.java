@@ -14,6 +14,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -23,7 +24,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProvider {
+public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   static final int MAX_SOUNDS = 10; // locked by gui size. 
   private static final String SOUNDAT = "soundat";
@@ -163,4 +164,18 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
     return inputSlots;
   }
 
+  @Override
+  public int[] getSlotsForFace(Direction direction) {
+    return inventory.getSlotsForFace(direction);
+  }
+
+  @Override
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+    return inventory.canPlaceItemThroughFace(i, itemStack, direction);
+  }
+
+  @Override
+  public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+    return inventory.canTakeItemThroughFace(i, itemStack, direction);
+  }
 }

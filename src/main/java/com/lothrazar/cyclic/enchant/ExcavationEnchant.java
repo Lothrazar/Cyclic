@@ -48,16 +48,16 @@ public class ExcavationEnchant {
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onBreakEvent(BreakEvent event) {
-    if (!isEnabled()) return;
+    if (!isEnabled()) { return; }
     LevelAccessor world = event.getLevel();
     Player player = event.getPlayer();
-    if (player.swingingArm == null || world.isClientSide()) return;
+    if (player.swingingArm == null || world.isClientSide()) { return; }
     BlockPos pos = event.getPos();
     BlockState eventState = event.getState();
     Block block = eventState.getBlock();
     ItemStack stackHarvestingWith = player.getItemInHand(player.swingingArm);
     int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.EXCAVATE, player), stackHarvestingWith);
-    if (level <= 0) return;
+    if (level <= 0) { return; }
     if (effectiveToolRequired && !player.hasCorrectToolForDrops(eventState)) {
       ModCyclic.LOGGER.info("excavate trigger cancelled; tool not effective");
       return;
@@ -101,9 +101,9 @@ public class ExcavationEnchant {
       wasHarvested.add(targetPos);
       totalBroken++;
     }
-    if (wasHarvested.isEmpty()) return totalBroken;
+    if (wasHarvested.isEmpty()) { return totalBroken; }
     for (BlockPos targetPos : theFuture) {
-      if (totalBroken >= this.getHarvestMax(level) || player.getItemInHand(player.swingingArm).isEmpty()) break;
+      if (totalBroken >= this.getHarvestMax(level) || player.getItemInHand(player.swingingArm).isEmpty()) { break; }
       totalBroken += this.harvestSurrounding(world, player, targetPos, block, totalBroken, level, swingingHand);
     }
     return totalBroken;

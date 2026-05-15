@@ -12,6 +12,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -28,7 +29,7 @@ import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider {
+public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   static enum Fields {
     REDSTONE, TIMER, RENDER, BURNMAX;
@@ -231,4 +232,18 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     return energy;
   }
 
+  @Override
+  public int[] getSlotsForFace(Direction direction) {
+    return inventory.getSlotsForFace(direction);
+  }
+
+  @Override
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+    return inventory.canPlaceItemThroughFace(i, itemStack, direction);
+  }
+
+  @Override
+  public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+    return inventory.canTakeItemThroughFace(i, itemStack, direction);
+  }
 }

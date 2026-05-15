@@ -30,7 +30,7 @@ public class LastStandEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent.Pre event) {
-    if (!isEnabled()) return;
+    if (!isEnabled()) { return; }
     final int level = EnchantUtil.getCurrentArmorLevelSlot(
         EnchantRegistry.holder(EnchantRegistry.STAND, event.getEntity()), event.getEntity(), EquipmentSlot.LEGS);
     if (level > 0 && event.getEntity().getHealth() - event.getOriginalDamage() <= 0 && event.getEntity() instanceof ServerPlayer player) {
@@ -39,7 +39,7 @@ public class LastStandEnchant {
         return;
       }
       final int xpCost = Math.max(1, (COST == null ? 50 : COST.get()) / level);
-      if (PlayerUtil.getExpTotal(player) < xpCost) return;
+      if (PlayerUtil.getExpTotal(player) < xpCost) { return; }
       float toSurvive = event.getEntity().getHealth() - 1;
       event.setNewDamage (toSurvive);
       player.giveExperiencePoints(-1 * xpCost);

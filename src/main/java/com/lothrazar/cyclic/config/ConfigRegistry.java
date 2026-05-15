@@ -48,6 +48,7 @@ import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
 import com.lothrazar.cyclic.block.tp.BlockTeleport;
 import com.lothrazar.cyclic.block.uncrafter.TileUncraft;
 import com.lothrazar.cyclic.block.user.TileUser;
+import com.lothrazar.cyclic.enchant.*;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.WandHypnoItem;
@@ -233,6 +234,7 @@ public class ConfigRegistry {
     CFG.comment(WALL, " Configs make sure players will not be able to craft any in survival "
         + " (api only allows me to disable original base level potion, stuff like splash/tipped arrows are out of my control, for futher steps i suggest modpacks hide them from JEI as well if desired, or bug Mojang to implement JSON brewing stand recipes)", WALL)
         .push("potion");
+    //TODO:
 //     PotionRegistry.PotionRecipeConfig.ANTIGRAVITY = CFG.comment(" Set false to disable the base recipe").define("antigravity.enabled", true);
 //     PotionRegistry.PotionRecipeConfig.ATTACK_RANGE = CFG.comment(" Set false to disable the base recipe").define("attack_range.enabled", true);
 //     PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
@@ -262,35 +264,36 @@ public class ConfigRegistry {
         .defineList(com.lothrazar.cyclic.enchant.GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
             it -> it instanceof String);
     BEHEADING_SKINS = CFG.comment(" Beheading enchant add player skin head drop, add any mob id and any skin")
-        .defineList(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
-    com.lothrazar.cyclic.enchant.BeheadingEnchant.PERCDROP = CFG.comment(" Base perecentage chance to drop a head on kill").defineInRange(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".percent", 20, 1, 99);
-    com.lothrazar.cyclic.enchant.BeheadingEnchant.PERCPERLEVEL = CFG.comment(" Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".per_level", 25, 1, 99);
-    com.lothrazar.cyclic.enchant.GloomCurseEnchant.CFG = CFG.comment(" (Gloom) Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.GloomCurseEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.DisarmEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.DisarmEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.ExcavationEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.ExcavationEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.GrowthEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.GrowthEnchant.RADIUS_FACTOR = CFG.comment(" Radius per level. Size around player to perform growth logic").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".radius", 2, 1, 16);
-    com.lothrazar.cyclic.enchant.GrowthEnchant.LIMIT_FACTOR = CFG.comment(" Max blocks to grow per tick per level").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".limit", 3, 1, 64);
-    com.lothrazar.cyclic.enchant.GrowthEnchant.HEIGHT = CFG.comment(" Height of the growth region in blocks").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".height", 2, 1, 16);
-    com.lothrazar.cyclic.enchant.GrowthEnchant.ODDS = CFG.comment(" Percent chance per block per tick to attempt growth").defineInRange(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".odds", 50, 1, 100);
-    com.lothrazar.cyclic.enchant.GrowthEnchant.PLAYER_ONLY = CFG.comment(" If true, only players trigger growth (not mobs holding hoes)").define(com.lothrazar.cyclic.enchant.GrowthEnchant.ID + ".player_only", true);
-    com.lothrazar.cyclic.enchant.MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(com.lothrazar.cyclic.enchant.MultiJumpEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.LifeLeechEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.MagnetEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.MultiBowEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.MultiBowEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.EnderPearlEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.EnderPearlEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.QuickdrawEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.QuickdrawEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.ReachEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.ReachEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.StepEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.StepEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.SteadyEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.SteadyEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.LastStandEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.LastStandEnchant.COST = CFG.comment(" Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
-    com.lothrazar.cyclic.enchant.LastStandEnchant.ABS = CFG.comment(" How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);
-    com.lothrazar.cyclic.enchant.LastStandEnchant.COOLDOWN = CFG.comment(" How many ticks of cooldown, 0 to disable").defineInRange(com.lothrazar.cyclic.enchant.LastStandEnchant.ID + ".cooldown", 20, 0, 99999);
-    com.lothrazar.cyclic.enchant.TravellerEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.TravellerEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.VenomEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.VenomEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.XpEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.XpEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.DisarmEnchant.PERCENTPERLEVEL = CFG.comment(" Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(com.lothrazar.cyclic.enchant.DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
+        .defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
+    BeheadingEnchant.PERCDROP = CFG.comment(" Base perecentage chance to drop a head on kill").defineInRange(BeheadingEnchant.ID + ".percent", 20, 1, 99);
+    BeheadingEnchant.PERCPERLEVEL = CFG.comment(" Percentage increase per level of enchant. Formula [percent + (level - 1) * per_level] ").defineInRange(BeheadingEnchant.ID + ".per_level", 25, 1, 99);
+    GloomCurseEnchant.CFG = CFG.comment(" (Gloom) Set false to stop enchantment from working").define(GloomCurseEnchant.ID + ".enabled", true);
+    DisarmEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(DisarmEnchant.ID + ".enabled", true);
+    ExcavationEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ExcavationEnchant.ID + ".enabled", true);
+    GrowthEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(GrowthEnchant.ID + ".enabled", true);
+    GrowthEnchant.RADIUS_FACTOR = CFG.comment(" Radius increase per level.  Actual radius is (this * level + 1)").defineInRange(GrowthEnchant.ID + ".radius", 2, 1, 16);
+    GrowthEnchant.HEIGHT = CFG.comment(" Height of growth enchantment range").defineInRange(GrowthEnchant.ID + ".height", 2, 0, 16);
+    GrowthEnchant.LIMIT_FACTOR = CFG.comment(" Max number of crops grown per growth per level. Actual is (level * this + 4 bonus when its raining) ").defineInRange(GrowthEnchant.ID + ".limit", 4, 1, 16);
+    GrowthEnchant.ODDS = CFG.comment(" Chance of trying to grow per tick / 100").defineInRange(GrowthEnchant.ID + ".percent", 4, 1, 100);
+    GrowthEnchant.PLAYER_ONLY = CFG.comment(" If true only players can use this (false allows anything with hands ie armor stands, zombies, etc)  ").define(GrowthEnchant.ID + ".player_only", false);
+    MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
+    LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
+    MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
+    MultiBowEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MultiBowEnchant.ID + ".enabled", true);
+    EnderPearlEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(EnderPearlEnchant.ID + ".enabled", true);
+    QuickdrawEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(QuickdrawEnchant.ID + ".enabled", true);
+    ReachEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ReachEnchant.ID + ".enabled", true);
+    StepEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(StepEnchant.ID + ".enabled", true);
+    SteadyEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(SteadyEnchant.ID + ".enabled", true);
+    LastStandEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LastStandEnchant.ID + ".enabled", true);
+    LastStandEnchant.COST = CFG.comment(" Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
+    LastStandEnchant.ABS = CFG.comment(" How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);
+    LastStandEnchant.COOLDOWN = CFG.comment(" How many ticks of cooldown, 0 to disable").defineInRange(LastStandEnchant.ID + ".cooldown", 20, 0, 99999);
+    TravellerEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(TravellerEnchant.ID + ".enabled", true);
+    VenomEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(VenomEnchant.ID + ".enabled", true);
+    XpEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(XpEnchant.ID + ".enabled", true);
+    DisarmEnchant.PERCENTPERLEVEL = CFG.comment(" Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
+
     DISARM_IGNORE_LIST = CFG.comment(" Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
         .defineList(com.lothrazar.cyclic.enchant.DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
             it -> it instanceof String);

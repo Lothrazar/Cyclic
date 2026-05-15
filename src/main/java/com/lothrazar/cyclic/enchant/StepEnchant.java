@@ -24,8 +24,8 @@ public class StepEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
-    if (!isEnabled()) return;
-    if (!(event.getEntity() instanceof Player player)) return;
+    if (!isEnabled()) { return; }
+    if (!(event.getEntity() instanceof Player player)) { return; }
     Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.STEP, player);
     int level = EnchantUtil.getCurrentArmorLevelSlot(h, player, EquipmentSlot.LEGS);
     if (level > 0) {

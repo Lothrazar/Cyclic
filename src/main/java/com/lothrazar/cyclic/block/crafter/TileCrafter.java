@@ -38,6 +38,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -60,7 +61,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 
 
 @SuppressWarnings("unchecked")
-public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
+public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
@@ -68,10 +69,11 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
   private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
   ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE);
   ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
+
   final ItemStackHandler gridCap =  new ItemStackHandler(GRID_SIZE);
   final ItemStackHandler preview = new ItemStackHandler(1);
-  private ItemStackHandlerWrapper inventoryWrapper = new ItemStackHandlerWrapper(inputHandler, outHandler);
-// //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventoryWrapper);
+  private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputHandler, outHandler);
+
   //
   public static final int IO_NUM_ROWS = 5;
   public static final int IO_NUM_COLS = 2;
@@ -422,4 +424,18 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider {
     return energy;
   }
 
+  @Override
+  public int[] getSlotsForFace(Direction direction) {
+    return inventory.getSlotsForFace(direction);
+  }
+
+  @Override
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+    return inventory.canPlaceItemThroughFace(i, itemStack, direction);
+  }
+
+  @Override
+  public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+    return inventory.canTakeItemThroughFace(i, itemStack, direction);
+  }
 }

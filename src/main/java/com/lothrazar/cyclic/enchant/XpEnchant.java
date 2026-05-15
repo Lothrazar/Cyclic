@@ -30,11 +30,11 @@ public class XpEnchant {
 
   @SubscribeEvent
   public void handleEntityDropEvent(LivingExperienceDropEvent event) {
-    if (!isEnabled()) return;
-    if (event.getAttackingPlayer() == null) return;
+    if (!isEnabled()) { return; }
+    if (event.getAttackingPlayer() == null) { return; }
     int level = EnchantUtil.getCurrentLevelTool(
         EnchantRegistry.holder(EnchantRegistry.EXPERIENCE_BOOST, event.getAttackingPlayer()), event.getAttackingPlayer().getMainHandItem());
-    if (level <= 0) return;
+    if (level <= 0) { return; }
     event.setDroppedExperience(event.getDroppedExperience() + getRandomExpAmount(level, event.getAttackingPlayer().level()));
   }
 

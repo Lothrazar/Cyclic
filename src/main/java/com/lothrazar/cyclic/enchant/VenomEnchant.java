@@ -25,8 +25,8 @@ public class VenomEnchant {
 
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
-    if (!isEnabled()) return;
-    if (!(event.getTarget() instanceof LivingEntity target)) return;
+    if (!isEnabled()) { return; }
+    if (!(event.getTarget() instanceof LivingEntity target)) { return; }
     Player attacker = event.getEntity();
     ItemStack main = attacker.getMainHandItem();
     ItemStack off = attacker.getOffhandItem();

@@ -50,7 +50,7 @@ public class GloomCurseEnchant {
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.CHEST)
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.LEGS)
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.FEET);
-    if (totalLevels <= 0) return;
+    if (totalLevels <= 0) { return; }
     double adjustedActivationChance = BASE_ACTIVATION_CHANCE / totalLevels;
     if (adjustedActivationChance > user.level().random.nextDouble()) {
       List<MobEffect> negativeEffects = EnchantUtil.getNegativeEffects();

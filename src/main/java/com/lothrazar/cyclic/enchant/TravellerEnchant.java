@@ -25,7 +25,7 @@ public class TravellerEnchant {
 
   @SubscribeEvent
   public void onEnderTeleportEvent(EntityTeleportEvent.EnderPearl event) {
-    if (!isEnabled()) return;
+    if (!isEnabled()) { return; }
     if (event.getEntity() instanceof LivingEntity living) {
       int level = EnchantUtil.getCurrentArmorLevelSlot(EnchantRegistry.holder(EnchantRegistry.TRAVELLER, living), living, EquipmentSlot.LEGS);
       if (level > 0) {
@@ -36,7 +36,7 @@ public class TravellerEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(LivingDamageEvent.Pre event) {
-    if (!isEnabled()) return;
+    if (!isEnabled()) { return; }
     LivingEntity entity = event.getEntity();
     int level = EnchantUtil.getCurrentArmorLevelSlot(EnchantRegistry.holder(EnchantRegistry.TRAVELLER, entity), entity, EquipmentSlot.LEGS);
     DamageSource source = event.getSource();

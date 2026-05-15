@@ -37,23 +37,23 @@ public class MultiJumpEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
-    if (!(event.getEntity() instanceof Player p)) return;
+    if (!(event.getEntity() instanceof Player p)) { return; }
     Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.LAUNCH, p);
     ItemStack armorStack = EnchantUtil.getFirstArmorStackWithEnchant(h, p);
-    if (armorStack.isEmpty()) return;
+    if (armorStack.isEmpty()) { return; }
     if ((p.hasImpulse == false || p.onGround()) && armorStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(NBT_USES) > 0) {
       armorStack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, d -> { CompoundTag t = d.copyTag(); t.putInt(NBT_USES, 0); return CustomData.of(t); });
     }
   }
 
   public void onKeyInput(Player player) {
-    if (player == null || player.getVehicle() instanceof Boat) return;
+    if (player == null || player.getVehicle() instanceof Boat) { return; }
     Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.LAUNCH, player);
     ItemStack feet = EnchantUtil.getFirstArmorStackWithEnchant(h, player);
-    if (feet.isEmpty() || player.isCrouching()) return;
+    if (feet.isEmpty() || player.isCrouching()) { return; }
     int level = EnchantUtil.getCurrentLevelTool(h, feet);
-    if (level <= 0) return;
-    if (player.getCooldowns().isOnCooldown(feet.getItem())) return;
+    if (level <= 0) { return; }
+    if (player.getCooldowns().isOnCooldown(feet.getItem())) { return; }
     if (Minecraft.getInstance().options.keyJump.isDown()
         && player.getY() < player.yOld && player.hasImpulse && !player.isInWater()) {
       int uses = feet.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(NBT_USES);

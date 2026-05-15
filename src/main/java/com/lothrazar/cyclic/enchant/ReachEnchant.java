@@ -27,8 +27,8 @@ public class ReachEnchant {
   final static int[] LEVELS = { 0, 4, 7, 11, 16, 19 };
 
   private int getBoost(int level) {
-    if (level < 0) return 0;
-    else if (level < LEVELS.length) return LEVELS[level];
+    if (level < 0) { return 0; }
+    else if (level < LEVELS.length) { return LEVELS[level]; }
     int oldLevel = LEVELS.length - 1;
     return 4 * (level - oldLevel) + LEVELS[oldLevel];
   }
@@ -47,8 +47,8 @@ public class ReachEnchant {
 
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
-    if (!isEnabled()) return;
-    if (!(event.getEntity() instanceof Player player)) return;
+    if (!isEnabled()) { return; }
+    if (!(event.getEntity() instanceof Player player)) { return; }
     Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.REACH, player);
     int level = EnchantUtil.getCurrentArmorLevel(h, player);
     if (level > 0) {

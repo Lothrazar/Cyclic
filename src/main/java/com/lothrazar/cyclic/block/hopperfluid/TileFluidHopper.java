@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -80,7 +81,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
     }
     //try from the world
     if (tank.getSpace() >= FluidAttributes.BUCKET_VOLUME) {
-      FluidHelpers.extractSourceWaterloggedCauldron(level, target, tank);
+      FluidHelpers.extractSourceWaterloggedCauldron(level, target, tank, ItemStack.EMPTY);
       this.updateComparatorOutputLevel();
     }
   }

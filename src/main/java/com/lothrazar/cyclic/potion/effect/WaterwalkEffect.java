@@ -15,7 +15,7 @@ public class WaterwalkEffect extends CyclicMobEffect {
 
   @Override
   public void tick(EntityTickEvent.Pre event) {
-    if (!(event.getEntity() instanceof LivingEntity entity)) return;
+    if (!(event.getEntity() instanceof LivingEntity entity)) { return; }
     //    living.getEffect(this).getAmplifier()
     if (entity.isInWater() || entity.level().getBlockState(entity.blockPosition()).is(Blocks.WATER)) {
       if (entity instanceof Player p) {

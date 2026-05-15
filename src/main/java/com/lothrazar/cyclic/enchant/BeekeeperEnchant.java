@@ -30,7 +30,7 @@ public class BeekeeperEnchant {
 
   @SubscribeEvent
   public void onLivingChangeTargetEvent(LivingChangeTargetEvent event) {
-    if (!isEnabled()) return;
+    if (!isEnabled()) { return; }
     if (event.getNewAboutToBeSetTarget() instanceof Player target && event.getEntity().getType() == EntityType.BEE && event.getEntity() instanceof Bee bee) {
       int level = EnchantUtil.getCurrentArmorLevel(holder(target), target);
       if (level > 0) {
@@ -44,7 +44,7 @@ public class BeekeeperEnchant {
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onLivingDamageEvent(LivingDamageEvent.Pre event) {
-    if (!isEnabled()) return;
+    if (!isEnabled()) { return; }
     int level = EnchantUtil.getCurrentArmorLevel(holder(event.getEntity()), event.getEntity());
     if (level >= 1 && event.getSource() != null && event.getSource().getDirectEntity() != null) {
       Entity esrc = event.getSource().getDirectEntity();
