@@ -2,9 +2,11 @@ package com.lothrazar.cyclic.data;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
@@ -38,6 +40,7 @@ public class DataTags {
   public static final TagKey<Item> IVINES = ItemTags.create(ResourceLocation.parse("c:vines"));
   public static final TagKey<Item> ICACTUS = ItemTags.create(ResourceLocation.parse("c:cactus"));
   public static final TagKey<Block> EXCAVATE_IGNORED = BlockTags.create(ResourceLocation.parse("cyclic:ignored/excavate"));
+  public static final TagKey<EntityType<?>> MAGICNET_BLOCKED = EntityTypeTags.create(ResourceLocation.parse("cyclic:magicnet_blocked"));
 
   public static void setup() {
     // do not delete:! this makes the mod get classloaded so the wrapper tags correctly get added to the registry early, before recipe testing

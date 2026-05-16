@@ -7,7 +7,6 @@ package com.lothrazar.cyclic.capabilities;
  */
 public class ClientDataManager {
 
-  //TODO: objects
   private static int playerMana;
   private static int chunkMana;
 

@@ -34,7 +34,6 @@ public class TilePeace extends TileBlockEntityCyclic {
 
   public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TilePeace e) {
     //NOOP client ticker
-    //TODO: particle randozo
   }
 
   @Override

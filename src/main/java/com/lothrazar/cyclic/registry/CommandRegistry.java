@@ -110,7 +110,7 @@ public class CommandRegistry {
                     .executes(x -> {
                       return CommandHome.executeSaveHome(x, EntityArgument.getPlayers(x, ARG_PLAYER));
                     }))))
-        //cyclic gethome   !! this is player only, not command block. TODO:? evaluate @Deprecated in 1.19 
+        //cyclic gethome   !! this is player only, not command block
         .then(Commands.literal(CyclicCommands.GETHOME.toString())
             .requires((p) -> {
               return p.hasPermission(COMMANDGETHOME.get() ? PERM_ELEVATED : PERM_EVERYONE);

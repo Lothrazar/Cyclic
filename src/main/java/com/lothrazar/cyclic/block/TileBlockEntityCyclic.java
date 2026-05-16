@@ -106,7 +106,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     return null;
   }
 
-  // TODO: this could use a refactor
   public void tryDumpFakePlayerInvo(WeakReference<FakePlayer> fp, ItemStackHandler out, boolean dropItemsOnGround) {
     if (out == null) {
       return;
@@ -445,8 +444,6 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     final BlockEntity tileTarget = level.getBlockEntity(posTarget);
     return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
   }
-  //TODO: redundant tile passess
-
   private static boolean moveEnergyInternal(final int quantity, final IEnergyStorage handlerHere, final Direction themFacingMe, final BlockEntity tileTarget) {
     if (handlerHere == null) {
       return false;

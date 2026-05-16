@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.magicnet;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -81,14 +82,9 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       CompoundTag compound = new CompoundTag();
       target.save(compound);
       //
-      if (target.getType() == EntityType.CHEST_MINECART // TODO: CONFIG or tag
-          || target.getType() == EntityType.COMMAND_BLOCK_MINECART
-          || target.getType() == EntityType.FURNACE_MINECART
-          || target.getType() == EntityType.HOPPER_MINECART) {
-        //non-config; hardcoded any minecart with inventory
-        //because they cheat
-        //and dont follow the logic of other mobs
-        //example: donkey with chest and chest containing diamonds, no issues
+      if (target.getType().builtInRegistryHolder().is(DataTags.MAGICNET_BLOCKED)) {
+        // datapack-extensible blocklist (defaults to inventory-holding minecarts,
+        // which cheat by serializing their contents and don't follow normal mob capture logic)
         return;
       }
       String id = EntityType.getKey(target.getType()).toString();
