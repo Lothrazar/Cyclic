@@ -37,22 +37,24 @@ public class ContainerFilterCard extends ContainerBase {
     //    this.nbt = bag.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
 //    bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ITEM_HANDLER).ifPresent(h -> {
       var h = CapabilityFixer.item(bag);
-      this.slotcount = h.getSlots();
-      for (int j = 0; j < h.getSlots(); j++) {
-        int row = j / 9;
-        int col = j % 9;
-        int xPos = 8 + col * Const.SQ;
-        int yPos = 32 + row * Const.SQ;
-        this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
+      if (h != null) {
+        this.slotcount = h.getSlots();
+        for (int j = 0; j < h.getSlots(); j++) {
+          int row = j / 9;
+          int col = j % 9;
+          int xPos = 8 + col * Const.SQ;
+          int yPos = 32 + row * Const.SQ;
+          this.addSlot(new SlotItemHandler(h, j, xPos, yPos) {
 
-          @Override
-          public boolean mayPlace(ItemStack stack) {
-            if (stack.getItem() == ItemRegistry.FILTER_DATA.get()) {
-              return false;
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+              if (stack.getItem() == ItemRegistry.FILTER_DATA.get()) {
+                return false;
+              }
+              return super.mayPlace(stack);
             }
-            return super.mayPlace(stack);
-          }
-        });
+          });
+        }
       }
 //    });
     layoutPlayerInventorySlots(8, 84);
