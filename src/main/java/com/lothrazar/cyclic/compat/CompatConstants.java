@@ -8,4 +8,5 @@ public class CompatConstants {
   public static final String TCONSTRUCT = "tconstruct";
   public static final String RS_MODID = "repurposed_structures";
   public static final String YUSTRONG_MODID = "betterstrongholds";
+  public static final String PATCHOULI = "patchouli";
 }

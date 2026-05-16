@@ -120,6 +120,7 @@ import com.lothrazar.cyclic.block.wireless.item.BlockWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
+import com.lothrazar.cyclic.compat.CompatConstants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -152,7 +153,21 @@ public class BlockRegistry {
           .icon(() -> new ItemStack(BlockRegistry.TRASH.get()))
           .title(Component.translatable("itemGroup." + ModCyclic.MODID))
           .displayItems((displayParameters, output) -> {
-            //first add all items (includes blocks that have an item version)
+            //
+            // important: keep FQCN
+            if (net.neoforged.fml.ModList.get().isLoaded(CompatConstants.PATCHOULI)) {
+              try {
+                ItemStack guideBook = vazkii.patchouli.api.PatchouliAPI.get().getBookStack(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "guide_book"));
+                if (!guideBook.isEmpty()) {
+                  output.accept(guideBook);
+                }
+              }
+              catch (Exception e) {
+                ModCyclic.LOGGER.error("Could not add Patchouli guide_book to creative tab", e);
+              }
+            }
+            // Next add all items (includes blocks that have an item version)
             List<ItemStack> stacks = ItemRegistry.ITEMS.getEntries().stream()
                 .map(reg -> new ItemStack(reg.get())).toList();
             output.acceptAll(stacks);
