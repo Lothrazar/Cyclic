@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.capabilities.chunk;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class ChunkDataStorage { // TODO: CHUNK MANA  / per chunk data
+public class ChunkDataStorage {
 
   int mana;
 

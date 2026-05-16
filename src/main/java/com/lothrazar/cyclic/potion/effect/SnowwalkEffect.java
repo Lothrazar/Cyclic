@@ -18,16 +18,18 @@ public class SnowwalkEffect extends CyclicMobEffect {
 
   @Override
   public void tick(EntityTickEvent.Pre event) {
-    // delete me i guess 
     if (!(event.getEntity() instanceof LivingEntity living)) { return; }
     Level level = living.level();
-    BlockPos blockpos = living.blockPosition();
-    BlockState blockstate = Blocks.SNOW.defaultBlockState();
-    living.getEffect(PotionEffectRegistry.SNOWWALK).getAmplifier(); // TODO: radius? 
-    if (level.isEmptyBlock(blockpos) && blockstate.canSurvive(level, blockpos)) {
-      //world.getBlockState(blockpos).is(Blocks.AIR)) {
-      //is air
-      level.setBlockAndUpdate(blockpos, blockstate);
+    BlockPos center = living.blockPosition();
+    BlockState snow = Blocks.SNOW.defaultBlockState();
+    int radius = living.getEffect(PotionEffectRegistry.SNOWWALK).getAmplifier();
+    for (int dx = -radius; dx <= radius; dx++) {
+      for (int dz = -radius; dz <= radius; dz++) {
+        BlockPos pos = center.offset(dx, 0, dz);
+        if (level.isEmptyBlock(pos) && snow.canSurvive(level, pos)) {
+          level.setBlockAndUpdate(pos, snow);
+        }
+      }
     }
   }
 }

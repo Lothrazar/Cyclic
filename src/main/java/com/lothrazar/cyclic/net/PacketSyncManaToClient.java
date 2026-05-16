@@ -27,8 +27,8 @@ public class PacketSyncManaToClient implements CustomPacketPayload {
   }
 
 
-  private int playerMana; // TODO : playerData object
-  private int chunkMana; // TODO: chunkData object
+  private int playerMana;
+  private int chunkMana;
 
   public PacketSyncManaToClient(PlayerCapabilityStorage playerMana, ChunkDataStorage chunkMana) {
     this.playerMana = playerMana.getMana();

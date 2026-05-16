@@ -26,7 +26,6 @@ public class CyclicWorldSavedData extends SavedData {
 
   private final Map<ChunkPos, ChunkDataStorage> chunkPosData = new HashMap<>();
   private final Random random = new Random();
-  //TODO: ticker in new whole thing Keep a counter so that we don't send mana back to the client every tick
   private int syncToClientCounter = 0;
 
   public CyclicWorldSavedData() {}
