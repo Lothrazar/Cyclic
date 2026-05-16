@@ -161,7 +161,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
   }
 
   private AABB getEntityRange(BlockPos target) {
-    final int r = 1; // TODO radius controls in GUI
+    final int r = 1;
     AABB ab = new AABB(target.getX() + r, target.getY(), target.getZ() + r,
         target.getX() - r, target.getY() + 1, target.getZ() - r);
     return ab;

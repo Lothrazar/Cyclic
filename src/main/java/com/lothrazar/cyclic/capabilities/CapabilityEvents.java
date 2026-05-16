@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.capabilities;
 
 import com.lothrazar.cyclic.registry.FeatureRegistry;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 public class CapabilityEvents {
@@ -17,13 +16,5 @@ public class CapabilityEvents {
       CyclicWorldSavedData manager = CyclicWorldSavedData.get(event.getLevel());
       manager.onWorldTick(event.getLevel());
     }
-  }
-
-  @SubscribeEvent
-  public void onPlayerCloned(PlayerEvent.Clone event) {
-    // TODO: blocked — PlayerCapProvider.CYCLIC_PLAYER does not exist yet.
-    // PlayerCapabilityStorage (mana) needs to be registered as a player capability via
-    // RegisterCapabilitiesEvent before death-transfer can be wired up here.
-    // Once registered: event.isWasDeath() guard + copy oldStore → newStore via copyFrom().
   }
 }

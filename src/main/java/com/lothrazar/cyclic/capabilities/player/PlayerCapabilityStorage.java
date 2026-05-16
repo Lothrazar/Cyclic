@@ -1,8 +1,14 @@
 package com.lothrazar.cyclic.capabilities.player;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.CompoundTag;
 
 public class PlayerCapabilityStorage {
+
+  public static final Codec<PlayerCapabilityStorage> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+      Codec.INT.fieldOf("mana").forGetter(PlayerCapabilityStorage::getMana)
+  ).apply(inst, PlayerCapabilityStorage::new));
 
   int mana;
 

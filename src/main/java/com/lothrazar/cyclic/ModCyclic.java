@@ -65,8 +65,9 @@ public class ModCyclic {
     CyclicRecipeType.RECIPE_TYPES.register(bus);
     CyclicRecipeType.RECIPE_SERIALIZERS.register(bus);
     EntityRegistry.ENTITIES.register(bus);
-    PotionRegistry.POTIONS.register(bus);
     PotionEffectRegistry.MOB_EFFECTS.register(bus);
+    PotionRegistry.POTIONS.register(bus);
+    NeoForge.EVENT_BUS.register(PotionRegistry.class); // for recipes
 
     AttachmentRegistry.ATTACHMENT_TYPES.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);

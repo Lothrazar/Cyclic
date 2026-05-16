@@ -38,7 +38,6 @@ public class EventRegistry {
 
   public static void setup(final FMLCommonSetupEvent event) {
     //now all blocks/items exist
-    PotionRegistry.setup();
     NeoForge.EVENT_BUS.register(new PotionEvents());
     NeoForge.EVENT_BUS.register(new ItemEvents());
     NeoForge.EVENT_BUS.register(new BlockSpawnEvents());
