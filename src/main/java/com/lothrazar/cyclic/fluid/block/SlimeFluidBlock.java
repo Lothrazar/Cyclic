@@ -1,79 +1,19 @@
 package com.lothrazar.cyclic.fluid.block;
 
+import com.lothrazar.library.fluid.PartialHeightFluidBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 
-public class SlimeFluidBlock extends LiquidBlock {
+public class SlimeFluidBlock extends PartialHeightFluidBlock {
 
-  public static class Flowing extends BaseFlowingFluid.Flowing {
-
-    public Flowing(Properties properties) {
-      super(properties);
-    }
-
-    @Override
-    public int getSlopeFindDistance(LevelReader worldIn) {
-      return 1;
-    }
-
-    @Override
-    public int getDropOff(LevelReader worldIn) {
-      return 2;
-    }
-  }
-
-  public static class Source extends BaseFlowingFluid.Source {
-
-    public Source(Properties properties) {
-      super(properties);
-    }
-
-    @Override
-    public int getSlopeFindDistance(LevelReader worldIn) {
-      return 1;
-    }
-
-    @Override
-    public int getDropOff(LevelReader worldIn) {
-      return 6;
-    }
-  }
-
-  VoxelShape shapes[] = new VoxelShape[16];
-
-  public SlimeFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Block.Properties props) {
-    super(supplier.get(), props);
-    int max = 15; //max of the property LEVEL.getAllowedValues()
-    float offset = 0.875F;
-    for (int i = 0; i <= max; i++) { //x and z go from [0,1] 
-      shapes[i] = Shapes.create(new AABB(0, 0, 0, 1, offset - i / 8F, 1));
-    }
-  }
-
-  @Override
-  @Deprecated
-  public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-    return shapes[state.getValue(LEVEL).intValue()];
-  }
-
-  @Override
-  @Deprecated
-  public VoxelShape getOcclusionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
-    return shapes[state.getValue(LEVEL).intValue()];
+  public SlimeFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Properties props) {
+    super(supplier, props);
   }
 
   @Override
@@ -95,8 +35,6 @@ public class SlimeFluidBlock extends LiquidBlock {
 
   /**
    * From SlimeBlock.java bounceUp
-   *
-   * @param entity
    */
   private void collision(Entity entity) {
     Vec3 vec3d = entity.getDeltaMovement();

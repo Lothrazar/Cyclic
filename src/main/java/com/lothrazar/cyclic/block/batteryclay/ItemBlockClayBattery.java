@@ -57,11 +57,6 @@ public class ItemBlockClayBattery extends BlockItem {
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
-// TODO: is this needed
-//  @Override
-//  // public Object initCapabilities(ItemStack stack, CompoundTag nbt) {
-//    return new CapabilityProviderEnergyStack(TileClayBattery.MAX.get());
-//  }
 
   }
 

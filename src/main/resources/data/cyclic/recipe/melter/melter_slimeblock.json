@@ -1,9 +1,9 @@
-{
+﻿{
   "neoforge:conditions": [
     {
       "value": {
         "modid": "tconstruct",
-        "type": "forge:mod_loaded"
+        "type": "neoforge:mod_loaded"
       },
       "type": "neoforge:not"
     }

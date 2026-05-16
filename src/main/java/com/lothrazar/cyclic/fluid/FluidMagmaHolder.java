@@ -2,13 +2,13 @@ package com.lothrazar.cyclic.fluid;
 
 import com.lothrazar.cyclic.fluid.block.MagmaFluidBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.library.fluid.ConfigurableFlowingFluid;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.BucketItem;
+import com.lothrazar.library.item.BucketItemFlib;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.SoundActions;
@@ -22,22 +22,23 @@ public class FluidMagmaHolder {
 
   private static final String ID = "magma";
   public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath("minecraft", "block/magma");
-  public static final int COLOR = 0x4B261F;
+  public static final int COLOR = 0xFFFFFF;
 
+  public static final int LIGHT_LEVEL = 8;
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
           FluidType.Properties.create().density(1024).viscosity(1024)
-              .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
+              .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).lightLevel(LIGHT_LEVEL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 
-  public static final DeferredHolder<Fluid, MagmaFluidBlock.Source> STILL = FluidRegistry.FLUID.register(ID, () -> new MagmaFluidBlock.Source(makeProperties()));
-  public static final DeferredHolder<Fluid, MagmaFluidBlock.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new MagmaFluidBlock.Flowing(makeProperties()));
+  public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Source> STILL = FluidRegistry.FLUID.register(ID, () -> new ConfigurableFlowingFluid.Source(makeProperties(), 2, 1));
+  public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new ConfigurableFlowingFluid.Flowing(makeProperties(), 2, 7));
 
   public static final DeferredBlock<MagmaFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel(s -> 8).noLootTable()));
+      () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable()));
 
   public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
-      () -> new BucketItem(STILL.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+      () -> new BucketItemFlib(STILL.get()));
 
   private static BaseFlowingFluid.Properties makeProperties() {
     return new BaseFlowingFluid.Properties(TYPE, STILL, FLOWING)

@@ -224,6 +224,7 @@ public class ClientRegistryCyclic {
     ItemProperties.register(ItemRegistry.SHIELD_OBSIDIAN.get(), ShieldCyclicItem.BLOCKING, blockFn);
   }
 
+  // the | 0xFF000000 is to force max alpha
   @SubscribeEvent
   public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
     event.registerFluidType(new IClientFluidTypeExtensions() {

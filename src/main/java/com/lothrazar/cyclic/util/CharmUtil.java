@@ -1,10 +1,14 @@
 package com.lothrazar.cyclic.util;
 
 import org.apache.commons.lang3.tuple.Triple;
+import com.lothrazar.cyclic.compat.CompatConstants;
 import com.lothrazar.library.core.IHasClickToggle;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.fml.ModList;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 public class CharmUtil {
 
@@ -21,16 +25,47 @@ public class CharmUtil {
   }
 
   public static ItemStack getCurio(Player player, Item match) {
-    // TODO: re-enable Curios integration when ported
+    if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
+      try {
+        SlotResult first = CuriosApi.getCuriosInventory(player)
+            .flatMap(handler -> handler.findFirstCurio(match))
+            .orElse(null);
+        if (first != null && isMatching(first.stack(), match)) {
+          return first.stack();
+        }
+      }
+      catch (Exception e) {
+        // if API not installed or fails
+      }
+    }
     return ItemStack.EMPTY;
   }
 
   /**
-   * First check player inventory. Then left/right hands.
+   * First check curios. Then player inventory. Then left/right hands, not ender chest.
    */
   private static Triple<String, Integer, ItemStack> isCurioOrInventory(Player player, Item match) {
     Triple<String, Integer, ItemStack> stackFound = Triple.of("", -1, ItemStack.EMPTY);
-    // TODO: re-enable Curios integration when ported
+    if (ModList.get().isLoaded(CompatConstants.CURIOS)) {
+      try {
+        SlotResult first = CuriosApi.getCuriosInventory(player)
+            .flatMap(handler -> handler.findFirstCurio(match))
+            .orElse(null);
+        if (first != null && isMatching(first.stack(), match)) {
+          ItemStack found = first.stack();
+          if (found.getItem() instanceof IHasClickToggle) {
+            IHasClickToggle testMe = (IHasClickToggle) found.getItem();
+            if (testMe.isOn(found)) {
+              return Triple.of(CompatConstants.CURIOS, first.slotContext().index(), found);
+            }
+            // else found but turned off, keep looking
+          }
+        }
+      }
+      catch (Exception e) {
+        // if API not installed or fails
+      }
+    }
     for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
       ItemStack temp = player.getInventory().getItem(i);
       if (isMatching(temp, match)) {

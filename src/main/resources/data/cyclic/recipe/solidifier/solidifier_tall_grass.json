@@ -1,8 +1,8 @@
-{
+﻿{
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "item": "minecraft:grass"
+      "item": "minecraft:short_grass"
     }
   ],
   "mix": {
