@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "conditions": [
+  "neoforge:conditions": [
     {
       "modid": "quark",
-      "type": "c:mod_loaded"
+      "type": "neoforge:mod_loaded"
     }
   ],
+  "type": "minecraft:crafting_shaped",
   "pattern": [
     "scs",
     "c c",

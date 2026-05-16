@@ -78,7 +78,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     final int energyCost = this.currentRecipe.getEnergy().getRfPertick();
-    final int fluidCost = this.currentRecipe.getRecipeFluid().getAmount();
+    final int fluidCost = this.currentRecipe.getAmount();
     if ((energy.getEnergyStored() < energyCost && energyCost > 0)
         || (tank.getFluidAmount() < fluidCost && fluidCost > 0)) {
       return; // not enough resources for the recipe
@@ -198,8 +198,9 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   }
 
   private boolean tryProcessRecipe() {
-    FluidStack test = tank.drain(this.currentRecipe.getRecipeFluid().getAmount(), IFluidHandler.FluidAction.SIMULATE);
-    if (test.getAmount() >= this.currentRecipe.getRecipeFluid().getAmount()) {
+    final int needed = this.currentRecipe.getAmount();
+    FluidStack test = tank.drain(needed, IFluidHandler.FluidAction.SIMULATE);
+    if (test.getAmount() >= needed) {
       // wait is output slot compatible
       if (!outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), true).isEmpty()) {
         return false;
@@ -209,7 +210,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       inputSlots.getStackInSlot(0).shrink(1);
       inputSlots.getStackInSlot(1).shrink(1);
       inputSlots.getStackInSlot(2).shrink(1);
-      tank.drain(this.currentRecipe.fluidIngredient.getAmount(), IFluidHandler.FluidAction.EXECUTE);
+      tank.drain(needed, IFluidHandler.FluidAction.EXECUTE);
       outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), false);
       updateComparatorOutputLevel();
       return true;

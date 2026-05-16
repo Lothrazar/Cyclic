@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "value": {
+        "modid": "tconstruct",
+        "type": "forge:mod_loaded"
+      },
+      "type": "neoforge:not"
+    }
+  ],
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "tag": "c:slimeballs"
+    },
+    {
+      "tag": "c:slimeballs"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 160
+  },
+  "result": {
+    "id": "cyclic:slime",
+    "amount": 500
+  }
+}

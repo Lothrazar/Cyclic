@@ -8,6 +8,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -111,6 +112,7 @@ public class RecipeCrusher implements Recipe<CrusherRecipeInput> {
         ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
         RandomizedOutputIngredient.CODEC.optionalFieldOf("bonus", new RandomizedOutputIngredient(0, ItemStack.EMPTY)).forGetter(r -> r.randOutput)
     ).apply(instance, RecipeCrusher::new));
+
     public static final StreamCodec<RegistryFriendlyByteBuf, RecipeCrusher> STREAM_CODEC = StreamCodec.composite(
         Ingredient.CONTENTS_STREAM_CODEC, r -> r.at(0),
         EnergyIngredient.STREAM_CODEC, r -> r.energy,

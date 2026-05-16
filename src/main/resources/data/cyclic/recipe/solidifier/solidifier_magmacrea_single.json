@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:slimeballs"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 220
+  },
+  "mix": {
+    "tag": "c:magma",
+    "amount": 50
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:magma_cream"
+  }
+}

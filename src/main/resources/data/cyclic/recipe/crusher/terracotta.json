@@ -1,6 +1,16 @@
 {
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:crusher",
+      "type": "neoforge:item_exists"
+    }
+  ],
   "type": "cyclic:crusher",
-  "input": {
+  "ingredient": {
     "item": "minecraft:terracotta"
   },
   "energy": {
@@ -11,24 +21,11 @@
     "count": 1,
     "id": "minecraft:clay_ball"
   },
-  "percent": 80,
   "bonus": {
-    "item": "minecraft:clay_ball",
-    "count": 3
-  },
-  "conditions": [
-    {
-      "values": [
-        {
-          "modid": "cyclic",
-          "type": "c:mod_loaded"
-        },
-        {
-          "item": "cyclic:crusher",
-          "type": "c:item_exists"
-        }
-      ],
-      "type": "c:and"
+    "percent": 80,
+    "bonus": {
+      "id": "minecraft:clay_ball",
+      "count": 3
     }
-  ]
+  }
 }

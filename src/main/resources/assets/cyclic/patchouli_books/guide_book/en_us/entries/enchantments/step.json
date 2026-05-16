@@ -1,6 +1,6 @@
-{
+﻿{
   "name": "enchantment.cyclic.step",
-  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:step\",lvl:1}]}",
+  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:step\":1}}]",
   "category": "cyclic:enchantments",
   "pages": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:step\",lvl:1}]}",
+      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:step\":1}}]",
       "link_recipe": true
     }
   ]

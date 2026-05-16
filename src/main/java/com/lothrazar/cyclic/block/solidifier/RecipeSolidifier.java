@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
-import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
-import com.lothrazar.library.util.RecipeUtil;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,17 +18,16 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.codec.ByteBufCodecs;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
 
   public ItemStack result = ItemStack.EMPTY;
   private NonNullList<Ingredient> ingredients = NonNullList.create();
   private final EnergyIngredient energy;
-  public final FluidTagIngredient fluidIngredient;
+  public final SizedFluidIngredient fluidIngredient;
 
-  public RecipeSolidifier(NonNullList<Ingredient> inList, FluidTagIngredient fluid, ItemStack result, EnergyIngredient energy) {
+  public RecipeSolidifier(NonNullList<Ingredient> inList, SizedFluidIngredient fluid, ItemStack result, EnergyIngredient energy) {
     this.energy = energy;
     ingredients = NonNullList.create();
     ingredients.addAll(inList);
@@ -43,7 +42,16 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
   }
 
   public FluidStack getRecipeFluid() {
-    return this.fluidIngredient.getFluidStack();
+    FluidStack[] stacks = fluidIngredient.getFluids();
+    return stacks.length == 0 ? FluidStack.EMPTY : stacks[0];
+  }
+
+  public List<FluidStack> getMatchingFluids() {
+    return List.of(fluidIngredient.getFluids());
+  }
+
+  public int getAmount() {
+    return fluidIngredient.amount();
   }
 
   @Override
@@ -68,7 +76,7 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
   @Override
   public boolean matches(SolidifierRecipeInput inv, Level worldIn) {
     try {
-      return matchItems(inv) && RecipeUtil.matchFluid(inv.getFluid(), this.fluidIngredient);
+      return matchItems(inv) && fluidIngredient.test(inv.getFluid());
     }
     catch (Exception e) {
       return false;
@@ -133,18 +141,13 @@ public class RecipeSolidifier implements Recipe<SolidifierRecipeInput> {
 
     public static final MapCodec<RecipeSolidifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
         Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(r -> r.getIngredients()),
-        FluidTagIngredient.CODEC.fieldOf("mix").forGetter(r -> r.fluidIngredient),
+        SizedFluidIngredient.FLAT_CODEC.fieldOf("mix").forGetter(r -> r.fluidIngredient),
         ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
         EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> r.getEnergy())
     ).apply(instance, (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, result, energy)));
     public static final StreamCodec<RegistryFriendlyByteBuf, RecipeSolidifier> STREAM_CODEC = StreamCodec.composite(
         Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), r -> r.getIngredients(),
-        StreamCodec.composite(
-            FluidStack.OPTIONAL_STREAM_CODEC, f -> f.getFluidStack() == null ? FluidStack.EMPTY : f.getFluidStack(),
-            ByteBufCodecs.STRING_UTF8, f -> f.getTag() == null ? "" : f.getTag(),
-            ByteBufCodecs.INT, f -> f.getAmount(),
-            (fs, tag, amount) -> new FluidTagIngredient(fs, tag.isEmpty() ? null : tag, amount)
-        ), r -> r.fluidIngredient,
+        SizedFluidIngredient.STREAM_CODEC, r -> r.fluidIngredient,
         ItemStack.OPTIONAL_STREAM_CODEC, r -> r.result,
         EnergyIngredient.STREAM_CODEC, r -> r.getEnergy(),
         (ingredients, fluid, result, energy) -> new RecipeSolidifier(NonNullList.of(Ingredient.EMPTY, ingredients.toArray(new Ingredient[0])), fluid, result, energy)

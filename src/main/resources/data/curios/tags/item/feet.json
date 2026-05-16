@@ -1,5 +1,5 @@
 {
-  "replace": "false",
+  "replace": false,
   "values": [
     {"id":   "cyclic:flippers","required":false}, 
     {"id":   "cyclic:charm_longfall","required":false}

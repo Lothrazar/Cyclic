@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sbs",
+    "ooo"
+  ],
+  "key": {
+    "b": {
+      "item": "cyclic:sponge_milk"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "s": {
+      "tag": "c:glass/dark"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:anti_beacon"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "item": "cyclic:gem_amber"
+    },
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "energy": {
+    "rfpertick": 1500,
+    "ticks": 300
+  },
+  "mix": {
+    "tag": "c:slime",
+    "amount": 500
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:gem_obsidian"
+  }
+}

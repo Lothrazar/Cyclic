@@ -36,9 +36,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.lothrazar.cyclic.ModCyclic;
 public class PacketEntityLaser implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketEntityLaser> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_entity_laser"));
+  public static final CustomPacketPayload.Type<PacketEntityLaser> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_entity_laser"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketEntityLaser> STREAM_CODEC = StreamCodec.of(PacketEntityLaser::encode, PacketEntityLaser::decode);
 

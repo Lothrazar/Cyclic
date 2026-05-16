@@ -117,7 +117,9 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
     ArrayList<Fluid> fluids = new ArrayList<>();
     for (var holder : recipes) {
       RecipeGeneratorFluid recipe = holder.value();
-      fluids.add(recipe.getRecipeFluid().getFluid());
+      for (FluidStack s : recipe.getMatchingFluids()) {
+        fluids.add(s.getFluid());
+      }
     }
     return fluids;
   }
@@ -135,7 +137,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
         this.currentRecipe = rec;
         this.burnTimeMax = this.currentRecipe.getTicks();
         this.burnTime = this.burnTimeMax;
-        tank.drain(this.currentRecipe.fluidIng.getAmount(), IFluidHandler.FluidAction.EXECUTE);
+        tank.drain(this.currentRecipe.getAmount(), IFluidHandler.FluidAction.EXECUTE);
         return;
       }
     }

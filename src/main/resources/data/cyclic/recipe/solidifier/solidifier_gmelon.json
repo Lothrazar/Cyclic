@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "cyclic:biomass"
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 40
+  },
+  "mix": {
+    "tag": "c:biomass",
+    "amount": 500
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:peat_unbaked"
+  }
+}

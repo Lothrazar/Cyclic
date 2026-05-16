@@ -1,0 +1,19 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "cyclic:biomass"
+    },
+    {
+      "item": "minecraft:kelp"
+    }
+  ],
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 60
+  },
+  "result": {
+    "id": "cyclic:biomass",
+    "amount": 1000
+  }
+}

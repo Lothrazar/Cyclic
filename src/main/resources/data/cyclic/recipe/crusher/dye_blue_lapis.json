@@ -1,6 +1,16 @@
 {
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:crusher",
+      "type": "neoforge:item_exists"
+    }
+  ],
   "type": "cyclic:crusher",
-  "input": {
+  "ingredient": {
     "item": "minecraft:lapis_lazuli"
   },
   "energy": {
@@ -11,24 +21,11 @@
     "count": 2,
     "id": "minecraft:blue_dye"
   },
-  "percent": 75,
   "bonus": {
-    "item": "minecraft:blue_dye",
-    "count": 3
-  },
-  "conditions": [
-    {
-      "values": [
-        {
-          "modid": "cyclic",
-          "type": "c:mod_loaded"
-        },
-        {
-          "item": "cyclic:crusher",
-          "type": "c:item_exists"
-        }
-      ],
-      "type": "c:and"
+    "percent": 75,
+    "bonus": {
+      "id": "minecraft:blue_dye",
+      "count": 3
     }
-  ]
+  }
 }

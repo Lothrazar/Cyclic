@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "liquidblocks",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "result": {
+    "id": "liquidblocks:liquid_gravel",
+    "amount": 1000
+  },
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 60
+  }
+}

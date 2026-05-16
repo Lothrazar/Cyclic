@@ -1,5 +1,5 @@
 {
-  "replace": "false",
+  "replace": false,
   "values": [
     {"id":    "cyclic:charm_magicdefense","required":false}, 
     {"id":    "cyclic:charm_wing","required":false}, 

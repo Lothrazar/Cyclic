@@ -12,11 +12,13 @@ import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.lothrazar.cyclic.block.generatorfluid.RecipeGeneratorFluid;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
-import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 @ZenRegister
 @ZenCodeType.Name("mods.cyclic.generator_fluid")
@@ -33,7 +35,7 @@ public class EnergyFluidZen implements IRecipeManager<RecipeGeneratorFluid> {
   public void addRecipe(String name, IFluidStack fluid, int rfPertick, int ticks) {
     ResourceLocation id = fixRecipeId(name);
     RecipeGeneratorFluid m = new RecipeGeneratorFluid(
-        new FluidTagIngredient(new FluidStack(fluid.getFluid(), 1), "", (int) fluid.getAmount()),
+        SizedFluidIngredient.of(fluid.getFluid(), (int) fluid.getAmount()),
         new EnergyIngredient(rfPertick, ticks));
     RecipeHolder<RecipeGeneratorFluid> holder = createHolder(id, m);
     CraftTweakerAPI.apply(new ActionAddRecipe<RecipeGeneratorFluid>(this, holder, ""));
@@ -43,8 +45,10 @@ public class EnergyFluidZen implements IRecipeManager<RecipeGeneratorFluid> {
   @ZenCodeType.Method
   public void addRecipe(String name, String fluidTag, int amount, int rfPertick, int ticks) {
     ResourceLocation id = fixRecipeId(name);
+    fluidTag = fluidTag.replace("<", "").replace(">", "").replace("fluid:", "");
+    TagKey<Fluid> tag = TagKey.create(Registries.FLUID, ResourceLocation.parse(fluidTag));
     RecipeGeneratorFluid m = new RecipeGeneratorFluid(
-        new FluidTagIngredient(null, fluidTag, amount),
+        SizedFluidIngredient.of(tag, amount),
         new EnergyIngredient(rfPertick, ticks));
     RecipeHolder<RecipeGeneratorFluid> holder = createHolder(id, m);
     CraftTweakerAPI.apply(new ActionAddRecipe<RecipeGeneratorFluid>(this, holder, ""));

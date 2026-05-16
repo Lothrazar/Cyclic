@@ -1,19 +1,19 @@
-{
+﻿{
   "name": "item.minecraft.potion.effect.cyclic_swimspeed",
   "icon": "minecraft:potion",
   "category": "cyclic:potions",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:potion#1{Potion:\"cyclic:swimspeed\"}",
+      "item": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:swimspeed\"}]",
       "text":"effect.cyclic.swimspeed"
     },
     {
       "type": "cyclic:brewing",
       "text":"item.minecraft.potion.effect.cyclic_swimspeed",
       "ingredient": "minecraft:dried_kelp_block",
-      "base_potion": "minecraft:potion#1{Potion:\"minecraft:awkward\"}",
-      "output": "minecraft:potion#1{Potion:\"cyclic:swimspeed\"}"
+      "base_potion": "minecraft:potion#1[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
+      "output": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:swimspeed\"}]"
     }
   ]
 }

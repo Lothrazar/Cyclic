@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "liquidblocks",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:netherrack"
+    }
+  ],
+  "mix": {
+    "fluid": "liquidblocks:liquid_netherrack",
+    "amount": 1000
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:netherrack"
+  },
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 60
+  }
+}

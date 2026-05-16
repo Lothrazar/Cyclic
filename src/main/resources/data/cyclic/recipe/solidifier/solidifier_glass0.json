@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 40
+  },
+  "mix": {
+    "tag": "c:magma",
+    "amount": 10
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:sand"
+  }
+}

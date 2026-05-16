@@ -1,6 +1,6 @@
-{
+﻿{
   "name": "enchantment.cyclic.launch",
-  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:launch\",lvl:1}]}",
+  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:launch\":1}}]",
   "category": "cyclic:enchantments",
   "pages": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:launch\",lvl:1}]}",
+      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:launch\":1}}]",
       "link_recipe": true
     }
   ]

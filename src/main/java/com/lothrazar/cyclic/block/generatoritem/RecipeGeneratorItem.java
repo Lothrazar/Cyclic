@@ -109,7 +109,7 @@ public class RecipeGeneratorItem implements Recipe<RecipeInput> {
   public static class SerializeGenerateItem implements RecipeSerializer<RecipeGeneratorItem> {
 
     public static final MapCodec<RecipeGeneratorItem> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        Ingredient.CODEC.fieldOf("ingredient").forGetter(r -> r.at(0)),
+        Ingredient.CODEC.fieldOf("fuel").forGetter(r -> r.at(0)),
         EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfPertick(), r.getTicks()))
     ).apply(instance, RecipeGeneratorItem::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorItem> STREAM_CODEC = StreamCodec.composite(

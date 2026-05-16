@@ -1,0 +1,19 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "cyclic:biomass"
+    },
+    {
+      "tag": "c:seeds"
+    }
+  ],
+  "energy": {
+    "rfpertick": 20,
+    "ticks": 60
+  },
+  "result": {
+    "id": "cyclic:biomass",
+    "amount": 1000
+  }
+}

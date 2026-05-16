@@ -162,8 +162,10 @@ dependencies {
 
   // no APIs
   compileOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE"
+  localRuntime "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE"
 
   compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${minecraft_version}:${crafttweaker_version}"
+  localRuntime "com.blamejared.crafttweaker:CraftTweaker-neoforge-${minecraft_version}:${crafttweaker_version}"
 
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository

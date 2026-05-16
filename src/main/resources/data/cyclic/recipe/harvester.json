@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ror",
+    "gbg",
+    "sss"
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:emerald"
+    },
+    "g": {
+      "tag": "c:storage_blocks/cobblestone"
+    },
+    "b": {
+      "item": "cyclic:biomass"
+    },
+    "s": {
+      "tag": "c:nuggets/copper"
+    },
+    "o": {
+      "item": "cyclic:obsidian_pressure_plate"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:harvester"
+  }
+}

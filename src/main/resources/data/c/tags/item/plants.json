@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "#forge:vines",
-    "#forge:cactus",
-    "#forge:dead_plants",
+    "#c:vines",
+    "#c:cactus",
+    "#c:dead_plants",
     "minecraft:tube_coral_fan",
     "minecraft:brain_coral_fan",
     "minecraft:bubble_coral_fan",
@@ -15,7 +15,7 @@
     "minecraft:lily_pad",
     "minecraft:kelp",
     "minecraft:seagrass",
-    "minecraft:grass",
+    "minecraft:short_grass",
     "minecraft:tall_grass",
     "minecraft:fern",
     "minecraft:dead_bush",

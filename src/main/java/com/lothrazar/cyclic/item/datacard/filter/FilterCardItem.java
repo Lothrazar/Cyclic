@@ -29,7 +29,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   private static final String NBTFILTER = "filter";
 
   public FilterCardItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

@@ -1,4 +1,14 @@
 {
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:generator_item",
+      "type": "neoforge:item_exists"
+    }
+  ],
   "type": "cyclic:generator_item",
   "fuel": {
     "item": "minecraft:ender_eye"
@@ -6,20 +16,5 @@
   "energy": {
     "ticks": 1600,
     "rfpertick": 80
-  },
-  "conditions": [
-    {
-      "values": [
-        {
-          "modid": "cyclic",
-          "type": "c:mod_loaded"
-        },
-        {
-          "item": "cyclic:generator_item",
-          "type": "c:item_exists"
-        }
-      ],
-      "type": "c:and"
-    }
-  ]
+  }
 }

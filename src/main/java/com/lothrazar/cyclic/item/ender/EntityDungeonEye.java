@@ -161,7 +161,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
 
   @Override
   protected Item getDefaultItem() {
-    return com.lothrazar.cyclic.registry.ItemRegistry.SPAWNER_SEEKER.get();
+    return ItemRegistry.SPAWNER_SEEKER.get();
   }
 
   @Override

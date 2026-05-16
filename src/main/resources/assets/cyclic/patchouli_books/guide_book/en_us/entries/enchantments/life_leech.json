@@ -1,6 +1,6 @@
-{
+﻿{
   "name": "enchantment.cyclic.life_leech",
-  "icon": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:life_leech\",lvl:1}]}",
+  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:life_leech\":1}}]",
   "category": "cyclic:enchantments",
   "pages": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "type": "spotlight",
-      "item": "minecraft:enchanted_book{StoredEnchantments:[{id:\"cyclic:life_leech\",lvl:1}]}",
+      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:life_leech\":1}}]",
       "link_recipe": true
     }
   ]

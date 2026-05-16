@@ -22,6 +22,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
+import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 
 public class ClayBattery extends BlockCyclic {
 
@@ -75,8 +76,8 @@ public class ClayBattery extends BlockCyclic {
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
     IEnergyStorage storage = CapabilityFixer.energy(stack);
-    if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(com.lothrazar.cyclic.block.TileBlockEntityCyclic.NBTENERGY)) {
-      current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(com.lothrazar.cyclic.block.TileBlockEntityCyclic.NBTENERGY);
+    if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(TileBlockEntityCyclic.NBTENERGY)) {
+      current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(TileBlockEntityCyclic.NBTENERGY);
     }
     else if (storage != null) {
       current = storage.getEnergyStored();

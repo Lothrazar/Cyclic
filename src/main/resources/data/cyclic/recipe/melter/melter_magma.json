@@ -1,0 +1,19 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:magma_block"
+    },
+    {
+      "item": "minecraft:magma_block"
+    }
+  ],
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 60
+  },
+  "result": {
+    "id": "cyclic:magma",
+    "amount": 2000
+  }
+}

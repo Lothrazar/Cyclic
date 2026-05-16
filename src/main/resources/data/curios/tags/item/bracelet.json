@@ -1,5 +1,5 @@
 {
-  "replace": "false",
+  "replace": false,
   "values": [
     {"id":   "cyclic:charm_knockback_resistance",  "required":false}, 
     {"id":   "cyclic:charm_crit",                  "required":false}, 

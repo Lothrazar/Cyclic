@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:redstone_block"
+    }
+  ],
+  "mix": {
+    "tag": "c:wax",
+    "amount": 100
+  },
+  "energy": {
+    "rfpertick": 800,
+    "ticks": 20
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:waxed_redstone"
+  }
+}

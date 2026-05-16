@@ -39,6 +39,7 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
+import com.lothrazar.cyclic.block.packager.UtilPackager;
 
 @JeiPlugin
 public class CyclicPluginJEI implements IModPlugin {
@@ -91,7 +92,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipes(CrusherRecipeCategory.TYPE, rm.getAllRecipesFor(CyclicRecipeType.CRUSHER.get()));
     registry.addRecipes(PackagerRecipeCategory.TYPE,
         rm.getAllRecipesFor(RecipeType.CRAFTING).stream()
-          .filter(h -> com.lothrazar.cyclic.block.packager.UtilPackager.isRecipeValid(h.value(), world.registryAccess()))
+          .filter(h -> UtilPackager.isRecipeValid(h.value(), world.registryAccess()))
           .toList());
     for (var item : ItemRegistry.ITEMS.getEntries()) {
       ItemStack st = new ItemStack(item.get());

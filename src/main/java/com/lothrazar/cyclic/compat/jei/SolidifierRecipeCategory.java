@@ -92,7 +92,7 @@ public class SolidifierRecipeCategory implements IRecipeCategory<RecipeHolder<Re
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 25).addIngredients(recipe.at(1));
     builder.addSlot(RecipeIngredientRole.INPUT, 34, 43).addIngredients(recipe.at(2));
     builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 25).addItemStack(recipe.result);
-    List<FluidStack> matchingFluids = recipe.fluidIngredient.getMatchingFluids();
+    List<FluidStack> matchingFluids = recipe.getMatchingFluids();
     builder.addSlot(RecipeIngredientRole.INPUT, 4, 25).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }
   //  @Override

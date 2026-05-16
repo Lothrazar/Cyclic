@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bcb",
+    "cbc",
+    "bcb"
+  ],
+  "key": {
+    "b": {
+      "item": "cyclic:biomass"
+    },
+    "c": {
+      "item": "cyclic:peat_fuel"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "cyclic:peat_unbaked"
+  }
+}

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 
 public class ButterEffect extends CyclicMobEffect {
 
@@ -29,7 +30,7 @@ public class ButterEffect extends CyclicMobEffect {
       }
       List<EquipmentSlot> slots = null;
       if (!living.onGround() || living.isSprinting()) {
-        int amplifier = living.getEffect(com.lothrazar.cyclic.registry.PotionEffectRegistry.BUTTERFINGERS).getAmplifier();
+        int amplifier = living.getEffect(PotionEffectRegistry.BUTTERFINGERS).getAmplifier();
         //sprinting or jumping or something
         if (amplifier == Const.Potions.I) {
           slots = Arrays.asList(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);

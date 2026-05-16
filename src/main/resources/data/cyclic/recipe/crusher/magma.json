@@ -1,6 +1,16 @@
 {
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:crusher",
+      "type": "neoforge:item_exists"
+    }
+  ],
   "type": "cyclic:crusher",
-  "input": {
+  "ingredient": {
     "item": "minecraft:magma_block"
   },
   "energy": {
@@ -11,24 +21,11 @@
     "count": 2,
     "id": "minecraft:magma_cream"
   },
-  "percent": 60,
   "bonus": {
-    "item": "minecraft:magma_cream",
-    "count": 2
-  },
-  "conditions": [
-    {
-      "values": [
-        {
-          "modid": "cyclic",
-          "type": "c:mod_loaded"
-        },
-        {
-          "item": "cyclic:crusher",
-          "type": "c:item_exists"
-        }
-      ],
-      "type": "c:and"
+    "percent": 60,
+    "bonus": {
+      "id": "minecraft:magma_cream",
+      "count": 2
     }
-  ]
+  }
 }

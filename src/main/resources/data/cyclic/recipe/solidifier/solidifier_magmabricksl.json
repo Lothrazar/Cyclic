@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_brick"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 220
+  },
+  "mix": {
+    "tag": "c:slime",
+    "amount": 10
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:nether_bricks"
+  }
+}

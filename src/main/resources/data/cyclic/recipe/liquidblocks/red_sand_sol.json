@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "liquidblocks",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:sand"
+    }
+  ],
+  "mix": {
+    "fluid": "liquidblocks:liquid_red_sand",
+    "amount": 1000
+  },
+  "result": {
+    "count": 2,
+    "id": "minecraft:red_sand"
+  },
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 60
+  }
+}

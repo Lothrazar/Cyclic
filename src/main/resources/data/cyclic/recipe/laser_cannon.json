@@ -1,4 +1,14 @@
 {
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:laser_cannon",
+      "type": "neoforge:item_exists"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " ct",
@@ -22,20 +32,5 @@
   "result": {
     "count": 1,
     "id": "cyclic:laser_cannon"
-  },
-  "conditions": [
-    {
-      "values": [
-        {
-          "modid": "cyclic",
-          "type": "c:mod_loaded"
-        },
-        {
-          "item": "cyclic:laser_cannon",
-          "type": "c:item_exists"
-        }
-      ],
-      "type": "c:and"
-    }
-  ]
+  }
 }

@@ -8,6 +8,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.lothrazar.cyclic.ModCyclic;
 
 /**
  * Sync Player and Chunk capabilities to client
@@ -15,7 +16,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
  */
 public class PacketSyncManaToClient implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketSyncManaToClient> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_sync_mana_to_client"));
+  public static final CustomPacketPayload.Type<PacketSyncManaToClient> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_sync_mana_to_client"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketSyncManaToClient> STREAM_CODEC = StreamCodec.of(PacketSyncManaToClient::encode, PacketSyncManaToClient::decode);
 

@@ -21,7 +21,11 @@ All downloads are on the official curseforge page https://www.curseforge.com/min
 New Issues and Pull Requests are always welcome
 
 
+# 
+
+
 # APIs and Optional Dependencies
+
 #### I have optional compatibility with the following mods, they are highly recommended (depending on your minecraft version). 
 - Curios https://www.curseforge.com/minecraft/mc-mods/curios
 - Baubles https://www.curseforge.com/minecraft/mc-mods/baubles
@@ -30,3 +34,12 @@ New Issues and Pull Requests are always welcome
 - JEI https://www.curseforge.com/minecraft/mc-mods/jei
 - Enchantment Descriptions https://minecraft.curseforge.com/projects/enchantment-descriptions
 - Potion descriptions https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed
+
+
+### Guide book
+- in 1.21.1 use this command to give yourself the patchouli guidebook like this
+
+  `  /give @s patchouli:guide_book[patchouli:book="cyclic:guide_book"]`
+- in older versions, use this command
+
+  `  /give @s patchouli:guide_book{"patchouli:book":"cyclic:guide_book"}`

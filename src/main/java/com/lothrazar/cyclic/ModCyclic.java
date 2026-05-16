@@ -26,6 +26,8 @@ import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.registry.MaterialRegistry;
+import com.lothrazar.cyclic.registry.PacketRegistry;
 
 @Mod(ModCyclic.MODID)
 public class ModCyclic {
@@ -35,10 +37,10 @@ public class ModCyclic {
 
   public ModCyclic(IEventBus bus, Dist dist, ModContainer container) {
 
-    com.lothrazar.cyclic.registry.MaterialRegistry.ARMOR_MATERIALS.register(bus);
-    com.lothrazar.cyclic.registry.MaterialRegistry.setup();
+    MaterialRegistry.ARMOR_MATERIALS.register(bus);
+    MaterialRegistry.setup();
     bus.addListener(EventRegistry::setup);
-    bus.addListener(com.lothrazar.cyclic.registry.PacketRegistry::setup);
+    bus.addListener(PacketRegistry::setup);
     if (dist.isClient()) {
 
       bus.addListener(ClientRegistryCyclic::setupClient);

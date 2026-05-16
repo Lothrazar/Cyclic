@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "minecraft:leaves"
+    },
+    {
+      "tag": "minecraft:flowers"
+    },
+    {
+      "tag": "minecraft:coals"
+    }
+  ],
+  "mix": {
+    "fluid": "minecraft:water",
+    "amount": 50
+  },
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 120
+  },
+  "result": {
+    "count": 8,
+    "id": "cyclic:biomass"
+  }
+}

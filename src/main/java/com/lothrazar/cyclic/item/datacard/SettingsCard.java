@@ -28,7 +28,7 @@ public class SettingsCard extends ItemBaseCyclic {
   private static final String NBT_SETSAVED = "settingsSaved";
 
   public SettingsCard(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

@@ -30,6 +30,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import com.lothrazar.cyclic.fixers.CapabilityFixer;
 
 public class TileCableFluid extends TileCableBase implements MenuProvider {
 
@@ -77,7 +78,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     final BlockPos target = this.worldPosition.relative(extractSide); // .offset(
     final Direction incomingSide = extractSide.getOpposite();
     //when draining from a tank (instead of a source/waterlogged block) check the filter
-    final IFluidHandler tankTarget = com.lothrazar.cyclic.fixers.CapabilityFixer.fluid(level, target, incomingSide);
+    final IFluidHandler tankTarget = CapabilityFixer.fluid(level, target, incomingSide);
     if (tankTarget != null
         && tankTarget.getTanks() > 0
         && !FilterCardItem.filterAllowsExtract(filterSta, tankTarget.getFluidInTank(0))) {

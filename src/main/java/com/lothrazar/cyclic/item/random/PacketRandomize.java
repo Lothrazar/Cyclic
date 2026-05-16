@@ -6,8 +6,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.lothrazar.cyclic.ModCyclic;
 public class PacketRandomize implements CustomPacketPayload {
-  public static final CustomPacketPayload.Type<PacketRandomize> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_randomize"));
+  public static final CustomPacketPayload.Type<PacketRandomize> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_randomize"));
   public static final StreamCodec<FriendlyByteBuf, PacketRandomize> STREAM_CODEC = StreamCodec.of(PacketRandomize::encode, PacketRandomize::decode);
   @Override public CustomPacketPayload.Type<? extends CustomPacketPayload> type() { return TYPE; }
   private BlockPos pos;

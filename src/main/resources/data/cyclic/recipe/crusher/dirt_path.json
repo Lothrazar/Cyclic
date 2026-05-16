@@ -1,6 +1,16 @@
 {
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:crusher",
+      "type": "neoforge:item_exists"
+    }
+  ],
   "type": "cyclic:crusher",
-  "input": {
+  "ingredient": {
     "item": "minecraft:dirt_path"
   },
   "energy": {
@@ -10,20 +20,5 @@
   "result": {
     "count": 1,
     "id": "minecraft:coarse_dirt"
-  },
-  "conditions": [
-    {
-      "values": [
-        {
-          "modid": "cyclic",
-          "type": "c:mod_loaded"
-        },
-        {
-          "item": "cyclic:crusher",
-          "type": "c:item_exists"
-        }
-      ],
-      "type": "c:and"
-    }
-  ]
+  }
 }

@@ -11,10 +11,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.lothrazar.cyclic.ModCyclic;
 
 public class PacketTileData implements CustomPacketPayload {
 
-  public static final CustomPacketPayload.Type<PacketTileData> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_tile_data"));
+  public static final CustomPacketPayload.Type<PacketTileData> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_tile_data"));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, PacketTileData> STREAM_CODEC = StreamCodec.of(PacketTileData::encode, PacketTileData::decode);
 

@@ -3,35 +3,29 @@ package com.lothrazar.cyclic.block.generatorfluid;
 import java.util.List;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
-import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
-import com.lothrazar.library.util.RecipeUtil;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.codec.ByteBufCodecs;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
 
   private NonNullList<Ingredient> ingredients = NonNullList.create();
-  public final FluidTagIngredient fluidIng;
+  public final SizedFluidIngredient fluid;
   private final EnergyIngredient energy;
 
-  public RecipeGeneratorFluid(FluidTagIngredient in, EnergyIngredient energy) {
-    this.fluidIng = in;
+  public RecipeGeneratorFluid(SizedFluidIngredient in, EnergyIngredient energy) {
+    this.fluid = in;
     this.energy = energy;
   }
 
@@ -56,22 +50,22 @@ public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
   }
 
   public FluidStack getRecipeFluid() {
-    return fluidIng.getFluidStack();
+    FluidStack[] stacks = fluid.getFluids();
+    return stacks.length == 0 ? FluidStack.EMPTY : stacks[0];
   }
 
-  @Deprecated
-  public List<Fluid> getFluidsFromTag() {
-    return null;
+  public List<FluidStack> getMatchingFluids() {
+    return List.of(fluid.getFluids());
   }
 
-  public TagKey<Fluid> getTag() {
-    return TagKey.create(Registries.FLUID, ResourceLocation.parse(this.fluidIng.getTag()));
+  public int getAmount() {
+    return fluid.amount();
   }
 
   @Override
   public boolean matches(GeneratorFluidRecipeInput inv, Level worldIn) {
     try {
-      return RecipeUtil.matchFluid(inv.getFluid(), this.fluidIng);
+      return fluid.test(inv.getFluid());
     }
     catch (Exception e) {
       return false;
@@ -108,16 +102,11 @@ public class RecipeGeneratorFluid implements Recipe<GeneratorFluidRecipeInput> {
   public static class SerializeGenerateFluid implements RecipeSerializer<RecipeGeneratorFluid> {
 
     public static final MapCodec<RecipeGeneratorFluid> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        FluidTagIngredient.CODEC.fieldOf("fluid").forGetter(r -> r.fluidIng),
+        SizedFluidIngredient.FLAT_CODEC.fieldOf("fuel").forGetter(r -> r.fluid),
         EnergyIngredient.CODEC.fieldOf("energy").forGetter(r -> new EnergyIngredient(r.getRfpertick(), r.getTicks()))
     ).apply(instance, RecipeGeneratorFluid::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, RecipeGeneratorFluid> STREAM_CODEC = StreamCodec.composite(
-        StreamCodec.composite(
-            FluidStack.OPTIONAL_STREAM_CODEC, f -> f.getFluidStack() == null ? FluidStack.EMPTY : f.getFluidStack(),
-            ByteBufCodecs.STRING_UTF8, f -> f.getTag() == null ? "" : f.getTag(),
-            ByteBufCodecs.INT, f -> f.getAmount(),
-            (fs, tag, amount) -> new FluidTagIngredient(fs, tag.isEmpty() ? null : tag, amount)
-        ), r -> r.fluidIng,
+        SizedFluidIngredient.STREAM_CODEC, r -> r.fluid,
         EnergyIngredient.STREAM_CODEC, r -> new EnergyIngredient(r.getRfpertick(), r.getTicks()),
         RecipeGeneratorFluid::new
     );

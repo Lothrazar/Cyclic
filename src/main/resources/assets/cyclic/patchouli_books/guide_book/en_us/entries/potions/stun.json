@@ -1,19 +1,19 @@
-{
+﻿{
   "name": "item.minecraft.potion.effect.cyclic_stun",
   "icon": "minecraft:potion",
   "category": "cyclic:potions",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:potion#1{Potion:\"cyclic:stun\"}",
+      "item": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:stun\"}]",
       "text":"effect.cyclic.stun"
     },
     {
       "type": "cyclic:brewing",
       "text":"item.minecraft.potion.effect.cyclic_stun",
       "ingredient": "minecraft:clay",
-      "base_potion": "minecraft:potion#1{Potion:\"minecraft:awkward\"}",
-      "output": "minecraft:potion#1{Potion:\"cyclic:stun\"}"
+      "base_potion": "minecraft:potion#1[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
+      "output": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:stun\"}]"
     }
   ]
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 
 public class SnowwalkEffect extends CyclicMobEffect {
 
@@ -22,7 +23,7 @@ public class SnowwalkEffect extends CyclicMobEffect {
     Level level = living.level();
     BlockPos blockpos = living.blockPosition();
     BlockState blockstate = Blocks.SNOW.defaultBlockState();
-    living.getEffect(com.lothrazar.cyclic.registry.PotionEffectRegistry.SNOWWALK).getAmplifier(); // TODO: radius? 
+    living.getEffect(PotionEffectRegistry.SNOWWALK).getAmplifier(); // TODO: radius? 
     if (level.isEmptyBlock(blockpos) && blockstate.canSurvive(level, blockpos)) {
       //world.getBlockState(blockpos).is(Blocks.AIR)) {
       //is air

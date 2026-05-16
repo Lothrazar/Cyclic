@@ -14,13 +14,15 @@ import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.lothrazar.cyclic.block.solidifier.RecipeSolidifier;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.library.recipe.ingredient.EnergyIngredient;
-import com.lothrazar.library.recipe.ingredient.FluidTagIngredient;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 @ZenRegister
 @ZenCodeType.Name("mods.cyclic.solidifier")
@@ -45,7 +47,7 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
     }
     RecipeSolidifier recipe = new RecipeSolidifier(
         list,
-        new FluidTagIngredient(new FluidStack(fluid.getFluid(), 1), "", (int) fluid.getAmount()),
+        SizedFluidIngredient.of(fluid.getFluid(), (int) fluid.getAmount()),
         output.getInternal(),
         new EnergyIngredient(rfPertick, ticks));
     RecipeHolder<RecipeSolidifier> holder = createHolder(id, recipe);
@@ -64,11 +66,12 @@ public class SolidifierZen implements IRecipeManager<RecipeSolidifier> {
       list.set(i, input[i].asVanillaIngredient());
     }
     //because CT doesnt have a fluid tag ingredient type really and it could come in foramt <fluid:minecraft:water>
-    //but the FluidTagIngredient just uses teh raw string, parse it out
+    //parse it out into a TagKey
     fluidTag = fluidTag.replace("<", "").replace(">", "").replace("fluid:", "");
+    TagKey<Fluid> tag = TagKey.create(Registries.FLUID, ResourceLocation.parse(fluidTag));
     RecipeSolidifier recipe = new RecipeSolidifier(
         list,
-        new FluidTagIngredient(null, fluidTag, fluidQuantity), // TAG of fluid instead of actual fluid.
+        SizedFluidIngredient.of(tag, fluidQuantity),
         output.getInternal(),
         new EnergyIngredient(rfPertick, ticks));
     RecipeHolder<RecipeSolidifier> holder = createHolder(id, recipe);

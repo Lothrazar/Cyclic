@@ -50,7 +50,7 @@ public class StoneEntity extends ThrowableItemProjectile {
         target.hurt(level.damageSources().thrown(this, owner), Mth.nextInt(level.random, 2, 6));
         if (level.random.nextDouble() < CHANCE_STUN && !level.isClientSide && target instanceof LivingEntity) {
           LivingEntity living = (LivingEntity) target;
-          living.addEffect(new MobEffectInstance(com.lothrazar.cyclic.registry.PotionEffectRegistry.STUN, Const.TICKS_PER_SEC * 2, 1, false, false, false));
+          living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, Const.TICKS_PER_SEC * 2, 1, false, false, false));
         }
       }
     }

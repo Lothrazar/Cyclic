@@ -75,7 +75,7 @@ public class GenfluidRecipeCategory implements IRecipeCategory<RecipeHolder<Reci
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeGeneratorFluid> recipeHolder, IFocusGroup focuses) {
     RecipeGeneratorFluid recipe = recipeHolder.value();
-    List<FluidStack> matchingFluids = recipe.fluidIng.getMatchingFluids();
+    List<FluidStack> matchingFluids = recipe.getMatchingFluids();
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
   }
 }

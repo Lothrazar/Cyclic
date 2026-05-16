@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "modid": "patchouli",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
   "type": "crafting_shapeless",
   "ingredients": [
     {
@@ -16,16 +22,5 @@
       "patchouli:book": "cyclic:guide_book"
     },
     "id": "patchouli:guide_book"
-  },
-  "conditions": [
-    {
-      "values": [
-        {
-          "modid": "patchouli",
-          "type": "c:mod_loaded"
-        }
-      ],
-      "type": "c:and"
-    }
-  ]
+  }
 }

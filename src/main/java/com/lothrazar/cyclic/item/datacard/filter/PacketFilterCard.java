@@ -8,8 +8,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import com.lothrazar.cyclic.ModCyclic;
 public class PacketFilterCard implements CustomPacketPayload {
-  public static final CustomPacketPayload.Type<PacketFilterCard> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(com.lothrazar.cyclic.ModCyclic.MODID, "packet_filter_card"));
+  public static final CustomPacketPayload.Type<PacketFilterCard> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_filter_card"));
   public static final StreamCodec<FriendlyByteBuf, PacketFilterCard> STREAM_CODEC = StreamCodec.of(PacketFilterCard::encode, PacketFilterCard::decode);
   @Override public CustomPacketPayload.Type<? extends CustomPacketPayload> type() { return TYPE; }
   private CraftingActionEnum action;

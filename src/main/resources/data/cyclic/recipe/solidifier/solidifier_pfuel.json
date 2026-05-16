@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "cyclic:peat_fuel"
+    },
+    {
+      "item": "cyclic:peat_fuel"
+    },
+    {
+      "item": "cyclic:peat_fuel"
+    }
+  ],
+  "mix": {
+    "tag": "c:biomass",
+    "amount": 500
+  },
+  "energy": {
+    "rfpertick": 50,
+    "ticks": 60
+  },
+  "result": {
+    "count": 3,
+    "id": "cyclic:peat_fuel_enriched"
+  }
+}

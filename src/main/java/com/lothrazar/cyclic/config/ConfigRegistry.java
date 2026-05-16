@@ -258,11 +258,11 @@ public class ConfigRegistry {
     ////////////////////////////////////////////////////////////////// enchantment
     CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
         .push("enchantment");
-    com.lothrazar.cyclic.enchant.AutoSmeltEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.AutoSmeltEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.BeekeeperEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.BeekeeperEnchant.ID + ".enabled", true);
-    com.lothrazar.cyclic.enchant.BeheadingEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(com.lothrazar.cyclic.enchant.BeheadingEnchant.ID + ".enabled", true);
+    AutoSmeltEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", true);
+    BeekeeperEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
+    BeheadingEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeheadingEnchant.ID + ".enabled", true);
     GLOOM_IGNORE_LIST = CFG.comment(" Set list of effects for Gloom enchant (cyclic:curse) to ignore and not use these")
-        .defineList(com.lothrazar.cyclic.enchant.GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
+        .defineList(GloomCurseEnchant.ID + ".ignored", Arrays.asList("minecraft:bad_omen", "minecraft:nausea", "botania:clear"),
             it -> it instanceof String);
     BEHEADING_SKINS = CFG.comment(" Beheading enchant add player skin head drop, add any mob id and any skin")
         .defineList(BeheadingEnchant.ID + ".EntityMHF", BEHEADING, it -> it instanceof String);
@@ -296,7 +296,7 @@ public class ConfigRegistry {
     DisarmEnchant.PERCENTPERLEVEL = CFG.comment(" Enchant level drop rate.  % = drop + (level-1)*drop").defineInRange(DisarmEnchant.ID + ".percentPerLevel", 15, 1, 100);
 
     DISARM_IGNORE_LIST = CFG.comment(" Mobs in this list cannot be disarmed and have their weapon stolen by the disarm enchantment")
-        .defineList(com.lothrazar.cyclic.enchant.DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
+        .defineList(DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
             it -> it instanceof String);
     CFG.pop(); //enchantment
     CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen

@@ -393,7 +393,7 @@ public class ItemRegistry {
   public static final DeferredItem<Item> ANVIL = ITEMS.register("anvil", () -> new BlockItem(BlockRegistry.ANVIL.get(), new Item.Properties()));
   public static final DeferredItem<Item> ANVIL_MAGMA = ITEMS.register("anvil_magma", () -> new BlockItem(BlockRegistry.ANVIL_MAGMA.get(), new Item.Properties()));
   public static final DeferredItem<Item> BEACON = ITEMS.register("beacon", () -> new BlockItem(BlockRegistry.BEACON.get(), new Item.Properties()));
-//  public static final DeferredItem<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties()));
   public static final DeferredItem<Item> BEACON_REDSTONE = ITEMS.register("beacon_redstone", () -> new BlockItem(BlockRegistry.BEACON_REDSTONE.get(), new Item.Properties()));
   public static final DeferredItem<Item> TANK = ITEMS.register("tank", () -> new ItemBlockTank(BlockRegistry.TANK.get(), new Item.Properties()));
   public static final DeferredItem<Item> DARK_GLASS = ITEMS.register("dark_glass", () -> new BlockItem(BlockRegistry.DARK_GLASS.get(), new Item.Properties()));
