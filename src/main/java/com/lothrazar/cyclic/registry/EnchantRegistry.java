@@ -36,11 +36,4 @@ public class EnchantRegistry {
     return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, name));
   }
 
-  public static Holder<Enchantment> holder(ResourceKey<Enchantment> key, Level level) {
-    return level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(key);
-  }
-
-  public static Holder<Enchantment> holder(ResourceKey<Enchantment> key, LivingEntity entity) {
-    return holder(key, entity.level());
-  }
 }

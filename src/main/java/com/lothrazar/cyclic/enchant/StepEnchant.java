@@ -26,7 +26,7 @@ public class StepEnchant {
   public void onEntityUpdate(EntityTickEvent.Pre event) {
     if (!isEnabled()) { return; }
     if (!(event.getEntity() instanceof Player player)) { return; }
-    Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.STEP, player);
+    Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.STEP, player);
     int level = EnchantUtil.getCurrentArmorLevelSlot(h, player, EquipmentSlot.LEGS);
     if (level > 0) {
       player.getPersistentData().putBoolean(NBT_ON, true);

@@ -51,7 +51,7 @@ public class BeheadingEnchant {
     }
     if (event.getSource().getEntity() instanceof Player) {
       Player attacker = (Player) event.getSource().getEntity();
-      int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.BEHEADING, attacker.level()), attacker);
+      int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.BEHEADING, attacker.level()), attacker);
       if (level <= 0) {
         return;
       }

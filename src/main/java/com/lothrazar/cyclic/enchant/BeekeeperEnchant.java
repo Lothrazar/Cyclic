@@ -25,7 +25,7 @@ public class BeekeeperEnchant {
   }
 
   private Holder<Enchantment> holder(LivingEntity entity) {
-    return EnchantRegistry.holder(EnchantRegistry.BEEKEEPER, entity);
+    return EnchantUtil.holder(EnchantRegistry.BEEKEEPER, entity);
   }
 
   @SubscribeEvent

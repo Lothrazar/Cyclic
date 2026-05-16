@@ -49,7 +49,7 @@ public class ReachEnchant {
   public void onEntityUpdate(EntityTickEvent.Pre event) {
     if (!isEnabled()) { return; }
     if (!(event.getEntity() instanceof Player player)) { return; }
-    Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.REACH, player);
+    Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.REACH, player);
     int level = EnchantUtil.getCurrentArmorLevel(h, player);
     if (level > 0) {
       turnReachOn(player, level);

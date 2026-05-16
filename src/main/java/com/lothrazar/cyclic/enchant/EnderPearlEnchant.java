@@ -33,7 +33,7 @@ public class EnderPearlEnchant {
     Level world = event.getLevel();
     if (world.isClientSide || event.isCanceled()) { return; }
     ItemStack stack = event.getItemStack();
-    int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.PEARL, world), stack);
+    int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.PEARL, world), stack);
     if (level <= 0) { return; }
     int adjustedCooldown = COOLDOWN / level;
     Player player = event.getEntity();

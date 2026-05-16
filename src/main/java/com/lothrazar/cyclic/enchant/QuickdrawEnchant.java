@@ -28,7 +28,7 @@ public class QuickdrawEnchant {
     if (hand == null) { return; }
     ItemStack heldItem = player.getItemInHand(hand);
     if (!(heldItem.getItem() instanceof BowItem)) { return; }
-    int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.QUICKDRAW, player), heldItem);
+    int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.QUICKDRAW, player), heldItem);
     if (level <= 0) { return; }
     for (int i = 0; i < level; i++) {
       player.updatingUsingItem();

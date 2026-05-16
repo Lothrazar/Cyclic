@@ -30,7 +30,7 @@ public class VenomEnchant {
     Player attacker = event.getEntity();
     ItemStack main = attacker.getMainHandItem();
     ItemStack off = attacker.getOffhandItem();
-    var h = EnchantRegistry.holder(EnchantRegistry.VENOM, attacker);
+    var h = EnchantUtil.holder(EnchantRegistry.VENOM, attacker);
     int mainLevel = EnchantUtil.getCurrentLevelTool(h, main);
     int offLevel = EnchantUtil.getCurrentLevelTool(h, off);
     int level = Math.max(mainLevel, offLevel);

@@ -1,10 +1,11 @@
 package com.lothrazar.cyclic.fluid.block;
 
+import com.lothrazar.library.util.EnchantUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -84,7 +85,9 @@ public class MagmaFluidBlock extends LiquidBlock {
       LivingEntity ent = (LivingEntity) entityIn;
       if (ent.isOnFire() == false
           && ent.fireImmune() == false) {
-        int level = 0; // TODO: use EnchantmentHelper.getTagEnchantmentLevel with registries
+        // TODO: backport this change to 1.20?
+        int level = EnchantUtil.getCurrentArmorLevel(EnchantUtil.holder(Enchantments.FIRE_PROTECTION, ent), ent);
+
         if (level < 4) {
           ent.igniteForSeconds(Mth.floor(worldIn.random.nextDouble() * 10));
         }

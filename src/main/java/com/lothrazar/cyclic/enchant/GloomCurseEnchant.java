@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.library.util.EnchantUtil;
-import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.FakePlayerUtil;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.Holder;
@@ -45,7 +44,7 @@ public class GloomCurseEnchant {
         || FakePlayerUtil.isFakePlayer(attacker)) {
       return;
     }
-    Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.CURSE, user);
+    Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.CURSE, user);
     int totalLevels = EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.HEAD)
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.CHEST)
         + EnchantUtil.getCurrentArmorLevelSlot(h, user, EquipmentSlot.LEGS)

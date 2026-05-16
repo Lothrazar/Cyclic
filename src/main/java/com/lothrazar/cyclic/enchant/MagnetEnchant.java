@@ -27,7 +27,7 @@ public class MagnetEnchant {
     if (!isEnabled()) { return; }
     if (!(event.getEntity() instanceof LivingEntity entity)) { return; }
     if (entity instanceof Player p && p.isSpectator()) { return; }
-    int level = EnchantUtil.getLevelAll(EnchantRegistry.holder(EnchantRegistry.MAGNET, entity), entity);
+    int level = EnchantUtil.getLevelAll(EnchantUtil.holder(EnchantRegistry.MAGNET, entity), entity);
     if (level > 0 && !BotaniaWrapper.hasSolegnoliaAround(entity)) {
       EntityUtil.moveEntityItemsInRegion(entity.getCommandSenderWorld(), entity.blockPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }

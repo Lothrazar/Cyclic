@@ -38,7 +38,7 @@ public class MultiJumpEnchant {
   @SubscribeEvent
   public void onEntityUpdate(EntityTickEvent.Pre event) {
     if (!(event.getEntity() instanceof Player p)) { return; }
-    Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.LAUNCH, p);
+    Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.LAUNCH, p);
     ItemStack armorStack = EnchantUtil.getFirstArmorStackWithEnchant(h, p);
     if (armorStack.isEmpty()) { return; }
     if ((p.hasImpulse == false || p.onGround()) && armorStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(NBT_USES) > 0) {
@@ -48,7 +48,7 @@ public class MultiJumpEnchant {
 
   public void onKeyInput(Player player) {
     if (player == null || player.getVehicle() instanceof Boat) { return; }
-    Holder<Enchantment> h = EnchantRegistry.holder(EnchantRegistry.LAUNCH, player);
+    Holder<Enchantment> h = EnchantUtil.holder(EnchantRegistry.LAUNCH, player);
     ItemStack feet = EnchantUtil.getFirstArmorStackWithEnchant(h, player);
     if (feet.isEmpty() || player.isCrouching()) { return; }
     int level = EnchantUtil.getCurrentLevelTool(h, feet);

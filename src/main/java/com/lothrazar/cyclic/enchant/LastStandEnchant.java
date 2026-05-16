@@ -32,7 +32,7 @@ public class LastStandEnchant {
   public void onEntityUpdate(LivingDamageEvent.Pre event) {
     if (!isEnabled()) { return; }
     final int level = EnchantUtil.getCurrentArmorLevelSlot(
-        EnchantRegistry.holder(EnchantRegistry.STAND, event.getEntity()), event.getEntity(), EquipmentSlot.LEGS);
+        EnchantUtil.holder(EnchantRegistry.STAND, event.getEntity()), event.getEntity(), EquipmentSlot.LEGS);
     if (level > 0 && event.getEntity().getHealth() - event.getOriginalDamage() <= 0 && event.getEntity() instanceof ServerPlayer player) {
       int cooldownTicks = COOLDOWN == null ? 20 : COOLDOWN.get();
       if (cooldownTicks > 0 && player.getCooldowns().isOnCooldown(player.getItemBySlot(EquipmentSlot.LEGS).getItem())) {

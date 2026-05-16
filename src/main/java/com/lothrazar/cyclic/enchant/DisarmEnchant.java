@@ -40,7 +40,7 @@ public class DisarmEnchant {
     if (!isEnabled()) { return; }
     if (!(event.getTarget() instanceof LivingEntity livingTarget)) { return; }
     LivingEntity user = event.getEntity();
-    int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.DISARM, user), user);
+    int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.DISARM, user), user);
     if (level <= 0) { return; }
     if (!canDisarm(livingTarget)) { return; }
     List<ItemStack> toDisarm = new ArrayList<>();

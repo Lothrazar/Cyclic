@@ -55,7 +55,7 @@ public class GrowthEnchant {
     }
     //Ticking
     ItemStack held = entity.getItemInHand(InteractionHand.MAIN_HAND);
-    int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.GROWTH, entity.level()), held);
+    int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.GROWTH, entity.level()), held);
     if (level > 0 && entity.level() instanceof ServerLevel sw) {
       final int growthLimit = level * LIMIT_FACTOR.get() + (entity.level().isRaining() ? 4 : 0); //more when raining too
       final int radius = 1 + level * RADIUS_FACTOR.get();

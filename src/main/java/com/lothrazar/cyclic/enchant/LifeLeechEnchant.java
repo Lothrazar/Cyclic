@@ -23,7 +23,7 @@ public class LifeLeechEnchant {
     if (!isEnabled()) { return; }
     if (!(event.getSource().getEntity() instanceof Player attacker)) { return; }
     if (!(event.getEntity() instanceof LivingEntity target)) { return; }
-    int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.LIFELEECH, attacker), attacker);
+    int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.LIFELEECH, attacker), attacker);
     if (level > 0) {
       int restore = (int) Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
       int min = level;
@@ -38,7 +38,7 @@ public class LifeLeechEnchant {
   public void onAttackEntity(AttackEntityEvent event) {
     if (!isEnabled()) { return; }
     Player attacker = event.getEntity();
-    int level = EnchantUtil.getCurrentLevelTool(EnchantRegistry.holder(EnchantRegistry.LIFELEECH, attacker), attacker);
+    int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.LIFELEECH, attacker), attacker);
     if (level > 0 && attacker.getHealth() < attacker.getMaxHealth()) {
       attacker.heal(level);
     }
