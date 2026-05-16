@@ -11,7 +11,9 @@ import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -93,7 +95,7 @@ public class BlockAntiBeacon extends BlockCyclic {
       return;
     }
     LivingEntity livingEntity = event.getEntity();
-    if (!doesConfigBlockEffect(event.getEffectInstance().getEffect().value())
+    if (!doesConfigBlockEffect(event.getEffectInstance().getEffect())
         || !(livingEntity.getCommandSenderWorld() instanceof ServerLevel serverLevel)
         || !serverLevel.isLoaded(livingEntity.blockPosition())) {
       return;
@@ -122,7 +124,7 @@ public class BlockAntiBeacon extends BlockCyclic {
   private static void cureAllRelevant(LivingEntity e) {
     List<Holder<MobEffect>> cureMe = new ArrayList<>();
     for (Holder<MobEffect> mobEffect : e.getActiveEffectsMap().keySet()) {
-      if (doesConfigBlockEffect(mobEffect.value())) {
+      if (doesConfigBlockEffect(mobEffect)) {
         cureMe.add(mobEffect);
       }
     }
@@ -133,11 +135,19 @@ public class BlockAntiBeacon extends BlockCyclic {
   }
 
   @SuppressWarnings("unchecked")
-  private static boolean doesConfigBlockEffect(MobEffect mobEffect) {
-    if (TileAntiBeacon.HARMFUL_POTIONS.get() && mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
-      return true;
+  private static boolean doesConfigBlockEffect(Holder<MobEffect> mobEffectHolder) {
+    MobEffect mobEffect = mobEffectHolder.value();
+
+    List<String> entries = (List<String>) TileAntiBeacon.POTIONS.get();
+    for (String entry : entries) {
+      if (entry.startsWith("#")) {
+        ResourceLocation tagId = ResourceLocation.tryParse(entry.substring(1));
+        if (tagId != null && mobEffectHolder.is(TagKey.create(Registries.MOB_EFFECT, tagId))) {
+          return true;
+        }
+      }
     }
     ResourceLocation potionId = BuiltInRegistries.MOB_EFFECT.getKey(mobEffect);
-    return StringParseUtil.isInList((List<String>) TileAntiBeacon.POTIONS.get(), potionId);
+    return StringParseUtil.isInList(entries, potionId);
   }
 }

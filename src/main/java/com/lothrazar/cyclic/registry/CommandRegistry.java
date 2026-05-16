@@ -160,7 +160,7 @@ public class CommandRegistry {
             .then(Commands.literal(FORK_SET)
                 .then(Commands.argument(ARG_PLAYER, EntityArgument.players())
                     .then(Commands.argument(ARG_VALUE, IntegerArgumentType.integer())
-                        .executes(x -> { // TODO: heartsCommand; attributesCommand
+                        .executes(x -> {
                           return AttributesUtil.setHearts(EntityArgument.getPlayers(x, ARG_PLAYER), IntegerArgumentType.getInteger(x, ARG_VALUE));
                         }))))
             .then(Commands.literal(FORK_ADD)

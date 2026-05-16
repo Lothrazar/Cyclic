@@ -17,7 +17,6 @@ public class TileAntiBeacon extends TileBlockEntityCyclic {
   public static ModConfigSpec.IntValue RADIUS;
   public static ModConfigSpec.IntValue TICKS;
   public static ModConfigSpec.ConfigValue<List<? extends String>> POTIONS;
-  public static ModConfigSpec.BooleanValue HARMFUL_POTIONS;
   private BeamStuff beamStuff = new BeamStuff();
 
   public TileAntiBeacon(BlockPos pos, BlockState state) {

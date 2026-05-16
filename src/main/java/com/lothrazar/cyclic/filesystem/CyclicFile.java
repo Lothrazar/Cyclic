@@ -9,7 +9,7 @@ import net.minecraft.nbt.Tag;
 
 public class CyclicFile {
 
-  //TODO: deprecate everything EXCEPT item stacks. replace with player caps 
+  //TODO: investigate moving all these into PlayerCapabilityStorage
   public static final String NBTINV = "inv";
   public final UUID playerId;
   public boolean storageVisible = false;
