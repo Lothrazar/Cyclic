@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "jeed",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
+  "type": "jeed:potion_provider",
+  "providers": [
+    {
+      "item": "cyclic:slingshot"
+    },
+    {
+      "item": "cyclic:boomerang_stun"
+    }
+  ]
+}

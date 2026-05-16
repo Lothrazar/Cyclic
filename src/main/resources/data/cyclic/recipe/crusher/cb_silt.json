@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "modid": "cobblestoney",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:crusher",
+      "type": "neoforge:item_exists"
+    }
+  ],
+  "type": "cyclic:crusher",
+  "energy": {
+    "ticks": 100,
+    "rfpertick": 20
+  },
+  "result": {
+    "count": 2,
+    "id": "cobblestoney:silt"
+  },
+  "ingredient": {
+    "item": "cobblestoney:stone_silt"
+  },
+  "bonus": {
+    "percent": 0,
+    "bonus": {
+      "count": 2,
+      "id": "cobblestoney:silt"
+    }
+  }
+}

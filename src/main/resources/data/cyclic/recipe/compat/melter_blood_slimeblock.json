@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "tconstruct:blood_slime"
+    },
+    {
+      "item": "tconstruct:blood_slime"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 160
+  },
+  "result": {
+    "id": "tconstruct:blood",
+    "amount": 4500
+  }
+}

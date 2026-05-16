@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "cyclic",
+      "type": "neoforge:mod_loaded"
+    },
+    {
+      "item": "cyclic:crusher",
+      "type": "neoforge:item_exists"
+    }
+  ],
+  "type": "cyclic:crusher",
+  "energy": {
+    "ticks": 500,
+    "rfpertick": 100
+  },
+  "result": {
+    "count": 9,
+    "id": "minecraft:redstone"
+  },
+  "ingredient": {
+    "item": "cyclic:waxed_redstone"
+  },
+  "bonus": {
+    "percent": 0,
+    "bonus": {
+      "count": 1,
+      "id": "minecraft:honeycomb"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "tconstruct:sky_slime_ball"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 160
+  },
+  "result": {
+    "id": "tconstruct:sky_slime",
+    "amount": 250
+  }
+}

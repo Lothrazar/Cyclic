@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "modid": "quark",
+      "type": "neoforge:mod_loaded"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "csc",
+    "s s",
+    "csc"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stone"
+    },
+    "c": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "quark:sturdy_stone"
+  }
+}

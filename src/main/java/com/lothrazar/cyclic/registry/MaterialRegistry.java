@@ -17,7 +17,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.Util;
 import net.minecraft.world.item.ArmorMaterials;
 
@@ -63,34 +62,31 @@ public class MaterialRegistry {
     public static final Holder<ArmorMaterial> GEMOBSIDIAN = ARMOR_MATERIALS.register("gem_obsidian", () -> new ArmorMaterial(
         Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
             map.put(ArmorItem.Type.BOOTS, 7);
-            map.put(ArmorItem.Type.LEGGINGS, 10); // Diamond is 6, config says boots 7 helm 7 chest 11, let's assume legs 10
+            map.put(ArmorItem.Type.LEGGINGS, 10);
             map.put(ArmorItem.Type.CHESTPLATE, 11);
             map.put(ArmorItem.Type.HELMET, 7);
             map.put(ArmorItem.Type.BODY, 11);
         }),
-        25, // enchantment value (from ArmorMaterials.GOLD)
-        SoundEvents.ARMOR_EQUIP_DIAMOND,
+        ArmorMaterials.GOLD.value().enchantmentValue() + 3,
+        SoundRegistry.EQUIP_EMERALD,
         () -> Ingredient.of(ItemRegistry.GEM_OBSIDIAN.get()),
         List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "crystal"))),
-        6.0F, // toughness
-        0.2F  // knockback resistance (Netherite is 0.1)
+        6.0F,
+        ArmorMaterials.NETHERITE.value().knockbackResistance()
     ));
 
-    public static final Holder<ArmorMaterial> GLOWING = ARMOR_MATERIALS.register("glowing", () -> new ArmorMaterial(
-        Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-            map.put(ArmorItem.Type.BOOTS, 3);
-            map.put(ArmorItem.Type.LEGGINGS, 6);
-            map.put(ArmorItem.Type.CHESTPLATE, 8);
-            map.put(ArmorItem.Type.HELMET, 3);
-            map.put(ArmorItem.Type.BODY, 11);
-        }),
-        15, // enchantment value
-        SoundEvents.ARMOR_EQUIP_DIAMOND,
-        () -> Ingredient.of(ItemRegistry.GEM_AMBER.get()), // Or glowing material
-        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "glowing"))),
-        2.0F, // toughness
-        0.0F  // knockback resistance
-    ));
+    public static final Holder<ArmorMaterial> GLOWING = ARMOR_MATERIALS.register("glowing", () -> {
+      var iron = ArmorMaterials.IRON.value();
+      return new ArmorMaterial(
+          iron.defense(),
+          iron.enchantmentValue() + 1,
+          SoundRegistry.EQUIP_EMERALD,
+          () -> Ingredient.of(ItemRegistry.GEM_AMBER.get()),
+          List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "glowing"))),
+          iron.toughness(),
+          iron.knockbackResistance()
+      );
+    });
   }
 
   public static class ToolMats {
