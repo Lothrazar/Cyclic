@@ -12,7 +12,7 @@
     }
   ],
   "mix": {
-    "id": "minecraft:lava",
+    "fluid": "minecraft:lava",
     "amount": 100
   },
   "energy": {

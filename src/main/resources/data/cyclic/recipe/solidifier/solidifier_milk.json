@@ -10,7 +10,7 @@
     "ticks": 60
   },
   "mix": {
-    "id": "minecraft:milk",
+    "fluid": "minecraft:milk",
     "amount": 1000
   },
   "result": {

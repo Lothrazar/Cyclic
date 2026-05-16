@@ -55,7 +55,7 @@ public class PacketRegistry {
     registrar.playToServer(PacketStorageBagScreen.TYPE, PacketStorageBagScreen.STREAM_CODEC, PacketStorageBagScreen::handle);
     registrar.playToServer(PacketCraftAction.TYPE, PacketCraftAction.STREAM_CODEC, PacketCraftAction::handle);
     registrar.playToServer(PacketFilterCard.TYPE, PacketFilterCard.STREAM_CODEC, PacketFilterCard::handle);
-    // registrar.playToServer(PacketItemScroll.ID, PacketItemScroll.STREAM_CODEC, PacketItemScroll::handle);
+    registrar.playToServer(PacketItemScroll.TYPE, PacketItemScroll.STREAM_CODEC, PacketItemScroll::handle);
     registrar.playToServer(PacketKeyBind.TYPE, PacketKeyBind.STREAM_CODEC, PacketKeyBind::handle);
     registrar.playToServer(PacketRecordSound.TYPE, PacketRecordSound.STREAM_CODEC, PacketRecordSound::handle);
     registrar.playToServer(PacketHarvesting.TYPE, PacketHarvesting.STREAM_CODEC, PacketHarvesting::handle);

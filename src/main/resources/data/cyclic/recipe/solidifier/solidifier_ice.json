@@ -16,7 +16,7 @@
     "ticks": 100
   },
   "mix": {
-    "id": "minecraft:water",
+    "fluid": "minecraft:water",
     "amount": 500
   },
   "result": {

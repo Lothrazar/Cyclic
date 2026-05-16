@@ -16,7 +16,7 @@
     "ticks": 300
   },
   "mix": {
-    "id": "minecraft:lava",
+    "fluid": "minecraft:lava",
     "amount": 800
   },
   "result": {

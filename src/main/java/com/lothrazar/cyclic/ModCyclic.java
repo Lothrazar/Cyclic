@@ -26,6 +26,7 @@ import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.registry.AttachmentRegistry;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 
@@ -67,6 +68,7 @@ public class ModCyclic {
     PotionRegistry.POTIONS.register(bus);
     PotionEffectRegistry.MOB_EFFECTS.register(bus);
 
+    AttachmentRegistry.ATTACHMENT_TYPES.register(bus);
     SoundRegistry.SOUND_EVENTS.register(bus);
     LootModifierRegistry.LOOT.register(bus);
     BlockRegistry.CREATIVE_MODE_TABS.register(bus);

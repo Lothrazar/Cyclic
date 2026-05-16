@@ -6,7 +6,7 @@
     }
   ],
   "mix": {
-    "id": "minecraft:water",
+    "fluid": "minecraft:water",
     "amount": 25
   },
   "energy": {

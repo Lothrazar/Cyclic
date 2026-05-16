@@ -129,6 +129,7 @@ import com.lothrazar.cyclic.block.wireless.item.ScreenWirelessItem;
 import com.lothrazar.cyclic.block.wireless.redstone.ScreenTransmit;
 import com.lothrazar.cyclic.block.workbench.ScreenWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagScreen;
+import com.lothrazar.cyclic.item.enderbook.EnderBookScreen;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickScreen;
 import com.lothrazar.cyclic.item.datacard.filter.ScreenFilterCard;
 import com.lothrazar.cyclic.item.storagebag.ScreenStorageBag;
@@ -284,6 +285,7 @@ public class ClientRegistryCyclic {
   public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
     event.register(MenuTypeRegistry.STORAGE_BAG.get(), ScreenStorageBag::new);
     event.register(MenuTypeRegistry.CRAFTING_BAG.get(), CraftingBagScreen::new);
+    event.register(MenuTypeRegistry.ENDER_BOOK.get(), EnderBookScreen::new);
     event.register(MenuTypeRegistry.CRAFTING_STICK.get(), CraftingStickScreen::new);
     event.register(MenuTypeRegistry.FILTER_DATA.get(), ScreenFilterCard::new);
     event.register(MenuTypeRegistry.DROPPER.get(), ScreenDropper::new);

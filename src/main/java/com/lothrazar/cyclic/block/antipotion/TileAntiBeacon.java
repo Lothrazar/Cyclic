@@ -30,6 +30,7 @@ public class TileAntiBeacon extends TileBlockEntityCyclic {
     }
     if (tile.timer <= 0) {
       BlockAntiBeacon.absorbPotions(level, blockPos);
+      BlockAntiBeacon.markNearbyEntitiesWithAntiBeaconPosition(level, blockPos);
       tile.timer = TICKS.get();
     }
     else {

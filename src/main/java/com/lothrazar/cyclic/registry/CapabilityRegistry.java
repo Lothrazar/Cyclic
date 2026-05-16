@@ -3,6 +3,8 @@ package com.lothrazar.cyclic.registry;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.crafting.CraftingBagCapability;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardCapability;
+import com.lothrazar.cyclic.item.enderbook.EnderBookCapability;
+import com.lothrazar.cyclic.item.lunchbox.LunchboxCapability;
 import com.lothrazar.cyclic.item.storagebag.StorageBagCapability;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -49,6 +51,16 @@ public class CapabilityRegistry {
             Capabilities.ItemHandler.ITEM,
             (stack, ctx) -> new FilterCardCapability(stack),
             ItemRegistry.FILTER_DATA.get()
+        );
+        event.registerItem(
+            Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new LunchboxCapability(stack),
+            ItemRegistry.LUNCHBOX.get()
+        );
+        event.registerItem(
+            Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new EnderBookCapability(stack),
+            ItemRegistry.ENDER_BOOK.get()
         );
     }
 }

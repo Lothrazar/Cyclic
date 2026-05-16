@@ -26,7 +26,7 @@ public class PotionEvents {
     if (event.getEffectInstance().getEffect() instanceof CyclicMobEffect self) {
       self.isPotionApplicable(event);
     }
-    // BlockRegistry.ANTI_BEACON.get().isPotionApplicable(event);
+    BlockRegistry.ANTI_BEACON.get().isPotionApplicable(event);
   }
 
   @SubscribeEvent
