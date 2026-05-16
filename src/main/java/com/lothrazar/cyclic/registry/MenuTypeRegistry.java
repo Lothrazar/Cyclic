@@ -32,6 +32,7 @@ import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
 import com.lothrazar.cyclic.block.generatorsolar.ContainerGeneratorSolar;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.laser.ContainerLaser;
+import com.lothrazar.cyclic.block.magnet.ContainerMagnet;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.miner.ContainerMiner;
 import com.lothrazar.cyclic.block.packager.ContainerPackager;
@@ -122,6 +123,7 @@ public class MenuTypeRegistry {
   public static final Supplier<MenuType<ContainerSoundPlayer>> SOUND_PLAYER = CONTAINERS.register("sound_player", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerSoundPlayer(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
   public static final Supplier<MenuType<ContainerCrusher>> CRUSHER = CONTAINERS.register("crusher", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerCrusher(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
   public static final Supplier<MenuType<ContainerTeleport>> TELEPORT = CONTAINERS.register("teleport", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerTeleport(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
+  public static final Supplier<MenuType<ContainerMagnet>> MAGNET = CONTAINERS.register("magnet", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerMagnet(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
   //  Items with containers
   public static final Supplier<MenuType<EnderBookContainer>> ENDER_BOOK = CONTAINERS.register("ender_book", () -> IMenuTypeExtension.create((windowId, inv, data) -> new EnderBookContainer(windowId, inv, inv.player)));
   public static final Supplier<MenuType<ContainerStorageBag>> STORAGE_BAG = CONTAINERS.register("storage_bag", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player, data.readInt())));

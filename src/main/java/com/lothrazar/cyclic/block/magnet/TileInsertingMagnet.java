@@ -1,30 +1,52 @@
 package com.lothrazar.cyclic.block.magnet;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
+import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.data.Vector3;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 import static com.lothrazar.cyclic.block.BlockCyclic.LIT;
-import net.minecraft.core.HolderLookup;
 
-public class TileInsertingMagnet extends TileBlockEntityCyclic {
+public class TileInsertingMagnet extends TileBlockEntityCyclic implements MenuProvider {
 
   private static final double ENTITY_PULL_DIST = 0.2; //closer than this and nothing happens
   private static final double ENTITY_PULL_SPEED_CUTOFF = 2; //closer than this and it slows
   private static final float ITEMSPEEDFAR = 0.8F;
   private static final float ITEMSPEEDCLOSE = 0.09F;
+
+  ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getItem() == ItemRegistry.FILTER_DATA.get();
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+  };
 
   public TileInsertingMagnet(BlockPos pos, BlockState state) {
     super(TileRegistry.MAGNET.get(), pos, state);
@@ -33,16 +55,34 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.loadAdditional(tag, registries);
+    if (tag.contains("filter")) {
+      filter.deserializeNBT(registries, tag.getCompound("filter"));
+    }
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.saveAdditional(tag, registries);
+    tag.put("filter", filter.serializeNBT(registries));
+  }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return filter;
+  }
+
+  @Override
+  public Component getDisplayName() {
+    return BlockRegistry.MAGNET.get().getName();
+  }
+
+  @Override
+  public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
+    return new ContainerMagnet(i, level, worldPosition, playerInventory, playerEntity);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileInsertingMagnet e) {
-    if(blockState.getValue(LIT)) {
-      Set<Item> filter = new HashSet<>(); // TODO: filter from DATACARD if present
+    if (blockState.getValue(LIT)) {
       final int radius = BlockMagnetPanel.RADIUS.get();
       int vradius = 0;
       int x = blockPos.getX();
@@ -50,11 +90,12 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
       int z = blockPos.getZ();
       AABB axisalignedbb = (new AABB(x, y, z, x + 1, y + 1, z + 1)).inflate(radius, vradius, radius);
       List<ItemEntity> list = level.getEntitiesOfClass(ItemEntity.class, axisalignedbb);
-      pullEntityList(x + 0.5, y + 0.1, z + 0.5, true, list, filter);
+      ItemStack filterCard = e.filter.getStackInSlot(0);
+      pullEntityList(x + 0.5, y + 0.1, z + 0.5, true, list, filterCard);
     }
   }
 
-  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<ItemEntity> all, Set<Item> filter) {
+  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<ItemEntity> all, ItemStack filterCard) {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
@@ -64,10 +105,7 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic {
       if (entity == null) {
         continue;
       }
-      if (filter != null
-          && !filter.isEmpty()
-          && !filter.contains(entity.getItem().getItem())) {
-        // filter is not empty AND it one of it items matches /me/
+      if (!FilterCardItem.filterAllowsExtract(filterCard, entity.getItem())) {
         continue;
       }
       //being paranoid

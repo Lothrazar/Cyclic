@@ -89,6 +89,7 @@ import com.lothrazar.cyclic.block.cable.item.ScreenCableItem;
 import com.lothrazar.cyclic.block.clock.ScreenClock;
 import com.lothrazar.cyclic.block.collectfluid.ScreenFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.ScreenItemCollector;
+import com.lothrazar.cyclic.block.magnet.ScreenMagnet;
 import com.lothrazar.cyclic.block.crafter.ScreenCrafter;
 import com.lothrazar.cyclic.block.crate.ScreenCrate;
 import com.lothrazar.cyclic.block.cratemini.ScreenCrateMini;
@@ -326,6 +327,7 @@ public class ClientRegistryCyclic {
     event.register(MenuTypeRegistry.CRAFTER.get(), ScreenCrafter::new);
     event.register(MenuTypeRegistry.BATTERY.get(), ScreenBattery::new);
     event.register(MenuTypeRegistry.COLLECTOR.get(), ScreenItemCollector::new);
+    event.register(MenuTypeRegistry.MAGNET.get(), ScreenMagnet::new);
     event.register(MenuTypeRegistry.BEACON.get(), ScreenPotion::new);
     event.register(MenuTypeRegistry.ANVIL.get(), ScreenAnvil::new);
     event.register(MenuTypeRegistry.PEAT_FARM.get(), ScreenPeatFarm::new);

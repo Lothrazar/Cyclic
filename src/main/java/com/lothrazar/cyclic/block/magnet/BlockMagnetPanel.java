@@ -7,8 +7,12 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -43,11 +47,28 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
 
   @Override
   public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
-    {
-      world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
-      SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-      ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+    if (player.isCrouching()) {
+      openFilterMenu(world, pos, player);
       return InteractionResult.SUCCESS;
+    }
+    world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
+    SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
+    ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+    return InteractionResult.SUCCESS;
+  }
+
+  @Override
+  protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    if (player.isCrouching()) {
+      openFilterMenu(world, pos, player);
+      return ItemInteractionResult.SUCCESS;
+    }
+    return super.useItemOn(heldItem, state, world, pos, player, hand, hit);
+  }
+
+  private static void openFilterMenu(Level world, BlockPos pos, Player player) {
+    if (!world.isClientSide && world.getBlockEntity(pos) instanceof MenuProvider mp) {
+      player.openMenu(mp, pos);
     }
   }
 
