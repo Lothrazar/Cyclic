@@ -3,13 +3,11 @@ package com.lothrazar.cyclic.block.cable.fluid;
 import java.util.List;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.cyclic.block.cable.ShapeCache;
+import com.lothrazar.library.data.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -88,7 +86,7 @@ public class BlockCableFluid extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
 //      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IFluidHandler cap = CapabilityFixer.fluid(worldIn,pos.relative(d),d.getOpposite()); //facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.FLUID_HANDLER, d.getOpposite()).orElse(null);
+      IFluidHandler cap = CapabilityUtil.fluid(worldIn,pos.relative(d),d.getOpposite()); //facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.FLUID_HANDLER, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);
@@ -117,7 +115,7 @@ public class BlockCableFluid extends CableBase {
       //  updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (CapabilityFixer.isFluid( facing,  (Level)world, facingPos)) {
+    if (CapabilityUtil.isFluid( facing,  (Level)world, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here

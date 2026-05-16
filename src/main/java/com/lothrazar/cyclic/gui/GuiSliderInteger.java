@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.api.IHasTooltip;
+import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.net.PacketTileData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

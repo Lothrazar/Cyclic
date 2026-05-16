@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.facade;
 
 import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.util.FacadeUtil;
+import com.lothrazar.library.util.FacadeUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;

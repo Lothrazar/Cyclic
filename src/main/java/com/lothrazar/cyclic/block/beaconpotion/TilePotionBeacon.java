@@ -8,13 +8,12 @@ import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.data.EntityFilterType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.MenuProvider;
@@ -48,7 +47,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   private static final int MAX_RADIUS = 64;
   private int radius = MAX_RADIUS;
   public static ModConfigSpec.IntValue POWERCONF;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler filter = new ItemStackHandler(1) {
 
     @Override

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilDirection;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.util.DirectionUtil;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -23,7 +23,7 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
     N, E, S, W, U, D;
   }
 
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   private Map<Direction, Boolean> poweredSides;
 
   public TileBatteryInfinite(BlockPos pos, BlockState state) {
@@ -83,7 +83,7 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
   }
 
   private void tickCableFlow() {
-    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
+    for (final Direction exportToSide : DirectionUtil.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
         moveEnergy(exportToSide, MAX / 4);
       }

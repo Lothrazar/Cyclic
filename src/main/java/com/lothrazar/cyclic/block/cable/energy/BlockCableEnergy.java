@@ -2,9 +2,9 @@ package com.lothrazar.cyclic.block.cable.energy;
 
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.cyclic.block.cable.ShapeCache;
+import com.lothrazar.library.data.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -63,7 +63,7 @@ public class BlockCableEnergy extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IEnergyStorage energy = CapabilityFixer.energy(worldIn,pos.relative(d));
+      IEnergyStorage energy = CapabilityUtil.energy(worldIn,pos.relative(d));
       if (energy != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);
@@ -80,7 +80,7 @@ public class BlockCableEnergy extends CableBase {
       //      updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (world instanceof Level && CapabilityFixer.isEnergy(facing, (Level) world, facingPos)) {
+    if (world instanceof Level && CapabilityUtil.isEnergy(facing, (Level) world, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here

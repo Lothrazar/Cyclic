@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.generatorsolar;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -24,8 +24,8 @@ public class ContainerGeneratorSolar extends ContainerBase {
     trackEnergy(tile);
   }
 
-  public int getEnergy() { // TODO is this needed
-    return CapabilityFixer.energyStored(tile.getLevel(),tile.getBlockPos()); //tile.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+  public int getEnergy() {
+    return CapabilityUtil.energyStored(tile.getLevel(),tile.getBlockPos());
   }
 
   @Override

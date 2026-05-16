@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -44,7 +44,7 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
 
   ItemStackHandler userSlots = new ItemStackHandler(1);
   ItemStackHandler outputSlots = new ItemStackHandler(4);
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX / 4);
 
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(userSlots, outputSlots);
 

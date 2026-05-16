@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.library.block.EntityBlockFlib;
 import com.lothrazar.library.util.SoundUtil;
@@ -23,8 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.capabilities.BaseCapability;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -99,7 +97,7 @@ public class BlockCyclic extends EntityBlockFlib {
            *
            *
            */
-          IFluidHandler handler = CapabilityFixer.fluid(level,pos,hit); // level.getCapability(Capabilities.FluidHandler.BLOCK, pos, hit.getDirection());
+          IFluidHandler handler = CapabilityUtil.fluid(level,pos,hit); // level.getCapability(Capabilities.FluidHandler.BLOCK, pos, hit.getDirection());
 
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
@@ -166,7 +164,7 @@ public class BlockCyclic extends EntityBlockFlib {
 //      BlockEntity tileentity = worldIn.getBlockEntity(pos);
 //      if (tileentity != null) {
 
-        IItemHandler items = CapabilityFixer.item(worldIn, pos);
+        IItemHandler items = CapabilityUtil.item(worldIn, pos);
         if (items != null) {
           for (int i = 0; i < items.getSlots(); ++i) {
             Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
@@ -198,7 +196,7 @@ public class BlockCyclic extends EntityBlockFlib {
 
   //for comparators that dont use item inventories
   protected int calcRedstoneFromFluid(BlockEntity tileEntity) {
-    IFluidHandler fluid = CapabilityFixer.fluid(tileEntity.getLevel(), tileEntity.getBlockPos());//tileEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+    IFluidHandler fluid = CapabilityUtil.fluid(tileEntity.getLevel(), tileEntity.getBlockPos());//tileEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
     if (fluid.getFluidInTank(0).isEmpty()) {
       return 0;
     }

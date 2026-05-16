@@ -8,8 +8,8 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -41,7 +41,7 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
 
   static final int MAX = 64000;
   private int transferRate = MAX / 8;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler gpsSlots = new ItemStackHandler(8) {
 
     @Override

@@ -11,7 +11,7 @@ import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -53,7 +53,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
   private int height = MAX_HEIGHT / 2;
   private int radius = 5;
   static final int MAX = 64000;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2) {
 
     @Override

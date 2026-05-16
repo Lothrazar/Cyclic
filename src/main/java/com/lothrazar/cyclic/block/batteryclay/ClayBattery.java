@@ -3,12 +3,10 @@ package com.lothrazar.cyclic.block.batteryclay;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -47,9 +45,9 @@ public class ClayBattery extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
     if (ent instanceof TileClayBattery battery) {
-      IEnergyStorage newStackCap = CapabilityFixer.energy(newStackBattery);// newStackBattery.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
-      if (newStackCap instanceof CustomEnergyStorage) {
-        ((CustomEnergyStorage) newStackCap).setEnergy(battery.energy.getEnergyStored());
+      IEnergyStorage newStackCap = CapabilityUtil.energy(newStackBattery);// newStackBattery.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+      if (newStackCap instanceof EnergyStorageWrapper) {
+        ((EnergyStorageWrapper) newStackCap).setEnergy(battery.energy.getEnergyStored());
       }
       else {
         newStackCap.receiveEnergy(battery.energy.getEnergyStored(), false);
@@ -75,7 +73,7 @@ public class ClayBattery extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
-    IEnergyStorage storage = CapabilityFixer.energy(stack);
+    IEnergyStorage storage = CapabilityUtil.energy(stack);
     if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(TileBlockEntityCyclic.NBTENERGY)) {
       current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(TileBlockEntityCyclic.NBTENERGY);
     }
@@ -83,7 +81,7 @@ public class ClayBattery extends BlockCyclic {
       current = storage.getEnergyStored();
     }
     TileClayBattery container = (TileClayBattery) world.getBlockEntity(pos);
-    CustomEnergyStorage storageTile = null; // ForgeCapabilities removed
+    EnergyStorageWrapper storageTile = null; // ForgeCapabilities removed
     if (storageTile != null) {
       storageTile.setEnergy(current);
     }

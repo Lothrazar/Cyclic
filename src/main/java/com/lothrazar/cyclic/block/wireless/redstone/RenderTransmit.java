@@ -6,7 +6,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.render.type.FakeBlockRenderTypes;
 import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.RenderBlockUtils;

@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.enderbook;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;

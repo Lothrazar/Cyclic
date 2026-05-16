@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.datacard.filter;
 
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -36,7 +36,7 @@ public class ContainerFilterCard extends ContainerBase {
     //
     //    this.nbt = bag.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
 //    bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ITEM_HANDLER).ifPresent(h -> {
-      var h = CapabilityFixer.item(bag);
+      var h = CapabilityUtil.item(bag);
       if (h != null) {
         this.slotcount = h.getSlots();
         for (int j = 0; j < h.getSlots(); j++) {

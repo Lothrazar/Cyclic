@@ -45,7 +45,6 @@ public class ItemStorageBag extends ItemBaseCyclic {
     stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
   }
 
-
   private static final String NBT_COLOUR = "COLOUR";
   public static final int REFILL_TICKS = 4;
   public static final int SLOTS = 81;
@@ -139,16 +138,6 @@ public class ItemStorageBag extends ItemBaseCyclic {
           .withStyle(ChatFormatting.RED));
     }
   }
-
-  @Override
-  public void registerClient() {
-    // // MenuScreens.register(MenuTypeRegistry.STORAGE_BAG.get(), ScreenStorageBag::new); // TODO: use RegisterMenuScreensEvent
-  }
-
-//  @Override
-//  // public Object initCapabilities(ItemStack stack, CompoundTag nbt) {
-//    return new StorageBagCapability(stack, nbt);
-//  }
 
   @Override
   public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {

@@ -7,7 +7,7 @@ import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.CyclicRecipeType;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -39,7 +39,7 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
 
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
   static final int MAX = TileBattery.MENERGY * 10;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(0);
   protected final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> indexFluidsFromRecipes().contains(p.getFluid()));
   ItemStackHandler outputSlots = new ItemStackHandler(0);

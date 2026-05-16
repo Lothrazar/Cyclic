@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.core.BlockPos;
@@ -46,7 +46,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
   public static ModConfigSpec.ConfigValue<Integer> TIMER;
   public static  ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_LIST;
   public static  ModConfigSpec.ConfigValue<List<? extends String>> IGNORE_RECIPES;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     @Override

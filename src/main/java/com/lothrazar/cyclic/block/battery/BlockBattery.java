@@ -3,12 +3,10 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
@@ -59,9 +57,9 @@ public class BlockBattery extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
     if (ent instanceof TileBattery battery) {
-      IEnergyStorage newStackCap = CapabilityFixer.energy(newStackBattery);
-      if (newStackCap instanceof CustomEnergyStorage) {
-        ((CustomEnergyStorage) newStackCap).setEnergy(battery.energy.getEnergyStored());
+      IEnergyStorage newStackCap = CapabilityUtil.energy(newStackBattery);
+      if (newStackCap instanceof EnergyStorageWrapper) {
+        ((EnergyStorageWrapper) newStackCap).setEnergy(battery.energy.getEnergyStored());
       }
       else {
         newStackCap.receiveEnergy(battery.energy.getEnergyStored(), false);
@@ -86,7 +84,7 @@ public class BlockBattery extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     int current = 0;
-    IEnergyStorage storage =  CapabilityFixer.energy(stack);
+    IEnergyStorage storage =  CapabilityUtil.energy(stack);
     if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(TileBlockEntityCyclic.NBTENERGY)) {
       current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(TileBlockEntityCyclic.NBTENERGY);
     }
@@ -94,7 +92,7 @@ public class BlockBattery extends BlockCyclic {
       current = storage.getEnergyStored();
     }
 //    TileBattery container = (TileBattery) world.getBlockEntity(pos);
-    var storageTile = CapabilityFixer.energy(world, pos);
+    var storageTile = CapabilityUtil.energy(world, pos);
     if (storageTile != null) {
 //      storageTile.setEnergy(current);
     storageTile.receiveEnergy(current, false);

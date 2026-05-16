@@ -167,9 +167,6 @@ public class ClientRegistryCyclic {
     }
   };
 
-  public ClientRegistryCyclic() {
-    //fired by mod constructor  DistExecutor.safeRunForDist
-  }
 
   public static void setupClient(final FMLClientSetupEvent event) {
     for (BlockCyclic b : BlockRegistry.BLOCKSCLIENTREGISTRY) {
@@ -271,7 +268,6 @@ public class ClientRegistryCyclic {
 
   @SubscribeEvent
   public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {
-    // TODO: possibly unused
     event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID,"hud_mana"), HUD_MANA);
   }
 
@@ -353,7 +349,8 @@ public class ClientRegistryCyclic {
     }, ItemRegistry.LUNCHBOX.get());
     //
     event.register((stack, tintIndex) -> {
-      if (tintIndex == 0) { //layer zero is outline, ignore this 
+      //layer 0 = outline, layer 2 = string overlay; only tint layer 1 (bag body)
+      if (tintIndex != 1) {
         return 0xFFFFFFFF;
       }
       return ItemStorageBag.getColour(stack);

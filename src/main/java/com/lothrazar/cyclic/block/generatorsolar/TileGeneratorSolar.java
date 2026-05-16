@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.generatorsolar;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -25,7 +25,7 @@ public class TileGeneratorSolar extends TileBlockEntityCyclic implements MenuPro
   }
 
   static final int MAX = 64000;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
 
   public TileGeneratorSolar(BlockPos pos, BlockState state) {
     super(TileRegistry.GENERATOR_SOLAR.get(), pos, state);

@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.block;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,18 +9,17 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.core.IHasEnergy;
 import com.lothrazar.library.core.IHasFluid;
 import com.lothrazar.library.packet.PacketSyncEnergy;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.FakePlayerUtil;
 import com.lothrazar.library.util.ItemStackUtil;
-import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -30,7 +28,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -39,14 +36,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
-import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -315,7 +309,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     BlockPos posTarget = worldPosition.relative(extractSide);
     BlockEntity tile = level.getBlockEntity(posTarget);
     if (tile != null) {
-      IItemHandler itemHandlerFrom = CapabilityFixer.item(level, posTarget, extractSide.getOpposite()); // tile.getCapability(ForgeCapabilities.ITEM_HANDLER, extractSide.getOpposite()).orElse(null);
+      IItemHandler itemHandlerFrom = CapabilityUtil.item(level, posTarget, extractSide.getOpposite()); // tile.getCapability(ForgeCapabilities.ITEM_HANDLER, extractSide.getOpposite()).orElse(null);
       //
       ItemStack itemTarget;
       if (itemHandlerFrom != null) {
@@ -394,7 +388,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       return false;
     }
 
-    final IItemHandler handlerOutput =  CapabilityFixer.item(level, tileTarget.getBlockPos(), themFacingMe); //  tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
+    final IItemHandler handlerOutput =  CapabilityUtil.item(level, tileTarget.getBlockPos(), themFacingMe); //  tileTarget.getCapability(ForgeCapabilities.ITEM_HANDLER, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
@@ -430,7 +424,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
       return false; //important to not desync cables 
     }
     Direction myFacingDir = loc.getSide();
-    final IEnergyStorage handlerHere =  CapabilityFixer.energy(level, this.worldPosition, myFacingDir); //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
+    final IEnergyStorage handlerHere =  CapabilityUtil.energy(level, this.worldPosition, myFacingDir); //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
     ServerLevel serverWorld = loc.getTargetLevel(level);
     final BlockEntity tileTarget = serverWorld.getBlockEntity(loc.getPos());
     final Direction themFacingMe = myFacingDir.getOpposite();
@@ -446,7 +440,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (this.level.isClientSide) {
       return false; //important to not desync cables 
     }
-    final IEnergyStorage handlerHere = CapabilityFixer.energy(level, this.worldPosition, myFacingDir);  //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
+    final IEnergyStorage handlerHere = CapabilityUtil.energy(level, this.worldPosition, myFacingDir);  //this.getCapability(ForgeCapabilities.ENERGY, myFacingDir).orElse(null);
     final Direction themFacingMe = myFacingDir.getOpposite();
     final BlockEntity tileTarget = level.getBlockEntity(posTarget);
     return moveEnergyInternal(quantity, handlerHere, themFacingMe, tileTarget);
@@ -460,7 +454,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (tileTarget == null) {
       return false;
     }
-    final IEnergyStorage handlerOutput =  CapabilityFixer.energy(tileTarget.getLevel(),tileTarget.getBlockPos(), themFacingMe);// tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
+    final IEnergyStorage handlerOutput =  CapabilityUtil.energy(tileTarget.getLevel(),tileTarget.getBlockPos(), themFacingMe);// tileTarget.getCapability(ForgeCapabilities.ENERGY, themFacingMe).orElse(null);
     if (handlerOutput == null) {
       return false;
     }
@@ -531,7 +525,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Deprecated
   @Override
   public int getContainerSize() { // was getSizeInventory
-    IItemHandler invo = CapabilityFixer.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    IItemHandler invo = CapabilityUtil.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     if (invo != null) {
       return invo.getSlots();
     }
@@ -547,7 +541,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Deprecated
   @Override
   public ItemStack getItem(int index) { // was getStackInSlot
-    IItemHandler invo = CapabilityFixer.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+    IItemHandler invo = CapabilityUtil.item(level,worldPosition);// this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
     try {
       if (invo != null && index < invo.getSlots()) {
         return invo.getStackInSlot(index);
@@ -594,7 +588,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
 
   @Override
   public int getEnergy() {
-   var energy = CapabilityFixer.energy(level,worldPosition);
+   var energy = CapabilityUtil.energy(level,worldPosition);
 
 return energy==null?0:energy.getEnergyStored()  ;
 //    return this.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
@@ -602,7 +596,7 @@ return energy==null?0:energy.getEnergyStored()  ;
 
   @Override
   public void setEnergy(int value) {
-    var energy = CapabilityFixer.energy(level,worldPosition);
+    var energy = CapabilityUtil.energy(level,worldPosition);
 //    if(energy !=null){
 //      energy.receiveEnergy(value,true);
 //    }
@@ -614,7 +608,7 @@ return energy==null?0:energy.getEnergyStored()  ;
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
     if (level.isClientSide == false && level.getGameTime() % 20 == 0) { //if serverside then 
-      var energy = CapabilityFixer.energy(level,worldPosition);
+      var energy = CapabilityUtil.energy(level,worldPosition);
       if (energy != null) {
         PacketRegistry.sendToAllClients(this.getLevel(), new PacketSyncEnergy(this.getBlockPos(), energy.getEnergyStored()));
       }

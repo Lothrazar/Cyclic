@@ -24,7 +24,7 @@
 package com.lothrazar.cyclic.item;
 
 import java.util.List;
-import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.ChatUtil;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.facade.light;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.block.facade.ITileFacade;
+import com.lothrazar.library.core.ITileFacade;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

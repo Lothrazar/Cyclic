@@ -1,9 +1,8 @@
 package com.lothrazar.cyclic.item.crafting;
 
-import java.util.Optional;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -24,7 +23,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.capabilities.Capabilities;
 
 public class CraftingBagContainer extends ContainerBase implements IContainerCraftingAction {
 
@@ -62,7 +60,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
       }
     }
 //    bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ITEM_HANDLER).ifPresent(h -> {
-    var h = CapabilityFixer.item(bag);
+    var h = CapabilityUtil.item(bag);
     if (h != null) {
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
@@ -80,7 +78,7 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
     super.removed(playerIn);
     this.craftResult.setItem(0, ItemStack.EMPTY);
     if (playerIn.level().isClientSide == false) {
-      IItemHandler handler = CapabilityFixer.item(bag);//bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
+      IItemHandler handler = CapabilityUtil.item(bag);//bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
       if (handler != null)
         for (int i = 0; i < 9; i++) {
           ItemStack crafty = this.craftMatrix.getItem(i);

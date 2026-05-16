@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
@@ -115,8 +115,8 @@ public class BlockFluidTank extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     try {
-      IFluidHandler storage = CapabilityFixer.fluid(stack);//stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
-      var storageTile = CapabilityFixer.fluid(world,pos);//world.getBlockEntity(pos);
+      IFluidHandler storage = CapabilityUtil.fluid(stack);//stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+      var storageTile = CapabilityUtil.fluid(world,pos);//world.getBlockEntity(pos);
         if (storage != null && storageTile != null) {
             storageTile.fill(storage.getFluidInTank(0), IFluidHandler.FluidAction.EXECUTE);
 
@@ -135,7 +135,7 @@ public class BlockFluidTank extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stackTool);
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {
-      IFluidHandler fluidInStack = CapabilityFixer.fluid(tankStack);//tankStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+      IFluidHandler fluidInStack = CapabilityUtil.fluid(tankStack);//tankStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
       if (fluidInStack != null && ent instanceof TileTank) {
         // push fluid from dying tank to itemstack
         TileTank ttank = (TileTank) ent;

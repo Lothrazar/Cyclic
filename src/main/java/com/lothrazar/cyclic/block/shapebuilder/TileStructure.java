@@ -8,8 +8,8 @@ import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.BlockUtil;
 import com.lothrazar.library.util.ShapeUtil;
@@ -46,7 +46,7 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   }
 
   static final int MAX = 64000;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(3) {
 
     @Override

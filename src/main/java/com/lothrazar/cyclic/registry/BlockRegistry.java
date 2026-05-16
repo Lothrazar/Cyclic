@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.BlockSimple;
 import com.lothrazar.cyclic.block.BlockWaxedRedstone;
 import com.lothrazar.cyclic.block.ButtonBlockMat;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
@@ -121,6 +120,7 @@ import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessRec;
 import com.lothrazar.cyclic.block.wireless.redstone.BlockWirelessTransmit;
 import com.lothrazar.cyclic.block.workbench.BlockWorkbench;
 import com.lothrazar.cyclic.compat.CompatConstants;
+import com.lothrazar.library.block.BlockFlib;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -195,8 +195,8 @@ public class BlockRegistry {
           }).build());
 
   public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ModCyclic.MODID);
-  public static final DeferredBlock<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockSimple(Block.Properties.of().strength(1.0F, 7.0F)) );
-  public static final DeferredBlock<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> new BlockSimple(Block.Properties.of().strength(1.3F, 5.0F)) );
+  public static final DeferredBlock<Block> COMPRESSED_COBBLESTONE = BLOCKS.register("compressed_cobblestone", () -> new BlockFlib(Block.Properties.of().strength(1.0F, 7.0F), new BlockFlib.Settings().noTooltip()));
+  public static final DeferredBlock<Block> FLINT_BLOCK = BLOCKS.register("flint_block", () -> new BlockFlib(Block.Properties.of().strength(1.3F, 5.0F), new BlockFlib.Settings().noTooltip()) );
   public static final DeferredBlock<Block> SPIKES_IRON = BLOCKS.register("spikes_iron", () -> new SpikesBlock(Block.Properties.of(), EnumSpikeType.PLAIN));
   public static final DeferredBlock<Block> SPIKES_FIRE = BLOCKS.register("spikes_fire", () -> new SpikesBlock(Block.Properties.of(), EnumSpikeType.FIRE));
   public static final DeferredBlock<Block> SPIKES_CURSE = BLOCKS.register("spikes_curse", () -> new SpikesBlock(Block.Properties.of(), EnumSpikeType.CURSE));

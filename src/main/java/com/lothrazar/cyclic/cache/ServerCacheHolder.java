@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.cache;
 
-import com.lothrazar.library.core.LivingTileCache;
+import com.lothrazar.library.data.LivingTileCache;
 
 /**
  * Server side multi-cache

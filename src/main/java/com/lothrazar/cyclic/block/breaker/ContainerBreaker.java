@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.breaker;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -25,7 +25,7 @@ public class ContainerBreaker extends ContainerBase {
     this.tile = (TileBreaker) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    var h = CapabilityFixer.item(world,pos);
+    var h = CapabilityUtil.item(world,pos);
       this.endInv = h.getSlots();
       addSlot(new SlotItemHandler(h, 0, 81, 31));
     layoutPlayerInventorySlots(8, 84);

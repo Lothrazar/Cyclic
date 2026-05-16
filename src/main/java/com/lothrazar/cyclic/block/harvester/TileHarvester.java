@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.HarvestUtil;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -40,7 +39,7 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
   BlockPos targetPos = null;
   private int height = 1;
   private boolean directionIsUp = false;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX_ENERGY, MAX_ENERGY / 4);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX_ENERGY, MAX_ENERGY / 4);
 
   public TileHarvester(BlockPos pos, BlockState state) {
     super(TileRegistry.HARVESTER.get(), pos, state);

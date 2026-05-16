@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.sprinkler;
 import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.GrowthUtil;
@@ -88,7 +88,7 @@ public class TileSprinkler extends TileBlockEntityCyclic {
       return;
     }
 //    BlockEntity below = this.level.getBlockEntity(this.worldPosition.below());
-    var below = CapabilityFixer.fluid(this.level,this.worldPosition.below());
+    var below = CapabilityUtil.fluid(this.level,this.worldPosition.below());
     if (below != null) {
       //from below, fill this.pos 
       FluidHelpers.tryFillPositionFromTank(level, this.worldPosition, Direction.DOWN, below, CAPACITY);

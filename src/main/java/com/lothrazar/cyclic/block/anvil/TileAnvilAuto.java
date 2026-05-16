@@ -4,7 +4,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
@@ -34,7 +34,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
 
   static final int MAX = 64000;
   public static ModConfigSpec.IntValue POWERCONF;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
     /* https://github.com/Lothrazar/Cyclic/pull/1990/files#diff-4eb95a3d9ac136172375b3e7be5bc26c576f9fa6efcabee458c4c80797205b73R40 */

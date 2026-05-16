@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.tankcask;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -60,7 +60,7 @@ public class ItemBlockCask extends BlockItem {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    IFluidHandler storage = CapabilityFixer.fluid(stack); // stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+    IFluidHandler storage = CapabilityUtil.fluid(stack); // stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
     if (storage != null) {
       FluidStack fs = storage.getFluidInTank(0);
       if (fs != null && !fs.isEmpty()) {

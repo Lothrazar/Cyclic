@@ -3,11 +3,11 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilDirection;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.util.DirectionUtil;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -31,12 +31,12 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   public static ModConfigSpec.IntValue MAX;
   public static ModConfigSpec.IntValue SLOT_CHARGING_RATE;
   private Map<Direction, Boolean> poweredSides;
-  final CustomEnergyStorage energy;
+  final EnergyStorageWrapper energy;
   ItemStackHandler batterySlots = new ItemStackHandler(1) {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return CapabilityFixer.energy(stack) != null;
+      return CapabilityUtil.energy(stack) != null;
       //return stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
     }
 
@@ -52,7 +52,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY.get(), pos, state);
-    energy = new CustomEnergyStorage(MAX.get(), MAX.get());
+    energy = new EnergyStorageWrapper(MAX.get(), MAX.get());
     flowing = 0;
     poweredSides = new ConcurrentHashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
@@ -84,7 +84,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     ItemStack slotItem = this.batterySlots.getStackInSlot(0);
-    IEnergyStorage itemStackStorage =CapabilityFixer.energy(slotItem); // slotItem.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    IEnergyStorage itemStackStorage = CapabilityUtil.energy(slotItem); // slotItem.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (itemStackStorage != null) {
       int extracted = this.energy.extractEnergy(SLOT_CHARGING_RATE.get(), true);
       int accepted = itemStackStorage.receiveEnergy(extracted, true);
@@ -179,7 +179,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void tickCableFlow() {
-    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
+    for (final Direction exportToSide : DirectionUtil.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
         moveEnergy(exportToSide, MAX.get() / 4);
       }

@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -72,7 +69,7 @@ public class BlockExpPylon extends BlockCyclic {
     ItemStack held = player.getItemInHand(hand);
 
     if (!world.isClientSide) {
-      IFluidHandler handler = CapabilityFixer.fluid(world, pos, hit.getDirection());
+      IFluidHandler handler = CapabilityUtil.fluid(world, pos, hit.getDirection());
       if (handler != null) {
         int drainMeExp = 0, drainMeFluid = 0;
         if (held.getItem() == Items.GLASS_BOTTLE) {
@@ -111,10 +108,10 @@ public class BlockExpPylon extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     try {
-      IFluidHandler storage = CapabilityFixer.fluid(stack); //stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+      IFluidHandler storage = CapabilityUtil.fluid(stack); //stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
       BlockEntity container = world.getBlockEntity(pos);
       if (storage != null && container != null) {
-        IFluidHandler storageTile = CapabilityFixer.fluid(world,pos); // container.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
+        IFluidHandler storageTile = CapabilityUtil.fluid(world,pos); // container.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
         if (storageTile != null) {
           storageTile.fill(storage.getFluidInTank(0), IFluidHandler.FluidAction.EXECUTE);
         }
@@ -133,7 +130,7 @@ public class BlockExpPylon extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stackTool);
     ItemStack tankStack = new ItemStack(this);
     if (ent != null) {
-      IFluidHandler fluidInStack = CapabilityFixer.fluid(tankStack); //tankStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+      IFluidHandler fluidInStack = CapabilityUtil.fluid(tankStack); //tankStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
       if (fluidInStack != null && ent instanceof TileExpPylon) {
         // push fluid from dying tank to itemstack
         TileExpPylon ttank = (TileExpPylon) ent;

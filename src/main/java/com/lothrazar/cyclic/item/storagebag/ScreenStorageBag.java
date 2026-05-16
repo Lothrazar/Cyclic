@@ -11,6 +11,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
@@ -111,6 +112,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
       titles.add(defaultTitle);
       tooltips.add(defaultTooltip);
       nbtValues.add(defaultValue);
+      this.setTooltip(Tooltip.create(defaultTooltip));
     }
     //
     //    @Override
@@ -125,6 +127,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
         index = 0;
       }
       this.setMessage(titles.get(index));
+      this.setTooltip(Tooltip.create(tooltips.get(index)));
       PacketDistributor.sendToServer(new PacketStorageBagScreen(
           ScreenStorageBag.this.menu.bag, ScreenStorageBag.this.menu.slot, nbtValues.get(index).getId(), nbtKey, nbtValues.get(index)));
     }
@@ -137,6 +140,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
           this.nbt.get(nbtKey.getAsString()).equals(nbtValue)) {
         this.index = this.nbtValues.indexOf(nbtValue);
         this.setMessage(this.titles.get(index));
+        this.setTooltip(Tooltip.create(this.tooltips.get(index)));
       }
     }
   }

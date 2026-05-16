@@ -6,7 +6,6 @@ import java.util.UUID;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class CyclicFile {
 

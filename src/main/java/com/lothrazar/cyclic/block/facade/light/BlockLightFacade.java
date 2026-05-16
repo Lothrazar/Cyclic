@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.facade.light;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.block.facade.IBlockFacade;
+import com.lothrazar.library.core.IBlockFacade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;

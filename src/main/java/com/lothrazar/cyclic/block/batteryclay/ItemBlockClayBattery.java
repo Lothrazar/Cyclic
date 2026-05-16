@@ -2,10 +2,9 @@ package com.lothrazar.cyclic.block.batteryclay;
 
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -25,7 +24,7 @@ public class ItemBlockClayBattery extends BlockItem {
 
   @Override
   public boolean isBarVisible(ItemStack stack) {
-    IEnergyStorage storage = CapabilityFixer.energy(stack);
+    IEnergyStorage storage = CapabilityUtil.energy(stack);
     return storage != null && storage.getEnergyStored() > 0;
   }
 
@@ -33,7 +32,7 @@ public class ItemBlockClayBattery extends BlockItem {
   public int getBarWidth(ItemStack stack) {
     float current = 0;
     float max = 0;
-    IEnergyStorage storage =  CapabilityFixer.energy(stack);
+    IEnergyStorage storage =  CapabilityUtil.energy(stack);
     if (storage != null) {
       current = storage.getEnergyStored();
       max = storage.getMaxEnergyStored();
@@ -50,7 +49,7 @@ public class ItemBlockClayBattery extends BlockItem {
   public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     int current = 0;
     int energyttmax = 0;
-    IEnergyStorage storage = CapabilityFixer.energy(stack);
+    IEnergyStorage storage = CapabilityUtil.energy(stack);
     if (storage != null) {
       current = storage.getEnergyStored();
       energyttmax = storage.getMaxEnergyStored();

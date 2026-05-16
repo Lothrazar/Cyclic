@@ -2,16 +2,14 @@ package com.lothrazar.cyclic.block.battery;
 
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -26,7 +24,7 @@ public class ItemBlockBattery extends BlockItem {
 
   @Override
   public boolean isBarVisible(ItemStack stack) {
-    IEnergyStorage storage = CapabilityFixer.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    IEnergyStorage storage = CapabilityUtil.energy(stack);//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     return storage != null && storage.getEnergyStored() > 0;
   }
 
@@ -34,7 +32,7 @@ public class ItemBlockBattery extends BlockItem {
   public int getBarWidth(ItemStack stack) {
     float current = 0;
     float max = 0;
-    IEnergyStorage storage =CapabilityFixer.energy(stack);// stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    IEnergyStorage storage = CapabilityUtil.energy(stack);// stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (storage != null) {
       current = storage.getEnergyStored();
       max = storage.getMaxEnergyStored();
@@ -51,7 +49,7 @@ public class ItemBlockBattery extends BlockItem {
   public void appendHoverText(ItemStack stack, Item.TooltipContext  worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     int current = 0;
     int energyttmax = 0;
-    IEnergyStorage storage = CapabilityFixer.energy(stack) ;//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
+    IEnergyStorage storage = CapabilityUtil.energy(stack) ;//stack.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
     if (storage != null) {
       current = storage.getEnergyStored();
       energyttmax = storage.getMaxEnergyStored();

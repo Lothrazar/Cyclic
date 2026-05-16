@@ -6,10 +6,10 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilDirection;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.util.DirectionUtil;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +23,7 @@ import net.minecraft.core.HolderLookup;
 
 public class TileCableEnergy extends TileCableBase {
 
-  final CustomEnergyStorage energy;
+  final EnergyStorageWrapper energy;
   public static ModConfigSpec.IntValue BUFFERSIZE;
   public static ModConfigSpec.IntValue TRANSFER_RATE;
   //  
@@ -36,7 +36,7 @@ public class TileCableEnergy extends TileCableBase {
     for (Direction f : Direction.values()) {
       mapIncomingEnergy.put(f, 0);
     }
-    energy = new CustomEnergyStorage(BUFFERSIZE.get(), TRANSFER_RATE.get());
+    energy = new EnergyStorageWrapper(BUFFERSIZE.get(), TRANSFER_RATE.get());
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
@@ -70,7 +70,7 @@ public class TileCableEnergy extends TileCableBase {
 //    if (tile == null) {
 //      return;
 //    }
-    final IEnergyStorage itemHandlerFrom = CapabilityFixer.energy(level, posTarget, extractSide.getOpposite());
+    final IEnergyStorage itemHandlerFrom = CapabilityUtil.energy(level, posTarget, extractSide.getOpposite());
 //        .getCapability(ForgeCapabilities.ENERGY, extractSide.getOpposite())
 //        .orElse(null);
     if (itemHandlerFrom == null) {
@@ -97,7 +97,7 @@ public class TileCableEnergy extends TileCableBase {
   }
 
   private void tickCableFlow() {
-    for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
+    for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
       if (connection.isExtraction() || connection.isBlocked()) {
         continue;

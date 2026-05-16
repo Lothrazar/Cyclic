@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.block.cable;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.block.facade.ITileFacade;
+import com.lothrazar.library.core.ITileFacade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;

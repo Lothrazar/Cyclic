@@ -1,5 +1,5 @@
 package com.lothrazar.cyclic.item.animal;
-import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 

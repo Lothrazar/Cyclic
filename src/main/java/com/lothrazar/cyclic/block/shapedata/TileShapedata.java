@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.data.RelativeShape;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;

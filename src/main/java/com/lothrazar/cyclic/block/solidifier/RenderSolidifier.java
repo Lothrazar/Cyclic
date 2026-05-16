@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.solidifier;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -24,7 +23,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
   @Override
   public void render(TileSolidifier tankHere, float v, PoseStack matrixStack,
       MultiBufferSource buffer, int light, int overlayLight) {
-    IItemHandler itemHandler = CapabilityFixer.item(tankHere.getLevel(),tankHere.getBlockPos());// tankHere.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
+    IItemHandler itemHandler = CapabilityUtil.item(tankHere.getLevel(),tankHere.getBlockPos());// tankHere.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
     var level = tankHere.getLevel();
     if (itemHandler != null) {
       ItemStack stack = itemHandler.getStackInSlot(0);
@@ -51,7 +50,7 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
         matrixStack.popPose();
       }
     }
-    IFluidHandler handler = CapabilityFixer.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
+    IFluidHandler handler = CapabilityUtil.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

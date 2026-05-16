@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -109,7 +109,7 @@ public class ItemBaseCyclic extends Item {
   @Override
   public boolean isBarVisible(ItemStack stack) {
     if (hasEnergy) {
-      IEnergyStorage storage = CapabilityFixer.energy(stack);
+      IEnergyStorage storage = CapabilityUtil.energy(stack);
       return storage != null; // && storage.getEnergyStored() > 0;
     }
     return super.isBarVisible(stack);
@@ -122,7 +122,7 @@ public class ItemBaseCyclic extends Item {
     if (this.hasEnergy) {
       int current = 0;
       int energyttmax = 0;
-      IEnergyStorage storage = CapabilityFixer.energy(stack);
+      IEnergyStorage storage = CapabilityUtil.energy(stack);
       if (storage != null) {
         current = storage.getEnergyStored();
         energyttmax = storage.getMaxEnergyStored();
@@ -136,7 +136,7 @@ public class ItemBaseCyclic extends Item {
     if (hasEnergy) {
       float current = 0;
       float max = 0;
-      IEnergyStorage storage = CapabilityFixer.energy(stack);
+      IEnergyStorage storage = CapabilityUtil.energy(stack);
       if (storage != null) {
         current = storage.getEnergyStored();
         max = storage.getMaxEnergyStored();

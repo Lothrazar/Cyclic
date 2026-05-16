@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-@SuppressWarnings({ "deprecation", "removal" })
 public class CharmUtil {
 
   public static ItemStack getIfEnabled(Player player, Item match) {

@@ -8,7 +8,7 @@ import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilDirection;
+import com.lothrazar.library.util.DirectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -73,7 +73,7 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
       final IItemHandler sideHandler = flow.get(incomingSide);//.orElse(null);
-      for (final Direction outgoingSide : UtilDirection.getAllInDifferentOrder()) {
+      for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
         }

@@ -5,7 +5,7 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -89,7 +89,7 @@ public class BlockEnderCtrl extends BlockCyclic {
       return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      var h = CapabilityFixer.item(world,pos);
+      var h = CapabilityUtil.item(world,pos);
 //      world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
         insertIntoController(player, InteractionHand.MAIN_HAND, heldItem, h);
 //      });

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.anvilmagma;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -41,7 +41,7 @@ public class ContainerAnvilMagma extends ContainerBase {
   }
 
   public int getEnergy() {
-     return CapabilityFixer.energyStored(tile.getLevel(),tile.getBlockPos());
+     return CapabilityUtil.energyStored(tile.getLevel(),tile.getBlockPos());
   }
 
   @Override

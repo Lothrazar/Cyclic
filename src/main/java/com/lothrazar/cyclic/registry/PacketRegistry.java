@@ -44,7 +44,7 @@ public class PacketRegistry {
     // registrar.playToServer(PacketSyncFluid.TYPE, PacketSyncFluid.STREAM_CODEC, PacketSyncFluid::handle);
     // registrar.playToServer(PacketSyncEnergy.TYPE, PacketSyncEnergy.STREAM_CODEC, PacketSyncEnergy::handle);
 
-    // registrar.playToServer(PacketItemGui.ID, PacketItemGui.STREAM_CODEC, PacketItemGui::handle);
+    registrar.playToServer(PacketItemGui.ID, PacketItemGui.STREAM_CODEC, PacketItemGui::handle);
     registrar.playToServer(PacketScythe.TYPE, PacketScythe.STREAM_CODEC, PacketScythe::handle);
     registrar.playToServer(PacketTileData.TYPE, PacketTileData.STREAM_CODEC, PacketTileData::handle);
     registrar.playToServer(PacketChestSack.TYPE, PacketChestSack.STREAM_CODEC, PacketChestSack::handle);

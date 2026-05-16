@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.tank;
 
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -19,7 +19,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
   @Override
   public void render(TileTank tankHere, float v, PoseStack matrix,
       MultiBufferSource renderer, int light, int overlayLight) {
-    IFluidHandler handler = CapabilityFixer.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
+    IFluidHandler handler = CapabilityUtil.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
     }

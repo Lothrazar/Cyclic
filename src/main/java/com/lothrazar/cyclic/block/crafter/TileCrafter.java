@@ -30,7 +30,7 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -66,7 +66,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   static final int MAX = 64000;
   public static final int TIMER_FULL = 40;
   public static ModConfigSpec.IntValue POWERCONF;
-  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputHandler = new ItemStackHandler(IO_SIZE);
   ItemStackHandler outHandler = new ItemStackHandler(IO_SIZE);
 

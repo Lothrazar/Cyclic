@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.gui;
 
-import com.lothrazar.cyclic.api.IHasTooltip;
+import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.ChatUtil;

@@ -4,8 +4,8 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
+import com.lothrazar.library.data.BlockPosDim;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +34,7 @@ public class TileTeleport extends TileBlockEntityCyclic implements MenuProvider 
 
   static final int MAX = 64000;
   public static final int MAX_TRANSFER = MAX;
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX / 4);
   ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 
     @Override

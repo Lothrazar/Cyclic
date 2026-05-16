@@ -2,12 +2,11 @@ package com.lothrazar.cyclic.gui;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.api.IHasTooltip;
+import com.lothrazar.library.core.IHasTooltip;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
-//import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 
 /**
  * not bound to a tile entity unlike ButtonMachine. Textures bound to TextureEnum

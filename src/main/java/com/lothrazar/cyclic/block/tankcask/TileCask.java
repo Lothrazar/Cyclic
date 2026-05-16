@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.util.UtilDirection;
+import com.lothrazar.library.util.DirectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -145,7 +145,7 @@ public class TileCask extends TileBlockEntityCyclic {
   }
 
   private void tickCableFlow() {
-    for (final Direction exportToSide : UtilDirection.getAllInDifferentOrder()) {
+    for (final Direction exportToSide : DirectionUtil.getAllInDifferentOrder()) {
       if (this.poweredSides.get(exportToSide)) {
         this.moveFluids(exportToSide, worldPosition.relative(exportToSide), TRANSFER_FLUID_PER_TICK / 4, tank);
       }

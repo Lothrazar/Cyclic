@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.batteryclay;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,11 +21,11 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   public static ModConfigSpec.IntValue MAX;
-  CustomEnergyStorage energy;
+  EnergyStorageWrapper energy;
 
   public TileClayBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY_CLAY.get(), pos, state);
-    energy = new CustomEnergyStorage(MAX.get(), MAX.get() / 4);
+    energy = new EnergyStorageWrapper(MAX.get(), MAX.get() / 4);
   }
 
   @Override

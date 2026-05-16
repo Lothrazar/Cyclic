@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.shapebuilder;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,7 +20,7 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure> {
 
   @Override
   public void render(TileStructure te, float v, PoseStack matrixStack, MultiBufferSource ibuffer, int partialTicks, int destroyStage) {
-    IItemHandler inv = CapabilityFixer.item(te.getLevel(),te.getBlockPos());
+    IItemHandler inv = CapabilityUtil.item(te.getLevel(),te.getBlockPos());
     if (inv == null) {
       return;
     }

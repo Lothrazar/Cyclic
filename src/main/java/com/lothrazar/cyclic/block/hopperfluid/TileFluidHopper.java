@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.hopperfluid;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
@@ -72,7 +72,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
       return;
     }
     BlockPos target = this.worldPosition.relative(Direction.UP);
-    IFluidHandler tankAbove = CapabilityFixer.fluid(level,target,Direction.DOWN); //FluidHelpers.getTank(level, target, Direction.DOWN);
+    IFluidHandler tankAbove = CapabilityUtil.fluid(level,target,Direction.DOWN); //FluidHelpers.getTank(level, target, Direction.DOWN);
     boolean success = FluidHelpers.tryFillPositionFromTank(level, worldPosition, Direction.UP, tankAbove, FLOW);
     if (success) {
       this.updateComparatorOutputLevelAt(target);

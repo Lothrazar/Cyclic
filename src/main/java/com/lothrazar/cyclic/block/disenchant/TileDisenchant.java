@@ -1,22 +1,18 @@
 package com.lothrazar.cyclic.block.disenchant;
 
-import java.util.Map;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
-import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.FluidHelpersUtil;
-import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,16 +20,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -68,7 +60,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   ItemStackHandler outputSlots = new ItemStackHandler(2);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
 // //  private final LazyOptional<IItemHandler> inventoryCap = LazyOptional.of(() -> inventory);
-  CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX / 4);
+  EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX / 4);
   public static ModConfigSpec.IntValue POWERCONF;
   public static ModConfigSpec.IntValue FLUIDCOST;
 // //  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
@@ -177,7 +169,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public int getEnergy() {
-    return CapabilityFixer.energyStored(level,this.getBlockPos());
+    return CapabilityUtil.energyStored(level,this.getBlockPos());
   }
 
   @Override

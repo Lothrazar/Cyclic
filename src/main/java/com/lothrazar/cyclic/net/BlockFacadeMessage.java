@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.net;
 
-import com.lothrazar.cyclic.block.facade.IBlockFacade;
-import com.lothrazar.cyclic.block.facade.ITileFacade;
+import com.lothrazar.library.core.IBlockFacade;
+import com.lothrazar.library.core.ITileFacade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;

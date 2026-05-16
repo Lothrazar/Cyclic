@@ -2,12 +2,10 @@ package com.lothrazar.cyclic.block.cable.item;
 
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
-import com.lothrazar.cyclic.block.cable.ShapeCache;
+import com.lothrazar.library.data.ShapeCache;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
@@ -60,7 +58,7 @@ public class BlockCableItem extends CableBase {
           Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
         }
         for (Direction dir : Direction.values()) {
-          IItemHandler items = CapabilityFixer.item(worldIn,pos);// tileentity.getCapability(ForgeCapabilities.ITEM_HANDLER, dir).orElse(null);
+          IItemHandler items = CapabilityUtil.item(worldIn,pos);// tileentity.getCapability(ForgeCapabilities.ITEM_HANDLER, dir).orElse(null);
           if (items != null) {
             for (int i = 0; i < items.getSlots(); ++i) {
               Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
@@ -93,7 +91,7 @@ public class BlockCableItem extends CableBase {
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
       BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
-      IItemHandler cap = CapabilityFixer.item(worldIn,pos.relative(d),d.getOpposite()); //= facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.ITEM_HANDLER, d.getOpposite()).orElse(null);
+      IItemHandler cap = CapabilityUtil.item(worldIn,pos.relative(d),d.getOpposite()); //= facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.ITEM_HANDLER, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
         worldIn.setBlockAndUpdate(pos, stateIn);
@@ -110,7 +108,7 @@ public class BlockCableItem extends CableBase {
       //  updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (world instanceof Level && CapabilityFixer.isItem(facing, (Level) world, facingPos)) {
+    if (world instanceof Level && CapabilityUtil.isItem(facing, (Level) world, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here

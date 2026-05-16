@@ -7,8 +7,8 @@ import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
-import com.lothrazar.cyclic.capabilities.CustomEnergyStorage;
-import com.lothrazar.library.core.BlockPosDim;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
+import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
@@ -38,7 +37,7 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
 
   static final int MAX = 64000;
   public static ModConfigSpec.IntValue POWERCONF;
-  private CustomEnergyStorage energy = new CustomEnergyStorage(MAX, MAX);
+  private EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
     ItemStackHandler inventory = new ItemStackHandler(1);
   ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 

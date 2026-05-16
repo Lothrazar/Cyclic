@@ -1,9 +1,9 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.api.IEntityInteractable;
+import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableBase;
-import com.lothrazar.cyclic.block.facade.IBlockFacade;
+import com.lothrazar.library.core.IBlockFacade;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
@@ -16,7 +16,6 @@ import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.elemental.AntimatterEvaporatorWandItem;
-import com.lothrazar.cyclic.item.enderbook.EnderBookItem;
 import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;

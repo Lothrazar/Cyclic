@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -53,7 +53,7 @@ public class PacketTileInventoryToClient implements CustomPacketPayload {
         return;
       }
       BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(message.blockPos);
-      var item = CapabilityFixer.item( Minecraft.getInstance().level,message.blockPos);
+      var item = CapabilityUtil.item( Minecraft.getInstance().level,message.blockPos);
       if (item != null) {
 //        tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
           if (message.type == SyncPacketType.SET) {

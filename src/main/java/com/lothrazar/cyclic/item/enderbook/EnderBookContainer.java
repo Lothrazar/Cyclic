@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.item.enderbook;
 
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclic.fixers.CapabilityFixer;
+import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -32,7 +32,7 @@ public class EnderBookContainer extends ContainerBase {
       this.bag = player.getOffhandItem();
       this.slot = 40;
     }
-    IItemHandler h = CapabilityFixer.item(bag);
+    IItemHandler h = CapabilityUtil.item(bag);
     if (h != null) {
       this.slotcount = h.getSlots();
       for (int j = 0; j < h.getSlots(); j++) {
