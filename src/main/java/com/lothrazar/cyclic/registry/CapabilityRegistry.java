@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.item.crafting.CraftingBagCapability;
 import com.lothrazar.cyclic.item.storagebag.StorageBagCapability;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -37,6 +38,11 @@ public class CapabilityRegistry {
             Capabilities.ItemHandler.ITEM,
             (stack, ctx) -> new StorageBagCapability(stack),
             ItemRegistry.STORAGE_BAG.get()
+        );
+        event.registerItem(
+            Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new CraftingBagCapability(stack),
+            ItemRegistry.CRAFTING_BAG.get()
         );
     }
 }

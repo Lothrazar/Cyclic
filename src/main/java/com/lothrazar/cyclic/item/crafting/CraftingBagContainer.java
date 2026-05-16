@@ -62,13 +62,15 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
       }
     }
 //    bag.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ITEM_HANDLER).ifPresent(h -> {
-    var h= CapabilityFixer.item(bag);
+    var h = CapabilityFixer.item(bag);
+    if (h != null) {
       for (int j = 0; j < h.getSlots(); j++) {
         ItemStack inBag = h.getStackInSlot(j);
         if (!inBag.isEmpty()) {
           this.craftMatrix.setItem(j, h.getStackInSlot(j));
         }
       }
+    }
 //    });
     layoutPlayerInventorySlots(8, 84);
   }
