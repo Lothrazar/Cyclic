@@ -133,11 +133,6 @@ public class ItemLunchbox extends ItemBaseCyclic {
     return super.use(worldIn, player, handIn);
   }
 
-  @Override
-  public void registerClient() {
-    // // // MenuScreens.register
-  }
-
 
 
   public static void setHoldingEdible(ItemStack box, boolean edible) {

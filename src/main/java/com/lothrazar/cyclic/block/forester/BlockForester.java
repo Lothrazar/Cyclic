@@ -36,11 +36,6 @@ public class BlockForester extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.FORESTER.get(), ScreenForester::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileForester(pos, state);
   }

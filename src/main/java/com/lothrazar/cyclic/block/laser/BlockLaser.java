@@ -21,11 +21,6 @@ public class BlockLaser extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.LASER.get(), ScreenLaser::new);
-  }
-
-  @Override
   public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }

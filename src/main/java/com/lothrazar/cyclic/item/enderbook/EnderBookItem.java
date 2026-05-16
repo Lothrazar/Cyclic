@@ -143,10 +143,6 @@ public class EnderBookItem extends ItemBaseCyclic {
     return null;
   }
 
-  @Override
-  public void registerClient() {
-  }
-
   public static void scroll(ServerPlayer player, int slot, boolean isDown) {
     ItemStack book = player.getInventory().getItem(slot);
     if (!(book.getItem() instanceof EnderBookItem)) {

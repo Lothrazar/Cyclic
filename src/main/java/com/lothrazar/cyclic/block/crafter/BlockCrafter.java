@@ -75,9 +75,4 @@ public class BlockCrafter extends BlockCyclic {
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.CRAFTER.get(), world.isClientSide ? TileCrafter::clientTick : TileCrafter::serverTick);
   }
-
-  @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.CRAFTER.get(), ScreenCrafter::new);
-  }
 }

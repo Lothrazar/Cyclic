@@ -34,9 +34,4 @@ public class BlockUncraft extends BlockCyclic {
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(LIT);
   }
-
-  @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.UNCRAFTER.get(), ScreenUncraft::new);
-  }
 }

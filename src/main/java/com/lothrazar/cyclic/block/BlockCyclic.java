@@ -35,7 +35,6 @@ public class BlockCyclic extends EntityBlockFlib {
 
   public BlockCyclic(Properties properties) {
     super(properties);
-    BlockRegistry.BLOCKSCLIENTREGISTRY.add(this);
   }
 
   public static boolean never(BlockState bs, BlockGetter bg, BlockPos pos) {
@@ -176,10 +175,6 @@ public class BlockCyclic extends EntityBlockFlib {
     }
   }
 
-  /**
-   * Override per block for render-ers/screens/etc
-   */
-  public void registerClient() {}
 
 
 //  private static boolean hasCapabilityDir(Direction facing, LevelAccessor world, BlockPos facingPos, BaseCapability cap) {

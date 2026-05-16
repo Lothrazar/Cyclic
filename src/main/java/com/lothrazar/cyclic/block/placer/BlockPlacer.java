@@ -36,11 +36,6 @@ public class BlockPlacer extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.PLACER.get(), ScreenPlacer::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TilePlacer(pos, state);
   }

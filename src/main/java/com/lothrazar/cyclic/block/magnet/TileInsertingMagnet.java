@@ -73,7 +73,7 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic implements MenuPr
 
   @Override
   public Component getDisplayName() {
-    return BlockRegistry.MAGNET.get().getName();
+    return BlockRegistry.MAGNET_BLOCK.get().getName();
   }
 
   @Override

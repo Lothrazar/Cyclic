@@ -45,11 +45,6 @@ public class BlockWirelessEnergy extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.WIRELESS_ENERGY.get(), ScreenWirelessEnergy::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileWirelessEnergy(pos, state);
   }

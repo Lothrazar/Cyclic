@@ -25,11 +25,6 @@ public class BlockUser extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.USER.get(), ScreenUser::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileUser(pos, state);
   }

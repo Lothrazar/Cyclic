@@ -39,11 +39,6 @@ public class BlockGeneratorFuel extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.GENERATOR_FUEL.get(), ScreenGeneratorFuel::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileGeneratorFuel(pos, state);
   }

@@ -44,11 +44,6 @@ public class BlockPeatFarm extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.PEAT_FARM.get(), ScreenPeatFarm::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TilePeatFarm(pos, state);
   }

@@ -46,11 +46,6 @@ public class BlockWirelessItem extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.WIRELESS_ITEM.get(), ScreenWirelessItem::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileWirelessItem(pos, state);
   }

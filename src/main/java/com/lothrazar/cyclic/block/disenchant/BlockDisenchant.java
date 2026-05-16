@@ -72,11 +72,6 @@ public class BlockDisenchant extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.DISENCHANTER.get(), ScreenDisenchant::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileDisenchant(pos, state);
   }

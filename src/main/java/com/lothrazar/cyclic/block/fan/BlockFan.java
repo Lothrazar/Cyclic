@@ -44,11 +44,6 @@ public class BlockFan extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.FAN.get(), ScreenFan::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileFan(pos, state);
   }

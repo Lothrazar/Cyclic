@@ -25,11 +25,6 @@ public class BlockFluidCollect extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.COLLECTOR_FLUID.get(), ScreenFluidCollect::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileFluidCollect(pos, state);
   }

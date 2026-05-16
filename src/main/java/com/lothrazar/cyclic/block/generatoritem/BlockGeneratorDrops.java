@@ -38,11 +38,6 @@ public class BlockGeneratorDrops extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.GENERATOR_DROPS.get(), ScreenGeneratorDrops::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileGeneratorDrops(pos, state);
   }

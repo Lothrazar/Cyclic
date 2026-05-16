@@ -49,11 +49,6 @@ public class BlockAnvilAuto extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.ANVIL.get(), ScreenAnvil::new);
-  }
-
-  @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
     return direction.getAxis() == Direction.Axis.X ? X_AXIS_AABB : Z_AXIS_AABB;

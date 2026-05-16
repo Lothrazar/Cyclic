@@ -37,11 +37,6 @@ public class BlockBattery extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.BATTERY.get(), ScreenBattery::new);
-  }
-
-  @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(LIT).add(PERCENT);
   }

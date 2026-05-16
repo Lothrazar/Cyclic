@@ -25,11 +25,6 @@ public class BlockPlacerFluid extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.PLACER_FLUID.get(), ScreenPlacerFluid::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TilePlacerFluid(pos, state);
   }

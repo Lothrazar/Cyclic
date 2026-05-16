@@ -71,9 +71,4 @@ public class BlockMelter extends BlockCyclic {
   public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidState) {
     return true;
   }
-
-  @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.MELTER.get(), ScreenMelter::new);
-  }
 }

@@ -26,11 +26,6 @@ public class CraftingBagItem extends ItemBaseCyclic {
     return super.use(worldIn, playerIn, handIn);
   }
 
-  @Override
-  public void registerClient() {
-    // // MenuScreens.register(MenuTypeRegistry.CRAFTING_BAG.get(), CraftingBagScreen::new);
-  }
-
 //  @Override
 //  public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
 //    return null;

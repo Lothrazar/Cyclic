@@ -38,11 +38,6 @@ public class BlockPotion extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.BEACON.get(), ScreenPotion::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TilePotionBeacon(pos, state);
   }

@@ -44,11 +44,6 @@ public class BlockExpPylon extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.EXPERIENCE_PYLON.get(), ScreenExpPylon::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileExpPylon(pos, state);
   }

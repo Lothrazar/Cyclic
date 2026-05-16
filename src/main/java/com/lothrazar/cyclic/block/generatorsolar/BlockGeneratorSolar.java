@@ -32,11 +32,6 @@ public class BlockGeneratorSolar extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.GENERATOR_SOLAR.get(), ScreenGeneratorSolar::new);
-  }
-
-  @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return AABB;
   }

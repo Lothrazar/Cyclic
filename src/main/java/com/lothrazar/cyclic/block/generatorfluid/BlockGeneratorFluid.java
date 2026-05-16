@@ -40,11 +40,6 @@ public class BlockGeneratorFluid extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.GENERATOR_FLUID.get(), ScreenGeneratorFluid::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileGeneratorFluid(pos, state);
   }

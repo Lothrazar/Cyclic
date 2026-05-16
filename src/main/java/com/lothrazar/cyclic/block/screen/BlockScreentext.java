@@ -30,11 +30,6 @@ public class BlockScreentext extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.SCREEN.get(), ScreenScreentext::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileScreentext(pos, state);
   }

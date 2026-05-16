@@ -32,6 +32,6 @@ public class ContainerMagnet extends ContainerBase {
 
   @Override
   public boolean stillValid(Player playerIn) {
-    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.MAGNET.get());
+    return stillValid(ContainerLevelAccess.create(tile.getLevel(), tile.getBlockPos()), playerEntity, BlockRegistry.MAGNET_BLOCK.get());
   }
 }

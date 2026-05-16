@@ -25,11 +25,6 @@ public class BlockWorkbench extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.WORKBENCH.get(), ScreenWorkbench::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileWorkbench(pos, state);
   }

@@ -38,11 +38,6 @@ public class BlockPackager extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.PACKAGER.get(), ScreenPackager::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TilePackager(pos, state);
   }

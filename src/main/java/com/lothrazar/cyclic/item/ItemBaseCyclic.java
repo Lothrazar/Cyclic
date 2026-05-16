@@ -34,7 +34,6 @@ public class ItemBaseCyclic extends Item {
 
   public ItemBaseCyclic(Properties properties) {
     super(properties);
-    ItemRegistry.ITEMSFIXME.add(this);
   }
 
   public void setUsesEnergy() {
@@ -145,9 +144,6 @@ public class ItemBaseCyclic extends Item {
     }
     return super.getBarWidth(stack);
   }
-
-  @OnlyIn(Dist.CLIENT)
-  public void registerClient() {}
 
 //  @Override
 //  // public Object initCapabilities(ItemStack stack, CompoundTag nbt) {

@@ -25,11 +25,6 @@ public class BlockBreaker extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.BREAKER.get(), ScreenBreaker::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileBreaker(pos, state);
   }

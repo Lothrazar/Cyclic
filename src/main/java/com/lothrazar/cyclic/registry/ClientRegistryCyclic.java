@@ -168,17 +168,6 @@ public class ClientRegistryCyclic {
     }
   };
 
-
-  public static void setupClient(final FMLClientSetupEvent event) {
-    for (BlockCyclic b : BlockRegistry.BLOCKSCLIENTREGISTRY) {
-      b.registerClient();
-    }
-    for (ItemBaseCyclic i : ItemRegistry.ITEMSFIXME) {
-      i.registerClient();
-    }
-    initShields();
-  }
-
   @SubscribeEvent
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
     event.registerBlockEntityRenderer(TileRegistry.PEAT_FARM.get(), RenderPeatFarm::new);
@@ -214,6 +203,9 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.FLUID_PIPE.get(), RenderCableFacade::new);
   }
 
+  public static void setupClient(final FMLClientSetupEvent event) {
+    initShields();
+  }
   @SuppressWarnings("deprecation")
   private static void initShields() {
     //this matches up with ShieldCyclicItem where it calls startUsingItem() inside of use()

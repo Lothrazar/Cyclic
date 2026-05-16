@@ -52,11 +52,6 @@ public class BlockCrate extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.CRATE.get(), ScreenCrate::new);
-  }
-
-  @Override
   public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
     // because harvestBlock manually forces a drop, we must do this to dodge that
     return new ArrayList<>();

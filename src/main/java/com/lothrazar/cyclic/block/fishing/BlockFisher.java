@@ -37,11 +37,6 @@ public class BlockFisher extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.FISHER.get(), ScreenFisher::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileFisher(pos, state);
   }

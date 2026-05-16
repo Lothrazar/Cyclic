@@ -26,11 +26,6 @@ public class BlockDropper extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.DROPPER.get(), ScreenDropper::new);
-  }
-
-  @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.DROPPER.get(), world.isClientSide ? TileDropper::clientTick : TileDropper::serverTick);
   }

@@ -27,11 +27,6 @@ public class BlockWirelessTransmit extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.WIRELESS_TRANSMITTER.get(), ScreenTransmit::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileWirelessTransmit(pos, state);
   }

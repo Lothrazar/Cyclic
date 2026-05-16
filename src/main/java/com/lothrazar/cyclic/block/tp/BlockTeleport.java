@@ -72,11 +72,6 @@ public class BlockTeleport extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.TELEPORT.get(), ScreenTeleport::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileTeleport(pos, state);
   }

@@ -77,9 +77,4 @@ public class BlockCrateMini extends BlockCyclic implements SimpleWaterloggedBloc
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileCrateMini(pos, state);
   }
-
-  @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.CRATE_MINI.get(), ScreenCrateMini::new);
-  }
 }

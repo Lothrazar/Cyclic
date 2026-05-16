@@ -26,12 +26,6 @@ public class BlockCrusher extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    //    ItemBlockRenderTypes.setRenderLayer(this, RenderType.cutoutMipped());
-    // MenuScreens.register(MenuTypeRegistry.CRUSHER.get(), ScreenCrusher::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileCrusher(pos, state);
   }

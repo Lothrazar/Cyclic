@@ -32,11 +32,6 @@ public class BlockCableItem extends CableBase {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.ITEM_PIPE.get(), ScreenCableItem::new);
-  }
-
-  @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     boolean facadesEnabled = false;
     try { facadesEnabled = ConfigRegistry.CABLE_FACADES.get(); } catch (Exception e) {}

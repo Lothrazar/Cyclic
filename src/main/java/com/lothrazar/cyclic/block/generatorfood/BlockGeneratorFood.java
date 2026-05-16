@@ -39,11 +39,6 @@ public class BlockGeneratorFood extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.GENERATOR_FOOD.get(), ScreenGeneratorFood::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileGeneratorFood(pos, state);
   }

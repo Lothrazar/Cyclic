@@ -38,11 +38,6 @@ public class BlockAnvilMagma extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.ANVIL_MAGMA.get(), ScreenAnvilMagma::new);
-  }
-
-  @Override
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
     return direction.getAxis() == Direction.Axis.X ? BlockAnvilAuto.X_AXIS_AABB : BlockAnvilAuto.Z_AXIS_AABB;

@@ -30,11 +30,6 @@ public class ClayBattery extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.BATTERY_CLAY.get(), ScreenClayBattery::new);
-  }
-
-  @Override
   public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
     //because harvestBlock manually forces a drop  
     return new ArrayList<>();

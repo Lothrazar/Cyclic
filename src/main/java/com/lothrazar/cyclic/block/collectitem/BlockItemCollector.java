@@ -57,9 +57,4 @@ public class BlockItemCollector extends BlockCyclic {
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
     return createTickerHelper(type, TileRegistry.COLLECTOR.get(), world.isClientSide ? TileItemCollector::clientTick : TileItemCollector::serverTick);
   }
-
-  @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.COLLECTOR.get(), ScreenItemCollector::new);
-  }
 }

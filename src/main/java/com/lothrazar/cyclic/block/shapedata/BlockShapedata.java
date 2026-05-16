@@ -19,11 +19,6 @@ public class BlockShapedata extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.COMPUTER_SHAPE.get(), ScreenShapedata::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileShapedata(pos, state);
   }

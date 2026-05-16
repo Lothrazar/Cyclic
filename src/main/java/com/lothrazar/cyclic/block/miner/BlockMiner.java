@@ -36,11 +36,6 @@ public class BlockMiner extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.MINER.get(), ScreenMiner::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileMiner(pos, state);
   }

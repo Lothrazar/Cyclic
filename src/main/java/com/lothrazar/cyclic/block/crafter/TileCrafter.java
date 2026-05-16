@@ -240,17 +240,6 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
     return gridStacks.isEmpty();
   }
 
-  //TODO:? re-write this whole thing using ASSEMBLE?
-  //big change
-  //  for (int i = 0; i < 9; i++) {
-  //    Ingredient ingredient = lastValidRecipe.getIngredients().get(i);
-  //    String s = ingredient.isEmpty() ? "empty" : "" + ingredient.getItems()[0].getDisplayName().getString();
-  //   println(i + " => " + s + "   matrix " + craftMatrix.getItem(i));
-  //    //for this ingredient. the mapping and grid lineup is correct
-  //    //find ingredients for each and use recipe.assemble(craftMatrixCopy);
-  //    //to solve the durability issue?
-  //    // https://github.com/Lothrazar/Cyclic/issues/1947
-  //  }
   private boolean doCraft(RecipeHolder<CraftingRecipe> lastValidRecipe) {
     HashMap<Integer, List<ItemStack>> putbackStacks = new HashMap<>();
     for (Ingredient ingredient : lastValidRecipe.value().getIngredients()) {

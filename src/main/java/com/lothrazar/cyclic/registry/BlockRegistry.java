@@ -144,8 +144,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class BlockRegistry {
 
-
-  public static List<BlockCyclic> BLOCKSCLIENTREGISTRY = new ArrayList<>(); // TODO: 1.19 ? refactor this 
   public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModCyclic.MODID);
 
 

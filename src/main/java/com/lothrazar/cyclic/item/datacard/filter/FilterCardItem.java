@@ -72,11 +72,6 @@ public class FilterCardItem extends ItemBaseCyclic {
 
 
 
-  @Override
-  public void registerClient() {
-    // // MenuScreens.register(MenuTypeRegistry.FILTER_DATA.get(), ScreenFilterCard::new);
-  }
-
   public static void toggleFilterType(ItemStack filter) {
     boolean prev = getIsIgnoreList(filter);
     CompoundTag tag = filter.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(); tag.putBoolean(NBTFILTER, !prev); filter.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));

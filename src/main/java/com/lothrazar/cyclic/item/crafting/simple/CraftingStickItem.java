@@ -24,9 +24,4 @@ public class CraftingStickItem extends ItemBaseCyclic {
     }
     return super.use(worldIn, playerIn, handIn);
   }
-
-  @Override
-  public void registerClient() {
-    // // MenuScreens.register(MenuTypeRegistry.CRAFTING_STICK.get(), CraftingStickScreen::new);
-  }
 }

@@ -40,11 +40,6 @@ public class BlockDetector extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.DETECTOR_ENTITY.get(), ScreenDetector::new);
-  }
-
-  @Override
   @Deprecated
   public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
     TileDetector te = (TileDetector) blockAccess.getBlockEntity(pos);

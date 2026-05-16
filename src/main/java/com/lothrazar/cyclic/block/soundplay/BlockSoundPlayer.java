@@ -39,11 +39,6 @@ public class BlockSoundPlayer extends BlockCyclic {
   }
 
   @Override
-  public void registerClient() {
-    // MenuScreens.register(MenuTypeRegistry.SOUND_PLAYER.get(), ScreenSoundPlayer::new);
-  }
-
-  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileSoundPlayer(pos, state);
   }
