@@ -49,9 +49,6 @@ public class CyclicPluginJEI implements IModPlugin {
   private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "jei");
 
   @Override
-  public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
-
-  @Override
   public ResourceLocation getPluginUid() {
     return ID;
   }

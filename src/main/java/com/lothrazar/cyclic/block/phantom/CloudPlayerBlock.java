@@ -47,11 +47,12 @@ public class CloudPlayerBlock extends BlockCyclic {
   }
 
   @Override
-//  @OnlyIn(Dist.CLIENT)
   public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
     return adjacentBlockState.getBlock() == this;
   }
 
   @Override
-  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {}
+  public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+ 
+  }
 }
