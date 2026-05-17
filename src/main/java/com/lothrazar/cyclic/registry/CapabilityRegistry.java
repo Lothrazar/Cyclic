@@ -1,6 +1,12 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
+import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
+import com.lothrazar.cyclic.fluid.FluidWaxHolder;
+import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.item.crafting.CraftingBagCapability;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardCapability;
 import com.lothrazar.cyclic.item.enderbook.EnderBookCapability;
@@ -10,6 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import com.lothrazar.cyclic.ModCyclic;
 
 @EventBusSubscriber(modid = ModCyclic.MODID)
@@ -61,6 +68,15 @@ public class CapabilityRegistry {
             Capabilities.ItemHandler.ITEM,
             (stack, ctx) -> new EnderBookCapability(stack),
             ItemRegistry.ENDER_BOOK.get()
+        );
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+            (stack, ctx) -> new FluidBucketWrapper(stack),
+            FluidBiomassHolder.BUCKET.get(),
+            FluidHoneyHolder.BUCKET.get(),
+            FluidMagmaHolder.BUCKET.get(),
+            FluidSlimeHolder.BUCKET.get(),
+            FluidWaxHolder.BUCKET.get(),
+            FluidXpJuiceHolder.BUCKET.get()
         );
     }
 }
