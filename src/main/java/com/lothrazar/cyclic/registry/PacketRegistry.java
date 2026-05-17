@@ -16,6 +16,7 @@ import com.lothrazar.cyclic.net.PacketHarvesting;
 import com.lothrazar.cyclic.net.PacketKeyBind;
 import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.net.PacketRecordSound;
+import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
 import com.lothrazar.cyclic.net.PacketSyncManaToClient;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
@@ -62,6 +63,7 @@ public class PacketRegistry {
     registrar.playToClient(PacketEntityLaser.TYPE, PacketEntityLaser.STREAM_CODEC, PacketEntityLaser::handle);
     registrar.playToClient(PacketPlayerSyncToClient.TYPE, PacketPlayerSyncToClient.STREAM_CODEC, PacketPlayerSyncToClient::handle);
     registrar.playToClient(PacketSyncManaToClient.TYPE, PacketSyncManaToClient.STREAM_CODEC, PacketSyncManaToClient::handle);
+    registrar.playToClient(PacketSyncHorseCarrots.TYPE, PacketSyncHorseCarrots.STREAM_CODEC, PacketSyncHorseCarrots::handle);
     registrar.playToServer(BlockFacadeMessage.TYPE, BlockFacadeMessage.STREAM_CODEC, BlockFacadeMessage::handle);
   }
 

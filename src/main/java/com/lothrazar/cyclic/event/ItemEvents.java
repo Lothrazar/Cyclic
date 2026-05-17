@@ -9,7 +9,10 @@ import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.enchant.MultiBowEnchant;
 import com.lothrazar.cyclic.item.SleepingMatItem;
+import com.lothrazar.cyclic.item.animal.ItemHorseCopperRadar;
 import com.lothrazar.cyclic.item.animal.ItemHorseEnder;
+import com.lothrazar.cyclic.item.animal.ItemHorseNetheriteFire;
+import com.lothrazar.cyclic.item.animal.ItemHorsePrismarineWater;
 import com.lothrazar.cyclic.item.bauble.CharmBase;
 import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
@@ -21,6 +24,7 @@ import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.food.LoftyStatureApple;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.BlockFacadeMessage;
+import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.library.util.EnchantUtil;
@@ -47,6 +51,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -69,6 +77,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.*;
@@ -246,6 +255,21 @@ public class ItemEvents {
   @SubscribeEvent
   public void onEntityDamage(LivingDamageEvent.Pre event) {
     DamageSource src = event.getSource();
+    if (event.getEntity() instanceof AbstractHorse horse) {
+      if (horse.getPersistentData().getBoolean(ItemHorseNetheriteFire.NBT_KEY)
+          && (src.is(DamageTypes.LAVA) || src.is(DamageTypes.IN_FIRE) || src.is(DamageTypes.ON_FIRE) || src.is(DamageTypes.HOT_FLOOR)
+              || src.is(DamageTypes.FIREBALL) || src.is(DamageTypes.UNATTRIBUTED_FIREBALL)
+              || src.is(DamageTypes.LIGHTNING_BOLT))) {
+        event.setNewDamage(0);
+        horse.clearFire();
+        return;
+      }
+      if (horse.getPersistentData().getBoolean(ItemHorsePrismarineWater.NBT_KEY)
+          && src.is(DamageTypes.DROWN)) {
+        event.setNewDamage(0);
+        return;
+      }
+    }
     if (event.getEntity() instanceof Player player) {
       if (src.is(DamageTypes.PLAYER_EXPLOSION)) {
         //explosion thingy
@@ -336,6 +360,7 @@ public class ItemEvents {
   public void onEntityUpdate(EntityTickEvent.Pre event) { // was LivingTickEvent
 
     tryItemHorseEnder(event);
+    tryItemHorseTickEffects(event);
     if (event.getEntity() instanceof Player player) {
       CharmBase.onEntityUpdate(player);
       //step
@@ -350,6 +375,46 @@ public class ItemEvents {
     ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSTOPPER.get());
     if (!charmStack.isEmpty()) {
       event.setCanceled(true);
+    }
+  }
+
+  private void tryItemHorseTickEffects(EntityTickEvent.Pre event) {
+    if (!(event.getEntity() instanceof AbstractHorse horse)) {
+      return;
+    }
+    boolean prismarine = horse.getPersistentData().getBoolean(ItemHorsePrismarineWater.NBT_KEY);
+    if (prismarine && horse.isInWater()) {
+      if (horse.getAirSupply() < horse.getMaxAirSupply()) {
+        horse.setAirSupply(horse.getMaxAirSupply());
+      }
+      if (!horse.hasEffect(MobEffects.DOLPHINS_GRACE)) {
+        horse.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 40, 0, false, false, false));
+      }
+      for (Entity passenger : horse.getPassengers()) {
+        if (passenger instanceof LivingEntity rider && !rider.hasEffect(MobEffects.DOLPHINS_GRACE)) {
+          rider.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 40, 0, false, false, false));
+        }
+      }
+    }
+    // Prismarine: rain runner — speed boost while it's raining
+    if (prismarine && horse.level().isRaining() && horse.level().canSeeSky(horse.blockPosition())) {
+      if (!horse.hasEffect(MobEffects.MOVEMENT_SPEED)) {
+        horse.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 0, false, false, false));
+      }
+    }
+    if (horse.isOnFire()
+        && horse.getPersistentData().getBoolean(ItemHorseNetheriteFire.NBT_KEY)) {
+      horse.clearFire();
+    }
+    // Copper: mob radar — glow nearby hostile mobs while horse is ridden
+    if (horse.getPersistentData().getBoolean(ItemHorseCopperRadar.NBT_KEY)
+        && horse.isVehicle()
+        && !horse.level().isClientSide()
+        && horse.tickCount % 20 == 0) {
+      AABB box = horse.getBoundingBox().inflate(16);
+      for (Monster mob : horse.level().getEntitiesOfClass(Monster.class, box)) {
+        mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, false, false, true));
+      }
     }
   }
 
@@ -465,6 +530,27 @@ public class ItemEvents {
       event.getLevel().setBlockAndUpdate(dest, item.getBlock().defaultBlockState());
       ItemStack stac = event.getEntity().getItemInHand(event.getHand());
       ItemStackUtil.shrink(event.getEntity(), stac);
+      event.setCanceled(true);
+    }
+  }
+
+  @SubscribeEvent
+  public void onStartTrackingHorse(PlayerEvent.StartTracking event) {
+    if (event.getTarget() instanceof AbstractHorse horse
+        && event.getEntity() instanceof ServerPlayer sp) {
+      PacketSyncHorseCarrots.sendTo(sp, horse);
+    }
+  }
+
+  @SubscribeEvent
+  public void onEntityMount(EntityMountEvent event) {
+    if (!event.isDismounting()) {
+      return;
+    }
+    if (event.getEntityBeingMounted() instanceof AbstractHorse horse
+        && event.getEntityMounting() instanceof Player
+        && horse.getPersistentData().getBoolean(ItemHorsePrismarineWater.NBT_KEY)
+        && horse.isInWater()) {
       event.setCanceled(true);
     }
   }

@@ -24,14 +24,14 @@
 package com.lothrazar.cyclic.item.animal;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.util.HorseFeedUtil;
+import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -72,10 +72,8 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
       }
       //do the thing 
       increment(ahorse, 1);
-      event.setCanceled(true);
-      event.setCancellationResult(InteractionResult.SUCCESS);
       event.getEntity().getCooldowns().addCooldown(this, 1);
-      event.getItemStack().shrink(1);
+      HorseFeedUtil.finishFeed(event, ahorse);
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
       ChatUtil.addChatMessage(event.getEntity(), ChatUtil.lang("item.cyclic.carrot_ender.count") + current);
       //

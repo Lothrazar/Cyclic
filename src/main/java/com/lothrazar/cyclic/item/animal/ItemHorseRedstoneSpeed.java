@@ -23,10 +23,11 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.animal;
 
-import com.lothrazar.library.core.IEntityInteractable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.util.HorseFeedUtil;
+import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.library.util.EntityUtil;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -34,6 +35,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public class ItemHorseRedstoneSpeed extends ItemBaseCyclic implements IEntityInteractable {
 
   public static final int SPEED_MAX = 50;
+  public static final String NBT_COUNT = ModCyclic.MODID + "_carrot_redstone_count";
   private static final double SPEED_AMT = 0.004;
 
   public ItemHorseRedstoneSpeed(Properties prop) {
@@ -49,10 +51,8 @@ public class ItemHorseRedstoneSpeed extends ItemBaseCyclic implements IEntityInt
       double newSpeed = speed + SPEED_AMT;
       if (EntityUtil.getSpeedTranslated(newSpeed) < SPEED_MAX) {
         ahorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
-        event.setCanceled(true);
-        event.setCancellationResult(InteractionResult.SUCCESS);
-        event.getItemStack().shrink(1);
-        EntityUtil.eatingHorse(ahorse);
+        ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getInt(NBT_COUNT) + 1);
+        HorseFeedUtil.finishFeed(event, ahorse);
       }
     }
   }

@@ -23,18 +23,18 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.animal;
 
-import com.lothrazar.library.core.IEntityInteractable;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.library.util.EntityUtil;
-import net.minecraft.world.InteractionResult;
+import com.lothrazar.cyclic.util.HorseFeedUtil;
+import com.lothrazar.library.core.IEntityInteractable;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-//import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
 public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEntityInteractable {
 
   public static final int HEARTS_MAX = 40;
+  public static final String NBT_COUNT = ModCyclic.MODID + "_carrot_diamond_count";
 
   public ItemHorseHealthDiamondCarrot(Properties prop) {
     super(prop);
@@ -49,13 +49,8 @@ public class ItemHorseHealthDiamondCarrot extends ItemBaseCyclic implements IEnt
       float mh = (float) ahorse.getAttribute(Attributes.MAX_HEALTH).getValue();
       if (mh < 2 * ItemHorseHealthDiamondCarrot.HEARTS_MAX) { // 20 hearts == 40 health points
         ahorse.getAttribute(Attributes.MAX_HEALTH).setBaseValue(mh + 2);
-        event.setCanceled(true);
-        event.setCancellationResult(InteractionResult.SUCCESS);
-        event.getItemStack().shrink(1);
-        ahorse.mobInteract(event.getEntity(), event.getHand());
-        //processInteract
-        //trigger eatingHorse
-        EntityUtil.eatingHorse(ahorse);
+        ahorse.getPersistentData().putInt(NBT_COUNT, ahorse.getPersistentData().getInt(NBT_COUNT) + 1);
+        HorseFeedUtil.finishFeed(event, ahorse);
       }
     }
   }

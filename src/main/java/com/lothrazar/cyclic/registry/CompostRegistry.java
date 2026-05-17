@@ -15,5 +15,9 @@ public class CompostRegistry {
     ComposterBlock.COMPOSTABLES.put(ItemRegistry.LAPIS_CARROT_VARIANT.get(), 0.3F);
     ComposterBlock.COMPOSTABLES.put(ItemRegistry.REDSTONE_CARROT_SPEED.get(), 0.3F);
     ComposterBlock.COMPOSTABLES.put(ItemRegistry.TOXIC_CARROT.get(), 0.3F);
+    ComposterBlock.COMPOSTABLES.put(ItemRegistry.QUARTZ_CARROT_STEP.get(), 0.3F);
+    ComposterBlock.COMPOSTABLES.put(ItemRegistry.COPPER_CARROT_RADAR.get(), 0.3F);
+    ComposterBlock.COMPOSTABLES.put(ItemRegistry.NETHERITE_CARROT_FIRE.get(), 0.3F);
+    ComposterBlock.COMPOSTABLES.put(ItemRegistry.PRISMARINE_CARROT_WATER.get(), 0.3F);
   }
 }

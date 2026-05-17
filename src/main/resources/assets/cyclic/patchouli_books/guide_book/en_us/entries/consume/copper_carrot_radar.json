@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.copper_carrot_radar",
+  "icon": "cyclic:copper_carrot_radar",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.copper_carrot_radar.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:copper_carrot_radar"
+    }
+  ]
+}

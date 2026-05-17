@@ -32,6 +32,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.HorseInventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -122,6 +123,7 @@ public class CyclicPluginJEI implements IModPlugin {
     registry.addRecipeClickArea(ScreenCrusher.class,
         76, 38,
         20, 20, CrusherRecipeCategory.TYPE);
+    registry.addGuiContainerHandler(HorseInventoryScreen.class, new HorseScreenGuiHandler());
   }
 
   @Override
