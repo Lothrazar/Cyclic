@@ -117,13 +117,12 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     }
   }
 
-
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     filter.deserializeNBT(registries,tag.getCompound("filter"));
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir);//.orElse(null);
+      fluidh = flow.get(dir);
       if (tag.contains("fluid" + dir.toString())) {
         fluidh.readFromNBT(registries,tag.getCompound("fluid" + dir.toString()));
       }
@@ -136,7 +135,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     tag.put("filter", filter.serializeNBT(registries));
     FluidTankBase fluidh;
     for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir);//.orElse(null);
+      fluidh = flow.get(dir);
       CompoundTag fluidtag = new CompoundTag();
       if (fluidh != null) {
         fluidh.writeToNBT(registries, fluidtag);

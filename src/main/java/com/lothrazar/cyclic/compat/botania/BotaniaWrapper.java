@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.compat.botania;
 
 import net.minecraft.world.entity.LivingEntity;
 
-// TODO: re-enable after porting
+// TODO: re-enable when its released
 // see extra.gradle
 public class BotaniaWrapper {
 

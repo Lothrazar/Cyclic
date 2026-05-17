@@ -23,7 +23,7 @@ public class CapabilityUtil {
     if (facing == null) {
       return false;
     }
-    return  CapabilityUtil.item(level, facingPos, facing.getOpposite()) != null ;
+    return  CapabilityUtil.fluid(level, facingPos, facing.getOpposite()) != null ;
   }
 
   public static boolean isEnergy(Direction facing, Level level, BlockPos facingPos) {

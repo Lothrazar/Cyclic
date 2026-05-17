@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -68,6 +69,11 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
   });
 // //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
 
   public TileDisenchant(BlockPos pos, BlockState state) {
     super(TileRegistry.DISENCHANTER.get(), pos, state);

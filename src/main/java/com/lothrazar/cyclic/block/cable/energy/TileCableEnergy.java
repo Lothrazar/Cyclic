@@ -119,23 +119,6 @@ public class TileCableEnergy extends TileCableBase {
     }
   }
 
-//  @Override
-// //  // public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-//    if (cap == ForgeCapabilities.ENERGY) {
-//      //
-//      //
-//      //
-//      //TODO: how to block cables now
-//      //
-//      //
-//      ////
-//      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
-//        return energyCap.cast();
-//      }
-//    }
-//    return super.getCapability(cap, side);
-//  }
-
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     for (Direction f : Direction.values()) {

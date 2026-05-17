@@ -326,24 +326,6 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
     return new ContainerCrafter(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-
-// //  // public <T> LazyOptional<T> getCapability(Capability<T> cap, ItemHandlers type) {
-//    if (cap == ForgeCapabilities.ITEM_HANDLER) {
-//      switch (type) {
-//        case INPUT:
-//          return inputHandler;
-//        case OUTPUT:
-//          return output.cast();
-//        case GRID:
-//          return gridCap.cast();
-//        case PREVIEW:
-//          return preview.cast();
-//      }
-//    }
-//    return null;
-//  }
-
-
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     if (tag.contains("energy")) {

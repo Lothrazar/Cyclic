@@ -67,6 +67,11 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     tank = new FluidTankBase(this, CAPACITY, p -> true);
   }
 
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidCollect e) {
     e.tick();
   }

@@ -172,6 +172,11 @@ public class TilePeatFarm extends TileBlockEntityCyclic implements MenuProvider 
     tank = new FluidTankBase(this, CAPACITY, isFluidValid());
   }
 
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   public Predicate<FluidStack> isFluidValid() {
     return p -> true;
   }

@@ -36,6 +36,12 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = FluidType.BUCKET_VOLUME / 20;
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inventory = new ItemStackHandler(2);
   private RecipeMelter currentRecipe;

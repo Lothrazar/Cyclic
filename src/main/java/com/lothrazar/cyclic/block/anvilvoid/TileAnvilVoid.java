@@ -59,6 +59,11 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
   });
 // //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
 
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   public TileAnvilVoid(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVILVOID.get(), pos, state);
     this.needsRedstone = 1;

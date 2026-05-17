@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class TileCask extends TileBlockEntityCyclic {
 
@@ -23,6 +24,11 @@ public class TileCask extends TileBlockEntityCyclic {
   public static final int CAPACITY = 8 * FluidType.BUCKET_VOLUME;
   public static final int TRANSFER_FLUID_PER_TICK = CAPACITY / 2;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
 
   static enum Fields {
     FLOWING, N, E, S, W, U, D;

@@ -29,6 +29,11 @@ public class TilePlacerFluid extends TileBlockEntityCyclic implements MenuProvid
   public static final int CAPACITY = 8 * FluidType.BUCKET_VOLUME;
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());;
 
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   static enum Fields {
     REDSTONE, RENDER;
   }

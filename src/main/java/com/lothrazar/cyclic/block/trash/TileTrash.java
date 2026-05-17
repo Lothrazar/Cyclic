@@ -35,6 +35,11 @@ public class TileTrash extends TileBlockEntityCyclic {
   }
 
   @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
+  @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     super.loadAdditional(tag,registries);

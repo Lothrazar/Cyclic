@@ -30,6 +30,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.minecraft.core.Direction;
 
 public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -44,6 +45,11 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
   public static final int CAPACITY = 64000 * FluidType.BUCKET_VOLUME;
   public static ModConfigSpec.IntValue RADIUS;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, isFluidValid());
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
 
   private int collect = 1;
 

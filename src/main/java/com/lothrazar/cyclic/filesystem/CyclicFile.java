@@ -9,8 +9,7 @@ import net.minecraft.nbt.Tag;
 
 public class CyclicFile {
 
-  // separate from the mana system — investigate migrating this file-based player store
-  // onto AttachmentRegistry.CYCLIC_PLAYER once it's load-bearing.
+  // TODO: should we move all this onto PlayerCapabilityStorage & AttachmentRegistry.CYCLIC_PLAYER once it's load-bearing.
   public static final String NBTINV = "inv";
   public final UUID playerId;
   public boolean storageVisible = false;

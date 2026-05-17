@@ -86,9 +86,7 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
   @Override
   protected void renderBg(GuiGraphics gg, float partialTicks, int x, int y) {
     this.drawBackground(gg, TextureRegistry.INVENTORY_LARGE);
-    //    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    //    RenderSystem.setShaderTexture(0, TextureRegistry.INVENTORY_SIDEBAR);
-    gg.blit(TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);//todo; use screenbase?
+    gg.blit(TextureRegistry.INVENTORY_SIDEBAR, this.leftPos - 24, this.topPos, 0, 0, 27, 101, 27, 101);
   }
 
   private class ToggleButton extends Button {

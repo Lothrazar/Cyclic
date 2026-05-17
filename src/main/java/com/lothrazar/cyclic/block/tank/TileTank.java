@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class TileTank extends TileBlockEntityCyclic {
 
@@ -53,6 +54,11 @@ public class TileTank extends TileBlockEntityCyclic {
   @Override
   public int getField(int field) {
     return 0;
+  }
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
   }
 
   @Override

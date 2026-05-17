@@ -39,6 +39,11 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     tank = new FluidTankBase(this, CAPACITY, p -> p.getFluid() == Fluids.WATER);
   }
 
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileSprinkler e) {
     e.tick();
   }

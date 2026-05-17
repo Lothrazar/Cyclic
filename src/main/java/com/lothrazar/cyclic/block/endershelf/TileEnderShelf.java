@@ -5,7 +5,9 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileEnderShelf extends TileBlockEntityCyclic {
 
@@ -18,6 +20,11 @@ public class TileEnderShelf extends TileBlockEntityCyclic {
 
   public TileEnderShelf(BlockPos pos, BlockState state) {
     super(TileRegistry.ENDER_SHELF.get(), pos, state);
+  }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return inventory;
   }
 
   @Override

@@ -39,8 +39,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 public class FluidHelpers {
 
   private static final int COLOUR_DEFAULT = 0xADD8E6; // if some random mod adds a fluid with no colour 
-  private static final int COLOUR_MILK = 0xF1F1F1; // mojang/forge didnt give any
-  private static final int COLOUR_LAVA = 0xff8c00; // mojang/forge didnt give lava any colour value
+
   public static final FluidRenderMap<Int2ObjectMap<Model3D>> CACHED_FLUIDS = new FluidRenderMap<>();
   public static final int STAGES = 1400;
 
@@ -56,30 +55,8 @@ public class FluidHelpers {
    * @return
    */
   public static int getColorFromFluid(FluidStack fstack) {
-    if (fstack != null && fstack.getFluid() != null) {
-      //first check mine
-      System.out.println("fluid COLOURS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//      if (fstack.getFluid() == FluidBiomassHolder.STILL.get()) {
-//        return FluidBiomassHolder.COLOR;
-//      }
-//      else if (fstack.getFluid() == FluidHoneyHolder.STILL.get()) {
-//        return FluidHoneyHolder.COLOR;
-//      }
-//      else if (fstack.getFluid() == FluidMagmaHolder.STILL.get()) {
-//        return FluidMagmaHolder.COLOR;
-//      }
-//      else if (fstack.getFluid() == FluidSlimeHolder.STILL.get()) {
-//        return FluidSlimeHolder.COLOR;
-//      }
-//      else if (fstack.getFluid() == FluidXpJuiceHolder.STILL.get()) {
-//        return FluidXpJuiceHolder.COLOR;
-//      }
-//      else if (fstack.getFluid() == NeoForgeMod.MILK.get()) {
-//        return COLOUR_MILK;
-//      }
-//      else if (fstack.getFluid() == Fluids.LAVA) {
-//        return COLOUR_LAVA;
-//      }
+    if (fstack != null && !fstack.isEmpty()) {
+      return IClientFluidTypeExtensions.of(fstack.getFluid()).getTintColor(fstack);
     }
     return COLOUR_DEFAULT;
   }
@@ -239,14 +216,6 @@ public class FluidHelpers {
     float targetScale = (float) stored / capacity;
     return targetScale;
   }
-//use FIXERS
-//  public static IFluidHandler getTank(Level world, BlockPos pos, Direction side) {
-//    BlockEntity tile = world.getBlockEntity(pos);
-//    if (tile == null) {
-//      return null;
-//    }
-//    return tile.getCapability(ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
-//  }
 
   public static boolean tryFillPositionFromTank(Level world, BlockPos posSide, Direction sideOpp, IFluidHandler tankFrom, final int amount) {
     if (tankFrom == null || amount <= 0) {

@@ -51,8 +51,6 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
       openFilterMenu(world, pos, player);
       return InteractionResult.SUCCESS;
     }
-    // TODO: drop this interaction fully.  instead of LIT property, have it based onredstone signal
-    // no power = on and working.  with redstone power = not lit aka disabled
     world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
     SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
     ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
@@ -61,7 +59,7 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
 
   @Override
   public ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    if (player.isCrouching()) { // TODO: always open gui no matter what
+    if (player.isCrouching()) {
       openFilterMenu(world, pos, player);
       return ItemInteractionResult.SUCCESS;
     }

@@ -42,6 +42,12 @@ public class TileGeneratorFluid extends TileBlockEntityCyclic implements MenuPro
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(0);
   protected final FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> indexFluidsFromRecipes().contains(p.getFluid()));
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   ItemStackHandler outputSlots = new ItemStackHandler(0);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
   private int burnTimeMax = 0; //only non zero if processing

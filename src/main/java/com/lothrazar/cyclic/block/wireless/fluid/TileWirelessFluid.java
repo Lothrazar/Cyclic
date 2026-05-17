@@ -26,6 +26,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -38,6 +39,11 @@ public class TileWirelessFluid extends TileBlockEntityCyclic implements MenuProv
   public static final int MAX_TRANSFER = MAX;
   private int transferRate = FluidType.BUCKET_VOLUME;
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, f -> true);
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
 // //  LazyOptional<FluidTankBase> fluidCap = LazyOptional.of(() -> tank);
   public ItemStackHandler gpsSlots = new ItemStackHandler(1) {
 

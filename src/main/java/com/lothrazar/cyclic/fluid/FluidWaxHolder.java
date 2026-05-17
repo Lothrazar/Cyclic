@@ -36,7 +36,7 @@ public class FluidWaxHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().noCollission().strength(100.0F).noLootTable(),
+      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).noLootTable(),
           List.of(
               ent -> ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, false)),
               ent -> {

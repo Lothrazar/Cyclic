@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -26,6 +27,11 @@ public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvid
   public TileClayBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY_CLAY.get(), pos, state);
     energy = new EnergyStorageWrapper(MAX.get(), MAX.get() / 4);
+  }
+
+  @Override
+  public IEnergyStorage getEnergyHandler(Direction side) {
+    return energy;
   }
 
   @Override

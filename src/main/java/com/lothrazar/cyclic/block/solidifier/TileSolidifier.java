@@ -40,6 +40,12 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
   public static final int TRANSFER_FLUID_PER_TICK = FluidType.BUCKET_VOLUME / 20;
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
+
+  @Override
+  public IFluidHandler getFluidHandler(Direction side) {
+    return tank;
+  }
+
   ItemStackHandler inputSlots = new ItemStackHandler(3);
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   private ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);

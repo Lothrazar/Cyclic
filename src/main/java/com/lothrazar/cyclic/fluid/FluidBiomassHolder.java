@@ -25,7 +25,7 @@ public class FluidBiomassHolder {
   private static final String ID = "biomass";
   public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_still");
   public static final ResourceLocation FLUID_FLOWING = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
-  public static final int COLOR = 0xFFFFFF;
+  public static final int COLOR = 0x7BAA3C;
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
@@ -37,7 +37,7 @@ public class FluidBiomassHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().noCollission().strength(100.0F).noLootTable(),
+      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).noLootTable(),
           List.of(ent -> {
             if (ent.level().random.nextDouble() < 0.1) {
               ent.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 0, false, false, false));

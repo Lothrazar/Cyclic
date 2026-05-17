@@ -85,19 +85,9 @@ public class BlockCyclic extends EntityBlockFlib {
       if (!level.isClientSide) {
         BlockEntity tankHere = level.getBlockEntity(pos);
         if (tankHere != null) {
-
-          /**************
-           *
-           *
-           *
-           * getting fluid capability from a block
-           *
-           *
-           *
-           *
-           */
-          IFluidHandler handler = CapabilityUtil.fluid(level,pos,hit); // level.getCapability(Capabilities.FluidHandler.BLOCK, pos, hit.getDirection());
-
+         //getting fluid capability from a block
+          IFluidHandler handler = CapabilityUtil.fluid(level,pos,hit);
+//breakpoint shows handler is null, even when blockhere is tileTank from a "Block{cyclic:tank}[above=false,below=false]"
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
               if (player instanceof ServerPlayer) {
@@ -160,8 +150,6 @@ public class BlockCyclic extends EntityBlockFlib {
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-//      BlockEntity tileentity = worldIn.getBlockEntity(pos);
-//      if (tileentity != null) {
 
         IItemHandler items = CapabilityUtil.item(worldIn, pos);
         if (items != null) {
@@ -170,34 +158,20 @@ public class BlockCyclic extends EntityBlockFlib {
           }
           worldIn.updateNeighbourForOutputSignal(pos, this);
         }
-//      }
+
       super.onRemove(state, worldIn, pos, newState, isMoving);
     }
   }
 
-
-
-//  private static boolean hasCapabilityDir(Direction facing, LevelAccessor world, BlockPos facingPos, BaseCapability cap) {
-//    if (facing == null) {
-//      return false;
-//    }
-//    BlockEntity neighbor = world.getBlockEntity(facingPos);
-//    if (neighbor != null
-//        && neighbor.getCapability(cap, facing.getOpposite()).orElse(null) != null) {
-//      return true;
-//    }
-//    return false;
-//  }
-
   //for comparators that dont use item inventories
   protected int calcRedstoneFromFluid(BlockEntity tileEntity) {
-    IFluidHandler fluid = CapabilityUtil.fluid(tileEntity.getLevel(), tileEntity.getBlockPos());//tileEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+    final IFluidHandler fluid = CapabilityUtil.fluid(tileEntity.getLevel(), tileEntity.getBlockPos());//tileEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
     if (fluid.getFluidInTank(0).isEmpty()) {
       return 0;
     }
-    float cap = fluid.getTankCapacity(0);
-    float amt = fluid.getFluidInTank(0).getAmount();
-    float f = amt / cap;
+    final float cap = fluid.getTankCapacity(0);
+    final float amt = fluid.getFluidInTank(0).getAmount();
+    final float f = amt / cap;
     return (int) Math.floor((f * 14.0F)) + 1;
   }
 }

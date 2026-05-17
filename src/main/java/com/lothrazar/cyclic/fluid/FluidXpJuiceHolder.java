@@ -37,7 +37,7 @@ public class FluidXpJuiceHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().noCollission().strength(100.0F).lightLevel(s -> 15).noLootTable(), List.of()));
+      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).lightLevel(s -> 15).noLootTable(), List.of()));
 
   public static DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket", () -> new BucketItemFlib(STILL.get()));
 

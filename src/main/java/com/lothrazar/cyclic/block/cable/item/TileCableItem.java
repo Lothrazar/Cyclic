@@ -96,17 +96,6 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     return !outgoingConnection.isExtraction() && !outgoingConnection.isBlocked();
   }
 
-//  @Override
-// //  // public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-//    if (side != null && cap == ForgeCapabilities.ITEM_HANDLER) {
-//      if (!CableBase.isCableBlocked(this.getBlockState(), side)) {
-//        return flow.get(side).cast();
-//      }
-//    }
-//    return super.getCapability(cap, side);
-//  }
-
-
   @SuppressWarnings("unchecked")
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
