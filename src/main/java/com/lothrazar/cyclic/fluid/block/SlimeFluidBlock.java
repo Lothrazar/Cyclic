@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.fluid.block;
 
-import com.lothrazar.library.fluid.PartialHeightFluidBlock;
+import com.lothrazar.library.fluid.GenericFluidBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,12 +8,28 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SlimeFluidBlock extends PartialHeightFluidBlock {
+public class SlimeFluidBlock extends GenericFluidBlock {
+
+  private final VoxelShape[] shapes = new VoxelShape[16];
 
   public SlimeFluidBlock(java.util.function.Supplier<? extends FlowingFluid> supplier, Properties props) {
     super(supplier, props);
+    float offset = 0.875F;
+    for (int i = 0; i <= 15; i++) {
+      shapes[i] = Shapes.create(new AABB(0, 0, 0, 1, offset - i / 8F, 1));
+    }
+  }
+
+  @Override
+  @Deprecated
+  public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+    return shapes[state.getValue(LEVEL).intValue()];
   }
 
   @Override

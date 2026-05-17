@@ -17,7 +17,6 @@ import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.BlockCyclic;
 // import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
 import com.lothrazar.cyclic.block.beaconredstone.RenderBeaconRedstone;
@@ -48,7 +47,6 @@ import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
@@ -222,32 +220,32 @@ public class ClientRegistryCyclic {
   public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
     event.registerFluidType(new IClientFluidTypeExtensions() {
       @Override public ResourceLocation getStillTexture() { return FluidXpJuiceHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidXpJuiceHolder.FLUID_FLOWING; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidXpJuiceHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidXpJuiceHolder.COLOR | 0xFF000000; }
     }, FluidXpJuiceHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
       @Override public ResourceLocation getStillTexture() { return FluidMagmaHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidMagmaHolder.FLUID_STILL; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidMagmaHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidMagmaHolder.COLOR | 0xFF000000; }
     }, FluidMagmaHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
       @Override public ResourceLocation getStillTexture() { return FluidSlimeHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidSlimeHolder.FLUID_FLOWING; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidSlimeHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidSlimeHolder.COLOR | 0xFF000000; }
     }, FluidSlimeHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
       @Override public ResourceLocation getStillTexture() { return FluidWaxHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidWaxHolder.FLUID_FLOWING; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidWaxHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidWaxHolder.COLOR | 0xFF000000; }
     }, FluidWaxHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
       @Override public ResourceLocation getStillTexture() { return FluidBiomassHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidBiomassHolder.FLUID_FLOWING; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidBiomassHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidBiomassHolder.COLOR | 0xFF000000; }
     }, FluidBiomassHolder.TYPE.get());
     event.registerFluidType(new IClientFluidTypeExtensions() {
       @Override public ResourceLocation getStillTexture() { return FluidHoneyHolder.FLUID_STILL; }
-      @Override public ResourceLocation getFlowingTexture() { return FluidHoneyHolder.FLUID_FLOWING; }
+      @Override public ResourceLocation getFlowingTexture() { return FluidHoneyHolder.FLUID_FLOW; }
       @Override public int getTintColor() { return FluidHoneyHolder.COLOR | 0xFF000000; }
     }, FluidHoneyHolder.TYPE.get());
     IClientItemExtensions shieldExt = new IClientItemExtensions() {

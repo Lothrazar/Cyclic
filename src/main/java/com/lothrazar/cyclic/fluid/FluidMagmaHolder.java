@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.fluid;
 
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.fluid.block.MagmaFluidBlock;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.library.fluid.ConfigurableFlowingFluid;
@@ -21,7 +22,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public class FluidMagmaHolder {
 
   private static final String ID = "magma";
-  public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath("minecraft", "block/magma");
+  public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_still");
+  public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
   public static final int COLOR = 0xFFFFFF;
 
   public static final int LIGHT_LEVEL = 8;
@@ -31,8 +33,10 @@ public class FluidMagmaHolder {
               .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).lightLevel(LIGHT_LEVEL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 
-  public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Source> STILL = FluidRegistry.FLUID.register(ID, () -> new ConfigurableFlowingFluid.Source(makeProperties(), 2, 1));
-  public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new ConfigurableFlowingFluid.Flowing(makeProperties(), 2, 7));
+  public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Source> STILL = FluidRegistry.FLUID.register(ID,
+      () -> new ConfigurableFlowingFluid.Source(makeProperties(), 2, 1));
+  public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing",
+      () -> new ConfigurableFlowingFluid.Flowing(makeProperties(), 2, 7));
 
   public static final DeferredBlock<MagmaFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
       () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable()));

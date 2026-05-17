@@ -22,8 +22,8 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public class FluidXpJuiceHolder {
 
   private static final String ID = "xpjuice";
-  public static final ResourceLocation FLUID_FLOWING = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
   public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_still");
+  public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
 
   public static final int COLOR = 0xFFFFFF;
 

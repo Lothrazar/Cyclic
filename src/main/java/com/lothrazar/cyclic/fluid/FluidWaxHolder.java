@@ -23,7 +23,7 @@ public class FluidWaxHolder {
 
   private static final String ID = "wax";
   public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still");
-  public static final ResourceLocation FLUID_FLOWING = ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_flow");
+  public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_flow");
   public static final int COLOR = 0xEEEEEE;
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
