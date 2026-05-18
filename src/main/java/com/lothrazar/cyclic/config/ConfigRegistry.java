@@ -92,6 +92,8 @@ public class ConfigRegistry {
   public void setupMain() {
     ModContainer mc = ModLoadingContext.get().getActiveContainer();
     mc.registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
+    // Separate file so pack authors editing chest loot don't scroll through everything else.
+    mc.registerConfig(ModConfig.Type.COMMON, LootConfig.SPEC, ModCyclic.MODID+"-loot.toml");
   }
 
   public void setupClient() {

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.data.loot.LootInjectModifier;
 import com.lothrazar.cyclic.enchant.AutoSmeltEnchant;
 import com.lothrazar.cyclic.enchant.AutoSmeltEnchant.EnchantAutoSmeltModifier;
 import com.mojang.serialization.MapCodec;
@@ -12,4 +13,5 @@ public class LootModifierRegistry {
 
   public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ModCyclic.MODID);
   public static final java.util.function.Supplier<MapCodec<EnchantAutoSmeltModifier>> AUTO_SMELT = LOOT.register(AutoSmeltEnchant.ID, () -> EnchantAutoSmeltModifier.MAP_CODEC.get());
+  public static final java.util.function.Supplier<MapCodec<LootInjectModifier>> LOOT_INJECT = LOOT.register(LootInjectModifier.ID, () -> LootInjectModifier.MAP_CODEC.get());
 }

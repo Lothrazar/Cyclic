@@ -10,12 +10,14 @@ repositories {
 dependencies {
 // TODO: once botania is ported, we can re enable here
  // compileOnly "vazkii.botania:Botania:[VERSION]:api"
+
+
   implementation "local.mods:flib:${minecraft_version}-${flib_version}"
 
   //deps outside of tmpl
   implementation "curse.maven:jeed-532286:${jeed_file}"
 
-//
-  compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
-  runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+// EMI for testing
+//  compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+//  runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 }

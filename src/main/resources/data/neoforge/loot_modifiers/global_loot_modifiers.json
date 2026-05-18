@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "cyclic:auto_smelt"
+    "cyclic:auto_smelt",
+    "cyclic:loot_inject"
   ]
 }
