@@ -1,12 +1,7 @@
 package com.lothrazar.cyclic.net;
 
-import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
-import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -27,10 +22,10 @@ public class PacketTileInventoryToClient implements CustomPacketPayload {
   }
 
 
-  private BlockPos blockPos;
-  private int slot;
-  private ItemStack itemStack;
-  private SyncPacketType type;
+  BlockPos blockPos;
+  int slot;
+  ItemStack itemStack;
+  SyncPacketType type;
 
   public static enum SyncPacketType {
     CHANGE, SET
@@ -45,34 +40,8 @@ public class PacketTileInventoryToClient implements CustomPacketPayload {
 
   public PacketTileInventoryToClient() {}
 
-  @SuppressWarnings("unused")
   public static void handle(PacketTileInventoryToClient message, IPayloadContext ctx) {
-    ctx.enqueueWork(() -> {
-      if (Minecraft.getInstance().level == null) {
-        
-        return;
-      }
-      BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(message.blockPos);
-      var item = CapabilityUtil.item( Minecraft.getInstance().level,message.blockPos);
-      if (item != null) {
-//        tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-          if (message.type == SyncPacketType.SET) {
-            if (item instanceof EnderShelfItemHandler es) {
-              ItemStack extracted = es.emptySlot(message.slot);
-            }
-            else if (item instanceof ClientAutoSyncItemHandler cas) {
-              ItemStack extracted = cas.emptySlot(message.slot);
-            }
-            else {
-              item.extractItem(message.slot, 64, false);
-            }
-          }
-          //not set, just insert
-          item.insertItem(message.slot, message.itemStack, false);
-//        });
-      }
-    });
-    
+    ctx.enqueueWork(() -> ClientNetHandlers.handleTileInventory(message));
   }
 
   public static PacketTileInventoryToClient decode(RegistryFriendlyByteBuf buf) {

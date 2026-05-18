@@ -18,6 +18,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -26,7 +27,9 @@ public class BlockSoundRecorder extends BlockCyclic {
 
   public BlockSoundRecorder(Properties properties) {
     super(properties.strength(1F).sound(SoundType.SCAFFOLDING));
-    NeoForge.EVENT_BUS.register(this);
+    if (FMLEnvironment.dist == Dist.CLIENT) {
+      NeoForge.EVENT_BUS.register(this);
+    }
     this.setHasGui();
   }
 

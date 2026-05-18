@@ -134,7 +134,7 @@ import com.lothrazar.cyclic.item.datacard.filter.ScreenFilterCard;
 import com.lothrazar.cyclic.item.storagebag.ScreenStorageBag;
 
 
-@EventBusSubscriber(modid = ModCyclic.MODID)
+@EventBusSubscriber(modid = ModCyclic.MODID, value = Dist.CLIENT)
 public class ClientRegistryCyclic {
 
   public static final KeyMapping CAKE = new KeyMapping("key." + ModCyclic.MODID + ".cake", new IKeyConflictContext() {

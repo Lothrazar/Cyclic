@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.net;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -21,7 +20,7 @@ public class PacketPlayerSyncToClient implements CustomPacketPayload {
   }
 
 
-  private boolean mayfly;
+  boolean mayfly;
 
   public PacketPlayerSyncToClient(boolean mayfly) {
     this.mayfly = mayfly;
@@ -30,14 +29,7 @@ public class PacketPlayerSyncToClient implements CustomPacketPayload {
   public PacketPlayerSyncToClient() {}
 
   public static void handle(PacketPlayerSyncToClient message, IPayloadContext ctx) {
-    ctx.enqueueWork(() -> {
-      Minecraft.getInstance().player.getAbilities().mayfly = message.mayfly;
-      if (!message.mayfly) {
-        //if not allowed to fly, also cancel flying
-        Minecraft.getInstance().player.getAbilities().flying = false;
-      }
-    });
-    
+    ctx.enqueueWork(() -> ClientNetHandlers.handlePlayerSync(message));
   }
 
   public static PacketPlayerSyncToClient decode(RegistryFriendlyByteBuf buf) {
