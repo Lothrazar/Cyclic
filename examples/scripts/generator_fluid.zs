@@ -6,7 +6,7 @@ var generator = <recipetype:cyclic:generator_fluid>;
 
 
 // recipe IDS, not item ids
-// see datapack inside the jar file or see https://github.com/Lothrazar/Cyclic/tree/trunk/1.20/src/main/resources/data/cyclic/recipes/generator
+// see datapack inside the jar file or see https://github.com/Lothrazar/Cyclic/tree/trunk/1.21.1/src/main/resources/data/cyclic/recipe/generator
 
 generator.removeRecipe("cyclic:generator/generate_xp","cyclic:generator/generate_lava");
 

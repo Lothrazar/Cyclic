@@ -5,7 +5,7 @@
 var generator = <recipetype:cyclic:generator_item>;
 
 // recipe IDS, not item ids
-// see datapack inside the jar file or see https://github.com/Lothrazar/Cyclic/tree/trunk/1.20/src/main/resources/data/cyclic/recipes/generator
+// see datapack inside the jar file or see https://github.com/Lothrazar/Cyclic/tree/trunk/1.21.1/src/main/resources/data/cyclic/recipe/generator
 generator.removeRecipe("cyclic:generator/generate_redstone");
 generator.removeRecipe("cyclic:generator/generate_star", "cyclic:generator/generate_tnt");
 

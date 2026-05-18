@@ -7,10 +7,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 
 public class CharmInvisible extends ItemBaseToggle {
 
-  final int seconds = 30;
+  private static final int SECONDS_DEFAULT = 30;
+  public static IntValue SECONDS;
 
   public CharmInvisible(Properties properties) {
     super(properties);
@@ -27,7 +29,8 @@ public class CharmInvisible extends ItemBaseToggle {
     if (worldIn.getGameTime() % 20 == 0 && entityIn instanceof LivingEntity) {
       LivingEntity living = (LivingEntity) entityIn;
       if (living.getEffect(MobEffects.INVISIBILITY) == null) {
-        MobEffectInstance eff = new MobEffectInstance(MobEffects.INVISIBILITY, 20 * seconds, 0, false, false, false);
+        int sec = SECONDS == null ? SECONDS_DEFAULT : SECONDS.get();
+        MobEffectInstance eff = new MobEffectInstance(MobEffects.INVISIBILITY, 20 * sec, 0, false, false, false);
         living.addEffect(eff);
         ItemStackUtil.damageItem(living, stack);
       }

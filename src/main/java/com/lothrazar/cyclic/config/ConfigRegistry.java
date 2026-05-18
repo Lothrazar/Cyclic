@@ -55,6 +55,9 @@ import com.lothrazar.cyclic.item.TeleporterWandItem;
 import com.lothrazar.cyclic.item.WandHypnoItem;
 import com.lothrazar.cyclic.item.bauble.AutoCaveTorchItem;
 import com.lothrazar.cyclic.item.bauble.AutoTorchItem;
+import com.lothrazar.cyclic.item.bauble.CharmBase;
+import com.lothrazar.cyclic.item.bauble.CharmInvisible;
+import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
 import com.lothrazar.cyclic.item.elemental.IceWand;
 import com.lothrazar.cyclic.item.elemental.WaterSpreaderItem;
 import com.lothrazar.cyclic.item.ender.ItemProjectileDungeon;
@@ -259,7 +262,7 @@ public class ConfigRegistry {
      PotionRegistry.PotionRecipeConfig.WITHER = CFG.comment(" Set false to disable the base recipe").define("wither.enabled", true);
     CFG.pop();
     ////////////////////////////////////////////////////////////////// enchantment
-    CFG.comment(WALL, " Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)", WALL)
+    CFG.comment(WALL, " Enchantment related configs. If enabled is false the enchantment still exists everywhere it just does nothing.  To further disable obtaining these enchantments you now have to use the mojang datapacks as of mc1.21+  ", WALL)
         .push("enchantment");
     AutoSmeltEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(AutoSmeltEnchant.ID + ".enabled", true);
     BeekeeperEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(BeekeeperEnchant.ID + ".enabled", true);
@@ -302,13 +305,8 @@ public class ConfigRegistry {
         .defineList(DisarmEnchant.ID + ".ingoredMobs", DISARM_IGNORE,
             it -> it instanceof String);
     CFG.pop(); //enchantment
-    CFG.comment(WALL, " Worldgen settings  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
-    GENERATE_FLOWERS = CFG.comment(" Do the four generate in the world. "
-        + " If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), "
-        + "but the mod will not use the features to generate/place flowers in world-generation")
-        .define("flowers.enabled", false);
-    CYAN_PODZOL_LEGACY = CFG.comment(" Enable the legacy feature that will spawn a Cyan flower when bonemeal is used on Podzol")
-        .define("cyan_podzol_legacy.enabled", false);
+    CFG.comment(WALL, " for Worldgen settings, see the example datapacks on github  ", WALL).push("worldgen"); //////////////////////////////////////////////////////////////////////////////////////////// worldgen
+
     CFG.pop();
     CFG.comment(WALL, " Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  ", WALL)
         .push("command");
@@ -389,11 +387,32 @@ public class ConfigRegistry {
     MaterialRegistry.OBS_LEG = CFG.comment(" Damage Reduction").defineInRange("leg", 10, 1, 99);
     CFG.pop();
     ItemProjectileDungeon.RANGE = CFG.comment(" Range in all directions to search for spawner").defineInRange("spawner_seeker.range", 64, 1, 256);
-    CHARM_LUCK = CFG.comment(" Boost given by item charm_luck").defineInRange("charm_luck.boost", 10, 0, 100);
-    CHARM_SPEED = CFG.comment(" Boost given by item charm_speed").defineInRange("charm_speed.boost", 0.5F, 0, 2F);
-    CHARM_ATTACKSPEED = CFG.comment(" Boost given by item charm_attackspeed").defineInRange("charm_attack_speed.boost", 0.5F, 0, 2F);
-    AutoTorchItem.LIGHT_LEVEL = CFG.comment(" Light level limit for placing torches").defineInRange("charm_torch.light_level", 9, 0, 15);
-    CFG.comment(WALL, " Caving Torch Charm settings", WALL).push("caving_torch");
+    ///////// NEW category
+    CFG.comment(WALL, " Charm bauble tunable values", WALL).push("charms");
+
+    CHARM_LUCK = CFG.comment(" Boost given by item charm_luck").defineInRange("luck.boost", 10, 0, 100);
+    CHARM_SPEED = CFG.comment(" Boost given by item charm_speed").defineInRange("speed.boost", 0.5F, 0, 2F);
+    CHARM_ATTACKSPEED = CFG.comment(" Boost given by item charm_attackspeed").defineInRange("attack_speed.boost", 0.5F, 0, 2F);
+    AutoTorchItem.LIGHT_LEVEL = CFG.comment(" Light level limit for placing torches").defineInRange("torch.light_level", 9, 0, 15);
+
+    CharmBase.FIREPROT_SECONDS = CFG.comment(" Seconds of Fire Resistance granted by charm_fire / charm_overpowered when on fire")
+        .defineInRange("fire.fire_resistance_seconds", 10, 1, 9999);
+    CharmBase.WING_FALL_DISTANCE_LIMIT = CFG.comment(" Fall distance (in blocks) at which charm_wing / charm_overpowered triggers Slow Falling")
+        .defineInRange("wing.fall_distance_trigger", 5, 1, 256);
+    CharmBase.WING_FALL_SLOWFALL_SECONDS = CFG.comment(" Seconds of Slow Falling granted by charm_wing / charm_overpowered when triggered")
+        .defineInRange("wing.slow_falling_seconds", 5, 1, 9999);
+    CharmBase.FLIPPERS_SWIM_MULTIPLIER = CFG.comment(" Swim speed multiplier added by flippers (as a multiplier on base swim speed)")
+        .defineInRange("flippers.swim_multiplier", 3.0, 0.0, 32.0);
+    CharmInvisible.SECONDS = CFG.comment(" Seconds of Invisibility refreshed each pulse by charm_invisible")
+        .defineInRange("invisible.seconds", 30, 2, 9999);
+    SoulstoneCharm.REGEN_TICKS = CFG.comment(" Ticks of Regeneration II granted by soulstone on death-save (20 ticks = 1 second)")
+        .defineInRange("soulstone.regeneration_ticks", 900, 0, 99999);
+    SoulstoneCharm.ABSORPTION_TICKS = CFG.comment(" Ticks of Absorption II granted by soulstone on death-save")
+        .defineInRange("soulstone.absorption_ticks", 100, 0, 99999);
+    SoulstoneCharm.FIRERES_TICKS = CFG.comment(" Ticks of Fire Resistance granted by soulstone on death-save")
+        .defineInRange("soulstone.fire_resistance_ticks", 800, 0, 99999);
+    CFG.pop(); // charms
+    CFG.comment(WALL, " Caving Torch settings", WALL).push("caving_torch");
     AutoCaveTorchItem.LIGHT_LIMIT = CFG.comment(" Light level at which to start placing down a torch").defineInRange("light_limit", 7, 0, 14);
     AutoCaveTorchItem.LIGHT_TARGET = CFG.comment(
         "Light level of the current block after placing down a torch. Must be greater than light_limit",

@@ -13,6 +13,8 @@ import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -32,9 +34,14 @@ import net.minecraft.resources.ResourceLocation;
 
 public abstract class CharmBase extends ItemBaseToggle {
 
-  private static final int FIREPROTSECONDS = 10;
-  private static final int FALLDISTANCESECONDS = 5;
-  private static final int FALLDISTANCELIMIT = 5; // was 6 in 1.12.2
+  private static final int FIREPROTSECONDS_DEFAULT = 10;
+  private static final int FALLDISTANCESECONDS_DEFAULT = 5;
+  private static final int FALLDISTANCELIMIT_DEFAULT = 5; // was 6 in 1.12.2
+  private static final double SWIM_MULTIPLIER_DEFAULT = 3;
+  public static IntValue FIREPROT_SECONDS;
+  public static IntValue WING_FALL_SLOWFALL_SECONDS;
+  public static IntValue WING_FALL_DISTANCE_LIMIT;
+  public static DoubleValue FLIPPERS_SWIM_MULTIPLIER;
   public static final UUID ID_SPEED = UUID.fromString("12230aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID ID_SWIMMING = UUID.fromString("92230aa2-eff2-4a81-b92b-a1cb95f115c6");
   public static final UUID ID_LUCK = UUID.fromString("acc30aa2-eff2-4a81-b92b-a1cb95f115c6");
@@ -73,8 +80,10 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   private void tryWingTick(ItemStack stack, Entity entityIn, LivingEntity living) {
-    if (this.wingCharm && living.fallDistance > FALLDISTANCELIMIT && !living.hasEffect(MobEffects.SLOW_FALLING)) {
-      MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, FALLDISTANCESECONDS * Const.TICKS_PER_SEC, Const.Potions.I, false, false, false);
+    int fallLimit = WING_FALL_DISTANCE_LIMIT == null ? FALLDISTANCELIMIT_DEFAULT : WING_FALL_DISTANCE_LIMIT.get();
+    int slowfallSeconds = WING_FALL_SLOWFALL_SECONDS == null ? FALLDISTANCESECONDS_DEFAULT : WING_FALL_SLOWFALL_SECONDS.get();
+    if (this.wingCharm && living.fallDistance > fallLimit && !living.hasEffect(MobEffects.SLOW_FALLING)) {
+      MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, slowfallSeconds * Const.TICKS_PER_SEC, Const.Potions.I, false, false, false);
       living.addEffect(eff);
       ItemStackUtil.damageItem(living, stack);
       SoundUtil.playSound(living, SoundEvents.LADDER_FALL);
@@ -83,7 +92,8 @@ public abstract class CharmBase extends ItemBaseToggle {
 
   private void tryFireTick(ItemStack stack, LivingEntity living) {
     if (this.fireProt && living.isOnFire() && !living.hasEffect(MobEffects.FIRE_RESISTANCE)) { // do nothing if you already have
-      MobEffectInstance eff = new MobEffectInstance(MobEffects.FIRE_RESISTANCE, FIREPROTSECONDS * Const.TICKS_PER_SEC, Const.Potions.I, false, false, false);
+      int firePotSec = FIREPROT_SECONDS == null ? FIREPROTSECONDS_DEFAULT : FIREPROT_SECONDS.get();
+      MobEffectInstance eff = new MobEffectInstance(MobEffects.FIRE_RESISTANCE, firePotSec * Const.TICKS_PER_SEC, Const.Potions.I, false, false, false);
       living.addEffect(eff);
       ItemStackUtil.damageItem(living, stack);
       SoundUtil.playSound(living, SoundEvents.FIRE_EXTINGUISH);
@@ -159,7 +169,8 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   static void charmSwimming(Player player) {
-    toggleAttribute(player, ItemRegistry.FLIPPERS.get(), NeoForgeMod.SWIM_SPEED, ID_SPEED, 3, 0, MUL);
+    float mult = FLIPPERS_SWIM_MULTIPLIER == null ? (float) SWIM_MULTIPLIER_DEFAULT : FLIPPERS_SWIM_MULTIPLIER.get().floatValue();
+    toggleAttribute(player, ItemRegistry.FLIPPERS.get(), NeoForgeMod.SWIM_SPEED, ID_SPEED, mult, 0, MUL);
   }
 
   static void charmGravity(Player player) {

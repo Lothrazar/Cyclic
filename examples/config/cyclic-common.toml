@@ -81,7 +81,7 @@
 			enabled = true
 
 	#####################################################################################
-	# Enchantment related configs (if disabled, they may still show up as NBT on books and such but have functions disabled and are not obtainable in survival)
+	# Enchantment related configs. If enabled is false the enchantment still exists everywhere it just does nothing.  To further disable obtaining these enchantments you now have to use the mojang datapacks as of mc1.21+  
 	#####################################################################################
 	[cyclic.enchantment]
 
@@ -212,19 +212,6 @@
 		[cyclic.enchantment.experience_boost]
 			# Set false to stop enchantment from working
 			enabled = true
-
-	#####################################################################################
-	# Worldgen settings  
-	#####################################################################################
-	[cyclic.worldgen]
-
-		[cyclic.worldgen.flowers]
-			# Do the four generate in the world.  If false, the 4 flower blocks and 3 features (flower_all, flower_tulip_ flower_lime) will still be registered and can be used externally (data packs etc), but the mod will not use the features to generate/place flowers in world-generation
-			enabled = false
-
-		[cyclic.worldgen.cyan_podzol_legacy]
-			# Enable the legacy feature that will spawn a Cyan flower when bonemeal is used on Podzol
-			enabled = false
 
 	#####################################################################################
 	# Edit the permissions of all commands added by the mod.  false means anyone can use, true means only OP players can use  
@@ -454,32 +441,79 @@
 			# Range: 1 ~ 256
 			range = 64
 
-		[cyclic.items.charm_luck]
-			# Boost given by item charm_luck
-			# Default: 10
-			# Range: 0 ~ 100
-			boost = 10
+		#####################################################################################
+		# Charm bauble tunable values
+		#####################################################################################
+		[cyclic.items.charms]
 
-		[cyclic.items.charm_speed]
-			# Boost given by item charm_speed
-			# Default: 0.5
-			# Range: 0.0 ~ 2.0
-			boost = 0.5
+			[cyclic.items.charms.luck]
+				# Boost given by item charm_luck
+				# Default: 10
+				# Range: 0 ~ 100
+				boost = 10
 
-		[cyclic.items.charm_attack_speed]
-			# Boost given by item charm_attackspeed
-			# Default: 0.5
-			# Range: 0.0 ~ 2.0
-			boost = 0.5
+			[cyclic.items.charms.speed]
+				# Boost given by item charm_speed
+				# Default: 0.5
+				# Range: 0.0 ~ 2.0
+				boost = 0.5
 
-		[cyclic.items.charm_torch]
-			# Light level limit for placing torches
-			# Default: 9
-			# Range: 0 ~ 15
-			light_level = 9
+			[cyclic.items.charms.attack_speed]
+				# Boost given by item charm_attackspeed
+				# Default: 0.5
+				# Range: 0.0 ~ 2.0
+				boost = 0.5
+
+			[cyclic.items.charms.torch]
+				# Light level limit for placing torches
+				# Default: 9
+				# Range: 0 ~ 15
+				light_level = 9
+
+			[cyclic.items.charms.fire]
+				# Seconds of Fire Resistance granted by charm_fire / charm_overpowered when on fire
+				# Default: 10
+				# Range: 1 ~ 9999
+				fire_resistance_seconds = 10
+
+			[cyclic.items.charms.wing]
+				# Fall distance (in blocks) at which charm_wing / charm_overpowered triggers Slow Falling
+				# Default: 5
+				# Range: 1 ~ 256
+				fall_distance_trigger = 5
+				# Seconds of Slow Falling granted by charm_wing / charm_overpowered when triggered
+				# Default: 5
+				# Range: 1 ~ 9999
+				slow_falling_seconds = 5
+
+			[cyclic.items.charms.flippers]
+				# Swim speed multiplier added by flippers (as a multiplier on base swim speed)
+				# Default: 3.0
+				# Range: 0.0 ~ 32.0
+				swim_multiplier = 3.0
+
+			[cyclic.items.charms.invisible]
+				# Seconds of Invisibility refreshed each pulse by charm_invisible
+				# Default: 30
+				# Range: 2 ~ 9999
+				seconds = 30
+
+			[cyclic.items.charms.soulstone]
+				# Ticks of Regeneration II granted by soulstone on death-save (20 ticks = 1 second)
+				# Default: 900
+				# Range: 0 ~ 99999
+				regeneration_ticks = 900
+				# Ticks of Absorption II granted by soulstone on death-save
+				# Default: 100
+				# Range: 0 ~ 99999
+				absorption_ticks = 100
+				# Ticks of Fire Resistance granted by soulstone on death-save
+				# Default: 800
+				# Range: 0 ~ 99999
+				fire_resistance_ticks = 800
 
 		#####################################################################################
-		# Caving Torch Charm settings
+		# Caving Torch settings
 		#####################################################################################
 		[cyclic.items.caving_torch]
 			# Light level at which to start placing down a torch
