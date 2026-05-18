@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_block"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+  ],
+  "mix": {
+    "tag": "c:experience",
+    "amount": 4000
+  },
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 600
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:budding_amethyst"
+  }
+}

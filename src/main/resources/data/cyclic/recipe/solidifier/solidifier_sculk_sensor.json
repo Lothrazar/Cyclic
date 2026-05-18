@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:sculk"
+    },
+    {
+      "item": "minecraft:comparator"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+  "mix": {
+    "tag": "c:experience",
+    "amount": 2000
+  },
+  "energy": {
+    "rfpertick": 300,
+    "ticks": 200
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:sculk_sensor"
+  }
+}

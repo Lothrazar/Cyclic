@@ -8,7 +8,7 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "tag": "c:sand"
+      "tag": "c:sands"
     }
   ],
   "mix": {

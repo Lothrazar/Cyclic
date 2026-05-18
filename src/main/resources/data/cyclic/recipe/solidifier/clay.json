@@ -5,10 +5,10 @@
       "item": "minecraft:mud"
     },
     {
-      "tag": "c:sand"
+      "tag": "c:sands"
     },
     {
-      "tag": "c:gravel"
+      "tag": "c:gravels"
     }
   ],
   "mix": {

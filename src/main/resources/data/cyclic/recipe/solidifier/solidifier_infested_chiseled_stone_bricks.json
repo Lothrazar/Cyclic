@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:chiseled_stone_bricks"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "mix": {
+    "fluid": "cyclic:slime",
+    "amount": 4000
+  },
+  "energy": {
+    "rfpertick": 200,
+    "ticks": 160
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:infested_chiseled_stone_bricks"
+  }
+}

@@ -2,7 +2,7 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "tag": "c:obsidian"
+      "tag": "c:obsidians"
     },
     {
       "item": "cyclic:gem_amber"

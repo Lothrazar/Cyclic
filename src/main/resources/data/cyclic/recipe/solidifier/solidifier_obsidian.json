@@ -2,13 +2,13 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "tag": "c:cobblestone"
+      "tag": "c:cobblestones"
     },
     {
-      "tag": "c:cobblestone"
+      "tag": "c:cobblestones"
     },
     {
-      "tag": "c:cobblestone"
+      "tag": "c:cobblestones"
     }
   ],
   "energy": {

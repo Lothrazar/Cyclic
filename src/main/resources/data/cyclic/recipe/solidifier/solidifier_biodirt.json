@@ -17,7 +17,7 @@
   },
   "mix": {
     "tag": "c:biomass",
-    "amount": 200
+    "amount": 1000
   },
   "result": {
     "count": 3,

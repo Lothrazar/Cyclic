@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "#c:storage_blocks/flint"
+    },
+    {
+      "item": "cyclic:membrane"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+  "mix": {
+    "tag": "c:experience",
+    "amount": 4000
+  },
+  "energy": {
+    "rfpertick": 800,
+    "ticks": 1000
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:sculk_shrieker"
+  }
+}
