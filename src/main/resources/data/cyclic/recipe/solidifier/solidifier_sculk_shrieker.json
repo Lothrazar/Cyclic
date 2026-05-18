@@ -2,7 +2,7 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "tag": "#c:storage_blocks/flint"
+      "tag": "c:storage_blocks/flint"
     },
     {
       "item": "cyclic:membrane"

@@ -2,9 +2,7 @@
   "replace": false,
   "values": [
     "cyclic:stun",
-    "cyclic:blind",
-    "cyclic:hunger",
-    "cyclic:wither",
+    "cyclic:antigravity",
     "cyclic:butter"
   ]
 }

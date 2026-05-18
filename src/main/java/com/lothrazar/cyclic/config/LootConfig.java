@@ -49,16 +49,18 @@ cyclic:charm_speed,1,1,5
 cyclic:ender_bag,1,1,5
 cyclic:quiver_damage,1,1,12
 cyclic:copper_sword[damage=15],1,1,5
-  cyclic:netherite_nugget,1,1,2
+cyclic:netherite_nugget,1,1,2
+ cyclic:heart,1,1,1
       """.strip()  },
       { "chests/abandoned_mineshaft",        """
-        cyclic:charm_luck,1,1,5
-        cyclic:apple_bone,2,6,30
-        cyclic:copper_pickaxe,1,1,15
-        cyclic:storage_bag,1,1,8
-  cyclic:netherite_nugget,1,1,2
-  cyclic:gem_amber,1,1,1
-  cyclic:gem_obsidian,1,1,1
+cyclic:charm_luck,1,1,5
+cyclic:apple_bone,2,6,30
+cyclic:copper_pickaxe,1,1,15
+cyclic:storage_bag,1,1,8
+cyclic:heart,1,1,2
+cyclic:netherite_nugget,1,1,2
+cyclic:gem_amber,1,1,1
+cyclic:gem_obsidian,1,1,1
       """.strip()  },
       { "chests/buried_treasure",         "cyclic:charm_crit,1,1,15" },
       { "chests/spawn_bonus_chest",     """
@@ -70,8 +72,8 @@ cyclic:sandstone_shovel[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,40
 """.strip() },
       // Strongholds
       { "chests/stronghold_corridor",   """
-
-  cyclic:netherite_nugget,1,1,2
+cyclic:heart,1,1,2
+cyclic:netherite_nugget,1,1,2
 cyclic:emerald_sword[enchantments={levels:{"minecraft:unbreaking":3}},lore=['{"text":"Ancient","color":"green","italic":true}'],custom_name='{"text":"Whispering Edge","italic":false,"color":"green"}'],1,1,3""".strip() },
       { "chests/stronghold_crossing",      """
       
@@ -79,7 +81,7 @@ cyclic:ender_eye_reuse,1,1,5
       """.strip() },
       { "chests/stronghold_library",       """
 
-  cyclic:netherite_nugget,1,1,2
+cyclic:netherite_nugget,1,1,2
 cyclic:shield_leather,1,1,8
 cyclic:ender_book,1,1,15
       """.strip() },
@@ -87,22 +89,24 @@ cyclic:ender_book,1,1,15
       { "chests/desert_pyramid",           """
 cyclic:apple_emerald,2,8,15
 cyclic:charm_xp_speed,1,1,10
-            cyclic:sandstone_sword,1,1,15
+cyclic:sandstone_sword,1,1,15
+cyclic:heart,1,1,2
       """.strip()  },
       { "chests/jungle_temple",             """
-        cyclic:apple_bone,2,6,30
-  cyclic:gem_amber,1,1,2
-  cyclic:gem_obsidian,1,1,2
-  cyclic:netherite_nugget,1,1,2
+cyclic:apple_bone,2,6,30
+cyclic:gem_amber,1,1,2
+cyclic:gem_obsidian,1,1,2
+cyclic:netherite_nugget,1,1,2
+cyclic:heart,1,1,2
       """.strip()  },
       { "chests/jungle_temple_dispenser",  """
 minecraft:tipped_arrow[potion_contents={potion:"minecraft:gravity",custom_effects:[{id:"minecraft:slowness",amplifier:2,duration:100}]}],32,64,15
 minecraft:tipped_arrow[potion_contents={potion:"minecraft:stun"]}],16,64,5
       """.strip() },
       { "chests/igloo_chest",              """
-        cyclic:spell_ice[damage=15],1,1,15
-        cyclic:spell_water[damage=15],1,1,15
-        cyclic:antimatter_wand[damage=15],1,1,5
+cyclic:spell_ice[damage=15],1,1,15
+cyclic:spell_water[damage=15],1,1,15
+cyclic:antimatter_wand[damage=15],1,1,5
       """.strip()  },
       // Pillager / woodland
       { "chests/pillager_outpost",         """
@@ -111,30 +115,31 @@ cyclic:shield_obsidian,1,1,8
 cyclic:charm_crit,1,1,12
 """.strip() },
       { "chests/woodland_mansion",         """
-  cyclic:wand_hypno,1,1,8
-  cyclic:glowing_helmet,1,1,10
-  cyclic:charm_invisible,1,1,3
-  cyclic:netherite_nugget,2,8,25
+cyclic:wand_hypno,1,1,8
+cyclic:glowing_helmet,1,1,10
+cyclic:charm_invisible,1,1,3
+cyclic:netherite_nugget,2,8,25
+cyclic:heart,1,1,2
       """.strip() },
       // Nether
       { "chests/nether_bridge",           """
-            cyclic:mattock_nether,1,1,5
-            cyclic:charm_fire,1,1,5
-            cyclic:netherbrick_sword,1,1,5
+cyclic:mattock_nether,1,1,5
+cyclic:charm_fire,1,1,5
+cyclic:netherbrick_sword,1,1,5
       """.strip() },
       { "chests/bastion_treasure",        """
-            cyclic:spikes_diamond,1,1,1
-            cyclic:charm_fire,1,1,1
-           cyclic:charm_wing,1,1,5
-  cyclic:netherite_nugget,1,1,2
-  cyclic:gem_amber,1,1,2
-  cyclic:gem_obsidian,1,1,2
-            cyclic:netherbrick_sword,1,1,5
-            
+cyclic:spikes_diamond,1,1,1
+cyclic:charm_fire,1,1,1
+cyclic:charm_wing,1,1,5
+cyclic:netherite_nugget,1,1,2
+cyclic:gem_amber,1,1,2
+cyclic:gem_obsidian,1,1,2
+cyclic:netherbrick_sword,1,1,5
+ cyclic:heart,1,1,2
       """.strip() },
       { "chests/bastion_other",           """
-
-            cyclic:netherbrick_axe,1,1,5
+ cyclic:heart,1,1,2
+  cyclic:netherbrick_axe,1,1,5
   cyclic:netherite_nugget,1,1,2
   cyclic:gem_amber,1,1,2
   cyclic:gem_obsidian,1,1,2
@@ -142,6 +147,7 @@ cyclic:charm_crit,1,1,12
       { "chests/bastion_bridge",          """
 cyclic:quiver_lightning,1,1,10
 cyclic:shield_obsidian,1,1,8
+ cyclic:heart,1,1,2
       """.strip() },
       { "chests/bastion_hoglin_stable",   """
       
@@ -155,7 +161,8 @@ cyclic:amethyst_sword,1,1,10
 cyclic:charm_crit,1,1,1
 cyclic:teleport_wand,1,1,5
 cyclic:apple_ender,2,8,15
-cyclic:emerald_chestplate,1,1,2
+cyclic:emerald_chestplate,1,1,1
+ cyclic:heart,1,1,1
 cyclic:chorus_flight,1,1,1
   cyclic:gem_amber,1,1,1
   cyclic:gem_obsidian,1,1,1
@@ -172,10 +179,12 @@ cyclic:peat_fuel,4,32,25
 cyclic:apple_diamond,4,6,15
 cyclic:teleport_wand,1,1,5
   cyclic:gem_amber,1,1,2
+   cyclic:heart,1,1,2
   cyclic:gem_obsidian,1,1,2
       """.strip()},
       { "chests/underwater_ruin_big",     """
 cyclic:amethyst_pickaxe,1,1,5
+ cyclic:heart,1,1,2
       """.strip()},
       { "chests/underwater_ruin_small",   """
       
@@ -186,6 +195,7 @@ cyclic:amethyst_pickaxe,1,1,5
       { "chests/ancient_city",             """
 cyclic:ender_bag,1,1,5
 
+  cyclic:heart,1,1,2
   cyclic:netherite_nugget,1,1,2
   cyclic:soulstone,1,1,2
   cyclic:gem_amber,1,1,2
@@ -212,6 +222,7 @@ cyclic:emerald_sword[enchantments={levels:{"minecraft:sharpness":3}}],1,1,15
 cyclic:wand_missile,1,1,8
 cyclic:apple_lofty_stature,2,4,8
 cyclic:soulstone,1,1,2
+  cyclic:heart,1,1,2
 cyclic:charm_void,1,1,2
   cyclic:charm_knockback_resistance,1,1,2
   cyclic:charm_magicdefense,1,1,5
@@ -227,6 +238,7 @@ cyclic:charm_void,1,1,2
   cyclic:wand_missile,1,1,8
     cyclic:charm_wing,1,1,3
   cyclic:charm_magicdefense,1,1,8
+  cyclic:heart,1,1,5
   cyclic:charm_creeper,1,1,8
   cyclic:soulstone,1,1,2
   cyclic:netherite_nugget,1,1,8
@@ -235,6 +247,7 @@ cyclic:charm_void,1,1,2
       { "chests/trial_chambers/reward_ominous_unique",   """
  cyclic:antimatter_wand,1,1,2
   cyclic:chorus_flight,6,16,5
+  cyclic:heart,1,1,5
   cyclic:charm_magicdefense,1,1,8
   cyclic:charm_creeper,1,1,8
   cyclic:charm_attack_speed,1,1,8
@@ -299,6 +312,7 @@ cyclic:shield_leather,1,1,25
       """.strip() },
       { "chests/village/village_temple",            """
           
+  cyclic:heart,1,1,1
             cyclic:charm_antipotion,1,1,10
       """.strip() },
       { "chests/village/village_toolsmith",     """

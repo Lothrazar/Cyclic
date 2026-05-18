@@ -8,7 +8,7 @@
       "item": "minecraft:echo_shard"
     },
     {
-      "item": "minecraft:netherite_nugget"
+      "tag": "c:nuggets/netherite"
     }
   ],
   "mix": {
@@ -20,7 +20,7 @@
     "ticks": 400
   },
   "result": {
-    "count": 4,
+    "count": 1,
     "id": "minecraft:reinforced_deepslate"
   }
 }
