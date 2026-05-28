@@ -32,7 +32,7 @@ public class BuilderItem extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
     tooltip.add(Component.translatable(msg));
-    BlockState target = BuilderActionType.getBlockState(null, stack);
+    BlockState target = BuilderActionType.getBlockState(stack);
     String block = "scepter.cyclic.nothing";
     if (target != null) {
       block = target.getBlock().getDescriptionId();

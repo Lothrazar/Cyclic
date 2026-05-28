@@ -41,7 +41,7 @@ public class ShapeCard extends ItemBaseCyclic {
       MutableComponent t = Component.translatable(getDescriptionId() + ".count");
       t.append(shape.getCount() + "");
       tooltip.add(t);
-      BlockState target = BuilderActionType.getBlockState(null, stack);
+      BlockState target = BuilderActionType.getBlockState(stack);
       String block = "scepter.cyclic.nothing";
       if (target != null) {
         block = target.getBlock().getDescriptionId();
@@ -66,7 +66,7 @@ public class ShapeCard extends ItemBaseCyclic {
     ItemStack stack = player.getMainHandItem();
     RelativeShape shape = RelativeShape.read(stack);
     if (shape != null) {
-      BlockState targetState = BuilderActionType.getBlockState(world, stack);
+      BlockState targetState = BuilderActionType.getBlockState(stack);
       if (targetState != null) {
         final BlockPos centerPos = player.blockPosition();
         //        Direction side = context.getFace(); 

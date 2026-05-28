@@ -67,7 +67,7 @@ public enum BuilderActionType {
     CompoundTag tag = wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(); tag.put(NBTBLOCKSTATE, encoded); wand.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
   }
 
-  public static BlockState getBlockState(Level level, ItemStack wand) {
+  public static BlockState getBlockState(ItemStack wand) {
     if (!wand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(NBTBLOCKSTATE)) {
       return null;
     }
