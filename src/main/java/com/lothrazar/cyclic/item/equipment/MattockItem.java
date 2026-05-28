@@ -29,6 +29,7 @@ public class MattockItem extends DiggerItem {
     this.radius = radius;
   }
 
+  /// The breaking logic was moved to BlockSpawnEvents.java; the following could be removed
   /*
     Level level = player.level();
     //    this.getTier()
@@ -74,7 +75,9 @@ public class MattockItem extends DiggerItem {
     }
     */
 
-  private List<BlockPos> getShape(BlockPos pos, int yoff, Direction sideHit) {
+  public List<BlockPos> getShape(BlockPos pos, boolean isPlayerCrouching, Direction sideHit) {
+    int yOff = radius == 2 && isPlayerCrouching ? 1 : 0;
+
     List<BlockPos> shape;
     if (sideHit == Direction.UP || sideHit == Direction.DOWN) {
       shape = ShapeUtil.squareHorizontalHollow(pos, radius);
@@ -83,13 +86,13 @@ public class MattockItem extends DiggerItem {
       }
     }
     else if (sideHit == Direction.EAST || sideHit == Direction.WEST) {
-      int y = 1 + radius - yoff;
+      int y = 1 + radius - yOff;
       int z = radius;
       shape = ShapeUtil.squareVerticalZ(pos, y, z);
     }
     else { //has to be NORTHSOUTH
       int x = radius;
-      int y = 1 + radius - yoff;
+      int y = 1 + radius - yOff;
       shape = ShapeUtil.squareVerticalX(pos, x, y);
     }
     return shape;
