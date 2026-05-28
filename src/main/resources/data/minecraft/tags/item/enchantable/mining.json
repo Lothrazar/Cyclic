@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "cyclic:mattock",
+    "cyclic:mattock_nether",
+    "cyclic:mattock_stone"
+  ]
+}
