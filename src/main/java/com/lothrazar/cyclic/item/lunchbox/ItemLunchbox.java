@@ -26,23 +26,28 @@ package com.lothrazar.cyclic.item.lunchbox;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.capabilities.Capabilities;
 
 public class ItemLunchbox extends ItemBaseCyclic {
 
-  private static final String HOLDING = "holding";
   public static final int SLOTS = 7;
 
   public ItemLunchbox(Properties prop) {
@@ -94,23 +99,24 @@ public class ItemLunchbox extends ItemBaseCyclic {
     if (!worldIn.isClientSide && entityLiving instanceof Player player) { // && !player.isCrouching()
       IItemHandler handler = stack.getCapability(Capabilities.ItemHandler.ITEM);
       if (handler != null) {
+        int foundSlot = -1;
         ItemStack found = ItemStack.EMPTY;
         //just go left to right and eat in order
         for (int i = 0; i < handler.getSlots(); i++) {
           ItemStack test = handler.getStackInSlot(i);
           if (test.has(DataComponents.FOOD) && !player.getCooldowns().isOnCooldown(test.getItem())) {
             found = test;
+            foundSlot = i;
             break;
           }
         }
         if (!found.isEmpty()) {
-          // found is edible and is not on cooldown
           ChatUtil.addServerChatMessage(player, found.getDisplayName());
-          //          found.getItem().finishUsingItem(found, worldIn, entityLiving); 
-          //moved from. eat() to forwarding the .finishUsingItem call
-          //allow mods to override finishUsingItem on their own
-          //for exmaple artifiacts everlasting beef calls .eat with found.copy() essentially
-          found.getItem().finishUsingItem(found, worldIn, entityLiving);
+          // forward to the food's finishUsingItem so mods can apply their own effects (e.g. artifacts' everlasting beef);
+          // pass a copy so vanilla LivingEntity.eat's in-place shrink doesn't bypass the handler's onContentsChanged
+          found.getItem().finishUsingItem(found.copy(), worldIn, entityLiving);
+          // route the actual consumption through the handler so onContentsChanged fires and the slot persists
+          handler.extractItem(foundSlot, 1, false);
         }
       }
     }
@@ -119,32 +125,47 @@ public class ItemLunchbox extends ItemBaseCyclic {
 
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+    ItemStack stack = player.getItemInHand(handIn);
     if (player.isCrouching()) {
       if (!worldIn.isClientSide) {
         ((ServerPlayer) player).openMenu(new ContainerProviderLunchbox(), player.blockPosition());
       }
-      return super.use(worldIn, player, handIn);
+      return InteractionResultHolder.success(stack);
     }
-    else if (player.canEat(false)) {
-      //not crouching so try to eat it
-      //if we arent full 
-      player.startUsingItem(handIn);
+    if (isEmpty(stack)) {
+      return InteractionResultHolder.fail(stack);
     }
-    return super.use(worldIn, player, handIn);
+    return ItemUtils.startUsingInstantly(worldIn, player, handIn);
   }
 
-
-
-  public static void setHoldingEdible(ItemStack box, boolean edible) {
-    CustomData.EMPTY.copyTag().putBoolean(HOLDING, edible);
+  private static boolean isEmpty(ItemStack stack) {
+    CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+    int max = tag.getInt("count_max");
+    int empty = tag.getInt("count_empty");
+    return max == 0 || empty >= max;
   }
 
   public static int getColour(ItemStack stack) {
-    if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(HOLDING)) {
-      // green? return 0x00AAAAFF;
-      return 0x000000FF; //  0xFFFF0011;
+    if (FMLEnvironment.dist == Dist.CLIENT && shouldHideLayer(stack)) {
+      return 0x00000000;
     }
     return 0xFFFFFFFF;
+  }
+
+  private static boolean shouldHideLayer(ItemStack stack) {
+    Minecraft mc = Minecraft.getInstance();
+    if (mc.screen instanceof ScreenLunchbox lunchScreen) {
+      if (lunchScreen.getMenu().bag == stack) {
+        return true;
+      }
+    }
+    if (mc.player != null && mc.screen instanceof AbstractContainerScreen<?> && !(mc.screen instanceof CreativeModeInventoryScreen)) {
+      ItemStack carried = mc.player.containerMenu.getCarried();
+      if (!carried.isEmpty() && carried.getFoodProperties(mc.player) != null) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

@@ -1,8 +1,6 @@
 package com.lothrazar.cyclic.event;
 
-import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.crafting.PacketItemGui;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickItem;
@@ -49,20 +47,6 @@ public class ClientInputEvents {
       if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
         boolean isDown = event.getScrollDeltaY() < 0;
         // net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
-      }
-    }
-  }
-
-  @SubscribeEvent
-  public void onScreenRender(ScreenEvent.Render.Pre event) {
-    Minecraft mc = Minecraft.getInstance();
-    Screen screen = mc.screen;
-    if (screen instanceof AbstractContainerScreen<?> gui && !(screen instanceof CreativeModeInventoryScreen)) {
-      ItemStack maybeFood = mc.player.containerMenu.getCarried();
-      List<ItemStack> boxes = ItemBaseCyclic.findAmmos(mc.player, ItemRegistry.LUNCHBOX.get());
-      for (ItemStack box : boxes) {
-        boolean isEdible = maybeFood.getFoodProperties(mc.player)!=null;
-        ItemLunchbox.setHoldingEdible(box, isEdible);
       }
     }
   }

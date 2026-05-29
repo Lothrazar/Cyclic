@@ -38,19 +38,13 @@ public class LunchboxCapability extends ItemStackHandler {
     CompoundTag data = boxStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     data.put(NBT_KEY, serializeNBT(server.registryAccess()));
     int empty = 0;
-    boolean holding = false;
     for (int i = 0; i < getSlots(); i++) {
-      ItemStack s = getStackInSlot(i);
-      if (s.isEmpty()) {
+      if (getStackInSlot(i).isEmpty()) {
         empty++;
-      }
-      else if (s.has(DataComponents.FOOD)) {
-        holding = true;
       }
     }
     data.putInt("count_max", getSlots());
     data.putInt("count_empty", empty);
-    data.putBoolean("holding", holding);
     boxStack.set(DataComponents.CUSTOM_DATA, CustomData.of(data));
   }
 }
