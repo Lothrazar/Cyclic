@@ -12,7 +12,7 @@ dependencies {
  // compileOnly "vazkii.botania:Botania:[VERSION]:api"
 
 
-  implementation "local.mods:flib:${minecraft_version}-${flib_version}"
+ // implementation "local.mods:flib:${minecraft_version}-${flib_version}"
 
   //deps outside of tmpl
   implementation "curse.maven:jeed-532286:${jeed_file}"

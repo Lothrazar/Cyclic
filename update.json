@@ -2,6 +2,7 @@
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 
 	"promos": { 
+		"1.21.1-latest":"1.13.7",
 		"1.20.1-latest":"1.13.7",
 		"1.19.2-latest":"1.9.0",
 		"1.19.4-latest":"1.11.0",
@@ -198,7 +199,7 @@
 
 	},
 	"1.21.1": {
-		"1.14.0": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2.  Blocks removed: anti_beacon "
+		"1.14.0.alpha": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2"
 
 	}
 }
