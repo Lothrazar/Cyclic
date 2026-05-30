@@ -74,35 +74,17 @@ public class LocationGpsCard extends ItemBaseCyclic {
     TagDataUtil.setItemStackBlockPos(held, pos);
 
     String dimText = LevelWorldUtil.dimensionToString(player.level());
-    setItemStackNBTVal(held, NBT_DIM, dimText);
+    TagDataUtil.setItemStackNBTVal(held, NBT_DIM, dimText);
 
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE, side.ordinal());
     TagDataUtil.setItemStackNBTVal(held, NBT_SIDE + "facing", player.getDirection().ordinal());
     ChatUtil.sendStatusMessage(player, ChatUtil.lang("item.location.saved") + ChatUtil.blockPosToString(pos));
     // fl
     Vec3 vec = context.getClickLocation();
-    setItemStackNBTVal(held, "hitx", vec.x - pos.getX());
-    setItemStackNBTVal(held, "hity", vec.y - pos.getY());
-    setItemStackNBTVal(held, "hitz", vec.z - pos.getZ());
+    TagDataUtil.setItemStackNBTVal(held, "hitx", vec.x - pos.getX());
+    TagDataUtil.setItemStackNBTVal(held, "hity", vec.y - pos.getY());
+    TagDataUtil.setItemStackNBTVal(held, "hitz", vec.z - pos.getZ());
     return InteractionResult.SUCCESS;
-  }
-
-  /* TODO : The next 3 methods should be moved to FLib, in the TagDataUtil class to replace the existing setItemStackNBTVal method.
-      A new method can be added if a different type of parameter is needed; the Consumer one (here, setItemStackNBTValLib) should remain private after the move.
-  */
-  private void setItemStackNBTVal(ItemStack held, String prop, String value) {
-    setItemStackNBTValLib(held, tag -> tag.putString(prop, value));
-  }
-
-  private void setItemStackNBTVal(ItemStack held, String prop, double value) {
-    setItemStackNBTValLib(held, tag -> tag.putDouble(prop, value));
-  }
-
-  private void setItemStackNBTValLib(ItemStack item, Consumer<CompoundTag> writer) {
-    if (item.isEmpty()) return;
-    CompoundTag tag = item.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-    writer.accept(tag);
-    item.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
   }
 
   public static BlockPosDim getPosition(ItemStack item) {
