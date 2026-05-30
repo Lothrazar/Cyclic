@@ -68,9 +68,8 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
 
   @Override
   public void toggle(Player player, ItemStack held) {
-    CompoundTag tags = TagDataUtil.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
-    tags.putInt(NBT_STATUS, vnew);
+    TagDataUtil.setItemStackNBTVal(held, NBT_STATUS, vnew);
   }
 
   @Override

@@ -49,6 +49,7 @@ import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
+import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -328,6 +329,7 @@ public class ClientRegistryCyclic {
     event.register(MenuTypeRegistry.SOUND_PLAYER.get(), ScreenSoundPlayer::new);
     event.register(MenuTypeRegistry.COMPUTER_SHAPE.get(), ScreenShapedata::new);
     event.register(MenuTypeRegistry.MINER.get(), ScreenMiner::new);
+    event.register(MenuTypeRegistry.LUNCHBOX.get(), ScreenLunchbox::new);
   }
 
   @OnlyIn(Dist.CLIENT)
