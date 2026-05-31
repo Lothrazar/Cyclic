@@ -21,14 +21,13 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-public class WandHypnoItem extends ItemBaseCyclic {
+public class WandHypnoItem extends ItemHasEnergy {
 
   public static ModConfigSpec.IntValue COST;
   public static ModConfigSpec.IntValue RANGE;
 
   public WandHypnoItem(Properties properties) {
     super(properties.stacksTo(1));
-    this.setUsesEnergy();
   }
 
   @Override
