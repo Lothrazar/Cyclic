@@ -79,9 +79,11 @@ public class EnderApple extends ItemBaseCyclic {
               TagKey.create(Registries.STRUCTURE, ResourceLocation.parse(conf)),
               entityLiving.blockPosition(), 100, false);
           if (blockpos != null) {
-            //add to ze frekni map yo 
+            //add to ze frekni map yo
             double distance = LevelWorldUtil.distanceBetweenHorizontal(blockpos.getFirst(), entityLiving.blockPosition());
-            distanceStructNames.put(blockpos.getSecond().toString(), (int) distance); // simplified
+            Holder<Structure> holder = blockpos.getSecond();
+            String name = holder.unwrapKey().map(k -> k.location().toString()).orElse(holder.toString());
+            distanceStructNames.put(name, (int) distance);
           }
         }
       }

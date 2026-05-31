@@ -138,6 +138,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -152,9 +153,9 @@ public class BlockRegistry {
           .title(Component.translatable("itemGroup." + ModCyclic.MODID))
           .displayItems((displayParameters, output) -> {
             //
-            // important: keep FQCN
-            if (net.neoforged.fml.ModList.get().isLoaded(CompatConstants.PATCHOULI)) {
+            if (ModList.get().isLoaded(CompatConstants.PATCHOULI)) {
               try {
+                // important: keep FQCN
                 ItemStack guideBook = vazkii.patchouli.api.PatchouliAPI.get().getBookStack(
                     net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "guide_book"));
                 if (!guideBook.isEmpty()) {
