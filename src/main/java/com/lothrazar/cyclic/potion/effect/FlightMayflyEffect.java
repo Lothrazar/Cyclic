@@ -7,7 +7,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-// import net.neoforged.bus.api.Event.Result;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class FlightMayflyEffect extends CyclicMobEffect {
@@ -40,7 +39,7 @@ public class FlightMayflyEffect extends CyclicMobEffect {
   @Override
   public void isPotionApplicable(MobEffectEvent.Applicable event) {
     if (event.getEntity() instanceof Player player) {
-      if (player.isCreative()) { //no creative players should use this to fly
+      if (player.isCreative() || player.isSpectator()) { //no creative players should use this to fly
         event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
       }
     }

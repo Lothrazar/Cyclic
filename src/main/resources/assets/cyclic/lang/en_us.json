@@ -77,7 +77,7 @@
   "item.cyclic.shield_obsidian.guide":"Prevents knockback completely while blocking.  Takes no durability damage from projectiles or explosions (unless they bypass armor)",
   "item.cyclic.shield_bone":"Bone Shield",
   "item.cyclic.shield_bone.tooltip":"Average shield",
-  "item.cyclic.shield_bone.guide":"Takes no durability tamage from projectiles.  Not weaker than normal shields unlike some others",
+  "item.cyclic.shield_bone.guide":"Takes no durability damage from projectiles.  Not weaker than normal shields unlike some others",
   "item.cyclic.flute_summoning":"Summoning Flute",
   "item.cyclic.flute_summoning.tooltip":"Tap on a specific entity to summon it later",
   "item.cyclic.flute_summoning.teleported":"Attempting teleport...",

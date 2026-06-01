@@ -21,7 +21,7 @@ public class MagneticEffect extends CyclicMobEffect {
       if (inst == null) {
         return;
       }
-      final int amp = inst.getAmplifier();
+      final int amp = inst.getAmplifier() + 1;
       EntityUtil.moveEntityItemsInRegion(livingEntity.level(), livingEntity.blockPosition(), 8 * amp, 1 + amp);
     }
   }

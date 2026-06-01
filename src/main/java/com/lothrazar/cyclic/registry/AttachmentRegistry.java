@@ -23,4 +23,7 @@ public class AttachmentRegistry {
               .serialize(PlayerCapabilityStorage.CODEC)
               .copyOnDeath()
               .build());
+
+  public static final Supplier<AttachmentType<Integer>> LAUNCH_USES =
+      ATTACHMENT_TYPES.register("launch_uses", () -> AttachmentType.builder(() -> 0).build());
 }
