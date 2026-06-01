@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 // import net.neoforged.bus.api.Event.Result;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -34,6 +35,16 @@ public class FlightMayflyEffect extends CyclicMobEffect {
       if (!player.getAbilities().mayfly) {
         setMayFlyFromServer(event.getEntity(), true);
       }
+    }
+  }
+
+  // MobEffectEvent.Added does NOT fire when an effect is restored from NBT on rejoin, and vanilla
+  // GameType.updatePlayerAbilities() forces mayfly=false on non-creative players during placeNewPlayer.
+  // Re-assert mayfly every tick while the effect is active — cheap (no-op once set), and corrects rejoin / gamemode-flip drift.
+  @Override
+  public void tick(EntityTickEvent.Pre event) {
+    if (event.getEntity() instanceof ServerPlayer sp && !sp.getAbilities().mayfly) {
+      setMayFlyFromServer(sp, true);
     }
   }
 

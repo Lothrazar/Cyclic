@@ -14,16 +14,19 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class PotionEvents {
 
+  // MobEffectInstance.getEffect() and MobEffectEvent.Remove.getEffect() return Holder<MobEffect> in 1.21,
+  // not MobEffect directly. The instanceof check compiles (Holder is an interface, CyclicMobEffect isn't
+  // final) but never matches at runtime — must unwrap via .value() first.
   @SubscribeEvent
   public void onPotionAdded(MobEffectEvent.Added event) {
-    if (event.getEffectInstance().getEffect() instanceof CyclicMobEffect self) {
+    if (event.getEffectInstance().getEffect().value() instanceof CyclicMobEffect self) {
       self.onPotionAdded(event);
     }
   }
 
   @SubscribeEvent
   public void isPotionApplicable(MobEffectEvent.Applicable event) {
-    if (event.getEffectInstance().getEffect() instanceof CyclicMobEffect self) {
+    if (event.getEffectInstance().getEffect().value() instanceof CyclicMobEffect self) {
       self.isPotionApplicable(event);
     }
     BlockRegistry.ANTI_BEACON.get().isPotionApplicable(event);
@@ -31,14 +34,14 @@ public class PotionEvents {
 
   @SubscribeEvent
   public void onPotionRemove(MobEffectEvent.Remove event) {
-    if (event.getEffect() instanceof CyclicMobEffect self) {
+    if (event.getEffect().value() instanceof CyclicMobEffect self) {
       self.onPotionRemove(event);
     }
   }
 
   @SubscribeEvent
   public void onPotionExpiry(MobEffectEvent.Expired event) {
-    if (event.getEffectInstance().getEffect() instanceof CyclicMobEffect self) {
+    if (event.getEffectInstance().getEffect().value() instanceof CyclicMobEffect self) {
       self.onPotionExpiry(event);
     }
   }

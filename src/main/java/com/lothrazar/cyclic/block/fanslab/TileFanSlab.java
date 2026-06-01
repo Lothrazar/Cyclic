@@ -144,7 +144,10 @@ public class TileFanSlab extends TileBlockEntityCyclic {
       default:
       break;
     }
-    AABB region = new AABB(start.getX(), start.getY(), start.getZ(), end.getX() + 1, end.getY() + 1, end.getZ() + 1);
+    // Use encapsulatingFullBlocks so the AABB is min/max'd per axis;
+    // the Y-axis branch above offsets start east and end south, leaving start.x > end.x,
+    // which the hand-rolled (sx, sy, sz, ex+1, ey+1, ez+1) form collapses to a zero-width slice.
+    AABB region = AABB.encapsulatingFullBlocks(start, end);
     List<Entity> entitiesFound = this.getLevel().getEntitiesOfClass(Entity.class, region);
     int moved = 0;
     final boolean doPush = true;

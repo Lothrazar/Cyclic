@@ -34,12 +34,14 @@ public class EdibleFlightItem extends AppleBuffs {
   @Override
   public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entity) {
     final var flight = PotionEffectRegistry.FLIGHT;
+    // MobEffectInstance(holder, duration, amplifier, ambient, visible, showIcon)
+    //   visible=false → no swirly particles; showIcon=true keeps the HUD timer chip so the player sees it ticking down.
     if (entity.hasEffect(flight)) {
       MobEffectInstance currentEff = entity.getEffect(flight);
-      currentEff.update(new MobEffectInstance(PotionEffectRegistry.FLIGHT, currentEff.getDuration() + TICKS.get())); // update to merge together new and existing timers
+      currentEff.update(new MobEffectInstance(flight, currentEff.getDuration() + TICKS.get(), 0, false, false, true)); // merge new timer onto existing
     }
     else {
-      entity.addEffect(new MobEffectInstance(flight, TICKS.get()));
+      entity.addEffect(new MobEffectInstance(flight, TICKS.get(), 0, false, false, true));
     }
     return super.finishUsingItem(stack, worldIn, entity);
   }

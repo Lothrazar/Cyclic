@@ -459,13 +459,7 @@ public class ItemEvents {
     Level world = event.getLevel();
     BlockPos pos = event.getPos();
     BlockState state = world.getBlockState(pos);
-    if (ConfigRegistry.CYAN_PODZOL_LEGACY.get()) {
-      //legacy feature, i meant to remove it in minecraft 1.16.2ish but forgot so now its a config
-      if (state.getBlock() == Blocks.PODZOL && world.isEmptyBlock(pos.above())) {
-        event.setSuccessful(true);
-        world.setBlockAndUpdate(pos.above(), BlockRegistry.FLOWER_CYAN.get().defaultBlockState());
-      }
-    }
+
     if (state.getBlock() == BlockRegistry.FLOWER_CYAN.get()) {
       event.setSuccessful(true);
       if (world.random.nextDouble() < 0.5) {

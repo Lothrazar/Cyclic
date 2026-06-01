@@ -121,8 +121,6 @@ public class ConfigRegistry {
   public static DoubleValue CHARM_SPEED;
   public static DoubleValue CHARM_ATTACKSPEED;
   public static BooleanValue OVERRIDE_TRANSPORTER_SINGLETON;
-  public static BooleanValue GENERATE_FLOWERS;
-  public static BooleanValue CYAN_PODZOL_LEGACY;
   public static BooleanValue TRANSFER_NODES_DIMENSIONAL;
   public static IntValue SOUND_RADIUS;
   public static IntValue RECORDER_RADIUS;
@@ -434,6 +432,7 @@ public class ConfigRegistry {
     OVERRIDE_TRANSPORTER_SINGLETON = CFG.comment(" Override chest placement when a 1/2 split chest is picked up, and set placed block as a singleton chests (prevents visual glitch of the open-sided half chest).  Set to false to restore old behavior and allow the split-chest placement.")
         .define("overrideChestSingle", true);
     CFG.pop();
+
     CFG.comment(" Heart items").push("heart");
     HeartToxicItem.HEARTXPMINUS = CFG.comment(" Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
     HeartItem.MAX = CFG.comment(" Maximum number of hearts that can be attained (including initial 10)").defineInRange("maximum", 100, 1, 200);

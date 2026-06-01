@@ -118,7 +118,6 @@ import com.lothrazar.cyclic.item.torchthrow.ItemTorchThrower;
 import com.lothrazar.cyclic.item.transporter.TileTransporterEmptyItem;
 import com.lothrazar.cyclic.item.transporter.TileTransporterItem;
 import com.lothrazar.cyclic.registry.MaterialRegistry.ToolMats;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
@@ -148,48 +147,48 @@ public class ItemRegistry {
   public static final DeferredItem<Item> APPLE_HONEY = ITEMS.register("apple_honey", () -> new ItemBaseCyclic(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT * 4).saturationModifier(APPLESATUR * 4)
       .build())));
   public static final DeferredItem<Item> APPLE_CHORUS = ITEMS.register("apple_chorus", () -> new AppleBuffs(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR)
-      .effect(() -> new MobEffectInstance(MobEffects.LEVITATION, LARGEPOTIONDUR, 1), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.UNLUCK, LARGEPOTIONDUR, 1), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, SMALLPOTIONDUR, 1), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.LEVITATION, LARGEPOTIONDUR, 1), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.DAMAGE_RESISTANCE, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.UNLUCK, LARGEPOTIONDUR, 1), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.SLOW_FALLING, SMALLPOTIONDUR, 1), 1)
       .alwaysEdible()
       .build())));
   public static final DeferredItem<Item> APPLE_BONE = ITEMS.register("apple_bone", () -> new AppleBuffs(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR)
-      .effect(() -> new MobEffectInstance(MobEffects.JUMP, LARGEPOTIONDUR, 4 + 5), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.INVISIBILITY, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.WEAKNESS, LARGEPOTIONDUR, 2), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.UNLUCK, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.JUMP, LARGEPOTIONDUR, 4 + 5), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.INVISIBILITY, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.WEAKNESS, LARGEPOTIONDUR, 2), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.UNLUCK, LARGEPOTIONDUR, 0), 1)
       .alwaysEdible()
       .build())));
   public static final DeferredItem<Item> APPLE_PRISMARINE = ITEMS.register("apple_prismarine", () -> new AppleBuffs(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR)
-      .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.GLOWING, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.DIG_SPEED, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.GLOWING, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.WATER_BREATHING, LARGEPOTIONDUR, 0), 1)
       .alwaysEdible()
       .build())));
   public static final DeferredItem<Item> APPLE_LAPIS = ITEMS.register("apple_lapis", () -> new AppleBuffs(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR * 4)
-      .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.CONDUIT_POWER, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, LARGEPOTIONDUR, 0), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.NIGHT_VISION, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.WATER_BREATHING, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.CONDUIT_POWER, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.SLOW_FALLING, LARGEPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.MOVEMENT_SPEED, LARGEPOTIONDUR, 0), 1)
       .fast().alwaysEdible()
       .build())));
   public static final DeferredItem<Item> APPLE_IRON = ITEMS.register("apple_iron", () -> new AppleBuffs(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR)
-      .effect(() -> new MobEffectInstance(MobEffects.HEALTH_BOOST, LARGEPOTIONDUR, 2), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, LARGEPOTIONDUR, 2), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.HEALTH_BOOST, LARGEPOTIONDUR, 2), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.DAMAGE_RESISTANCE, LARGEPOTIONDUR, 2), 1)
       .fast().alwaysEdible()
       .build())));
   public static final DeferredItem<Item> APPLE_DIAMOND = ITEMS.register("apple_diamond", () -> new AppleBuffs(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationModifier(1)
-      .effect(() -> new MobEffectInstance(MobEffects.HEALTH_BOOST, SMALLPOTIONDUR, 4), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, SMALLPOTIONDUR, 4), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.HEALTH_BOOST, SMALLPOTIONDUR, 4), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.DAMAGE_RESISTANCE, SMALLPOTIONDUR, 4), 1)
       .fast().alwaysEdible()
       .build())));
   public static final DeferredItem<Item> APPLE_EMERALD = ITEMS.register("apple_emerald", () -> new AppleBuffs(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT * 3).saturationModifier(APPLESATUR)
-      .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, SMALLPOTIONDUR, 2), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.LUCK, SMALLPOTIONDUR, 1), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, SMALLPOTIONDUR, 1), 1)
-      .effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, SMALLPOTIONDUR, 1), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.DIG_SPEED, SMALLPOTIONDUR, 2), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.LUCK, SMALLPOTIONDUR, 1), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.DAMAGE_BOOST, SMALLPOTIONDUR, 1), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.SLOW_FALLING, SMALLPOTIONDUR, 1), 1)
       .alwaysEdible().build())));
   public static final DeferredItem<Item> APPLE_CHOCOLATE = ITEMS.register("apple_chocolate", () -> new AppleChocolate(new Item.Properties().food(new FoodProperties.Builder().nutrition(APPLENUT).saturationModifier(APPLESATUR * 4)
       .alwaysEdible().build())));
