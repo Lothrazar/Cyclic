@@ -36,4 +36,5 @@ public final class ClientNetHandlers {
       Minecraft.getInstance().player.getAbilities().flying = false;
     }
   }
+
 }

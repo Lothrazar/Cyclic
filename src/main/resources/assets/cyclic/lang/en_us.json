@@ -797,7 +797,7 @@
   "item.cyclic.chorus_flight.tooltip": "A burst of flight",
   "item.cyclic.chorus_spectral.guide": "Eat this to phase through walls for a few seconds. Does not include flight, you will fall into the void without extra items or abilities, and you can get stuck inside a wall",
   "item.cyclic.chorus_spectral": "Corrupted Chorus Fruit",
-  "item.cyclic.chorus_spectral.tooltip": "Grants the curse of noClip",
+  "item.cyclic.chorus_spectral.tooltip": "WARNING: Do not eat unless flying",
   "item.cyclic.glowing_helmet": "Vision Helmet",
   "item.cyclic.glowing_helmet.tooltip": "Glowing night vision",
   "item.cyclic.glowing_helmet.guide": "Enables glowing night vision while worn, you can also turn it on and off by right-clicking (works in most inventory screens)",
@@ -1389,8 +1389,15 @@
   "energy.button.top": "Fuel Bar Above",
   "energy.button.side": "Fuel Bar Side",
   "potion.butter.oops": "Butterfingers!  Dropped something when you moved.",
-  
-  
+
+  "effect.cyclic.noclip": "Phasing",
+  "effect.cyclic.noclip.description": "Phasing",
+  "item.minecraft.potion.effect.cyclic_noclip": "Potion of Phasing",
+  "item.minecraft.splash_potion.effect.cyclic_noclip": "Splash Potion of Phasing",
+  "item.minecraft.lingering_potion.effect.cyclic_noclip": "Lingering Potion of Phasing",
+  "item.minecraft.tipped_arrow.effect.cyclic_noclip": "Arrow of Phasing",
+
+
   "effect.cyclic.flight": "Flight",
   "effect.cyclic.flight.description": "Players can fly using this effect",
   "item.minecraft.potion.effect.cyclic_flight": "Potion of Flight",

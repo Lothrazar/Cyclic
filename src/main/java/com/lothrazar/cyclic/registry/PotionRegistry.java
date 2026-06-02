@@ -33,6 +33,10 @@ public class PotionRegistry {
   public static final DeferredHolder<Potion, Potion> HUNGER = POTIONS.register("hunger", () -> new Potion(ModCyclic.MODID + "_hunger", new MobEffectInstance(MobEffects.HUNGER, normal)));
   public static final DeferredHolder<Potion, Potion> LEVITATION = POTIONS.register("levitation", () -> new Potion(ModCyclic.MODID + "_levitation", new MobEffectInstance(MobEffects.LEVITATION, smal)));
   public static final DeferredHolder<Potion, Potion> MAGNETIC = POTIONS.register("magnetic", () -> new Potion(ModCyclic.MODID + "_magnetic", new MobEffectInstance(PotionEffectRegistry.MAGNETIC, normal)));
+  // NoClip is intentionally a curse: shorter duration, no paired flight. Player either brings their own flight source
+  // (Flight potion, creative, elytra, etc.) or they free-fall through bedrock when they phase. The HARMFUL category
+  // gives the effect a red HUD tint as a warning; the chorus_spectral item tooltip spells it out further.
+  public static final DeferredHolder<Potion, Potion> NOCLIP = POTIONS.register("noclip", () -> new Potion(ModCyclic.MODID + "_noclip", new MobEffectInstance(PotionEffectRegistry.NOCLIP, smal)));
   public static final DeferredHolder<Potion, Potion> REACH_DISTANCE = POTIONS.register("reach_distance", () -> new Potion(ModCyclic.MODID + "_reach_distance", new MobEffectInstance(PotionEffectRegistry.REACH_DISTANCE, normal)));
   public static final DeferredHolder<Potion, Potion> RESISTANCE = POTIONS.register("resistance", () -> new Potion(ModCyclic.MODID + "_resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, smal)));
   public static final DeferredHolder<Potion, Potion> STUN = POTIONS.register("stun", () -> new Potion(ModCyclic.MODID + "_stun", new MobEffectInstance(PotionEffectRegistry.STUN, smal)));
@@ -55,6 +59,7 @@ public class PotionRegistry {
     public static ModConfigSpec.BooleanValue HUNGER;
     public static ModConfigSpec.BooleanValue LEVITATION;
     public static ModConfigSpec.BooleanValue MAGNETIC;
+    public static ModConfigSpec.BooleanValue NOCLIP;
     public static ModConfigSpec.BooleanValue REACH_DISTANCE;
     public static ModConfigSpec.BooleanValue RESISTANCE;
     public static ModConfigSpec.BooleanValue STUN;
@@ -123,6 +128,9 @@ public class PotionRegistry {
     }
     if (PotionRecipeConfig.FLIGHT.get()) {
       builder.addMix(Potions.STRONG_HEALING, Items.CHORUS_FRUIT, PotionRegistry.FLIGHT);
+    }
+    if (PotionRecipeConfig.NOCLIP.get()) {
+      builder.addMix(PotionRegistry.FLIGHT, ItemRegistry.MEMBRANE.get(), PotionRegistry.NOCLIP);
     }
   }
 }

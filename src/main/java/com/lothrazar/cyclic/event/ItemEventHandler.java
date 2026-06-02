@@ -1,13 +1,13 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.item.elemental.FireballItem;
 import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.library.core.IBlockFacade;
 import com.lothrazar.cyclic.block.scaffolding.ItemScaffolding;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.enchant.MultiBowEnchant;
 import com.lothrazar.cyclic.item.SleepingMatItem;
 import com.lothrazar.cyclic.item.animal.ItemHorseCopperRadar;
 import com.lothrazar.cyclic.item.animal.ItemHorseEnder;
@@ -26,15 +26,12 @@ import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.net.BlockFacadeMessage;
 import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
 import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.cyclic.registry.EnchantRegistry;
-import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.library.util.AttributesUtil;
 import com.lothrazar.library.util.ChatUtil;
-import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import com.lothrazar.library.util.SoundUtil;
@@ -73,7 +70,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -84,7 +80,7 @@ import net.neoforged.neoforge.event.entity.player.*;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-public class ItemEvents {
+public class ItemEventHandler {
 
   private boolean inPotionAddedHandler = false;
 
@@ -134,27 +130,6 @@ public class ItemEvents {
     }
   }
 
-  @SubscribeEvent
-  public void onArrowLooseEvent(ArrowLooseEvent event) {
-    if (!MultiBowEnchant.isEnabled()) {
-      return;
-    }
-    ItemStack stackBow = event.getBow();
-    Player player = event.getEntity();
-    Level worldIn = player.level();
-    if (!worldIn.isClientSide) {
-      var holder = EnchantUtil.holder(EnchantRegistry.MULTIBOW, player);
-      int level = EnchantUtil.getCurrentLevelTool(holder, stackBow);
-      if (level <= 0) {
-        return;
-      }
-      Vec3 playerDirection = EntityUtil.lookVector(player.getYRot(), player.getXRot());
-      Vec3 left = playerDirection.cross(new Vec3(0, 1, 0));
-      Vec3 right = playerDirection.cross(new Vec3(0, -1, 0));
-      MultiBowEnchant.spawnArrow(worldIn, player, stackBow, event.getCharge(), left.normalize());
-      MultiBowEnchant.spawnArrow(worldIn, player, stackBow, event.getCharge(), right.normalize());
-    }
-  }
 
   @SubscribeEvent
   public void onLivingKnockBackEvent(LivingKnockBackEvent event) {
@@ -334,10 +309,7 @@ public class ItemEvents {
 
   @SubscribeEvent
   public void onPlayerDeath(LivingDeathEvent event) {
-    //
-    if (event.getEntity() instanceof Player) {
-      Player player = (Player) event.getEntity();
-      //      Items.TOTEM_OF_UNDYING
+    if (event.getEntity() instanceof Player player) {
       ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.SOULSTONE.get());
       if (SoulstoneCharm.checkTotemDeathProtection(event.getSource(), player, charmStack)) {
         event.setCanceled(true);
@@ -357,8 +329,7 @@ public class ItemEvents {
   }
 
   @SubscribeEvent
-  public void onEntityUpdate(EntityTickEvent.Pre event) { // was LivingTickEvent
-
+  public void onEntityUpdate(EntityTickEvent.Pre event) {
     tryItemHorseEnder(event);
     tryItemHorseTickEffects(event);
     if (event.getEntity() instanceof Player player) {
@@ -366,6 +337,7 @@ public class ItemEvents {
       //step
       LoftyStatureApple.onUpdate(player);
       GlowingHelmetItem.onEntityUpdate(event);
+      FireballItem.tickHoldingFireball(player);
     }
   }
 

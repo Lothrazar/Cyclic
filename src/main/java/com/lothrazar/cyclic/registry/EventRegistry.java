@@ -1,11 +1,8 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.capabilities.CapabilityEvents;
-import com.lothrazar.cyclic.event.BlockSpawnEvents;
-import com.lothrazar.cyclic.event.ItemEvents;
-import com.lothrazar.cyclic.event.PlayerAbilityEvents;
-import com.lothrazar.cyclic.event.PlayerDataEvents;
-import com.lothrazar.cyclic.event.PotionEvents;
+import com.lothrazar.cyclic.event.*;
+import com.lothrazar.cyclic.potion.PotionEventHandler;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -38,11 +35,11 @@ public class EventRegistry {
 
   public static void setup(final FMLCommonSetupEvent event) {
     //now all blocks/items exist
-    NeoForge.EVENT_BUS.register(new PotionEvents());
-    NeoForge.EVENT_BUS.register(new ItemEvents());
-    NeoForge.EVENT_BUS.register(new BlockSpawnEvents());
-    NeoForge.EVENT_BUS.register(new PlayerDataEvents());
-    NeoForge.EVENT_BUS.register(new PlayerAbilityEvents());
+    NeoForge.EVENT_BUS.register(new PotionEventHandler());
+    NeoForge.EVENT_BUS.register(new ItemEventHandler());
+    NeoForge.EVENT_BUS.register(new EnchantEventHandler());
+    NeoForge.EVENT_BUS.register(new WorldEventHandler());
+    NeoForge.EVENT_BUS.register(new PlayerDataEventHandler());
     NeoForge.EVENT_BUS.register(new CapabilityEvents());
     // enchantment event handlers
     NeoForge.EVENT_BUS.register(new BeekeeperEnchant());

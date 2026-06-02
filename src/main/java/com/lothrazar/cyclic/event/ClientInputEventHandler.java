@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.crafting.PacketItemGui;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickItem;
@@ -9,7 +10,6 @@ import com.lothrazar.cyclic.item.food.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
 import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
-//import com.lothrazar.cyclic.registry.EnchantRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.packet.PacketItemToggle;
@@ -28,11 +28,11 @@ import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-public class ClientInputEvents {
+public class ClientInputEventHandler {
 
   @SubscribeEvent
   public void onKeyInput(InputEvent.Key event) {
-    // EnchantRegistry.LAUNCH.get().onKeyInput(Minecraft.getInstance().player);
+    MultiJumpEnchant.onKeyInput(Minecraft.getInstance().player);
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
     }
@@ -46,7 +46,7 @@ public class ClientInputEvents {
       event.setCanceled(true);
       if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
         boolean isDown = event.getScrollDeltaY() < 0;
-        // net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
+        PacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
       }
     }
   }

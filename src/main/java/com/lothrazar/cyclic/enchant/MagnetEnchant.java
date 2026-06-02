@@ -8,18 +8,31 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class MagnetEnchant {
 
-  private static final int ITEM_HRADIUS = 4;
-  private static final int HRADIUS_PER_LEVEL = 4;
-  private static final int ITEM_VRADIUS = 4;
   public static final String ID = "magnet";
   public static BooleanValue CFG;
+  public static IntValue H_RADIUS_BASE;
+  public static IntValue H_RADIUS_PER_LEVEL;
+  public static IntValue V_RADIUS;
 
   public static boolean isEnabled() {
     return CFG == null || CFG.get();
+  }
+
+  private static int hRadiusBase() {
+    return H_RADIUS_BASE == null ? 4 : H_RADIUS_BASE.get();
+  }
+
+  private static int hRadiusPerLevel() {
+    return H_RADIUS_PER_LEVEL == null ? 4 : H_RADIUS_PER_LEVEL.get();
+  }
+
+  private static int vRadius() {
+    return V_RADIUS == null ? 4 : V_RADIUS.get();
   }
 
   @SubscribeEvent
@@ -29,7 +42,7 @@ public class MagnetEnchant {
     if (entity instanceof Player p && p.isSpectator()) { return; }
     int level = EnchantUtil.getLevelAll(EnchantUtil.holder(EnchantRegistry.MAGNET, entity), entity);
     if (level > 0 && !BotaniaWrapper.hasSolegnoliaAround(entity)) {
-      EntityUtil.moveEntityItemsInRegion(entity.getCommandSenderWorld(), entity.blockPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
+      EntityUtil.moveEntityItemsInRegion(entity.getCommandSenderWorld(), entity.blockPosition(), hRadiusBase() + hRadiusPerLevel() * level, vRadius());
     }
   }
 }

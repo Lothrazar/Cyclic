@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.food;
 
-import com.lothrazar.cyclic.event.PlayerDataEvents;
+import com.lothrazar.cyclic.event.PlayerDataEventHandler;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
@@ -33,7 +33,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
     }
     player.getCooldowns().addCooldown(stack.getItem(), 40); // 2seconds
     if (!worldIn.isClientSide) {
-      CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
+      CyclicFile datFile = PlayerDataEventHandler.getOrCreate(player);
       datFile.toggleStepHeight();
       ChatUtil.addServerChatMessage(player, "cyclic.unlocks.stepheight." + datFile.stepHeight);
     }
@@ -46,7 +46,7 @@ public class LoftyStatureApple extends ItemBaseCyclic {
   }
 
   public static void onUpdate(Player player) {
-    CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
+    CyclicFile datFile = PlayerDataEventHandler.getOrCreate(player);
     if (datFile.stepHeight) {
       AttributesUtil.enableStepHeight(player);
     }

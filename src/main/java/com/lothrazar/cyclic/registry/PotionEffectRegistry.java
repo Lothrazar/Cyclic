@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.potion.effect.ButterEffect;
 import com.lothrazar.cyclic.potion.effect.FlightMayflyEffect;
 import com.lothrazar.cyclic.potion.effect.FrostEffect;
 import com.lothrazar.cyclic.potion.effect.MagneticEffect;
+import com.lothrazar.cyclic.potion.effect.NoClipEffect;
 import com.lothrazar.cyclic.potion.effect.SnowwalkEffect;
 import com.lothrazar.cyclic.potion.effect.StunEffect;
 import com.lothrazar.cyclic.potion.effect.WaterwalkEffect;
@@ -20,10 +21,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.neoforge.registries.DeferredHolder;
-// import net.neoforged.neoforge.registries.ForgeRegistries;
 
 public class PotionEffectRegistry {
 
+  /**
+   * This is used by PotionEvents::onEntityUpdate which Subscribes to EntityTickEvent.Pre
+   *
+   */
   public static final List<CyclicMobEffect> EFFECTS = new ArrayList<>();
   public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, ModCyclic.MODID);
   public static final DeferredHolder<MobEffect, StunEffect> STUN = MOB_EFFECTS.register("stun", () -> new StunEffect(MobEffectCategory.HARMFUL, 0xcccc00));
@@ -42,4 +46,7 @@ public class PotionEffectRegistry {
   public static final DeferredHolder<MobEffect, ? extends MobEffect> FROST_WALKER = MOB_EFFECTS.register("frost_walker", () -> new FrostEffect(MobEffectCategory.BENEFICIAL, 0x42f4d7));
   public static final DeferredHolder<MobEffect, ? extends MobEffect> MAGNETIC = MOB_EFFECTS.register("magnetic", () -> new MagneticEffect(MobEffectCategory.NEUTRAL, 0x224BAF));
   public static final DeferredHolder<MobEffect, ? extends MobEffect> FLIGHT = MOB_EFFECTS.register("flight", () -> new FlightMayflyEffect(MobEffectCategory.BENEFICIAL, 0xF24BAF));
+  // HARMFUL category gives the effect a red HUD tint as a "this is risky" cue (player can fall through bedrock if Flight isn't also active).
+  // Still vanilla-removable by milk; Flight is protected against milk via PotionEvents snapshot/restore.
+  public static final DeferredHolder<MobEffect, NoClipEffect> NOCLIP = MOB_EFFECTS.register("noclip", () -> new NoClipEffect(MobEffectCategory.HARMFUL, 0xa0a0c0));
 }

@@ -23,7 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import com.lothrazar.cyclic.event.PlayerDataEvents;
+import com.lothrazar.cyclic.event.PlayerDataEventHandler;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.food.inventorycake.ContainerProviderCake;
 import com.lothrazar.library.util.ChatUtil;
@@ -69,7 +69,7 @@ public class PacketKeyBind implements CustomPacketPayload {
       //rotate type
       ServerPlayer sender = (ServerPlayer) ctx.player();
       // datfile
-      CyclicFile datFile = PlayerDataEvents.getOrCreate(sender);
+      CyclicFile datFile = PlayerDataEventHandler.getOrCreate(sender);
       if (datFile.storageVisible) {
         sender.openMenu(new ContainerProviderCake());
       }

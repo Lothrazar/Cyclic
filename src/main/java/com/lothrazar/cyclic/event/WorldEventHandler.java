@@ -1,23 +1,16 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.cache.ServerCacheHolder;
-import com.lothrazar.cyclic.registry.BlockRegistry;
-import com.lothrazar.library.util.LevelWorldUtil;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 
-public class BlockSpawnEvents {
+public class WorldEventHandler {
 
   @SubscribeEvent
   public void onExplosionEvent(ExplosionEvent.Start event) {

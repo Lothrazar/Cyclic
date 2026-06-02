@@ -1,8 +1,7 @@
 package com.lothrazar.cyclic;
 
-import com.lothrazar.cyclic.event.ClientInputEvents;
-import com.lothrazar.cyclic.event.EventRender;
-import com.lothrazar.cyclic.event.HorseCarrotOverlay;
+import com.lothrazar.cyclic.event.ClientInputEventHandler;
+import com.lothrazar.cyclic.render.HorseCarrotOverlay;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -49,8 +48,7 @@ public class ModCyclic {
 
       bus.addListener(ClientRegistryCyclic::setupClient);
 
-      NeoForge.EVENT_BUS.register(new ClientInputEvents());
-      NeoForge.EVENT_BUS.register(new EventRender());
+      NeoForge.EVENT_BUS.register(new ClientInputEventHandler());
       NeoForge.EVENT_BUS.register(new HorseCarrotOverlay());
     }
 

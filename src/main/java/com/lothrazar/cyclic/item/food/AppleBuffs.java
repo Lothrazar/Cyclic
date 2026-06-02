@@ -16,7 +16,11 @@ import net.minecraft.world.item.alchemy.PotionContents;
 public class AppleBuffs extends ItemBaseCyclic {
 
   public AppleBuffs(Properties properties) {
-    super(properties, new Settings().noTooltip());
+    this(properties, new Settings().noTooltip());
+  }
+
+  public AppleBuffs(Properties food, Settings settings) {
+    super(food,settings);
   }
 
   @Override

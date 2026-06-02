@@ -245,6 +245,7 @@ public class ConfigRegistry {
      PotionRegistry.PotionRecipeConfig.BLIND = CFG.comment(" Set false to disable the base recipe").define("blind.enabled", true);
      PotionRegistry.PotionRecipeConfig.BUTTERFINGERS = CFG.comment(" Set false to disable the base recipe").define("butterfingers.enabled", true);
      PotionRegistry.PotionRecipeConfig.FLIGHT = CFG.comment(" Set false to disable the base recipe").define("flight.enabled", true);
+     PotionRegistry.PotionRecipeConfig.NOCLIP = CFG.comment(" Set false to disable the base recipe").define("noclip.enabled", true);
      PotionRegistry.PotionRecipeConfig.FROST_WALKER = CFG.comment(" Set false to disable the base recipe").define("frost_walker.enabled", true);
      PotionRegistry.PotionRecipeConfig.GRAVITY = CFG.comment(" Set false to disable the base recipe").define("gravity.enabled", true);
      PotionRegistry.PotionRecipeConfig.HASTE = CFG.comment(" Set false to disable the base recipe").define("haste.enabled", true);
@@ -284,6 +285,9 @@ public class ConfigRegistry {
     MultiJumpEnchant.CFG = CFG.comment(" (Multijump) Set false to disable Multi Jump enchantment").define(MultiJumpEnchant.ID + ".enabled", true);
     LifeLeechEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LifeLeechEnchant.ID + ".enabled", true);
     MagnetEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MagnetEnchant.ID + ".enabled", true);
+    MagnetEnchant.H_RADIUS_BASE = CFG.comment(" Base horizontal radius for item pickup at level 1. Total horizontal radius = base + per_level * level.").defineInRange(MagnetEnchant.ID + ".h_radius_base", 4, 0, 32);
+    MagnetEnchant.H_RADIUS_PER_LEVEL = CFG.comment(" Additional horizontal radius per enchant level beyond 1.").defineInRange(MagnetEnchant.ID + ".h_radius_per_level", 4, 0, 32);
+    MagnetEnchant.V_RADIUS = CFG.comment(" Vertical pickup radius (does not scale with level).").defineInRange(MagnetEnchant.ID + ".v_radius", 4, 0, 32);
     MultiBowEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(MultiBowEnchant.ID + ".enabled", true);
     EnderPearlEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(EnderPearlEnchant.ID + ".enabled", true);
     QuickdrawEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(QuickdrawEnchant.ID + ".enabled", true);
