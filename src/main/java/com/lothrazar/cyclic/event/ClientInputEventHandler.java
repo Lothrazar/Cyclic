@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.crafting.PacketItemGui;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickItem;
+import com.lothrazar.cyclic.item.enderbook.PacketItemScroll;
 import com.lothrazar.cyclic.item.food.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
@@ -33,7 +34,7 @@ public class ClientInputEventHandler {
   @SubscribeEvent
   public void onKeyInput(InputEvent.Key event) {
     if (event.getKey() == Minecraft.getInstance().options.keyJump.getKey().getValue() && event.getAction() == GLFW.GLFW_PRESS) {
-      MultiJumpEnchant.onJump(Minecraft.getInstance().player);
+      MultiJumpEnchant.onKeyInput(Minecraft.getInstance().player);
     }
     if (ClientRegistryCyclic.CAKE.consumeClick()) {
       ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);

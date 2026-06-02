@@ -3,7 +3,6 @@ package com.lothrazar.cyclic.item.random;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
 import net.minecraft.core.BlockPos;
@@ -14,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class RandomizerItem extends ItemBaseCyclic {
 
@@ -45,14 +45,15 @@ public class RandomizerItem extends ItemBaseCyclic {
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     if (player.level().isClientSide) {
-      // PacketRegistry.INSTANCE.sendToServer
+      PacketRandomize message = new PacketRandomize(pos, side, context.getHand());
+      PacketDistributor.sendToServer(message);
     }
     EntityUtil.setCooldownItem(player, this, COOLDOWN);
     return super.useOn(context);
   }
 
   public static List<BlockPos> getPlaces(final BlockPos pos, final Direction side) {
-    List<BlockPos> places = new ArrayList<BlockPos>();
+    List<BlockPos> places = new ArrayList<>();
     int xMin = pos.getX();
     int yMin = pos.getY();
     int zMin = pos.getZ();

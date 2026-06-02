@@ -35,6 +35,7 @@ public class EventRegistry {
 
   public static void setup(final FMLCommonSetupEvent event) {
     //now all blocks/items exist
+    NeoForge.EVENT_BUS.register(new OutlineRenderHandler());
     NeoForge.EVENT_BUS.register(new PotionEventHandler());
     NeoForge.EVENT_BUS.register(new ItemEventHandler());
     NeoForge.EVENT_BUS.register(new EnchantEventHandler());
@@ -60,8 +61,6 @@ public class EventRegistry {
     NeoForge.EVENT_BUS.register(new TravellerEnchant());
     NeoForge.EVENT_BUS.register(new VenomEnchant());
     NeoForge.EVENT_BUS.register(new XpEnchant());
-    event.enqueueWork(() -> {
-      CompostRegistry.setup();
-    });
+    event.enqueueWork(CompostRegistry::setup);
   }
 }

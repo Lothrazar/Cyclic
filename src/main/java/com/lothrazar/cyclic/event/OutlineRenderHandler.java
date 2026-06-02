@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
+import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
@@ -25,7 +26,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 import java.awt.Color;
@@ -34,12 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
-public class EventRender {
-  @SubscribeEvent
-  public void onRenderOverlay(RenderGuiEvent.Post event) {}
-  @SubscribeEvent
-  public void onRenderWorldLast(RenderLevelStageEvent event) {}
-
+public class OutlineRenderHandler {
   @SubscribeEvent
   public void onRenderOutline(RenderLevelStageEvent event) {
     if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
@@ -83,6 +78,11 @@ public class EventRender {
     if (stack.getItem() instanceof ShapeCard) {
       handleShapeCard(poseStack, cameraPosition, player, stack);
     }
+
+//    stack = LaserItem.getIfHeld(player);
+//    if (!stack.isEmpty() && player.isUsingItem()) {
+//      LaserBeamHandler.handle(event, player, stack);
+//    }
   }
 
   private void handleOreProspector(PoseStack poseStack, Vec3 camPos, Level world, ItemStack stack) {

@@ -34,8 +34,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class IceWand extends ItemBaseCyclic {
@@ -51,28 +54,34 @@ public class IceWand extends ItemBaseCyclic {
     Player player = context.getPlayer();
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
-    if (side != null) {
-      pos = pos.relative(side);
-    }
+    boolean isLevelClientSide = context.getLevel().isClientSide();
+
     if (spreadWaterFromCenter(context.getLevel(), pos.relative(side))) {
       //but the real sound
-      SoundUtil.playSound(player, Blocks.PACKED_ICE.defaultBlockState().getSoundType().getBreakSound());
-      ItemStackUtil.damageItem(player, context.getItemInHand());
+      if (player != null) {
+        SoundUtil.playSound(player, Blocks.PACKED_ICE.defaultBlockState().getSoundType().getBreakSound());
+
+        if (!isLevelClientSide) {
+          ItemStackUtil.damageItem(player, context.getItemInHand());
+        }
+      }
+
+      return InteractionResult.sidedSuccess(isLevelClientSide);
     }
     return super.useOn(context);
   }
 
   private boolean spreadWaterFromCenter(Level world, BlockPos posCenter) {
     int count = 0;
+    final BlockState iceState = Blocks.ICE.defaultBlockState();
     List<BlockPos> water = LevelWorldUtil.findBlocks(world, posCenter, Blocks.WATER, RADIUS.get());
+
     for (BlockPos pos : water) {
-      FluidState fluidState = world.getBlockState(pos).getFluidState();
-      if (fluidState != null &&
-      //          fluidState.getFluidState() != null &&
-          fluidState.getAmount() >= 8) { // .getFluidState()
-        world.setBlock(pos, Blocks.ICE.defaultBlockState(), 3);
+      FluidState fluid = world.getFluidState(pos);
+      if (fluid.is(Fluids.WATER) && fluid.isSource()) {
+        world.setBlock(pos, iceState, Block.UPDATE_ALL);
+        count++;
       }
-      count++;
     }
     return count > 0;
   }
