@@ -44,7 +44,9 @@ public class MultiJumpEnchant {
     }
   }
 
-  public static void onJump(Player player) {
+  // Called from ClientInputEventHandler. Static because the caller can't go through the registry anymore
+  // (in 1.21 EnchantRegistry.LAUNCH is a ResourceKey<Enchantment>, not a DeferredHolder<…, MultiJumpEnchant>).
+  public static void onKeyInput(Player player) {
     if (player == null || player.getVehicle() instanceof Boat) { return; }
     if (player.onGround() || player.isCrouching() || player.isInWater()) return;
     if (Minecraft.getInstance().screen != null) return;

@@ -16,7 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.minecraft.nbt.NbtAccounter;
 
-public class PlayerDataEvents {
+public class PlayerDataEventHandler {
 
   public static Map<UUID, CyclicFile> DATA_QUEUE = new HashMap<>();
   public static final String FILE_EXT = ".dat";

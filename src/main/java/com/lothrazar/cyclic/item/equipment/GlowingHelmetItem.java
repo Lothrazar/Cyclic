@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.util.CharmUtil;
 import com.lothrazar.library.core.Const;
 import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.util.ChatUtil;
-import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.TagDataUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -58,14 +57,6 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
     player.removeEffectNoUpdate(MobEffects.NIGHT_VISION);
   }
 
-  private static void checkIfHelmOff(Player player) {
-    Item itemInSlot = PlayerUtil.getItemArmorSlot(player, EquipmentSlot.HEAD);
-    if (itemInSlot instanceof GlowingHelmetItem) {
-      //turn it off once, from the message
-      removeNightVision(player, false);
-    }
-  }
-
   @Override
   public void toggle(Player player, ItemStack held) {
     int vnew = isOn(held) ? 0 : 1;
@@ -86,21 +77,23 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
     return tags.getInt(NBT_STATUS) == 1;
   }
 
-  //from ItemEvents- curios slot
+  //check the vanilla HEAD armor slot first, then fall back to Curios slots
   public static void onEntityUpdate(EntityTickEvent.Pre event) {
     //reduce check to only once per second instead  of per tick
     if (event.getEntity().level().getGameTime() % Const.TICKS_PER_SEC == 0 &&
-        event.getEntity() instanceof Player player) { //some of the items need an off switch 
-      checkIfHelmOff(player);
-      // get helm
-      ItemStack helm = CharmUtil.getCurio(player, ItemRegistry.GLOWING_HELMET.get());
-      if (!helm.isEmpty()) {
-        if (isOnStatic(helm)) {
-          addNightVision(player);
-        }
-        else {
-          removeNightVision(player, false);
-        }
+        event.getEntity() instanceof Player player) {
+      ItemStack helm = player.getItemBySlot(EquipmentSlot.HEAD);
+      if (!(helm.getItem() instanceof GlowingHelmetItem)) {
+        helm = CharmUtil.getCurio(player, ItemRegistry.GLOWING_HELMET.get());
+      }
+      if (helm.isEmpty()) {
+        return;
+      }
+      if (isOnStatic(helm)) {
+        addNightVision(player);
+      }
+      else {
+        removeNightVision(player, false);
       }
     }
   }

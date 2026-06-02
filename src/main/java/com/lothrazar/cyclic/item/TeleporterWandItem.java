@@ -56,20 +56,12 @@ public class TeleporterWandItem extends ItemBaseCyclic {
     }
   }
 
-  /**
-   * pearls repair 4 durability per item, unlike default 1 per item like Torches
-   */
-  @Override
-  public int getRepairPerItem() {
-    return 4;
-  }
-
   @Override
   public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int chargeTimer) {
     if (!(entity instanceof Player)) {
       return;
     }
-    float percentageCharged = getChargedPercent(stack, chargeTimer);
+    float percentageCharged = getChargedPercent(stack, chargeTimer, entity);
     if (percentageCharged >= 0.98) { //full charge with a bit of buffer room
       Player player = (Player) entity;
       HitResult trace = player.pick(RANGE.get(), 0, true);

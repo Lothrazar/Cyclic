@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.item.ItemHasEnergy;
 import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -20,14 +21,13 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-public class WandMissileItem extends ItemBaseCyclic {
+public class WandMissileItem extends ItemHasEnergy {
 
   public static ModConfigSpec.IntValue COST;
   public static ModConfigSpec.IntValue RANGE;
 
   public WandMissileItem(Properties properties) {
     super(properties.stacksTo(1));
-    this.setUsesEnergy();
   }
 
   @Override

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item.food.inventorycake;
 
-import com.lothrazar.cyclic.event.PlayerDataEvents;
+import com.lothrazar.cyclic.event.PlayerDataEventHandler;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
@@ -20,7 +20,7 @@ public class ContainerCake extends ContainerBase {
     super(MenuTypeRegistry.INVENTORY_CAKE.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.datFile = PlayerDataEvents.getOrCreate(player);
+    this.datFile = PlayerDataEventHandler.getOrCreate(player);
     this.endInv = 3 * 9;
     //copy to this MIRROR inventory
     mirror = new ItemStackHandler(endInv);

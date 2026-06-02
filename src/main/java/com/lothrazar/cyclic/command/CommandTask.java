@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.command;
 
-import com.lothrazar.cyclic.event.PlayerDataEvents;
+import com.lothrazar.cyclic.event.PlayerDataEventHandler;
 import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.library.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
@@ -12,7 +12,7 @@ public class CommandTask {
 
   public static int add(CommandContext<CommandSourceStack> ctx, String string) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEvents.getOrCreate(player);
+    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
     String extra = String.join(" ", string);
     int j = file.todoTasks.size();
     file.todoTasks.add(extra);
@@ -22,7 +22,7 @@ public class CommandTask {
 
   public static int remove(CommandContext<CommandSourceStack> ctx, int integer) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEvents.getOrCreate(player);
+    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
     file.todoTasks.remove(integer);
     ChatUtil.addServerChatMessage(player, "[" + file.todoTasks.size() + "]");
     return 0;
@@ -30,14 +30,14 @@ public class CommandTask {
 
   public static int toggle(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEvents.getOrCreate(player);
+    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
     file.todoVisible = !file.todoVisible;
     return 0;
   }
 
   public static int list(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEvents.getOrCreate(player);
+    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
     for (int i = 0; i < file.todoTasks.size(); i++) {
       ChatUtil.addServerChatMessage(player, i + ")" + file.todoTasks.get(i));
     }

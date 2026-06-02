@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.cache.ServerCacheHolder;
@@ -30,7 +29,7 @@ import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 import java.util.List;
 
-public class BlockSpawnEvents {
+public class WorldEventHandler {
 
   @SubscribeEvent
   public void onExplosionEvent(ExplosionEvent.Start event) {

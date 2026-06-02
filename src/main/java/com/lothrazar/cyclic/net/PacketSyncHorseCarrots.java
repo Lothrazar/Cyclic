@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.event.HorseCarrotClientCache;
+import com.lothrazar.cyclic.render.HorseCarrotClientCache;
 import com.lothrazar.cyclic.item.animal.ItemHorseCopperRadar;
 import com.lothrazar.cyclic.item.animal.ItemHorseEmeraldJump;
 import com.lothrazar.cyclic.item.animal.ItemHorseEnder;

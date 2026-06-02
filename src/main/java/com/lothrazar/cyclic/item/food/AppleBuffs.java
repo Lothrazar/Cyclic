@@ -2,43 +2,46 @@ package com.lothrazar.cyclic.item.food;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.library.util.ChatUtil;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.alchemy.PotionContents;
 
 public class AppleBuffs extends ItemBaseCyclic {
 
   public AppleBuffs(Properties properties) {
-    super(properties);
+    this(properties, new Settings().noTooltip());
   }
 
-//  @Override
-//  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-//    if (this.getFoodProperties(stack, null) != null && this.getFoodProperties(stack, null).getEffects() != null) {
-//      List<Pair<MobEffectInstance, Float>> eff = this.getFoodProperties(stack, null).getEffects();
-//      for (Pair<MobEffectInstance, Float> entry : eff) {
-//        MobEffectInstance effCurrent = entry.getFirst();
-//        if (effCurrent == null || effCurrent.getEffect() == null) {
-//          continue;
-//        }
-//        MutableComponent t = Component.translatable(effCurrent.getEffect().getDescriptionId());
-//        t.append(" " + ChatUtil.lang("potion.potency." + effCurrent.getAmplifier()));
-//        t.withStyle(ChatFormatting.DARK_GRAY);
-//        tooltip.add(t);
-//      }
-//    }
-//    //    super.addInformation(stack, worldIn, tooltip, flagIn);
-//  }
+  public AppleBuffs(Properties food, Settings settings) {
+    super(food,settings);
+  }
 
-//  @Override
-//  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-//    return super.finishUsingItem(stack, worldIn, entityLiving);
-//  }
+  @Override
+  public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    super.appendHoverText(stack, context, tooltip, flag);
+    FoodProperties food = stack.get(DataComponents.FOOD);
+    if (food == null || food.effects().isEmpty()) {
+      return;
+    }
+    List<MobEffectInstance> effects = food.effects().stream()
+        .map(FoodProperties.PossibleEffect::effect)
+        .toList();
+    PotionContents.addPotionTooltip(effects, tooltip::add, 1.0F, context.tickRate());
+  }
+
+  /**
+   * Convenience: build a MobEffectInstance that grants the effect without spawning particles.
+   * ambient=false, visible=false (no swirly particles), showIcon=true (HUD timer still appears).
+   * Tooltip is still rendered via {@link #appendHoverText} so the player knows what they're getting.
+   */
+  public static MobEffectInstance silent(Holder<MobEffect> effect, int duration, int amplifier) {
+    return new MobEffectInstance(effect, duration, amplifier, false, false, true);
+  }
 }

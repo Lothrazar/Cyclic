@@ -28,7 +28,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
-public class ClientInputEvents {
+public class ClientInputEventHandler {
 
   @SubscribeEvent
   public void onKeyInput(InputEvent.Key event) {
@@ -48,7 +48,7 @@ public class ClientInputEvents {
       event.setCanceled(true);
       if (!player.getCooldowns().isOnCooldown(ItemRegistry.ENDER_BOOK.get())) {
         boolean isDown = event.getScrollDeltaY() < 0;
-        // net.neoforged.neoforge.network.PacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
+        PacketDistributor.sendToServer(new PacketItemScroll(player.getInventory().selected, isDown));
       }
     }
   }

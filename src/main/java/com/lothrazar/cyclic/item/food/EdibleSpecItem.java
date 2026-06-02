@@ -1,37 +1,19 @@
 package com.lothrazar.cyclic.item.food;
 
-import com.lothrazar.cyclic.event.PlayerDataEvents;
-import com.lothrazar.cyclic.filesystem.CyclicFile;
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
+import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public class EdibleSpecItem extends ItemBaseCyclic {
+public class EdibleSpecItem extends AppleBuffs {
 
-  private static final int COOLDOWN = 2;
   public static ModConfigSpec.IntValue TICKS;
 
   public EdibleSpecItem(Properties properties) {
-    super(properties.rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(1).saturationModifier(0).alwaysEdible().build()));
-  }
-
-  @Override
-  public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-    if (entityLiving instanceof Player == false) {
-      return super.finishUsingItem(stack, worldIn, entityLiving);
-    }
-    Player player = (Player) entityLiving;
-    if (player.getCooldowns().isOnCooldown(this)) {
-      return super.finishUsingItem(stack, worldIn, entityLiving);
-    }
-    player.getCooldowns().addCooldown(this, COOLDOWN);
-    CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
-    datFile.spectatorTicks += TICKS.get();
-    return super.finishUsingItem(stack, worldIn, entityLiving);
+    super(properties.rarity(Rarity.EPIC).food(new FoodProperties.Builder()
+        .nutrition(1).saturationModifier(0).alwaysEdible()
+        // Suppliers are lazy so TICKS.get() resolves at eat-time, after config has loaded.
+        .effect(() -> AppleBuffs.silent(PotionEffectRegistry.NOCLIP, TICKS.get(), 0), 1)
+        .build()), new Settings().tooltip());
   }
 }
