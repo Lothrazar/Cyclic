@@ -14,6 +14,8 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import java.util.List;
 
 public class ItemHasEnergy extends ItemFlib {
+  public static final int MAX_ENERGY = 16000;
+  public static final String NBT_TAG = "energy";
 
   public ItemHasEnergy(Properties properties) {
     super(properties);

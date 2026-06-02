@@ -37,18 +37,21 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import com.lothrazar.cyclic.ModCyclic;
+
 public class PacketEntityLaser implements CustomPacketPayload {
 
   public static final CustomPacketPayload.Type<PacketEntityLaser> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "packet_entity_laser"));
 
-  public static final StreamCodec<RegistryFriendlyByteBuf, PacketEntityLaser> STREAM_CODEC = StreamCodec.of(PacketEntityLaser::encode, PacketEntityLaser::decode);
+  public static final StreamCodec<RegistryFriendlyByteBuf, PacketEntityLaser> STREAM_CODEC = StreamCodec.of(
+      PacketEntityLaser::encode,
+      PacketEntityLaser::decode
+  );
 
 
   @Override
   public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
     return TYPE;
   }
-
 
   private int entityId;
   private boolean crosshair;
@@ -58,13 +61,23 @@ public class PacketEntityLaser implements CustomPacketPayload {
     this.crosshair = cross;
   }
 
+  public static PacketEntityLaser decode(RegistryFriendlyByteBuf buf) {
+      return new PacketEntityLaser(buf.readInt(), buf.readBoolean());
+  }
+
+  public static void encode(RegistryFriendlyByteBuf buf, PacketEntityLaser msg) {
+    buf.writeInt(msg.entityId);
+    buf.writeBoolean(msg.crosshair);
+  }
+
   public static void handle(PacketEntityLaser message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
       ServerPlayer sender = (ServerPlayer) ctx.player();
       Level level = sender.level();
       Entity target = level.getEntity(message.entityId);
-      //validate also covers delay
+
       ItemStack stack = LaserItem.getIfHeld(sender);
+
       if (PacketEntityLaser.canShoot(sender, target, stack)) {
         IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
         if (storage != null) {
@@ -83,23 +96,14 @@ public class PacketEntityLaser implements CustomPacketPayload {
 
   private static boolean canShoot(ServerPlayer sender, Entity target, ItemStack stack) {
     if (!sender.isAlive() || !target.isAlive() || target.isInvulnerable()) {
-      //somene died or target is invincible
+      // Someone died or target is invincible
       return false;
     }
     if (stack.isEmpty()) {
       return false;
     }
+
     IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
     return (storage != null && storage.extractEnergy(ConfigRegistry.LaserItemEnergy.get(), true) == ConfigRegistry.LaserItemEnergy.get());
-  }
-
-  public static PacketEntityLaser decode(RegistryFriendlyByteBuf buf) {
-    PacketEntityLaser msg = new PacketEntityLaser(buf.readInt(), buf.readBoolean());
-    return msg;
-  }
-
-  public static void encode(RegistryFriendlyByteBuf buf, PacketEntityLaser msg) {
-    buf.writeInt(msg.entityId);
-    buf.writeBoolean(msg.crosshair);
   }
 }

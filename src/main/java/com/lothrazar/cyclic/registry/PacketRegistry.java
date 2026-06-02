@@ -60,7 +60,7 @@ public class PacketRegistry {
     registrar.playToServer(PacketKeyBind.TYPE, PacketKeyBind.STREAM_CODEC, PacketKeyBind::handle);
     registrar.playToServer(PacketRecordSound.TYPE, PacketRecordSound.STREAM_CODEC, PacketRecordSound::handle);
     registrar.playToServer(PacketHarvesting.TYPE, PacketHarvesting.STREAM_CODEC, PacketHarvesting::handle);
-    registrar.playToClient(PacketEntityLaser.TYPE, PacketEntityLaser.STREAM_CODEC, PacketEntityLaser::handle);
+    registrar.playToServer(PacketEntityLaser.TYPE, PacketEntityLaser.STREAM_CODEC, PacketEntityLaser::handle);
     registrar.playToClient(PacketPlayerSyncToClient.TYPE, PacketPlayerSyncToClient.STREAM_CODEC, PacketPlayerSyncToClient::handle);
     registrar.playToClient(PacketSyncManaToClient.TYPE, PacketSyncManaToClient.STREAM_CODEC, PacketSyncManaToClient::handle);
     registrar.playToClient(PacketSyncHorseCarrots.TYPE, PacketSyncHorseCarrots.STREAM_CODEC, PacketSyncHorseCarrots::handle);

@@ -7,15 +7,20 @@ import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidWaxHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
+import com.lothrazar.cyclic.item.ItemHasEnergy;
 import com.lothrazar.cyclic.item.crafting.CraftingBagCapability;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardCapability;
 import com.lothrazar.cyclic.item.enderbook.EnderBookCapability;
 import com.lothrazar.cyclic.item.lunchbox.LunchboxCapability;
 import com.lothrazar.cyclic.item.storagebag.StorageBagCapability;
+import com.lothrazar.library.util.TagDataUtil;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import com.lothrazar.cyclic.ModCyclic;
 
@@ -44,6 +49,36 @@ public class CapabilityRegistry {
                 return null;
             });
         }
+
+        for (var entry : ItemRegistry.ITEMS.getEntries()) {
+            Item item = entry.get();
+            if (item instanceof ItemHasEnergy energyItem) {
+                event.registerItem(
+                    Capabilities.EnergyStorage.ITEM,
+                    (stack, ctx) -> new EnergyStorage(ItemHasEnergy.MAX_ENERGY) {
+                        @Override
+                        public int receiveEnergy(int maxReceive, boolean simulate) {
+                            int received = super.receiveEnergy(maxReceive, simulate);
+                            if (!simulate) saveToStack(stack);
+                            return received;
+                        }
+                        @Override
+                        public int extractEnergy(int maxExtract, boolean simulate) {
+                            int extracted = super.extractEnergy(maxExtract, simulate);
+                            if (!simulate) saveToStack(stack);
+                            return extracted;
+                        }
+                        private void saveToStack(ItemStack stack) {
+                            TagDataUtil.setItemStackNBTVal(stack, ItemHasEnergy.NBT_TAG, getEnergyStored());
+                        }
+                        // Load from NBT on creation
+                        { this.energy = TagDataUtil.getItemStackNBT(stack).getInt(ItemHasEnergy.NBT_TAG); }
+                    },
+                    item
+                );
+            }
+        }
+
         event.registerItem(
             Capabilities.ItemHandler.ITEM,
             (stack, ctx) -> new StorageBagCapability(stack),

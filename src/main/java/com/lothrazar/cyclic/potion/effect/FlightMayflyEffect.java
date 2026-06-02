@@ -19,6 +19,8 @@ public class FlightMayflyEffect extends CyclicMobEffect {
 
   private static void setMayFlyFromServer(LivingEntity entity, boolean mayflyIn) {
     if (entity instanceof ServerPlayer sp) {
+      if (sp.isCreative() || sp.isSpectator()) return;
+
       //set server-player
       sp.getAbilities().mayfly = mayflyIn;
       if (!mayflyIn) {

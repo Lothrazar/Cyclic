@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.cyclic.item.OreProspector;
 import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
@@ -78,11 +77,6 @@ public class OutlineRenderHandler {
     if (stack.getItem() instanceof ShapeCard) {
       handleShapeCard(poseStack, cameraPosition, player, stack);
     }
-
-//    stack = LaserItem.getIfHeld(player);
-//    if (!stack.isEmpty() && player.isUsingItem()) {
-//      LaserBeamHandler.handle(event, player, stack);
-//    }
   }
 
   private void handleOreProspector(PoseStack poseStack, Vec3 camPos, Level world, ItemStack stack) {

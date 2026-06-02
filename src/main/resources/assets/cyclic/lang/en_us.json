@@ -1391,7 +1391,7 @@
   "potion.butter.oops": "Butterfingers!  Dropped something when you moved.",
 
   "effect.cyclic.noclip": "Phasing",
-  "effect.cyclic.noclip.description": "Phasing",
+  "effect.cyclic.noclip.description": "Players go though blocks with this effect",
   "item.minecraft.potion.effect.cyclic_noclip": "Potion of Phasing",
   "item.minecraft.splash_potion.effect.cyclic_noclip": "Splash Potion of Phasing",
   "item.minecraft.lingering_potion.effect.cyclic_noclip": "Lingering Potion of Phasing",
