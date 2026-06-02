@@ -17,6 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.phys.Vec3;
 
+//TODO: is this redundant? is this needed? BeaconRenderer.class
 public class RenderBeaconPotion implements BlockEntityRenderer<TilePotionBeacon> {
 
   public RenderBeaconPotion(BlockEntityRendererProvider.Context d) {}
@@ -35,7 +36,6 @@ public class RenderBeaconPotion implements BlockEntityRenderer<TilePotionBeacon>
       j += beaconblockentity$beaconbeamsection.getHeight();
     }
   }
-  /* BeaconRenderer.class */
 
   public static void renderBeaconBeam(PoseStack ms, MultiBufferSource p_112178_, float p_112179_, long p_112180_, int p_112181_, int p_112182_, float[] p_112183_) {
     renderBeaconBeam(ms, p_112178_, BeaconRenderer.BEAM_LOCATION, p_112179_, 1.0F, p_112180_, p_112181_, p_112182_, p_112183_, 0.2F, 0.25F);

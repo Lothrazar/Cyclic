@@ -25,6 +25,7 @@ import com.lothrazar.cyclic.enchant.StepEnchant;
 import com.lothrazar.cyclic.enchant.TravellerEnchant;
 import com.lothrazar.cyclic.enchant.VenomEnchant;
 import com.lothrazar.cyclic.enchant.XpEnchant;
+import com.lothrazar.cyclic.item.equipment.MattockItem;
 
 public class EventRegistry {
 
@@ -41,6 +42,7 @@ public class EventRegistry {
     NeoForge.EVENT_BUS.register(new WorldEventHandler());
     NeoForge.EVENT_BUS.register(new PlayerDataEventHandler());
     NeoForge.EVENT_BUS.register(new CapabilityEvents());
+    NeoForge.EVENT_BUS.register(new MattockItem.BreakHandler());
     // enchantment event handlers
     NeoForge.EVENT_BUS.register(new BeekeeperEnchant());
     NeoForge.EVENT_BUS.register(new BeheadingEnchant());

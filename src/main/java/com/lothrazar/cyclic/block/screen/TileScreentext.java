@@ -42,11 +42,6 @@ public class TileScreentext extends TileBlockEntityCyclic implements MenuProvide
         ((blue & 0xFF) << 0);
   }
 
-  /* 
-  @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
-  } */
 
   @Override
   public Component getDisplayName() {

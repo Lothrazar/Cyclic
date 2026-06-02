@@ -8,7 +8,10 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -25,8 +28,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-//import net.minecraft.world.level.storage.loot.LootDataManager;
-import net.minecraft.world.level.storage.loot.LootDataType;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -116,20 +117,19 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void doFishing(ItemStack fishingRod, BlockPos center) {
-/*
+
     Level world = this.getLevel();
     RandomSource rand = world.random;
     if (rand.nextDouble() < CHANCE.get() && world instanceof ServerLevel) {
-      LootDataManager manager = level.getServer().getLootData();
-      if (manager == null) {
-        return;
-      }
-      LootTable table = manager.getElement(LootDataType.TABLE, BuiltInLootTables.FISHING);
+      LootTable table = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
       if (table == null) {
         return;
       }
       //got it
-      int luck = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, fishingRod) + 1;
+      HolderLookup.RegistryLookup<Enchantment> enchLookup = world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+      Holder<Enchantment> luckHolder = enchLookup.getOrThrow(Enchantments.LUCK_OF_THE_SEA);
+      Holder<Enchantment> mendingHolder = enchLookup.getOrThrow(Enchantments.MENDING);
+      int luck = EnchantmentHelper.getItemEnchantmentLevel(luckHolder, fishingRod) + 1;
       LootParams lootContext = new LootParams.Builder((ServerLevel) world)
           .withLuck(luck)//.withRandom(rand)
           .withParameter(LootContextParams.ORIGIN,
@@ -140,7 +140,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
       if (lootDrops != null && lootDrops.size() > 0) {
         ItemStackUtil.drop(world, center, lootDrops);
         if (fishingRod.isDamageableItem()) {
-          int mending = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.MENDING, fishingRod);
+          int mending = EnchantmentHelper.getItemEnchantmentLevel(mendingHolder, fishingRod);
           if (mending == 0) {
             ItemStackUtil.damageItem(null, fishingRod);
           }
@@ -159,7 +159,7 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
         } // else fishing rod cannot be damaged (supreme/diamond/other mods)
       }
     }
-*/  }
+  }
 
   @Override
   public void setField(int field, int value) {

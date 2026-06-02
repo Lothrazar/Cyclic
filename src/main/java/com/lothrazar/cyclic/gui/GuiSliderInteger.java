@@ -68,15 +68,6 @@ public class GuiSliderInteger extends AbstractSliderButton implements IHasToolti
     tooltip.add(Component.translatable(ttIn));
   }
 
-  /**
-   * Mouse scrolling
-   */
-  /*
-    if (delta != 0) {
-      moveSliderAndUpdate((int) delta);
-      return true;
-    }
-    */
 
   /**
    * Fires when control is selected, also I call this from screen class whenever mouse is hovered for extra UX

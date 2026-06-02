@@ -4,15 +4,19 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.cap.ItemStackHandlerWrapper;
 import com.lothrazar.library.util.FluidHelpersUtil;
+import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,9 +24,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -111,66 +118,72 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
       return;
     }
     //input is size 1, at least one book exists, and output IS empty
-    /*
-    Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(input);
-    Enchantment keyMoved = null;
-    for (Map.Entry<Enchantment, Integer> entry : inputEnchants.entrySet()) {
+    ItemEnchantments inputEnchants = EnchantmentHelper.getEnchantmentsForCrafting(input);
+    Holder<Enchantment> keyMoved = null;
+    int levelMoved = 0;
+    for (var entry : inputEnchants.entrySet()) {
       keyMoved = entry.getKey();
-      outEnchants.put(keyMoved, entry.getValue());
+      levelMoved = entry.getIntValue();
       break;
     }
-    if (outEnchants.size() == 0 || keyMoved == null) {
+    if (keyMoved == null) {
       return;
     }
-    //and input has at least one enchantment 
+    //and input has at least one enchantment
     //success happening
     if (level.random.nextDouble() < 0.5) {
       SoundUtil.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
-    }
-    else {
+    } else {
       SoundUtil.playSound(level, worldPosition, SoundEvents.ANVIL_USE);
     }
     energy.extractEnergy(cost, false);
     if (FLUIDCOST.get() > 0) {
       tank.drain(FLUIDCOST.get(), IFluidHandler.FluidAction.EXECUTE);
-    }
-    else if (FLUIDCOST.get() < 0) {
+    } else if (FLUIDCOST.get() < 0) {
       Fluid newFluid = FluidXpJuiceHolder.STILL.get();
       if (!this.getFluid().isEmpty()) {
-        //if its holding a tag compatible but different fluid, just fill 
+        //if its holding a tag compatible but different fluid, just fill
         newFluid = this.getFluid().getFluid();
       }
       tank.fill(new FluidStack(newFluid, -1 * FLUIDCOST.get()), IFluidHandler.FluidAction.EXECUTE);
     }
-    inputEnchants.remove(keyMoved);
+    //build the enchanted book with just the single moved enchantment
+    final Holder<Enchantment> movedKey = keyMoved;
+    final int movedLvl = levelMoved;
     ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
-    EnchantmentHelper.setEnchantments(outEnchants, eBook); //add to book
+    EnchantmentHelper.updateEnchantments(eBook, m -> m.set(movedKey, movedLvl));
     //replace book with enchanted
     inputSlots.extractItem(SLOT_BOOK, 1, false);
     outputSlots.insertItem(0, eBook, false);
+    //strip the moved enchantment off a copy so we can see what (if anything) remains
+    ItemStack stripped = input.copy();
+    EnchantmentHelper.updateEnchantments(stripped, m -> m.removeIf(h -> h.equals(movedKey)));
+    boolean remainingEmpty = EnchantmentHelper.getEnchantmentsForCrafting(stripped).isEmpty();
     //do i replace input with a book?
-    if (input.getItem() == Items.ENCHANTED_BOOK && inputEnchants.size() == 0) { // empty ench on enchbook override
+    if (input.getItem() == Items.ENCHANTED_BOOK && remainingEmpty) { // empty ench on enchbook override
       inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
       inputSlots.insertItem(SLOT_INPUT, new ItemStack(Items.BOOK), false);
-    }
-    else {
+    } else {
       //was a normal item, so ok to set its ench list to empty
-      if (input.getItem() == Items.ENCHANTED_BOOK) { // normal enchanted book
-        ItemStack inputCopy = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantmentHelper.setEnchantments(inputEnchants, inputCopy); //set as remove
+      if (input.getItem() == Items.ENCHANTED_BOOK) { // normal enchanted book - swap in stripped copy
         inputSlots.extractItem(SLOT_INPUT, 64, false); //delete input
-        inputSlots.insertItem(SLOT_INPUT, inputCopy, false);
-      }
-      else { // non-book set as removed from item
-        EnchantmentHelper.setEnchantments(inputEnchants, input); //set as removed
+        inputSlots.insertItem(SLOT_INPUT, stripped, false);
+      } else { // non-book set as removed from item
+        EnchantmentHelper.updateEnchantments(input, m -> m.removeIf(h -> h.equals(movedKey)));
       }
     }
     //recalculate input item
     input = inputSlots.getStackInSlot(SLOT_INPUT);
-    inputEnchants = EnchantmentHelper.getEnchantments(input);
-    if (!input.isEmpty() && inputEnchants.size() == 0) {
+    ItemEnchantments postInput = EnchantmentHelper.getEnchantmentsForCrafting(input);
+    if (!input.isEmpty() && postInput.isEmpty()) {
       //hey we done, bump it over to the ALL NEW finished slot
-      }*/
+      if (outputSlots.getStackInSlot(1).isEmpty()) {
+        //only if there is space, then do it
+        outputSlots.insertItem(1, input.copy(), false);
+        inputSlots.extractItem(SLOT_INPUT, 64, false);
+      }
+      //delete input
+    }
   }
 
   @Override
