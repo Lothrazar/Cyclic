@@ -32,12 +32,6 @@ public class GlowingHelmetItem extends ArmorItem implements IHasClickToggle {
     super(materialIn, slot, builderIn);
   }
 
-  public Rarity getRarity(ItemStack stack) {
-    return Rarity.UNCOMMON;
-  }
-
-  /* removed onArmorTick */
-
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     tooltip.add(Component.translatable(ChatUtil.lang(this.getDescriptionId() + ".tooltip")).withStyle(ChatFormatting.GRAY));

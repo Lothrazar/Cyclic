@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.MenuProvider;
@@ -149,7 +150,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
-    /* if (tag.contains("Effects", 9)) {
+  if (tag.contains("Effects", 9)) {
       ListTag listnbt = tag.getList("Effects", 10);
       this.effects.clear();
       for (int i = 0; i < listnbt.size(); ++i) {
@@ -159,7 +160,8 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
         }
       }
     }
-    */ super.loadAdditional(tag, registries);
+
+    super.loadAdditional(tag, registries);
   }
 
   @Override
@@ -169,15 +171,14 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
     tag.putInt("entityFilter", entityFilter.ordinal());
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    //
-    /* if (!this.effects.isEmpty()) {
+     if (!this.effects.isEmpty()) {
       ListTag listnbt = new ListTag();
       for (MobEffectInstance effectinstance : this.effects) {
-        listnbt.add(effectinstance.save(new CompoundTag()));
+        listnbt.add(effectinstance.save());
       }
       tag.put("Effects", listnbt);
     }
-    */ super.saveAdditional(tag, registries);
+   super.saveAdditional(tag, registries);
   }
 
   private void pullFromItem(Iterable<MobEffectInstance> newEffects) {

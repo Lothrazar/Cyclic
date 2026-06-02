@@ -37,8 +37,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
-    /* https://github.com/Lothrazar/Cyclic/pull/1990/files#diff-4eb95a3d9ac136172375b3e7be5bc26c576f9fa6efcabee458c4c80797205b73R40 */
-    @Override
+   @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
       if (!stack.isEmpty() && stack.isRepairable() && stack.getDamageValue() == 0) {
         return outputSlots.insertItem(slot, stack, simulate);

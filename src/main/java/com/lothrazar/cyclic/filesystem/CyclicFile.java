@@ -31,7 +31,6 @@ public class CyclicFile {
   }
 
   public void read(CompoundTag tag) {
-//    inventory.deserializeNBT(tag.getCompound(NBTINV));
     storageVisible = tag.getBoolean("storageVisible");
     stepHeight = tag.getBoolean("stepHeight");
     stepHeightForceOff = tag.getBoolean("stepHeightForceOff");

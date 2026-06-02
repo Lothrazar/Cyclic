@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.block.generatorexpl.BlockDestruction;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
 import com.lothrazar.cyclic.cache.ServerCacheHolder;
@@ -33,17 +34,16 @@ public class WorldEventHandler {
 
   @SubscribeEvent
   public void onExplosionEvent(ExplosionEvent.Start event) {
-/*
-    Level world = event.getLevel();
-    //    Entity exploder = event.getExplosion().getExploder();
+    var world = event.getLevel();
+//   Entity exploder = event.getExplosion().getExploder();
     Integer radius = BlockDestruction.RADIUS.get();
     Integer height = BlockDestruction.HEIGHT.get();
-    Vec3 thanksMojang = event.getExplosion().getPosition();
+    Vec3 thanksMojang = event.getExplosion().center();
     if (LevelWorldUtil.doesBlockExist(world, new BlockPos((int) thanksMojang.x, (int) thanksMojang.y, (int) thanksMojang.z), BlockRegistry.ALTAR_DESTRUCTION.get().defaultBlockState(), radius, height)) {
-      ModCyclic.LOGGER.info(world.isClientSide + " =clinet;Explosion cancelled " + event.getExplosion());
+      ModCyclic.LOGGER.debug(world.isClientSide + " Explosion cancelled " + event.getExplosion());
       event.setCanceled(true);
     }
-*/  }
+ }
 
   @SubscribeEvent
   public void onLivingSpawnEvent(FinalizeSpawnEvent event) {
