@@ -18,7 +18,7 @@ public class ItemHasEnergy extends ItemFlib {
   public static final String NBT_TAG = "energy";
 
   public ItemHasEnergy(Properties properties) {
-    super(properties);
+    super(properties, new Settings().tooltip());
   }
   public ItemHasEnergy(Properties properties, Settings settings) {
     super(properties, settings);
