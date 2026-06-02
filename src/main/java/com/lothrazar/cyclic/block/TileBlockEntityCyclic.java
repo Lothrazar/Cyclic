@@ -13,6 +13,7 @@ import com.lothrazar.cyclic.fixers.CapabilityUtil;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.core.IHasEnergy;
 import com.lothrazar.library.core.IHasFluid;
@@ -587,19 +588,15 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   public int getEnergy() {
    var energy = CapabilityUtil.energy(level,worldPosition);
 
-return energy==null?0:energy.getEnergyStored()  ;
-//    return this.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+    return energy == null ? 0 : energy.getEnergyStored();
   }
 
   @Override
   public void setEnergy(int value) {
     var energy = CapabilityUtil.energy(level,worldPosition);
-//    if(energy !=null){
-//      energy.receiveEnergy(value,true);
-//    }
-//    if (energ != null && energ instanceof CustomEnergyStorage) {
-//      ((CustomEnergyStorage) energ).setEnergy(value);
-//    }
+    if (energy instanceof EnergyStorageWrapper wrapper) {
+      wrapper.setEnergy(value);
+    }
   }
 
   //fluid tanks have 'onchanged', energy caps do not
