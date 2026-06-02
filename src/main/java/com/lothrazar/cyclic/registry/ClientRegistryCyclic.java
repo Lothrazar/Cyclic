@@ -48,7 +48,6 @@ import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
 import com.lothrazar.cyclic.capabilities.ClientDataManager;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
-import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
@@ -340,7 +339,7 @@ public class ClientRegistryCyclic {
         return 0xFFFFFFFF;
       }
       //layer 1 is overlay  
-      return ItemLunchbox.getColour(stack);
+      return ScreenLunchbox.getColour(stack);
     }, ItemRegistry.LUNCHBOX.get());
     //
     event.register((stack, tintIndex) -> {
