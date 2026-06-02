@@ -68,7 +68,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
    * @param cmd
    */
   public void execute(StructCommands cmd) {
-/*
+
     ItemStack shapeCard = inventory.getStackInSlot(SLOT_CARD);
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
@@ -96,9 +96,9 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
       case PASTE:
         //from BUFFER to CARD
         //only works on EMPTY CARDS
-        if (this.copiedShape != null && shapeCard.getTag() != null) {
+        if (this.copiedShape != null && shapeCard.has(DataComponents.CUSTOM_DATA)) {
           //
-          shapeCard.setTag(null); //paste and not merge so overwrite
+          shapeCard.remove(DataComponents.CUSTOM_DATA); //paste and not merge so overwrite
           this.copiedShape.write(shapeCard);
           ModCyclic.LOGGER.info(cmd + " success");
         }
@@ -115,7 +115,7 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
         }
       break;
     }
-*/  }
+  }
 
   public TileShapedata(BlockPos pos, BlockState state) {
     super(TileRegistry.COMPUTER_SHAPE.get(), pos, state);

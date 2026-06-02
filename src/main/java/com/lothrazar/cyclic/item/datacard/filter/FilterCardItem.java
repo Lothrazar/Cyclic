@@ -65,7 +65,7 @@ public class FilterCardItem extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (!worldIn.isClientSide && !playerIn.isCrouching()) {
-      /* playerIn.openMenu(new ContainerProviderFilterCard(), playerIn.blockPosition()); */
+     playerIn.openMenu(new ContainerProviderFilterCard(), playerIn.blockPosition());
     }
     return super.use(worldIn, playerIn, handIn);
   }

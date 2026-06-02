@@ -92,12 +92,6 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
     }
   }
 
-  /* 
-  @Override
-  public AABB getRenderBoundingBox() {
-    return BlockEntity.INFINITE_EXTENT_AABB;
-  }
-  */
 
   @Override
   public Component getDisplayName() {

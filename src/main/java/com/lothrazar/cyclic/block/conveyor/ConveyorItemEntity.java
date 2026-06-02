@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 
 public class ConveyorItemEntity extends ItemEntity {
 
+  // TODO: use or delete
   public ConveyorItemEntity(Level worldIn, double x, double y, double z, ItemStack stack) {
     super(EntityRegistry.CONVEYOR_ITEM.get(), worldIn);
     this.setPos(x, y, z);
@@ -57,5 +58,4 @@ public class ConveyorItemEntity extends ItemEntity {
     //Do nothing
   }
 
-  /* removed getAddEntityPacket */
 }
