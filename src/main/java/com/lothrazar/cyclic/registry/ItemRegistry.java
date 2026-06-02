@@ -495,7 +495,7 @@ public class ItemRegistry {
   public static final DeferredItem<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties()));
   public static final DeferredItem<Item> NO_SOLICITING = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.NO_SOLICITING.get(), new Item.Properties()));
   public static final DeferredItem<Item> FLUTE = ITEMS.register("flute_summoning", () -> new FluteItem(new Item.Properties()));
-public static final DeferredItem<Item> SPARK = ITEMS.register("spark", () -> new GlowingSpark(new Item.Properties()));
+  public static final DeferredItem<Item> SPARK = ITEMS.register("spark", () -> new GlowingSpark(new Item.Properties()));
   public static final DeferredItem<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new DarkFireballItem(new Item.Properties()));
   public static final DeferredItem<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties()));
   public static final DeferredItem<Item> LUNCHBOX = ITEMS.register("lunchbox", () -> new ItemLunchbox(new Item.Properties()));

@@ -26,9 +26,6 @@ package com.lothrazar.cyclic.item.lunchbox;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -38,8 +35,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -143,29 +138,6 @@ public class ItemLunchbox extends ItemBaseCyclic {
     int max = tag.getInt("count_max");
     int empty = tag.getInt("count_empty");
     return max == 0 || empty >= max;
-  }
-
-  public static int getColour(ItemStack stack) {
-    if (FMLEnvironment.dist == Dist.CLIENT && shouldHideLayer(stack)) {
-      return 0x00000000;
-    }
-    return 0xFFFFFFFF;
-  }
-
-  private static boolean shouldHideLayer(ItemStack stack) {
-    Minecraft mc = Minecraft.getInstance();
-    if (mc.screen instanceof ScreenLunchbox lunchScreen) {
-      if (lunchScreen.getMenu().bag == stack) {
-        return true;
-      }
-    }
-    if (mc.player != null && mc.screen instanceof AbstractContainerScreen<?> && !(mc.screen instanceof CreativeModeInventoryScreen)) {
-      ItemStack carried = mc.player.containerMenu.getCarried();
-      if (!carried.isEmpty() && carried.getFoodProperties(mc.player) != null) {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
