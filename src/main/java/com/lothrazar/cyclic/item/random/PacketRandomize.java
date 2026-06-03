@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.item.random;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.BlockUtil;
-import com.lothrazar.library.util.ItemStackUtil;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -9,6 +10,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -54,12 +56,17 @@ public class PacketRandomize implements CustomPacketPayload {
       var player = ctx.player();
 
       Level world = player.getCommandSenderWorld();
-      List<BlockPos> places = RandomizerItem.getPlaces(message.pos, message.side, player.getItemInHand(message.hand));
+      ItemStack held = player.getItemInHand(message.hand);
+      IEnergyStorage storage = CapabilityUtil.energy(held);
+      final int cost = RandomizerItem.COST.get();
+      if (storage == null || storage.extractEnergy(cost, true) < cost) {
+        return;
+      }
+      List<BlockPos> places = RandomizerItem.getPlaces(message.pos, message.side, held);
       List<BlockPos> rpos = new ArrayList<BlockPos>();
       List<BlockState> rstates = new ArrayList<BlockState>();
       //
       BlockState stateHere;
-      boolean atLeastOne = false;
       for (BlockPos p : places) {
         stateHere = world.getBlockState(p);
         boolean canMove = RandomizerItem.canMove(stateHere, world, p);
@@ -75,17 +82,17 @@ public class PacketRandomize implements CustomPacketPayload {
       BlockState swapState;
       synchronized (rpos) { //just in case
         for (int i = 0; i < rpos.size(); i++) {
+          if (storage.extractEnergy(cost, true) < cost) {
+            break;
+          }
           swapPos = rpos.get(i);
           swapState = rstates.get(i);
           world.destroyBlock(swapPos, false);
           //playing sound here in large areas causes ConcurrentModificationException
           if (BlockUtil.placeStateSafe(world, player, swapPos, swapState, false)) {
-            atLeastOne = true;
+            storage.extractEnergy(cost, false);
           }
         }
-      }
-      if (atLeastOne) {
-        ItemStackUtil.damageItem(player, player.getItemInHand(message.hand));
       }
     });
   }

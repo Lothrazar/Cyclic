@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.random;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.item.ItemHasEnergy;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.EntityUtil;
@@ -20,18 +20,22 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-public class RandomizerItem extends ItemBaseCyclic {
+public class RandomizerItem extends ItemHasEnergy {
 
   private static final int COOLDOWN = 15;
+  public static ModConfigSpec.IntValue COST;
+  public static ModConfigSpec.IntValue MAX;
 
   public RandomizerItem(Properties properties) {
-    super(properties.stacksTo(1).durability(4096));
+    super(properties.stacksTo(1));
   }
 
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
     String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
     tooltip.add(Component.translatable(msg));
   }

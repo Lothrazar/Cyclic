@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.item.builder;
 
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.*;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -72,14 +74,21 @@ public class PacketSwapBlock implements CustomPacketPayload {
       }
       BuildStyle buildStyle = ((BuilderItem) itemStackHeld.getItem()).style;
       Level world = player.getCommandSenderWorld();
+      IEnergyStorage storage = CapabilityUtil.energy(itemStackHeld);
+      final int cost = BuilderItem.COST.get();
+      if (storage == null || storage.extractEnergy(cost, true) < cost) {
+        return;
+      }
       BlockState replacedBlockState;
       List<BlockPos> places = getSelectedBlocks(world, message.pos, message.actionType, message.side, buildStyle);
       Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
       BlockPos curPos;
-      boolean atLeastOne = false;
       synchronized (places) {
         for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
           curPos = i.next();
+          if (storage.extractEnergy(cost, true) < cost) {
+            break;
+          }
           if (processed.containsKey(curPos) == false) {
             processed.put(curPos, 0);
           }
@@ -129,16 +138,13 @@ public class PacketSwapBlock implements CustomPacketPayload {
             success = BlockUtil.placeStateSafe(world, player, curPos, targetState);
           }
           if (success) {
-            atLeastOne = true;
+            storage.extractEnergy(cost, false);
             PlayerUtil.decrStackSize(player, slot);
             world.levelEvent(2001, curPos, Block.getId(targetState));
             //always break with PLAYER CONTEXT in mind
             replacedBlock.playerDestroy(world, player, curPos, replacedBlockState, null, itemStackHeld);
           }
         } // close off the for loop
-      }
-      if (atLeastOne) {
-        ItemStackUtil.damageItem(player, itemStackHeld);
       }
     });
   }

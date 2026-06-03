@@ -1,9 +1,10 @@
 package com.lothrazar.cyclic.item.builder;
 
 import java.util.List;
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.item.ItemHasEnergy;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.ChatFormatting;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -19,17 +20,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 
-public class BuilderItem extends ItemBaseCyclic {
+public class BuilderItem extends ItemHasEnergy {
 
   public BuildStyle style;
+  public static ModConfigSpec.IntValue COST;
+  public static ModConfigSpec.IntValue MAX;
 
   public BuilderItem(Properties properties, BuildStyle t) {
-    super(properties.stacksTo(1).durability(4096));
+    super(properties.stacksTo(1));
     style = t;
   }
 
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    super.appendHoverText(stack, worldIn, tooltip, flagIn);
     String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
     tooltip.add(Component.translatable(msg));
     BlockState target = BuilderActionType.getBlockState(null, stack);

@@ -12,7 +12,9 @@ import com.lothrazar.cyclic.capabilities.item.ItemFluidCap;
 import com.lothrazar.cyclic.capabilities.item.ItemInventoryCap;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.WandHypnoItem;
+import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.missile.WandMissileItem;
+import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
@@ -107,6 +109,14 @@ public class CapabilityRegistry {
         event.registerItem(Capabilities.EnergyStorage.ITEM,
             (stack, ctx) -> new ItemEnergyCap(stack, ConfigRegistry.LaserItemEnergyMax.get()),
             ItemRegistry.LASER_CANNON.get());
+        event.registerItem(Capabilities.EnergyStorage.ITEM,
+            (stack, ctx) -> new ItemEnergyCap(stack, BuilderItem.MAX.get()),
+            ItemRegistry.BUILD_SCEPTER.get(),
+            ItemRegistry.REPLACE_SCEPTER.get(),
+            ItemRegistry.OFFSET_SCEPTER.get());
+        event.registerItem(Capabilities.EnergyStorage.ITEM,
+            (stack, ctx) -> new ItemEnergyCap(stack, RandomizerItem.MAX.get()),
+            ItemRegistry.RANDOMIZE_SCEPTER.get());
         // Fluid on BlockItem
         event.registerItem(Capabilities.FluidHandler.ITEM,
             (stack, ctx) -> new ItemFluidCap(stack, TileTank.CAPACITY),

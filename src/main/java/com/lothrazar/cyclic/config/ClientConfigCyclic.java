@@ -28,6 +28,7 @@ public class ClientConfigCyclic {
   public static ModConfigSpec.ConfigValue<String> REPLACE_SCEPTER;
   public static ModConfigSpec.ConfigValue<String> BUILD_SCEPTER;
   public static ModConfigSpec.ConfigValue<Boolean> FLUID_BLOCK_STATUS;
+  public static ModConfigSpec.ConfigValue<Boolean> ENERGY_HUD;
 
   public static Color getColor(BlockEntity tile) {
     //passing in tile in case of data overrides in future

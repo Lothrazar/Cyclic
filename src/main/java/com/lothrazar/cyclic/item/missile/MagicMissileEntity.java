@@ -97,7 +97,9 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
       Entity target = entityRayTrace.getEntity();
       Entity owner = getOwner();
       if (target.isAlive()) {
-        target.hurt(level().damageSources().thrown(this, owner), Mth.nextInt(level().random, 1, 6));
+        int min = WandMissileItem.DAMAGE_MIN.get();
+        int max = Math.max(min, WandMissileItem.DAMAGE_MAX.get());
+        target.hurt(level().damageSources().thrown(this, owner), Mth.nextInt(level().random, min, max));
       }
     }
     this.remove(RemovalReason.DISCARDED);

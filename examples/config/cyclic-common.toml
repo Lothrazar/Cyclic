@@ -28,6 +28,10 @@
 			# Set false to disable the base recipe
 			enabled = true
 
+		[cyclic.potion.noclip]
+			# Set false to disable the base recipe
+			enabled = true
+
 		[cyclic.potion.frost_walker]
 			# Set false to disable the base recipe
 			enabled = true
@@ -160,6 +164,18 @@
 		[cyclic.enchantment.magnet]
 			# Set false to stop enchantment from working
 			enabled = true
+			# Base horizontal radius for item pickup at level 1. Total horizontal radius = base + per_level * level.
+			# Default: 4
+			# Range: 0 ~ 32
+			h_radius_base = 4
+			# Additional horizontal radius per enchant level beyond 1.
+			# Default: 4
+			# Range: 0 ~ 32
+			h_radius_per_level = 4
+			# Vertical pickup radius (does not scale with level).
+			# Default: 4
+			# Range: 0 ~ 32
+			v_radius = 4
 
 		[cyclic.enchantment.multishot]
 			# Set false to stop enchantment from working
@@ -259,6 +275,10 @@
 			# Default: 10
 			# Range: > 1
 			energy = 10
+			# Maximum internal energy storage of the laser cannon
+			# Default: 64000
+			# Range: > 1
+			energy_max = 64000
 			# Render the laser beam even when there is no living target (used to be hardcoded as false, so change this back to restore legacy behavior)
 			render_misses = true
 
@@ -352,6 +372,10 @@
 			# Default: 500
 			# Range: 1 ~ 50000
 			energy = 500
+			# Maximum internal energy storage
+			# Default: 64000
+			# Range: > 1
+			energy_max = 64000
 			# Range to search out enemies for this multi-target attack
 			# Default: 16
 			# Range: 1 ~ 256
@@ -362,10 +386,42 @@
 			# Default: 150
 			# Range: 1 ~ 50000
 			energy = 150
+			# Maximum internal energy storage
+			# Default: 64000
+			# Range: > 1
+			energy_max = 64000
 			# Range to search out enemies for this attack
 			# Default: 64
 			# Range: 1 ~ 512
 			range = 64
+			# Minimum damage dealt on hit (inclusive)
+			# Default: 3
+			# Range: > 0
+			damage_min = 3
+			# Maximum damage dealt on hit (exclusive upper bound for the random roll)
+			# Default: 9
+			# Range: > 1
+			damage_max = 9
+
+		[cyclic.items.build_scepter]
+			# Energy cost per block placed by the build/replace/offset scepters
+			# Default: 50
+			# Range: > 0
+			energy = 50
+			# Maximum internal energy storage of the build/replace/offset scepters
+			# Default: 64000
+			# Range: > 1
+			energy_max = 64000
+
+		[cyclic.items.randomize_scepter]
+			# Energy cost per block swapped by the randomize scepter
+			# Default: 50
+			# Range: > 0
+			energy = 50
+			# Maximum internal energy storage of the randomize scepter
+			# Default: 64000
+			# Range: > 1
+			energy_max = 64000
 
 		[cyclic.items.prospector]
 			# Ore Prospector radius around player to search for ores
@@ -599,8 +655,8 @@
 			# Default: 200
 			# Range: 20 ~ 9999
 			ticks = 200
-			# List of extra effects to clear. Supports exact ids (e.g. 'minecraft:poison'), namespace wildcards (e.g. 'cyclic:*'), and tags prefixed with '#' (e.g. '#c:harmful').  
-			potion_list = ["#c:harmful", "cyclic:gravity"]
+			# List of extra effects to clear. Any effect marked harmfil, or in this list, will be cured. Supports exact ids (e.g. 'minecraft:poison'), namespace wildcards (e.g. cyclic:*, minecraft:trial_omen, minecraft:glowing).  
+			potion_list = ["cyclic:gravity"]
 
 			[cyclic.blocks.cables.fluid]
 				# How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)

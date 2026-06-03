@@ -26,6 +26,8 @@ public class WandMissileItem extends ItemHasEnergy {
   public static ModConfigSpec.IntValue COST;
   public static ModConfigSpec.IntValue RANGE;
   public static ModConfigSpec.IntValue MAX;
+  public static ModConfigSpec.IntValue DAMAGE_MIN;
+  public static ModConfigSpec.IntValue DAMAGE_MAX;
 
   public WandMissileItem(Properties properties) {
     super(properties.stacksTo(1));

@@ -50,6 +50,7 @@ cyclic:ender_bag,1,1,5
 cyclic:quiver_damage,1,1,12
 cyclic:copper_sword[damage=15],1,1,5
 cyclic:netherite_nugget,1,1,2
+cyclic:boomerang_damage,1,1,6
  cyclic:heart,1,1,1
       """.strip()  },
       { "chests/abandoned_mineshaft",        """
@@ -59,6 +60,7 @@ cyclic:copper_pickaxe,1,1,15
 cyclic:storage_bag,1,1,8
 cyclic:heart,1,1,2
 cyclic:netherite_nugget,1,1,2
+cyclic:boomerang_carry,1,1,6
 cyclic:gem_amber,1,1,1
 cyclic:gem_obsidian,1,1,1
       """.strip()  },
@@ -90,6 +92,7 @@ cyclic:ender_book,1,1,15
 cyclic:apple_emerald,2,8,15
 cyclic:charm_xp_speed,1,1,10
 cyclic:sandstone_sword,1,1,15
+cyclic:boomerang_damage,1,1,6
 cyclic:heart,1,1,2
       """.strip()  },
       { "chests/jungle_temple",             """
@@ -97,6 +100,8 @@ cyclic:apple_bone,2,6,30
 cyclic:gem_amber,1,1,2
 cyclic:gem_obsidian,1,1,2
 cyclic:netherite_nugget,1,1,2
+cyclic:boomerang_carry,1,1,6
+cyclic:boomerang_stun,1,1,6
 cyclic:heart,1,1,2
       """.strip()  },
       { "chests/jungle_temple_dispenser",  """
@@ -113,12 +118,14 @@ cyclic:antimatter_wand[damage=15],1,1,5
 cyclic:quiver_lightning,1,1,10
 cyclic:shield_obsidian,1,1,8
 cyclic:charm_crit,1,1,12
+cyclic:boomerang_stun,1,1,6
 """.strip() },
       { "chests/woodland_mansion",         """
 cyclic:wand_hypno,1,1,8
 cyclic:glowing_helmet,1,1,10
 cyclic:charm_invisible,1,1,3
 cyclic:netherite_nugget,2,8,25
+cyclic:evoker_fang,1,1,8
 cyclic:heart,1,1,2
       """.strip() },
       // Nether
@@ -135,6 +142,8 @@ cyclic:netherite_nugget,1,1,2
 cyclic:gem_amber,1,1,2
 cyclic:gem_obsidian,1,1,2
 cyclic:netherbrick_sword,1,1,5
+cyclic:fire_scepter,1,1,8
+cyclic:evoker_fang,1,1,5
  cyclic:heart,1,1,2
       """.strip() },
       { "chests/bastion_other",           """
@@ -162,6 +171,10 @@ cyclic:charm_crit,1,1,1
 cyclic:teleport_wand,1,1,5
 cyclic:apple_ender,2,8,15
 cyclic:emerald_chestplate,1,1,1
+cyclic:ice_scepter,1,1,8
+cyclic:fire_scepter,1,1,8
+cyclic:lightning_scepter,1,1,8
+cyclic:evoker_fang,1,1,5
  cyclic:heart,1,1,1
 cyclic:chorus_flight,1,1,1
   cyclic:gem_amber,1,1,1
@@ -194,14 +207,16 @@ cyclic:amethyst_pickaxe,1,1,5
       // Ancient city
       { "chests/ancient_city",             """
 cyclic:ender_bag,1,1,5
+cyclic:lightning_scepter,1,1,6
+cyclic:evoker_fang,1,1,5
 
   cyclic:heart,1,1,2
   cyclic:netherite_nugget,1,1,2
   cyclic:soulstone,1,1,2
   cyclic:gem_amber,1,1,2
   cyclic:gem_obsidian,1,1,2
-      
-      
+
+
       """.strip() },
       { "chests/ancient_city_ice_box",    """
 
@@ -222,6 +237,7 @@ cyclic:emerald_sword[enchantments={levels:{"minecraft:sharpness":3}}],1,1,15
 cyclic:wand_missile,1,1,8
 cyclic:apple_lofty_stature,2,4,8
 cyclic:soulstone,1,1,2
+cyclic:ice_scepter,1,1,6
   cyclic:heart,1,1,2
 cyclic:charm_void,1,1,2
   cyclic:charm_knockback_resistance,1,1,2
@@ -238,6 +254,7 @@ cyclic:charm_void,1,1,2
   cyclic:wand_missile,1,1,8
     cyclic:charm_wing,1,1,3
   cyclic:charm_magicdefense,1,1,8
+  cyclic:evoker_fang,1,1,5
   cyclic:heart,1,1,5
   cyclic:charm_creeper,1,1,8
   cyclic:soulstone,1,1,2

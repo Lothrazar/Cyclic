@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.RegistryHolder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -47,7 +48,6 @@ import com.lothrazar.cyclic.block.solidifier.RenderSolidifier;
 import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
-import com.lothrazar.cyclic.capabilities.ClientDataManager;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
@@ -134,12 +134,10 @@ import com.lothrazar.cyclic.item.crafting.simple.CraftingStickScreen;
 import com.lothrazar.cyclic.item.datacard.filter.ScreenFilterCard;
 import com.lothrazar.cyclic.item.storagebag.ScreenStorageBag;
 
-
 @EventBusSubscriber(modid = ModCyclic.MODID, value = Dist.CLIENT)
 public class ClientRegistryCyclic {
 
   public static final KeyMapping CAKE = new KeyMapping("key." + ModCyclic.MODID + ".cake", new IKeyConflictContext() {
-
     @Override
     public boolean isActive() {
       //client side cant know when active. stored on server player file 
@@ -153,23 +151,34 @@ public class ClientRegistryCyclic {
     }
   }, InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_X), "key." + ModCyclic.MODID + ".category");
 
-  public static final LayeredDraw.Layer HUD_MANA = (guiGraphics, deltaTracker) -> {
-//    if (!FeatureRegistry.PLAYER_RENDER_CAPS) { // TODO: feature registry instead Config file!?
-//      return;
-//    }
+  @SubscribeEvent
+  public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+    //    net.neoforged.neoforge.client.ClientRegistry.registerKeyBinding(CAKE);
+    event.register(CAKE);
+  }
+
+  @SubscribeEvent
+  public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {
+    event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID,"energy_hud"), ENERGY_HUD_LAYER);
+  }
+  /**
+   *
+   */
+  public static final LayeredDraw.Layer ENERGY_HUD_LAYER = (guiGraphics, deltaTracker) -> {
+    if (!ClientConfigCyclic.ENERGY_HUD.get()) {
+      return;
+    }
     LocalPlayer player = Minecraft.getInstance().player;
     var e = CapabilityUtil.energy(player.getMainHandItem());
-    if(e != null){
+    if(e != null) {
 
-//    }
-//    if (player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
       final String toDisplay = e.getEnergyStored() + "/" + e.getMaxEnergyStored();
-//      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
       int x = 10;
       int y = 10;
-      if (x >= 0 && y >= 0) {
-        guiGraphics.drawString(Minecraft.getInstance().font, toDisplay, x, y, 0xFF0000);
-      }
+      int colour = 0xFF0000;
+//      if (x >= 0 && y >= 0) {
+        guiGraphics.drawString(Minecraft.getInstance().font, toDisplay, x, y, colour);
+//      }
     }
   };
 
@@ -282,16 +291,6 @@ public class ClientRegistryCyclic {
         ItemRegistry.SHIELD_FLINT.get(), ItemRegistry.SHIELD_BONE.get(), ItemRegistry.SHIELD_OBSIDIAN.get());
   }
 
-  @SubscribeEvent
-  public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {
-    event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID,"hud_mana"), HUD_MANA);
-  }
-
-  @SubscribeEvent
-  public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-    //    net.neoforged.neoforge.client.ClientRegistry.registerKeyBinding(CAKE);
-    event.register(CAKE);
-  }
 
   @SubscribeEvent
   public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {

@@ -67,7 +67,9 @@ import com.lothrazar.cyclic.item.food.EdibleSpecItem;
 import com.lothrazar.cyclic.item.food.EnderApple;
 import com.lothrazar.cyclic.item.food.HeartItem;
 import com.lothrazar.cyclic.item.food.HeartToxicItem;
+import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.missile.WandMissileItem;
+import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.item.scythe.ScytheBrush;
 import com.lothrazar.cyclic.item.scythe.ScytheForage;
 import com.lothrazar.cyclic.item.scythe.ScytheHarvest;
@@ -373,6 +375,12 @@ public class ConfigRegistry {
     WandMissileItem.COST = CFG.comment(" Energy cost per item use").defineInRange("wand_missile.energy", 150, 1, 50000);
     WandMissileItem.MAX = CFG.comment(" Maximum internal energy storage").defineInRange("wand_missile.energy_max", 64000, 1, Integer.MAX_VALUE);
     WandMissileItem.RANGE = CFG.comment(" Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
+    WandMissileItem.DAMAGE_MIN = CFG.comment(" Minimum damage dealt on hit (inclusive)").defineInRange("wand_missile.damage_min", 3, 0, Integer.MAX_VALUE);
+    WandMissileItem.DAMAGE_MAX = CFG.comment(" Maximum damage dealt on hit (exclusive upper bound for the random roll)").defineInRange("wand_missile.damage_max", 9, 1, Integer.MAX_VALUE);
+    BuilderItem.COST = CFG.comment(" Energy cost per block placed by the build/replace/offset scepters").defineInRange("build_scepter.energy", 50, 0, Integer.MAX_VALUE);
+    BuilderItem.MAX = CFG.comment(" Maximum internal energy storage of the build/replace/offset scepters").defineInRange("build_scepter.energy_max", 64000, 1, Integer.MAX_VALUE);
+    RandomizerItem.COST = CFG.comment(" Energy cost per block swapped by the randomize scepter").defineInRange("randomize_scepter.energy", 50, 0, Integer.MAX_VALUE);
+    RandomizerItem.MAX = CFG.comment(" Maximum internal energy storage of the randomize scepter").defineInRange("randomize_scepter.energy_max", 64000, 1, Integer.MAX_VALUE);
     OreProspector.RANGE = CFG.comment(" Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
     OreProspector.HEIGHT = CFG.comment(" Ore Prospector height around player to search for ores").defineInRange("prospector.height", 8, 1, 128);
     ///
@@ -631,6 +639,7 @@ public class ConfigRegistry {
     CFGC.pop();
     CFGC.push("text");
     ClientConfigCyclic.FLUID_BLOCK_STATUS = CFGC.comment(" True means this will hide the fluid contents chat message (right click) on relevant blocks (pylon, fluid generator, fluid hopper, solidifier, sprinkler, tank, cask)").define("FluidContents", true);
+    ClientConfigCyclic.ENERGY_HUD = CFGC.comment("Enabling this will show the energy of any held item in the top left of your screen").define("Energy_HUD", true);
     CFGC.pop();
     CFGC.pop(); //end of blocks
     CFGC.comment(WALL, "Item Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
