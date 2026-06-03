@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
@@ -618,72 +618,9 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
   }
 
-  /**
-   * beam render tick
-   * 
-   * @param level
-   * @param pos
-   * @param beamStuff
-   */
-//  public static void updateBeam(Level level, BlockPos pos, com.lothrazar.cyclic.block.beaconpotion.BeamStuff beamStuff) {
-//    BlockPos blockpos;
-//    if (beamStuff.lastCheckY < pos.getY()) {
-//      blockpos = pos;
-//      beamStuff.checkingBeamSections = new ArrayList<>();
-//      beamStuff.lastCheckY = pos.getY() - 1;
-//    }
-//    else {
-//      blockpos = new BlockPos(pos.getX(), beamStuff.lastCheckY + 1, pos.getZ());
-//    }
-//    BeaconBlockEntity.BeaconBeamSection beaconblockentity$beaconbeamsection = beamStuff.checkingBeamSections.isEmpty() ? null : beamStuff.checkingBeamSections.get(beamStuff.checkingBeamSections.size() - 1);
-//    int surfaceHeight = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ());
-//    for (int yLoop = 0; yLoop < 10 && blockpos.getY() <= surfaceHeight; ++yLoop) {
-//      BlockState blockstate = level.getBlockState(blockpos);
-//      // important: start one up OR give your beacon block an override to getBeaconColorMultiplier
-//      float[] colorMult = blockstate.getBeaconColorMultiplier(level, blockpos, pos);
-//      if (colorMult != null) {
-//        if (beamStuff.checkingBeamSections.size() <= 1) {
-//          beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(colorMult);
-//          beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
-//        }
-//        else if (beaconblockentity$beaconbeamsection != null) {
-//          float[] col = beaconblockentity$beaconbeamsection.getColor();
-//          if (Arrays.equals(colorMult, col)) {
-//            beaconblockentity$beaconbeamsection.increaseHeight();
-//          }
-//          else {
-//            beaconblockentity$beaconbeamsection = new BeaconBlockEntity.BeaconBeamSection(new float[] { (col[0] + colorMult[0]) / 2.0F, (col[1] + colorMult[1]) / 2.0F, (col[2] + colorMult[2]) / 2.0F });
-//            beamStuff.checkingBeamSections.add(beaconblockentity$beaconbeamsection);
-//          }
-//        }
-//      }
-//      else {
-//        //        .println("     null color so check bedrock from state=" + blockstate);
-//        if (beaconblockentity$beaconbeamsection == null || blockstate.getLightBlock(level, blockpos) >= 15 && !blockstate.is(Blocks.BEDROCK)) {
-//          beamStuff.checkingBeamSections.clear();
-//          //cancel does work but shoots thru sht. prevents us stopping at day zero
-//          //.out.print("CANCELLED why reset to surface height here " + lastCheckY + " becomes " + surfaceHeight);
-//          beamStuff.lastCheckY = surfaceHeight;
-//          break;
-//        }
-//        if (beaconblockentity$beaconbeamsection != null)
-//          beaconblockentity$beaconbeamsection.increaseHeight();
-//      }
-//      blockpos = blockpos.above();
-//      ++beamStuff.lastCheckY;
-//      //.out.println("     move up=" + lastCheckY);
-//    }
-//    if (level.getGameTime() % 80L == 0L) {
-//      if (!beamStuff.beamSections.isEmpty()) {
-//        //        applyEffects(p_155108_, p_155109_, this.levels, this.primaryPower, this.secondaryPower);
-//        SoundUtil.playSound(level, pos, SoundEvents.BEACON_AMBIENT);
-//      }
-//    }
-//    if (beamStuff.lastCheckY >= surfaceHeight) {
-//      beamStuff.lastCheckY = level.getMinBuildHeight() - 1;
-//      beamStuff.beamSections = beamStuff.checkingBeamSections;
-//    }
-//  }
+  // Beam logic moved to BeamHolder (interface + static helper) - see
+  // com.lothrazar.cyclic.render.beacon. Cyclic beacons implement BeamHolder;
+  // renderers extend RenderBeaconBase; the beam draw lives on BeaconBeamRenderer.
 
   // was getTargetCenter
   protected BlockPos getFacingShapeCenter(int radiusIn) {

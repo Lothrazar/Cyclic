@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 
 /**
  * laser rendering by direwolf20-MC from this MIT project
@@ -22,6 +23,11 @@ import net.minecraft.world.entity.player.Player;
 public class RenderLaser implements BlockEntityRenderer<TileLaser> {
 
   public RenderLaser(BlockEntityRendererProvider.Context d) {}
+
+  @Override
+  public AABB getRenderBoundingBox(TileLaser blockEntity) {
+    return AABB.INFINITE;
+  }
 
   @Override
   public void render(TileLaser te, float v, PoseStack matrixStack, MultiBufferSource iRenderTypeBuffer, int partialTicks, int destroyStage) {

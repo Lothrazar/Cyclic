@@ -129,11 +129,6 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     return tank == null ? FluidStack.EMPTY : tank.getFluid();
   }
 
-//  @Override
-//  public AABB getRenderBoundingBox() {
-//    return BlockEntity.INFINITE_EXTENT_AABB;
-//  }
-
   private int heightWithDirection() {
     Direction blockFacing = this.getBlockState().getValue(BlockStateProperties.FACING);
     int diff = 1; // directionIsUp ? 1 : -1;

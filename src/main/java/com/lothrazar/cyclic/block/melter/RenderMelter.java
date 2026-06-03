@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.melter;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -51,6 +51,10 @@ public class RenderMelter implements BlockEntityRenderer<TileMelter> {
       return;
     }
     VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.RESIZABLE);
+    //skip during block-breaking overlay (vertex format mismatch with SheetedDecalTextureGenerator)
+    if (vertexBuffer.getClass().getName().equals("com.mojang.blaze3d.vertex.VertexMultiConsumer$Double")) {
+      return;
+    }
     matrixStack.pushPose();
     matrixStack.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);
     RenderBlockUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),

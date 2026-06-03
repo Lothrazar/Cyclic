@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -123,11 +124,6 @@ public class TileHarvester extends TileBlockEntityCyclic implements MenuProvider
     }
     return shape;
   }
-
-//  @Override
-//  public AABB getRenderBoundingBox() {
-//    return BlockEntity.INFINITE_EXTENT_AABB;
-//  }
 
   @Override
   public int getField(int id) {

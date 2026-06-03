@@ -81,11 +81,6 @@ public class TileLaser extends TileBlockEntityCyclic implements MenuProvider {
     return this.getBlockPos();
   }
 
-//  @Override
-//  public AABB getRenderBoundingBox() {
-//    return BlockEntity.INFINITE_EXTENT_AABB;
-//  }
-
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {

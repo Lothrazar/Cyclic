@@ -18,9 +18,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -31,10 +33,15 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockAntiBeacon extends BlockCyclic {
+public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
 
   public BlockAntiBeacon(Properties properties) {
     super(properties.randomTicks().strength(0.7F).noOcclusion());
+  }
+
+  @Override
+  public DyeColor getColor() {
+    return DyeColor.WHITE;
   }
 
   @Override
@@ -95,7 +102,7 @@ public class BlockAntiBeacon extends BlockCyclic {
       return;
     }
     LivingEntity livingEntity = event.getEntity();
-    if (!doesConfigBlockEffect(event.getEffectInstance().getEffect())
+    if (!willCureThis(event.getEffectInstance().getEffect())
         || !(livingEntity.getCommandSenderWorld() instanceof ServerLevel serverLevel)
         || !serverLevel.isLoaded(livingEntity.blockPosition())) {
       return;
@@ -124,7 +131,7 @@ public class BlockAntiBeacon extends BlockCyclic {
   private static void cureAllRelevant(LivingEntity e) {
     List<Holder<MobEffect>> cureMe = new ArrayList<>();
     for (Holder<MobEffect> mobEffect : e.getActiveEffectsMap().keySet()) {
-      if (doesConfigBlockEffect(mobEffect)) {
+      if (willCureThis(mobEffect)) {
         cureMe.add(mobEffect);
       }
     }
@@ -134,10 +141,14 @@ public class BlockAntiBeacon extends BlockCyclic {
     }
   }
 
+  //any vanilla- or mod-tagged HARMFUL effect is auto-blocked
+  // also any in config
   @SuppressWarnings("unchecked")
-  private static boolean doesConfigBlockEffect(Holder<MobEffect> mobEffectHolder) {
+  private static boolean willCureThis(Holder<MobEffect> mobEffectHolder) {
     MobEffect mobEffect = mobEffectHolder.value();
-
+    if (mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
+      return true;
+    }
     List<String> entries = (List<String>) TileAntiBeacon.POTIONS.get();
     for (String entry : entries) {
       if (entry.startsWith("#")) {

@@ -96,11 +96,6 @@ public class TileDropper extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
-//  @Override
-//  public AABB getRenderBoundingBox() {
-//    return BlockEntity.INFINITE_EXTENT_AABB;
-//  }
-
   @Override
   public Component getDisplayName() {
     return BlockRegistry.DROPPER.get().getName();

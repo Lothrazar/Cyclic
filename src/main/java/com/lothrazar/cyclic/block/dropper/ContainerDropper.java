@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.dropper;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;

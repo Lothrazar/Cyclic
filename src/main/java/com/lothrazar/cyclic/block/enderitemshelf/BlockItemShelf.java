@@ -5,7 +5,10 @@ import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.BlockEnderShelf;
 import com.lothrazar.cyclic.data.DataTags;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import com.lothrazar.library.util.BlockstatesUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
@@ -27,8 +30,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
 
 public class BlockItemShelf extends BlockCyclic {
 
@@ -135,14 +136,20 @@ public class BlockItemShelf extends BlockCyclic {
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
     if (entity != null) {
-      //facing state if needed 
+      //facing state if needed
       world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, BlockstatesUtil.getFacingFromEntityHorizontal(pos, entity)), 2);
     }
     BlockEntity tileentity = world.getBlockEntity(pos);
-    TileItemShelf shelf = (TileItemShelf) tileentity;
-    if (stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null) {
-      //to tile from tag 
-      shelf.inventory.deserializeNBT(null, stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
+    if (!(tileentity instanceof TileItemShelf shelf)) {
+      return;
+    }
+    //pull inventory from the item's capability (which loads from CUSTOM_DATA) into the tile
+    IItemHandler stackInv = CapabilityUtil.item(stack);
+    if (stackInv != null) {
+      int slots = Math.min(stackInv.getSlots(), shelf.inventory.getSlots());
+      for (int i = 0; i < slots; i++) {
+        shelf.inventory.setStackInSlot(i, stackInv.getStackInSlot(i).copy());
+      }
     }
   }
 
@@ -150,10 +157,16 @@ public class BlockItemShelf extends BlockCyclic {
   public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity tileentity, ItemStack stackToolUsed) {
     super.playerDestroy(world, player, pos, state, tileentity, stackToolUsed);
     ItemStack newStack = new ItemStack(this);
-    if (tileentity instanceof TileItemShelf) {
-      TileItemShelf shelf = (TileItemShelf) tileentity;
-      CompoundTag tileData = shelf.inventory.serializeNBT(null);
-      //read from tile, write to itemstack 
+    if (tileentity instanceof TileItemShelf shelf) {
+      //write the tile's inventory into the dropped item's capability (which persists into CUSTOM_DATA)
+      IItemHandler stackInv = CapabilityUtil.item(newStack);
+      if (stackInv instanceof ItemStackHandler sh) {
+        int slots = Math.min(sh.getSlots(), shelf.inventory.getSlots());
+        for (int i = 0; i < slots; i++) {
+          sh.setStackInSlot(i, shelf.inventory.getStackInSlot(i).copy());
+        }
+      }
+      CompoundTag tileData = shelf.inventory.serializeNBT(world.registryAccess());
       // newStack.setTag(tileData); // disabled: use DataComponents in 1.21.1
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);

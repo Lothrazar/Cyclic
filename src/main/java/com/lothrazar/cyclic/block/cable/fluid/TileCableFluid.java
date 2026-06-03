@@ -30,7 +30,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 
 public class TileCableFluid extends TileCableBase implements MenuProvider {
 

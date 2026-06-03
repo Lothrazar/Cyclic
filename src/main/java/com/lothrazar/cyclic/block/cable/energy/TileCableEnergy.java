@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.DirectionUtil;
 import com.lothrazar.library.cap.EnergyStorageWrapper;

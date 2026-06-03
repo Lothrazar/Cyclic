@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
+import com.lothrazar.cyclic.util.RegistryHolder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
-// import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
+ import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
 import com.lothrazar.cyclic.block.beaconredstone.RenderBeaconRedstone;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
@@ -203,6 +203,23 @@ public class ClientRegistryCyclic {
 
   public static void setupClient(final FMLClientSetupEvent event) {
     initShields();
+    //provide a client-side HolderLookup.Provider for item caps that serialize component-aware
+    //payloads (FluidStack, ItemStack handlers) so tooltips work over dedicated-server connections.
+    initClientRegistries();
+  }
+
+  public static void initClientRegistries() {
+    RegistryHolder.CLIENT_LOOKUP = () -> {
+      var mc = net.minecraft.client.Minecraft.getInstance();
+      if (mc.level != null) {
+        return mc.level.registryAccess();
+      }
+      var conn = mc.getConnection();
+      if (conn != null) {
+        return conn.registryAccess();
+      }
+      return null;
+    };
   }
   @SuppressWarnings("deprecation")
   private static void initShields() {

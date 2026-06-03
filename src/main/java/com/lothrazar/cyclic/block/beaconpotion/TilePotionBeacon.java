@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.render.beacon.BeamHolder;
+import com.lothrazar.cyclic.render.beacon.BeamStuff;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
@@ -25,7 +27,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -34,7 +35,7 @@ import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
 
-public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvider {
+public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvider, BeamHolder {
 
   static enum Fields {
     TIMER, REDSTONE, RANGE, ENTITYTYPE;
@@ -71,7 +72,19 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
       return potionContents!=null;
     }
   };
-  private BeamStuff beamStuff = new BeamStuff();
+  private final BeamStuff beamStuff = new BeamStuff();
+
+  @Override
+  public BeamStuff getBeamStuff() {
+    return beamStuff;
+  }
+
+  @Override
+  public boolean isBeamActive() {
+    // potion beacon's LIT state is driven by its own timer/energy logic
+    return this.getBlockState().hasProperty(BlockPotion.LIT)
+        && this.getBlockState().getValue(BlockPotion.LIT);
+  }
 
   public TilePotionBeacon(BlockPos pos, BlockState state) {
     super(TileRegistry.BEACON.get(), pos, state);
@@ -117,18 +130,14 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
         }
       }
       return;
-    } //end of timer/potion checks 
-    // updateBeam(level, pos, beamStuff);
+    } //end of timer/potion checks
+    tickBeam(level, worldPosition);
   }
 
   @Override
   public void setLevel(Level p_155091_) {
     super.setLevel(p_155091_);
     beamStuff.lastCheckY = p_155091_.getMinBuildHeight() - 1;
-  }
-
-  public List<BeaconBlockEntity.BeaconBeamSection> getBeamSections() {
-    return beamStuff.beamSections;
   }
 
   @Override

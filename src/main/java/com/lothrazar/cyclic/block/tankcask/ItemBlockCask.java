@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.tankcask;
 
 import java.util.List;
 import com.lothrazar.cyclic.block.tank.ItemBlockTank;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -76,8 +76,4 @@ public class ItemBlockCask extends BlockItem {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
-//  @Override
-//  // public Object initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
-//    return new FluidHandlerCapabilityStack(stack, TileCask.CAPACITY);
-//  }
 }

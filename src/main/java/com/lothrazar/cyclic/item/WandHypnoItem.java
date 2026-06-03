@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.ParticleUtil;
 import net.minecraft.core.BlockPos;

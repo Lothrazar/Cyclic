@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.DirectionUtil;

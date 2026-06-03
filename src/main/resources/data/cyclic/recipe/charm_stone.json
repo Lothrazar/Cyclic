@@ -7,7 +7,7 @@
   ],
   "key": {
     "g": {
-      "item": "minecraft:gold_nugget"
+      "tag": "c:nuggets/copper"
     },
     "f": {
       "item": "minecraft:end_crystal"

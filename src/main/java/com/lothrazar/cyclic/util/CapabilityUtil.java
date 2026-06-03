@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.fixers;
+package com.lothrazar.cyclic.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

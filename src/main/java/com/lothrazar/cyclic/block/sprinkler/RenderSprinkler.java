@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.sprinkler;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -28,6 +28,10 @@ public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler> {
       return;
     }
     VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.RESIZABLE);
+    //skip during block-breaking overlay (vertex format mismatch with SheetedDecalTextureGenerator)
+    if (buffer.getClass().getName().equals("com.mojang.blaze3d.vertex.VertexMultiConsumer$Double")) {
+      return;
+    }
     matrix.scale(1F, FluidHelpers.getScale(tankHere.tank) / 4F, 1F);
     float f = 0.5F;
     matrix.scale(f, 1F, f);

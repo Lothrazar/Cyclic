@@ -48,7 +48,7 @@ public class PacketTileInventoryToClient implements CustomPacketPayload {
     PacketTileInventoryToClient p = new PacketTileInventoryToClient();
     p.blockPos = buf.readBlockPos();
     p.slot = buf.readInt();
-    p.itemStack = ItemStack.STREAM_CODEC.decode(buf);
+    p.itemStack = ItemStack.OPTIONAL_STREAM_CODEC.decode(buf);
     p.type = buf.readEnum(SyncPacketType.class);
     return p;
   }
@@ -56,7 +56,7 @@ public class PacketTileInventoryToClient implements CustomPacketPayload {
   public static void encode(RegistryFriendlyByteBuf buf, PacketTileInventoryToClient msg) {
     buf.writeBlockPos(msg.blockPos);
     buf.writeInt(msg.slot);
-    ItemStack.STREAM_CODEC.encode(buf, msg.itemStack);
+    ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, msg.itemStack);
     buf.writeEnum(msg.type);
   }
 }

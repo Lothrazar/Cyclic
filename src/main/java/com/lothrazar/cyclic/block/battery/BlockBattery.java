@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.block.battery;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -52,11 +52,12 @@ public class BlockBattery extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, ent, stack);
     ItemStack newStackBattery = new ItemStack(this);
     if (ent instanceof TileBattery battery) {
+      //write tile energy into the dropped item's energy capability (which persists into CUSTOM_DATA)
       IEnergyStorage newStackCap = CapabilityUtil.energy(newStackBattery);
-      if (newStackCap instanceof EnergyStorageWrapper) {
-        ((EnergyStorageWrapper) newStackCap).setEnergy(battery.energy.getEnergyStored());
+      if (newStackCap instanceof EnergyStorageWrapper wrapper) {
+        wrapper.setEnergy(battery.energy.getEnergyStored());
       }
-      else {
+      else if (newStackCap != null) {
         newStackCap.receiveEnergy(battery.energy.getEnergyStored(), false);
       }
       if (battery.energy.getEnergyStored() > 0) {
@@ -78,19 +79,19 @@ public class BlockBattery extends BlockCyclic {
 
   @Override
   public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    //read stored energy from the item's capability (which loads from CUSTOM_DATA)
     int current = 0;
-    IEnergyStorage storage =  CapabilityUtil.energy(stack);
-    if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(TileBlockEntityCyclic.NBTENERGY)) {
-      current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(TileBlockEntityCyclic.NBTENERGY);
-    }
-    else if (storage != null) {
+    IEnergyStorage storage = CapabilityUtil.energy(stack);
+    if (storage != null) {
       current = storage.getEnergyStored();
     }
+    else if (stack.has(DataComponents.CUSTOM_DATA) && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(TileBlockEntityCyclic.NBTENERGY)) {
+      current = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt(TileBlockEntityCyclic.NBTENERGY);
+    }
 //    TileBattery container = (TileBattery) world.getBlockEntity(pos);
-    var storageTile = CapabilityUtil.energy(world, pos);
-    if (storageTile != null) {
+    if (current > 0 && world.getBlockEntity(pos) instanceof TileBattery tile) {
 //      storageTile.setEnergy(current);
-    storageTile.receiveEnergy(current, false);
+      tile.energy.setEnergy(current);
     }
     super.setPlacedBy(world, pos, state, placer, stack);
   }

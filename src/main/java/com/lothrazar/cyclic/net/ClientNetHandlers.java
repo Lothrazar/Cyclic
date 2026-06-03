@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.net;
 
 import com.lothrazar.cyclic.block.enderitemshelf.ClientAutoSyncItemHandler;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 public final class ClientNetHandlers {

@@ -140,9 +140,10 @@ public class BlockEnderShelf extends BlockCyclic {
         controller.getShelves().add(pos);
       }
     }
-    if (stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null) {
-      //to tile from tag 
-      shelf.inventory.deserializeNBT(null, stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
+    CompoundTag stored = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+    if (stored != null && !stored.isEmpty()) {
+      //to tile from tag
+      shelf.inventory.deserializeNBT(world.registryAccess(), stored);
     }
   }
 
@@ -152,8 +153,9 @@ public class BlockEnderShelf extends BlockCyclic {
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileEnderShelf) {
       TileEnderShelf shelf = (TileEnderShelf) tileentity;
-      //read from tile, write to itemstack  
-      CompoundTag tileData = shelf.inventory.serializeNBT(null);
+      //read from tile, write to itemstack
+      CompoundTag tileData = shelf.inventory.serializeNBT(world.registryAccess());
+      newStack.set(DataComponents.CUSTOM_DATA, CustomData.of(tileData));
       // newStack.setTag(tileData); // disabled
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);

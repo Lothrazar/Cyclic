@@ -5,9 +5,11 @@ import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -16,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 
-public class BlockPotion extends BlockCyclic {
+public class BlockPotion extends BlockCyclic implements BeaconBeamBlock {
 
   private static final float[] COLOR = new float[] { 1, 1, 1 };
 
@@ -25,6 +27,11 @@ public class BlockPotion extends BlockCyclic {
         .noOcclusion() // transparency
     );
     this.setHasGui();
+  }
+
+  @Override
+  public DyeColor getColor() {
+    return DyeColor.WHITE;
   }
 
   @Override

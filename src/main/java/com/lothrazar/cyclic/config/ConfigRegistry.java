@@ -472,10 +472,10 @@ public class ConfigRegistry {
      TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
          .defineInRange("anti_beacon.ticks", 200, 20, 9999);
 
-     TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. Supports exact ids (e.g. 'minecraft:poison'),"
-         + " namespace wildcards (e.g. 'cyclic:*'), and tags prefixed with '#' (e.g. '#c:harmful')."
+     TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. Any effect marked harmfil, or in this list, will be cured. Supports exact ids (e.g. 'minecraft:poison'),"
+         + " namespace wildcards (e.g. cyclic:*, minecraft:trial_omen, minecraft:glowing)."
          + "  ")
-         .defineList("anti_beacon.potion_list", Arrays.asList("#c:harmful", "cyclic:gravity"), it -> it instanceof String);
+         .defineList("anti_beacon.potion_list", Arrays.asList("cyclic:gravity"), it -> it instanceof String);
     TileCableFluid.BUFFERSIZE = CFG.comment(" How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);
     TileCableFluid.TRANSFER_RATE = CFG.comment(" How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode")

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.block.tank;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
@@ -28,6 +28,12 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
       return;
     }
     VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.RESIZABLE);
+    //skip when the block is being broken: the breaking overlay wraps the buffer in a
+    //SheetedDecalTextureGenerator that requires UV0+Normal vertex elements, but the
+    //fluid RenderType doesn't include them and crashes BufferBuilder.endLastVertex
+    if (buffer.getClass().getName().equals("com.mojang.blaze3d.vertex.VertexMultiConsumer$Double")) {
+      return;
+    }
     matrix.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);
     RenderBlockUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
         matrix, buffer, RenderBlockUtils.getColorARGB(fluid),

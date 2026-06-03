@@ -10,7 +10,7 @@
       "item": "minecraft:stone_brick_stairs"
     },
     "i": {
-      "item": "minecraft:redstone"
+      "tag": "c:nuggets/copper"
     }
   },
   "result": {

@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.item.storagebag.PacketStorageBagScreen;
 import com.lothrazar.cyclic.item.transporter.PacketChestSack;
 import com.lothrazar.cyclic.net.BlockFacadeMessage;
 import com.lothrazar.cyclic.net.PacketCraftAction;
+import com.lothrazar.cyclic.net.PacketDisplayFluidMessage;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
 import com.lothrazar.cyclic.net.PacketHarvesting;
 import com.lothrazar.cyclic.net.PacketKeyBind;
@@ -64,6 +65,7 @@ public class PacketRegistry {
     registrar.playToClient(PacketPlayerSyncToClient.TYPE, PacketPlayerSyncToClient.STREAM_CODEC, PacketPlayerSyncToClient::handle);
     registrar.playToClient(PacketSyncManaToClient.TYPE, PacketSyncManaToClient.STREAM_CODEC, PacketSyncManaToClient::handle);
     registrar.playToClient(PacketSyncHorseCarrots.TYPE, PacketSyncHorseCarrots.STREAM_CODEC, PacketSyncHorseCarrots::handle);
+    registrar.playToClient(PacketDisplayFluidMessage.TYPE, PacketDisplayFluidMessage.STREAM_CODEC, PacketDisplayFluidMessage::handle);
     registrar.playToServer(BlockFacadeMessage.TYPE, BlockFacadeMessage.STREAM_CODEC, BlockFacadeMessage::handle);
   }
 

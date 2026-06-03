@@ -3,7 +3,7 @@ package com.lothrazar.cyclic.item.missile;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.ItemHasEnergy;
 import com.lothrazar.library.util.EntityUtil;

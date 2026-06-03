@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic;
 
 import com.lothrazar.cyclic.event.ClientInputEventHandler;
-import com.lothrazar.cyclic.render.HorseCarrotOverlay;
+import com.lothrazar.cyclic.render.overlay.HorseCarrotOverlay;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;

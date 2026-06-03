@@ -3,9 +3,9 @@ package com.lothrazar.cyclic.block.crate;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
-import com.lothrazar.cyclic.registry.MenuTypeRegistry;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
-import net.minecraft.client.gui.screens.MenuScreens;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +17,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
 
 public class BlockCrate extends BlockCyclic {
 
@@ -60,13 +58,15 @@ public class BlockCrate extends BlockCyclic {
   @Override
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     BlockEntity tileentity = worldIn.getBlockEntity(pos);
-    if (stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null && tileentity instanceof TileCrate && stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(NBTCRATE + "0")) {
-      //to tile from tag
-      TileCrate crate = (TileCrate) tileentity;
-      for (int i = 0; i < crate.inventory.getSlots(); i++) {
-        //
-        ItemStack crateStack = ItemStack.EMPTY; // crate load stub
-        crate.inventory.setStackInSlot(i, crateStack);
+    if (!(tileentity instanceof TileCrate crate)) {
+      return;
+    }
+    //pull inventory from the item's capability (which loads from CUSTOM_DATA) into the tile
+    IItemHandler stackInv = CapabilityUtil.item(stack);
+    if (stackInv != null) {
+      int slots = Math.min(stackInv.getSlots(), crate.inventory.getSlots());
+      for (int i = 0; i < slots; i++) {
+        crate.inventory.setStackInSlot(i, stackInv.getStackInSlot(i).copy());
       }
     }
   }
@@ -76,11 +76,19 @@ public class BlockCrate extends BlockCyclic {
     super.playerDestroy(world, player, pos, state, tileentity, stackToolUsed);
     ItemStack newStack = new ItemStack(this);
     if (tileentity instanceof TileCrate crate) {
-      //read from tile, write to itemstack
-      for (int i = 0; i < crate.inventory.getSlots(); i++) {
-        CompoundTag nbt = new CompoundTag();
-        // crate save stub
+      //write the tile's inventory into the dropped item's capability (which persists into CUSTOM_DATA)
+      IItemHandler stackInv = CapabilityUtil.item(newStack);
+      if (stackInv != null) {
+        int slots = Math.min(stackInv.getSlots(), crate.inventory.getSlots());
+        for (int i = 0; i < slots; i++) {
+          ItemStack contents = crate.inventory.getStackInSlot(i);
+          if (!contents.isEmpty() && stackInv instanceof net.neoforged.neoforge.items.ItemStackHandler sh) {
+            sh.setStackInSlot(i, contents.copy());
+          }
+        }
       }
+      CompoundTag nbt = new CompoundTag();
+      // crate save stub
     }
     ItemStackUtil.dropItemStackMotionless(world, pos, newStack);
   }

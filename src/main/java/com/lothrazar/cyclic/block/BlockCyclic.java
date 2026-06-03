@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.block;
 
-import com.lothrazar.cyclic.config.ClientConfigCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
-import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.net.PacketDisplayFluidMessage;
+import com.lothrazar.cyclic.util.CapabilityUtil;
+import net.neoforged.neoforge.network.PacketDistributor;
 import com.lothrazar.library.block.EntityBlockFlib;
 import com.lothrazar.library.util.SoundUtil;
 import com.lothrazar.library.util.StringParseUtil;
@@ -141,9 +141,13 @@ public class BlockCyclic extends EntityBlockFlib {
   }
 
   private void displayClientFluidMessage(Player player, IFluidHandler handler) {
-    if (ClientConfigCyclic.FLUID_BLOCK_STATUS.get()) {
-      player.displayClientMessage(Component.translatable(StringParseUtil.getFluidRatioName(handler)), true);
+    //compute the ratio key server-side, then send to the target client; the client's handler
+    //checks the per-client config (ClientConfigCyclic.FLUID_BLOCK_STATUS) and displays.
+    if (!(player instanceof ServerPlayer sp)) {
+      return;
     }
+    String key = StringParseUtil.getFluidRatioName(handler);
+    PacketDistributor.sendToPlayer(sp, new PacketDisplayFluidMessage(key));
   }
 
   @SuppressWarnings("deprecation")

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.item.crafting;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.data.IContainerCraftingAction;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.gui.ContainerBase;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;

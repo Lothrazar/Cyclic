@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.battery;
 
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -58,10 +58,6 @@ public class ItemBlockBattery extends BlockItem {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
-//  @Override
-//  // public Object initCapabilities(ItemStack stack, CompoundTag nbt) {
-//    return new CapabilityProviderEnergyStack(TileBattery.MAX.get());
-//  }
 
   }
 

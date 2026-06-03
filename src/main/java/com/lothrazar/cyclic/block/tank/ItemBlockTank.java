@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.tank;
 
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -53,7 +53,13 @@ public class ItemBlockTank extends BlockItem {
 
   public static FluidStack copyFluidFromStack(ItemStack stack) {
     // FluidHandlerCapabilityStack removed in 1.21.1
-    return null;
+    //read from the registered item fluid capability (backed by CUSTOM_DATA via ItemFluidCap)
+    IFluidHandler storage = CapabilityUtil.fluid(stack);
+    if (storage == null) {
+      return null;
+    }
+    FluidStack fs = storage.getFluidInTank(0);
+    return fs == null || fs.isEmpty() ? null : fs;
   }
 
   @Override
@@ -81,8 +87,4 @@ public class ItemBlockTank extends BlockItem {
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
   }
 
-//  @Override
-//  // public Object initCapabilities(ItemStack stack, net.minecraft.nbt.CompoundTag nbt) {
-//    return new FluidHandlerCapabilityStack(stack, TileTank.CAPACITY);
-//  }
 }

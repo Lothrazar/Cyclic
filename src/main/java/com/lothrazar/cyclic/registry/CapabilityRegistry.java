@@ -1,6 +1,15 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.block.battery.TileBattery;
+import com.lothrazar.cyclic.block.batteryclay.TileClayBattery;
+import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
+import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
+import com.lothrazar.cyclic.block.tank.TileTank;
+import com.lothrazar.cyclic.block.tankcask.TileCask;
+import com.lothrazar.cyclic.capabilities.item.ItemEnergyCap;
+import com.lothrazar.cyclic.capabilities.item.ItemFluidCap;
+import com.lothrazar.cyclic.capabilities.item.ItemInventoryCap;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
@@ -78,5 +87,32 @@ public class CapabilityRegistry {
             FluidWaxHolder.BUCKET.get(),
             FluidXpJuiceHolder.BUCKET.get()
         );
+        // Energy on BlockItem: persists into CUSTOM_DATA so place/break round-trips work
+        event.registerItem(Capabilities.EnergyStorage.ITEM,
+            (stack, ctx) -> new ItemEnergyCap(stack, TileBattery.MAX.get()),
+            ItemRegistry.BATTERY.get());
+        event.registerItem(Capabilities.EnergyStorage.ITEM,
+            (stack, ctx) -> new ItemEnergyCap(stack, TileClayBattery.MAX.get()),
+            ItemRegistry.BATTERY_CLAY.get());
+        // Fluid on BlockItem
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+            (stack, ctx) -> new ItemFluidCap(stack, TileTank.CAPACITY),
+            ItemRegistry.TANK.get());
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+            (stack, ctx) -> new ItemFluidCap(stack, TileCask.CAPACITY),
+            ItemRegistry.CASK.get());
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+            (stack, ctx) -> new ItemFluidCap(stack, TileExpPylon.CAPACITY),
+            ItemRegistry.EXPERIENCE_PYLON.get());
+        // Inventory on BlockItem
+        // Note: ender shelf uses a bespoke handler with extra serialized state (book caches, etc)
+        // and persists its full handler NBT directly into CUSTOM_DATA via the block's
+        // setPlacedBy/playerDestroy, so it doesn't get an item-level cap.
+        event.registerItem(Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new ItemInventoryCap(stack, 9 * 9),
+            ItemRegistry.CRATE.get());
+        event.registerItem(Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new ItemInventoryCap(stack, EnderShelfItemHandler.ROWS),
+            ItemRegistry.ENDER_ITEM_SHELF.get());
     }
 }

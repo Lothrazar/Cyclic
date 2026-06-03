@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
 
 /**
  * as of minecraft 1.16 parts of this file contains code from this mod which is MIT License, the same as this project
@@ -17,6 +18,11 @@ import net.minecraft.core.Direction;
 public class RenderScreentext implements BlockEntityRenderer<TileScreentext> {
 
   public RenderScreentext(BlockEntityRendererProvider.Context d) {}
+
+  @Override
+  public AABB getRenderBoundingBox(TileScreentext blockEntity) {
+    return AABB.INFINITE;
+  }
 
   @Override
   public void render(TileScreentext tile, float v, PoseStack matrix,

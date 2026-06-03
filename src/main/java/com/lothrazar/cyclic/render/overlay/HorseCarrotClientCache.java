@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.render;
+package com.lothrazar.cyclic.render.overlay;
 
 import java.util.HashMap;
 import java.util.Map;

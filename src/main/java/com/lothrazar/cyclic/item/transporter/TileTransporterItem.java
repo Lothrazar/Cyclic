@@ -120,7 +120,8 @@ public class TileTransporterItem extends ItemBaseCyclic {
   @OnlyIn(Dist.CLIENT)
   @Override
   public void appendHoverText(ItemStack itemStack, Item.TooltipContext worldIn, List<Component> list, TooltipFlag flagIn) {
-    if (itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null && itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(KEY_BLOCKNAME)) {
+    if (itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() != null
+        && itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains(KEY_BLOCKNAME)) {
       String blockname = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
         MutableComponent t = Component.translatable(ChatUtil.lang(blockname));
@@ -128,11 +129,11 @@ public class TileTransporterItem extends ItemBaseCyclic {
         list.add(t);
       }
     }
-    else {
-      MutableComponent t = Component.translatable(ChatUtil.lang("invalid"));
-      t.withStyle(ChatFormatting.DARK_RED);
-      list.add(t);
-    }
+//    else {
+//      MutableComponent t = Component.translatable(ChatUtil.lang("invalid"));
+//      t.withStyle(ChatFormatting.DARK_RED);
+//      list.add(t);
+//    }
   }
 
   @Override

@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.capabilities.block;
 
 import java.util.function.Predicate;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.library.packet.PacketSyncFluid;
 import net.neoforged.neoforge.fluids.FluidStack;

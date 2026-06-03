@@ -2,7 +2,7 @@ package com.lothrazar.cyclic.block.batteryclay;
 
 import java.util.List;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

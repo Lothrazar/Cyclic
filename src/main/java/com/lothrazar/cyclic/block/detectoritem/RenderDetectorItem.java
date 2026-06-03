@@ -8,11 +8,17 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class RenderDetectorItem implements BlockEntityRenderer<TileDetectorItem> {
 
   public RenderDetectorItem(BlockEntityRendererProvider.Context d) {}
+
+  @Override
+  public AABB getRenderBoundingBox(TileDetectorItem blockEntity) {
+    return AABB.INFINITE;
+  }
 
   @Override
   public void render(TileDetectorItem te, float v, PoseStack matrixStack,

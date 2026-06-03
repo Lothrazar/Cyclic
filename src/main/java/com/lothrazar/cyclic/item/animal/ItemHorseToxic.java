@@ -46,7 +46,7 @@ public class ItemHorseToxic extends ItemBaseCyclic implements IEntityInteractabl
     }
     if (horseOld.isSaddled()) {
       // copy the real saddle item in case its modded
-      ItemStack saddle = horseOld.inventory.getItem(0).copy();
+      ItemStack saddle = horseOld.getInventory().getItem(0).copy();
       zombieNew.equipSaddle(saddle, SoundSource.PLAYERS);
     }
     ItemStack body = horseOld.getBodyArmorItem();

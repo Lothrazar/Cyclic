@@ -10,7 +10,7 @@
       "tag": "c:storage_blocks/flint"
     },
     "g": {
-      "item": "minecraft:gold_nugget"
+      "tag": "c:nuggets/copper"
     },
     "f": {
       "item": "minecraft:gunpowder"

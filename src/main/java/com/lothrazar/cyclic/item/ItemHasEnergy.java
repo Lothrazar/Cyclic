@@ -1,6 +1,6 @@
 package com.lothrazar.cyclic.item;
 
-import com.lothrazar.cyclic.fixers.CapabilityUtil;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.item.ItemFlib;
 import net.minecraft.ChatFormatting;
