@@ -20,10 +20,10 @@ public class CyclicLogger {
     logger.error(string, e);
   }
 
-  public void info(String string) {
+  public void info(String string , Object... e) {
     //default for all releases is false to prevent spam-logs slipping out
     if (LOGINFO.get()) {
-      logger.info(string);
+      logger.info(string, e);
     }
   }
 

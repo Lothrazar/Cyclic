@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic;
 
 import com.lothrazar.cyclic.event.ClientInputEventHandler;
+import com.lothrazar.cyclic.render.OutlineRenderer;
 import com.lothrazar.cyclic.render.overlay.HorseCarrotOverlay;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -50,6 +51,7 @@ public class ModCyclic {
 
       NeoForge.EVENT_BUS.register(new ClientInputEventHandler());
       NeoForge.EVENT_BUS.register(new HorseCarrotOverlay());
+      NeoForge.EVENT_BUS.register(new OutlineRenderer());
     }
 
     ConfigRegistry cfg = new ConfigRegistry();

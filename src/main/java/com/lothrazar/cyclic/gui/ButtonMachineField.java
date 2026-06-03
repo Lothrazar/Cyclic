@@ -49,7 +49,9 @@ public class ButtonMachineField extends ButtonMachine {
   }
 
   private void onValueUpdate(int val) {
-    setTooltip(ChatUtil.lang(this.tooltipPrefix + val));
+    if(tooltipPrefix != null) {
+      setTooltip(ChatUtil.lang(this.tooltipPrefix + val));
+    }
     switch (val) {
       case 0:
         setTextureId(textureZero);

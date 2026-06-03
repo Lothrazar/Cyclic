@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class RandomizerItem extends ItemBaseCyclic {
 
@@ -45,7 +46,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     if (player.level().isClientSide) {
-      // PacketRegistry.INSTANCE.sendToServer
+      PacketDistributor.sendToServer(new PacketRandomize(pos, side, context.getHand()));
     }
     EntityUtil.setCooldownItem(player, this, COOLDOWN);
     return super.useOn(context);

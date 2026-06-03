@@ -20,14 +20,17 @@ public class FluidTankBase extends FluidTank {
 
   @Override
   public void onContentsChanged() {
-    //send to client
-    IFluidHandler handler = CapabilityUtil.fluid(tile.getLevel(), tile.getBlockPos());
-    if (handler == null || handler.getFluidInTank(0) == null) {
+    if (tile.getLevel() == null || tile.getLevel().isClientSide) {
       return;
     }
-    if (tile.getLevel().isClientSide == false) { //if serverside then
-      FluidStack f = handler.getFluidInTank(0);
-      PacketRegistry.sendToAllClients(tile.getLevel(), new PacketSyncFluid(tile.getBlockPos(), f));
+    IFluidHandler handler = CapabilityUtil.fluid(tile.getLevel(), tile.getBlockPos());
+    if (handler == null) {
+      return;
     }
+    FluidStack f = handler.getFluidInTank(0);
+    if (f.isEmpty()) {
+      return;
+    }
+    PacketRegistry.sendToAllClients(tile.getLevel(), new PacketSyncFluid(tile.getBlockPos(), f));
   }
 }

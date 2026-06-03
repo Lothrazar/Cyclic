@@ -6,6 +6,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
+import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -30,26 +31,32 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
     energy.guiLeft = leftPos;
     energy.guiTop = topPos;
     int x, y;
-    int h = 20;
+    int h = 20, w = 16;
     x = leftPos + 6;
     y = topPos + 6;
     int f = TileUser.Fields.REDSTONE.ordinal();
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, f, menu.tile.getBlockPos()));
-    x = leftPos + 32;
-    y = topPos + 26;
+    x = leftPos + 2 * w;
+    y = topPos + h + 6;
+    w=120;
     f = TileUser.Fields.TIMERDEL.ordinal();
-    GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, 120, h, f, menu.tile.getBlockPos(), 1, 64, menu.tile.getField(f)));
-    slider.setTooltip(Tooltip.create(Component.translatable("block.cyclic.user.delay")));
+    GuiSliderInteger slider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(), 1, 64, menu.tile.getField(f)));
+    slider.setTooltip(Tooltip.create(ChatUtil.ilang("block.cyclic.user.delay")));
     h = 14;
+    w = 14;
     x = btnRedstone.getX() + 4;
-    y = btnRedstone.getY() + h + 16;
+    y = btnRedstone.getY() + h + w;
     f = TileUser.Fields.INTERACTTYPE.ordinal();
     btnType = addRenderableWidget(new ButtonMachineField(x, y, f,
-        menu.tile.getBlockPos(), TextureEnum.SQUARE_ENDER, TextureEnum.SQUARE_RED, "block.cyclic.user.type"));
+        menu.tile.getBlockPos(), TextureEnum.SQUARE_ENDER, TextureEnum.SQUARE_RED, null));
+    btnType.setWidth(w);
+    btnType.setHeight(h);
     y = btnType.getY() + h + 4;
     f = TileUser.Fields.ENTITIES.ordinal();
     btnEntities = addRenderableWidget(new ButtonMachineField(x, y, f,
-        menu.tile.getBlockPos(), TextureEnum.CRAFT_EMPTY, TextureEnum.CRAFT_MATCH, "block.cyclic.user.entities"));
+        menu.tile.getBlockPos(), TextureEnum.CRAFT_EMPTY, TextureEnum.CRAFT_MATCH, null));
+    btnEntities.setWidth(w);
+    btnEntities.setHeight(h);
   }
 
   @Override
@@ -64,9 +71,9 @@ public class ScreenUser extends ScreenBase<ContainerUser> {
   protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     btnRedstone.onValueUpdate(menu.tile);
     btnType.onValueUpdate(menu.tile);
-    btnType.setTooltip(Tooltip.create(Component.literal("block.cyclic.user.type." + menu.tile.doHitBreak)));
+    btnType.setTooltip(Tooltip.create(ChatUtil.ilang("block.cyclic.user.type." + menu.tile.doHitBreak)));
     btnEntities.onValueUpdate(menu.tile);
-    btnEntities.setTooltip(Tooltip.create(Component.literal("block.cyclic.user.entities." + menu.tile.entities)));
+    btnEntities.setTooltip(Tooltip.create(ChatUtil.ilang("block.cyclic.user.entities." + menu.tile.entities)));
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }

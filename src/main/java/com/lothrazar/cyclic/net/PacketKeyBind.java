@@ -65,7 +65,6 @@ public class PacketKeyBind implements CustomPacketPayload {
 
   public static void handle(PacketKeyBind message, IPayloadContext ctx) {
     ctx.enqueueWork(() -> {
-      //      ContainerCraf
       //rotate type
       ServerPlayer sender = (ServerPlayer) ctx.player();
       // datfile
@@ -75,9 +74,6 @@ public class PacketKeyBind implements CustomPacketPayload {
       }
       else {
         ChatUtil.addServerChatMessage(sender, "cyclic.unlocks.extended.locked");
-        //        Triple<String, Integer, ItemStack> result = CharmUtil.isCurioOrInventory(sender, ItemRegistry.CRAFTING_STICK.get());
-        //        if (!result.getRight().isEmpty())
-        //          NetworkHooks.openGui(sender, new CraftingStickContainerProvider(null), sender.blockPosition());
       }
     });
     
