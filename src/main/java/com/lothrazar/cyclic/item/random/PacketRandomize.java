@@ -54,7 +54,7 @@ public class PacketRandomize implements CustomPacketPayload {
       var player = ctx.player();
 
       Level world = player.getCommandSenderWorld();
-      List<BlockPos> places = RandomizerItem.getPlaces(message.pos, message.side);
+      List<BlockPos> places = RandomizerItem.getPlaces(message.pos, message.side, player.getItemInHand(message.hand));
       List<BlockPos> rpos = new ArrayList<BlockPos>();
       List<BlockState> rstates = new ArrayList<BlockState>();
       //

@@ -3,14 +3,20 @@ package com.lothrazar.cyclic.item.random;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.cyclic.registry.PacketRegistry;
+import com.lothrazar.cyclic.item.builder.BuilderActionType;
+import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,6 +28,36 @@ public class RandomizerItem extends ItemBaseCyclic {
 
   public RandomizerItem(Properties properties) {
     super(properties.stacksTo(1).durability(4096));
+  }
+
+  @Override
+  public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    String msg = ChatFormatting.GREEN + ChatUtil.lang(BuilderActionType.getName(stack));
+    tooltip.add(Component.translatable(msg));
+  }
+
+  @Override
+  public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    BuilderActionType.tickTimeout(stack);
+  }
+
+  public static int getRadius(ItemStack stack) {
+    BuilderActionType type = BuilderActionType.values()[BuilderActionType.get(stack)];
+    switch (type) {
+      case SINGLE:
+        return 0;
+      case X3:
+        return 1;
+      case X5:
+        return 2;
+      case X7:
+        return 3;
+      case X9:
+      case X19:
+      case X91:
+      default:
+        return 4;
+    }
   }
 
   public static ItemStack getIfHeld(Player player) {
@@ -52,7 +88,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     return super.useOn(context);
   }
 
-  public static List<BlockPos> getPlaces(final BlockPos pos, final Direction side) {
+  public static List<BlockPos> getPlaces(final BlockPos pos, final Direction side, final ItemStack stack) {
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = pos.getX();
     int yMin = pos.getY();
@@ -61,9 +97,7 @@ public class RandomizerItem extends ItemBaseCyclic {
     int yMax = pos.getY();
     int zMax = pos.getZ();
     boolean isVertical = (side == Direction.UP || side == Direction.DOWN);
-    int offsetRadius = 0;
-    //    case X5:
-    offsetRadius = 2;
+    int offsetRadius = getRadius(stack);
     if (offsetRadius > 0) {
       if (isVertical) {
         //then we just go in all horizontal directions

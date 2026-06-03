@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.registry;
 
-import com.lothrazar.cyclic.capabilities.CapabilityEvents;
 import com.lothrazar.cyclic.event.*;
 import com.lothrazar.cyclic.potion.PotionEventHandler;
 import net.neoforged.neoforge.common.NeoForge;
@@ -41,7 +40,6 @@ public class EventRegistry {
     NeoForge.EVENT_BUS.register(new EnchantEventHandler());
     NeoForge.EVENT_BUS.register(new WorldEventHandler());
     NeoForge.EVENT_BUS.register(new PlayerDataEventHandler());
-    NeoForge.EVENT_BUS.register(new CapabilityEvents());
     NeoForge.EVENT_BUS.register(new MattockItem.BreakHandler());
     // enchantment event handlers
     NeoForge.EVENT_BUS.register(new BeekeeperEnchant());

@@ -10,6 +10,9 @@ import com.lothrazar.cyclic.block.tankcask.TileCask;
 import com.lothrazar.cyclic.capabilities.item.ItemEnergyCap;
 import com.lothrazar.cyclic.capabilities.item.ItemFluidCap;
 import com.lothrazar.cyclic.capabilities.item.ItemInventoryCap;
+import com.lothrazar.cyclic.config.ConfigRegistry;
+import com.lothrazar.cyclic.item.WandHypnoItem;
+import com.lothrazar.cyclic.item.missile.WandMissileItem;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
@@ -94,6 +97,16 @@ public class CapabilityRegistry {
         event.registerItem(Capabilities.EnergyStorage.ITEM,
             (stack, ctx) -> new ItemEnergyCap(stack, TileClayBattery.MAX.get()),
             ItemRegistry.BATTERY_CLAY.get());
+        // Energy on handheld tools that consume RF per use
+        event.registerItem(Capabilities.EnergyStorage.ITEM,
+            (stack, ctx) -> new ItemEnergyCap(stack, WandMissileItem.MAX.get()),
+            ItemRegistry.WAND_MISSILE.get());
+        event.registerItem(Capabilities.EnergyStorage.ITEM,
+            (stack, ctx) -> new ItemEnergyCap(stack, WandHypnoItem.MAX.get()),
+            ItemRegistry.WAND_HYPNO.get());
+        event.registerItem(Capabilities.EnergyStorage.ITEM,
+            (stack, ctx) -> new ItemEnergyCap(stack, ConfigRegistry.LaserItemEnergyMax.get()),
+            ItemRegistry.LASER_CANNON.get());
         // Fluid on BlockItem
         event.registerItem(Capabilities.FluidHandler.ITEM,
             (stack, ctx) -> new ItemFluidCap(stack, TileTank.CAPACITY),

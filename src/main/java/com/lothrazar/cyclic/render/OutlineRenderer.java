@@ -137,7 +137,7 @@ public class OutlineRenderer {
       if (world.getBlockState(lookingAt.getBlockPos()).isAir()) {
         return;
       }
-      List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection());
+      List<BlockPos> coords = RandomizerItem.getPlaces(lookingAt.getBlockPos(), lookingAt.getDirection(), stack);
       for (BlockPos e : coords) {
         BlockState stHere = world.getBlockState(e);
         if (!RandomizerItem.canMove(stHere, world, e) && !stHere.isAir()) {

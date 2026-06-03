@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.registry;
 
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.RegistryHolder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
@@ -151,13 +152,19 @@ public class ClientRegistryCyclic {
       return this == other || KeyConflictContext.IN_GAME == other;
     }
   }, InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_X), "key." + ModCyclic.MODID + ".category");
+
   public static final LayeredDraw.Layer HUD_MANA = (guiGraphics, deltaTracker) -> {
-    if (!FeatureRegistry.PLAYER_RENDER_CAPS) {
-      return;
-    }
+//    if (!FeatureRegistry.PLAYER_RENDER_CAPS) { // TODO: feature registry instead Config file!?
+//      return;
+//    }
     LocalPlayer player = Minecraft.getInstance().player;
-    if (player != null && player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
-      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
+    var e = CapabilityUtil.energy(player.getMainHandItem());
+    if(e != null){
+
+//    }
+//    if (player.getMainHandItem().is(ItemRegistry.BATTERY_INFINITE.get())) {
+      final String toDisplay = e.getEnergyStored() + "/" + e.getMaxEnergyStored();
+//      final String toDisplay = "P:" + ClientDataManager.getPlayerMana() + " CH:" + ClientDataManager.getChunkMana();
       int x = 10;
       int y = 10;
       if (x >= 0 && y >= 0) {

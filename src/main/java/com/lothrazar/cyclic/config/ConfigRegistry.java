@@ -128,6 +128,7 @@ public class ConfigRegistry {
   public static IntValue LaserItemDamageClose;
   public static IntValue LaserItemDamageFar;
   public static IntValue LaserItemEnergy;
+  public static IntValue LaserItemEnergyMax;
   public static BooleanValue LaserRenderMisses;
   static {
     buildDefaults();
@@ -332,6 +333,7 @@ public class ConfigRegistry {
     LaserItemDamageClose = CFG.comment(" Damage dealt at point blank range").defineInRange("damage_close", 20, 1, Integer.MAX_VALUE);
     LaserItemDamageFar = CFG.comment(" Damage dealt when firing at range").defineInRange("damage_far", 12, 1, Integer.MAX_VALUE);
     LaserItemEnergy = CFG.comment(" Energy cost per firing; only drained when living targets are hit").defineInRange("energy", 10, 1, Integer.MAX_VALUE);
+    LaserItemEnergyMax = CFG.comment(" Maximum internal energy storage of the laser cannon").defineInRange("energy_max", 64000, 1, Integer.MAX_VALUE);
     LaserRenderMisses = CFG.comment(" Render the laser beam even when there is no living target (used to be hardcoded as false, so change this back to restore legacy behavior)").define("render_misses", true);
     //
     CFG.pop();
@@ -366,8 +368,10 @@ public class ConfigRegistry {
     ShieldCyclicItem.FLINT_PCT = CFG.comment(" How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_flint.blocked_damage_percent", 30, 0, 100);
     ShieldCyclicItem.FLINT_THORNS_PCT = CFG.comment(" What % chance does this have to apply thorns damage against ranged non-explosive attackers").defineInRange("shield_flint.damage", 50, 0, 100);
     WandHypnoItem.COST = CFG.comment(" Energy cost per item use").defineInRange("wand_hypno.energy", 500, 1, 50000);
+    WandHypnoItem.MAX = CFG.comment(" Maximum internal energy storage").defineInRange("wand_hypno.energy_max", 64000, 1, Integer.MAX_VALUE);
     WandHypnoItem.RANGE = CFG.comment(" Range to search out enemies for this multi-target attack").defineInRange("wand_hypno.range", 16, 1, 256);
     WandMissileItem.COST = CFG.comment(" Energy cost per item use").defineInRange("wand_missile.energy", 150, 1, 50000);
+    WandMissileItem.MAX = CFG.comment(" Maximum internal energy storage").defineInRange("wand_missile.energy_max", 64000, 1, Integer.MAX_VALUE);
     WandMissileItem.RANGE = CFG.comment(" Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
     OreProspector.RANGE = CFG.comment(" Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
     OreProspector.HEIGHT = CFG.comment(" Ore Prospector height around player to search for ores").defineInRange("prospector.height", 8, 1, 128);

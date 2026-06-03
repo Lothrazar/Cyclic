@@ -18,6 +18,7 @@ import com.lothrazar.cyclic.item.bauble.SoulstoneCharm;
 import com.lothrazar.cyclic.item.builder.BuilderActionType;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
+import com.lothrazar.cyclic.item.random.RandomizerItem;
 import com.lothrazar.cyclic.item.elemental.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.equipment.GlowingHelmetItem;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
@@ -578,6 +579,18 @@ public class ItemEventHandler {
     }
     if (held.getItem() instanceof AntimatterEvaporatorWandItem) {
       AntimatterEvaporatorWandItem.toggleMode(player, held);
+    }
+    if (held.getItem() instanceof RandomizerItem) {
+      if (BuilderActionType.getTimeout(held) > 0) {
+        return;
+      }
+      BuilderActionType.setTimeout(held);
+      event.setCanceled(true);
+      if (!world.isClientSide) {
+        BuilderActionType.toggle(held);
+      }
+      SoundUtil.playSound(player, SoundRegistry.TOOL_MODE.get());
+      ChatUtil.sendStatusMessage(player, ChatUtil.lang(BuilderActionType.getName(held)));
     }
   }
 
