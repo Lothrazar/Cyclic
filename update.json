@@ -199,7 +199,7 @@
 
 	},
 	"1.21.1": {
-		"1.14.0.alpha": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2.  New magical carrots added.  Some fluid textures are now animated.  Biomass color changed to green ish instead of brown.  Some recipes use copper nuggets instead of gold nuggets."
+		"1.14.0.alpha": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2.  New magical carrots added.  Some fluid textures are now animated.  Biomass color changed to green ish instead of brown.  Some recipes use copper nuggets instead of gold nuggets.  Add copper armor. "
 
 	}
 }

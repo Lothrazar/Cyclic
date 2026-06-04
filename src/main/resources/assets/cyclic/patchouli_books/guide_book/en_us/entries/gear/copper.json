@@ -1,0 +1,35 @@
+{
+  "name": "item.cyclic.copper_gear",
+  "icon": "cyclic:copper_chestplate",
+  "category": "cyclic:gear",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.copper_gear.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:copper_sword",
+      "recipe2": "cyclic:copper_pickaxe"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:copper_axe",
+      "recipe2": "cyclic:copper_shovel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:copper_helmet",
+      "recipe2": "cyclic:copper_chestplate"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:copper_leggings",
+      "recipe2": "cyclic:copper_boots"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:copper_hoe"
+    }
+  ]
+}

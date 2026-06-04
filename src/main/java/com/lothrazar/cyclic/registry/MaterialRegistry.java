@@ -35,7 +35,7 @@ public class MaterialRegistry {
   public static ModConfigSpec.DoubleValue OBS_TOUGH;
   public static ModConfigSpec.DoubleValue OBS_DMG;
 
-  public static void setup() {
+  public static void setup() { // do not delete!!!
     Object a = ArmorMats.EMERALD;
     Object b = ToolMats.EMERALD;
   }
@@ -57,6 +57,22 @@ public class MaterialRegistry {
         List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "emerald"))),
         3.0F, // toughness
         (ArmorMaterials.DIAMOND.value().knockbackResistance() + ArmorMaterials.NETHERITE.value().knockbackResistance()) / 2.0F
+    ));
+
+    public static final Holder<ArmorMaterial> COPPER = ARMOR_MATERIALS.register("copper", () -> new ArmorMaterial(
+        Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+            map.put(ArmorItem.Type.BOOTS, 2);
+            map.put(ArmorItem.Type.LEGGINGS, 4);
+            map.put(ArmorItem.Type.CHESTPLATE, 5);
+            map.put(ArmorItem.Type.HELMET, 2);
+            map.put(ArmorItem.Type.BODY, 4);
+        }),
+        15, // enchantment value (between iron=9 and gold=25)
+        SoundRegistry.EQUIP_EMERALD,
+        () -> Ingredient.of(Items.COPPER_INGOT),
+        List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "copper"))),
+        0.5F, // toughness (iron is 0)
+        ArmorMaterials.IRON.value().knockbackResistance()
     ));
 
     public static final Holder<ArmorMaterial> GEMOBSIDIAN = ARMOR_MATERIALS.register("gem_obsidian", () -> new ArmorMaterial(

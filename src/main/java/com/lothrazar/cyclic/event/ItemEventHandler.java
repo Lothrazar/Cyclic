@@ -479,8 +479,6 @@ public class ItemEventHandler {
     }
     if (player.isCrouching() && event.getItemStack().is(DataTags.WRENCH)) {
       if (event.getLevel().getBlockState(event.getPos()).getBlock() instanceof CableBase) {
-        //cyclic cable
-        //test? maybe config disable? 
         player.swing(event.getHand());
         CableBase.crouchClick(event, event.getLevel().getBlockState(event.getPos()));
         event.setCanceled(true);

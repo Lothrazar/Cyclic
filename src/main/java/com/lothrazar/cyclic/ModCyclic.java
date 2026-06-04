@@ -43,15 +43,9 @@ public class ModCyclic {
     MaterialRegistry.setup();
     bus.addListener(EventRegistry::setup);
     bus.addListener(PacketRegistry::setup);
+
     if (dist.isClient()) {
-      // this replaces the old
-      // DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
-
-      bus.addListener(ClientRegistryCyclic::setupClient);
-
-      NeoForge.EVENT_BUS.register(new ClientInputEventHandler());
-      NeoForge.EVENT_BUS.register(new HorseCarrotOverlay());
-      NeoForge.EVENT_BUS.register(new OutlineRenderer());
+      setupClient(bus);
     }
 
     ConfigRegistry cfg = new ConfigRegistry();
@@ -77,5 +71,16 @@ public class ModCyclic {
     LootModifierRegistry.LOOT.register(bus);
     BlockRegistry.CREATIVE_MODE_TABS.register(bus);
     NeoForgeMod.enableMilkFluid();
+  }
+
+  private static void setupClient(IEventBus bus) {
+    // this replaces the old
+    // DistExecutor.safeRunForDist(() -> ClientRegistryCyclic::new, () -> EventRegistry::new);
+
+    bus.addListener(ClientRegistryCyclic::setupClient);
+
+    NeoForge.EVENT_BUS.register(new ClientInputEventHandler());
+    NeoForge.EVENT_BUS.register(new HorseCarrotOverlay());
+    NeoForge.EVENT_BUS.register(new OutlineRenderer());
   }
 }
