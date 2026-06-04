@@ -21,6 +21,7 @@ public class ClientConfigCyclic {
   public static ModConfigSpec.ConfigValue<String> MINER;
   public static ModConfigSpec.ConfigValue<String> PEAT_FARM;
   public static ModConfigSpec.ConfigValue<String> STRUCTURE;
+  public static ModConfigSpec.ConfigValue<String> LASER_COLOR;
   public static ModConfigSpec.ConfigValue<String> LOCATION;
   public static ModConfigSpec.ConfigValue<String> SHAPE_DATA;
   public static ModConfigSpec.ConfigValue<String> RANDOMIZE_SCEPTER;

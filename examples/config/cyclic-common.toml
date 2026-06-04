@@ -272,9 +272,9 @@
 			# Range: > 1
 			damage_far = 12
 			# Energy cost per firing; only drained when living targets are hit
-			# Default: 10
+			# Default: 250
 			# Range: > 1
-			energy = 10
+			energy = 250
 			# Maximum internal energy storage of the laser cannon
 			# Default: 64000
 			# Range: > 1

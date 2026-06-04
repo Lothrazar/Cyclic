@@ -334,7 +334,7 @@ public class ConfigRegistry {
     LaserItemRange = CFG.comment(" Maximum range to hit target").defineInRange("range", 6000, 1, 9999);
     LaserItemDamageClose = CFG.comment(" Damage dealt at point blank range").defineInRange("damage_close", 20, 1, Integer.MAX_VALUE);
     LaserItemDamageFar = CFG.comment(" Damage dealt when firing at range").defineInRange("damage_far", 12, 1, Integer.MAX_VALUE);
-    LaserItemEnergy = CFG.comment(" Energy cost per firing; only drained when living targets are hit").defineInRange("energy", 10, 1, Integer.MAX_VALUE);
+    LaserItemEnergy = CFG.comment(" Energy cost per firing; only drained when living targets are hit").defineInRange("energy", 250, 1, Integer.MAX_VALUE);
     LaserItemEnergyMax = CFG.comment(" Maximum internal energy storage of the laser cannon").defineInRange("energy_max", 64000, 1, Integer.MAX_VALUE);
     LaserRenderMisses = CFG.comment(" Render the laser beam even when there is no living target (used to be hardcoded as false, so change this back to restore legacy behavior)").define("render_misses", true);
     //
@@ -626,6 +626,7 @@ public class ConfigRegistry {
     CFGC.comment(WALL, "Block Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
         .push("blocks");
     CFGC.push("colors");
+    ClientConfigCyclic.LASER_COLOR = CFGC.comment(" Specify hex color of the laser cannon beam.  default #FF1010").define("laser_cannon", "#444103C");
     ClientConfigCyclic.COLLECTOR_ITEM = CFGC.comment(" Specify hex color of preview mode.  default #444044").define("collector_item", "#444044");
     ClientConfigCyclic.COLLECTOR_FLUID = CFGC.comment(" Specify hex color of preview mode.  default #444044").define("collector_fluid", "#444044");
     ClientConfigCyclic.DETECTOR_ENTITY = CFGC.comment(" Specify hex color of preview mode.  default #00FF00").define("detector_entity", "#00FF00");

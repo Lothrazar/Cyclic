@@ -265,13 +265,13 @@
 			"scale": [1.2, 1.2, 1.2]
 		},
 		"firstperson_righthand": {
-			"rotation": [-90, 0, 25],
-			"translation": [0, 4, 2],
+			"rotation": [-75, 0, 25],
+			"translation": [0, 2, 2],
 			"scale": [1.2, 1.2, 1.2]
 		},
 		"firstperson_lefthand": {
-			"rotation": [-90, 0, 25],
-			"translation": [0, 4, 2],
+			"rotation": [-75, 0, 25],
+			"translation": [0, 2, 2],
 			"scale": [1.5, 1.5, 1.5]
 		},
 		"gui": {

@@ -9,6 +9,8 @@
 	[cyclic.blocks]
 
 		[cyclic.blocks.colors]
+			# Specify hex color of the laser cannon beam.  default #FF1010
+			laser_cannon = "#444103C"
 			# Specify hex color of preview mode.  default #444044
 			collector_item = "#444044"
 			# Specify hex color of preview mode.  default #444044
@@ -33,6 +35,8 @@
 		[cyclic.blocks.text]
 			# True means this will hide the fluid contents chat message (right click) on relevant blocks (pylon, fluid generator, fluid hopper, solidifier, sprinkler, tank, cask)
 			FluidContents = true
+			#Enabling this will show the energy of any held item in the top left of your screen
+			Energy_HUD = true
 
 	#####################################################################################
 	#Item Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF
