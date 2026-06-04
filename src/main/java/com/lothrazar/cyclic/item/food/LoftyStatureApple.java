@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.food;
 
-import com.lothrazar.cyclic.event.PlayerDataEventHandler;
-import com.lothrazar.cyclic.filesystem.CyclicFile;
+import com.lothrazar.cyclic.capabilities.player.PlayerCyclicAttachment;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.registry.AttachmentRegistry;
 import com.lothrazar.cyclic.registry.SoundRegistry;
 import com.lothrazar.library.util.AttributesUtil;
 import com.lothrazar.library.util.ChatUtil;
@@ -33,9 +33,9 @@ public class LoftyStatureApple extends ItemBaseCyclic {
     }
     player.getCooldowns().addCooldown(stack.getItem(), 40); // 2seconds
     if (!worldIn.isClientSide) {
-      CyclicFile datFile = PlayerDataEventHandler.getOrCreate(player);
-      datFile.toggleStepHeight();
-      ChatUtil.addServerChatMessage(player, "cyclic.unlocks.stepheight." + datFile.stepHeight);
+      PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
+      data.toggleStepHeight();
+      ChatUtil.addServerChatMessage(player, "cyclic.unlocks.stepheight." + data.stepHeight);
     }
     return super.finishUsingItem(stack, worldIn, entityLiving);
   }
@@ -46,12 +46,15 @@ public class LoftyStatureApple extends ItemBaseCyclic {
   }
 
   public static void onUpdate(Player player) {
-    CyclicFile datFile = PlayerDataEventHandler.getOrCreate(player);
-    if (datFile.stepHeight) {
+    if (player.level().isClientSide) {
+      return;
+    }
+    PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
+    if (data.stepHeight) {
       AttributesUtil.enableStepHeight(player);
     }
     else {
-      if (datFile.stepHeightForceOff) {
+      if (data.stepHeightForceOff) {
         AttributesUtil.disableStepHeight(player);
       }
     }

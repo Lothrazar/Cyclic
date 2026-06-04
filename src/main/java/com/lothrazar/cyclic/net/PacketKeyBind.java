@@ -23,9 +23,9 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.net;
 
-import com.lothrazar.cyclic.event.PlayerDataEventHandler;
-import com.lothrazar.cyclic.filesystem.CyclicFile;
+import com.lothrazar.cyclic.capabilities.player.PlayerCyclicAttachment;
 import com.lothrazar.cyclic.item.food.inventorycake.ContainerProviderCake;
+import com.lothrazar.cyclic.registry.AttachmentRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -68,8 +68,8 @@ public class PacketKeyBind implements CustomPacketPayload {
       //rotate type
       ServerPlayer sender = (ServerPlayer) ctx.player();
       // datfile
-      CyclicFile datFile = PlayerDataEventHandler.getOrCreate(sender);
-      if (datFile.storageVisible) {
+      PlayerCyclicAttachment data = sender.getData(AttachmentRegistry.CYCLIC_PLAYER);
+      if (data.storageVisible) {
         sender.openMenu(new ContainerProviderCake());
       }
       else {

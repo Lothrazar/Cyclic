@@ -2,7 +2,6 @@ package com.lothrazar.cyclic.render;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
-import com.lothrazar.cyclic.filesystem.CyclicFile;
 import com.lothrazar.cyclic.item.LaserItem;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import net.neoforged.neoforge.energy.IEnergyStorage;

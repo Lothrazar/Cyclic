@@ -1,7 +1,7 @@
 package com.lothrazar.cyclic.command;
 
-import com.lothrazar.cyclic.event.PlayerDataEventHandler;
-import com.lothrazar.cyclic.filesystem.CyclicFile;
+import com.lothrazar.cyclic.capabilities.player.PlayerCyclicAttachment;
+import com.lothrazar.cyclic.registry.AttachmentRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -12,34 +12,27 @@ public class CommandTask {
 
   public static int add(CommandContext<CommandSourceStack> ctx, String string) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
+    PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
     String extra = String.join(" ", string);
-    int j = file.todoTasks.size();
-    file.todoTasks.add(extra);
+    int j = data.todoTasks.size();
+    data.todoTasks.add(extra);
     ChatUtil.addServerChatMessage(player, j + ")" + extra);
     return 0;
   }
 
   public static int remove(CommandContext<CommandSourceStack> ctx, int integer) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
-    file.todoTasks.remove(integer);
-    ChatUtil.addServerChatMessage(player, "[" + file.todoTasks.size() + "]");
-    return 0;
-  }
-
-  public static int toggle(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-    ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
-    file.todoVisible = !file.todoVisible;
+    PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
+    data.todoTasks.remove(integer);
+    ChatUtil.addServerChatMessage(player, "[" + data.todoTasks.size() + "]");
     return 0;
   }
 
   public static int list(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
     ServerPlayer player = ctx.getSource().getPlayerOrException();
-    CyclicFile file = PlayerDataEventHandler.getOrCreate(player);
-    for (int i = 0; i < file.todoTasks.size(); i++) {
-      ChatUtil.addServerChatMessage(player, i + ")" + file.todoTasks.get(i));
+    PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
+    for (int i = 0; i < data.todoTasks.size(); i++) {
+      ChatUtil.addServerChatMessage(player, i + ")" + data.todoTasks.get(i));
     }
     return 0;
   }

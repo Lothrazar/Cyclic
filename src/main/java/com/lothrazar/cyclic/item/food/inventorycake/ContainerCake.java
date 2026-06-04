@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.food.inventorycake;
 
-import com.lothrazar.cyclic.event.PlayerDataEventHandler;
-import com.lothrazar.cyclic.filesystem.CyclicFile;
+import com.lothrazar.cyclic.capabilities.player.PlayerCyclicAttachment;
 import com.lothrazar.cyclic.gui.ContainerBase;
+import com.lothrazar.cyclic.registry.AttachmentRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,14 +13,14 @@ import net.minecraft.world.item.ItemStack;
 
 public class ContainerCake extends ContainerBase {
 
-  private CyclicFile datFile;
+  private PlayerCyclicAttachment data;
   private ItemStackHandler mirror;
 
   public ContainerCake(int id, Inventory playerInventory, Player player) {
     super(MenuTypeRegistry.INVENTORY_CAKE.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.datFile = PlayerDataEventHandler.getOrCreate(player);
+    this.data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
     this.endInv = 3 * 9;
     //copy to this MIRROR inventory
     mirror = new ItemStackHandler(endInv);

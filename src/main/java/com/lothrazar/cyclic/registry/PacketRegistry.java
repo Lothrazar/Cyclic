@@ -18,7 +18,6 @@ import com.lothrazar.cyclic.net.PacketKeyBind;
 import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
-import com.lothrazar.cyclic.net.PacketSyncManaToClient;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.net.PacketTileInventoryToClient;
 import com.lothrazar.cyclic.net.PacketTileString;
@@ -35,16 +34,6 @@ public class PacketRegistry {
 
   public static void setup(RegisterPayloadHandlersEvent event) {
     PayloadRegistrar registrar = event.registrar(ModCyclic.MODID);
-    
-    // We will register packets from Cyclic here.
-    // The flib packets (PacketPlayerFalldamage, PacketItemToggle, etc)
-    // are now handled differently or missing, we will comment them out for now.
-    
-    // registrar.playToServer(PacketPlayerFalldamage.TYPE, PacketPlayerFalldamage.STREAM_CODEC, PacketPlayerFalldamage::handle);
-    // registrar.playToServer(PacketItemToggle.TYPE, PacketItemToggle.STREAM_CODEC, PacketItemToggle::handle);
-    // registrar.playToServer(PacketRotateBlock.TYPE, PacketRotateBlock.STREAM_CODEC, PacketRotateBlock::handle);
-    // registrar.playToServer(PacketSyncFluid.TYPE, PacketSyncFluid.STREAM_CODEC, PacketSyncFluid::handle);
-    // registrar.playToServer(PacketSyncEnergy.TYPE, PacketSyncEnergy.STREAM_CODEC, PacketSyncEnergy::handle);
 
     registrar.playToServer(PacketItemGui.ID, PacketItemGui.STREAM_CODEC, PacketItemGui::handle);
     registrar.playToServer(PacketScythe.TYPE, PacketScythe.STREAM_CODEC, PacketScythe::handle);
@@ -63,7 +52,7 @@ public class PacketRegistry {
     registrar.playToServer(PacketHarvesting.TYPE, PacketHarvesting.STREAM_CODEC, PacketHarvesting::handle);
     registrar.playToServer(PacketEntityLaser.TYPE, PacketEntityLaser.STREAM_CODEC, PacketEntityLaser::handle);
     registrar.playToClient(PacketPlayerSyncToClient.TYPE, PacketPlayerSyncToClient.STREAM_CODEC, PacketPlayerSyncToClient::handle);
-    registrar.playToClient(PacketSyncManaToClient.TYPE, PacketSyncManaToClient.STREAM_CODEC, PacketSyncManaToClient::handle);
+//    registrar.playToClient(PacketSyncManaToClient.TYPE, PacketSyncManaToClient.STREAM_CODEC, PacketSyncManaToClient::handle);
     registrar.playToClient(PacketSyncHorseCarrots.TYPE, PacketSyncHorseCarrots.STREAM_CODEC, PacketSyncHorseCarrots::handle);
     registrar.playToClient(PacketDisplayFluidMessage.TYPE, PacketDisplayFluidMessage.STREAM_CODEC, PacketDisplayFluidMessage::handle);
     registrar.playToServer(BlockFacadeMessage.TYPE, BlockFacadeMessage.STREAM_CODEC, BlockFacadeMessage::handle);

@@ -2,7 +2,7 @@
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/cyclic",
 
 	"promos": { 
-		"1.21.1-latest":"1.13.7",
+		"1.21.1-latest":"1.14.0",
 		"1.20.1-latest":"1.13.7",
 		"1.19.2-latest":"1.9.0",
 		"1.19.4-latest":"1.11.0",
@@ -199,7 +199,7 @@
 
 	},
 	"1.21.1": {
-		"1.14.0.alpha": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2.  New magical carrots added.  Some fluid textures are now animated.  Biomass color changed to green ish instead of brown.  Some recipes use copper nuggets instead of gold nuggets.  Add copper armor. "
+		"1.14.0": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2.  New magical carrots added.  Some fluid textures are now animated.  Biomass color changed to green ish instead of brown.  Build scepters now need to be charged with Energy to use.  Some recipes use copper nuggets instead of gold nuggets.  Add copper armor. "
 
 	}
 }

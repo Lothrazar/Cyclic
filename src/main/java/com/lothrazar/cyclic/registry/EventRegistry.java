@@ -39,7 +39,6 @@ public class EventRegistry {
     NeoForge.EVENT_BUS.register(new ItemEventHandler());
     NeoForge.EVENT_BUS.register(new EnchantEventHandler());
     NeoForge.EVENT_BUS.register(new WorldEventHandler());
-    NeoForge.EVENT_BUS.register(new PlayerDataEventHandler());
     NeoForge.EVENT_BUS.register(new MattockItem.BreakHandler());
     // enchantment event handlers
     NeoForge.EVENT_BUS.register(new BeekeeperEnchant());

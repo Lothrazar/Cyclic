@@ -1,8 +1,8 @@
 package com.lothrazar.cyclic.item.food.inventorycake;
 
-import com.lothrazar.cyclic.event.PlayerDataEventHandler;
-import com.lothrazar.cyclic.filesystem.CyclicFile;
+import com.lothrazar.cyclic.capabilities.player.PlayerCyclicAttachment;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
+import com.lothrazar.cyclic.registry.AttachmentRegistry;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -34,8 +34,8 @@ public class ItemCakeInventory extends ItemBaseCyclic {
     }
     Player player = (Player) entityLiving;
     if (!worldIn.isClientSide) {
-      CyclicFile datFile = PlayerDataEventHandler.getOrCreate(player);
-      datFile.storageVisible = !datFile.storageVisible;
+      PlayerCyclicAttachment data = player.getData(AttachmentRegistry.CYCLIC_PLAYER);
+      data.storageVisible = !data.storageVisible;
       ChatUtil.addServerChatMessage(player, "cyclic.unlocks.extended");
     }
     return super.finishUsingItem(stack, worldIn, entityLiving);
