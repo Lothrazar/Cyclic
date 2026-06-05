@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.charm_antigravity",
+  "icon": "cyclic:charm_antigravity",
+  "category": "cyclic:accessories",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.charm_antigravity.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:charm_antigravity",
+      "text": "item.cantoggle.guide"
+    }
+  ]
+}

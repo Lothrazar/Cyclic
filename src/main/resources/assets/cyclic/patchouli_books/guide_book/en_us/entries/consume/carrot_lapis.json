@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.carrot_lapis",
+  "icon": "cyclic:carrot_lapis",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carrot_lapis.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carrot_lapis"
+    }
+  ]
+}

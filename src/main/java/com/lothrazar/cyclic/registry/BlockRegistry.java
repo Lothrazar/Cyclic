@@ -210,7 +210,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> TERRAGLASS = BLOCKS.register("terra_glass", () -> new BlockTerraGlass(Block.Properties.ofFullCopy(Blocks.GLASS)));
   public static final DeferredBlock<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new BlockSprinkler(Block.Properties.of().forceSolidOn()));
   public static final DeferredBlock<Block> SHEARING = BLOCKS.register("shearing", () -> new BlockShearing(Block.Properties.of()));
-  public static final DeferredBlock<Block> DARK_GLASS_CONNECTED = BLOCKS.register("dark_glass_connected", () -> new DarkGlassConnectedBlock(Block.Properties.of()));
+  public static final DeferredBlock<Block> GLASS_DARK_CONNECTED = BLOCKS.register("glass_dark_connected", () -> new DarkGlassConnectedBlock(Block.Properties.of()));
   public static final DeferredBlock<Block> GLASS_CONNECTED = BLOCKS.register("glass_connected", () -> new GlassConnectedBlock(Block.Properties.of().sound(SoundType.GLASS).strength(0.3F)));
   public static final DeferredBlock<Block> ENDER_ITEM_SHELF = BLOCKS.register("ender_item_shelf", () -> new BlockItemShelf(Block.Properties.of()));
   public static final DeferredBlock<Block> DOORBELL = BLOCKS.register("doorbell", () -> new DoorbellButton(Block.Properties.of()));
@@ -310,7 +310,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> SCAFFOLD_FRAGILE = BLOCKS.register("scaffold_fragile", () -> new BlockScaffolding(Block.Properties.of(), true));
   public static final DeferredBlock<Block> SCAFFOLD_RESPONSIVE = BLOCKS.register("scaffold_responsive", () -> new BlockScaffoldingResponsive(Block.Properties.of(), false));
   public static final DeferredBlock<Block> SCAFFOLD_REPLACE = BLOCKS.register("scaffold_replace", () -> new BlockScaffoldingReplace(Block.Properties.of()));
-  public static final DeferredBlock<Block> DARK_GLASS = BLOCKS.register("dark_glass", () -> new DarkGlassBlock(Block.Properties.of()));
+  public static final DeferredBlock<Block> GLASS_DARK = BLOCKS.register("glass_dark", () -> new DarkGlassBlock(Block.Properties.of()));
   public static final DeferredBlock<Block> PEAT_UNBAKED = BLOCKS.register("peat_unbaked", () -> new PeatBlock(Block.Properties.of().sound(SoundType.GRAVEL)));
   public static final DeferredBlock<Block> PEAT_BAKED = BLOCKS.register("peat_baked", () -> new PeatFuelBlock(Block.Properties.of().sound(SoundType.GRAVEL)));
   public static final DeferredBlock<Block> PEAT_FARM = BLOCKS.register("peat_farm", () -> new BlockPeatFarm(Block.Properties.of()));

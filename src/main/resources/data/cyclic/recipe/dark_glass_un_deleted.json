@@ -1,4 +1,4 @@
-{
+﻿{
   "__comment": "This recipe was temporarily deleted from previous versions",
   "type": "minecraft:crafting_shaped",
   "pattern": [
@@ -16,6 +16,6 @@
   },
   "result": {
     "count": 8,
-    "id": "cyclic:dark_glass"
+    "id": "cyclic:glass_dark"
   }
 }

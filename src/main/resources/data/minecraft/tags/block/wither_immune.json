@@ -1,8 +1,8 @@
-{
+﻿{
   "replace": false,
   "values": [
-       {"required":false, "id": "cyclic:dark_glass"},
-       {"required":false, "id": "cyclic:dark_glass_connected"},
+       {"required":false, "id": "cyclic:glass_dark"},
+       {"required":false, "id": "cyclic:glass_dark_connected"},
        {"required":false, "id": "cyclic:crate"},
        {"required":false, "id": "cyclic:crate_mini"},
        {"required":false, "id": "cyclic:unbreakable_block"},

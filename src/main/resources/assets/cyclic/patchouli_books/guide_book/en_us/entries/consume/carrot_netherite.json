@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.carrot_netherite",
+  "icon": "cyclic:carrot_netherite",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carrot_netherite.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carrot_netherite"
+    }
+  ]
+}

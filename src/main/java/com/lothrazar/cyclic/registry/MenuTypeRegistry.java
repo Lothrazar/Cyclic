@@ -57,7 +57,6 @@ import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
 import com.lothrazar.cyclic.item.enderbook.EnderBookContainer;
-import com.lothrazar.cyclic.item.food.inventorycake.ContainerCake;
 import com.lothrazar.cyclic.item.lunchbox.ContainerLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -130,6 +129,5 @@ public class MenuTypeRegistry {
   public static final Supplier<MenuType<CraftingBagContainer>> CRAFTING_BAG = CONTAINERS.register("crafting_bag", () -> IMenuTypeExtension.create((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player, data.readInt())));
   public static final Supplier<MenuType<CraftingStickContainer>> CRAFTING_STICK = CONTAINERS.register("crafting_stick", () -> IMenuTypeExtension.create((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, data.readInt())));
   public static final Supplier<MenuType<ContainerFilterCard>> FILTER_DATA = CONTAINERS.register("filter_data", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player)));
-  public static final Supplier<MenuType<ContainerCake>> INVENTORY_CAKE = CONTAINERS.register("inventory_cake", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerCake(windowId, inv, inv.player)));
   public static final Supplier<MenuType<ContainerLunchbox>> LUNCHBOX = CONTAINERS.register("lunchbox", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerLunchbox(windowId, inv, inv.player)));
 }

@@ -5,6 +5,6 @@
      {"id": "cyclic:charm_luck","required":false}, 
      {"id": "cyclic:charm_xp_speed","required":false}, 
      {"id": "cyclic:charm_xp_blocker","required":false}, 
-     {"id": "cyclic:antigravity","required":false}
+     {"id": "cyclic:charm_antigravity","required":false}
   ]
 }

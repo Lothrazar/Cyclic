@@ -6,10 +6,8 @@ import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.crafting.PacketItemGui;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickItem;
 import com.lothrazar.cyclic.item.enderbook.PacketItemScroll;
-import com.lothrazar.cyclic.item.food.inventorycake.ItemCakeInventory;
 import com.lothrazar.cyclic.item.lunchbox.ItemLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
-import com.lothrazar.cyclic.registry.ClientRegistryCyclic;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.packet.PacketItemToggle;
@@ -33,9 +31,6 @@ public class ClientInputEventHandler {
   @SubscribeEvent
   public void onKeyInput(InputEvent.Key event) {
     MultiJumpEnchant.onKeyInput(Minecraft.getInstance().player);
-    if (ClientRegistryCyclic.CAKE.consumeClick()) {
-      ItemCakeInventory.onKeyInput(Minecraft.getInstance().player);
-    }
   }
 
   @SubscribeEvent // MouseScrollEvent -> MouseScrollingEvent

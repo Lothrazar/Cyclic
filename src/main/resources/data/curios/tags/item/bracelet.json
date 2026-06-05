@@ -4,6 +4,6 @@
     {"id":   "cyclic:charm_knockback_resistance",  "required":false}, 
     {"id":   "cyclic:charm_crit",                  "required":false}, 
     {"id":   "cyclic:charm_creeper",               "required":false}, 
-    {"id":   "cyclic:antigravity",                 "required":false}
+    {"id":   "cyclic:charm_antigravity",           "required":false}
   ]
 }

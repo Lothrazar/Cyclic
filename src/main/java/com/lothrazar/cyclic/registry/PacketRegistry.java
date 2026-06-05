@@ -14,7 +14,6 @@ import com.lothrazar.cyclic.net.PacketCraftAction;
 import com.lothrazar.cyclic.net.PacketDisplayFluidMessage;
 import com.lothrazar.cyclic.net.PacketEntityLaser;
 import com.lothrazar.cyclic.net.PacketHarvesting;
-import com.lothrazar.cyclic.net.PacketKeyBind;
 import com.lothrazar.cyclic.net.PacketPlayerSyncToClient;
 import com.lothrazar.cyclic.net.PacketRecordSound;
 import com.lothrazar.cyclic.net.PacketSyncHorseCarrots;
@@ -47,7 +46,6 @@ public class PacketRegistry {
     registrar.playToServer(PacketCraftAction.TYPE, PacketCraftAction.STREAM_CODEC, PacketCraftAction::handle);
     registrar.playToServer(PacketFilterCard.TYPE, PacketFilterCard.STREAM_CODEC, PacketFilterCard::handle);
     registrar.playToServer(PacketItemScroll.TYPE, PacketItemScroll.STREAM_CODEC, PacketItemScroll::handle);
-    registrar.playToServer(PacketKeyBind.TYPE, PacketKeyBind.STREAM_CODEC, PacketKeyBind::handle);
     registrar.playToServer(PacketRecordSound.TYPE, PacketRecordSound.STREAM_CODEC, PacketRecordSound::handle);
     registrar.playToServer(PacketHarvesting.TYPE, PacketHarvesting.STREAM_CODEC, PacketHarvesting::handle);
     registrar.playToServer(PacketEntityLaser.TYPE, PacketEntityLaser.STREAM_CODEC, PacketEntityLaser::handle);

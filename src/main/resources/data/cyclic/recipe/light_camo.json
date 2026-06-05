@@ -1,4 +1,4 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " s ",
@@ -10,7 +10,7 @@
       "item": "minecraft:glowstone_dust"
     },
     "s": {
-      "item": "cyclic:dark_glass"
+      "item": "cyclic:glass_dark"
     }
   },
   "result": {

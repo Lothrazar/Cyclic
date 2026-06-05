@@ -2,7 +2,7 @@
 	"replace": false,
 	"values": [
 		{
-			"id": "cyclic:cable_wrench",
+			"id": "cyclic:wrench",
 			"required": false
 		}
 	]

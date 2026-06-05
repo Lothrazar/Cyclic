@@ -12,12 +12,8 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraft.client.gui.LayeredDraw;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
-import net.neoforged.neoforge.client.settings.IKeyConflictContext;
-import net.neoforged.neoforge.client.settings.KeyConflictContext;
-import org.lwjgl.glfw.GLFW;
 import com.lothrazar.cyclic.ModCyclic;
  import com.lothrazar.cyclic.block.antipotion.RenderBeaconAnti;
 import com.lothrazar.cyclic.block.beaconpotion.RenderBeaconPotion;
@@ -52,8 +48,6 @@ import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
 import com.lothrazar.cyclic.item.storagebag.ItemStorageBag;
-import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -136,26 +130,6 @@ import com.lothrazar.cyclic.item.storagebag.ScreenStorageBag;
 
 @EventBusSubscriber(modid = ModCyclic.MODID, value = Dist.CLIENT)
 public class ClientRegistryCyclic {
-
-  public static final KeyMapping CAKE = new KeyMapping("key." + ModCyclic.MODID + ".cake", new IKeyConflictContext() {
-    @Override
-    public boolean isActive() {
-      //client side cant know when active. stored on server player file 
-      //maybe when no gui is open 
-      return true;
-    }
-
-    @Override
-    public boolean conflicts(IKeyConflictContext other) {
-      return this == other || KeyConflictContext.IN_GAME == other;
-    }
-  }, InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_X), "key." + ModCyclic.MODID + ".category");
-
-  @SubscribeEvent
-  public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-    //    net.neoforged.neoforge.client.ClientRegistry.registerKeyBinding(CAKE);
-    event.register(CAKE);
-  }
 
   @SubscribeEvent
   public static void onRegisterGuiOverlays(RegisterGuiLayersEvent event) {

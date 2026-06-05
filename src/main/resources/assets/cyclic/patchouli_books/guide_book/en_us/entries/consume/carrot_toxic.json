@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.carrot_toxic",
+  "icon": "cyclic:carrot_toxic",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carrot_toxic.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carrot_toxic"
+    }
+  ]
+}

@@ -17,6 +17,6 @@
      {"id":  "cyclic:charm_ultimate",                  "required":false}, 
      {"id": "cyclic:charm_stealthpotion","required":false},
      {"id":   "cyclic:charm_stone"          ,        "required":false},
-     {"id": "cyclic:antigravity","required":false}
+     {"id": "cyclic:charm_antigravity","required":false}
   ]
 }

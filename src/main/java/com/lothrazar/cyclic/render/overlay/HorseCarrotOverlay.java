@@ -102,30 +102,30 @@ public class HorseCarrotOverlay {
     // which IS auto-synced by vanilla attribute syncing.
     if (state != null) {
       if (state.redstone > 0) {
-        out.add(new Entry(ItemRegistry.REDSTONE_CARROT_SPEED.get(), state.redstone, "cyclic.horse_panel.speed"));
+        out.add(new Entry(ItemRegistry.CARROT_REDSTONE.get(), state.redstone, "cyclic.horse_panel.speed"));
       }
       if (state.diamond > 0) {
-        out.add(new Entry(ItemRegistry.DIAMOND_CARROT_HEALTH.get(), state.diamond, "cyclic.horse_panel.health"));
+        out.add(new Entry(ItemRegistry.CARROT_DIAMOND.get(), state.diamond, "cyclic.horse_panel.health"));
       }
       if (state.emerald > 0) {
-        out.add(new Entry(ItemRegistry.EMERALD_CARROT_JUMP.get(), state.emerald, "cyclic.horse_panel.jump"));
+        out.add(new Entry(ItemRegistry.CARROT_EMERALD.get(), state.emerald, "cyclic.horse_panel.jump"));
       }
       if (state.ender > 0) {
         out.add(new Entry(ItemRegistry.CARROT_ENDER.get(), state.ender, "cyclic.horse_panel.ender"));
       }
       if (state.copper()) {
-        out.add(new Entry(ItemRegistry.COPPER_CARROT_RADAR.get(), 0, "cyclic.horse_panel.radar"));
+        out.add(new Entry(ItemRegistry.CARROT_COPPER.get(), 0, "cyclic.horse_panel.radar"));
       }
       if (state.netherite()) {
-        out.add(new Entry(ItemRegistry.NETHERITE_CARROT_FIRE.get(), 0, "cyclic.horse_panel.heat"));
+        out.add(new Entry(ItemRegistry.CARROT_NETHERITE.get(), 0, "cyclic.horse_panel.heat"));
       }
       if (state.prismarine()) {
-        out.add(new Entry(ItemRegistry.PRISMARINE_CARROT_WATER.get(), 0, "cyclic.horse_panel.water"));
+        out.add(new Entry(ItemRegistry.CARROT_PRISMARINE.get(), 0, "cyclic.horse_panel.water"));
       }
     }
     AttributeInstance step = horse.getAttribute(Attributes.STEP_HEIGHT);
     if (step != null && step.getBaseValue() >= ItemHorseQuartzStep.STEP_TARGET) {
-      out.add(new Entry(ItemRegistry.QUARTZ_CARROT_STEP.get(), 0, "cyclic.horse_panel.step"));
+      out.add(new Entry(ItemRegistry.CARROT_QUARTZ.get(), 0, "cyclic.horse_panel.step"));
     }
     return out;
   }

@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.carrot_diamond",
+  "icon": "cyclic:carrot_diamond",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carrot_diamond.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carrot_diamond"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.carrot_emerald",
+  "icon": "cyclic:carrot_emerald",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carrot_emerald.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carrot_emerald"
+    }
+  ]
+}

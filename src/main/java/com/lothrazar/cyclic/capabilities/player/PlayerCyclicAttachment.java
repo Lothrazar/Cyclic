@@ -8,23 +8,20 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 public class PlayerCyclicAttachment {
 
   public static final Codec<PlayerCyclicAttachment> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-      Codec.BOOL.optionalFieldOf("storageVisible", false).forGetter(a -> a.storageVisible),
       Codec.BOOL.optionalFieldOf("stepHeight", false).forGetter(a -> a.stepHeight),
       Codec.BOOL.optionalFieldOf("stepHeightForceOff", false).forGetter(a -> a.stepHeightForceOff),
       Codec.STRING.listOf().optionalFieldOf("todoTasks", List.of()).forGetter(a -> a.todoTasks)
   ).apply(inst, PlayerCyclicAttachment::new));
 
-  public boolean storageVisible;
   public boolean stepHeight;
   public boolean stepHeightForceOff;
   public List<String> todoTasks;
 
   public PlayerCyclicAttachment() {
-    this(false, false, false, List.of());
+    this(false, false, List.of());
   }
 
-  public PlayerCyclicAttachment(boolean storageVisible, boolean stepHeight, boolean stepHeightForceOff, List<String> todoTasks) {
-    this.storageVisible = storageVisible;
+  public PlayerCyclicAttachment(boolean stepHeight, boolean stepHeightForceOff, List<String> todoTasks) {
     this.stepHeight = stepHeight;
     this.stepHeightForceOff = stepHeightForceOff;
     this.todoTasks = new ArrayList<>(todoTasks);

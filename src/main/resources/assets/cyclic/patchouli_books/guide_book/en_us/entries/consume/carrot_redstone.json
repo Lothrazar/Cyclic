@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.carrot_redstone",
+  "icon": "cyclic:carrot_redstone",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.carrot_redstone.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:carrot_redstone"
+    }
+  ]
+}

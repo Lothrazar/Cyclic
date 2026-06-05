@@ -1,0 +1,15 @@
+﻿{
+  "name": "block.cyclic.glass_dark",
+  "icon": "cyclic:glass_dark",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.glass_dark.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:glass_dark"
+    }
+  ]
+}
