@@ -1,0 +1,24 @@
+﻿{
+  "name": "item.cyclic.scepter_build",
+  "icon": "cyclic:scepter_build",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_build.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_build",
+      "recipe2": "cyclic:scepter_offset"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_replace"
+    },
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_build.guide0"
+    }
+  ]
+}

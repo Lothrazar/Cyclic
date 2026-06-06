@@ -1,0 +1,23 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "crc",
+    " b ",
+    " b "
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:gold_ingot"
+    },
+    "b": {
+      "item": "cyclic:gem_amber"
+    },
+    "r": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:scepter_hypno"
+  }
+}

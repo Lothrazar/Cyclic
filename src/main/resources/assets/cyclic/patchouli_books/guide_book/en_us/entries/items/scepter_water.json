@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.scepter_water",
+  "icon": "cyclic:scepter_water",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_water.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_water"
+    }
+  ]
+}

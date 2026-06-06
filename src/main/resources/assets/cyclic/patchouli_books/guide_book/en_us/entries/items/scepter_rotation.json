@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.scepter_rotation",
+  "icon": "cyclic:scepter_rotation",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_rotation.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_rotation"
+    }
+  ]
+}

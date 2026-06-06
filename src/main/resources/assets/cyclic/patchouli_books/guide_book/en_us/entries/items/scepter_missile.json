@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.scepter_missile",
+  "icon": "cyclic:scepter_missile",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_missile.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_missile"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.scepter_lightning",
+  "icon": "cyclic:scepter_lightning",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_lightning.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_lightning"
+    }
+  ]
+}

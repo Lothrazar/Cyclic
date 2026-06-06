@@ -24,10 +24,10 @@ public class ClientConfigCyclic {
   public static ModConfigSpec.ConfigValue<String> LASER_COLOR;
   public static ModConfigSpec.ConfigValue<String> LOCATION;
   public static ModConfigSpec.ConfigValue<String> SHAPE_DATA;
-  public static ModConfigSpec.ConfigValue<String> RANDOMIZE_SCEPTER;
-  public static ModConfigSpec.ConfigValue<String> OFFSET_SCEPTER;
-  public static ModConfigSpec.ConfigValue<String> REPLACE_SCEPTER;
-  public static ModConfigSpec.ConfigValue<String> BUILD_SCEPTER;
+  public static ModConfigSpec.ConfigValue<String> SCEPTER_RANDOMIZE;
+  public static ModConfigSpec.ConfigValue<String> SCEPTER_OFFSET;
+  public static ModConfigSpec.ConfigValue<String> SCEPTER_REPLACE;
+  public static ModConfigSpec.ConfigValue<String> SCEPTER_BUILD;
   public static ModConfigSpec.ConfigValue<Boolean> FLUID_BLOCK_STATUS;
   public static ModConfigSpec.ConfigValue<Boolean> ENERGY_HUD;
 
@@ -89,17 +89,17 @@ public class ClientConfigCyclic {
     else if (item.getItem() == ItemRegistry.SHAPE_DATA.get()) {
       return parseColor(SHAPE_DATA.get());
     }
-    else if (item.getItem() == ItemRegistry.RANDOMIZE_SCEPTER.get()) {
-      return parseColor(RANDOMIZE_SCEPTER.get());
+    else if (item.getItem() == ItemRegistry.SCEPTER_RANDOMIZE.get()) {
+      return parseColor(SCEPTER_RANDOMIZE.get());
     }
-    else if (item.getItem() == ItemRegistry.OFFSET_SCEPTER.get()) {
-      return parseColor(OFFSET_SCEPTER.get());
+    else if (item.getItem() == ItemRegistry.SCEPTER_OFFSET.get()) {
+      return parseColor(SCEPTER_OFFSET.get());
     }
-    else if (item.getItem() == ItemRegistry.REPLACE_SCEPTER.get()) {
-      return parseColor(REPLACE_SCEPTER.get());
+    else if (item.getItem() == ItemRegistry.SCEPTER_REPLACE.get()) {
+      return parseColor(SCEPTER_REPLACE.get());
     }
-    else if (item.getItem() == ItemRegistry.BUILD_SCEPTER.get()) {
-      return parseColor(BUILD_SCEPTER.get());
+    else if (item.getItem() == ItemRegistry.SCEPTER_BUILD.get()) {
+      return parseColor(SCEPTER_BUILD.get());
     }
     else {
       ModCyclic.LOGGER.error("Default color for item " + item.getItem());

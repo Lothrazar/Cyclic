@@ -319,18 +319,18 @@
 			radius = 6
 
 		#####################################################################################
-		# spell_water settings
+		# scepter_water settings
 		#####################################################################################
-		[cyclic.items.spell_water]
+		[cyclic.items.scepter_water]
 			# Radius defines how far it reaches
 			# Default: 3
 			# Range: 0 ~ 32
 			radius = 3
 
 		#####################################################################################
-		# spell_ice settings
+		# scepter_ice settings
 		#####################################################################################
-		[cyclic.items.spell_ice]
+		[cyclic.items.scepter_ice]
 			# Radius defines how far it reaches
 			# Default: 3
 			# Range: 0 ~ 32
@@ -367,7 +367,7 @@
 			# Range: 0 ~ 100
 			damage = 50
 
-		[cyclic.items.wand_hypno]
+		[cyclic.items.scepter_hypno]
 			# Energy cost per item use
 			# Default: 500
 			# Range: 1 ~ 50000
@@ -381,7 +381,7 @@
 			# Range: 1 ~ 256
 			range = 16
 
-		[cyclic.items.wand_missile]
+		[cyclic.items.scepter_missile]
 			# Energy cost per item use
 			# Default: 150
 			# Range: 1 ~ 50000
@@ -403,7 +403,7 @@
 			# Range: > 1
 			damage_max = 9
 
-		[cyclic.items.build_scepter]
+		[cyclic.items.scepter_build]
 			# Energy cost per block placed by the build/replace/offset scepters
 			# Default: 50
 			# Range: > 0
@@ -413,7 +413,7 @@
 			# Range: > 1
 			energy_max = 64000
 
-		[cyclic.items.randomize_scepter]
+		[cyclic.items.scepter_randomize]
 			# Energy cost per block swapped by the randomize scepter
 			# Default: 50
 			# Range: > 0
@@ -605,7 +605,7 @@
 			ignore_list = ["minecraft:ender_dragon", "minecraft:wither"]
 
 		# Wand settings
-		[cyclic.items.teleport_wand]
+		[cyclic.items.scepter_teleport]
 			# Maximum distance to activate
 			# Default: 256
 			# Range: 8 ~ 1024

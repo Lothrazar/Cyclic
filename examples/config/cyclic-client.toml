@@ -49,10 +49,10 @@
 			# Specify hex color of preview mode.  default #FFC800
 			shape_data = "#FFC800"
 			# Specify hex color of preview mode.  default #0000FF
-			randomize_scepter = "#00EE00"
+			scepter_randomize = "#00EE00"
 			# Specify hex color of preview mode.  default #0000FF
-			offset_scepter = "#00FF00"
+			scepter_offset = "#00FF00"
 			# Specify hex color of preview mode.  default #0000FF
-			replace_scepter = "#FFFF00"
+			scepter_replace = "#FFFF00"
 			# Specify hex color of preview mode.  default #0000FF
-			build_scepter = "#0000FF"
+			scepter_build = "#0000FF"

@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.scepter_hypno",
+  "icon": "cyclic:scepter_hypno",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_hypno.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_hypno"
+    }
+  ]
+}

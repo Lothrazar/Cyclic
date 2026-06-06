@@ -130,8 +130,8 @@ public class AntimatterEvaporatorWandItem extends ItemBaseCyclic {
 
   private static MutableComponent getModeTooltip(ItemStack stack) {
     EvaporateMode mode = EvaporateMode.values()[CustomData.EMPTY.copyTag().getInt(NBT_MODE)];
-    return Component.translatable("item.cyclic.antimatter_wand.tooltip0",
-        Component.translatable(String.format("item.cyclic.antimatter_wand.mode.%s",
+    return Component.translatable("item.cyclic.scepter_antimatter.tooltip0",
+        Component.translatable(String.format("item.cyclic.scepter_antimatter.mode.%s",
             mode.getSerializedName())));
   }
 

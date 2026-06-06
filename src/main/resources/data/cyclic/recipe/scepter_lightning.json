@@ -1,0 +1,25 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ngn",
+    "nsn",
+    " o "
+  ],
+  "key": {
+    "g": {
+      "tag": "c:nuggets/netherite"
+    },
+    "o": {
+      "item": "minecraft:glowstone"
+    },
+    "n": {
+      "item": "minecraft:ender_pearl"
+    },
+    "s": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "id": "cyclic:scepter_lightning"
+  }
+}

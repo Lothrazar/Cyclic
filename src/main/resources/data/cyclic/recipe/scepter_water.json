@@ -1,0 +1,25 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ofo",
+    "beb",
+    "ofo"
+  ],
+  "key": {
+    "e": {
+      "item": "cyclic:gem_amber"
+    },
+    "b": {
+      "tag": "c:nuggets/copper"
+    },
+    "o": {
+      "item": "minecraft:magma_block"
+    },
+    "f": {
+      "item": "minecraft:ice"
+    }
+  },
+  "result": {
+    "id": "cyclic:scepter_water"
+  }
+}

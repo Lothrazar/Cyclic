@@ -109,9 +109,9 @@ minecraft:tipped_arrow[potion_contents={potion:"minecraft:gravity",custom_effect
 minecraft:tipped_arrow[potion_contents={potion:"minecraft:stun"]}],16,64,5
       """.strip() },
       { "chests/igloo_chest",              """
-cyclic:spell_ice[damage=15],1,1,15
-cyclic:spell_water[damage=15],1,1,15
-cyclic:antimatter_wand[damage=15],1,1,5
+cyclic:scepter_ice[damage=15],1,1,15
+cyclic:scepter_water[damage=15],1,1,15
+cyclic:scepter_antimatter[damage=15],1,1,5
       """.strip()  },
       // Pillager / woodland
       { "chests/pillager_outpost",         """
@@ -121,7 +121,7 @@ cyclic:charm_crit,1,1,12
 cyclic:boomerang_stun,1,1,6
 """.strip() },
       { "chests/woodland_mansion",         """
-cyclic:wand_hypno,1,1,8
+cyclic:scepter_hypno,1,1,8
 cyclic:glowing_helmet,1,1,10
 cyclic:charm_invisible,1,1,3
 cyclic:netherite_nugget,2,8,25
@@ -142,7 +142,7 @@ cyclic:netherite_nugget,1,1,2
 cyclic:gem_amber,1,1,2
 cyclic:gem_obsidian,1,1,2
 cyclic:netherbrick_sword,1,1,5
-cyclic:fire_scepter,1,1,8
+cyclic:scepter_fire,1,1,8
 cyclic:evoker_fang,1,1,5
  cyclic:heart,1,1,2
       """.strip() },
@@ -168,12 +168,12 @@ cyclic:amethyst_pickaxe,1,1,10
       { "chests/end_city_treasure",        """
 cyclic:amethyst_sword,1,1,10
 cyclic:charm_crit,1,1,1
-cyclic:teleport_wand,1,1,5
+cyclic:scepter_teleport,1,1,5
 cyclic:apple_ender,2,8,15
 cyclic:emerald_chestplate,1,1,1
-cyclic:ice_scepter,1,1,8
-cyclic:fire_scepter,1,1,8
-cyclic:lightning_scepter,1,1,8
+cyclic:scepter_snow,1,1,8
+cyclic:scepter_fire,1,1,8
+cyclic:scepter_lightning,1,1,8
 cyclic:evoker_fang,1,1,5
  cyclic:heart,1,1,1
 cyclic:chorus_flight,1,1,1
@@ -182,7 +182,7 @@ cyclic:chorus_flight,1,1,1
       """.strip() },
       // Ocean / shipwrecks / ruins
       { "chests/shipwreck_map",           """
-cyclic:teleport_wand,1,1,5
+cyclic:scepter_teleport,1,1,5
       """.strip()},
       { "chests/shipwreck_supply",        """
 cyclic:apple_honey,8,16,10
@@ -190,7 +190,7 @@ cyclic:peat_fuel,4,32,25
       """.strip()},
       { "chests/shipwreck_treasure",      """
 cyclic:apple_diamond,4,6,15
-cyclic:teleport_wand,1,1,5
+cyclic:scepter_teleport,1,1,5
   cyclic:gem_amber,1,1,2
    cyclic:heart,1,1,2
   cyclic:gem_obsidian,1,1,2
@@ -207,7 +207,7 @@ cyclic:amethyst_pickaxe,1,1,5
       // Ancient city
       { "chests/ancient_city",             """
 cyclic:ender_bag,1,1,5
-cyclic:lightning_scepter,1,1,6
+cyclic:scepter_lightning,1,1,6
 cyclic:evoker_fang,1,1,5
 
   cyclic:heart,1,1,2
@@ -234,10 +234,10 @@ cyclic:emerald_sword[enchantments={levels:{"minecraft:sharpness":3}}],1,1,15
   cyclic:netherite_nugget,1,1,2
       """.strip() },
       { "chests/trial_chambers/reward_unique",           """
-cyclic:wand_missile,1,1,8
+cyclic:scepter_missile,1,1,8
 cyclic:apple_lofty_stature,2,4,8
 cyclic:soulstone,1,1,2
-cyclic:ice_scepter,1,1,6
+cyclic:scepter_snow,1,1,6
   cyclic:heart,1,1,2
 cyclic:charm_void,1,1,2
   cyclic:charm_knockback_resistance,1,1,2
@@ -251,7 +251,7 @@ cyclic:charm_void,1,1,2
   cyclic:charm_knockback_resistance,1,1,8
       """.strip() },
       { "chests/trial_chambers/reward_ominous_rare",     """
-  cyclic:wand_missile,1,1,8
+  cyclic:scepter_missile,1,1,8
     cyclic:charm_wing,1,1,3
   cyclic:charm_magicdefense,1,1,8
   cyclic:evoker_fang,1,1,5
@@ -262,7 +262,7 @@ cyclic:charm_void,1,1,2
   cyclic:charm_ultimate,1,1,2
       """.strip() },
       { "chests/trial_chambers/reward_ominous_unique",   """
- cyclic:antimatter_wand,1,1,2
+ cyclic:scepter_antimatter,1,1,2
   cyclic:chorus_flight,6,16,5
   cyclic:heart,1,1,5
   cyclic:charm_magicdefense,1,1,8
@@ -293,7 +293,7 @@ cyclic:shield_obsidian[enchantments={levels:{"minecraft:unbreaking":3}}],1,1,8
   cyclic:charm_venom,1,1,5
       """.strip() },
       { "chests/village/village_desert_house",      """
-  cyclic:randomize_scepter,1,1,5
+  cyclic:scepter_randomize,1,1,5
   cyclic:sandstone_pickaxe,1,1,5
   cyclic:sandstone_shovel,1,1,5
       """.strip() },

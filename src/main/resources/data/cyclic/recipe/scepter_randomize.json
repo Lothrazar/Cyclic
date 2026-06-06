@@ -1,0 +1,26 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "pgi",
+    " ig",
+    "o p"
+  ],
+  "key": {
+    "p": {
+      "tag": "c:dyes/purple"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    },
+    "g": {
+      "item": "minecraft:redstone"
+    },
+    "o": {
+      "item": "cyclic:gem_amber"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:scepter_randomize"
+  }
+}

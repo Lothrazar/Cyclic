@@ -1,0 +1,25 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ngn",
+    "nsn",
+    " o "
+  ],
+  "key": {
+    "g": {
+      "item": "cyclic:fireball"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "n": {
+      "tag": "c:nuggets/gold"
+    },
+    "s": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "id": "cyclic:scepter_fire"
+  }
+}

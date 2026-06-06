@@ -353,11 +353,11 @@ public class ConfigRegistry {
     ScytheHarvest.RADIUS = CFG.comment(" Radius defines how far it reaches (for example radius 6 is 13x13 square)").defineInRange("radius", 6, 0, 32);
     CFG.pop();
     //
-    CFG.comment(WALL, " spell_water settings", WALL).push("spell_water");
+    CFG.comment(WALL, " scepter_water settings", WALL).push("scepter_water");
     WaterSpreaderItem.RADIUS = CFG.comment(" Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
     CFG.pop();
     //
-    CFG.comment(WALL, " spell_ice settings", WALL).push("spell_ice");
+    CFG.comment(WALL, " scepter_ice settings", WALL).push("scepter_ice");
     IceWand.RADIUS = CFG.comment(" Radius defines how far it reaches").defineInRange("radius", 3, 0, 32);
     CFG.pop();
     CFG.comment(" apple_ender settings").push("apple_ender");
@@ -369,18 +369,18 @@ public class ConfigRegistry {
     ShieldCyclicItem.WOOD_PCT = CFG.comment(" How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_wood.blocked_damage_percent", 60, 0, 100);
     ShieldCyclicItem.FLINT_PCT = CFG.comment(" How much weaker than the regular shield is this item (used to calculate damage blocked)").defineInRange("shield_flint.blocked_damage_percent", 30, 0, 100);
     ShieldCyclicItem.FLINT_THORNS_PCT = CFG.comment(" What % chance does this have to apply thorns damage against ranged non-explosive attackers").defineInRange("shield_flint.damage", 50, 0, 100);
-    WandHypnoItem.COST = CFG.comment(" Energy cost per item use").defineInRange("wand_hypno.energy", 500, 1, 50000);
-    WandHypnoItem.MAX = CFG.comment(" Maximum internal energy storage").defineInRange("wand_hypno.energy_max", 64000, 1, Integer.MAX_VALUE);
-    WandHypnoItem.RANGE = CFG.comment(" Range to search out enemies for this multi-target attack").defineInRange("wand_hypno.range", 16, 1, 256);
-    WandMissileItem.COST = CFG.comment(" Energy cost per item use").defineInRange("wand_missile.energy", 150, 1, 50000);
-    WandMissileItem.MAX = CFG.comment(" Maximum internal energy storage").defineInRange("wand_missile.energy_max", 64000, 1, Integer.MAX_VALUE);
-    WandMissileItem.RANGE = CFG.comment(" Range to search out enemies for this attack").defineInRange("wand_missile.range", 64, 1, 512);
-    WandMissileItem.DAMAGE_MIN = CFG.comment(" Minimum damage dealt on hit (inclusive)").defineInRange("wand_missile.damage_min", 3, 0, Integer.MAX_VALUE);
-    WandMissileItem.DAMAGE_MAX = CFG.comment(" Maximum damage dealt on hit (exclusive upper bound for the random roll)").defineInRange("wand_missile.damage_max", 9, 1, Integer.MAX_VALUE);
-    BuilderItem.COST = CFG.comment(" Energy cost per block placed by the build/replace/offset scepters").defineInRange("build_scepter.energy", 50, 0, Integer.MAX_VALUE);
-    BuilderItem.MAX = CFG.comment(" Maximum internal energy storage of the build/replace/offset scepters").defineInRange("build_scepter.energy_max", 64000, 1, Integer.MAX_VALUE);
-    RandomizerItem.COST = CFG.comment(" Energy cost per block swapped by the randomize scepter").defineInRange("randomize_scepter.energy", 50, 0, Integer.MAX_VALUE);
-    RandomizerItem.MAX = CFG.comment(" Maximum internal energy storage of the randomize scepter").defineInRange("randomize_scepter.energy_max", 64000, 1, Integer.MAX_VALUE);
+    WandHypnoItem.COST = CFG.comment(" Energy cost per item use").defineInRange("scepter_hypno.energy", 500, 1, 50000);
+    WandHypnoItem.MAX = CFG.comment(" Maximum internal energy storage").defineInRange("scepter_hypno.energy_max", 64000, 1, Integer.MAX_VALUE);
+    WandHypnoItem.RANGE = CFG.comment(" Range to search out enemies for this multi-target attack").defineInRange("scepter_hypno.range", 16, 1, 256);
+    WandMissileItem.COST = CFG.comment(" Energy cost per item use").defineInRange("scepter_missile.energy", 150, 1, 50000);
+    WandMissileItem.MAX = CFG.comment(" Maximum internal energy storage").defineInRange("scepter_missile.energy_max", 64000, 1, Integer.MAX_VALUE);
+    WandMissileItem.RANGE = CFG.comment(" Range to search out enemies for this attack").defineInRange("scepter_missile.range", 64, 1, 512);
+    WandMissileItem.DAMAGE_MIN = CFG.comment(" Minimum damage dealt on hit (inclusive)").defineInRange("scepter_missile.damage_min", 3, 0, Integer.MAX_VALUE);
+    WandMissileItem.DAMAGE_MAX = CFG.comment(" Maximum damage dealt on hit (exclusive upper bound for the random roll)").defineInRange("scepter_missile.damage_max", 9, 1, Integer.MAX_VALUE);
+    BuilderItem.COST = CFG.comment(" Energy cost per block placed by the build/replace/offset scepters").defineInRange("scepter_build.energy", 50, 0, Integer.MAX_VALUE);
+    BuilderItem.MAX = CFG.comment(" Maximum internal energy storage of the build/replace/offset scepters").defineInRange("scepter_build.energy_max", 64000, 1, Integer.MAX_VALUE);
+    RandomizerItem.COST = CFG.comment(" Energy cost per block swapped by the randomize scepter").defineInRange("scepter_randomize.energy", 50, 0, Integer.MAX_VALUE);
+    RandomizerItem.MAX = CFG.comment(" Maximum internal energy storage of the randomize scepter").defineInRange("scepter_randomize.energy_max", 64000, 1, Integer.MAX_VALUE);
     OreProspector.RANGE = CFG.comment(" Ore Prospector radius around player to search for ores").defineInRange("prospector.range", 32, 1, 256);
     OreProspector.HEIGHT = CFG.comment(" Ore Prospector height around player to search for ores").defineInRange("prospector.height", 8, 1, 128);
     ///
@@ -438,7 +438,7 @@ public class ConfigRegistry {
     EdibleFlightItem.TICKS = CFG.comment(" Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", 20 * 60, 1, 20 * 1000);
     EdibleSpecItem.TICKS = CFG.comment(" Seconds of noClip per chorus_spectral").defineInRange("chorus_spectral.ticks", 20 * 30, 1, 20 * 1000);
     MBALL_IGNORE_LIST = CFG.comment(" Entity ids that cannot be picked up with the Monster all").defineList("monster_ball.ignore_list", MBALL_IGNORE, it -> it instanceof String);
-    CFG.comment(" Wand settings").push("teleport_wand");
+    CFG.comment(" Wand settings").push("scepter_teleport");
     TeleporterWandItem.RANGE = CFG.comment(" Maximum distance to activate").defineInRange("range", 256, 8, 1024);
     CFG.pop();
     //
@@ -649,10 +649,10 @@ public class ConfigRegistry {
     CFGC.push("colors");
     ClientConfigCyclic.LOCATION = CFGC.comment(" Specify hex color of preview mode for the GPS data card.  default #0000FF").define("location", "#0000FF");
     ClientConfigCyclic.SHAPE_DATA = CFGC.comment(" Specify hex color of preview mode.  default #FFC800").define("shape_data", "#FFC800"); // orange
-    ClientConfigCyclic.RANDOMIZE_SCEPTER = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("randomize_scepter", "#00EE00");
-    ClientConfigCyclic.OFFSET_SCEPTER = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("offset_scepter", "#00FF00");
-    ClientConfigCyclic.REPLACE_SCEPTER = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("replace_scepter", "#FFFF00");
-    ClientConfigCyclic.BUILD_SCEPTER = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("build_scepter", "#0000FF");
+    ClientConfigCyclic.SCEPTER_RANDOMIZE = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("scepter_randomize", "#00EE00");
+    ClientConfigCyclic.SCEPTER_OFFSET = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("scepter_offset", "#00FF00");
+    ClientConfigCyclic.SCEPTER_REPLACE = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("scepter_replace", "#FFFF00");
+    ClientConfigCyclic.SCEPTER_BUILD = CFGC.comment(" Specify hex color of preview mode.  default #0000FF").define("scepter_build", "#0000FF");
     CFGC.pop();
     CFGC.pop(); //end of items
     CFGC.pop();

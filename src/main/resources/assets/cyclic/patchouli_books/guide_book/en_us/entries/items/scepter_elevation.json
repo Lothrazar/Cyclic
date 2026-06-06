@@ -1,0 +1,15 @@
+﻿{
+  "name": "item.cyclic.scepter_elevation",
+  "icon": "cyclic:scepter_elevation",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_elevation.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:scepter_elevation"
+    }
+  ]
+}

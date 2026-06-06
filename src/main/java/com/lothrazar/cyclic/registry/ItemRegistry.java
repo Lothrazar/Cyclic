@@ -255,236 +255,16 @@ public class ItemRegistry {
 
   public static final DeferredItem<Item> LASER_CANNON = ITEMS.register("laser_cannon", () -> new LaserItem(new Item.Properties()));
 
-  public static final DeferredItem<Item> BUILD_SCEPTER = ITEMS.register("build_scepter", () -> new BuilderItem(new Item.Properties(), BuildStyle.NORMAL));
-  public static final DeferredItem<Item> REPLACE_SCEPTER = ITEMS.register("replace_scepter", () -> new BuilderItem(new Item.Properties(), BuildStyle.REPLACE));
-  public static final DeferredItem<Item> OFFSET_SCEPTER = ITEMS.register("offset_scepter", () -> new BuilderItem(new Item.Properties(), BuildStyle.OFFSET));
-  public static final DeferredItem<Item> RANDOMIZE_SCEPTER = ITEMS.register("randomize_scepter", () -> new RandomizerItem(new Item.Properties()));
+  public static final DeferredItem<Item> SCEPTER_BUILD = ITEMS.register("scepter_build", () -> new BuilderItem(new Item.Properties(), BuildStyle.NORMAL));
+  public static final DeferredItem<Item> SCEPTER_REPLACE = ITEMS.register("scepter_replace", () -> new BuilderItem(new Item.Properties(), BuildStyle.REPLACE));
+  public static final DeferredItem<Item> SCEPTER_OFFSET = ITEMS.register("scepter_offset", () -> new BuilderItem(new Item.Properties(), BuildStyle.OFFSET));
+  public static final DeferredItem<Item> SCEPTER_RANDOMIZE = ITEMS.register("scepter_randomize", () -> new RandomizerItem(new Item.Properties()));
  public static final DeferredItem<Item> SPAWNINSPECTOR = ITEMS.register("spawn_inspector", () -> new SpawnInspectorTool(new Item.Properties().durability(256)));
   public static final DeferredItem<Item> SLINGSHOT = ITEMS.register("slingshot", () -> new SlingshotItem(new Item.Properties().durability(64)));
   public static final DeferredItem<Item> SOULSTONE = ITEMS.register("soulstone", () -> new SoulstoneCharm(new Item.Properties().durability(8)));
 
 
-  public static final DeferredItem<Item> LOCATION_DATA = ITEMS.register("location_data", () -> new LocationGpsCard(new Item.Properties()));
-  public static final DeferredItem<Item> SETTINGS_DATA = ITEMS.register("settings_data", () -> new SettingsCard(new Item.Properties()));
-  public static final DeferredItem<Item> SHAPE_DATA = ITEMS.register("shape_data", () -> new ShapeCard(new Item.Properties()));
-  public static final DeferredItem<Item> FILTER_DATA = ITEMS.register("filter_data", () -> new FilterCardItem(new Item.Properties()));
-  public static final DeferredItem<Item> SOUND_DATA = ITEMS.register("sound_data", () -> new SoundCard(new Item.Properties()));
-  public static final DeferredItem<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties()));
-  public static final DeferredItem<Item> BLOCKSTATE_DATA = ITEMS.register("blockstate_data", () -> new BlockstateCard(new Item.Properties()));
-
-
-  public static final DeferredItem<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new GemstoneItem(new Item.Properties()));
-  public static final DeferredItem<Item> NETHERITE_NUGGET = ITEMS.register("netherite_nugget", () -> new GemstoneItem(new Item.Properties()));
-  public static final DeferredItem<Item> SOIL = ITEMS.register("soil", () -> new BlockItem(BlockRegistry.SOIL.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COMPRESSED_COBBLESTONE = ITEMS.register("compressed_cobblestone", () -> new BlockItem(BlockRegistry.COMPRESSED_COBBLESTONE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FLINT_BLOCK = ITEMS.register("flint_block", () -> new BlockItem(BlockRegistry.FLINT_BLOCK.get(), new Item.Properties()));
-
-  public static final DeferredItem<Item> GOLD_BARS = ITEMS.register("gold_bars", () -> new BlockItem(BlockRegistry.GOLD_BARS.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GOLD_CHAIN = ITEMS.register("gold_chain", () -> new BlockItem(BlockRegistry.GOLD_CHAIN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GOLD_LANTERN = ITEMS.register("gold_lantern", () -> new BlockItem(BlockRegistry.GOLD_LANTERN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GOLD_SOUL_LANTERN = ITEMS.register("gold_soul_lantern", () -> new BlockItem(BlockRegistry.GOLD_SOUL_LANTERN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COPPER_BARS = ITEMS.register("copper_bars", () -> new BlockItem(BlockRegistry.COPPER_BARS.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COPPER_CHAIN = ITEMS.register("copper_chain", () -> new BlockItem(BlockRegistry.COPPER_CHAIN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COPPER_LANTERN = ITEMS.register("copper_lantern", () -> new BlockItem(BlockRegistry.COPPER_LANTERN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COPPER_SOUL_LANTERN = ITEMS.register("copper_soul_lantern", () -> new BlockItem(BlockRegistry.COPPER_SOUL_LANTERN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COPPER_PRESSURE_PLATE = ITEMS.register("copper_pressure_plate", () -> new BlockItem(BlockRegistry.COPPER_PRESSURE_PLATE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> NETHERITE_BARS = ITEMS.register("netherite_bars", () -> new BlockItem(BlockRegistry.NETHERITE_BARS.get(), new Item.Properties()));
-  public static final DeferredItem<Item> NETHERTIE_CHAIN = ITEMS.register("netherite_chain", () -> new BlockItem(BlockRegistry.NETHERTIE_CHAIN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> NETHERITE_PRESSURE_PLATE = ITEMS.register("netherite_pressure_plate", () -> new BlockItem(BlockRegistry.NETHERITE_PRESSURE_PLATE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> NETHERITE_LANTERN = ITEMS.register("netherite_lantern", () -> new BlockItem(BlockRegistry.NETHERITE_LANTERN.get(), new Item.Properties()));
-
-
-  public static final DeferredItem<Item> OBSIDIAN_PRESSURE_PLATE = ITEMS.register("obsidian_pressure_plate", () -> new BlockItem(BlockRegistry.OBSIDIAN_PRESSURE_PLATE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties()));
-  public static final DeferredItem<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties()));
-
-
-  public static final DeferredItem<Item> WIRELESS_TRANSMITTER = ITEMS.register("wireless_transmitter", () -> new BlockItem(BlockRegistry.WIRELESS_TRANSMITTER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> WIRELESS_RECEIVER = ITEMS.register("wireless_receiver", () -> new BlockItem(BlockRegistry.WIRELESS_RECEIVER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties()));
-
-
-  public static final DeferredItem<Item> LAMP = ITEMS.register("lamp", () -> new BlockItem(BlockRegistry.LAMP.get(), new Item.Properties()));
- public static final DeferredItem<Item> CLOUD = ITEMS.register("cloud", () -> new BlockItem(BlockRegistry.CLOUD.get(), new Item.Properties()));
-  public static final DeferredItem<Item> CLOUD_MEMBRANE = ITEMS.register("cloud_membrane", () -> new BlockItem(BlockRegistry.CLOUD_MEMBRANE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GHOST_PHANTOM = ITEMS.register("ghost_phantom", () -> new BlockItem(BlockRegistry.GHOST_PHANTOM.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GHOST = ITEMS.register("ghost", () -> new BlockItem(BlockRegistry.GHOST.get(), new Item.Properties()));
-  public static final DeferredItem<Item> MEMBRANE = ITEMS.register("membrane", () -> new BlockItem(BlockRegistry.MEMBRANE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> DICE = ITEMS.register("dice", () -> new BlockItem(BlockRegistry.DICE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> TERRA_PRETA = ITEMS.register("terra_preta", () -> new BlockItem(BlockRegistry.TERRA_PRETA.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FIREPLACE = ITEMS.register("fireplace", () -> new BlockItem(BlockRegistry.FIREPLACE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> UNBREAKABLE_BLOCK = ITEMS.register("unbreakable_block", () -> new BlockItem(BlockRegistry.UNBREAKABLE_BLOCK.get(), new Item.Properties()));
-  public static final DeferredItem<Item> UNBREAKABLE_REACTIVE = ITEMS.register("unbreakable_reactive", () -> new BlockItem(BlockRegistry.UNBREAKABLE_REACTIVE.get(), new Item.Properties()));
-
-  public static final DeferredItem<Item> SPONGE_LAVA = ITEMS.register("sponge_lava", () -> new BlockItem(BlockRegistry.SPONGE_LAVA.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SPONGE_MILK = ITEMS.register("sponge_milk", () -> new BlockItem(BlockRegistry.SPONGE_MILK.get(), new Item.Properties()));
-
-  public static final DeferredItem<Item> DOORBELL = ITEMS.register("doorbell", () -> new BlockItem(BlockRegistry.DOORBELL.get(), new Item.Properties()));
-
-
-  public static final DeferredItem<Item> SPIKES_DIAMOND = ITEMS.register("spikes_diamond", () -> new BlockItem(BlockRegistry.SPIKES_DIAMOND.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SPIKES_IRON = ITEMS.register("spikes_iron", () -> new BlockItem(BlockRegistry.SPIKES_IRON.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SPIKES_CURSE = ITEMS.register("spikes_curse", () -> new BlockItem(BlockRegistry.SPIKES_CURSE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SPIKES_FIRE = ITEMS.register("spikes_fire", () -> new BlockItem(BlockRegistry.SPIKES_FIRE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> DETECTOR_ITEM = ITEMS.register("detector_item", () -> new BlockItem(BlockRegistry.DETECTOR_ITEM.get(), new Item.Properties()));
-  public static final DeferredItem<Item> DETECTOR_ENTITY = ITEMS.register("detector_entity", () -> new BlockItem(BlockRegistry.DETECTOR_ENTITY.get(), new Item.Properties()));
-
-  public static final DeferredItem<Item> DETECTORMOON = ITEMS.register("detector_moon", () -> new BlockItem(BlockRegistry.DETECTORMOON.get(), new Item.Properties()));
-  public static final DeferredItem<Item> DETECTORWEATHER = ITEMS.register("detector_weather", () -> new BlockItem(BlockRegistry.DETECTORWEATHER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> TERRAGLASS = ITEMS.register("terra_glass", () -> new BlockItem(BlockRegistry.TERRAGLASS.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SPRINKLER = ITEMS.register("sprinkler", () -> new BlockItem(BlockRegistry.SPRINKLER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SHEARING = ITEMS.register("shearing", () -> new BlockItem(BlockRegistry.SHEARING.get(), new Item.Properties()));
-
-
-
-
-  public static final DeferredItem<Item> SOUND_RECORDER = ITEMS.register("sound_recorder", () -> new BlockItem(BlockRegistry.SOUND_RECORDER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SOUND_PLAYER = ITEMS.register("sound_player", () -> new BlockItem(BlockRegistry.SOUND_PLAYER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GENERATOR_FUEL = ITEMS.register("generator_fuel", () -> new BlockItem(BlockRegistry.GENERATOR_FUEL.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GENERATOR_FOOD = ITEMS.register("generator_food", () -> new BlockItem(BlockRegistry.GENERATOR_FOOD.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GENERATOR_FLUID = ITEMS.register("generator_fluid", () -> new BlockItem(BlockRegistry.GENERATOR_FLUID.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GENERATOR_ITEM = ITEMS.register("generator_item", () -> new BlockItem(BlockRegistry.GENERATOR_ITEM.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FLOWER_CYAN = ITEMS.register("flower_cyan", () -> new BlockItem(BlockRegistry.FLOWER_CYAN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FLOWER_PURPLE = ITEMS.register("flower_purple_tulip", () -> new BlockItem(BlockRegistry.FLOWER_PURPLE_TULIP.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FLOWER_BROWN = ITEMS.register("flower_absalon_tulip", () -> new BlockItem(BlockRegistry.FLOWER_ABSALON_TULIP.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FLOWER_LIME = ITEMS.register("flower_lime_carnation", () -> new BlockItem(BlockRegistry.FLOWER_LIME_CARNATION.get(), new Item.Properties()));
-  public static final DeferredItem<Item> WATER_CANDLE = ITEMS.register("water_candle", () -> new BlockItem(BlockRegistry.WATER_CANDLE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> PEACE_CANDLE = ITEMS.register("peace_candle", () -> new BlockItem(BlockRegistry.PEACE_CANDLE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> TELEPORT = ITEMS.register("teleport", () -> new BlockItem(BlockRegistry.TELEPORT.get(), new Item.Properties()));
-  public static final DeferredItem<Item> STORAGE_BAG = ITEMS.register("storage_bag", () -> new ItemStorageBag(new Item.Properties().stacksTo(1).setNoRepair()));
-  public static final DeferredItem<Item> CRAFTING_BAG = ITEMS.register("crafting_bag", () -> new CraftingBagItem(new Item.Properties().stacksTo(1).setNoRepair()));
-  public static final DeferredItem<Item> CRAFTING_STICK = ITEMS.register("crafting_stick", () -> new CraftingStickItem(new Item.Properties().stacksTo(1).setNoRepair()));
-  public static final DeferredItem<Item> MOB_CONTAINER = ITEMS.register("mob_container", () -> new ItemMobContainer(new Item.Properties().stacksTo(1)));
-  public static final DeferredItem<Item> TILE_TRANSPORTER_EMPTY = ITEMS.register("tile_transporter_empty", () -> new TileTransporterEmptyItem(new Item.Properties()));
-  public static final DeferredItem<Item> TILE_TRANSPORTER = ITEMS.register("tile_transporter", () -> new TileTransporterItem(new Item.Properties()));
-  public static final DeferredItem<Item> MAGIC_NET = ITEMS.register("magic_net", () -> new ItemMagicNet(new Item.Properties()));
-  public static final DeferredItem<Item> BOOMERANG_STUN = ITEMS.register("boomerang_stun", () -> new BoomerangItem(Boomer.STUN, new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> BOOMERANG_CARRY = ITEMS.register("boomerang_carry", () -> new BoomerangItem(Boomer.CARRY, new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> BOOMERANG_DAMAGE = ITEMS.register("boomerang_damage", () -> new BoomerangItem(Boomer.DAMAGE, new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> SPAWNER_SEEKER = ITEMS.register("spawner_seeker", () -> new ItemProjectileDungeon(new Item.Properties()));
-  public static final DeferredItem<Item> GLOVE_CLIMB = ITEMS.register("glove_climb", () -> new GloveItem(new Item.Properties().durability(256 * 8)));
-  public static final DeferredItem<Item> FLIPPERS = ITEMS.register("flippers", () -> new ItemBaseToggle(new Item.Properties().durability(256 * 4)));
-
-
- public static final DeferredItem<Item> HEART = ITEMS.register("heart", () -> new HeartItem(new Item.Properties().stacksTo(16)));
-  public static final DeferredItem<Item> HEART_EMPTY = ITEMS.register("heart_empty", () -> new HeartToxicItem(new Item.Properties().stacksTo(16)));
-  public static final DeferredItem<Item> CARBON_PAPER = ITEMS.register("carbon_paper", () -> new CarbonPaperItem(new Item.Properties()));
-  public static final DeferredItem<Item> ICE_SCEPTER = ITEMS.register("ice_scepter", () -> new SnowScepter(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> FIRE_SCEPTER = ITEMS.register("fire_scepter", () -> new FireScepter(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> LIGHTNING_SCEPTER = ITEMS.register("lightning_scepter", () -> new LightningScepter(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> ENDER_BAG = ITEMS.register("ender_bag", () -> new EnderBagItem(new Item.Properties()));
-  public static final DeferredItem<Item> SPELL_WATER = ITEMS.register("spell_water", () -> new WaterSpreaderItem(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> SPELL_ICE = ITEMS.register("spell_ice", () -> new IceWand(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> TORCH_LAUNCHER = ITEMS.register("torch_launcher", () -> new ItemTorchThrower(new Item.Properties()));
-  public static final DeferredItem<Item> CHARM_TORCH = ITEMS.register("charm_torch", () -> new AutoTorchItem(new Item.Properties().durability(256 * 4)));
-  public static final DeferredItem<Item> CHARM_TORCH_CAVE = ITEMS.register("charm_torch_cave", () -> new AutoCaveTorchItem(new Item.Properties().durability(256 * 4)));
-  public static final DeferredItem<Item> CHARM_HOME = ITEMS.register("charm_home", () -> new EnderWingItem(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> CHARM_WORLD = ITEMS.register("charm_world", () -> new EnderWingSp(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> EVOKER_FANG = ITEMS.register("evoker_fang", () -> new EvokerFangItem(new Item.Properties()));
-  public static final DeferredItem<Item> ENDER_EYE_REUSE = ITEMS.register("ender_eye_reuse", () -> new EnderEyeReuseItem(new Item.Properties()));
-  public static final DeferredItem<Item> ENDER_PEARL_REUSE = ITEMS.register("ender_pearl_reuse", () -> new EnderPearlReuse(new Item.Properties()));
-  public static final DeferredItem<Item> ENDER_PEARL_MOUNTED = ITEMS.register("ender_pearl_mounted", () -> new EnderPearlMount(new Item.Properties()));
-  public static final DeferredItem<Item> SPELUNKER = ITEMS.register("spelunker", () -> new SpelunkerCaveFinder(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> PROSPECTOR = ITEMS.register("prospector", () -> new OreProspector(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> ELEVATION_WAND = ITEMS.register("elevation_wand", () -> new ElevationWandItem(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> TELEPORT_WAND = ITEMS.register("teleport_wand", () -> new TeleporterWandItem(new Item.Properties().durability(64)));
-  public static final DeferredItem<Item> SCYTHE_HARVEST = ITEMS.register("scythe_harvest", () -> new ScytheHarvest(new Item.Properties().durability(1024)));
-  public static final DeferredItem<Item> ANTIMATTER_WAND = ITEMS.register("antimatter_wand", () -> new AntimatterEvaporatorWandItem(new Item.Properties().durability(1024)));
-  public static final DeferredItem<Item> SHEARS_FLINT = ITEMS.register("shears_flint", () -> new ShearsMaterial(new Item.Properties().durability(64)));
-  public static final DeferredItem<Item> ROTATION_WAND = ITEMS.register("rotation_wand", () -> new RotatorItem(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> SCYTHE_BRUSH = ITEMS.register("scythe_brush", () -> new ScytheBrush(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> SCYTHE_FORAGE = ITEMS.register("scythe_forage", () -> new ScytheForage(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> SCYTHE_LEAVES = ITEMS.register("scythe_leaves", () -> new ScytheLeaves(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> STIRRUPS = ITEMS.register("stirrups", () -> new StirrupsItem(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> STIRRUPS_REVERSE = ITEMS.register("stirrups_reverse", () -> new StirrupsReverseItem(new Item.Properties().durability(256)));
-  public static final DeferredItem<Item> LEVER_REMOTE = ITEMS.register("lever_remote", () -> new LeverRemote(new Item.Properties().stacksTo(1)));
-// peat
-  public static final DeferredItem<Item> BIOMASS = ITEMS.register("biomass", () -> new ItemBaseCyclic(new Item.Properties()));
-  public static final DeferredItem<Item> PEAT_FUEL = ITEMS.register("peat_fuel", () -> new ItemBaseCyclic(new Item.Properties()));
-  public static final DeferredItem<Item> PEAT_FUEL_ENRICHED = ITEMS.register("peat_fuel_enriched", () -> new ItemBaseCyclic(new Item.Properties()));
-
-  public static final DeferredItem<Item> PEAT_UNBAKED = ITEMS.register("peat_unbaked", () -> new BlockItem(BlockRegistry.PEAT_UNBAKED.get(), new Item.Properties()));
-  public static final DeferredItem<Item> PEAT_BAKED = ITEMS.register("peat_baked", () -> new BlockItem(BlockRegistry.PEAT_BAKED.get(), new Item.Properties()));
-  public static final DeferredItem<Item> PEAT_FARM = ITEMS.register("peat_farm", () -> new BlockItem(BlockRegistry.PEAT_FARM.get(), new Item.Properties()));
- // blocks
-  public static final DeferredItem<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new ItemBlockClayBattery(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties()));
-  public static final DeferredItem<Item> BATTERY = ITEMS.register("battery", () -> new ItemBlockBattery(BlockRegistry.BATTERY.get(), new Item.Properties()));
-  public static final DeferredItem<Item> CRAFTER = ITEMS.register("crafter", () -> new BlockItem(BlockRegistry.CRAFTER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> PACKAGER = ITEMS.register("packager", () -> new BlockItem(BlockRegistry.PACKAGER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> CRUSHER = ITEMS.register("crusher", () -> new BlockItem(BlockRegistry.CRUSHER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> MELTER = ITEMS.register("melter", () -> new BlockItem(BlockRegistry.MELTER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SOLIDIFIER = ITEMS.register("solidifier", () -> new BlockItem(BlockRegistry.SOLIDIFIER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ROTATOR = ITEMS.register("rotator", () -> new BlockItem(BlockRegistry.ROTATOR.get(), new Item.Properties()));
-  public static final DeferredItem<Item> PLACER = ITEMS.register("placer", () -> new BlockItem(BlockRegistry.PLACER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> BREAKER = ITEMS.register("breaker", () -> new BlockItem(BlockRegistry.BREAKER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> USER = ITEMS.register("user", () -> new BlockItem(BlockRegistry.USER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> DROPPER = ITEMS.register("dropper", () -> new BlockItem(BlockRegistry.DROPPER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FORESTER = ITEMS.register("forester", () -> new BlockItem(BlockRegistry.FORESTER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> MINER = ITEMS.register("miner", () -> new BlockItem(BlockRegistry.MINER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> STRUCTURE = ITEMS.register("structure", () -> new BlockItem(BlockRegistry.STRUCTURE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COMPUTER_SHAPE = ITEMS.register("computer_shape", () -> new BlockItem(BlockRegistry.COMPUTER_SHAPE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> HARVESTER = ITEMS.register("harvester", () -> new BlockItem(BlockRegistry.HARVESTER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COLLECTOR = ITEMS.register("collector", () -> new BlockItem(BlockRegistry.COLLECTOR.get(), new Item.Properties()));
-  public static final DeferredItem<Item> COLLECTOR_FLUID = ITEMS.register("collector_fluid", () -> new BlockItem(BlockRegistry.COLLECTOR_FLUID.get(), new Item.Properties()));
-  public static final DeferredItem<Item> PLACER_FLUID = ITEMS.register("placer_fluid", () -> new BlockItem(BlockRegistry.PLACER_FLUID.get(), new Item.Properties()));
-  public static final DeferredItem<Item> CASK = ITEMS.register("cask", () -> new ItemBlockCask(BlockRegistry.CASK.get(), new Item.Properties()));
-  public static final DeferredItem<Item> CRATE = ITEMS.register("crate", () -> new BlockItem(BlockRegistry.CRATE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> MINI_CRATE = ITEMS.register("crate_mini", () -> new BlockItem(BlockRegistry.CRATE_MINI.get(), new Item.Properties()));
-  public static final DeferredItem<Item> CLOCK = ITEMS.register("clock", () -> new BlockItem(BlockRegistry.CLOCK.get(), new Item.Properties()));
- public static final DeferredItem<Item> PLATE_LAUNCH_REDSTONE = ITEMS.register("plate_launch_redstone", () -> new BlockItem(BlockRegistry.PLATE_LAUNCH_REDSTONE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> PLATE_LAUNCH = ITEMS.register("plate_launch", () -> new BlockItem(BlockRegistry.PLATE_LAUNCH.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SCREEN = ITEMS.register("screen", () -> new BlockItem(BlockRegistry.SCREEN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> UNCRAFTER = ITEMS.register("uncrafter", () -> new BlockItem(BlockRegistry.UNCRAFTER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FISHER = ITEMS.register("fisher", () -> new BlockItem(BlockRegistry.FISHER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> DISENCHANTER = ITEMS.register("disenchanter", () -> new BlockItem(BlockRegistry.DISENCHANTER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FAN = ITEMS.register("fan", () -> new BlockItem(BlockRegistry.FAN.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FANSLAB = ITEMS.register("fan_slab", () -> new BlockItem(BlockRegistry.FANSLAB.get(), new Item.Properties()));
-  public static final DeferredItem<Item> LIGHT_CAMO = ITEMS.register("light_camo", () -> new BlockItem(BlockRegistry.LIGHT_CAMO.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SOUNDPROOFING_GHOST = ITEMS.register("soundproofing_ghost", () -> new BlockItem(BlockRegistry.SOUNDPROOFING_GHOST.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SOUNDPROOFING = ITEMS.register("soundproofing", () -> new BlockItem(BlockRegistry.SOUNDPROOFING.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ANVIL = ITEMS.register("anvil", () -> new BlockItem(BlockRegistry.ANVIL.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ANVIL_MAGMA = ITEMS.register("anvil_magma", () -> new BlockItem(BlockRegistry.ANVIL_MAGMA.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ANVILVOID = ITEMS.register("anvil_void", () -> new BlockItem(BlockRegistry.ANVILVOID.get(), new Item.Properties()));
-  public static final DeferredItem<Item> LASER = ITEMS.register("laser", () -> new BlockItem(BlockRegistry.LASER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> BEACON = ITEMS.register("beacon", () -> new BlockItem(BlockRegistry.BEACON.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties()));
-  public static final DeferredItem<Item> BEACON_REDSTONE = ITEMS.register("beacon_redstone", () -> new BlockItem(BlockRegistry.BEACON_REDSTONE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> TANK = ITEMS.register("tank", () -> new ItemBlockTank(BlockRegistry.TANK.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GLASS_CONNECTED = ITEMS.register("glass_connected", () -> new BlockItem(BlockRegistry.GLASS_CONNECTED.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GLASS_DARK = ITEMS.register("glass_dark", () -> new BlockItem(BlockRegistry.GLASS_DARK.get(), new Item.Properties()));
-  public static final DeferredItem<Item> GLASS_DARK_CONNECTED = ITEMS.register("glass_dark_connected", () -> new BlockItem(BlockRegistry.GLASS_DARK_CONNECTED.get(), new Item.Properties()));
-  public static final DeferredItem<Item> TRASH = ITEMS.register("trash", () -> new BlockItem(BlockRegistry.TRASH.get(), new Item.Properties()));
-  public static final DeferredItem<Item> BATTERY_INFINITE = ITEMS.register("battery_infinite", () -> new BlockItem(BlockRegistry.BATTERY_INFINITE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ITEM_INFINITE = ITEMS.register("item_infinite", () -> new BlockItem(BlockRegistry.ITEM_INFINITE.get(), new Item.Properties()));
- public static final DeferredItem<Item> CONVEYOR = ITEMS.register("conveyor", () -> new BlockItem(BlockRegistry.CONVEYOR.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ENDER_ITEM_SHELF = ITEMS.register("ender_item_shelf", () -> new BlockItem(BlockRegistry.ENDER_ITEM_SHELF.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ENDER_SHELF = ITEMS.register("ender_shelf", () -> new BlockItem(BlockRegistry.ENDER_SHELF.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ENDER_CONTROLLER = ITEMS.register("ender_controller", () -> new BlockItem(BlockRegistry.ENDER_CONTROLLER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(BlockRegistry.WORKBENCH.get(), new Item.Properties()));
-  public static final DeferredItem<Item> EXPERIENCE_PYLON = ITEMS.register("experience_pylon", () -> new ItemBlockPylon(BlockRegistry.EXPERIENCE_PYLON.get(), new Item.Properties()));
-  public static final DeferredItem<Item> EXPERIENCE_FOOD = ITEMS.register("experience_food", () -> new ExpItemGain(new Item.Properties()));
-  public static final DeferredItem<Item> MATTOCK = ITEMS.register("mattock", () -> new MattockItem(Tiers.DIAMOND, new Item.Properties().durability(9000), 1));
-  public static final DeferredItem<Item> MATTOCK_NETHER = ITEMS.register("mattock_nether", () -> new MattockItem(Tiers.NETHERITE, new Item.Properties().durability(9001), 2));
-  public static final DeferredItem<Item> MATTOCK_STONE = ITEMS.register("mattock_stone", () -> new MattockItem(Tiers.STONE, new Item.Properties().durability(1024), 1));
-  public static final DeferredItem<Item> SLEEPING_MAT = ITEMS.register("sleeping_mat", () -> new SleepingMatItem(new Item.Properties()));
-  public static final DeferredItem<Item> SHEARS_OBSIDIAN = ITEMS.register("shears_obsidian", () -> new ShearsMaterial(new Item.Properties().durability(1024 * 1024)));
-  public static final DeferredItem<Item> SCAFFOLD_REPLACE = ITEMS.register("scaffold_replace", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_REPLACE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SCAFFOLD_FRAGILE = ITEMS.register("scaffold_fragile", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_FRAGILE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> SCAFFOLD_RESPONSIVE = ITEMS.register("scaffold_responsive", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_RESPONSIVE.get(), new Item.Properties()));
-
-  public static final DeferredItem<Item> FLUIDHOPPER = ITEMS.register("hopper_fluid", () -> new BlockItem(BlockRegistry.FLUIDHOPPER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> HOPPER = ITEMS.register("hopper", () -> new BlockItem(BlockRegistry.HOPPER.get(), new Item.Properties()));
-  public static final DeferredItem<Item> HOPPERGOLD = ITEMS.register("hopper_gold", () -> new BlockItem(BlockRegistry.HOPPERGOLD.get(), new Item.Properties()));
-
-  public static final DeferredItem<Item> ENERGY_PIPE = ITEMS.register("energy_pipe", () -> new BlockItem(BlockRegistry.ENERGY_PIPE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> ITEM_PIPE = ITEMS.register("item_pipe", () -> new BlockItem(BlockRegistry.ITEM_PIPE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> FLUID_PIPE = ITEMS.register("fluid_pipe", () -> new BlockItem(BlockRegistry.FLUID_PIPE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new CableWrench(new Item.Properties()));
-  public static final DeferredItem<Item> WIRELESS_ENERGY = ITEMS.register("wireless_energy", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties()));
-  public static final DeferredItem<Item> WIRELESS_ITEM = ITEMS.register("wireless_item", () -> new BlockItem(BlockRegistry.WIRELESS_ITEM.get(), new Item.Properties()));
-  public static final DeferredItem<Item> WIRELESS_FLUID = ITEMS.register("wireless_fluid", () -> new BlockItem(BlockRegistry.WIRELESS_FLUID.get(), new Item.Properties()));
- // durability multipliers below mirror vanilla tiers: leather=5, gold=7, iron/chain=15, diamond=33, netherite=37
-
+  public static final DeferredItem<Item> MILK_BOTTLE = ITEMS.register("milk_bottle", () -> new MilkBottle(new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().build())));
   public static final DeferredItem<Item> GLOWING_HELMET = ITEMS.register("glowing_helmet", () -> new GlowingHelmetItem(MaterialRegistry.ArmorMats.GLOWING, ArmorItem.Type.HELMET, (new Item.Properties().stacksTo(1).durability(ArmorItem.Type.HELMET.getDurability(15)))));
   public static final DeferredItem<Item> CRYSTAL_BOOTS = ITEMS.register("crystal_boots", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, ArmorItem.Type.BOOTS, new Item.Properties().stacksTo(1).durability(ArmorItem.Type.BOOTS.getDurability(37))));
   public static final DeferredItem<Item> CRYSTAL_HELMET = ITEMS.register("crystal_helmet", () -> new ArmorItem(MaterialRegistry.ArmorMats.GEMOBSIDIAN, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1).durability(ArmorItem.Type.HELMET.getDurability(37))));
@@ -533,13 +313,243 @@ public class ItemRegistry {
   public static final DeferredItem<Item> SHIELD_FLINT = ITEMS.register("shield_flint", () -> new ShieldCyclicItem(new Item.Properties().durability(168 + 84), ShieldType.FLINT));
   public static final DeferredItem<Item> SHIELD_OBSIDIAN = ITEMS.register("shield_obsidian", () -> new ShieldCyclicItem(new Item.Properties().durability(168 * 8), ShieldType.OBSIDIAN));
   public static final DeferredItem<Item> SHIELD_BONE = ITEMS.register("shield_bone", () -> new ShieldCyclicItem(new Item.Properties().durability(168 + 84), ShieldType.BONE));
-  public static final DeferredItem<Item> WAND_HYPNO = ITEMS.register("wand_hypno", () -> new WandHypnoItem(new Item.Properties()));
-  public static final DeferredItem<Item> WAND_MISSILE = ITEMS.register("wand_missile", () -> new WandMissileItem(new Item.Properties()));
+  public static final DeferredItem<Item> SCEPTER_HYPNO = ITEMS.register("scepter_hypno", () -> new WandHypnoItem(new Item.Properties()));
+  public static final DeferredItem<Item> SCEPTER_MISSILE = ITEMS.register("scepter_missile", () -> new WandMissileItem(new Item.Properties()));
   public static final DeferredItem<Item> FIRE_KILLER = ITEMS.register("fire_killer", () -> new FireExtinguishItem(new Item.Properties()));
-  public static final DeferredItem<Item> MILK_BOTTLE = ITEMS.register("milk_bottle", () -> new MilkBottle(new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().build())));
   public static final DeferredItem<Item> FIREBALL_ORANGE = ITEMS.register("fireball", () -> new FireballItem(new Item.Properties()));
- public static final DeferredItem<Item> MAGNET_BLOCK = ITEMS.register("magnet_block", () -> new BlockItem(BlockRegistry.MAGNET_BLOCK.get(), new Item.Properties()));
+
+
+
+
+  public static final DeferredItem<Item> STORAGE_BAG = ITEMS.register("storage_bag", () -> new ItemStorageBag(new Item.Properties().stacksTo(1).setNoRepair()));
+  public static final DeferredItem<Item> CRAFTING_BAG = ITEMS.register("crafting_bag", () -> new CraftingBagItem(new Item.Properties().stacksTo(1).setNoRepair()));
+  public static final DeferredItem<Item> CRAFTING_STICK = ITEMS.register("crafting_stick", () -> new CraftingStickItem(new Item.Properties().stacksTo(1).setNoRepair()));
+  public static final DeferredItem<Item> MOB_CONTAINER = ITEMS.register("mob_container", () -> new ItemMobContainer(new Item.Properties().stacksTo(1)));
+  public static final DeferredItem<Item> TILE_TRANSPORTER_EMPTY = ITEMS.register("tile_transporter_empty", () -> new TileTransporterEmptyItem(new Item.Properties()));
+  public static final DeferredItem<Item> TILE_TRANSPORTER = ITEMS.register("tile_transporter", () -> new TileTransporterItem(new Item.Properties()));
+  public static final DeferredItem<Item> MAGIC_NET = ITEMS.register("magic_net", () -> new ItemMagicNet(new Item.Properties()));
+  public static final DeferredItem<Item> BOOMERANG_STUN = ITEMS.register("boomerang_stun", () -> new BoomerangItem(Boomer.STUN, new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> BOOMERANG_CARRY = ITEMS.register("boomerang_carry", () -> new BoomerangItem(Boomer.CARRY, new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> BOOMERANG_DAMAGE = ITEMS.register("boomerang_damage", () -> new BoomerangItem(Boomer.DAMAGE, new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SPAWNER_SEEKER = ITEMS.register("spawner_seeker", () -> new ItemProjectileDungeon(new Item.Properties()));
+  public static final DeferredItem<Item> GLOVE_CLIMB = ITEMS.register("glove_climb", () -> new GloveItem(new Item.Properties().durability(256 * 8)));
+  public static final DeferredItem<Item> FLIPPERS = ITEMS.register("flippers", () -> new ItemBaseToggle(new Item.Properties().durability(256 * 4)));
+
+
+  public static final DeferredItem<Item> HEART = ITEMS.register("heart", () -> new HeartItem(new Item.Properties().stacksTo(16)));
+  public static final DeferredItem<Item> HEART_EMPTY = ITEMS.register("heart_empty", () -> new HeartToxicItem(new Item.Properties().stacksTo(16)));
+
+
+  public static final DeferredItem<Item> CARBON_PAPER = ITEMS.register("carbon_paper", () -> new CarbonPaperItem(new Item.Properties()));
+  public static final DeferredItem<Item> SCEPTER_SNOW = ITEMS.register("scepter_snow", () -> new SnowScepter(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCEPTER_FIRE = ITEMS.register("scepter_fire", () -> new FireScepter(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCEPTER_LIGHTNING = ITEMS.register("scepter_lightning", () -> new LightningScepter(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> ENDER_BAG = ITEMS.register("ender_bag", () -> new EnderBagItem(new Item.Properties()));
+  public static final DeferredItem<Item> SCEPTER_WATER = ITEMS.register("scepter_water", () -> new WaterSpreaderItem(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCEPTER_ICE = ITEMS.register("scepter_ice", () -> new IceWand(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> TORCH_LAUNCHER = ITEMS.register("torch_launcher", () -> new ItemTorchThrower(new Item.Properties()));
+  public static final DeferredItem<Item> CHARM_TORCH = ITEMS.register("charm_torch", () -> new AutoTorchItem(new Item.Properties().durability(256 * 4)));
+  public static final DeferredItem<Item> CHARM_TORCH_CAVE = ITEMS.register("charm_torch_cave", () -> new AutoCaveTorchItem(new Item.Properties().durability(256 * 4)));
+  public static final DeferredItem<Item> CHARM_HOME = ITEMS.register("charm_home", () -> new EnderWingItem(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> CHARM_WORLD = ITEMS.register("charm_world", () -> new EnderWingSp(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> EVOKER_FANG = ITEMS.register("evoker_fang", () -> new EvokerFangItem(new Item.Properties()));
+  public static final DeferredItem<Item> ENDER_EYE_REUSE = ITEMS.register("ender_eye_reuse", () -> new EnderEyeReuseItem(new Item.Properties()));
+  public static final DeferredItem<Item> ENDER_PEARL_REUSE = ITEMS.register("ender_pearl_reuse", () -> new EnderPearlReuse(new Item.Properties()));
+  public static final DeferredItem<Item> ENDER_PEARL_MOUNTED = ITEMS.register("ender_pearl_mounted", () -> new EnderPearlMount(new Item.Properties()));
+  public static final DeferredItem<Item> SPELUNKER = ITEMS.register("spelunker", () -> new SpelunkerCaveFinder(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> PROSPECTOR = ITEMS.register("prospector", () -> new OreProspector(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCEPTER_ELEVATION = ITEMS.register("scepter_elevation", () -> new ElevationWandItem(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCEPTER_TELEPORT = ITEMS.register("scepter_teleport", () -> new TeleporterWandItem(new Item.Properties().durability(64)));
+  public static final DeferredItem<Item> SCYTHE_HARVEST = ITEMS.register("scythe_harvest", () -> new ScytheHarvest(new Item.Properties().durability(1024)));
+  public static final DeferredItem<Item> SCEPTER_ANTIMATTER = ITEMS.register("scepter_antimatter", () -> new AntimatterEvaporatorWandItem(new Item.Properties().durability(1024)));
+  public static final DeferredItem<Item> SHEARS_FLINT = ITEMS.register("shears_flint", () -> new ShearsMaterial(new Item.Properties().durability(64)));
+  public static final DeferredItem<Item> SCEPTER_ROTATION = ITEMS.register("scepter_rotation", () -> new RotatorItem(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCYTHE_BRUSH = ITEMS.register("scythe_brush", () -> new ScytheBrush(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCYTHE_FORAGE = ITEMS.register("scythe_forage", () -> new ScytheForage(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> SCYTHE_LEAVES = ITEMS.register("scythe_leaves", () -> new ScytheLeaves(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> STIRRUPS = ITEMS.register("stirrups", () -> new StirrupsItem(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> STIRRUPS_REVERSE = ITEMS.register("stirrups_reverse", () -> new StirrupsReverseItem(new Item.Properties().durability(256)));
+  public static final DeferredItem<Item> LEVER_REMOTE = ITEMS.register("lever_remote", () -> new LeverRemote(new Item.Properties().stacksTo(1)));
+
+
+  public static final DeferredItem<Item> LOCATION_DATA = ITEMS.register("location_data", () -> new LocationGpsCard(new Item.Properties()));
+  public static final DeferredItem<Item> SETTINGS_DATA = ITEMS.register("settings_data", () -> new SettingsCard(new Item.Properties()));
+  public static final DeferredItem<Item> SHAPE_DATA = ITEMS.register("shape_data", () -> new ShapeCard(new Item.Properties()));
+  public static final DeferredItem<Item> FILTER_DATA = ITEMS.register("filter_data", () -> new FilterCardItem(new Item.Properties()));
+  public static final DeferredItem<Item> SOUND_DATA = ITEMS.register("sound_data", () -> new SoundCard(new Item.Properties()));
+  public static final DeferredItem<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties()));
+  public static final DeferredItem<Item> BLOCKSTATE_DATA = ITEMS.register("blockstate_data", () -> new BlockstateCard(new Item.Properties()));
+
+
+  public static final DeferredItem<Item> COPPER_NUGGET = ITEMS.register("copper_nugget", () -> new GemstoneItem(new Item.Properties()));
+  public static final DeferredItem<Item> NETHERITE_NUGGET = ITEMS.register("netherite_nugget", () -> new GemstoneItem(new Item.Properties()));
+
+  public static final DeferredItem<Item> GOLD_BARS = ITEMS.register("gold_bars", () -> new BlockItem(BlockRegistry.GOLD_BARS.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GOLD_CHAIN = ITEMS.register("gold_chain", () -> new BlockItem(BlockRegistry.GOLD_CHAIN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GOLD_LANTERN = ITEMS.register("gold_lantern", () -> new BlockItem(BlockRegistry.GOLD_LANTERN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GOLD_SOUL_LANTERN = ITEMS.register("gold_soul_lantern", () -> new BlockItem(BlockRegistry.GOLD_SOUL_LANTERN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COPPER_BARS = ITEMS.register("copper_bars", () -> new BlockItem(BlockRegistry.COPPER_BARS.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COPPER_CHAIN = ITEMS.register("copper_chain", () -> new BlockItem(BlockRegistry.COPPER_CHAIN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COPPER_LANTERN = ITEMS.register("copper_lantern", () -> new BlockItem(BlockRegistry.COPPER_LANTERN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COPPER_SOUL_LANTERN = ITEMS.register("copper_soul_lantern", () -> new BlockItem(BlockRegistry.COPPER_SOUL_LANTERN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COPPER_PRESSURE_PLATE = ITEMS.register("copper_pressure_plate", () -> new BlockItem(BlockRegistry.COPPER_PRESSURE_PLATE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> NETHERITE_BARS = ITEMS.register("netherite_bars", () -> new BlockItem(BlockRegistry.NETHERITE_BARS.get(), new Item.Properties()));
+  public static final DeferredItem<Item> NETHERTIE_CHAIN = ITEMS.register("netherite_chain", () -> new BlockItem(BlockRegistry.NETHERTIE_CHAIN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> NETHERITE_PRESSURE_PLATE = ITEMS.register("netherite_pressure_plate", () -> new BlockItem(BlockRegistry.NETHERITE_PRESSURE_PLATE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> NETHERITE_LANTERN = ITEMS.register("netherite_lantern", () -> new BlockItem(BlockRegistry.NETHERITE_LANTERN.get(), new Item.Properties()));
+
+
+  public static final DeferredItem<Item> OBSIDIAN_PRESSURE_PLATE = ITEMS.register("obsidian_pressure_plate", () -> new BlockItem(BlockRegistry.OBSIDIAN_PRESSURE_PLATE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> LAMP = ITEMS.register("lamp", () -> new BlockItem(BlockRegistry.LAMP.get(), new Item.Properties()));
+  public static final DeferredItem<Item> CLOUD = ITEMS.register("cloud", () -> new BlockItem(BlockRegistry.CLOUD.get(), new Item.Properties()));
+  public static final DeferredItem<Item> CLOUD_MEMBRANE = ITEMS.register("cloud_membrane", () -> new BlockItem(BlockRegistry.CLOUD_MEMBRANE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GHOST_PHANTOM = ITEMS.register("ghost_phantom", () -> new BlockItem(BlockRegistry.GHOST_PHANTOM.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GHOST = ITEMS.register("ghost", () -> new BlockItem(BlockRegistry.GHOST.get(), new Item.Properties()));
+  public static final DeferredItem<Item> MEMBRANE = ITEMS.register("membrane", () -> new BlockItem(BlockRegistry.MEMBRANE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> DICE = ITEMS.register("dice", () -> new BlockItem(BlockRegistry.DICE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> TERRA_PRETA = ITEMS.register("terra_preta", () -> new BlockItem(BlockRegistry.TERRA_PRETA.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SOIL = ITEMS.register("soil", () -> new BlockItem(BlockRegistry.SOIL.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COMPRESSED_COBBLESTONE = ITEMS.register("compressed_cobblestone", () -> new BlockItem(BlockRegistry.COMPRESSED_COBBLESTONE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FLINT_BLOCK = ITEMS.register("flint_block", () -> new BlockItem(BlockRegistry.FLINT_BLOCK.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> FIREPLACE = ITEMS.register("fireplace", () -> new BlockItem(BlockRegistry.FIREPLACE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> UNBREAKABLE_BLOCK = ITEMS.register("unbreakable_block", () -> new BlockItem(BlockRegistry.UNBREAKABLE_BLOCK.get(), new Item.Properties()));
+  public static final DeferredItem<Item> UNBREAKABLE_REACTIVE = ITEMS.register("unbreakable_reactive", () -> new BlockItem(BlockRegistry.UNBREAKABLE_REACTIVE.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> SPONGE_LAVA = ITEMS.register("sponge_lava", () -> new BlockItem(BlockRegistry.SPONGE_LAVA.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SPONGE_MILK = ITEMS.register("sponge_milk", () -> new BlockItem(BlockRegistry.SPONGE_MILK.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> DOORBELL = ITEMS.register("doorbell", () -> new BlockItem(BlockRegistry.DOORBELL.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> WIRELESS_TRANSMITTER = ITEMS.register("wireless_transmitter", () -> new BlockItem(BlockRegistry.WIRELESS_TRANSMITTER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> WIRELESS_RECEIVER = ITEMS.register("wireless_receiver", () -> new BlockItem(BlockRegistry.WIRELESS_RECEIVER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties()));
+
+
+  public static final DeferredItem<Item> SPIKES_DIAMOND = ITEMS.register("spikes_diamond", () -> new BlockItem(BlockRegistry.SPIKES_DIAMOND.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SPIKES_IRON = ITEMS.register("spikes_iron", () -> new BlockItem(BlockRegistry.SPIKES_IRON.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SPIKES_CURSE = ITEMS.register("spikes_curse", () -> new BlockItem(BlockRegistry.SPIKES_CURSE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SPIKES_FIRE = ITEMS.register("spikes_fire", () -> new BlockItem(BlockRegistry.SPIKES_FIRE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> DETECTOR_ITEM = ITEMS.register("detector_item", () -> new BlockItem(BlockRegistry.DETECTOR_ITEM.get(), new Item.Properties()));
+  public static final DeferredItem<Item> DETECTOR_ENTITY = ITEMS.register("detector_entity", () -> new BlockItem(BlockRegistry.DETECTOR_ENTITY.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> DETECTORMOON = ITEMS.register("detector_moon", () -> new BlockItem(BlockRegistry.DETECTORMOON.get(), new Item.Properties()));
+  public static final DeferredItem<Item> DETECTORWEATHER = ITEMS.register("detector_weather", () -> new BlockItem(BlockRegistry.DETECTORWEATHER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> TERRAGLASS = ITEMS.register("terra_glass", () -> new BlockItem(BlockRegistry.TERRAGLASS.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SPRINKLER = ITEMS.register("sprinkler", () -> new BlockItem(BlockRegistry.SPRINKLER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SHEARING = ITEMS.register("shearing", () -> new BlockItem(BlockRegistry.SHEARING.get(), new Item.Properties()));
+
+
+
+  public static final DeferredItem<Item> SOUND_RECORDER = ITEMS.register("sound_recorder", () -> new BlockItem(BlockRegistry.SOUND_RECORDER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SOUND_PLAYER = ITEMS.register("sound_player", () -> new BlockItem(BlockRegistry.SOUND_PLAYER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GENERATOR_FUEL = ITEMS.register("generator_fuel", () -> new BlockItem(BlockRegistry.GENERATOR_FUEL.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GENERATOR_FOOD = ITEMS.register("generator_food", () -> new BlockItem(BlockRegistry.GENERATOR_FOOD.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GENERATOR_FLUID = ITEMS.register("generator_fluid", () -> new BlockItem(BlockRegistry.GENERATOR_FLUID.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GENERATOR_ITEM = ITEMS.register("generator_item", () -> new BlockItem(BlockRegistry.GENERATOR_ITEM.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FLOWER_CYAN = ITEMS.register("flower_cyan", () -> new BlockItem(BlockRegistry.FLOWER_CYAN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FLOWER_PURPLE = ITEMS.register("flower_purple_tulip", () -> new BlockItem(BlockRegistry.FLOWER_PURPLE_TULIP.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FLOWER_BROWN = ITEMS.register("flower_absalon_tulip", () -> new BlockItem(BlockRegistry.FLOWER_ABSALON_TULIP.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FLOWER_LIME = ITEMS.register("flower_lime_carnation", () -> new BlockItem(BlockRegistry.FLOWER_LIME_CARNATION.get(), new Item.Properties()));
+  public static final DeferredItem<Item> WATER_CANDLE = ITEMS.register("water_candle", () -> new BlockItem(BlockRegistry.WATER_CANDLE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PEACE_CANDLE = ITEMS.register("peace_candle", () -> new BlockItem(BlockRegistry.PEACE_CANDLE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> TELEPORT = ITEMS.register("teleport", () -> new BlockItem(BlockRegistry.TELEPORT.get(), new Item.Properties()));
+
+
+  // peat
+  public static final DeferredItem<Item> BIOMASS = ITEMS.register("biomass", () -> new ItemBaseCyclic(new Item.Properties()));
+  public static final DeferredItem<Item> PEAT_FUEL = ITEMS.register("peat_fuel", () -> new ItemBaseCyclic(new Item.Properties()));
+  public static final DeferredItem<Item> PEAT_FUEL_ENRICHED = ITEMS.register("peat_fuel_enriched", () -> new ItemBaseCyclic(new Item.Properties()));
+
+  public static final DeferredItem<Item> PEAT_UNBAKED = ITEMS.register("peat_unbaked", () -> new BlockItem(BlockRegistry.PEAT_UNBAKED.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PEAT_BAKED = ITEMS.register("peat_baked", () -> new BlockItem(BlockRegistry.PEAT_BAKED.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PEAT_FARM = ITEMS.register("peat_farm", () -> new BlockItem(BlockRegistry.PEAT_FARM.get(), new Item.Properties()));
+ // blocks
+  public static final DeferredItem<Item> BATTERY_CLAY = ITEMS.register("battery_clay", () -> new ItemBlockClayBattery(BlockRegistry.BATTERY_CLAY.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BATTERY = ITEMS.register("battery", () -> new ItemBlockBattery(BlockRegistry.BATTERY.get(), new Item.Properties()));
+  public static final DeferredItem<Item> CRAFTER = ITEMS.register("crafter", () -> new BlockItem(BlockRegistry.CRAFTER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PACKAGER = ITEMS.register("packager", () -> new BlockItem(BlockRegistry.PACKAGER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> CRUSHER = ITEMS.register("crusher", () -> new BlockItem(BlockRegistry.CRUSHER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> MELTER = ITEMS.register("melter", () -> new BlockItem(BlockRegistry.MELTER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SOLIDIFIER = ITEMS.register("solidifier", () -> new BlockItem(BlockRegistry.SOLIDIFIER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ROTATOR = ITEMS.register("rotator", () -> new BlockItem(BlockRegistry.ROTATOR.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PLACER = ITEMS.register("placer", () -> new BlockItem(BlockRegistry.PLACER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BREAKER = ITEMS.register("breaker", () -> new BlockItem(BlockRegistry.BREAKER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> USER = ITEMS.register("user", () -> new BlockItem(BlockRegistry.USER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> DROPPER = ITEMS.register("dropper", () -> new BlockItem(BlockRegistry.DROPPER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FORESTER = ITEMS.register("forester", () -> new BlockItem(BlockRegistry.FORESTER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> MINER = ITEMS.register("miner", () -> new BlockItem(BlockRegistry.MINER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> STRUCTURE = ITEMS.register("structure", () -> new BlockItem(BlockRegistry.STRUCTURE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COMPUTER_SHAPE = ITEMS.register("computer_shape", () -> new BlockItem(BlockRegistry.COMPUTER_SHAPE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> HARVESTER = ITEMS.register("harvester", () -> new BlockItem(BlockRegistry.HARVESTER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COLLECTOR = ITEMS.register("collector", () -> new BlockItem(BlockRegistry.COLLECTOR.get(), new Item.Properties()));
+  public static final DeferredItem<Item> COLLECTOR_FLUID = ITEMS.register("collector_fluid", () -> new BlockItem(BlockRegistry.COLLECTOR_FLUID.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PLACER_FLUID = ITEMS.register("placer_fluid", () -> new BlockItem(BlockRegistry.PLACER_FLUID.get(), new Item.Properties()));
+  public static final DeferredItem<Item> CASK = ITEMS.register("cask", () -> new ItemBlockCask(BlockRegistry.CASK.get(), new Item.Properties()));
+  public static final DeferredItem<Item> CRATE = ITEMS.register("crate", () -> new BlockItem(BlockRegistry.CRATE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> MINI_CRATE = ITEMS.register("crate_mini", () -> new BlockItem(BlockRegistry.CRATE_MINI.get(), new Item.Properties()));
+  public static final DeferredItem<Item> CLOCK = ITEMS.register("clock", () -> new BlockItem(BlockRegistry.CLOCK.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PLATE_LAUNCH_REDSTONE = ITEMS.register("plate_launch_redstone", () -> new BlockItem(BlockRegistry.PLATE_LAUNCH_REDSTONE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> PLATE_LAUNCH = ITEMS.register("plate_launch", () -> new BlockItem(BlockRegistry.PLATE_LAUNCH.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SCREEN = ITEMS.register("screen", () -> new BlockItem(BlockRegistry.SCREEN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> UNCRAFTER = ITEMS.register("uncrafter", () -> new BlockItem(BlockRegistry.UNCRAFTER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FISHER = ITEMS.register("fisher", () -> new BlockItem(BlockRegistry.FISHER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> DISENCHANTER = ITEMS.register("disenchanter", () -> new BlockItem(BlockRegistry.DISENCHANTER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FAN = ITEMS.register("fan", () -> new BlockItem(BlockRegistry.FAN.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FANSLAB = ITEMS.register("fan_slab", () -> new BlockItem(BlockRegistry.FANSLAB.get(), new Item.Properties()));
+  public static final DeferredItem<Item> LIGHT_CAMO = ITEMS.register("light_camo", () -> new BlockItem(BlockRegistry.LIGHT_CAMO.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SOUNDPROOFING_GHOST = ITEMS.register("soundproofing_ghost", () -> new BlockItem(BlockRegistry.SOUNDPROOFING_GHOST.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SOUNDPROOFING = ITEMS.register("soundproofing", () -> new BlockItem(BlockRegistry.SOUNDPROOFING.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ANVIL = ITEMS.register("anvil", () -> new BlockItem(BlockRegistry.ANVIL.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ANVIL_MAGMA = ITEMS.register("anvil_magma", () -> new BlockItem(BlockRegistry.ANVIL_MAGMA.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ANVILVOID = ITEMS.register("anvil_void", () -> new BlockItem(BlockRegistry.ANVILVOID.get(), new Item.Properties()));
+  public static final DeferredItem<Item> LASER = ITEMS.register("laser", () -> new BlockItem(BlockRegistry.LASER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BEACON = ITEMS.register("beacon", () -> new BlockItem(BlockRegistry.BEACON.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ANTI_BEACON = ITEMS.register("anti_beacon", () -> new BlockItem(BlockRegistry.ANTI_BEACON.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BEACON_REDSTONE = ITEMS.register("beacon_redstone", () -> new BlockItem(BlockRegistry.BEACON_REDSTONE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> TANK = ITEMS.register("tank", () -> new ItemBlockTank(BlockRegistry.TANK.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GLASS_CONNECTED = ITEMS.register("glass_connected", () -> new BlockItem(BlockRegistry.GLASS_CONNECTED.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GLASS_DARK = ITEMS.register("glass_dark", () -> new BlockItem(BlockRegistry.GLASS_DARK.get(), new Item.Properties()));
+  public static final DeferredItem<Item> GLASS_DARK_CONNECTED = ITEMS.register("glass_dark_connected", () -> new BlockItem(BlockRegistry.GLASS_DARK_CONNECTED.get(), new Item.Properties()));
+  public static final DeferredItem<Item> TRASH = ITEMS.register("trash", () -> new BlockItem(BlockRegistry.TRASH.get(), new Item.Properties()));
+ public static final DeferredItem<Item> CONVEYOR = ITEMS.register("conveyor", () -> new BlockItem(BlockRegistry.CONVEYOR.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ENDER_ITEM_SHELF = ITEMS.register("ender_item_shelf", () -> new BlockItem(BlockRegistry.ENDER_ITEM_SHELF.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ENDER_SHELF = ITEMS.register("ender_shelf", () -> new BlockItem(BlockRegistry.ENDER_SHELF.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ENDER_CONTROLLER = ITEMS.register("ender_controller", () -> new BlockItem(BlockRegistry.ENDER_CONTROLLER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(BlockRegistry.WORKBENCH.get(), new Item.Properties()));
+  public static final DeferredItem<Item> EXPERIENCE_PYLON = ITEMS.register("experience_pylon", () -> new ItemBlockPylon(BlockRegistry.EXPERIENCE_PYLON.get(), new Item.Properties()));
+  public static final DeferredItem<Item> EXPERIENCE_FOOD = ITEMS.register("experience_food", () -> new ExpItemGain(new Item.Properties()));
+  public static final DeferredItem<Item> MATTOCK = ITEMS.register("mattock", () -> new MattockItem(Tiers.DIAMOND, new Item.Properties().durability(9000), 1));
+  public static final DeferredItem<Item> MATTOCK_NETHER = ITEMS.register("mattock_nether", () -> new MattockItem(Tiers.NETHERITE, new Item.Properties().durability(9001), 2));
+  public static final DeferredItem<Item> MATTOCK_STONE = ITEMS.register("mattock_stone", () -> new MattockItem(Tiers.STONE, new Item.Properties().durability(1024), 1));
+  public static final DeferredItem<Item> SLEEPING_MAT = ITEMS.register("sleeping_mat", () -> new SleepingMatItem(new Item.Properties()));
+  public static final DeferredItem<Item> SHEARS_OBSIDIAN = ITEMS.register("shears_obsidian", () -> new ShearsMaterial(new Item.Properties().durability(1024 * 1024)));
+  public static final DeferredItem<Item> SCAFFOLD_REPLACE = ITEMS.register("scaffold_replace", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_REPLACE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SCAFFOLD_FRAGILE = ITEMS.register("scaffold_fragile", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_FRAGILE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> SCAFFOLD_RESPONSIVE = ITEMS.register("scaffold_responsive", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_RESPONSIVE.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> FLUIDHOPPER = ITEMS.register("hopper_fluid", () -> new BlockItem(BlockRegistry.FLUIDHOPPER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> HOPPER = ITEMS.register("hopper", () -> new BlockItem(BlockRegistry.HOPPER.get(), new Item.Properties()));
+  public static final DeferredItem<Item> HOPPERGOLD = ITEMS.register("hopper_gold", () -> new BlockItem(BlockRegistry.HOPPERGOLD.get(), new Item.Properties()));
+
+  public static final DeferredItem<Item> ENERGY_PIPE = ITEMS.register("energy_pipe", () -> new BlockItem(BlockRegistry.ENERGY_PIPE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ITEM_PIPE = ITEMS.register("item_pipe", () -> new BlockItem(BlockRegistry.ITEM_PIPE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> FLUID_PIPE = ITEMS.register("fluid_pipe", () -> new BlockItem(BlockRegistry.FLUID_PIPE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new CableWrench(new Item.Properties()));
+
+  public static final DeferredItem<Item> WIRELESS_ENERGY = ITEMS.register("wireless_energy", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties()));
+  public static final DeferredItem<Item> WIRELESS_ITEM = ITEMS.register("wireless_item", () -> new BlockItem(BlockRegistry.WIRELESS_ITEM.get(), new Item.Properties()));
+  public static final DeferredItem<Item> WIRELESS_FLUID = ITEMS.register("wireless_fluid", () -> new BlockItem(BlockRegistry.WIRELESS_FLUID.get(), new Item.Properties()));
+ // durability multipliers below mirror vanilla tiers: leather=5, gold=7, iron/chain=15, diamond=33, netherite=37
+
+  public static final DeferredItem<Item> MAGNET_BLOCK = ITEMS.register("magnet_block", () -> new BlockItem(BlockRegistry.MAGNET_BLOCK.get(), new Item.Properties()));
+
  public static final DeferredItem<Item> ALTAR_DESTRUCTION = ITEMS.register("altar_destruction", () -> new BlockItem(BlockRegistry.ALTAR_DESTRUCTION.get(), new Item.Properties()));
   public static final DeferredItem<Item> GENERATOR_SOLAR = ITEMS.register("generator_solar", () -> new BlockItem(BlockRegistry.GENERATOR_SOLAR.get(), new Item.Properties()));
   public static final DeferredItem<Item> NO_SOLICITING = ITEMS.register("no_soliciting", () -> new BlockItem(BlockRegistry.NO_SOLICITING.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BATTERY_INFINITE = ITEMS.register("battery_infinite", () -> new BlockItem(BlockRegistry.BATTERY_INFINITE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> ITEM_INFINITE = ITEMS.register("item_infinite", () -> new BlockItem(BlockRegistry.ITEM_INFINITE.get(), new Item.Properties()));
 }

@@ -102,21 +102,21 @@ public class CapabilityRegistry {
         // Energy on handheld tools that consume RF per use
         event.registerItem(Capabilities.EnergyStorage.ITEM,
             (stack, ctx) -> new ItemEnergyCap(stack, WandMissileItem.MAX.get()),
-            ItemRegistry.WAND_MISSILE.get());
+            ItemRegistry.SCEPTER_MISSILE.get());
         event.registerItem(Capabilities.EnergyStorage.ITEM,
             (stack, ctx) -> new ItemEnergyCap(stack, WandHypnoItem.MAX.get()),
-            ItemRegistry.WAND_HYPNO.get());
+            ItemRegistry.SCEPTER_HYPNO.get());
         event.registerItem(Capabilities.EnergyStorage.ITEM,
             (stack, ctx) -> new ItemEnergyCap(stack, ConfigRegistry.LaserItemEnergyMax.get()),
             ItemRegistry.LASER_CANNON.get());
         event.registerItem(Capabilities.EnergyStorage.ITEM,
             (stack, ctx) -> new ItemEnergyCap(stack, BuilderItem.MAX.get()),
-            ItemRegistry.BUILD_SCEPTER.get(),
-            ItemRegistry.REPLACE_SCEPTER.get(),
-            ItemRegistry.OFFSET_SCEPTER.get());
+            ItemRegistry.SCEPTER_BUILD.get(),
+            ItemRegistry.SCEPTER_REPLACE.get(),
+            ItemRegistry.SCEPTER_OFFSET.get());
         event.registerItem(Capabilities.EnergyStorage.ITEM,
             (stack, ctx) -> new ItemEnergyCap(stack, RandomizerItem.MAX.get()),
-            ItemRegistry.RANDOMIZE_SCEPTER.get());
+            ItemRegistry.SCEPTER_RANDOMIZE.get());
         // Fluid on BlockItem
         event.registerItem(Capabilities.FluidHandler.ITEM,
             (stack, ctx) -> new ItemFluidCap(stack, TileTank.CAPACITY),

@@ -1,4 +1,4 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "ggg",
@@ -13,7 +13,7 @@
       "item": "minecraft:arrow"
     },
     "a": {
-      "item": "cyclic:lightning_scepter"
+      "item": "cyclic:scepter_lightning"
     }
   },
   "result": {
