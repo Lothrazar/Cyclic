@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class TileGoldHopper extends TileSimpleHopper {
 
   public TileGoldHopper(BlockPos pos, BlockState state) {
-    super(TileRegistry.HOPPERGOLD.get(), pos, state);
+    super(TileRegistry.HOPPER_GOLD.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGoldHopper e) {

@@ -85,13 +85,11 @@ public class MembraneBlock extends BlockCyclic {
       LivingEntity player = (Player) entityIn;
       if (player.isSprinting()) {
         //zscaler
-        MobEffectInstance eff = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 30, 5, false, false, false);
-        // eff.showIcon = false; // private in 1.21.1
-        // eff.visible = false; // private in 1.21.1
+        MobEffectInstance eff = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 4 * 20, 5, false, false, true);
+
         player.addEffect(eff);
-        eff = new MobEffectInstance(MobEffects.JUMP, 30, 5, false, false, false);
-        // eff.showIcon = false; // private in 1.21.1
-        // eff.visible = false; // private in 1.21.1
+        eff = new MobEffectInstance(MobEffects.JUMP, 4 * 20, 5, false, false, true);
+
         player.addEffect(eff);
       }
     }

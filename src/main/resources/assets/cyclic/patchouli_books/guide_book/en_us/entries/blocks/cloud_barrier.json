@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.cloud_barrier",
+  "icon": "cyclic:cloud_ghost",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.cloud_barrier.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:cloud_barrier"
+    }
+  ]
+}

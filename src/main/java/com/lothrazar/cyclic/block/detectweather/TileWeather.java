@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class TileWeather extends TileBlockEntityCyclic {
 
   public TileWeather(BlockPos pos, BlockState state) {
-    super(TileRegistry.DETECTORWEATHER.get(), pos, state);
+    super(TileRegistry.DETECTOR_WEATHER.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWeather e) {

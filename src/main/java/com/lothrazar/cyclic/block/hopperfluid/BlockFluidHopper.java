@@ -70,6 +70,6 @@ public class BlockFluidHopper extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.FLUIDHOPPER.get(), world.isClientSide ? TileFluidHopper::clientTick : TileFluidHopper::serverTick);
+    return createTickerHelper(type, TileRegistry.HOPPER_FLUID.get(), world.isClientSide ? TileFluidHopper::clientTick : TileFluidHopper::serverTick);
   }
 }

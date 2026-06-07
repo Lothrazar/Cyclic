@@ -10,14 +10,14 @@
       "item": "minecraft:string"
     },
     "i": {
-      "item": "minecraft:iron_nugget"
+      "item": "cyclic:cloud"
     },
     "r": {
-      "tag": "c:dyes/gray"
+      "item": "minecraft:redstone"
     }
   },
   "result": {
-    "count": 8,
-    "id": "cyclic:ghost"
+    "count": 4,
+    "id": "cyclic:cloud_ghost"
   }
 }

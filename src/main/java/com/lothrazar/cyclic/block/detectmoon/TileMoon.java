@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class TileMoon extends TileBlockEntityCyclic {
 
   public TileMoon(BlockPos pos, BlockState state) {
-    super(TileRegistry.DETECTORMOON.get(), pos, state);
+    super(TileRegistry.DETECTOR_MOON.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMoon e) {

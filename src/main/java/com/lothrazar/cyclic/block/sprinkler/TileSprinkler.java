@@ -67,10 +67,11 @@ public class TileSprinkler extends TileBlockEntityCyclic {
     if (shapeIndex >= shape.size()) {
       shapeIndex = 0;
     }
-    if (level.isClientSide && GrowthUtil.isValidGrow(level, shape.get(shapeIndex))) {
+    if (level.isClientSide) {
       ParticleUtil.spawnParticle(level, ParticleTypes.FALLING_WATER, shape.get(shapeIndex), 9);
     }
-    if (level instanceof ServerLevel sl) {
+    if (GrowthUtil.isValidGrow(level, shape.get(shapeIndex)) &&
+        level instanceof ServerLevel sl) {
       if (GrowthUtil.tryGrow(sl, shape.get(shapeIndex), 1)) {
         //it worked so pay
         tank.drain(WATERCOST.get(), IFluidHandler.FluidAction.EXECUTE);

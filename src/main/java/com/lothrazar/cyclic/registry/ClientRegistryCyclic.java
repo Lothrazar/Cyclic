@@ -10,6 +10,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import com.lothrazar.cyclic.render.SpinModelRenderer;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.minecraft.client.gui.LayeredDraw;
@@ -156,6 +158,12 @@ public class ClientRegistryCyclic {
 //      }
     }
   };
+
+  @SubscribeEvent
+  public static void onRegisterAdditionalModels(ModelEvent.RegisterAdditional event) {
+    event.register(SpinModelRenderer.SPRINKLER_SPIN);
+    event.register(SpinModelRenderer.FOUNTAIN_SPIN);
+  }
 
   @SubscribeEvent
   public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {

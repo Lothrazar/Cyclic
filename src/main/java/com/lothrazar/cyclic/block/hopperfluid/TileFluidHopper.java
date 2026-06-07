@@ -25,7 +25,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic {
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
 
   public TileFluidHopper(BlockPos pos, BlockState state) {
-    super(TileRegistry.FLUIDHOPPER.get(), pos, state);
+    super(TileRegistry.HOPPER_FLUID.get(), pos, state);
   }
 
   @Override

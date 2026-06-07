@@ -35,15 +35,7 @@ public class BlockSprinkler extends BlockCyclic {
   public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
     return SHAPE;
   }
-  //  @Override
-  //  public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-  //    return blockState.get(LIT) ? 15 : 0;
-  //  }
-  //
-  //  @Override
-  //  public int getStrongPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-  //    return blockState.get(LIT) ? 15 : 0;
-  //  }
+
 
   @Override
   public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {

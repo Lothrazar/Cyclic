@@ -31,7 +31,7 @@ public class TileFanSlab extends TileBlockEntityCyclic {
   private int speed = 5;
 
   public TileFanSlab(BlockPos pos, BlockState state) {
-    super(TileRegistry.FANSLAB.get(), pos, state);
+    super(TileRegistry.FAN_SLAB.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFanSlab e) {

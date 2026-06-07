@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.sprinkler;
 
+import com.lothrazar.cyclic.render.SpinModelRenderer;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
@@ -20,11 +21,14 @@ public class RenderSprinkler implements BlockEntityRenderer<TileSprinkler> {
   public void render(TileSprinkler tankHere, float v, PoseStack matrix,
       MultiBufferSource renderer, int light, int overlayLight) {
     IFluidHandler handler = CapabilityUtil.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
-    if (handler == null || handler.getFluidInTank(0) == null) {
-      return;
+    FluidStack fluid = handler == null ? FluidStack.EMPTY : handler.getFluidInTank(0);
+    boolean spinning = fluid != null && !fluid.isEmpty();
+    float angle = 0F;
+    if (spinning && tankHere.getLevel() != null) {
+      angle = ((tankHere.getLevel().getGameTime() % 60L) + v) * 6F;
     }
-    FluidStack fluid = handler.getFluidInTank(0);
-    if (fluid.isEmpty()) {
+    SpinModelRenderer.render(SpinModelRenderer.SPRINKLER_SPIN, angle, matrix, renderer, light, overlayLight);
+    if (!spinning) {
       return;
     }
     VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.RESIZABLE);

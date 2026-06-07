@@ -165,7 +165,7 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   static void charmAttackSpeed(Player player) {
-    toggleAttribute(player, ItemRegistry.CHARM_ATTACKSPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACKSPEED.get().floatValue(), 0, ADD);
+    toggleAttribute(player, ItemRegistry.CHARM_ATTACK_SPEED.get(), Attributes.ATTACK_SPEED, ID_ATTACKSPEED, ConfigRegistry.CHARM_ATTACK_SPEED.get().floatValue(), 0, ADD);
   }
 
   static void charmSwimming(Player player) {
@@ -179,7 +179,7 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   static void charmExpSpeed(Player player) {
-    ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSPEED.get());
+    ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XP_SPEED.get());
     if (!charmStack.isEmpty()) {
       player.takeXpDelay = 0;
     }

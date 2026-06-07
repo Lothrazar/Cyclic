@@ -68,20 +68,10 @@ public class OutlineRenderer {
         }
       }
     }
-    //TODO: delete
-//    int height = mc.getWindow().getGuiScaledHeight();
-//    CyclicFile datFile = PlayerDataEvents.getOrCreate(player);
-//    if (datFile.spectatorTicks > 0) {
-//      int sec = datFile.spectatorTicks / 20;
-//      RenderUtil.drawString(event.getGuiGraphics(), "noClip " + sec, 10, height - 10);
-//    }
   }
 
   @SubscribeEvent
   public void onRenderWorldLast(RenderLevelStageEvent event) {
-    //    if (event.getStage() == Stage.AFTER_TRANSLUCENT_BLOCKS) { // was AFTER_SOLID_BLOCKS
-    //      //      return; //send it
-    //    }
     if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES) { // was AFTER_SOLID_BLOCKS / AFTER_TRANSLUCENT_BLOCKS / AFTER_PARTICLES - testing the very last stage
       return; //send it
     }
@@ -180,7 +170,7 @@ public class OutlineRenderer {
       float scale = 1;
       PoseStack matrix = event.getPoseStack();
       Vec3 view = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-      RenderBlockUtils.renderColourCubes(matrix, view, renderCubes, scale, alpha); // TODO: why do they wiggle
+      RenderBlockUtils.renderColourCubes(matrix, view, renderCubes, scale, alpha);
     }
     /****************** end rendering cubes. start laser beam render ********************/
     stack = LaserItem.getIfHeld(player);

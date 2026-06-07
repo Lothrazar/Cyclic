@@ -515,7 +515,7 @@
 				boost = 0.5
 
 			[cyclic.items.charms.attack_speed]
-				# Boost given by item charm_attackspeed
+				# Boost given by item charm_attack_speed
 				# Default: 0.5
 				# Range: 0.0 ~ 2.0
 				boost = 0.5
@@ -979,6 +979,21 @@
 			# Default: 16
 			# Range: 1 ~ 64
 			radius = 16
+
+		# experience_fountain settings
+		[cyclic.blocks.experience_fountain]
+			# Tick rate.  Spawn one xp orb every this many ticks (20 = 1 second) while powered
+			# Default: 5
+			# Range: 1 ~ 20000
+			ticks = 5
+			# Minimum xp value per spawned orb (inclusive)
+			# Default: 3
+			# Range: 1 ~ 10000
+			xp_min = 3
+			# Maximum xp value per spawned orb (inclusive)
+			# Default: 10
+			# Range: 1 ~ 10000
+			xp_max = 10
 
 		# fisher settings
 		[cyclic.blocks.fisher]

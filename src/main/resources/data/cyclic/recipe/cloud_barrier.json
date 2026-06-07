@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s s",
+    " i ",
+    "s s"
+  ],
+  "key": {
+    "i": {
+      "item": "cyclic:membrane"
+    },
+    "s": {
+      "item": "cyclic:cloud"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "cyclic:cloud_barrier"
+  }
+}

@@ -122,7 +122,7 @@ public class ConfigRegistry {
   private static final String WALL = "####################################################################################";
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
-  public static DoubleValue CHARM_ATTACKSPEED;
+  public static DoubleValue CHARM_ATTACK_SPEED;
   public static BooleanValue OVERRIDE_TRANSPORTER_SINGLETON;
   public static BooleanValue TRANSFER_NODES_DIMENSIONAL;
   public static IntValue SOUND_RADIUS;
@@ -407,7 +407,7 @@ public class ConfigRegistry {
 
     CHARM_LUCK = CFG.comment(" Boost given by item charm_luck").defineInRange("luck.boost", 10, 0, 100);
     CHARM_SPEED = CFG.comment(" Boost given by item charm_speed").defineInRange("speed.boost", 0.5F, 0, 2F);
-    CHARM_ATTACKSPEED = CFG.comment(" Boost given by item charm_attackspeed").defineInRange("attack_speed.boost", 0.5F, 0, 2F);
+    CHARM_ATTACK_SPEED = CFG.comment(" Boost given by item charm_attack_speed").defineInRange("attack_speed.boost", 0.5F, 0, 2F);
     AutoTorchItem.LIGHT_LEVEL = CFG.comment(" Light level limit for placing torches").defineInRange("torch.light_level", 9, 0, 15);
 
     CharmBase.FIREPROT_SECONDS = CFG.comment(" Seconds of Fire Resistance granted by charm_fire / charm_overpowered when on fire")
@@ -596,7 +596,7 @@ public class ConfigRegistry {
     CFG.pop();
     //
     CFG.comment(" experience_fountain settings").push("experience_fountain");
-    TileExperienceFountain.TIMER_FULL = CFG.comment(" Tick rate.  Spawn one xp orb every this many ticks (20 = 1 second) while powered").defineInRange("ticks", 15, 1, 20000);
+    TileExperienceFountain.TIMER_FULL = CFG.comment(" Tick rate.  Spawn one xp orb every this many ticks (20 = 1 second) while powered").defineInRange("ticks", 5, 1, 20000);
     TileExperienceFountain.XP_MIN = CFG.comment(" Minimum xp value per spawned orb (inclusive)").defineInRange("xp_min", 3, 1, 10000);
     TileExperienceFountain.XP_MAX = CFG.comment(" Maximum xp value per spawned orb (inclusive)").defineInRange("xp_max", 10, 1, 10000);
     CFG.pop();

@@ -97,14 +97,14 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class TileRegistry {
 
   public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ModCyclic.MODID);
-  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileFluidHopper>> FLUIDHOPPER = TILES.register("hopper_fluid", () -> BlockEntityType.Builder.of(TileFluidHopper::new, BlockRegistry.FLUIDHOPPER.get()).build(null));
+  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileFluidHopper>> HOPPER_FLUID = TILES.register("hopper_fluid", () -> BlockEntityType.Builder.of(TileFluidHopper::new, BlockRegistry.HOPPER_FLUID.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileSimpleHopper>> HOPPER = TILES.register("hopper", () -> BlockEntityType.Builder.of(TileSimpleHopper::new, BlockRegistry.HOPPER.get()).build(null));
-  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileGoldHopper>> HOPPERGOLD = TILES.register("hopper_gold", () -> BlockEntityType.Builder.of(TileGoldHopper::new, BlockRegistry.HOPPERGOLD.get()).build(null));
+  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileGoldHopper>> HOPPER_GOLD = TILES.register("hopper_gold", () -> BlockEntityType.Builder.of(TileGoldHopper::new, BlockRegistry.HOPPER_GOLD.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileAnvilVoid>> ANVILVOID = TILES.register("anvil_void", () -> BlockEntityType.Builder.of(TileAnvilVoid::new, BlockRegistry.ANVILVOID.get()).build(null));
-  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileFanSlab>> FANSLAB = TILES.register("fan_slab", () -> BlockEntityType.Builder.of(TileFanSlab::new, BlockRegistry.FANSLAB.get()).build(null));
+  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileFanSlab>> FAN_SLAB = TILES.register("fan_slab", () -> BlockEntityType.Builder.of(TileFanSlab::new, BlockRegistry.FAN_SLAB.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileRotator>> ROTATOR = TILES.register("rotator", () -> BlockEntityType.Builder.of(TileRotator::new, BlockRegistry.ROTATOR.get()).build(null));
-  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileMoon>> DETECTORMOON = TILES.register("detector_moon", () -> BlockEntityType.Builder.of(TileMoon::new, BlockRegistry.DETECTORMOON.get()).build(null));
-  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileWeather>> DETECTORWEATHER = TILES.register("detector_weather", () -> BlockEntityType.Builder.of(TileWeather::new, BlockRegistry.DETECTORWEATHER.get()).build(null));
+  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileMoon>> DETECTOR_MOON = TILES.register("detector_moon", () -> BlockEntityType.Builder.of(TileMoon::new, BlockRegistry.DETECTOR_MOON.get()).build(null));
+  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileWeather>> DETECTOR_WEATHER = TILES.register("detector_weather", () -> BlockEntityType.Builder.of(TileWeather::new, BlockRegistry.DETECTOR_WEATHER.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileTerraGlass>> GLASS_TERRA = TILES.register("glass_terra", () -> BlockEntityType.Builder.of(TileTerraGlass::new, BlockRegistry.GLASS_TERRA.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileSprinkler>> SPRINKLER = TILES.register("sprinkler", () -> BlockEntityType.Builder.of(TileSprinkler::new, BlockRegistry.SPRINKLER.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileItemShelf>> SHELF = TILES.register("shelf", () -> BlockEntityType.Builder.of(TileItemShelf::new, BlockRegistry.SHELF.get()).build(null));

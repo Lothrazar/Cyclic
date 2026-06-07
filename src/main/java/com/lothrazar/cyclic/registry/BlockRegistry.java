@@ -197,13 +197,13 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> SPIKES_FIRE = BLOCKS.register("spikes_fire", () -> new SpikesBlock(Block.Properties.of(), EnumSpikeType.FIRE));
   public static final DeferredBlock<Block> SPIKES_CURSE = BLOCKS.register("spikes_curse", () -> new SpikesBlock(Block.Properties.of(), EnumSpikeType.CURSE));
   public static final DeferredBlock<Block> SPIKES_DIAMOND = BLOCKS.register("spikes_diamond", () -> new SpikesDiamond(Block.Properties.of()));
-  public static final DeferredBlock<Block> FLUIDHOPPER = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.of().noOcclusion()));
+  public static final DeferredBlock<Block> HOPPER_FLUID = BLOCKS.register("hopper_fluid", () -> new BlockFluidHopper(Block.Properties.of().noOcclusion()));
   public static final DeferredBlock<Block> HOPPER = BLOCKS.register("hopper", () -> new BlockSimpleHopper(Block.Properties.of().noOcclusion()));
-  public static final DeferredBlock<Block> HOPPERGOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.of().noOcclusion()));
-  public static final DeferredBlock<Block> FANSLAB = BLOCKS.register("fan_slab", () -> new BlockFanSlab(Block.Properties.of().forceSolidOn()));
+  public static final DeferredBlock<Block> HOPPER_GOLD = BLOCKS.register("hopper_gold", () -> new BlockGoldHopper(Block.Properties.of().noOcclusion()));
+  public static final DeferredBlock<Block> FAN_SLAB = BLOCKS.register("fan_slab", () -> new BlockFanSlab(Block.Properties.of().forceSolidOn()));
   public static final DeferredBlock<Block> ROTATOR = BLOCKS.register("rotator", () -> new BlockRotator(Block.Properties.of()));
-  public static final DeferredBlock<Block> DETECTORMOON = BLOCKS.register("detector_moon", () -> new BlockMoon(Block.Properties.of()));
-  public static final DeferredBlock<Block> DETECTORWEATHER = BLOCKS.register("detector_weather", () -> new BlockWeather(Block.Properties.of()));
+  public static final DeferredBlock<Block> DETECTOR_MOON = BLOCKS.register("detector_moon", () -> new BlockMoon(Block.Properties.of()));
+  public static final DeferredBlock<Block> DETECTOR_WEATHER = BLOCKS.register("detector_weather", () -> new BlockWeather(Block.Properties.of()));
   public static final DeferredBlock<Block> GLASS_TERRA = BLOCKS.register("glass_terra", () -> new BlockTerraGlass(Block.Properties.ofFullCopy(Blocks.GLASS)));
   public static final DeferredBlock<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new BlockSprinkler(Block.Properties.of().forceSolidOn()));
   public static final DeferredBlock<Block> SHEARING = BLOCKS.register("shearing", () -> new BlockShearing(Block.Properties.of()));
@@ -269,8 +269,8 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> SOIL = BLOCKS.register("soil", () -> new SoilBlock(Block.Properties.of().sound(SoundType.ROOTED_DIRT)));
   public static final DeferredBlock<Block> CLOUD = BLOCKS.register("cloud", () -> new CloudBlock(Block.Properties.of()));
   public static final DeferredBlock<Block> CLOUD_MEMBRANE = BLOCKS.register("cloud_membrane", () -> new CloudPlayerBlock(Block.Properties.of()));
-  public static final DeferredBlock<Block> GHOST = BLOCKS.register("ghost", () -> new GhostBlock(Block.Properties.of(), false));
-  public static final DeferredBlock<Block> GHOST_PHANTOM = BLOCKS.register("ghost_phantom", () -> new GhostBlock(Block.Properties.of(), true));
+  public static final DeferredBlock<Block> CLOUD_GHOST = BLOCKS.register("cloud_ghost", () -> new GhostBlock(Block.Properties.of(), false));
+  public static final DeferredBlock<Block> CLOUD_BARRIER = BLOCKS.register("cloud_barrier", () -> new GhostBlock(Block.Properties.of(), true));
   public static final DeferredBlock<Block> WORKBENCH = BLOCKS.register("workbench", () -> new BlockWorkbench(Block.Properties.of()));
   public static final DeferredBlock<Block> OBSIDIAN_PRESSURE_PLATE = BLOCKS.register("obsidian_pressure_plate", () -> new PressurePlateMetal(Block.Properties.of().noCollission().strength(0.5F)));
   public static final DeferredBlock<Block> GOLD_BARS = BLOCKS.register("gold_bars", () -> new MetalBarsBlock(Block.Properties.of().strength(3.0F, 6.0F)));
@@ -289,7 +289,7 @@ public class BlockRegistry {
     }
   });
   public static final DeferredBlock<Block> NETHERITE_BARS = BLOCKS.register("netherite_bars", () -> new MetalBarsBlock(Block.Properties.of().strength(6.0F, 12.0F)));
-  public static final DeferredBlock<Block> NETHERTIE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
+  public static final DeferredBlock<Block> NETHERITE_CHAIN = BLOCKS.register("netherite_chain", () -> new ChainBlock(BlockBehaviour.Properties.of().strength(5.0F, 6.0F).sound(SoundType.CHAIN).noOcclusion()));
   public static final DeferredBlock<Block> NETHERITE_LANTERN = BLOCKS.register("netherite_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of().noOcclusion().strength(3.5F).sound(SoundType.LANTERN).lightLevel(p -> 15))); // same as lantern=15
   public static final DeferredBlock<Block> NETHERITE_PRESSURE_PLATE = BLOCKS.register("netherite_pressure_plate", () -> new PressurePlateBlock(BlockSetType.STONE, Block.Properties.of().noCollission().strength(0.5F)));
   public static final DeferredBlock<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of().sound(SoundType.SPORE_BLOSSOM).lightLevel(p -> 2)));

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cyclic:ghost_phantom"
+          "name": "cyclic:cloud_ghost"
         }
       ],
       "conditions": [

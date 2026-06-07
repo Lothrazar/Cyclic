@@ -1,20 +1,36 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "cmc",
-    "mcm",
-    "cmc"
-  ],
-  "key": {
-    "m": {
-      "item": "cyclic:membrane"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cyclic:cloud"
     },
-    "c": {
+    {
+      "item": "cyclic:cloud"
+    },
+    {
+      "item": "cyclic:cloud"
+    },
+    {
+      "item": "cyclic:cloud"
+    },
+    {
+      "item": "cyclic:cloud"
+    },
+    {
+      "item": "cyclic:cloud"
+    },
+    {
+      "item": "cyclic:cloud"
+    },
+    {
+      "item": "cyclic:cloud"
+    },
+    {
       "item": "cyclic:cloud"
     }
-  },
+  ],
   "result": {
-    "count": 4,
-    "id": "cyclic:cloud_membrane"
+    "id": "cyclic:cloud_membrane",
+    "count": 4
   }
 }

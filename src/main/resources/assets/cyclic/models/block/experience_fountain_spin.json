@@ -1,0 +1,6 @@
+{
+	"parent": "cyclic:block/sprinkler_spin",
+	"textures": {
+		"1": "cyclic:block/machine/green"
+	}
+}

@@ -142,7 +142,7 @@ public class ItemEventHandler {
           // shieldType.onKnockback(event); // removed
         }
       }
-      ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_KNOCKBACK_RESIST.get());
+      ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_KNOCKBACK_RESISTANCE.get());
       if (!find.isEmpty()) {
         event.setCanceled(true);
         ItemStackUtil.damageItem(ply, find);
@@ -259,7 +259,7 @@ public class ItemEventHandler {
         this.damageFinder(event, player, ItemRegistry.CHARM_STONE.get(), 0);
       }
       else if (src.is(DamageTypes.MAGIC) || src.is(DamageTypes.DRAGON_BREATH)) {
-        this.damageFinder(event, player, ItemRegistry.CHARM_MAGICDEF.get(), 0.5F);
+        this.damageFinder(event, player, ItemRegistry.CHARM_MAGICDEFENSE.get(), 0.5F);
       }
       else if (src.is(DamageTypes.STARVE)) {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_STARVATION.get(), 0)) {
@@ -345,7 +345,7 @@ public class ItemEventHandler {
   @SubscribeEvent
   public void onXpPickup(PlayerXpEvent.PickupXp event) {
     Player player = event.getEntity();
-    ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XPSTOPPER.get());
+    ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XP_BLOCKER.get());
     if (!charmStack.isEmpty()) {
       event.setCanceled(true);
     }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block.expfountain;
 
+import com.lothrazar.cyclic.render.SpinModelRenderer;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.render.type.FluidTankRenderType;
@@ -19,6 +20,11 @@ public class RenderExperienceFountain implements BlockEntityRenderer<TileExperie
   @Override
   public void render(TileExperienceFountain tankHere, float v, PoseStack matrix,
       MultiBufferSource renderer, int light, int overlayLight) {
+    float angle = 0F;
+    if (tankHere.getLevel() != null && tankHere.getLevel().hasNeighborSignal(tankHere.getBlockPos())) {
+      angle = ((tankHere.getLevel().getGameTime() % 60L) + v) * 6F;
+    }
+    SpinModelRenderer.render(SpinModelRenderer.FOUNTAIN_SPIN, angle, matrix, renderer, light, overlayLight);
     IFluidHandler handler = CapabilityUtil.fluid(tankHere.getLevel(), tankHere.getBlockPos());
     if (handler == null || handler.getFluidInTank(0) == null) {
       return;
