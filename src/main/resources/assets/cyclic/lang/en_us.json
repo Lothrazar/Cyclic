@@ -1,4 +1,4 @@
-{
+﻿{
   "_comments": "Thanks to https://tterrag.com/lang2json/",
   "itemGroup.cyclic": "Cyclic",
   "curios.identifier.quiver": "Quiver",
@@ -116,8 +116,11 @@
   "block.cyclic.trash.tooltip": "Deletes all items and fluids piped into it",
   "block.cyclic.trash.guide": "Deletes all items and fluids piped into it.",
   "block.cyclic.trash.guide0": "Warning! There's no undo button. Once the item's gone, it's gone.",
+  "block.cyclic.experience_fountain": "Experience Fountain",
+  "block.cyclic.experience_fountain.tooltip": "Spews experience orbs when powered by redstone, draining stored Fluid Experience",
+  "block.cyclic.experience_fountain.guide": "Fill the internal tank with Fluid Experience (using a bucket or fluid pipes).  While receiving a redstone signal, it will periodically spawn experience orbs in the 3x3 area above the block, consuming fluid to do so.",
   "block.cyclic.experience_pylon": "Experience Pylon",
-  "block.cyclic.experience_pylon.tooltip": "Collects XP from nearby orbs and players that crouch on it",
+  "block.cyclic.experience_pylon.tooltip": "Collects XP from nearby orbs and players that crouch on it.  Glass Bottles will extract the experience and create a Bottle o' Enchanting",
   "block.cyclic.experience_pylon.guide": "Use a bottle or empty hand to extract experience.  The Experience Pylon automatically collects nearby experience orbs and stores them as Fluid Experience in its internal buffer. Fluid Experience can be pumped into and out of the pylon.",
   "button.exp_pylon.collect.tooltip":"Toggle collecting experience orb entities in the world nearby (does not affect players who can still insert and withdraw xp directly while crouching)",
   "button.exp_pylon.collect0":"Idle",

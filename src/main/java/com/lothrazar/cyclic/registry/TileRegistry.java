@@ -73,6 +73,7 @@ import com.lothrazar.cyclic.block.soundrecord.TileSoundRecorder;
 import com.lothrazar.cyclic.block.spawntriggers.TileAltar;
 import com.lothrazar.cyclic.block.spawntriggers.TilePeace;
 import com.lothrazar.cyclic.block.spikes.TileDiamondSpikes;
+import com.lothrazar.cyclic.block.expfountain.TileExperienceFountain;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.tank.TileTank;
 import com.lothrazar.cyclic.block.tankcask.TileCask;
@@ -156,6 +157,7 @@ public class TileRegistry {
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileItemCollector>> COLLECTOR = TILES.register("collector", () -> BlockEntityType.Builder.of(TileItemCollector::new, BlockRegistry.COLLECTOR.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileFan>> FAN = TILES.register("fan", () -> BlockEntityType.Builder.of(TileFan::new, BlockRegistry.FAN.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileExpPylon>> EXPERIENCE_PYLON = TILES.register("experience_pylon", () -> BlockEntityType.Builder.of(TileExpPylon::new, BlockRegistry.EXPERIENCE_PYLON.get()).build(null));
+  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileExperienceFountain>> EXPERIENCE_FOUNTAIN = TILES.register("experience_fountain", () -> BlockEntityType.Builder.of(TileExperienceFountain::new, BlockRegistry.EXPERIENCE_FOUNTAIN.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileTrash>> TRASH = TILES.register("trash", () -> BlockEntityType.Builder.of(TileTrash::new, BlockRegistry.TRASH.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TileInsertingMagnet>> MAGNET = TILES.register("magnet", () -> BlockEntityType.Builder.of(TileInsertingMagnet::new, BlockRegistry.MAGNET_BLOCK.get()).build(null));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TilePeatFarm>> PEAT_FARM = TILES.register("peat_farm", () -> BlockEntityType.Builder.of(TilePeatFarm::new, BlockRegistry.PEAT_FARM.get()).build(null));

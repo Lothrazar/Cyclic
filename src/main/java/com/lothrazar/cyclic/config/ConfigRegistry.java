@@ -43,6 +43,7 @@ import com.lothrazar.cyclic.block.peatfarm.TilePeatFarm;
 import com.lothrazar.cyclic.block.shapebuilder.TileStructure;
 import com.lothrazar.cyclic.block.spawntriggers.BlockAltarNoTraders;
 import com.lothrazar.cyclic.block.spawntriggers.CandlePeaceBlock;
+import com.lothrazar.cyclic.block.expfountain.TileExperienceFountain;
 import com.lothrazar.cyclic.block.sprinkler.TileSprinkler;
 import com.lothrazar.cyclic.block.terraglass.TileTerraGlass;
 import com.lothrazar.cyclic.block.terrasoil.TileTerraPreta;
@@ -592,6 +593,12 @@ public class ConfigRegistry {
     //
     CFG.comment(" experience_pylon settings").push("experience_pylon");
     TileExpPylon.RADIUS = CFG.comment(" Radius to pickup xp orbs").defineInRange("radius", 16, 1, 64);
+    CFG.pop();
+    //
+    CFG.comment(" experience_fountain settings").push("experience_fountain");
+    TileExperienceFountain.TIMER_FULL = CFG.comment(" Tick rate.  Spawn one xp orb every this many ticks (20 = 1 second) while powered").defineInRange("ticks", 15, 1, 20000);
+    TileExperienceFountain.XP_MIN = CFG.comment(" Minimum xp value per spawned orb (inclusive)").defineInRange("xp_min", 3, 1, 10000);
+    TileExperienceFountain.XP_MAX = CFG.comment(" Maximum xp value per spawned orb (inclusive)").defineInRange("xp_max", 10, 1, 10000);
     CFG.pop();
     //
     CFG.comment(" fisher settings").push("fisher");

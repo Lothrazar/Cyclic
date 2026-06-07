@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " d ",
+    "dbd",
+    " d "
+  ],
+  "key": {
+    "d": {
+      "tag": "c:nuggets/copper"
+    },
+    "b": {
+      "item": "cyclic:sprinkler"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:experience_fountain"
+  }
+}

@@ -41,6 +41,7 @@ import com.lothrazar.cyclic.block.screen.RenderScreentext;
 import com.lothrazar.cyclic.block.shapebuilder.RenderStructure;
 import com.lothrazar.cyclic.block.shapedata.RenderShapedata;
 import com.lothrazar.cyclic.block.solidifier.RenderSolidifier;
+import com.lothrazar.cyclic.block.expfountain.RenderExperienceFountain;
 import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
@@ -180,6 +181,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.SOLIDIFIER.get(), RenderSolidifier::new);
     event.registerBlockEntityRenderer(TileRegistry.SOUNDPROOFING_GHOST.get(), SoundmuffRenderFacade::new);
     event.registerBlockEntityRenderer(TileRegistry.SPRINKLER.get(), RenderSprinkler::new);
+    event.registerBlockEntityRenderer(TileRegistry.EXPERIENCE_FOUNTAIN.get(), RenderExperienceFountain::new);
     event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
     event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);

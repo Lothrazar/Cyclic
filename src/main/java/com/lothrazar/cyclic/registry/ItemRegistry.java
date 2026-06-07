@@ -556,6 +556,7 @@ public static final DeferredItem<Item> SHEARING = ITEMS.register("shearing", () 
   public static final DeferredItem<Item> ENDER_SHELF = ITEMS.register("ender_shelf", () -> new BlockItem(BlockRegistry.ENDER_SHELF.get(), new Item.Properties()));
   public static final DeferredItem<Item> ENDER_CONTROLLER = ITEMS.register("ender_controller", () -> new BlockItem(BlockRegistry.ENDER_CONTROLLER.get(), new Item.Properties()));
   public static final DeferredItem<Item> EXPERIENCE_PYLON = ITEMS.register("experience_pylon", () -> new ItemBlockPylon(BlockRegistry.EXPERIENCE_PYLON.get(), new Item.Properties()));
+  public static final DeferredItem<Item> EXPERIENCE_FOUNTAIN = ITEMS.register("experience_fountain", () -> new BlockItem(BlockRegistry.EXPERIENCE_FOUNTAIN.get(), new Item.Properties()));
   public static final DeferredItem<Item> EXPERIENCE_FOOD = ITEMS.register("experience_food", () -> new ExpItemGain(new Item.Properties()));
   public static final DeferredItem<Item> SCAFFOLD_REPLACE = ITEMS.register("scaffold_replace", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_REPLACE.get(), new Item.Properties()));
   public static final DeferredItem<Item> SCAFFOLD_FRAGILE = ITEMS.register("scaffold_fragile", () -> new ItemScaffolding(BlockRegistry.SCAFFOLD_FRAGILE.get(), new Item.Properties()));
