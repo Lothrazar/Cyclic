@@ -354,7 +354,7 @@ public class ClientRegistryCyclic {
         //pull the colours from the egg
         for (SpawnEggItem spawneggitem : SpawnEggItem.eggs()) {
           if (spawneggitem.getType(spawneggitem.getDefaultInstance()) == thing) {
-            return spawneggitem.getColor(tintIndex - 1);
+            return 0xFF000000 | spawneggitem.getColor(tintIndex - 1);
           }
         }
       }
