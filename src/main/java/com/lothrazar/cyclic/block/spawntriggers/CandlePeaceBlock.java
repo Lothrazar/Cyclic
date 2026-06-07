@@ -48,7 +48,7 @@ public class CandlePeaceBlock extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.PEACE_CANDLE.get(), world.isClientSide ? TilePeace::clientTick : TilePeace::serverTick);
+    return createTickerHelper(type, TileRegistry.CANDLE_PEACE.get(), world.isClientSide ? TilePeace::clientTick : TilePeace::serverTick);
   }
 
   @Override

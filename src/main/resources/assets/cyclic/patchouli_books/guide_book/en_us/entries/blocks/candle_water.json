@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.candle_water",
+  "icon": "cyclic:candle_water",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.candle_water.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:candle_water",
+      "text": "block.cyclic.candle_water.guide0"
+    }
+  ]
+}

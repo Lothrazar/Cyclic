@@ -13,8 +13,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -58,17 +60,22 @@ public class FireEntity extends ThrowableItemProjectile {
     }
     else if (type == HitResult.Type.BLOCK) {
       BlockHitResult ray = (BlockHitResult) result;
-      if (ray.getBlockPos() == null) {
-        return;
+      //  set fire in the area here, small radius randomized, similar to lightning strike or tnt
+      var level = this.level();
+      if (!level.isClientSide && ray.getBlockPos() != null) {
+        final int radius = 2;
+        final BlockPos center = ray.getBlockPos().relative(ray.getDirection());
+        final int attempts = Mth.nextInt(level.random, 3, 6); //range similar to lightning default
+        for (int i = 0; i < attempts; i++) {
+          BlockPos firePos = center.offset(
+              Mth.nextInt(level.random, -radius, radius),
+              Mth.nextInt(level.random, -1, 1),
+              Mth.nextInt(level.random, -radius, radius));
+          if (level.isEmptyBlock(firePos) && BaseFireBlock.canBePlacedAt(level, firePos, ray.getDirection())) {
+            level.setBlockAndUpdate(firePos, BaseFireBlock.getState(level, firePos));
+          }
+        }
       }
-      //      BlockPos pos = ray.getPos();//.offset(ray.getFace());
-      //      Block blockHere = world.getBlockState(pos).getBlock();
-      //      if (blockHere == Blocks.SNOW
-      //          || blockHere == Blocks.SNOW_BLOCK
-      //          || blockHere == Blocks.SNOW
-      //          || blockHere == Blocks.ICE) {
-      //        this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
-      //      }
     }
     this.remove(RemovalReason.DISCARDED);
   }

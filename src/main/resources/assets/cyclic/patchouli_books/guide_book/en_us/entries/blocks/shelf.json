@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.shelf",
+  "icon": "cyclic:shelf",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.shelf.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shelf"
+    }
+  ]
+}

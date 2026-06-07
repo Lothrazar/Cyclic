@@ -1,0 +1,13 @@
+{
+    "parent": "minecraft:block/cube",
+    "render_type": "translucent",
+    "textures": {
+        "particle": "cyclic:block/glass_terra_on",
+        "down": "cyclic:block/glass_terra_on",
+        "up": "cyclic:block/glass_terra_on",
+        "north": "cyclic:block/glass_terra_on",
+        "south": "cyclic:block/glass_terra_on",
+        "west": "cyclic:block/glass_terra_on",
+        "east": "cyclic:block/glass_terra_on"
+    }
+}

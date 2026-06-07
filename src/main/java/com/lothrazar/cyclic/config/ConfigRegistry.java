@@ -480,14 +480,14 @@ public class ConfigRegistry {
         .define("wireless_transfer_dimensional", true);
 
      TileAntiBeacon.RADIUS = CFG.comment(" Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). ")
-         .defineInRange("anti_beacon.radius", 16, 1, 128);
+         .defineInRange("beacon_sponge.radius", 16, 1, 128);
      TileAntiBeacon.TICKS = CFG.comment(" Ticks to fire anti beacon and remove effects from entities (20 = 1 second).  Does not affect potion immunity which applies regardless of ticks. This only used if you gain a potion effect out of range and then walk into range, so keep this large.")
-         .defineInRange("anti_beacon.ticks", 200, 20, 9999);
+         .defineInRange("beacon_sponge.ticks", 200, 20, 9999);
 
      TileAntiBeacon.POTIONS = CFG.comment(" List of extra effects to clear. Any effect marked harmfil, or in this list, will be cured. Supports exact ids (e.g. 'minecraft:poison'),"
          + " namespace wildcards (e.g. cyclic:*, minecraft:trial_omen, minecraft:glowing)."
          + "  ")
-         .defineList("anti_beacon.potion_list", Arrays.asList("cyclic:gravity"), it -> it instanceof String);
+         .defineList("beacon_sponge.potion_list", Arrays.asList("cyclic:gravity"), it -> it instanceof String);
     TileCableFluid.BUFFERSIZE = CFG.comment(" How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);
     TileCableFluid.TRANSFER_RATE = CFG.comment(" How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode")
@@ -508,15 +508,15 @@ public class ConfigRegistry {
     BlockGeneratorSolar.TIMEOUT = CFG.comment(" Ticks between power gen interval. Example: 40 ticks is 2 seconds. 0 means every tick it generates")
         .defineInRange("generator_solar.ticks", 60, 0, Integer.MAX_VALUE);
     LavaSpongeBlock.RADIUS = CFG.comment(" Reach of the sponge").defineInRange("sponge_lava.radius", 8, 1, 64);
-    CandlePeaceBlock.HEIGHT = CFG.comment(" Height reach of the candle for spawn prevention").defineInRange("peace_candle.height", 4, 0, 512);
-    CandlePeaceBlock.RADIUS = CFG.comment(" Reach of the candle for spawn prevention").defineInRange("peace_candle.radius", 32, 0, 64);
+    CandlePeaceBlock.HEIGHT = CFG.comment(" Height reach of the candle for spawn prevention").defineInRange("candle_peace.height", 4, 0, 512);
+    CandlePeaceBlock.RADIUS = CFG.comment(" Reach of the candle for spawn prevention").defineInRange("candle_peace.radius", 32, 0, 64);
     BlockDestruction.HEIGHT = CFG.comment(" Height for explosion prevention").defineInRange("altar_destruction.height", 8, 1, 512);
     BlockDestruction.RADIUS = CFG.comment(" Reach for explosion prevention").defineInRange("altar_destruction.radius", 32, 1, 128);
     BlockMagnetPanel.RADIUS = CFG.comment(" Reach for magnet distance to find items").defineInRange("magnet_block.radius", 16, 1, 128);
-    BlockAltarNoTraders.HEIGHT = CFG.comment(" Height reach of the no_soliciting for spawn prevention").defineInRange("no_soliciting.height", 4, 0, 512);
-    BlockAltarNoTraders.RADIUS = CFG.comment(" Reach of the no_soliciting for spawn prevention").defineInRange("no_soliciting.radius", 32, 0, 64);
-    CandleWaterBlock.RADIUS = CFG.comment(" Reach of the candle").defineInRange("water_candle.radius", 8, 1, 64);
-    CandleWaterBlock.TICK_RATE = CFG.comment(" Tick rate of the candle").defineInRange("water_candle.tick_rate", 60, 1, Integer.MAX_VALUE);
+    BlockAltarNoTraders.HEIGHT = CFG.comment(" Height reach of the altar_soliciting for spawn prevention").defineInRange("altar_soliciting.height", 4, 0, 512);
+    BlockAltarNoTraders.RADIUS = CFG.comment(" Reach of the altar_soliciting for spawn prevention").defineInRange("altar_soliciting.radius", 32, 0, 64);
+    CandleWaterBlock.RADIUS = CFG.comment(" Reach of the candle").defineInRange("candle_water.radius", 8, 1, 64);
+    CandleWaterBlock.TICK_RATE = CFG.comment(" Tick rate of the candle").defineInRange("candle_water.tick_rate", 60, 1, Integer.MAX_VALUE);
     TilePackager.POWERCONF = CFG.comment(" Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, Integer.MAX_VALUE);
     TileUser.POWERCONF = CFG.comment(" Power per use user").defineInRange("user.energy_cost", 0, 0, Integer.MAX_VALUE);
     TileAnvilAuto.POWERCONF = CFG.comment(" Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, Integer.MAX_VALUE);
@@ -565,7 +565,7 @@ public class ConfigRegistry {
     TileTerraPreta.CHANCE = CFG.comment(" Chance that the crop will grow after the interval").defineInRange("growth_chance", 0.5, 0, 1);
     TileTerraPreta.HEIGHT = CFG.comment(" growth height above the soil").defineInRange("height", 8, 2, 32);
     CFG.pop(); // terra_preta
-    CFG.comment(" terra_glass settings").push("terra_glass");
+    CFG.comment(" glass_terra settings").push("glass_terra");
     TileTerraGlass.TIMER_FULL = CFG.comment(" ticks between growth cycles").defineInRange("timer", 100, 1, 10000);
     TileTerraGlass.HEIGHT = CFG.comment(" growth height below the glass").defineInRange("height", 8, 0, 32);
     CFG.pop(); // terra_preta

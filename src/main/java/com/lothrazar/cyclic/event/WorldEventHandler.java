@@ -45,8 +45,8 @@ public class WorldEventHandler {
       if (radius > 0
           && height > 0
           && CandlePeaceBlock.isBad(mob, res)
-          && ServerCacheHolder.PEACE_CANDLE.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
-      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.PEACE_CANDLE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), radius, height)
+          && ServerCacheHolder.CANDLE_PEACE.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
+      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.CANDLE_PEACE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), radius, height)
       ) {
         //default range 32 and filtered
         ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by CacheCandle " + mob.getType());
@@ -58,8 +58,8 @@ public class WorldEventHandler {
       if (radius > 0
           && height > 0
           && BlockAltarNoTraders.isSpawnDenied(mob, res)
-          && ServerCacheHolder.NO_SOLICITING.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
-      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.NO_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
+          && ServerCacheHolder.ALTAR_SOLICITING.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
+      //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.ALTAR_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
       ) {
         ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by cache-altar " + mob.getType());
         event.setSpawnCancelled(true);

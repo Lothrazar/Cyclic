@@ -8,7 +8,7 @@ import com.lothrazar.library.data.LivingTileCache;
 public class ServerCacheHolder {
 
   // @TilePeace.java and @BlockSpawnEvents.java
-  public static LivingTileCache PEACE_CANDLE = new LivingTileCache("PEACE");
+  public static LivingTileCache CANDLE_PEACE = new LivingTileCache("PEACE");
   // @TileAltar.java and @BlockSpawnEvents.java
-  public static LivingTileCache NO_SOLICITING = new LivingTileCache("NOS");
+  public static LivingTileCache ALTAR_SOLICITING = new LivingTileCache("NOS");
 }

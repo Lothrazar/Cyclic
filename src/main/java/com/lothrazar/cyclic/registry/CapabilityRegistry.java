@@ -136,6 +136,6 @@ public class CapabilityRegistry {
             ItemRegistry.CRATE.get());
         event.registerItem(Capabilities.ItemHandler.ITEM,
             (stack, ctx) -> new ItemInventoryCap(stack, EnderShelfItemHandler.ROWS),
-            ItemRegistry.ENDER_ITEM_SHELF.get());
+            ItemRegistry.SHELF.get());
     }
 }

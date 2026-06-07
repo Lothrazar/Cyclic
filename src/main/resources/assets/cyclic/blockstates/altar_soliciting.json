@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/altar_soliciting" },
+        "lit=true": { "model": "cyclic:block/altar_soliciting_on" }
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.beacon_sponge",
+  "icon": "cyclic:beacon_sponge",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.beacon_sponge.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:beacon_sponge"
+    }
+  ]
+}

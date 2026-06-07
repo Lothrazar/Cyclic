@@ -59,6 +59,7 @@ public class MaterialRegistry {
         (ArmorMaterials.DIAMOND.value().knockbackResistance() + ArmorMaterials.NETHERITE.value().knockbackResistance()) / 2.0F
     ));
 
+    // durability multipliers below mirror vanilla tiers: leather=5, gold=7, iron/chain=15, diamond=33, netherite=37
     public static final Holder<ArmorMaterial> COPPER = ARMOR_MATERIALS.register("copper", () -> new ArmorMaterial(
         Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
             map.put(ArmorItem.Type.BOOTS, 2);

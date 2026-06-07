@@ -20,7 +20,7 @@ public class TileItemShelf extends TileBlockEntityCyclic {
   public RenderTextType renderStyle = RenderTextType.STACK;
 
   public TileItemShelf(BlockPos pos, BlockState state) {
-    super(TileRegistry.ENDER_ITEM_SHELF.get(), pos, state);
+    super(TileRegistry.SHELF.get(), pos, state);
   }
 
   //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileItemShelf e) {

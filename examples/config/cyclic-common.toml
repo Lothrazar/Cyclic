@@ -646,7 +646,7 @@
 				# Allow cables to have blocks placed in them as facades (sneak-left-click to set; use empty hand to remove).  Set to false to disable facades
 				enabled = true
 
-		[cyclic.blocks.anti_beacon]
+		[cyclic.blocks.beacon_sponge]
 			# Radius to protect players and entities from potion effects being applied (used by both sponge and artemisbeacon). 
 			# Default: 16
 			# Range: 1 ~ 128
@@ -710,7 +710,7 @@
 			# Range: 1 ~ 64
 			radius = 8
 
-		[cyclic.blocks.peace_candle]
+		[cyclic.blocks.candle_peace]
 			# Height reach of the candle for spawn prevention
 			# Default: 4
 			# Range: 0 ~ 512
@@ -736,17 +736,17 @@
 			# Range: 1 ~ 128
 			radius = 16
 
-		[cyclic.blocks.no_soliciting]
-			# Height reach of the no_soliciting for spawn prevention
+		[cyclic.blocks.altar_soliciting]
+			# Height reach of the altar_soliciting for spawn prevention
 			# Default: 4
 			# Range: 0 ~ 512
 			height = 4
-			# Reach of the no_soliciting for spawn prevention
+			# Reach of the altar_soliciting for spawn prevention
 			# Default: 32
 			# Range: 0 ~ 64
 			radius = 32
 
-		[cyclic.blocks.water_candle]
+		[cyclic.blocks.candle_water]
 			# Reach of the candle
 			# Default: 8
 			# Range: 1 ~ 64
@@ -925,8 +925,8 @@
 			# Range: 2 ~ 32
 			height = 8
 
-		# terra_glass settings
-		[cyclic.blocks.terra_glass]
+		# glass_terra settings
+		[cyclic.blocks.glass_terra]
 			# ticks between growth cycles
 			# Default: 100
 			# Range: 1 ~ 10000

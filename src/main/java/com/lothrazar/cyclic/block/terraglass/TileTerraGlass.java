@@ -17,7 +17,7 @@ public class TileTerraGlass extends TileBlockEntityCyclic {
   public static ModConfigSpec.IntValue HEIGHT;
 
   public TileTerraGlass(BlockPos pos, BlockState state) {
-    super(TileRegistry.TERRA_GLASS.get(), pos, state);
+    super(TileRegistry.GLASS_TERRA.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTerraGlass e) {

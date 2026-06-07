@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class TileAltar extends TileBlockEntityCyclic {
 
   public TileAltar(BlockPos pos, BlockState state) {
-    super(TileRegistry.NO_SOLICITING.get(), pos, state);
+    super(TileRegistry.ALTAR_SOLICITING.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileAltar tile) {
@@ -25,10 +25,10 @@ public class TileAltar extends TileBlockEntityCyclic {
 
   private static void pingCache(Level level, BlockPos blockPos, BlockState blockState) {
     if (blockState.getValue(BlockCyclic.LIT)) {
-      ServerCacheHolder.NO_SOLICITING.load(level, blockPos);
+      ServerCacheHolder.ALTAR_SOLICITING.load(level, blockPos);
     }
     else {
-      ServerCacheHolder.NO_SOLICITING.unload(level, blockPos);
+      ServerCacheHolder.ALTAR_SOLICITING.unload(level, blockPos);
     }
   }
 
@@ -40,13 +40,13 @@ public class TileAltar extends TileBlockEntityCyclic {
   public void onLoad() {
     super.onLoad();
     if (getBlockState().getValue(BlockCyclic.LIT)) {
-      ServerCacheHolder.NO_SOLICITING.load(getLevel(), getBlockPos());
+      ServerCacheHolder.ALTAR_SOLICITING.load(getLevel(), getBlockPos());
     }
   }
 
   @Override
   public void setRemoved() {
-    ServerCacheHolder.NO_SOLICITING.unload(getLevel(), getBlockPos());
+    ServerCacheHolder.ALTAR_SOLICITING.unload(getLevel(), getBlockPos());
     super.setRemoved();
   }
 

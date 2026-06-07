@@ -19,7 +19,7 @@ public class TileAntiBeacon extends TileBlockEntityCyclic implements BeamHolder 
   private final BeamStuff beamStuff = new BeamStuff();
 
   public TileAntiBeacon(BlockPos pos, BlockState state) {
-    super(TileRegistry.ANTI_BEACON.get(), pos, state);
+    super(TileRegistry.BEACON_SPONGE.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileAntiBeacon tile) {

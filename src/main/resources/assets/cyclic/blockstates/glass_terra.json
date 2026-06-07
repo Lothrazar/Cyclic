@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/glass_terra" },
+        "lit=true": { "model": "cyclic:block/glass_terra_on" }
+    }
+}

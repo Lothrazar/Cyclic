@@ -207,12 +207,12 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> ROTATOR = BLOCKS.register("rotator", () -> new BlockRotator(Block.Properties.of()));
   public static final DeferredBlock<Block> DETECTORMOON = BLOCKS.register("detector_moon", () -> new BlockMoon(Block.Properties.of()));
   public static final DeferredBlock<Block> DETECTORWEATHER = BLOCKS.register("detector_weather", () -> new BlockWeather(Block.Properties.of()));
-  public static final DeferredBlock<Block> TERRAGLASS = BLOCKS.register("terra_glass", () -> new BlockTerraGlass(Block.Properties.ofFullCopy(Blocks.GLASS)));
+  public static final DeferredBlock<Block> GLASS_TERRA = BLOCKS.register("glass_terra", () -> new BlockTerraGlass(Block.Properties.ofFullCopy(Blocks.GLASS)));
   public static final DeferredBlock<Block> SPRINKLER = BLOCKS.register("sprinkler", () -> new BlockSprinkler(Block.Properties.of().forceSolidOn()));
   public static final DeferredBlock<Block> SHEARING = BLOCKS.register("shearing", () -> new BlockShearing(Block.Properties.of()));
   public static final DeferredBlock<Block> GLASS_DARK_CONNECTED = BLOCKS.register("glass_dark_connected", () -> new DarkGlassConnectedBlock(Block.Properties.of()));
   public static final DeferredBlock<Block> GLASS_CONNECTED = BLOCKS.register("glass_connected", () -> new GlassConnectedBlock(Block.Properties.of().sound(SoundType.GLASS).strength(0.3F)));
-  public static final DeferredBlock<Block> ENDER_ITEM_SHELF = BLOCKS.register("ender_item_shelf", () -> new BlockItemShelf(Block.Properties.of()));
+  public static final DeferredBlock<Block> SHELF = BLOCKS.register("shelf", () -> new BlockItemShelf(Block.Properties.of()));
   public static final DeferredBlock<Block> DOORBELL = BLOCKS.register("doorbell", () -> new DoorbellButton(Block.Properties.of()));
   public static final DeferredBlock<Block> WIRELESS_ENERGY = BLOCKS.register("wireless_energy", () -> new BlockWirelessEnergy(Block.Properties.of().forceSolidOn()));
   public static final DeferredBlock<Block> WIRELESS_ITEM = BLOCKS.register("wireless_item", () -> new BlockWirelessItem(Block.Properties.of().forceSolidOn()));
@@ -298,9 +298,9 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> SPONGE_LAVA = BLOCKS.register("sponge_lava", () -> new LavaSpongeBlock(Block.Properties.of().sound(SoundType.SPORE_BLOSSOM).lightLevel(p -> 2)));
   public static final DeferredBlock<Block> SPONGE_MILK = BLOCKS.register("sponge_milk", () -> new MilkSpongeBlock(Block.Properties.of().lightLevel(p -> 1)));
   public static final DeferredBlock<Block> CRUSHER = BLOCKS.register("crusher", () -> new BlockCrusher(Block.Properties.of()));
-  public static final DeferredBlock<Block> PEACE_CANDLE = BLOCKS.register("peace_candle", () -> new CandlePeaceBlock(Block.Properties.of()
+  public static final DeferredBlock<Block> CANDLE_PEACE = BLOCKS.register("candle_peace", () -> new CandlePeaceBlock(Block.Properties.of()
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 6 : 0)));
-  public static final DeferredBlock<Block> WATER_CANDLE = BLOCKS.register("water_candle", () -> new CandleWaterBlock(Block.Properties.of()
+  public static final DeferredBlock<Block> CANDLE_WATER = BLOCKS.register("candle_water", () -> new CandleWaterBlock(Block.Properties.of()
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 1 : 0)));
   public static final DeferredBlock<Block> TELEPORT = BLOCKS.register("teleport", () -> new BlockTeleport(Block.Properties.of().forceSolidOn()));
   public static final DeferredBlock<Block> APPLE_SPROUT_EMERALD = BLOCKS.register("apple_sprout_emerald", () -> new AppleCropBlock(Block.Properties.of(), false));
@@ -342,7 +342,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> ANVILVOID = BLOCKS.register("anvil_void", () -> new BlockAnvilVoid(Block.Properties.of()));
   public static final DeferredBlock<Block> BEACON = BLOCKS.register("beacon", () -> new BlockPotion(Block.Properties.of()));
   public static final DeferredBlock<Block> BEACON_REDSTONE = BLOCKS.register("beacon_redstone", () -> new BlockBeaconRedstone(Block.Properties.of().lightLevel(p -> 4)));
-  public static final DeferredBlock<BlockAntiBeacon> ANTI_BEACON = BLOCKS.register("anti_beacon", () -> new BlockAntiBeacon(Block.Properties.of().lightLevel(p -> 2)));
+  public static final DeferredBlock<BlockAntiBeacon> BEACON_SPONGE = BLOCKS.register("beacon_sponge", () -> new BlockAntiBeacon(Block.Properties.of().lightLevel(p -> 2)));
   public static final DeferredBlock<Block> SOUNDPROOFING_GHOST = BLOCKS.register("soundproofing_ghost", () -> new SoundmufflerBlockFacade(Block.Properties.of()));
   public static final DeferredBlock<Block> SOUNDPROOFING = BLOCKS.register("soundproofing", () -> new SoundmufflerBlock(Block.Properties.of()));
   public static final DeferredBlock<Block> CLOCK = BLOCKS.register("clock", () -> new BlockRedstoneClock(Block.Properties.of()));
@@ -374,7 +374,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> BUTTON_BLACKSTONE = BLOCKS.register("button_blackstone", () -> new ButtonBlockMat(Block.Properties.of(), 20, true, 8));
   public static final DeferredBlock<Block> BATTERY_CLAY = BLOCKS.register("battery_clay", () -> new ClayBattery(Block.Properties.of()));// NOGUI
   public static final DeferredBlock<Block> GENERATOR_SOLAR = BLOCKS.register("generator_solar", () -> new BlockGeneratorSolar(Block.Properties.of().forceSolidOn())); // NOGUI
-  public static final DeferredBlock<Block> NO_SOLICITING = BLOCKS.register("no_soliciting", () -> new BlockAltarNoTraders(Block.Properties.of()
+  public static final DeferredBlock<Block> ALTAR_SOLICITING = BLOCKS.register("altar_soliciting", () -> new BlockAltarNoTraders(Block.Properties.of()
       .lightLevel(p -> p.getValue(BlockCyclic.LIT) ? 3 : 0).forceSolidOn()));
   public static final DeferredBlock<Block> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockDestruction(Block.Properties.of()));
   public static final DeferredBlock<Block> WAXED_REDSTONE = BLOCKS.register("waxed_redstone", () -> new BlockWaxedRedstone(Block.Properties.of())); // , MaterialColor.FIRE

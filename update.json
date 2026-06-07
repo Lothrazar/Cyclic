@@ -199,7 +199,7 @@
 
 	},
 	"1.21.1": {
-		"1.14.0": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2.  New magical carrots added.  Some fluid textures are now animated.  Removed item 'inventory_cake'.  Biomass color changed to green ish instead of brown.  Build scepters now need to be charged with Energy to use.  Some recipes use copper nuggets instead of gold nuggets.  Add copper armor. "
+		"1.14.0": "Ported to mc1.21.1.  Mod now adds only 1 creative tab instead of 2.  New magical carrots added.  Some fluid textures are now animated.  Removed item 'inventory_cake'.  Biomass color changed to green ish instead of brown.  Build scepters now need to be charged with Energy to use.  Some recipes use copper nuggets instead of gold nuggets.  Add copper armor.  Changed the internal registry-name of some items.  Removed cyclic:fireball_dark, upgraded regular fireball and removed cooldown."
 
 	}
 }

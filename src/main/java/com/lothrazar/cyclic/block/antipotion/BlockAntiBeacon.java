@@ -61,7 +61,7 @@ public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.ANTI_BEACON.get(), world.isClientSide ? TileAntiBeacon::clientTick : TileAntiBeacon::serverTick);
+    return createTickerHelper(type, TileRegistry.BEACON_SPONGE.get(), world.isClientSide ? TileAntiBeacon::clientTick : TileAntiBeacon::serverTick);
   }
 
   @Override
@@ -82,9 +82,9 @@ public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
     int radius = TileAntiBeacon.RADIUS.get();
     List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, radius, radius));
     for (LivingEntity e : all) {
-      LivingEntityCapabilityStorage data = e.getData(AttachmentRegistry.ANTI_BEACON_TARGET);
+      LivingEntityCapabilityStorage data = e.getData(AttachmentRegistry.BEACON_SPONGE_TARGET);
       BlockPos oldPosition = data.getClosestAntiBeaconPosition();
-      if (oldPosition != null && world.getBlockState(oldPosition).is(BlockRegistry.ANTI_BEACON.get())) {
+      if (oldPosition != null && world.getBlockState(oldPosition).is(BlockRegistry.BEACON_SPONGE.get())) {
         int oldDistance = e.blockPosition().distManhattan(oldPosition);
         int newDistance = e.blockPosition().distManhattan(pos);
         if (newDistance < oldDistance) {
@@ -107,7 +107,7 @@ public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
         || !serverLevel.isLoaded(livingEntity.blockPosition())) {
       return;
     }
-    LivingEntityCapabilityStorage data = livingEntity.getData(AttachmentRegistry.ANTI_BEACON_TARGET);
+    LivingEntityCapabilityStorage data = livingEntity.getData(AttachmentRegistry.BEACON_SPONGE_TARGET);
     BlockPos closestAntiBeacon = data.getClosestAntiBeaconPosition();
     if (closestAntiBeacon == null) {
       return;

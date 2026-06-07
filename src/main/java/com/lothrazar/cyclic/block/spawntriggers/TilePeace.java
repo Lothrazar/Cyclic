@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class TilePeace extends TileBlockEntityCyclic {
 
   public TilePeace(BlockPos pos, BlockState state) {
-    super(TileRegistry.PEACE_CANDLE.get(), pos, state);
+    super(TileRegistry.CANDLE_PEACE.get(), pos, state);
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TilePeace tile) {
@@ -25,10 +25,10 @@ public class TilePeace extends TileBlockEntityCyclic {
 
   private static void pingCache(Level level, BlockPos blockPos, BlockState blockState) {
     if (blockState.getValue(BlockCyclic.LIT)) {
-      ServerCacheHolder.PEACE_CANDLE.load(level, blockPos);
+      ServerCacheHolder.CANDLE_PEACE.load(level, blockPos);
     }
     else {
-      ServerCacheHolder.PEACE_CANDLE.unload(level, blockPos);
+      ServerCacheHolder.CANDLE_PEACE.unload(level, blockPos);
     }
   }
 
@@ -40,13 +40,13 @@ public class TilePeace extends TileBlockEntityCyclic {
   public void onLoad() {
     super.onLoad();
     if (getBlockState().getValue(BlockCyclic.LIT)) {
-      ServerCacheHolder.PEACE_CANDLE.load(getLevel(), getBlockPos());
+      ServerCacheHolder.CANDLE_PEACE.load(getLevel(), getBlockPos());
     }
   }
 
   @Override
   public void setRemoved() {
-    ServerCacheHolder.PEACE_CANDLE.unload(getLevel(), getBlockPos());
+    ServerCacheHolder.CANDLE_PEACE.unload(getLevel(), getBlockPos());
     super.setRemoved();
   }
 

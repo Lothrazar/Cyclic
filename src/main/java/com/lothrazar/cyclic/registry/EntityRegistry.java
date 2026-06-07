@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.block.conveyor.ConveyorItemEntity;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityCarry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityDamage;
 import com.lothrazar.cyclic.item.boomerang.BoomerangEntityStun;
-import com.lothrazar.cyclic.item.elemental.DarkFireEntity;
 import com.lothrazar.cyclic.item.elemental.FireEntity;
 import com.lothrazar.cyclic.item.elemental.FishingEnderEntity;
 import com.lothrazar.cyclic.item.elemental.LightningEntity;
@@ -103,12 +102,6 @@ public class EntityRegistry {
       .setTrackingRange(128)
       .sized(.6F, .6F)
       .build("conveyor_item"));
-  public static final DeferredHolder<EntityType<?>, EntityType<DarkFireEntity>> DARKFIRE_BOLT = ENTITIES.register("darkfire_bolt", () -> EntityType.Builder.<DarkFireEntity> of(DarkFireEntity::new, MobCategory.MISC)
-      .setShouldReceiveVelocityUpdates(true)
-      .setUpdateInterval(1)
-      .setTrackingRange(128)
-      .sized(.6F, .6F)
-      .build("darkfire_bolt"));
   public static final DeferredHolder<EntityType<?>, EntityType<FishingEnderEntity>> ENDER_FISHING = ENTITIES.register("ender_fishing", () -> EntityType.Builder.<FishingEnderEntity> of(FishingEnderEntity::new, MobCategory.MISC)
       .setShouldReceiveVelocityUpdates(true)
       .setUpdateInterval(1)

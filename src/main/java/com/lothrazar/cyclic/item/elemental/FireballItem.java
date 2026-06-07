@@ -23,8 +23,8 @@ public class FireballItem extends ItemBaseCyclic {
     if (!shooter.isCreative()) {
       shooter.getItemInHand(hand).shrink(1);
     }
-    shooter.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 20);
-    SoundUtil.playSound(shooter, SoundRegistry.FIRELAUNCH.get());
+//    shooter.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 20);
+    SoundUtil.playSound(shooter, SoundRegistry.FIRELAUNCH.get()); // or GOODLAUNCH ?
     return super.use(world, shooter, hand);
   }
 
@@ -39,7 +39,7 @@ public class FireballItem extends ItemBaseCyclic {
         //i am holding fireball in my main hand
         //i am not on fire right now, i have no fire prot
         player.setRemainingFireTicks(30); // 20 ticks is one secondfireProt
-        player.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 5);
+//        player.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 5);
         //          player.hurt(DamageSource.IN_FIRE, 0.5F);
       }
     }

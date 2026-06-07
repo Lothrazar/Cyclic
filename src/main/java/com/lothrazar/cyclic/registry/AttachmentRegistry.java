@@ -13,8 +13,8 @@ public class AttachmentRegistry {
   public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES =
       DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, ModCyclic.MODID);
 
-  public static final Supplier<AttachmentType<LivingEntityCapabilityStorage>> ANTI_BEACON_TARGET =
-      ATTACHMENT_TYPES.register("anti_beacon_target",
+  public static final Supplier<AttachmentType<LivingEntityCapabilityStorage>> BEACON_SPONGE_TARGET =
+      ATTACHMENT_TYPES.register("beacon_sponge_target",
           () -> AttachmentType.builder(LivingEntityCapabilityStorage::new).build());
 
   public static final Supplier<AttachmentType<PlayerCyclicAttachment>> CYCLIC_PLAYER =

@@ -165,7 +165,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ENTITY.get(), RenderDetector::new);
     event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ITEM.get(), RenderDetectorItem::new);
     event.registerBlockEntityRenderer(TileRegistry.DROPPER.get(), RenderDropper::new);
-    event.registerBlockEntityRenderer(TileRegistry.ENDER_ITEM_SHELF.get(), ItemShelfRenderer::new);
+    event.registerBlockEntityRenderer(TileRegistry.SHELF.get(), ItemShelfRenderer::new);
     event.registerBlockEntityRenderer(TileRegistry.FAN.get(), RenderFan::new);
     event.registerBlockEntityRenderer(TileRegistry.ENDER_SHELF.get(), EnderShelfRenderer::new);
     event.registerBlockEntityRenderer(TileRegistry.FISHER.get(), RenderFisher::new);
@@ -183,7 +183,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.TANK.get(), RenderTank::new);
     event.registerBlockEntityRenderer(TileRegistry.WIRELESS_TRANSMITTER.get(), RenderTransmit::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON.get(), RenderBeaconPotion::new);
-    event.registerBlockEntityRenderer(TileRegistry.ANTI_BEACON.get(), RenderBeaconAnti::new);
+    event.registerBlockEntityRenderer(TileRegistry.BEACON_SPONGE.get(), RenderBeaconAnti::new);
     event.registerBlockEntityRenderer(TileRegistry.BEACON_REDSTONE.get(), RenderBeaconRedstone::new);
     //cable renderers
     event.registerBlockEntityRenderer(TileRegistry.ENERGY_PIPE.get(), RenderCableFacade::new);
@@ -374,7 +374,6 @@ public class ClientRegistryCyclic {
     event.registerEntityRenderer(EntityRegistry.DUNGEON.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.EYE.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.FIRE_BOLT.get(), ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.DARKFIRE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.ENDER_FISHING.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.STONE_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.LIGHTNING_BOLT.get(), ThrownItemRenderer::new);
