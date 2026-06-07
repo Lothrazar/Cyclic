@@ -24,12 +24,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class EntityRegistry {
 
   public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ModCyclic.MODID);
-  public static final DeferredHolder<EntityType<?>, EntityType<EntityMagicNetEmpty>> MAGIC_NET = ENTITIES.register("magic_net", () -> EntityType.Builder.<EntityMagicNetEmpty> of(EntityMagicNetEmpty::new, MobCategory.MISC)
+  public static final DeferredHolder<EntityType<?>, EntityType<EntityMagicNetEmpty>> MOB_CONTAINER_EMPTY = ENTITIES.register("mob_container_empty", () -> EntityType.Builder.<EntityMagicNetEmpty> of(EntityMagicNetEmpty::new, MobCategory.MISC)
       .setShouldReceiveVelocityUpdates(true)
       .setUpdateInterval(1)
       .setTrackingRange(128)
       .sized(.6F, .6F)
-      .build("magic_net"));
+      .build("mob_container_empty"));
   public static final DeferredHolder<EntityType<?>, EntityType<EntityTorchBolt>> TORCH_BOLT = ENTITIES.register("torch_bolt", () -> EntityType.Builder.<EntityTorchBolt> of(EntityTorchBolt::new, MobCategory.MISC)
       .setShouldReceiveVelocityUpdates(true)
       .setUpdateInterval(1)

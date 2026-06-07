@@ -41,12 +41,12 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
   }
 
   public EntityMagicNetEmpty(Level worldIn, LivingEntity livingEntityIn) {
-    super(EntityRegistry.MAGIC_NET.get(), livingEntityIn, worldIn);
+    super(EntityRegistry.MOB_CONTAINER_EMPTY.get(), livingEntityIn, worldIn);
   }
 
   @Override
   protected Item getDefaultItem() {
-    return ItemRegistry.MAGIC_NET.get();
+    return ItemRegistry.MOB_CONTAINER_EMPTY.get();
   }
 
   @Override
@@ -88,7 +88,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
         return;
       }
       String id = EntityType.getKey(target.getType()).toString();
-      if (StringParseUtil.isInList(ConfigRegistry.getMagicNetList(), EntityType.getKey(target.getType()))) {
+      if (StringParseUtil.isInList(ConfigRegistry.getMobContainerEmptyList(), EntityType.getKey(target.getType()))) {
         ModCyclic.LOGGER.info("ignored by: CONFIG LIST" + id);
         return;
       }
@@ -109,7 +109,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       BlockPos pos = this.blockPosition();
       targetHeightOffset = 0.0D;
       particleType = ParticleTypes.POOF;
-      ItemStackUtil.drop(level, pos, new ItemStack(ItemRegistry.MAGIC_NET.get()));
+      ItemStackUtil.drop(level, pos, new ItemStack(ItemRegistry.MOB_CONTAINER_EMPTY.get()));
     }
     if (particleType != null) {
       Vec3 hitVec = result.getLocation();

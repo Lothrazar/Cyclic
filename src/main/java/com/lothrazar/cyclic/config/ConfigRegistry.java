@@ -660,7 +660,7 @@ public class ConfigRegistry {
   }
 
   @SuppressWarnings("unchecked")
-  public static List<String> getMagicNetList() {
+  public static List<String> getMobContainerEmptyList() {
     return (List<String>) MBALL_IGNORE_LIST.get();
   }
 

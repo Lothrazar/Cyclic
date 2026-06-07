@@ -250,7 +250,7 @@ public class ItemRegistry {
   //public static final DeferredItem<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new DarkFireballItem(new Item.Properties()));
   public static final DeferredItem<Item> FIREBALL_ORANGE = ITEMS.register("fireball", () -> new FireballItem(new Item.Properties()));
   public static final DeferredItem<Item> SPAWNER_SEEKER = ITEMS.register("spawner_seeker", () -> new ItemProjectileDungeon(new Item.Properties()));
-  public static final DeferredItem<Item> MAGIC_NET = ITEMS.register("magic_net", () -> new ItemMagicNet(new Item.Properties()));
+  public static final DeferredItem<Item> MOB_CONTAINER_EMPTY = ITEMS.register("mob_container_empty", () -> new ItemMagicNet(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_FISHING = ITEMS.register("ender_fishing", () -> new FishingMagicItem(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_TORCH = ITEMS.register("ender_torch", () -> new TorchThrowingItem(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_EYE_REUSE = ITEMS.register("ender_eye_reuse", () -> new EnderEyeReuseItem(new Item.Properties()));
