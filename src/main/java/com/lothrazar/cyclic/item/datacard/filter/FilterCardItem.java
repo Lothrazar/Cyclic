@@ -125,7 +125,7 @@ public class FilterCardItem extends ItemBaseCyclic {
     }
   }
 
-  private static boolean getIsIgnoreList(ItemStack filterStack) {
+  public static boolean getIsIgnoreList(ItemStack filterStack) {
     return filterStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(NBTFILTER);
   }
 

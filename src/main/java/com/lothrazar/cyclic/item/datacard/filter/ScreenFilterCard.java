@@ -45,7 +45,7 @@ public class ScreenFilterCard extends ScreenBase<ContainerFilterCard> {
   protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     super.renderLabels(ms, mouseX, mouseY);
     this.drawButtonTooltips(ms, mouseX, mouseY);
-    boolean filter = false;
+    boolean filter = screenContainer.bag != null && FilterCardItem.getIsIgnoreList(screenContainer.bag);
     btnType.setTextureId(filter ? TextureEnum.RENDER_HIDE : TextureEnum.RENDER_SHOW);
     btnType.setTooltip("cyclic.screen.filter." + filter);
   }
