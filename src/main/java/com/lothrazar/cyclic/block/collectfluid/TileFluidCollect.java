@@ -4,7 +4,9 @@ import java.util.List;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
+import com.lothrazar.cyclic.item.datacard.fluid.FluidFilterCardItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers.FluidAttributes;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
@@ -60,6 +62,21 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
       return Block.byItem(stack.getItem()) != Blocks.AIR;
     }
   };
+  ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      if (stack.isEmpty()) {
+        return true;
+      }
+      return stack.getItem() == ItemRegistry.FILTER_FLUID.get();
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+  };
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
 
   public TileFluidCollect(BlockPos pos, BlockState state) {
@@ -105,6 +122,11 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     FluidState fluidState = level.getFluidState(targetPos);
     if (fluidState.isSource()) {
       FluidStack fstack = new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME);
+      //if a filter card is set, gate pickup through it
+      ItemStack filterSta = filter.getStackInSlot(0);
+      if (!filterSta.isEmpty() && !FluidFilterCardItem.filterAllowsExtract(filterSta, fstack)) {
+        return;
+      }
       int result = tank.fill(fstack, IFluidHandler.FluidAction.SIMULATE);
       if (result == FluidAttributes.BUCKET_VOLUME) {
         //we got enough   
@@ -190,6 +212,9 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    if (tag.contains("filter")) {
+      filter.deserializeNBT(registries, tag.getCompound("filter"));
+    }
     super.loadAdditional(tag, registries);
   }
 
@@ -199,6 +224,7 @@ public class TileFluidCollect extends TileBlockEntityCyclic implements MenuProvi
     tag.putInt("height", height);
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
+    tag.put("filter", filter.serializeNBT(registries));
     CompoundTag fluid = new CompoundTag();
     tank.writeToNBT(registries,fluid);
     tag.put(NBTFLUID, fluid);

@@ -23,6 +23,7 @@ import com.lothrazar.cyclic.fluid.FluidWaxHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
 import com.lothrazar.cyclic.item.crafting.CraftingBagCapability;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardCapability;
+import com.lothrazar.cyclic.item.datacard.fluid.FluidFilterCardCapability;
 import com.lothrazar.cyclic.item.enderbook.EnderBookCapability;
 import com.lothrazar.cyclic.item.lunchbox.LunchboxCapability;
 import com.lothrazar.cyclic.item.storagebag.StorageBagCapability;
@@ -72,6 +73,11 @@ public class CapabilityRegistry {
             Capabilities.ItemHandler.ITEM,
             (stack, ctx) -> new FilterCardCapability(stack),
             ItemRegistry.FILTER_DATA.get()
+        );
+        event.registerItem(
+            Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new FluidFilterCardCapability(stack),
+            ItemRegistry.FILTER_FLUID.get()
         );
         event.registerItem(
             Capabilities.ItemHandler.ITEM,

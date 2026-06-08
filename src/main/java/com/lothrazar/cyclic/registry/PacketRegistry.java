@@ -4,6 +4,7 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
 import com.lothrazar.cyclic.item.crafting.PacketItemGui;
 import com.lothrazar.cyclic.item.datacard.filter.PacketFilterCard;
+import com.lothrazar.cyclic.item.datacard.fluid.PacketFluidFilterCard;
 import com.lothrazar.cyclic.item.enderbook.PacketItemScroll;
 import com.lothrazar.cyclic.item.random.PacketRandomize;
 import com.lothrazar.cyclic.item.scythe.PacketScythe;
@@ -45,6 +46,7 @@ public class PacketRegistry {
     registrar.playToServer(PacketStorageBagScreen.TYPE, PacketStorageBagScreen.STREAM_CODEC, PacketStorageBagScreen::handle);
     registrar.playToServer(PacketCraftAction.TYPE, PacketCraftAction.STREAM_CODEC, PacketCraftAction::handle);
     registrar.playToServer(PacketFilterCard.TYPE, PacketFilterCard.STREAM_CODEC, PacketFilterCard::handle);
+    registrar.playToServer(PacketFluidFilterCard.TYPE, PacketFluidFilterCard.STREAM_CODEC, PacketFluidFilterCard::handle);
     registrar.playToServer(PacketItemScroll.TYPE, PacketItemScroll.STREAM_CODEC, PacketItemScroll::handle);
     registrar.playToServer(PacketRecordSound.TYPE, PacketRecordSound.STREAM_CODEC, PacketRecordSound::handle);
     registrar.playToServer(PacketHarvesting.TYPE, PacketHarvesting.STREAM_CODEC, PacketHarvesting::handle);

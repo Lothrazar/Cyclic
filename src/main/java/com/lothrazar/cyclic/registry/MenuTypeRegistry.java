@@ -32,6 +32,8 @@ import com.lothrazar.cyclic.block.generatoritem.ContainerGeneratorDrops;
 import com.lothrazar.cyclic.block.generatorsolar.ContainerGeneratorSolar;
 import com.lothrazar.cyclic.block.harvester.ContainerHarvester;
 import com.lothrazar.cyclic.block.laser.ContainerLaser;
+import com.lothrazar.cyclic.block.hopperfluid.ContainerFluidHopper;
+import com.lothrazar.cyclic.block.hoppergold.ContainerGoldHopper;
 import com.lothrazar.cyclic.block.magnet.ContainerMagnet;
 import com.lothrazar.cyclic.block.melter.ContainerMelter;
 import com.lothrazar.cyclic.block.miner.ContainerMiner;
@@ -56,6 +58,7 @@ import com.lothrazar.cyclic.block.workbench.ContainerWorkbench;
 import com.lothrazar.cyclic.item.crafting.CraftingBagContainer;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
+import com.lothrazar.cyclic.item.datacard.fluid.ContainerFluidFilterCard;
 import com.lothrazar.cyclic.item.enderbook.EnderBookContainer;
 import com.lothrazar.cyclic.item.lunchbox.ContainerLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
@@ -123,11 +126,14 @@ public class MenuTypeRegistry {
   public static final Supplier<MenuType<ContainerCrusher>> CRUSHER = CONTAINERS.register("crusher", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerCrusher(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
   public static final Supplier<MenuType<ContainerTeleport>> TELEPORT = CONTAINERS.register("teleport", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerTeleport(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
   public static final Supplier<MenuType<ContainerMagnet>> MAGNET = CONTAINERS.register("magnet", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerMagnet(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
+  public static final Supplier<MenuType<ContainerGoldHopper>> HOPPER_GOLD = CONTAINERS.register("hopper_gold", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerGoldHopper(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
+  public static final Supplier<MenuType<ContainerFluidHopper>> HOPPER_FLUID = CONTAINERS.register("hopper_fluid", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerFluidHopper(windowId, inv.player.level(), data.readBlockPos(), inv, inv.player)));
   //  Items with containers
   public static final Supplier<MenuType<EnderBookContainer>> ENDER_BOOK = CONTAINERS.register("ender_book", () -> IMenuTypeExtension.create((windowId, inv, data) -> new EnderBookContainer(windowId, inv, inv.player)));
   public static final Supplier<MenuType<ContainerStorageBag>> STORAGE_BAG = CONTAINERS.register("storage_bag", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerStorageBag(windowId, inv, inv.player, data.readInt())));
   public static final Supplier<MenuType<CraftingBagContainer>> CRAFTING_BAG = CONTAINERS.register("crafting_bag", () -> IMenuTypeExtension.create((windowId, inv, data) -> new CraftingBagContainer(windowId, inv, inv.player, data.readInt())));
   public static final Supplier<MenuType<CraftingStickContainer>> CRAFTING_STICK = CONTAINERS.register("crafting_stick", () -> IMenuTypeExtension.create((windowId, inv, data) -> new CraftingStickContainer(windowId, inv, inv.player, data.readInt())));
   public static final Supplier<MenuType<ContainerFilterCard>> FILTER_DATA = CONTAINERS.register("filter_data", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player)));
+  public static final Supplier<MenuType<ContainerFluidFilterCard>> FLUID_DATA = CONTAINERS.register("fluid_data", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerFluidFilterCard(windowId, inv, inv.player)));
   public static final Supplier<MenuType<ContainerLunchbox>> LUNCHBOX = CONTAINERS.register("lunchbox", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerLunchbox(windowId, inv, inv.player)));
 }

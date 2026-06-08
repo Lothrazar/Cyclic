@@ -129,6 +129,9 @@ import com.lothrazar.cyclic.item.crafting.CraftingBagScreen;
 import com.lothrazar.cyclic.item.enderbook.EnderBookScreen;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickScreen;
 import com.lothrazar.cyclic.item.datacard.filter.ScreenFilterCard;
+import com.lothrazar.cyclic.block.hopperfluid.ScreenFluidHopper;
+import com.lothrazar.cyclic.block.hoppergold.ScreenGoldHopper;
+import com.lothrazar.cyclic.item.datacard.fluid.ScreenFluidFilterCard;
 import com.lothrazar.cyclic.item.storagebag.ScreenStorageBag;
 
 @EventBusSubscriber(modid = ModCyclic.MODID, value = Dist.CLIENT)
@@ -283,6 +286,9 @@ public class ClientRegistryCyclic {
     event.register(MenuTypeRegistry.ENDER_BOOK.get(), EnderBookScreen::new);
     event.register(MenuTypeRegistry.CRAFTING_STICK.get(), CraftingStickScreen::new);
     event.register(MenuTypeRegistry.FILTER_DATA.get(), ScreenFilterCard::new);
+    event.register(MenuTypeRegistry.FLUID_DATA.get(), ScreenFluidFilterCard::new);
+    event.register(MenuTypeRegistry.HOPPER_GOLD.get(), ScreenGoldHopper::new);
+    event.register(MenuTypeRegistry.HOPPER_FLUID.get(), ScreenFluidHopper::new);
     event.register(MenuTypeRegistry.DROPPER.get(), ScreenDropper::new);
     event.register(MenuTypeRegistry.FISHER.get(), ScreenFisher::new);
     event.register(MenuTypeRegistry.DETECTOR_ITEM.get(), ScreenDetectorItem::new);

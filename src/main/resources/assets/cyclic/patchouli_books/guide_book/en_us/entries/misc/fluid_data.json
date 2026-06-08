@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.fluid_data",
+  "icon": "cyclic:fluid_data",
+  "category": "cyclic:misc",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.fluid_data.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:fluid_data"
+    }
+
+  ]
+}

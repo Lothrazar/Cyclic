@@ -1,4 +1,4 @@
-package com.lothrazar.cyclic.block.cable.fluid;
+package com.lothrazar.cyclic.block.hopperfluid;
 
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
@@ -6,15 +6,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-public class ScreenCableFluid extends ScreenBase<ContainerCableFluid> {
+public class ScreenFluidHopper extends ScreenBase<ContainerFluidHopper> {
 
-  public ScreenCableFluid(ContainerCableFluid screenContainer, Inventory inv, Component titleIn) {
+  public ScreenFluidHopper(ContainerFluidHopper screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
-  }
-
-  @Override
-  public void init() {
-    super.init();
   }
 
   @Override
@@ -26,13 +21,12 @@ public class ScreenCableFluid extends ScreenBase<ContainerCableFluid> {
 
   @Override
   protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
-    this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
   }
 
   @Override
   protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, imageWidth / 2 - 9, 28, TextureRegistry.SLOT_FILTER_FLUID, 18);
+    this.drawSlot(ms, 79, 23, TextureRegistry.SLOT_FILTER_FLUID, 18);
   }
 }

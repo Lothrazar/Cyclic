@@ -59,6 +59,7 @@ import com.lothrazar.cyclic.item.datacard.SettingsCard;
 import com.lothrazar.cyclic.item.datacard.ShapeCard;
 import com.lothrazar.cyclic.item.datacard.SoundCard;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
+import com.lothrazar.cyclic.item.datacard.fluid.FluidFilterCardItem;
 import com.lothrazar.cyclic.item.elemental.AntimatterEvaporatorWandItem;
 import com.lothrazar.cyclic.item.elemental.EvokerFangItem;
 import com.lothrazar.cyclic.item.elemental.FireExtinguishItem;
@@ -247,12 +248,12 @@ public class ItemRegistry {
   public static final DeferredItem<Item> FLIPPERS = ITEMS.register("flippers", () -> new ItemBaseToggle(new Item.Properties().durability(256 * 4)));
   // ---- throwable
   public static final DeferredItem<Item> SPARK = ITEMS.register("spark", () -> new GlowingSpark(new Item.Properties()));
-  //public static final DeferredItem<Item> FIREBALL_DARK = ITEMS.register("fireball_dark", () -> new DarkFireballItem(new Item.Properties()));
   public static final DeferredItem<Item> FIREBALL_ORANGE = ITEMS.register("fireball", () -> new FireballItem(new Item.Properties()));
-  public static final DeferredItem<Item> SPAWNER_SEEKER = ITEMS.register("spawner_seeker", () -> new ItemProjectileDungeon(new Item.Properties()));
-  public static final DeferredItem<Item> MOB_CONTAINER_EMPTY = ITEMS.register("mob_container_empty", () -> new ItemMagicNet(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_FISHING = ITEMS.register("ender_fishing", () -> new FishingMagicItem(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_TORCH = ITEMS.register("ender_torch", () -> new TorchThrowingItem(new Item.Properties()));
+  public static final DeferredItem<Item> SPAWNER_SEEKER = ITEMS.register("spawner_seeker", () -> new ItemProjectileDungeon(new Item.Properties()));
+  public static final DeferredItem<Item> MOB_CONTAINER = ITEMS.register("mob_container", () -> new ItemMobContainer(new Item.Properties().stacksTo(1)));
+  public static final DeferredItem<Item> MOB_CONTAINER_EMPTY = ITEMS.register("mob_container_empty", () -> new ItemMagicNet(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_EYE_REUSE = ITEMS.register("ender_eye_reuse", () -> new EnderEyeReuseItem(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_PEARL_REUSE = ITEMS.register("ender_pearl_reuse", () -> new EnderPearlReuse(new Item.Properties()));
   public static final DeferredItem<Item> ENDER_PEARL_MOUNTED = ITEMS.register("ender_pearl_mounted", () -> new EnderPearlMount(new Item.Properties()));
@@ -359,7 +360,6 @@ public class ItemRegistry {
   public static final DeferredItem<Item> STORAGE_BAG = ITEMS.register("storage_bag", () -> new ItemStorageBag(new Item.Properties().stacksTo(1).setNoRepair()));
   public static final DeferredItem<Item> CRAFTING_BAG = ITEMS.register("crafting_bag", () -> new CraftingBagItem(new Item.Properties().stacksTo(1).setNoRepair()));
   public static final DeferredItem<Item> CRAFTING_STICK = ITEMS.register("crafting_stick", () -> new CraftingStickItem(new Item.Properties().stacksTo(1).setNoRepair()));
-  public static final DeferredItem<Item> MOB_CONTAINER = ITEMS.register("mob_container", () -> new ItemMobContainer(new Item.Properties().stacksTo(1)));
   public static final DeferredItem<Item> TILE_TRANSPORTER_EMPTY = ITEMS.register("tile_transporter_empty", () -> new TileTransporterEmptyItem(new Item.Properties()));
   public static final DeferredItem<Item> TILE_TRANSPORTER = ITEMS.register("tile_transporter", () -> new TileTransporterItem(new Item.Properties()));
 
@@ -370,6 +370,7 @@ public class ItemRegistry {
   public static final DeferredItem<Item> SETTINGS_DATA = ITEMS.register("settings_data", () -> new SettingsCard(new Item.Properties()));
   public static final DeferredItem<Item> SHAPE_DATA = ITEMS.register("shape_data", () -> new ShapeCard(new Item.Properties()));
   public static final DeferredItem<Item> FILTER_DATA = ITEMS.register("filter_data", () -> new FilterCardItem(new Item.Properties()));
+  public static final DeferredItem<Item> FILTER_FLUID = ITEMS.register("fluid_data", () -> new FluidFilterCardItem(new Item.Properties()));
   public static final DeferredItem<Item> SOUND_DATA = ITEMS.register("sound_data", () -> new SoundCard(new Item.Properties()));
   public static final DeferredItem<Item> ENTITY_DATA = ITEMS.register("entity_data", () -> new EntityDataCard(new Item.Properties()));
   public static final DeferredItem<Item> BLOCKSTATE_DATA = ITEMS.register("blockstate_data", () -> new BlockstateCard(new Item.Properties()));

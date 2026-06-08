@@ -1,12 +1,7 @@
 package com.lothrazar.cyclic.util;
 
 import com.lothrazar.cyclic.ModCyclic;
-import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
-import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
-import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
-import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
-import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
-import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
+import com.lothrazar.cyclic.item.datacard.fluid.FluidFilterCardItem;
 import com.lothrazar.library.data.Model3D;
 import com.lothrazar.library.render.FluidRenderMap;
 import com.lothrazar.library.render.FluidRenderMap.FluidFlow;
@@ -22,14 +17,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
@@ -127,7 +120,7 @@ public class FluidHelpers {
 
     if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) && targetState.getValue(BlockStateProperties.WATERLOGGED) == true) {
       //for waterlogged it is hardcoded to water
-      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
+      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
         int simFill = tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
         if (simFill == FluidAttributes.BUCKET_VOLUME
             && level.setBlockAndUpdate(posTarget, targetState.setValue(BlockStateProperties.WATERLOGGED, false))) {
@@ -136,7 +129,7 @@ public class FluidHelpers {
       }
     }
     else if (targetState.getBlock() == Blocks.WATER_CAULDRON && targetState.getValue(LayeredCauldronBlock.LEVEL) >= 3) {
-      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
+      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.WATER,1))) {
         int simFill = tank.fill(new FluidStack(Fluids.WATER, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
         if (simFill == FluidAttributes.BUCKET_VOLUME
             && level.setBlockAndUpdate(posTarget, Blocks.CAULDRON.defaultBlockState())) {
@@ -145,7 +138,7 @@ public class FluidHelpers {
       }
     }
     else if (targetState.getBlock() == Blocks.LAVA_CAULDRON) {
-      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.LAVA,1))) {
+      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta,new FluidStack(Fluids.LAVA,1))) {
         //copypasta of water cauldron code
         int simFill = tank.fill(new FluidStack(Fluids.LAVA, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
         if (simFill == FluidAttributes.BUCKET_VOLUME
@@ -156,7 +149,7 @@ public class FluidHelpers {
     }
     else if (fluidState != null && fluidState.isSource() && fluidState.getType() != null) { // from ze world
       //not just water. any fluid source block
-      if (filterSta.isEmpty() || FilterCardItem.filterAllowsExtract(filterSta, new FluidStack(fluidState.getType(), 1))) {
+      if (filterSta.isEmpty() || FluidFilterCardItem.filterAllowsExtract(filterSta, new FluidStack(fluidState.getType(), 1))) {
         int simFill = tank.fill(new FluidStack(fluidState.getType(), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE);
         if (simFill == FluidAttributes.BUCKET_VOLUME
             && level.setBlockAndUpdate(posTarget, Blocks.AIR.defaultBlockState())) {

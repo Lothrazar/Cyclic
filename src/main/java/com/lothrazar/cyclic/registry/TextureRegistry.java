@@ -26,6 +26,7 @@ public class TextureRegistry {
   public static final ResourceLocation SLOT_BUCKET = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/gui/slot_bucket.png");
   public static final ResourceLocation SLOT_GPS = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/gui/slot_gps.png");
   public static final ResourceLocation SLOT_FILTER = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/gui/slot_filter.png");
+  public static final ResourceLocation SLOT_FILTER_FLUID = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/gui/slot_filter_fluid.png");
   public static final ResourceLocation SLOT_SHAPE = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/gui/slot_shape.png");
   public static final ResourceLocation WIDGETS = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/gui/enderio-publicdomain-widgetsv2.png");
   public static final ResourceLocation INVENTORY_SIDEBAR = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "textures/gui/inventory_sidebar.png");

@@ -14,6 +14,7 @@ public class BlockGoldHopper extends BlockSimpleHopper {
 
   public BlockGoldHopper(Properties properties) {
     super(properties);
+    this.setHasGui();
   }
 
   @Override

@@ -45,7 +45,7 @@ public class ScreenItemCollector extends ScreenBase<ContainerItemCollector> {
     //now start sliders
     //
     x = leftPos + 30;
-    y = topPos + 34;
+    y = topPos + 32;
     f = TileItemCollector.Fields.HEIGHT.ordinal();
     heightslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, TileItemCollector.Fields.HEIGHT.ordinal(), menu.tile.getBlockPos(),
         0, TileItemCollector.MAX_HEIGHT, menu.tile.getField(f)));

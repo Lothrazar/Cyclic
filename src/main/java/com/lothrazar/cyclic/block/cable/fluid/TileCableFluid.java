@@ -6,7 +6,7 @@ import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
-import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
+import com.lothrazar.cyclic.item.datacard.fluid.FluidFilterCardItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -40,7 +40,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem() == ItemRegistry.FILTER_DATA.get();
+      return stack.getItem() == ItemRegistry.FILTER_FLUID.get();
     }
   };
   private final Map<Direction, FluidTankBase> flow = new ConcurrentHashMap<>();
@@ -81,7 +81,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     final IFluidHandler tankTarget = CapabilityUtil.fluid(level, target, incomingSide);
     if (tankTarget != null
         && tankTarget.getTanks() > 0
-        && !FilterCardItem.filterAllowsExtract(filterSta, tankTarget.getFluidInTank(0))) {
+        && !FluidFilterCardItem.filterAllowsExtract(filterSta, tankTarget.getFluidInTank(0))) {
       return;
     }
     //first try standard fluid transfer

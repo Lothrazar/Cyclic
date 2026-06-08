@@ -20,17 +20,22 @@ public class ContainerFluidCollect extends ContainerBase {
     tile = (TileFluidCollect) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-//    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
     var h = tile.inventory;
-      this.endInv = h.getSlots();
-      addSlot(new SlotItemHandler(h, 0, 10, 51) {
+    this.endInv = h.getSlots();
+    addSlot(new SlotItemHandler(h, 0, 9, 49) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-//    });
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(tile.filter, 0, 9+20, 7) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
     layoutPlayerInventorySlots(8, 84);
     this.trackEnergy(tile);
     this.trackAllIntFields(tile, TileFluidCollect.Fields.values().length);

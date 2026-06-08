@@ -22,6 +22,7 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
 
   public ScreenFluidCollect(ContainerFluidCollect screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
+    this.imageHeight = 214;
   }
 
   @Override
@@ -42,14 +43,13 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     int w = 96;
     int h = 20;
     x = leftPos + 32;
-    y += h + 1;
+    y += h + 8;
     int f = TileFluidCollect.Fields.HEIGHT.ordinal();
     GuiSliderInteger height = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileFluidCollect.MAX_HEIGHT, menu.tile.getField(f)));
     height.setTooltip(Tooltip.create(Component.translatable("buildertype.height.tooltip")));
-    y += h + 1;
     //
-    //
+    y += h + 4;
     f = TileFluidCollect.Fields.SIZE.ordinal();
     GuiSliderInteger size = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, TileMiner.MAX_SIZE, menu.tile.getField(f)));
@@ -71,15 +71,13 @@ public class ScreenFluidCollect extends ScreenBase<ContainerFluidCollect> {
     this.drawName(ms, this.title.getString());
     btnRedstone.onValueUpdate(menu.tile);
     btnRender.onValueUpdate(menu.tile);
-    //    int on = container.tile.getField(TileFluidCollect.Fields.RENDER.ordinal());
-    //    btnRender.setTooltip(UtilChat.lang("gui.cyclic.render" + on));
-    //    btnRender.setTextureId(on == 1 ? TextureEnum.RENDER_SHOW : TextureEnum.RENDER_HIDE);
   }
 
   @Override
   protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    this.drawSlot(ms, 9, 50);
+    this.drawSlot(ms, 8, 48);
+    this.drawSlot(ms,  8+22, 8,  TextureRegistry.SLOT_FILTER_FLUID, 18);
     if (TileFluidCollect.POWERCONF.get() > 0) {
       energy.draw(ms, menu.tile.getEnergy());
     }

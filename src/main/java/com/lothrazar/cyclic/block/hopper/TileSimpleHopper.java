@@ -48,7 +48,7 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
     }
     //no cooldown unlike mojang hopper
     this.tryPullFromWorld(worldPosition.relative(Direction.UP));
-    this.tryExtract(inventory, Direction.UP, getFlow(), null);
+    this.tryExtract(inventory, Direction.UP, getFlow(), getFilter());
     Direction exportToSide = this.getBlockState().getValue(BlockSimpleHopper.FACING);
     //is it a composter
     this.moveItemToCompost(exportToSide, inventory);
@@ -58,6 +58,14 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
 
   public int getFlow() {
     return 1;
+  }
+
+  /**
+   * Hook for subclasses (eg. gold hopper) to provide a filter card slot.
+   * Returning null means no filter; matches the wooden hopper's behavior.
+   */
+  protected ItemStackHandler getFilter() {
+    return null;
   }
 
   private void tryPullFromWorld(BlockPos center) {

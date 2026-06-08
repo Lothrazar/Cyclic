@@ -27,6 +27,7 @@ public class BlockFluidHopper extends BlockCyclic {
     // isRedstoneConductor(never) so chests/dispensers/cats below still work even though the collision shape is a full cube.
     super(properties.strength(1.3F).isRedstoneConductor(BlockCyclic::never));
     this.setHasFluidInteract();
+    this.setHasGui();
   }
 
   @Override
