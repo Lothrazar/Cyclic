@@ -4,7 +4,9 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
+import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.data.EntityFilterType;
 import com.lothrazar.library.util.ShapeUtil;
@@ -12,15 +14,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.HolderLookup;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileDetector extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -36,8 +41,23 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
   //default is > 0 living entities 
   private int limitUntilRedstone = 0;
   private CompareType compType = CompareType.GREATER;
-  EntityFilterType entityFilter = EntityFilterType.LIVING;
+  public EntityFilterType entityFilter = EntityFilterType.LIVING;
   private boolean isPoweredNow = false;
+  public final ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      if (stack.isEmpty()) {
+        return true;
+      }
+      return stack.getItem() == ItemRegistry.ENTITY_DATA.get();
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+  };
 
   public TileDetector(BlockPos pos, BlockState state) {
     super(TileRegistry.DETECTOR_ENTITY.get(), pos, state);
@@ -117,6 +137,19 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   private int getCountInRange() {
+    ItemStack filterSta = filter.getStackInSlot(0);
+    if (EntityDataCard.hasEntity(filterSta)) {
+      //card present: ignore the Type button and count entities matching the card's stored entity type
+      AABB range = getRange();
+      List<Entity> all = level.getEntitiesOfClass(Entity.class, range);
+      int count = 0;
+      for (Entity e : all) {
+        if (EntityDataCard.matchesEntity(e, filterSta)) {
+          count++;
+        }
+      }
+      return count;
+    }
     List<? extends LivingEntity> list = this.entityFilter.getEntities(level, getRange());
     return list.size();
   }
@@ -211,6 +244,9 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
     if (eType >= 0 && eType < EntityFilterType.values().length) {
       this.entityFilter = EntityFilterType.values()[eType];
     }
+    if (tag.contains("filter")) {
+      filter.deserializeNBT(registries, tag.getCompound("filter"));
+    }
     super.loadAdditional(tag, registries);
   }
 
@@ -222,6 +258,7 @@ public class TileDetector extends TileBlockEntityCyclic implements MenuProvider 
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
     tag.putInt("entityType", entityFilter.ordinal());
+    tag.put("filter", filter.serializeNBT(registries));
     super.saveAdditional(tag, registries);
   }
 }

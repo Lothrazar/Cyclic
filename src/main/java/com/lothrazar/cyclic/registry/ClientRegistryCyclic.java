@@ -25,6 +25,7 @@ import com.lothrazar.cyclic.block.collectitem.RenderItemCollect;
 import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
 import com.lothrazar.cyclic.block.detectorentity.RenderDetector;
 import com.lothrazar.cyclic.block.detectoritem.RenderDetectorItem;
+import com.lothrazar.cyclic.block.disenchant.RenderDisenchant;
 import com.lothrazar.cyclic.block.dropper.RenderDropper;
 import com.lothrazar.cyclic.block.enderitemshelf.ItemShelfRenderer;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfRenderer;
@@ -176,6 +177,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.COLLECTOR.get(), RenderItemCollect::new);
     event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ENTITY.get(), RenderDetector::new);
     event.registerBlockEntityRenderer(TileRegistry.DETECTOR_ITEM.get(), RenderDetectorItem::new);
+    event.registerBlockEntityRenderer(TileRegistry.DISENCHANTER.get(), RenderDisenchant::new);
     event.registerBlockEntityRenderer(TileRegistry.DROPPER.get(), RenderDropper::new);
     event.registerBlockEntityRenderer(TileRegistry.SHELF.get(), ItemShelfRenderer::new);
     event.registerBlockEntityRenderer(TileRegistry.FAN.get(), RenderFan::new);

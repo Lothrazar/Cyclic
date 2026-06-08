@@ -21,6 +21,7 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
 
   public ScreenDetectorItem(ContainerDetectorItem screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
+    this.imageHeight = 214;
   }
 
   @Override
@@ -32,17 +33,18 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
     btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileDetectorItem.Fields.RENDER.ordinal(),
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x += 22;
-    btnComp = addRenderableWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
+    int h = 20, w=50;
+    btnComp = addRenderableWidget(new ButtonMachine(x, y, w, h, "", (p) -> {
       int f = TileDetectorItem.Fields.GREATERTHAN.ordinal();
       PacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     //x 
     //sliders
-    int w = 160;
-    int h = 20;
+      w = 160;
+      h = 18;
     x = leftPos + 8;
-    y += h + 1;
+    y += h + 4;
     int f = TileDetectorItem.Fields.RANGEX.ordinal();
     GuiSliderInteger red = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
@@ -85,6 +87,7 @@ public class ScreenDetectorItem extends ScreenBase<ContainerDetectorItem> {
 
   @Override
   protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY_PLAIN);
+    this.drawBackground(ms, TextureRegistry.INVENTORY_MEDIUM);
+    this.drawSlot(ms, 151, 6, TextureRegistry.SLOT_FILTER, 18);
   }
 }

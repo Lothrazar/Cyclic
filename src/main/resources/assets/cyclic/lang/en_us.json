@@ -1235,6 +1235,8 @@
   "block.cyclic.detector_entity.tooltip": "Detect entities nearby and output redstone",
   "block.cyclic.detector_entity.guide": "Detect entities nearby and outputs a redstone signal when detected. The detection range, type of entity, amount, and comparison type are configurable from its GUI.",
   "cyclic.detector.entitytype.tooltip": "Which Entity types are counted",
+  "cyclic.detector.entitytype.disabled.tooltip": "Ignored: the Entity Data Card in the filter slot determines what is counted. Remove the card to use this type filter again.",
+  "cyclic.detector.entitytype.card": "From Card",
   "cyclic.detector.compare2": "Equal",
   "cyclic.detector.compare1": "Greater",
   "cyclic.detector.compare0": "Less",

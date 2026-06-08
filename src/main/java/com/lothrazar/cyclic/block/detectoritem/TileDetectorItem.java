@@ -5,7 +5,9 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.detectorentity.CompareType;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
+import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.BlockRegistry;
+import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -19,8 +21,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.HolderLookup;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvider {
 
@@ -37,6 +41,21 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
   private int limitUntilRedstone = 0;
   private CompareType compType = CompareType.GREATER;
   private boolean isPoweredNow = false;
+  final ItemStackHandler filter = new ItemStackHandler(1) {
+
+    @Override
+    public boolean isItemValid(int slot, ItemStack stack) {
+      if (stack.isEmpty()) {
+        return true;
+      }
+      return stack.getItem() == ItemRegistry.FILTER_DATA.get();
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
+    }
+  };
 
   public TileDetectorItem(BlockPos pos, BlockState state) {
     super(TileRegistry.DETECTOR_ITEM.get(), pos, state);
@@ -109,8 +128,13 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
   private int getCountInRange() {
     AABB entityRange = getRange();
     int entitiesFound = 0;
+    ItemStack filterSta = filter.getStackInSlot(0);
+    boolean hasFilter = !filterSta.isEmpty();
     List<ItemEntity> entityList = level.getEntitiesOfClass(ItemEntity.class, entityRange);
     for (ItemEntity item : entityList) {
+      if (hasFilter && !FilterCardItem.filterAllowsExtract(filterSta, item.getItem())) {
+        continue;
+      }
       entitiesFound += item.getItem().getCount();
     }
     return entitiesFound;
@@ -202,6 +226,9 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
     if (cType >= 0 && cType < CompareType.values().length) {
       this.compType = CompareType.values()[cType];
     }
+    if (tag.contains("filter")) {
+      filter.deserializeNBT(registries, tag.getCompound("filter"));
+    }
     super.loadAdditional(tag, registries);
   }
 
@@ -212,6 +239,7 @@ public class TileDetectorItem extends TileBlockEntityCyclic implements MenuProvi
     tag.putInt("oz", rangeZ);
     tag.putInt("limit", limitUntilRedstone);
     tag.putInt("compare", compType.ordinal());
+    tag.put("filter", filter.serializeNBT(registries));
     super.saveAdditional(tag, registries);
   }
 

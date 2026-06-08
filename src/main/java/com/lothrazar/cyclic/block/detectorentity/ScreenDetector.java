@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.GuiSliderInteger;
 import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.gui.TextureEnum;
+import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.net.PacketTileData;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.util.ChatUtil;
@@ -22,6 +23,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
 
   public ScreenDetector(ContainerDetector screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
+    this.imageHeight = 214;
   }
 
   @Override
@@ -34,22 +36,22 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
         menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
     x += 22;
     int w = 50, h = 20;
-    btnEntity = addRenderableWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
+    btnEntity = addRenderableWidget(new ButtonMachine(x, y, w, h, "", (p) -> {
       int f = TileDetector.Fields.ENTITYTYPE.ordinal();
       PacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     x += 58;
-    btnComp = addRenderableWidget(new ButtonMachine(x, y, 50, 20, "", (p) -> {
+    btnComp = addRenderableWidget(new ButtonMachine(x, y, w, h, "", (p) -> {
       int f = TileDetector.Fields.GREATERTHAN.ordinal();
       PacketDistributor.sendToServer(new PacketTileData(f,
           menu.tile.getField(f) + 1, menu.tile.getBlockPos()));
     }));
     //sliders
     w = 160;
-    h = 20;
+    h = 18;
     x = leftPos + 8;
-    y += h + 1;
+    y += h + 4;
     int f = TileDetector.Fields.RANGEX.ordinal();
     GuiSliderInteger red = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         0, 64, menu.tile.getField(f)));
@@ -83,8 +85,17 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, this.title.getString());
     btnRender.onValueUpdate(menu.tile);
-    btnEntity.setTooltip(ChatUtil.lang("cyclic.detector.entitytype.tooltip"));
-    btnEntity.setMessage(ChatUtil.ilang("cyclic.entitytype." + menu.tile.entityFilter.name().toLowerCase()));
+    //when a filled entity_data card is in the filter slot, the Type button is ignored - disable it
+    boolean hasCard = EntityDataCard.hasEntity(menu.tile.filter.getStackInSlot(0));
+    btnEntity.active = !hasCard;
+    if (hasCard) {
+      btnEntity.setTooltip(ChatUtil.lang("cyclic.detector.entitytype.disabled.tooltip"));
+      btnEntity.setMessage(ChatUtil.ilang("cyclic.detector.entitytype.card"));
+    }
+    else {
+      btnEntity.setTooltip(ChatUtil.lang("cyclic.detector.entitytype.tooltip"));
+      btnEntity.setMessage(ChatUtil.ilang("cyclic.entitytype." + menu.tile.entityFilter.name().toLowerCase()));
+    }
     btnComp.setTooltip(ChatUtil.lang("cyclic.detector.compare.tooltip"));
     btnComp.setMessage(ChatUtil.ilang("cyclic.detector.compare" +
         menu.tile.getField(TileDetector.Fields.GREATERTHAN.ordinal())));
@@ -92,6 +103,7 @@ public class ScreenDetector extends ScreenBase<ContainerDetector> {
 
   @Override
   protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
-    this.drawBackground(ms, TextureRegistry.INVENTORY_PLAIN);
+    this.drawBackground(ms, TextureRegistry.INVENTORY_MEDIUM);
+    this.drawSlot(ms, 151, 6, TextureRegistry.SLOT_FILTER, 18);
   }
 }

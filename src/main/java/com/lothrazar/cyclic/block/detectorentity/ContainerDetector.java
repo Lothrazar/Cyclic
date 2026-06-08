@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ContainerDetector extends ContainerBase {
 
@@ -18,6 +19,14 @@ public class ContainerDetector extends ContainerBase {
     tile = (TileDetector) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
+    addSlot(new SlotItemHandler(tile.filter, 0, 152, 7) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    layoutPlayerInventorySlots(8, 132);
     this.trackAllIntFields(tile, TileDetector.Fields.values().length);
   }
 
