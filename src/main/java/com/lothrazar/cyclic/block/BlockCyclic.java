@@ -154,15 +154,18 @@ public class BlockCyclic extends EntityBlockFlib {
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-
-        IItemHandler items = CapabilityUtil.item(worldIn, pos);
+      // Read inventory directly from the tile - at this point the block state has already
+      // changed to newState, so level.getCapability() finds no provider (air has none) and
+      // returns null. The block entity is still present until super.onRemove removes it.
+      if (worldIn.getBlockEntity(pos) instanceof TileBlockEntityCyclic tile) {
+        IItemHandler items = tile.getItemHandler(null);
         if (items != null) {
           for (int i = 0; i < items.getSlots(); ++i) {
             Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
           }
           worldIn.updateNeighbourForOutputSignal(pos, this);
         }
-
+      }
       super.onRemove(state, worldIn, pos, newState, isMoving);
     }
   }
