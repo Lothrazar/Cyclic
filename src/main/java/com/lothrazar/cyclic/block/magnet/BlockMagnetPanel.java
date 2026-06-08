@@ -47,19 +47,22 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
 
   @Override
   public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult result) {
+    //crouch + empty hand toggles on/off
     if (player.isCrouching()) {
-      openFilterMenu(world, pos, player);
+      world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
+      SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
+      ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
       return InteractionResult.SUCCESS;
     }
-    world.setBlockAndUpdate(pos, state.setValue(LIT, !state.getValue(LIT)));
-    SoundUtil.playSound(world, pos, SoundEvents.FIRE_EXTINGUISH);
-    ParticleUtil.spawnParticle(world, ParticleTypes.SPLASH, pos.above(), 12);
+    //normal right-click opens the filter menu, matching the rest of the mod
+    openFilterMenu(world, pos, player);
     return InteractionResult.SUCCESS;
   }
 
   @Override
   public ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-    if (player.isCrouching()) {
+    //right-click with an item also opens the filter menu (parallels every other GUI block)
+    if (!player.isCrouching()) {
       openFilterMenu(world, pos, player);
       return ItemInteractionResult.SUCCESS;
     }
