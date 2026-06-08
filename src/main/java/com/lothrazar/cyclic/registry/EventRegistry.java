@@ -19,6 +19,7 @@ import com.lothrazar.cyclic.enchant.MagnetEnchant;
 import com.lothrazar.cyclic.enchant.MultiJumpEnchant;
 import com.lothrazar.cyclic.enchant.QuickdrawEnchant;
 import com.lothrazar.cyclic.enchant.ReachEnchant;
+import com.lothrazar.cyclic.enchant.SoulboundEnchant;
 import com.lothrazar.cyclic.enchant.SteadyEnchant;
 import com.lothrazar.cyclic.enchant.StepEnchant;
 import com.lothrazar.cyclic.enchant.TravellerEnchant;
@@ -54,6 +55,7 @@ public class EventRegistry {
     NeoForge.EVENT_BUS.register(new MultiJumpEnchant());
     NeoForge.EVENT_BUS.register(new QuickdrawEnchant());
     NeoForge.EVENT_BUS.register(new ReachEnchant());
+    NeoForge.EVENT_BUS.register(new SoulboundEnchant());
     NeoForge.EVENT_BUS.register(new SteadyEnchant());
     NeoForge.EVENT_BUS.register(new StepEnchant());
     NeoForge.EVENT_BUS.register(new TravellerEnchant());

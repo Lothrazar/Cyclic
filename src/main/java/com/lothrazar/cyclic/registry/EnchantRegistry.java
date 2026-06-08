@@ -27,6 +27,7 @@ public class EnchantRegistry {
   public static final ResourceKey<Enchantment> QUICKDRAW = key("quickshot");
   public static final ResourceKey<Enchantment> REACH = key("reach");
   public static final ResourceKey<Enchantment> STEADY = key("steady");
+  public static final ResourceKey<Enchantment> SOULBOUND = key("soulbound");
   public static final ResourceKey<Enchantment> STEP = key("step");
   public static final ResourceKey<Enchantment> TRAVELLER = key("traveler");
   public static final ResourceKey<Enchantment> VENOM = key("venom");
