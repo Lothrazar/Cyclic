@@ -29,8 +29,11 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
   static enum Fields {
-    REDSTONE, TIMER, RENDER, BURNMAX;
+    REDSTONE, TIMER, RENDER, BURNMAX, LOCK;
   }
+
+  private static final String NBT_LOCK = "lock";
+  private int lock = 0;
 
   static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
@@ -67,6 +70,10 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     }
     //Fixes sync issue entirely
     if (level.isClientSide()) {
+      return;
+    }
+    if (this.lock == 1 && anyInputAtOne(inventory)) {
+      //lock engaged and a stack would shrink to zero: halt before consuming any energy
       return;
     }
     this.timer--;
@@ -108,6 +115,9 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       case BURNMAX:
         this.burnTimeMax = value;
       break;
+      case LOCK:
+        this.lock = value % 2;
+      break;
     }
   }
 
@@ -122,6 +132,8 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
         return this.render;
       case BURNMAX:
         return this.burnTimeMax;
+      case LOCK:
+        return this.lock;
     }
     return 0;
   }
@@ -144,6 +156,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     }
     inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
     burnTimeMax = tag.getInt("burnTimeMax");
+    lock = tag.getInt(NBT_LOCK);
     super.loadAdditional(tag,registries);
   }
 
@@ -155,6 +168,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
     tag.putInt("burnTimeMax", this.burnTimeMax);
+    tag.putInt(NBT_LOCK, this.lock);
     super.saveAdditional(tag,registries);
   }
 
@@ -201,11 +215,25 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
     }
   }
 
+  private static boolean anyInputAtOne(ItemStackHandler inv) {
+    for (int i = 0; i < inv.getSlots(); i++) {
+      ItemStack s = inv.getStackInSlot(i);
+      if (!s.isEmpty() && s.getCount() <= 1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private boolean tryProcessRecipe() {
     MelterRecipeInput input = new MelterRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()
         && currentRecipe.matches(input, level)) {
+      //lock: refuse to drain any non-empty input slot down to zero, so automation can't refill with a different item
+      if (this.lock == 1 && anyInputAtOne(inventory)) {
+        return false;
+      }
       inventory.getStackInSlot(0).shrink(1);
       inventory.getStackInSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.EXECUTE);

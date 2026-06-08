@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.block.melter;
 
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.FluidBar;
@@ -14,6 +16,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   private EnergyBar energy;
   private FluidBar fluid;
   private TexturedProgress progress;
+  private ButtonMachineField btnLock;
 
   public ScreenMelter(ContainerMelter screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
@@ -28,6 +31,9 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     this.progress.setTopDown(false);
     progress.guiLeft = fluid.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = fluid.guiTop = energy.guiTop = topPos;
+    btnLock = addRenderableWidget(new ButtonMachineField(leftPos + 78, topPos + 58,
+        TileMelter.Fields.LOCK.ordinal(), menu.tile.getBlockPos(),
+        TextureEnum.POWER_MOVING, TextureEnum.POWER_STOP, "gui.cyclic.lock"));
   }
 
   @Override
@@ -43,6 +49,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
   protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
+    btnLock.onValueUpdate(menu.tile);
   }
 
   @Override

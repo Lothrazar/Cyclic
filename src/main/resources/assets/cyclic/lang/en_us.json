@@ -1325,6 +1325,8 @@
   "gui.cyclic.render2": "Preview Outline",
   "gui.cyclic.redstone0": "Always On",
   "gui.cyclic.redstone1": "Requires Redstone",
+  "gui.cyclic.lock0": "Slots Unlocked: processing will fully consume input stacks (automation may refill empty slots with other items)",
+  "gui.cyclic.lock1": "Slots Locked: processing will stop before the last item is consumed, preventing automated pipes from refilling empty slots with wrong items",
   "block.cyclic.spikes.guide": "Spikes can be placed in the world in any orientation to damage creatures or players that touch them. Spikes are only extended when they receive a redstone signal.",
   "block.cyclic.spikes_iron": "Iron Spikes",
   "block.cyclic.spikes_iron.tooltip": "Powered by redstone; damage on contact",

@@ -32,8 +32,11 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   static enum Fields {
-    REDSTONE, TIMER, RENDER, BURNMAX;
+    REDSTONE, TIMER, RENDER, BURNMAX, LOCK;
   }
+
+  private static final String NBT_LOCK = "lock";
+  private int lock = 0;
 
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
@@ -83,6 +86,10 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     if (this.outputSlots.getStackInSlot(0).getCount() > max - res.getCount()) {
       return;
     }
+    if (this.lock == 1 && anyInputAtOne(inputSlots)) {
+      //lock engaged and a stack would shrink to zero: halt before consuming any energy
+      return;
+    }
     final int energyCost = this.currentRecipe.getEnergy().getRfPertick();
     final int fluidCost = this.currentRecipe.getAmount();
     if ((energy.getEnergyStored() < energyCost && energyCost > 0)
@@ -116,6 +123,9 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       case BURNMAX:
         this.burnTimeMax = value;
       break;
+      case LOCK:
+        this.lock = value % 2;
+      break;
     }
   }
 
@@ -130,6 +140,8 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
         return this.render;
       case BURNMAX:
         return this.burnTimeMax;
+      case LOCK:
+        return this.lock;
     }
     return 0;
   }
@@ -153,6 +165,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     inputSlots.deserializeNBT(registries,tag.getCompound(NBTINV));
     outputSlots.deserializeNBT(registries,tag.getCompound("invoutput"));
     burnTimeMax = tag.getInt("burnTimeMax");
+    lock = tag.getInt(NBT_LOCK);
     super.loadAdditional(tag,registries);
   }
 
@@ -165,6 +178,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     tag.put(NBTINV, inputSlots.serializeNBT(registries));
     tag.put("invoutput", outputSlots.serializeNBT(registries));
     tag.putInt("burnTimeMax", this.burnTimeMax);
+    tag.putInt(NBT_LOCK, this.lock);
     super.saveAdditional(tag,registries);
   }
 
@@ -203,6 +217,16 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
     }
   }
 
+  private static boolean anyInputAtOne(ItemStackHandler inv) {
+    for (int i = 0; i < inv.getSlots(); i++) {
+      ItemStack s = inv.getStackInSlot(i);
+      if (!s.isEmpty() && s.getCount() <= 1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private boolean tryProcessRecipe() {
     final int needed = this.currentRecipe.getAmount();
     FluidStack test = tank.drain(needed, IFluidHandler.FluidAction.SIMULATE);
@@ -211,6 +235,10 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
       if (!outputSlots.insertItem(0, currentRecipe.getResultItem(level.registryAccess()), true).isEmpty()) {
         return false;
         // there was non-empty left after this, so no room for all
+      }
+      //lock: refuse to drain any non-empty input slot down to zero, so automation can't refill with a different item
+      if (this.lock == 1 && anyInputAtOne(inputSlots)) {
+        return false;
       }
       // ok it has room for all the fluid none will be wasted
       inputSlots.getStackInSlot(0).shrink(1);

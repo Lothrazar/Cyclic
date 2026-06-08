@@ -1,6 +1,8 @@
 package com.lothrazar.cyclic.block.solidifier;
 
+import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.FluidBar;
@@ -14,6 +16,7 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   private EnergyBar energy;
   private FluidBar fluid;
   private TexturedProgress progress;
+  private ButtonMachineField btnLock;
 
   public ScreenSolidifier(ContainerSolidifier screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
@@ -29,6 +32,9 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
     progress.guiLeft = fluid.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = fluid.guiTop = energy.guiTop = topPos;
     //    energy.visible = TileSolidifier.POWERCONF.get() > 0;
+    btnLock = addRenderableWidget(new ButtonMachineField(leftPos + 78, topPos + 58,
+        TileSolidifier.Fields.LOCK.ordinal(), menu.tile.getBlockPos(),
+        TextureEnum.POWER_MOVING, TextureEnum.POWER_STOP, "gui.cyclic.lock"));
   }
 
   @Override
@@ -44,6 +50,7 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
   protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
     this.drawName(ms, title.getString());
+    btnLock.onValueUpdate(menu.tile);
   }
 
   @Override
