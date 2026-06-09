@@ -21,6 +21,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -36,9 +37,9 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class TileStructure extends TileBlockEntityCyclic implements MenuProvider {
 
   public static ModConfigSpec.IntValue POWERCONF;
-  static final int SLOT_BUILD = 0;
-  protected static final int SLOT_SHAPE = 1;
-  protected static final int SLOT_GPS = 2;
+  static final int SLOT_BUILD = 0;    // index in inventory
+  static final int SLOT_SHAPE = 0;    // index in filter
+  static final int SLOT_GPS = 1;      // index in filter
   public static final int MAX_HEIGHT = 100;
 
   static enum Fields {
@@ -47,25 +48,35 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
 
   static final int MAX = 64000;
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
-  ItemStackHandler inventory = new ItemStackHandler(3) {
+  ItemStackHandler inventory = new ItemStackHandler(1) {
+
+//    @Override
+//    public ItemStack getStackInSlot(int slot) {
+//      if (slot < 0 || slot >= this.stacks.size()) {
+//        return ItemStack.EMPTY; // failsafe for slot not in range legacy worlds
+//      }
+//      return super.getStackInSlot(slot);
+//    }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
-      if (slot < 0 || slot >= this.stacks.size()) {
-        return ItemStack.EMPTY; // failsafe for slot not in range legacy worlds
-      }
-      return super.getStackInSlot(slot); //this.stacks.get(slot);
+    public boolean isItemValid(int slot, ItemStack stack) {
+      return stack.getItem() instanceof BlockItem;
+    }
+  };
+
+  ItemStackHandler filter = new ItemStackHandler(2) {
+
+    @Override
+    public int getSlotLimit(int slot) {
+      return 1;
     }
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-      if (slot == SLOT_BUILD) {
-        return Block.byItem(stack.getItem()) != null;
-      }
-      else if (slot == SLOT_SHAPE) {
+      if (slot == SLOT_SHAPE) {
         return stack.getItem() instanceof ShapeCard;
       }
-      else { // if SLOT_GPS
+      else { // SLOT_GPS
         return stack.getItem() instanceof LocationGpsCard;
       }
     }
@@ -94,7 +105,10 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
     if (tag.contains(NBTENERGY)) {
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
-    inventory.deserializeNBT(registries,tag.getCompound(NBTINV));
+    inventory.deserializeNBT(registries, tag.getCompound(NBTINV));
+    if (tag.contains("filter")) {
+      filter.deserializeNBT(registries, tag.getCompound("filter"));
+    }
     int t = tag.getInt("buildType");
     buildType = BuildStructureType.values()[t];
     buildSize = tag.getInt("buildSize");
@@ -111,6 +125,7 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
     tag.putInt("shapeIndex", shapeIndex);
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
+    tag.put("filter", filter.serializeNBT(registries));
     super.saveAdditional(tag,registries);
   }
 
@@ -187,13 +202,10 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
     //start at current position and validate
     //does my shape exist? if so copy to it
     ItemStack stack = inventory.getStackInSlot(SLOT_BUILD);
-    //    if (stack.isEmpty()) {
-    //      return;
-    //    }
-    Block stuff = Block.byItem(stack.getItem());
-    if (stuff == null) {
+    if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem)) {
       return;
     }
+    Block stuff = Block.byItem(stack.getItem());
     int cost = POWERCONF.get();
     for (int i = 0; i < spotsSkippablePerTrigger; i++) {
       if (energy.getEnergyStored() < cost && cost > 0) {
@@ -209,6 +221,7 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
           //build success
           this.incrementPosition(shape);
           stack.shrink(1);
+          setChanged();
           energy.extractEnergy(cost, false);
         }
         break;
@@ -238,10 +251,10 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   }
 
   private BlockPos getPosTarget() {
-    if (SLOT_GPS < inventory.getSlots()) {
+    if (SLOT_GPS < filter.getSlots()) {
       //before going to nextpos
       //do we have a center offset
-      BlockPosDim loc = LocationGpsCard.getPosition(inventory.getStackInSlot(SLOT_GPS));
+      BlockPosDim loc = LocationGpsCard.getPosition(filter.getStackInSlot(SLOT_GPS));
       if (loc != null && loc.getPos() != null) {
         return loc.getPos();
       }
@@ -255,8 +268,8 @@ public class TileStructure extends TileBlockEntityCyclic implements MenuProvider
   }
 
   public List<BlockPos> getShape() {
-    if (SLOT_SHAPE < inventory.getSlots()) {
-      ItemStack shapeCard = inventory.getStackInSlot(SLOT_SHAPE);
+    if (SLOT_SHAPE < filter.getSlots()) {
+      ItemStack shapeCard = filter.getStackInSlot(SLOT_SHAPE);
       if (shapeCard.getItem() instanceof ShapeCard) {
         RelativeShape shape = RelativeShape.read(shapeCard);
         if (shape != null) {

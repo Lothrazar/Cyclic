@@ -23,6 +23,13 @@ public class EnderShelfItemHandler extends ItemStackHandler {
   String[] enchantmentIdCache = new String[ROWS];
   int[] extraBooks = new int[ROWS];
 
+  @Override
+  protected void onContentsChanged(int slot) {
+    if (shelf != null) {
+      shelf.setChanged();
+    }
+  }
+
   public void resetNameCache() {
     nameCache = new String[5];
   }

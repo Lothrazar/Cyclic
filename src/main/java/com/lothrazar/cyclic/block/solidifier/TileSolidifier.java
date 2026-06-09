@@ -40,7 +40,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
 
   public static final int MAX = 64000;
   public static final int CAPACITY = 64 * FluidType.BUCKET_VOLUME;
-  public static final int TRANSFER_FLUID_PER_TICK = FluidType.BUCKET_VOLUME / 20;
+//  public static final int TRANSFER_FLUID_PER_TICK = FluidType.BUCKET_VOLUME / 20;
   private RecipeSolidifier currentRecipe;
   FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> true);
 

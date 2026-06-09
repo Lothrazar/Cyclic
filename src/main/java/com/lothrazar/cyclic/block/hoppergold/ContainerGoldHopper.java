@@ -19,9 +19,17 @@ public class ContainerGoldHopper extends ContainerBase {
     tile = (TileGoldHopper) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
+    var inv = tile.getInventory();
     var h = tile.getFilterSlot();
-    this.endInv = h.getSlots();
-    addSlot(new SlotItemHandler(h, 0, 80, 24) {
+    this.endInv = inv.getSlots() + h.getSlots();
+    addSlot(new SlotItemHandler(inv, 0, 80, 34) {
+
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(h, 0, 152, 8) {
 
       @Override
       public void setChanged() {

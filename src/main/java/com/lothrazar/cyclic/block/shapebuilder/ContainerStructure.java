@@ -20,39 +20,38 @@ public class ContainerStructure extends ContainerBase {
     tile = (TileStructure) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    var h =tile.inventory;
-      addSlot(new SlotItemHandler(h, TileStructure.SLOT_BUILD, 61, 21) {
+    addSlot(new SlotItemHandler(tile.inventory, TileStructure.SLOT_BUILD, 61, 21) {
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-      addSlot(new SlotItemHandler(h, TileStructure.SLOT_SHAPE, 8, 132) {
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    this.endInv = tile.inventory.getSlots();
+    addSlot(new SlotItemHandler(tile.filter, TileStructure.SLOT_SHAPE, 8, 132) {
 
-        @Override
-        public int getMaxStackSize() {
-          return 1;
-        }
+      @Override
+      public int getMaxStackSize() {
+        return 1;
+      }
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-      addSlot(new SlotItemHandler(h, TileStructure.SLOT_GPS, 152, 132) {
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
+    addSlot(new SlotItemHandler(tile.filter, TileStructure.SLOT_GPS, 152, 132) {
 
-        @Override
-        public int getMaxStackSize() {
-          return 1;
-        }
+      @Override
+      public int getMaxStackSize() {
+        return 1;
+      }
 
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-      this.endInv = h.getSlots();
+      @Override
+      public void setChanged() {
+        tile.setChanged();
+      }
+    });
 //    });
     layoutPlayerInventorySlots(8, 153);
     this.trackAllIntFields(tile, TileStructure.Fields.values().length);

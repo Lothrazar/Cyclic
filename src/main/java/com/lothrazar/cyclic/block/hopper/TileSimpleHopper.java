@@ -120,6 +120,10 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
   @Override
   public boolean isGridAligned() { return true; }
 
+  public ItemStackHandler getInventory() {
+    return inventory;
+  }
+
   @Override
   public IItemHandler getItemHandler(Direction side) {
     return inventory;
