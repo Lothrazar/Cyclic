@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
+import net.minecraft.core.Direction;
+import net.neoforged.neoforge.items.IItemHandler;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -24,6 +26,11 @@ public class TileEnderCtrl extends TileBlockEntityCyclic {
 
   public TileEnderCtrl(BlockPos pos, BlockState state) {
     super(TileRegistry.ENDER_CONTROLLER.get(), pos, state);
+  }
+
+  @Override
+  public IItemHandler getItemHandler(Direction side) {
+    return controllerInv;
   }
 
   @Override

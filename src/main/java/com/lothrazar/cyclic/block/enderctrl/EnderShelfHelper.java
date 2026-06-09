@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import com.lothrazar.cyclic.block.endershelf.EnderShelfItemHandler;
+import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -84,11 +85,17 @@ public class EnderShelfHelper {
     return shelves;
   }
 
-    public static EnderShelfItemHandler getShelfHandler(BlockEntity te) {
+  public static EnderShelfItemHandler getShelfHandler(BlockEntity te) {
+    if (te instanceof TileEnderShelf shelf) {
+      return shelf.inventory;
+    }
     return null;
   }
 
-    public static EnderControllerItemHandler getControllerHandler(BlockEntity te) {
+  public static EnderControllerItemHandler getControllerHandler(BlockEntity te) {
+    if (te instanceof TileEnderCtrl ctrl) {
+      return ctrl.controllerInv;
+    }
     return null;
   }
 

@@ -32,9 +32,10 @@ public class ScreenSolidifier extends ScreenBase<ContainerSolidifier> {
     progress.guiLeft = fluid.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = fluid.guiTop = energy.guiTop = topPos;
     //    energy.visible = TileSolidifier.POWERCONF.get() > 0;
-    btnLock = addRenderableWidget(new ButtonMachineField(leftPos + 78, topPos + 58,
+    btnLock = addRenderableWidget(new ButtonMachineField(leftPos + 80, topPos + 60,
         TileSolidifier.Fields.LOCK.ordinal(), menu.tile.getBlockPos(),
-        TextureEnum.POWER_MOVING, TextureEnum.POWER_STOP, "gui.cyclic.lock"));
+        TextureEnum.CRAFT_EMPTY, TextureEnum.CRAFT_BALANCE, "gui.cyclic.lock"));
+    btnLock.setSize(14);
   }
 
   @Override

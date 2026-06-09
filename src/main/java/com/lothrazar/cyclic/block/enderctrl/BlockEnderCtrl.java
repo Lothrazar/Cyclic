@@ -5,7 +5,6 @@ import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf;
 import com.lothrazar.cyclic.block.endershelf.TileEnderShelf.RenderTextType;
 import com.lothrazar.cyclic.data.DataTags;
-import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.BlockstatesUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -21,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.items.IItemHandler;
 
 public class BlockEnderCtrl extends BlockCyclic {
 
@@ -89,14 +87,16 @@ public class BlockEnderCtrl extends BlockCyclic {
       return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
     if (heldItem.getItem() == Items.ENCHANTED_BOOK) {
-      var h = CapabilityUtil.item(world,pos);
-//      world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-        insertIntoController(player, InteractionHand.MAIN_HAND, heldItem, h);
-//      });
+      if (!world.isClientSide) {
+        TileEnderCtrl ctrl = (TileEnderCtrl) world.getBlockEntity(pos);
+        if (ctrl != null) {
+          ItemStack remaining = ctrl.controllerInv.insertItem(0, heldItem, false);
+          player.setItemInHand(InteractionHand.MAIN_HAND, remaining);
+          player.swing(InteractionHand.MAIN_HAND);
+        }
+      }
+      return ItemInteractionResult.CONSUME;
     }
     return ItemInteractionResult.CONSUME;
-  }
-
-  private void insertIntoController(Player player, InteractionHand hand, ItemStack heldItem, IItemHandler controller) {
   }
 }

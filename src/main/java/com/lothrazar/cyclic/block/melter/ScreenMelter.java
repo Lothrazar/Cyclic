@@ -31,9 +31,10 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     this.progress.setTopDown(false);
     progress.guiLeft = fluid.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = fluid.guiTop = energy.guiTop = topPos;
-    btnLock = addRenderableWidget(new ButtonMachineField(leftPos + 78, topPos + 58,
+    btnLock = addRenderableWidget(new ButtonMachineField(leftPos + 80, topPos + 60,
         TileMelter.Fields.LOCK.ordinal(), menu.tile.getBlockPos(),
-        TextureEnum.POWER_MOVING, TextureEnum.POWER_STOP, "gui.cyclic.lock"));
+        TextureEnum.CRAFT_EMPTY, TextureEnum.CRAFT_BALANCE, "gui.cyclic.lock"));
+    btnLock.setSize(14);
   }
 
   @Override
