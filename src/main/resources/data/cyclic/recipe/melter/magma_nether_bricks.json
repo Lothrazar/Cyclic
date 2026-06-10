@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_bricks"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 900
+  },
+  "result": {
+    "id": "cyclic:magma",
+    "amount": 50
+  }
+}

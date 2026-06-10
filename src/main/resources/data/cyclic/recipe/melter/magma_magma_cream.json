@@ -6,11 +6,11 @@
     }
   ],
   "energy": {
-    "rfpertick": 80,
-    "ticks": 60
+    "rfpertick": 200,
+    "ticks": 600
   },
   "result": {
     "id": "cyclic:magma",
-    "amount": 100
+    "amount": 250
   }
 }

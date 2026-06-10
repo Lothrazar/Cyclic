@@ -27,11 +27,11 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
     this.energy = energy;
     ingredients = NonNullList.create();
     ingredients.addAll(ingredientsIn);
-    while (ingredients.size() < 2) {
+    while (ingredients.size() < 1) {
       ingredients.add(Ingredient.EMPTY);
     }
-    if (ingredients.size() > 2) {
-      throw new IllegalArgumentException("Melter recipe must have at most two ingredients");
+    if (ingredients.size() > 1) {
+      throw new IllegalArgumentException("Melter recipe must have exactly one ingredient");
     }
     this.outFluid = out;
   }
@@ -44,9 +44,7 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
   @Override
   public boolean matches(MelterRecipeInput inv, Level worldIn) {
     try {
-      boolean matchLeft = matches(inv.getItem(0), ingredients.get(0));
-      boolean matchRight = matches(inv.getItem(1), ingredients.get(1));
-      return matchLeft && matchRight;
+      return matches(inv.getItem(0), ingredients.get(0));
     }
     catch (Exception e) {
       return false;
@@ -58,7 +56,7 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
       return current.isEmpty();
     }
     if (current.isEmpty()) {
-      return ing == Ingredient.EMPTY;
+      return false;
     }
     return ing.test(current);
   }
@@ -102,7 +100,7 @@ public class RecipeMelter implements Recipe<MelterRecipeInput> {
 
   @Override
   public boolean canCraftInDimensions(int width, int height) {
-    return width <= 2 && height <= 1;
+    return width <= 1 && height <= 1;
   }
 
   public int getEnergyCost() {

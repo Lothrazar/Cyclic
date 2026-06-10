@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.compat.crafttweaker;
 
-import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
@@ -20,6 +19,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.fluids.FluidStack;
 
+import java.util.Arrays;
+
 @ZenRegister
 @ZenCodeType.Name("mods.cyclic.melter")
 public class MelterZen implements IRecipeManager<RecipeMelter> {
@@ -32,12 +33,10 @@ public class MelterZen implements IRecipeManager<RecipeMelter> {
   }
 
   @ZenCodeType.Method
-  public void addRecipe(String name, IIngredient[] input, IFluidStack fluidStack, int rfPertick, int ticks) {
+  public void addRecipe(String name, IIngredient input, IFluidStack fluidStack, int rfPertick, int ticks) {
     ResourceLocation id = fixRecipeId(name);
-    NonNullList<Ingredient> list = NonNullList.withSize(input.length, Ingredient.EMPTY);
-    for (int i = 0; i < input.length; i++) {
-      list.set(i, input[i].asVanillaIngredient());
-    }
+    NonNullList<Ingredient> list = NonNullList.withSize(1, Ingredient.EMPTY);
+    list.set(0, input.asVanillaIngredient());
     RecipeMelter m = new RecipeMelter(list,
         new FluidStack(fluidStack.getFluid(), (int) fluidStack.getAmount()), new EnergyIngredient(rfPertick, ticks));
     RecipeHolder<RecipeMelter> holder = createHolder(id, m);

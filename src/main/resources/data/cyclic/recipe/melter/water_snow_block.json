@@ -2,15 +2,15 @@
   "type": "cyclic:melter",
   "ingredients": [
     {
-      "item": "minecraft:magma_block"
+      "item": "minecraft:snow_block"
     }
   ],
   "energy": {
-    "rfpertick": 80,
-    "ticks": 60
+    "rfpertick": 40,
+    "ticks": 120
   },
   "result": {
-    "id": "cyclic:magma",
+    "id": "minecraft:water",
     "amount": 1000
   }
 }

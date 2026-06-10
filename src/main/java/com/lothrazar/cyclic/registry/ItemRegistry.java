@@ -399,6 +399,8 @@ public class ItemRegistry {
   public static final DeferredItem<Item> OBSIDIAN_PRESSURE_PLATE = ITEMS.register("obsidian_pressure_plate", () -> new BlockItem(BlockRegistry.OBSIDIAN_PRESSURE_PLATE.get(), new Item.Properties()));
   public static final DeferredItem<Item> BUTTON_BASALT = ITEMS.register("button_basalt", () -> new BlockItem(BlockRegistry.BUTTON_BASALT.get(), new Item.Properties()));
   public static final DeferredItem<Item> BUTTON_BLACKSTONE = ITEMS.register("button_blackstone", () -> new BlockItem(BlockRegistry.BUTTON_BLACKSTONE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BUTTON_DEEPSLATE = ITEMS.register("button_deepslate", () -> new BlockItem(BlockRegistry.BUTTON_DEEPSLATE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BUTTON_TUFF = ITEMS.register("button_tuff", () -> new BlockItem(BlockRegistry.BUTTON_TUFF.get(), new Item.Properties()));
   public static final DeferredItem<Item> LEVER_REMOTE = ITEMS.register("lever_remote", () -> new LeverRemote(new Item.Properties().stacksTo(1)));
   public static final DeferredItem<Item> CLOCK = ITEMS.register("clock", () -> new BlockItem(BlockRegistry.CLOCK.get(), new Item.Properties()));
   public static final DeferredItem<Item> WAXED_REDSTONE = ITEMS.register("waxed_redstone", () -> new BlockItem(BlockRegistry.WAXED_REDSTONE.get(), new Item.Properties()));

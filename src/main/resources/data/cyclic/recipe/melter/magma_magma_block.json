@@ -3,17 +3,14 @@
   "ingredients": [
     {
       "item": "minecraft:magma_block"
-    },
-    {
-      "item": "minecraft:magma_block"
     }
   ],
   "energy": {
     "rfpertick": 80,
-    "ticks": 60
+    "ticks": 600
   },
   "result": {
     "id": "cyclic:magma",
-    "amount": 2000
+    "amount": 1000
   }
 }

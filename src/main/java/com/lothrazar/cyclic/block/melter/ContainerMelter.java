@@ -21,14 +21,7 @@ public class ContainerMelter extends ContainerBase {
     this.playerInventory = playerInventory;
 //    tile.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
       this.endInv = tile.inventory.getSlots();
-      addSlot(new SlotItemHandler(tile.inventory, 0, 17, 31) {
-
-        @Override
-        public void setChanged() {
-          tile.setChanged();
-        }
-      });
-      addSlot(new SlotItemHandler(tile.inventory, 1, 35, 31) {
+      addSlot(new SlotItemHandler(tile.inventory, 0, 26, 31) {
 
         @Override
         public void setChanged() {

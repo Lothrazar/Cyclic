@@ -27,7 +27,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     super.init();
     energy = new EnergyBar(this.font, TileMelter.MAX);
     fluid = new FluidBar(this.font, 132, 8, TileMelter.CAPACITY);
-    this.progress = new TexturedProgress(this.font, 68, 37, 24, 17, TextureRegistry.ARROW);
+    this.progress = new TexturedProgress(this.font, 78, 32, 24, 17, TextureRegistry.ARROW);
     this.progress.setTopDown(false);
     progress.guiLeft = fluid.guiLeft = energy.guiLeft = leftPos;
     progress.guiTop = fluid.guiTop = energy.guiTop = topPos;
@@ -60,7 +60,6 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     this.progress.max = menu.tile.getField(TileMelter.Fields.BURNMAX.ordinal());
     progress.draw(ms, menu.tile.getField(TileMelter.Fields.TIMER.ordinal()));
     fluid.draw(ms, menu.tile.getFluid());
-    this.drawSlot(ms, 16, 30);
-    this.drawSlot(ms, 34, 30);
+    this.drawSlot(ms, 25, 30);
   }
 }

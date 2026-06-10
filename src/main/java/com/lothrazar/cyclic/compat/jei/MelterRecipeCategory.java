@@ -27,6 +27,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<RecipeMelter>> {
 
@@ -88,9 +89,8 @@ public class MelterRecipeCategory implements IRecipeCategory<RecipeHolder<Recipe
   @Override
   public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<RecipeMelter> recipeHolder, IFocusGroup focuses) {
     RecipeMelter recipe = recipeHolder.value();
-    builder.addSlot(RecipeIngredientRole.INPUT, 4, 19).addIngredients(recipe.at(0));
-    builder.addSlot(RecipeIngredientRole.INPUT, 22, 19).addIngredients(recipe.at(1));
+    builder.addSlot(RecipeIngredientRole.INPUT, 18, 26).addIngredients(recipe.at(0));
     List<FluidStack> matchingFluids = List.of(recipe.getRecipeFluid());
-    builder.addSlot(RecipeIngredientRole.OUTPUT, 132, 19).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(4000, false, 16, 16);
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 132, 26).addIngredients(NeoForgeTypes.FLUID_STACK, matchingFluids).setFluidRenderer(FluidType.BUCKET_VOLUME, false, 16, 16);
   }
 }

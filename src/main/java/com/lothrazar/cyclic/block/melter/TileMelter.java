@@ -46,7 +46,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
-  ItemStackHandler inventory = new ItemStackHandler(2);
+  ItemStackHandler inventory = new ItemStackHandler(1);
   private RecipeMelter currentRecipe;
   private int burnTimeMax = 0; //only non zero if processing
 
@@ -86,7 +86,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
       return;
     }
     energy.extractEnergy(cost, false);
-    if (currentRecipe == null || !currentRecipe.matches(new MelterRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1)), level)) {
+    if (currentRecipe == null || !currentRecipe.matches(new MelterRecipeInput(inventory.getStackInSlot(0)), level)) {
       this.findMatchingRecipe();
       if (currentRecipe == null) {
         this.timer = 0;
@@ -191,7 +191,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private void findMatchingRecipe() {
-    MelterRecipeInput input = new MelterRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
+    MelterRecipeInput input = new MelterRecipeInput(inventory.getStackInSlot(0));
     if (currentRecipe != null && currentRecipe.matches(input, level)) {
       return;
     }
@@ -226,7 +226,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   private boolean tryProcessRecipe() {
-    MelterRecipeInput input = new MelterRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
+    MelterRecipeInput input = new MelterRecipeInput(inventory.getStackInSlot(0));
     int test = tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.SIMULATE);
     if (test == this.currentRecipe.getRecipeFluid().getAmount()
         && currentRecipe.matches(input, level)) {
@@ -235,7 +235,6 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
         return false;
       }
       inventory.getStackInSlot(0).shrink(1);
-      inventory.getStackInSlot(1).shrink(1);
       tank.fill(this.currentRecipe.getRecipeFluid(), IFluidHandler.FluidAction.EXECUTE);
       updateComparatorOutputLevel();
       return true;

@@ -126,8 +126,8 @@ public class CyclicPluginJEI implements IModPlugin {
   @Override
   public void registerRecipeTransferHandlers(IRecipeTransferRegistration registry) {
     registry.addRecipeTransferHandler(ContainerMelter.class, MenuTypeRegistry.MELTER.get(), MelterRecipeCategory.TYPE,
-        0, 2, //recipeSLotStart, recipeSlotCount
-        2, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
+        0, 1, //recipeSLotStart, recipeSlotCount
+        1, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount
     registry.addRecipeTransferHandler(ContainerSolidifier.class, MenuTypeRegistry.SOLIDIFIER.get(), SolidifierRecipeCategory.TYPE,
         0, 3, //recipeSLotStart, recipeSlotCount
         4, PLAYER_INV_SIZE); // inventorySlotStart, inventorySlotCount

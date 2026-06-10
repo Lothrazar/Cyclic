@@ -2,18 +2,15 @@
   "type": "cyclic:melter",
   "ingredients": [
     {
-      "item": "cyclic:biomass"
-    },
-    {
-      "item": "minecraft:kelp"
+      "tag": "c:cactus"
     }
   ],
   "energy": {
-    "rfpertick": 80,
-    "ticks": 60
+    "rfpertick": 250,
+    "ticks": 600
   },
   "result": {
     "id": "cyclic:biomass",
-    "amount": 1000
+    "amount": 500
   }
 }

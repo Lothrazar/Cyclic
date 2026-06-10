@@ -12,17 +12,14 @@
   "ingredients": [
     {
       "tag": "c:slimeballs"
-    },
-    {
-      "tag": "c:slimeballs"
     }
   ],
   "energy": {
-    "rfpertick": 100,
-    "ticks": 160
+    "rfpertick": 500,
+    "ticks": 180
   },
   "result": {
     "id": "cyclic:slime",
-    "amount": 500
+    "amount": 250
   }
 }

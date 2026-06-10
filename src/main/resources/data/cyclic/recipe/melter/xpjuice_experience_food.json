@@ -3,9 +3,6 @@
   "ingredients": [
     {
       "item": "cyclic:experience_food"
-    },
-    {
-      "item": "minecraft:ghast_tear"
     }
   ],
   "energy": {
@@ -14,6 +11,6 @@
   },
   "result": {
     "id": "cyclic:xpjuice",
-    "amount": 1200
+    "amount": 1000
   }
 }

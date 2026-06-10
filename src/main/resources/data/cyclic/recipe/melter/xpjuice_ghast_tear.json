@@ -2,10 +2,7 @@
   "type": "cyclic:melter",
   "ingredients": [
     {
-      "tag": "c:stone"
-    },
-    {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:ghast_tear"
     }
   ],
   "energy": {
@@ -13,7 +10,7 @@
     "ticks": 160
   },
   "result": {
-    "id": "minecraft:lava",
-    "amount": 1000
+    "id": "cyclic:xpjuice",
+    "amount": 50
   }
 }

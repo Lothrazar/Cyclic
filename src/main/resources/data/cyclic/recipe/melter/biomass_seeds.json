@@ -2,18 +2,15 @@
   "type": "cyclic:melter",
   "ingredients": [
     {
-      "item": "minecraft:honey_bottle"
-    },
-    {
-      "item": "minecraft:honey_bottle"
+      "tag": "c:seeds"
     }
   ],
   "energy": {
-    "rfpertick": 80,
+    "rfpertick": 20,
     "ticks": 60
   },
   "result": {
-    "id": "cyclic:honey",
+    "id": "cyclic:biomass",
     "amount": 500
   }
 }

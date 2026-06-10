@@ -2,9 +2,6 @@
   "type": "cyclic:melter",
   "ingredients": [
     {
-      "item": "cyclic:experience_food"
-    },
-    {
       "tag": "c:bones"
     }
   ],
@@ -14,6 +11,6 @@
   },
   "result": {
     "id": "cyclic:xpjuice",
-    "amount": 1020
+    "amount": 1
   }
 }

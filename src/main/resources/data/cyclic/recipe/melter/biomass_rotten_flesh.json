@@ -2,10 +2,7 @@
   "type": "cyclic:melter",
   "ingredients": [
     {
-      "item": "minecraft:obsidian"
-    },
-    {
-      "tag": "c:stone"
+      "item": "minecraft:rotten_flesh"
     }
   ],
   "energy": {
@@ -13,7 +10,7 @@
     "ticks": 160
   },
   "result": {
-    "id": "minecraft:lava",
-    "amount": 1000
+    "id": "cyclic:biomass",
+    "amount": 10
   }
 }

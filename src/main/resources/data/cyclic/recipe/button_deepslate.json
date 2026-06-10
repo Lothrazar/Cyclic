@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "item": "minecraft:stone_button"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "cyclic:button_deepslate"
+  }
+}
