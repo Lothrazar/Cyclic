@@ -298,7 +298,8 @@ public class ConfigRegistry {
     ReachEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(ReachEnchant.ID + ".enabled", true);
     StepEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(StepEnchant.ID + ".enabled", true);
     SteadyEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(SteadyEnchant.ID + ".enabled", true);
-    SoulboundEnchant.CFG = CFG.comment(" Set false to stop enchantment from working. When enabled, one item with this enchant is kept on player death.").define(SoulboundEnchant.ID + ".enabled", true);
+    SoulboundEnchant.CFG = CFG.comment(" Set false to stop enchantment from working. When enabled, all items with this enchant are kept on player death.").define(SoulboundEnchant.ID + ".enabled", true);
+    SoulboundEnchant.DURABILITY_COST = CFG.comment(" Durability damage applied to each soulbound item on death. Set to 0 to disable.").defineInRange(SoulboundEnchant.ID + ".durability_cost", 5, 0, 9999);
     LastStandEnchant.CFG = CFG.comment(" Set false to stop enchantment from working").define(LastStandEnchant.ID + ".enabled", true);
     LastStandEnchant.COST = CFG.comment(" Base XP cost to activate at level 1 (level 2 is this/2)").defineInRange(LastStandEnchant.ID + ".xp_cost", 50, 1, 9999);
     LastStandEnchant.ABS = CFG.comment(" How many ticks of Absorption hearts given on trigger, 0 to disable").defineInRange(LastStandEnchant.ID + ".potion_ticks", 600, 0, 9999);

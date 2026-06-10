@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.item.datacard.filter.GhostFilterSlot;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.MenuTypeRegistry;
 import com.lothrazar.cyclic.util.CapabilityUtil;
+import com.lothrazar.library.core.Const;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
@@ -21,7 +22,7 @@ public class ContainerFluidFilterCard extends ContainerBase {
     super(MenuTypeRegistry.FLUID_DATA.get(), id);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.endInv = 1;
+    this.endInv = 9;
     if (player.getMainHandItem().getItem() instanceof FluidFilterCardItem) {
       this.bag = player.getMainHandItem();
       this.slot = player.getInventory().selected;
@@ -33,18 +34,21 @@ public class ContainerFluidFilterCard extends ContainerBase {
     var h = CapabilityUtil.item(bag);
     if (h != null) {
       this.slotcount = h.getSlots();
-      //ghost slot: holds a snapshot copy of a bucket-like item but never drains the cursor
-      this.addSlot(new GhostFilterSlot(h, FluidFilterCardItem.SLOT_FLUID, 80 + 1, 31 + 1) {
+      for (int j = 0; j < h.getSlots(); j++) {
+        int xPos = 8 + j * Const.SQ;
+        int yPos = 32;
+        this.addSlot(new GhostFilterSlot(h, j, xPos, yPos) {
 
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-          if (stack.getItem() == ItemRegistry.FILTER_FLUID.get()) {
-            return false;
+          @Override
+          public boolean mayPlace(ItemStack stack) {
+            if (stack.getItem() == ItemRegistry.FILTER_FLUID.get()) {
+              return false;
+            }
+            //only accept items that expose a fluid handler capability (buckets, bottles, etc.)
+            return !stack.isEmpty() && stack.getCapability(Capabilities.FluidHandler.ITEM) != null;
           }
-          //only accept items that expose a fluid handler capability (buckets, bottles, etc.)
-          return !stack.isEmpty() && stack.getCapability(Capabilities.FluidHandler.ITEM) != null;
-        }
-      });
+        });
+      }
     }
     layoutPlayerInventorySlots(8, 84);
   }

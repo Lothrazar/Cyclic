@@ -1,19 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "   ",
+    "vvv",
     "ege",
     "ccc"
   ],
   "key": {
-    "e": {
-      "item": "minecraft:end_stone"
+    "v": {
+      "item": "cyclic:conveyor"
     },
     "c": {
       "item": "minecraft:calcite"
     },
+    "e": {
+      "tag": "c:end_stones"
+    },
     "g": {
-      "item": "cyclic:gem_obsidian"
+      "item": "cyclic:gem_amber"
     }
   },
   "result": {

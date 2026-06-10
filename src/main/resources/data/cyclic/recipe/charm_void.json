@@ -10,7 +10,7 @@
       "item": "cyclic:gem_amber"
     },
     "i": {
-      "item": "minecraft:end_stone"
+      "tag": "c:end_stones"
     },
     "w": {
       "item": "minecraft:amethyst_shard"

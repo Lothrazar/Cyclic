@@ -2,13 +2,13 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "item": "minecraft:sculk"
+      "item": "minecraft:emerald"
     },
     {
       "item": "minecraft:comparator"
     },
     {
-      "item": "minecraft:echo_shard"
+      "item": "minecraft:sculk_catalyst"
     }
   ],
   "mix": {

@@ -11,7 +11,7 @@
   ],
   "type": "cyclic:crusher",
   "ingredient": {
-    "item": "minecraft:end_stone"
+    "tag": "c:end_stones"
   },
   "energy": {
     "ticks": 600,

@@ -10,10 +10,10 @@
       "item": "minecraft:rabbit_stew"
     },
     "b": {
-      "item": "minecraft:lily_pad"
+      "item": "minecraft:echo_shard"
     },
     "c": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:amethyst_shard"
     },
     "d": {
       "item": "minecraft:cake"
@@ -25,7 +25,7 @@
       "item": "minecraft:enchanted_golden_apple"
     },
     "g": {
-      "item": "minecraft:emerald_block"
+      "item": "minecraft:prismarine_shard"
     },
     "h": {
       "item": "minecraft:poisonous_potato"

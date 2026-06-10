@@ -11,14 +11,15 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 /**
- * Single-slot capability backing FluidFilterCardItem. The slot only accepts items
+ * Nine-slot capability backing FluidFilterCardItem. Each slot only accepts items
  * exposing a FluidHandlerItem capability (i.e. buckets, bottles, etc.).
  */
 public class FluidFilterCardCapability extends ItemStackHandler {
 
-  public static final int SLOTS = 1;
+  public static final int SLOTS = 9;
   private static final String NBT_KEY = "bucket";
   private static final String NBT_TOOLTIP = "fluidTooltip";
+  private static final String NBT_COUNT = "fluidCount";
   private final ItemStack cardStack;
 
   public FluidFilterCardCapability(ItemStack cardStack) {
@@ -53,13 +54,30 @@ public class FluidFilterCardCapability extends ItemStackHandler {
     if (server != null) {
       CompoundTag data = cardStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
       data.put(NBT_KEY, serializeNBT(server.registryAccess()));
-      //precompute the fluid display name into CUSTOM_DATA so it syncs to the client
-      //(NeoForge 1.21 dropped Item.getShareTag; CUSTOM_DATA is the auto-synced channel)
-      ItemStack bucket = this.getStackInSlot(0);
-      IFluidHandlerItem fluidCap = bucket.getCapability(Capabilities.FluidHandler.ITEM);
-      FluidStack fluid = (fluidCap != null) ? fluidCap.getFluidInTank(0) : FluidStack.EMPTY;
-      if (fluid != null && !fluid.isEmpty()) {
-        data.putString(NBT_TOOLTIP, fluid.getHoverName().getString());
+      //precompute tooltip data into CUSTOM_DATA so it syncs to the client
+      int count = 0;
+      String firstName = null;
+      for (int i = 0; i < this.getSlots(); i++) {
+        ItemStack bucket = this.getStackInSlot(i);
+        if (bucket.isEmpty()) {
+          continue;
+        }
+        IFluidHandlerItem fluidCap = bucket.getCapability(Capabilities.FluidHandler.ITEM);
+        if (fluidCap == null) {
+          continue;
+        }
+        FluidStack fluid = fluidCap.getFluidInTank(0);
+        if (fluid == null || fluid.isEmpty()) {
+          continue;
+        }
+        count++;
+        if (firstName == null) {
+          firstName = fluid.getHoverName().getString();
+        }
+      }
+      data.putInt(NBT_COUNT, count);
+      if (firstName != null) {
+        data.putString(NBT_TOOLTIP, firstName);
       }
       else {
         data.remove(NBT_TOOLTIP);

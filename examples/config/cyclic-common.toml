@@ -202,8 +202,12 @@
 			enabled = true
 
 		[cyclic.enchantment.soulbound]
-			# Set false to stop enchantment from working. When enabled, one item with this enchant is kept on player death.
+			# Set false to stop enchantment from working. When enabled, all items with this enchant are kept on player death.
 			enabled = true
+			# Durability damage applied to each soulbound item on death. Set to 0 to disable.
+			# Default: 5
+			# Range: 0 ~ 9999
+			durability_cost = 5
 
 		[cyclic.enchantment.laststand]
 			# Set false to stop enchantment from working

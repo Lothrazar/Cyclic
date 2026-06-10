@@ -51,9 +51,12 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
       t.withStyle(isIgnore ? ChatFormatting.DARK_GRAY : ChatFormatting.DARK_BLUE);
       tooltip.add(t);
       CompoundTag stackTag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-      if (stackTag.contains("fluidTooltip")) {
-        String fluidTooltip = stackTag.getString("fluidTooltip");
-        tooltip.add(Component.translatable(fluidTooltip).withStyle(ChatFormatting.AQUA));
+      int count = stackTag.getInt("fluidCount");
+      if (count > 0) {
+        if (stackTag.contains("fluidTooltip")) {
+          tooltip.add(Component.translatable(stackTag.getString("fluidTooltip")).withStyle(ChatFormatting.AQUA));
+        }
+        tooltip.add(Component.translatable("cyclic.screen.filter.item.count").append("" + count).withStyle(ChatFormatting.AQUA));
       }
     }
     else {
@@ -109,22 +112,43 @@ public class FluidFilterCardItem extends ItemBaseCyclic {
     if (!(filterStack.getItem() instanceof FluidFilterCardItem)) {
       return true;
     }
-    FluidStack fluidFilter = getFluidStack(filterStack);
+    IItemHandler handler = filterStack.getCapability(Capabilities.ItemHandler.ITEM);
+    if (handler == null) {
+      return true;
+    }
     boolean isIgnoreList = getIsIgnoreList(filterStack);
     boolean isTagMatch = getIsTagMatch(filterStack);
-    boolean isMatchingList;
-    if (isTagMatch && !fluidFilter.isEmpty()) {
-      //share any fluid tag with the filter entry
-      isMatchingList = fluidFilter.getFluid().builtInRegistryHolder().tags().anyMatch(fluidInTank::is);
-    }
-    else {
-      isMatchingList = fluidFilter.getFluid() == fluidInTank.getFluid();
+    boolean anyFilled = false;
+    for (int i = 0; i < handler.getSlots(); i++) {
+      ItemStack bucket = handler.getStackInSlot(i);
+      if (bucket.isEmpty()) {
+        continue;
+      }
+      IFluidHandlerItem fluidCap = bucket.getCapability(Capabilities.FluidHandler.ITEM);
+      if (fluidCap == null) {
+        continue;
+      }
+      FluidStack fluidFilter = fluidCap.getFluidInTank(0);
+      if (fluidFilter == null || fluidFilter.isEmpty()) {
+        continue;
+      }
+      anyFilled = true;
+      boolean matches;
+      if (isTagMatch) {
+        matches = fluidFilter.getFluid().builtInRegistryHolder().tags().anyMatch(fluidInTank::is);
+      }
+      else {
+        matches = fluidFilter.getFluid() == fluidInTank.getFluid();
+      }
+      if (matches) {
+        return !isIgnoreList;
+      }
     }
     if (isIgnoreList) {
-      return !isMatchingList;
+      return true;
     }
     //allow list: empty filter passes everything
-    return fluidFilter.isEmpty() || isMatchingList;
+    return !anyFilled;
   }
 
 }

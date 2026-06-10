@@ -16,11 +16,10 @@
     }
   ],
   "result": {
-    "type": "c:nbt",
+    "id": "patchouli:guide_book",
     "count": 1,
-    "nbt": {
+    "components": {
       "patchouli:book": "cyclic:guide_book"
-    },
-    "id": "patchouli:guide_book"
+    }
   }
 }

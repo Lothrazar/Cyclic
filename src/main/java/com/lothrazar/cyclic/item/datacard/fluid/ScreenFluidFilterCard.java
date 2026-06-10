@@ -60,7 +60,8 @@ public class ScreenFluidFilterCard extends ScreenBase<ContainerFluidFilterCard> 
   @Override
   protected void renderBg(GuiGraphics ms, float partialTicks, int mouseX, int mouseY) {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
-    //single centered bucket slot
-    this.drawSlot(ms, 80, 31, TextureRegistry.SLOT_BUCKET, Const.SQ);
+    for (int i = 0; i < 9; i++) {
+      this.drawSlot(ms, 7 + i * Const.SQ, 31);
+    }
   }
 }
