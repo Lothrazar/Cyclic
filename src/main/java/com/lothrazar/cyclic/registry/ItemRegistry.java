@@ -415,8 +415,8 @@ public class ItemRegistry {
 
   // ----
 
-  public static final DeferredItem<Item> EYE_REDSTONE = ITEMS.register("eye_redstone", () -> new BlockItem(BlockRegistry.EYE_REDSTONE.get(), new Item.Properties()));
-  public static final DeferredItem<Item> EYE_TELEPORT = ITEMS.register("eye_teleport", () -> new BlockItem(BlockRegistry.EYE_TELEPORT.get(), new Item.Properties()));
+  public static final DeferredItem<Item> EYE_REDSTONE = ITEMS.register("ender_eye_block", () -> new BlockItem(BlockRegistry.EYE_REDSTONE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> EYE_TELEPORT = ITEMS.register("ender_pearl_block", () -> new BlockItem(BlockRegistry.EYE_TELEPORT.get(), new Item.Properties()));
 
 
   // ---- simple? blocks

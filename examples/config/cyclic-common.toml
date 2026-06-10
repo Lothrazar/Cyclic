@@ -201,6 +201,10 @@
 			# Set false to stop enchantment from working
 			enabled = true
 
+		[cyclic.enchantment.soulbound]
+			# Set false to stop enchantment from working. When enabled, one item with this enchant is kept on player death.
+			enabled = true
+
 		[cyclic.enchantment.laststand]
 			# Set false to stop enchantment from working
 			enabled = true
@@ -937,7 +941,7 @@
 			height = 8
 
 		# Ender Anchor settings
-		[cyclic.blocks.eye_teleport]
+		[cyclic.blocks.ender_pearl_block]
 			# Maximum distance to activate
 			# Default: 128
 			# Range: 2 ~ 256
@@ -1007,7 +1011,7 @@
 			chance = 0.06
 
 		# Ender Trigger settings
-		[cyclic.blocks.eye_redstone]
+		[cyclic.blocks.ender_eye_block]
 			# Maximum distance to activate
 			# Default: 32
 			# Range: 2 ~ 256

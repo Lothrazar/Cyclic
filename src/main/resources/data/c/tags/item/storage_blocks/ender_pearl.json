@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    { "id":"cyclic:eye_teleport","required":false}
+    { "id":"cyclic:ender_pearl_block","required":false}
   ]
 }

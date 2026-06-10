@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-     {"required":false, "id": "cyclic:eye_redstone"      }
+     {"required":false, "id": "cyclic:ender_eye_block"      }
   ]
 }

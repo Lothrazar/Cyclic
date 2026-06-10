@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "cyclic:block/ender_pearl_block" }
+    }
+}

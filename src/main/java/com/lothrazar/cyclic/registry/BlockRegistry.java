@@ -317,8 +317,8 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> CASK = BLOCKS.register("cask", () -> new BlockCask(Block.Properties.of()));
   public static final DeferredBlock<Block> CRATE = BLOCKS.register("crate", () -> new BlockCrate(Block.Properties.of()));
   public static final DeferredBlock<Block> CRATE_MINI = BLOCKS.register("crate_mini", () -> new BlockCrateMini(Block.Properties.of().forceSolidOn()));
-  public static final DeferredBlock<Block> EYE_REDSTONE = BLOCKS.register("eye_redstone", () -> new BlockEye(Block.Properties.of()));
-  public static final DeferredBlock<Block> EYE_TELEPORT = BLOCKS.register("eye_teleport", () -> new BlockEyeTp(Block.Properties.of()));
+  public static final DeferredBlock<Block> EYE_REDSTONE = BLOCKS.register("ender_eye_block", () -> new BlockEye(Block.Properties.of()));
+  public static final DeferredBlock<Block> EYE_TELEPORT = BLOCKS.register("ender_pearl_block", () -> new BlockEyeTp(Block.Properties.of()));
   public static final DeferredBlock<Block> PLACER = BLOCKS.register("placer", () -> new BlockPlacer(Block.Properties.of()));
   public static final DeferredBlock<Block> BREAKER = BLOCKS.register("breaker", () -> new BlockBreaker(Block.Properties.of()));
   public static final DeferredBlock<Block> DROPPER = BLOCKS.register("dropper", () -> new BlockDropper(Block.Properties.of()));

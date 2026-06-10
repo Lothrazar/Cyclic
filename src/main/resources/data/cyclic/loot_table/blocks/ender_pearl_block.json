@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cyclic:eye_teleport"
+          "name": "cyclic:ender_pearl_block"
         }
       ],
       "conditions": [

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cyclic:eye_redstone"
+          "name": "cyclic:ender_eye_block"
         }
       ],
       "conditions": [

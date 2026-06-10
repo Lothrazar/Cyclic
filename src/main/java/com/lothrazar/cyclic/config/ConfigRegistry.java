@@ -571,13 +571,13 @@ public class ConfigRegistry {
     TileTerraGlass.TIMER_FULL = CFG.comment(" ticks between growth cycles").defineInRange("timer", 100, 1, 10000);
     TileTerraGlass.HEIGHT = CFG.comment(" growth height below the glass").defineInRange("height", 8, 0, 32);
     CFG.pop(); // terra_preta
-    CFG.comment(" Ender Anchor settings").push("eye_teleport");
+    CFG.comment(" Ender Anchor settings").push("ender_pearl_block");
     TileEyeTp.RANGE = CFG.comment(" Maximum distance to activate").defineInRange("range", 128, 2, 256);
     TileEyeTp.HUNGER = CFG.comment(" Hunger cost on teleport").defineInRange("hunger", 1, 0, 20);
     TileEyeTp.EXP = CFG.comment(" Exp cost on teleport").defineInRange("exp", 0, 0, 500);
     TileEyeTp.FREQUENCY = CFG.comment(" Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")
         .defineInRange("frequency", 5, 1, 20);
-    CFG.pop(); // eye_teleport
+    CFG.pop(); // ender_pearl_block
     //
     //
     CFG.comment(" battery_clay settings").push("battery_clay");
@@ -607,7 +607,7 @@ public class ConfigRegistry {
     TileFisher.CHANCE = CFG.comment(" Chance to Fish from nearby water.  Smaller values is slower fish").defineInRange("chance", 0.06, 0.000001, 0.999);
     CFG.pop();
     //
-    CFG.comment(" Ender Trigger settings").push("eye_redstone");
+    CFG.comment(" Ender Trigger settings").push("ender_eye_block");
     TileEye.RANGE = CFG.comment(" Maximum distance to activate").defineInRange("range", 32, 2, 256);
     TileEye.FREQUENCY = CFG.comment(" Tick delay between checks, faster checks can consume server resources (1 means check every tick; 20 means only check once per second)")
         .defineInRange("frequency", 5, 1, 20);

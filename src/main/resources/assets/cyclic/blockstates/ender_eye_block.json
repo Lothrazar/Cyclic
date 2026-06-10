@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=false": { "model": "cyclic:block/ender_eye_block" },
+        "lit=true": { "model": "cyclic:block/ender_eye_block_on" }
+    }
+}

@@ -98,7 +98,7 @@ public class RenderStructure implements BlockEntityRenderer<TileStructure> {
       for (Direction dir : Direction.values()) {
         ModelData modelData = model.getModelData(level, crd, state, ModelData.EMPTY);
         List<BakedQuad> quads = model.getQuads(state, dir, level.random, modelData, RenderType.solid());
-        RenderBlockUtils.renderModelBrightnessColorQuads(poseStack.last(), consumer, r, g, b, PREVIEW_ALPHA, quads, packedLight, packedOverlay);
+        RenderBlockUtils.renderModelBrightnessColorQuads(poseStack.last(), consumer, r, g, b, PREVIEW_ALPHA, quads, RenderBlockUtils.FULL_LIGHT, packedOverlay);
       }
       poseStack.popPose();
     }
