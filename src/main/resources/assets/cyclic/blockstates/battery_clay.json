@@ -1,5 +1,11 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/battery_clay" }
+        "percent=0": { "model": "cyclic:block/battery_clay_0percent" },
+        "percent=20": { "model": "cyclic:block/battery_clay_20percent" },
+        "percent=40": { "model": "cyclic:block/battery_clay_40percent" },
+        "percent=60": { "model": "cyclic:block/battery_clay_60percent" },
+        "percent=80": { "model": "cyclic:block/battery_clay_80percent" },
+        "percent=90": { "model": "cyclic:block/battery_clay_90percent" },
+        "percent=100": { "model": "cyclic:block/battery_clay_100percent" }
     }
 }

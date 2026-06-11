@@ -257,7 +257,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public IItemHandler getItemHandler(Direction side) {
-    return inputSlots;
+    return inventory;
   }
 
 

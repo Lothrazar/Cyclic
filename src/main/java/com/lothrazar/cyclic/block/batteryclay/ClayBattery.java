@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.batteryclay;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.cyclic.block.battery.EnumBatteryPercent;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
@@ -12,10 +13,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.minecraft.core.component.DataComponents;
@@ -24,9 +28,17 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 
 public class ClayBattery extends BlockCyclic {
 
+  public static final EnumProperty<EnumBatteryPercent> PERCENT = EnumProperty.create("percent", EnumBatteryPercent.class);
+
   public ClayBattery(Properties properties) {
     super(properties.strength(1.8F));
     this.setHasGui();
+    this.registerDefaultState(defaultBlockState().setValue(PERCENT, EnumBatteryPercent.ZERO));
+  }
+
+  @Override
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    builder.add(PERCENT);
   }
 
   @Override

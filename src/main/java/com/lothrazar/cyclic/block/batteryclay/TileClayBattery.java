@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.batteryclay;
 
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
+import com.lothrazar.cyclic.block.battery.EnumBatteryPercent;
 import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
@@ -54,9 +55,45 @@ public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvid
 
   public void tick() {
     this.syncEnergy();
+    setPercentFilled();
     if (this.isPowered()) {
       moveEnergy(Direction.DOWN, MAX.get() / 4);
     }
+  }
+
+  public void setPercentFilled() {
+    BlockState st = this.getBlockState();
+    if (st.hasProperty(ClayBattery.PERCENT)) {
+      EnumBatteryPercent previousPercent = st.getValue(ClayBattery.PERCENT);
+      EnumBatteryPercent percent = calculateRoundedPercentFilled();
+      if (percent != previousPercent) {
+        this.level.setBlockAndUpdate(worldPosition, st.setValue(ClayBattery.PERCENT, percent));
+      }
+    }
+  }
+
+  public EnumBatteryPercent calculateRoundedPercentFilled() {
+    int max = MAX.get();
+    int percent = (int) Math.floor((this.getEnergy() * 1.0F) / max * 10.0) * 10;
+    if (percent >= 100) {
+      return EnumBatteryPercent.ONEHUNDRED;
+    }
+    else if (percent >= 90) {
+      return EnumBatteryPercent.NINETY;
+    }
+    else if (percent >= 80) {
+      return EnumBatteryPercent.EIGHTY;
+    }
+    else if (percent >= 60) {
+      return EnumBatteryPercent.SIXTY;
+    }
+    else if (percent >= 40) {
+      return EnumBatteryPercent.FOURTY;
+    }
+    else if (percent >= 20) {
+      return EnumBatteryPercent.TWENTY;
+    }
+    return EnumBatteryPercent.ZERO;
   }
 
 

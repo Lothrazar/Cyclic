@@ -258,7 +258,7 @@ public class TileSolidifier extends TileBlockEntityCyclic implements MenuProvide
 
   @Override
   public IItemHandler getItemHandler(Direction side) {
-    return inputSlots;
+    return inventory;
   }
 
 

@@ -161,7 +161,7 @@ public class TileSoundRecorder extends TileBlockEntityCyclic implements MenuProv
 
   @Override
   public IItemHandler getItemHandler(Direction side) {
-    return inputSlots;
+    return inventory;
   }
 
   @Override
