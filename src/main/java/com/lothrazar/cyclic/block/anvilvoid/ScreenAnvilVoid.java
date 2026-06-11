@@ -22,7 +22,7 @@ public class ScreenAnvilVoid extends ScreenBase<ContainerAnvilVoid> {
   public void init() {
     super.init();
     fluid = new FluidBar(this.font, 152, 8, TileAnvilVoid.CAPACITY);
-    fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid.cyclic.xpjuice");
+    fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid_type.cyclic.xpjuice");
     fluid.guiLeft = leftPos;
     fluid.guiTop = topPos;
     int x, y;

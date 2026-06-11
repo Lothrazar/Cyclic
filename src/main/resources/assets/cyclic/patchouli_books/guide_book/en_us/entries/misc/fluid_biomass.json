@@ -1,5 +1,5 @@
 {
-  "name": "fluid.cyclic.biomass",
+  "name": "fluid_type.cyclic.biomass",
   "icon": "cyclic:biomass_bucket",
   "category": "cyclic:misc",
   "pages": [

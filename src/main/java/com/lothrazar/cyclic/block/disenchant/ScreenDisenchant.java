@@ -25,7 +25,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     super.init();
     energy = new EnergyBar(this.font, TileDisenchant.MAX);
     fluid = new FluidBar(this.font, 134, 8, TileDisenchant.CAPACITY);
-    fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid.cyclic.xpjuice");
+    fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid_type.cyclic.xpjuice");
     fluid.guiLeft = energy.guiLeft = leftPos;
     fluid.guiTop = energy.guiTop = topPos;
     int x, y;

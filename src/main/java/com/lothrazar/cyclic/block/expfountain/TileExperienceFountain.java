@@ -6,6 +6,8 @@ import com.lothrazar.cyclic.block.expcollect.TileExpPylon;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import com.lothrazar.cyclic.util.FluidHelpers;
+import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.library.util.FluidHelpersUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -50,6 +52,7 @@ public class TileExperienceFountain extends TileBlockEntityCyclic {
     if (level == null || level.isClientSide) {
       return;
     }
+    tryPullFromBelow();
     if (!this.isPowered()) {
       return;
     }
@@ -72,6 +75,20 @@ public class TileExperienceFountain extends TileBlockEntityCyclic {
     ExperienceOrb orb = new ExperienceOrb(level, dx, dy, dz, xpValue);
     level.addFreshEntity(orb);
     this.setChanged();
+  }
+
+  private void tryPullFromBelow() {
+    if (tank.getSpace() <= 0) {
+      return;
+    }
+    IFluidHandler below = CapabilityUtil.fluid(level, worldPosition.below(), Direction.UP);
+    if (below == null) {
+      return;
+    }
+    boolean filled = FluidHelpers.tryFillPositionFromTank(level, worldPosition, Direction.DOWN, below, CAPACITY);
+    if (filled) {
+      this.setChanged();
+    }
   }
 
   public Predicate<FluidStack> isFluidValid() {
