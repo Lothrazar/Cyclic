@@ -25,6 +25,7 @@ import com.lothrazar.cyclic.item.crafting.CraftingBagCapability;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardCapability;
 import com.lothrazar.cyclic.item.datacard.fluid.FluidFilterCardCapability;
 import com.lothrazar.cyclic.item.enderbook.EnderBookCapability;
+import com.lothrazar.cyclic.item.compass.GpsCompassCapability;
 import com.lothrazar.cyclic.item.lunchbox.LunchboxCapability;
 import com.lothrazar.cyclic.item.storagebag.StorageBagCapability;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -83,6 +84,11 @@ public class CapabilityRegistry {
             Capabilities.ItemHandler.ITEM,
             (stack, ctx) -> new LunchboxCapability(stack),
             ItemRegistry.LUNCHBOX.get()
+        );
+        event.registerItem(
+            Capabilities.ItemHandler.ITEM,
+            (stack, ctx) -> new GpsCompassCapability(stack),
+            ItemRegistry.GPS_COMPASS.get()
         );
         event.registerItem(
             Capabilities.ItemHandler.ITEM,

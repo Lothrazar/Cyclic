@@ -48,6 +48,8 @@ import com.lothrazar.cyclic.block.expfountain.RenderExperienceFountain;
 import com.lothrazar.cyclic.block.sprinkler.RenderSprinkler;
 import com.lothrazar.cyclic.block.tank.RenderTank;
 import com.lothrazar.cyclic.block.wireless.redstone.RenderTransmit;
+import com.lothrazar.cyclic.item.compass.GpsCompassItem;
+import com.lothrazar.cyclic.item.compass.ScreenGpsCompass;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.lunchbox.ScreenLunchbox;
 import com.lothrazar.cyclic.item.magicnet.EntityMagicNetEmpty;
@@ -208,6 +210,7 @@ public class ClientRegistryCyclic {
 
   public static void setupClient(final FMLClientSetupEvent event) {
     initShields();
+    initCompass();
     //provide a client-side HolderLookup.Provider for item caps that serialize component-aware
     //payloads (FluidStack, ItemStack handlers) so tooltips work over dedicated-server connections.
     initClientRegistries();
@@ -235,6 +238,13 @@ public class ClientRegistryCyclic {
     ItemProperties.register(ItemRegistry.SHIELD_FLINT.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_BONE.get(), ShieldCyclicItem.BLOCKING, blockFn);
     ItemProperties.register(ItemRegistry.SHIELD_OBSIDIAN.get(), ShieldCyclicItem.BLOCKING, blockFn);
+  }
+
+  @SuppressWarnings("deprecation")
+  private static void initCompass() {
+    ItemPropertyFunction compassFn = (stack, level, entity, seed) -> GpsCompassItem.getAngle(stack, entity);
+    ItemProperties.register(ItemRegistry.GPS_COMPASS.get(),
+        ResourceLocation.fromNamespaceAndPath("minecraft", "angle"), compassFn);
   }
 
   // the | 0xFF000000 is to force max alpha
@@ -344,6 +354,7 @@ public class ClientRegistryCyclic {
     event.register(MenuTypeRegistry.COMPUTER_SHAPE.get(), ScreenShapedata::new);
     event.register(MenuTypeRegistry.MINER.get(), ScreenMiner::new);
     event.register(MenuTypeRegistry.LUNCHBOX.get(), ScreenLunchbox::new);
+    event.register(MenuTypeRegistry.GPS_COMPASS.get(), ScreenGpsCompass::new);
   }
 
   @OnlyIn(Dist.CLIENT)

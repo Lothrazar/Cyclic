@@ -52,6 +52,7 @@ import com.lothrazar.cyclic.item.builder.BuildStyle;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.crafting.CraftingBagItem;
 import com.lothrazar.cyclic.item.crafting.simple.CraftingStickItem;
+import com.lothrazar.cyclic.item.compass.GpsCompassItem;
 import com.lothrazar.cyclic.item.datacard.BlockstateCard;
 import com.lothrazar.cyclic.item.datacard.EntityDataCard;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
@@ -366,6 +367,7 @@ public class ItemRegistry {
 
 
   // ---- core ----
+  public static final DeferredItem<Item> GPS_COMPASS = ITEMS.register("compass_gps", () -> new GpsCompassItem(new Item.Properties().stacksTo(1)));
   public static final DeferredItem<Item> LOCATION_DATA = ITEMS.register("location_data", () -> new LocationGpsCard(new Item.Properties()));
   public static final DeferredItem<Item> SETTINGS_DATA = ITEMS.register("settings_data", () -> new SettingsCard(new Item.Properties()));
   public static final DeferredItem<Item> SHAPE_DATA = ITEMS.register("shape_data", () -> new ShapeCard(new Item.Properties()));

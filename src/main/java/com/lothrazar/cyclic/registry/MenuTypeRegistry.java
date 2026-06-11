@@ -60,6 +60,7 @@ import com.lothrazar.cyclic.item.crafting.simple.CraftingStickContainer;
 import com.lothrazar.cyclic.item.datacard.filter.ContainerFilterCard;
 import com.lothrazar.cyclic.item.datacard.fluid.ContainerFluidFilterCard;
 import com.lothrazar.cyclic.item.enderbook.EnderBookContainer;
+import com.lothrazar.cyclic.item.compass.ContainerGpsCompass;
 import com.lothrazar.cyclic.item.lunchbox.ContainerLunchbox;
 import com.lothrazar.cyclic.item.storagebag.ContainerStorageBag;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -136,4 +137,5 @@ public class MenuTypeRegistry {
   public static final Supplier<MenuType<ContainerFilterCard>> FILTER_DATA = CONTAINERS.register("filter_data", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerFilterCard(windowId, inv, inv.player)));
   public static final Supplier<MenuType<ContainerFluidFilterCard>> FLUID_DATA = CONTAINERS.register("fluid_data", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerFluidFilterCard(windowId, inv, inv.player)));
   public static final Supplier<MenuType<ContainerLunchbox>> LUNCHBOX = CONTAINERS.register("lunchbox", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerLunchbox(windowId, inv, inv.player)));
+  public static final Supplier<MenuType<ContainerGpsCompass>> GPS_COMPASS = CONTAINERS.register("compass_gps", () -> IMenuTypeExtension.create((windowId, inv, data) -> new ContainerGpsCompass(windowId, inv, inv.player)));
 }

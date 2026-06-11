@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.compass_gps",
+  "icon": "cyclic:compass_gps",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.compass_gps.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:compass_gps"
+    }
+  ]
+}
