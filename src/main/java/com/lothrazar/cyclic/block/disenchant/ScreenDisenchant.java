@@ -5,6 +5,7 @@ import com.lothrazar.cyclic.gui.ScreenBase;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.EnergyBar;
 import com.lothrazar.library.gui.FluidBar;
+import com.lothrazar.library.gui.TexturedProgress;
 import com.lothrazar.library.util.ChatUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -15,6 +16,7 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
   private EnergyBar energy;
   private ButtonMachineField btnRedstone;
   private FluidBar fluid;
+  private TexturedProgress progress;
 
   public ScreenDisenchant(ContainerDisenchant screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
@@ -26,8 +28,10 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     energy = new EnergyBar(this.font, TileDisenchant.MAX);
     fluid = new FluidBar(this.font, 134, 8, TileDisenchant.CAPACITY);
     fluid.emtpyTooltip = "0 " + ChatUtil.lang("fluid_type.cyclic.xpjuice");
-    fluid.guiLeft = energy.guiLeft = leftPos;
-    fluid.guiTop = energy.guiTop = topPos;
+    progress = new TexturedProgress(this.font, 69, 40, 24, 17, TextureRegistry.ARROW);
+    progress.setTopDown(false);
+    fluid.guiLeft = energy.guiLeft = progress.guiLeft = leftPos;
+    fluid.guiTop = energy.guiTop = progress.guiTop = topPos;
     int x, y;
     x = leftPos + 6;
     y = topPos + 6;
@@ -62,5 +66,8 @@ public class ScreenDisenchant extends ScreenBase<ContainerDisenchant> {
     this.drawSlotLarge(ms, 103, y + 12);
     energy.draw(ms, menu.tile.getEnergy());
     fluid.draw(ms, menu.tile.getFluid());
+    final int timerMax = menu.tile.getField(TileDisenchant.Fields.TIMERMAX.ordinal());
+    progress.max = timerMax;
+    progress.draw(ms, timerMax - menu.tile.getField(TileDisenchant.Fields.TIMER.ordinal()));
   }
 }

@@ -44,7 +44,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvider, WorldlyContainer {
 
   static enum Fields {
-    REDSTONE, TIMER;
+    REDSTONE, TIMER, TIMERMAX;
   }
 
   static final int MAX = 640000;
@@ -71,6 +71,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX / 4);
   public static ModConfigSpec.IntValue POWERCONF;
   public static ModConfigSpec.IntValue FLUIDCOST;
+  public static ModConfigSpec.IntValue TIMERCONF;
 // //  private LazyOptional<IEnergyStorage> energyCap = LazyOptional.of(() -> energy);
   public FluidTankBase tank = new FluidTankBase(this, CAPACITY, p -> {
     return FluidHelpersUtil.matches(p.getFluid(), DataTags.EXPERIENCE);
@@ -96,18 +97,25 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   public void tick() {
     this.syncEnergy();
+    if (level.isClientSide) {
+      return;
+    }
     if (this.requiresRedstone() && !this.isPowered()) {
+      timer = 0;
       return;
     }
     ItemStack input = inputSlots.getStackInSlot(SLOT_INPUT);
     if (input.isEmpty() || input.is(DataTags.DISENCHANTER_IMMUNE)) {
+      timer = 0;
       return;
     }
     Integer cost = POWERCONF.get();
     if (energy.getEnergyStored() < cost && (cost > 0)) {
+      timer = 0;
       return;
     }
     if (FLUIDCOST.get() > 0 && tank.getFluidAmount() < FLUIDCOST.get()) {
+      timer = 0;
       return;
     }
     ItemStack book = inputSlots.getStackInSlot(SLOT_BOOK);
@@ -115,6 +123,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
         || outputSlots.getStackInSlot(0).isEmpty() == false
         || outputSlots.getStackInSlot(1).isEmpty() == false
         || input.getCount() != 1) {
+      timer = 0;
       return;
     }
     //input is size 1, at least one book exists, and output IS empty
@@ -127,9 +136,18 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
       break;
     }
     if (keyMoved == null) {
+      timer = 0;
       return;
     }
-    //and input has at least one enchantment
+    //and input has at least one enchantment - count down the timer
+    if (timer <= 0) {
+      timer = TIMERCONF.get();
+    }
+    timer--;
+    if (timer > 0) {
+      return;
+    }
+    timer = 0;
     //success happening
     if (level.random.nextDouble() < 0.5) {
       SoundUtil.playSound(level, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE);
@@ -231,6 +249,8 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
       case TIMER:
         timer = value;
       break;
+      case TIMERMAX:
+      break;
     }
   }
 
@@ -241,6 +261,8 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
         return needsRedstone;
       case TIMER:
         return timer;
+      case TIMERMAX:
+        return TIMERCONF.get();
     }
     return 0;
   }

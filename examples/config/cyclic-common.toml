@@ -865,14 +865,18 @@
 			fluid_cost = 100
 
 		[cyclic.blocks.disenchanter]
-			# Cost of (or payment for if negative) per enchanted book generated
-			# Default: 100
+			# Fluid cost per enchanted book generated. Negative value means the machine pays out that fluid amount instead of consuming it.
+			# Default: -100
 			# Range: -1000 ~ 16000
-			fluid_cost = 100
+			fluid_cost = -100
 			# Power per use disenchanter
-			# Default: 2500
+			# Default: 7500
 			# Range: > 0
 			energy_cost = 2500
+			# Ticks required per operation
+			# Default: 300
+			# Range: > 1
+			timer = 300
 
 		[cyclic.blocks.anvil_void]
 			# Payment per void action, if not zero

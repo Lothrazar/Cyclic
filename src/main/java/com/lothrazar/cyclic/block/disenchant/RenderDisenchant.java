@@ -27,6 +27,9 @@ public class RenderDisenchant implements BlockEntityRenderer<TileDisenchant> {
   @Override
   public void render(TileDisenchant tile, float partialTick, PoseStack pose,
       MultiBufferSource buffer, int packedLight, int packedOverlay) {
+    if (tile.inputSlots.getStackInSlot(1).isEmpty()) {
+      return;
+    }
     pose.pushPose();
     //block is 12/16 tall, sit the book just above the top surface
     pose.translate(0.5F, 0.95F, 0.5F);

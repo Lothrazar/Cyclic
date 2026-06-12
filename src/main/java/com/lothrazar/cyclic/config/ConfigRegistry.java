@@ -542,8 +542,9 @@ public class ConfigRegistry {
             0.0010000000000F, 1F);
     TileAnvilMagma.FLUIDCOST = CFG.comment(" Cost of magma fluid per action").defineInRange("anvil_magma.fluid_cost", 100, 1, 64000);
     CFG.push("disenchanter");
-    TileDisenchant.FLUIDCOST = CFG.comment(" Cost of (or payment for if negative) per enchanted book generated").defineInRange("fluid_cost", 100, -1000, 16000);
-    TileDisenchant.POWERCONF = CFG.comment(" Power per use disenchanter").defineInRange("energy_cost", 2500, 0, Integer.MAX_VALUE);
+    TileDisenchant.FLUIDCOST = CFG.comment(" Fluid cost per enchanted book generated. Negative value means the machine pays out that fluid amount instead of consuming it.").defineInRange("fluid_cost", -100, -1000, 16000);
+    TileDisenchant.POWERCONF = CFG.comment(" Power per use disenchanter").defineInRange("energy_cost", 7500, 0, Integer.MAX_VALUE);
+    TileDisenchant.TIMERCONF = CFG.comment(" Ticks required per operation").defineInRange("timer", 300, 1, Integer.MAX_VALUE);
     CFG.pop();
     CFG.push("anvil_void");
     TileAnvilVoid.FLUIDPAY = CFG.comment(" Payment per void action, if not zero").defineInRange("fluid_cost", 25, 0, Integer.MAX_VALUE);
