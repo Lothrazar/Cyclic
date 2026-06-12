@@ -18,6 +18,7 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -110,6 +111,18 @@ public class BlockFluidTank extends BlockCyclic {
   public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
     //because harvestBlock manually forces a drop 
     return new ArrayList<>();
+  }
+
+  @Override
+  public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+    ItemStack tankStack = new ItemStack(this);
+    if (level.getBlockEntity(pos) instanceof TileTank ttank) {
+      IFluidHandler fluidInStack = CapabilityUtil.fluid(tankStack);
+      if (fluidInStack != null) {
+        fluidInStack.fill(ttank.tank.getFluid(), IFluidHandler.FluidAction.EXECUTE);
+      }
+    }
+    return tankStack;
   }
 
   @Override

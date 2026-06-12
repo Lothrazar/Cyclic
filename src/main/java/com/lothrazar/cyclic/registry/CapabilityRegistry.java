@@ -15,9 +15,15 @@ import com.lothrazar.cyclic.item.WandHypnoItem;
 import com.lothrazar.cyclic.item.builder.BuilderItem;
 import com.lothrazar.cyclic.item.missile.WandMissileItem;
 import com.lothrazar.cyclic.item.random.RandomizerItem;
+import com.lothrazar.cyclic.fluid.FluidAmethystHolder;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidChocolateHolder;
+import com.lothrazar.cyclic.fluid.FluidEnderHolder;
+import com.lothrazar.cyclic.fluid.FluidGlowstoneHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.fluid.FluidRedstoneHolder;
+import com.lothrazar.cyclic.fluid.FluidSculkHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidWaxHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
@@ -102,7 +108,13 @@ public class CapabilityRegistry {
             FluidMagmaHolder.BUCKET.get(),
             FluidSlimeHolder.BUCKET.get(),
             FluidWaxHolder.BUCKET.get(),
-            FluidXpJuiceHolder.BUCKET.get()
+            FluidXpJuiceHolder.BUCKET.get(),
+            FluidChocolateHolder.BUCKET.get(),
+            FluidRedstoneHolder.BUCKET.get(),
+            FluidEnderHolder.BUCKET.get(),
+            FluidGlowstoneHolder.BUCKET.get(),
+            FluidAmethystHolder.BUCKET.get(),
+            FluidSculkHolder.BUCKET.get()
         );
         // Energy on BlockItem: persists into CUSTOM_DATA so place/break round-trips work
         event.registerItem(Capabilities.EnergyStorage.ITEM,

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    {"required": false, "id": "thermal:ender"},
+    "cyclic:ender"
+  ]
+}

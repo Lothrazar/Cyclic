@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    {"required": false, "id": "create:chocolate"},
+    "cyclic:chocolate"
+  ]
+}

@@ -1,9 +1,15 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.fluid.FluidAmethystHolder;
 import com.lothrazar.cyclic.fluid.FluidBiomassHolder;
+import com.lothrazar.cyclic.fluid.FluidChocolateHolder;
+import com.lothrazar.cyclic.fluid.FluidEnderHolder;
+import com.lothrazar.cyclic.fluid.FluidGlowstoneHolder;
 import com.lothrazar.cyclic.fluid.FluidHoneyHolder;
 import com.lothrazar.cyclic.fluid.FluidMagmaHolder;
+import com.lothrazar.cyclic.fluid.FluidRedstoneHolder;
+import com.lothrazar.cyclic.fluid.FluidSculkHolder;
 import com.lothrazar.cyclic.fluid.FluidSlimeHolder;
 import com.lothrazar.cyclic.fluid.FluidWaxHolder;
 import com.lothrazar.cyclic.fluid.FluidXpJuiceHolder;
@@ -24,4 +30,10 @@ public class FluidRegistry {
   public static final FluidHoneyHolder HONEY = new FluidHoneyHolder();
   public static final FluidMagmaHolder MAGMA = new FluidMagmaHolder();
   public static final FluidWaxHolder WAX = new FluidWaxHolder();
+  public static final FluidChocolateHolder CHOCOLATE = new FluidChocolateHolder();
+  public static final FluidRedstoneHolder REDSTONE = new FluidRedstoneHolder();
+  public static final FluidEnderHolder ENDER = new FluidEnderHolder();
+  public static final FluidGlowstoneHolder GLOWSTONE = new FluidGlowstoneHolder();
+  public static final FluidAmethystHolder AMETHYST = new FluidAmethystHolder();
+  public static final FluidSculkHolder SCULK = new FluidSculkHolder();
 }

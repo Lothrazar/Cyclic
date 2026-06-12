@@ -9,8 +9,6 @@ import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.fluid.GenericFluidBlock;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import com.lothrazar.library.item.BucketItemFlib;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -21,16 +19,18 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
-public class FluidBiomassHolder {
 
-  private static final String ID = "biomass";
+public class FluidEnderHolder {
+
+  private static final String ID = "ender";
   public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_still");
   public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
   public static final int COLOR = 0xFFFFFF;
+  public static final int LIGHT_LEVEL = 3;
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
-          FluidType.Properties.create().density(1024).viscosity(1024)
+          FluidType.Properties.create().density(1050).viscosity(1050).lightLevel(LIGHT_LEVEL)
               .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 
@@ -38,12 +38,7 @@ public class FluidBiomassHolder {
   public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING = FluidRegistry.FLUID.register(ID + "_flowing", () -> new BaseFlowingFluid.Flowing(makeProperties()));
 
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).noLootTable(),
-          List.of(ent -> {
-            if (ent.level().random.nextDouble() < 0.1) {
-              ent.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 0, false, false, false));
-            }
-          })));
+      () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable(), List.of()));
 
   public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
       () -> new BucketItemFlib(STILL.get()));
