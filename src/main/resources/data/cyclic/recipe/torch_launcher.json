@@ -7,13 +7,13 @@
   ],
   "key": {
     "g": {
-      "item": "minecraft:gold_ingot"
+      "item": "minecraft:gold_block"
     },
     "c": {
       "item": "minecraft:coal_block"
     },
     "l": {
-      "tag": "minecraft:logs"
+      "tag": "c:storage_blocks/flint"
     }
   },
   "result": {

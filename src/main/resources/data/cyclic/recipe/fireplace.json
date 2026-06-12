@@ -3,7 +3,7 @@
   "pattern": [
     "brb",
     "bfb",
-    "bbb"
+    "bkb"
   ],
   "key": {
     "b": {
@@ -14,6 +14,9 @@
     },
     "f": {
       "item": "cyclic:fireball"
+    },
+    "k": {
+      "tag": "c:storage_blocks/flint"
     }
   },
   "result": {

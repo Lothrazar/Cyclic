@@ -7,7 +7,7 @@
   ],
   "key": {
     "o": {
-      "item": "minecraft:cobblestone_slab"
+      "tag": "c:storage_blocks/cobblestone"
     },
     "g": {
       "item": "minecraft:bucket"

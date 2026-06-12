@@ -19,7 +19,7 @@
       "item": "minecraft:hopper"
     },
     "q": {
-      "item": "cyclic:flint_block"
+      "tag": "c:storage_blocks/flint"
     }
   },
   "result": {

@@ -7,7 +7,7 @@
   ],
   "key": {
     "o": {
-      "tag": "c:cobblestones"
+      "tag": "c:storage_blocks/cobblestone"
     },
     "t": {
       "item": "minecraft:stick"
