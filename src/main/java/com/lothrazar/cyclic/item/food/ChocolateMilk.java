@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.item.food;
 
-import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +10,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-public class ChocolateMilk extends ItemBaseCyclic {
+public class ChocolateMilk extends FoodItemWithEffects {
 
   public ChocolateMilk(Properties properties) {
     super(properties);

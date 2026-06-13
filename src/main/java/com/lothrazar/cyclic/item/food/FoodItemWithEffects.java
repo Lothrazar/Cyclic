@@ -13,14 +13,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
 
-public class AppleBuffs extends ItemBaseCyclic {
+public class FoodItemWithEffects extends ItemBaseCyclic {
 
-  public AppleBuffs(Properties properties) {
+  public FoodItemWithEffects(Properties properties) {
     this(properties, new Settings().noTooltip()); // disable tooltip since we use potion effects instead
   }
 
-  public AppleBuffs(Properties food, Settings settings) {
-    super(food,settings);
+  public FoodItemWithEffects(Properties food, Settings settings) {
+    super(food, settings);
   }
 
   @Override

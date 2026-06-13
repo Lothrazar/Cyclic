@@ -7,7 +7,7 @@
   ],
   "mix": {
     "tag": "c:wax",
-    "amount": 100
+    "amount": 250
   },
   "energy": {
     "rfpertick": 800,
