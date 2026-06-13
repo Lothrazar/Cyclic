@@ -3,24 +3,18 @@
   "ingredients": [
     {
       "item": "minecraft:grass_block"
-    },
-    {
-      "item": "minecraft:grass_block"
-    },
-    {
-      "item": "minecraft:grass_block"
     }
   ],
   "mix": {
     "tag": "c:biomass",
-    "amount": 100
+    "amount": 1000
   },
   "energy": {
     "rfpertick": 100,
-    "ticks": 120
+    "ticks": 20
   },
   "result": {
-    "count": 3,
+    "count": 2,
     "id": "minecraft:farmland"
   }
 }

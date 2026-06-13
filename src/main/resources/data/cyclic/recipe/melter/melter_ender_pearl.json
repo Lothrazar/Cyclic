@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_pearl"
+    }
+  ],
+  "energy": {
+    "rfpertick": 12000,
+    "ticks": 120
+  },
+  "result": {
+    "id": "cyclic:ender",
+    "amount": 250
+  }
+}

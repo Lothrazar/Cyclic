@@ -2,19 +2,19 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "tag": "c:slimeballs"
+      "item": "minecraft:glowstone"
     }
   ],
   "energy": {
     "rfpertick": 500,
-    "ticks": 220
+    "ticks": 120
   },
   "mix": {
-    "tag": "c:magma",
-    "amount": 50
+    "tag": "c:redstone",
+    "amount": 250
   },
   "result": {
     "count": 1,
-    "id": "minecraft:magma_cream"
+    "id": "minecraft:redstone_lamp"
   }
 }

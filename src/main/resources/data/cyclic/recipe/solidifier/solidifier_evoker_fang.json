@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "cyclic:gem_amber"
+    },
+    {
+      "item": "minecraft:cobweb"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
+  "energy": {
+    "rfpertick": 3000,
+    "ticks": 240
+  },
+  "mix": {
+    "tag": "c:sculk",
+    "amount": 5000
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:evoker_fang"
+  }
+}

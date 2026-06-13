@@ -1,0 +1,23 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "cyclic:gem_amber"
+    }
+  ],
+  "energy": {
+    "rfpertick": 300,
+    "ticks": 150
+  },
+  "mix": {
+    "tag": "c:amethyst",
+    "amount": 250
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:scepter_missile"
+  }
+}

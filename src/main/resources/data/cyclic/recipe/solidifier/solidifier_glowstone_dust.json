@@ -2,19 +2,19 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "item": "minecraft:stick"
+      "item": "minecraft:sand"
     }
   ],
   "energy": {
     "rfpertick": 100,
-    "ticks": 100
+    "ticks": 60
   },
   "mix": {
-    "tag": "c:honey",
-    "amount": 1000
+    "tag": "c:glowstone",
+    "amount": 250
   },
   "result": {
     "count": 1,
-    "id": "minecraft:honey_block"
+    "id": "minecraft:glowstone_dust"
   }
 }

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:feathers"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "item": "cyclic:gem_amber"
+    }
+  ],
+  "energy": {
+    "rfpertick": 200,
+    "ticks": 100
+  },
+  "mix": {
+    "tag": "c:ender",
+    "amount": 2000
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:charm_home"
+  }
+}

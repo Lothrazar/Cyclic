@@ -10,7 +10,7 @@
       "item": "minecraft:golden_carrot"
     },
     "d": {
-      "item": "minecraft:redstone"
+      "item": "minecraft:redstone_block"
     }
   },
   "result": {

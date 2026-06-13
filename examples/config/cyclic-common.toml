@@ -598,9 +598,9 @@
 
 		[cyclic.items.chorus_flight]
 			# Seconds of flight per chorus_flight
-			# Default: 1200
+			# Default: 12000
 			# Range: 1 ~ 20000
-			ticks = 1200
+			ticks = 12000
 
 		[cyclic.items.chorus_spectral]
 			# Seconds of noClip per chorus_spectral
@@ -872,7 +872,7 @@
 			# Power per use disenchanter
 			# Default: 7500
 			# Range: > 0
-			energy_cost = 2500
+			energy_cost = 7500
 			# Ticks required per operation
 			# Default: 300
 			# Range: > 1

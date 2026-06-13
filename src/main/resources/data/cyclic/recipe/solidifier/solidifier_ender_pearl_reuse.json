@@ -1,0 +1,23 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/redstone"
+    },
+    {
+      "tag": "c:nuggets/copper"
+    }
+  ],
+  "energy": {
+    "rfpertick": 1000,
+    "ticks": 200
+  },
+  "mix": {
+    "tag": "c:ender",
+    "amount": 1000
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:ender_pearl_reuse"
+  }
+}

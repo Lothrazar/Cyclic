@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:chorus_fruit"
+    }
+  ],
+  "energy": {
+    "rfpertick": 1500,
+    "ticks": 600
+  },
+  "result": {
+    "id": "cyclic:ender",
+    "amount": 50
+  }
+}

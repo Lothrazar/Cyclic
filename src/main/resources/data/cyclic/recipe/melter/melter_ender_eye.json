@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_eye"
+    }
+  ],
+  "energy": {
+    "rfpertick": 1500,
+    "ticks": 280
+  },
+  "result": {
+    "id": "cyclic:ender",
+    "amount": 500
+  }
+}

@@ -93,6 +93,7 @@ import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem;
 import com.lothrazar.cyclic.item.equipment.ShieldCyclicItem.ShieldType;
 import com.lothrazar.cyclic.item.food.AppleBuffs;
 import com.lothrazar.cyclic.item.food.AppleChocolate;
+import com.lothrazar.cyclic.item.food.ChocolateMilk;
 import com.lothrazar.cyclic.item.food.EdibleFlightItem;
 import com.lothrazar.cyclic.item.food.EdibleSpecItem;
 import com.lothrazar.cyclic.item.food.EnderApple;
@@ -199,6 +200,11 @@ public class ItemRegistry {
   public static final DeferredItem<Item> CHORUS_FLIGHT = ITEMS.register("chorus_flight", () -> new EdibleFlightItem(new Item.Properties()));
   public static final DeferredItem<Item> CHORUS_SPECTRAL = ITEMS.register("chorus_spectral", () -> new EdibleSpecItem(new Item.Properties()));
   public static final DeferredItem<Item> MILK_BOTTLE = ITEMS.register("milk_bottle", () -> new MilkBottle(new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().build())));
+  public static final DeferredItem<Item> CHOCOLATE_MILK = ITEMS.register("chocolate_milk", () -> new ChocolateMilk(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationModifier(0)
+      .effect(() -> AppleBuffs.silent(MobEffects.MOVEMENT_SPEED, SMALLPOTIONDUR, 0), 1)
+      .effect(() -> AppleBuffs.silent(MobEffects.HUNGER, 120, 0), 0.5F)
+      .effect(() -> AppleBuffs.silent(MobEffects.SATURATION, 60, 0), 1)
+      .alwaysEdible().build())));
   public static final DeferredItem<Item> HEART = ITEMS.register("heart", () -> new HeartItem(new Item.Properties().stacksTo(16)));
   public static final DeferredItem<Item> HEART_EMPTY = ITEMS.register("heart_empty", () -> new HeartToxicItem(new Item.Properties().stacksTo(16)));
   //

@@ -1,0 +1,23 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:glass/colorless"
+    },
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "energy": {
+    "rfpertick": 300,
+    "ticks": 150
+  },
+  "mix": {
+    "tag": "c:redstone",
+    "amount": 900
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:laser"
+  }
+}

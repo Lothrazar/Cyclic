@@ -2,19 +2,19 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "item": "minecraft:grass_block"
+      "item": "minecraft:sandstone"
     }
   ],
-  "mix": {
-    "tag": "c:biomass",
-    "amount": 50
-  },
   "energy": {
     "rfpertick": 100,
-    "ticks": 120
+    "ticks": 100
+  },
+  "mix": {
+    "tag": "c:ender",
+    "amount": 10
   },
   "result": {
     "count": 1,
-    "id": "minecraft:farmland"
+    "id": "minecraft:end_stone"
   }
 }

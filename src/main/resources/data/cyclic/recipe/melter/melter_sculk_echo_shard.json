@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 250
+  },
+  "result": {
+    "id": "cyclic:sculk",
+    "amount": 2000
+  }
+}

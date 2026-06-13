@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_block"
+    }
+  ],
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 200
+  },
+  "result": {
+    "id": "cyclic:amethyst",
+    "amount": 1000
+  }
+}

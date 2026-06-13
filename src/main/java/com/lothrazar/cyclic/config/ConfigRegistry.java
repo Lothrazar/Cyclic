@@ -438,7 +438,7 @@ public class ConfigRegistry {
     AutoCaveTorchItem.PREFER_WALLS = CFG.comment(" Whether to prioritise placing torches on walls").define("prefer_walls", true);
     AutoCaveTorchItem.PREFER_LEFT_WALL = CFG.comment(" Which wall to place torches on when digging a 1-wide tunnel", "True means left, False means right").define("prefer_left_wall", false);
     CFG.pop(); // caving_torch 
-    EdibleFlightItem.TICKS = CFG.comment(" Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", 20 * 60, 1, 20 * 1000);
+    EdibleFlightItem.TICKS = CFG.comment(" Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", 20 * 600, 1, 20 * 1000);
     EdibleSpecItem.TICKS = CFG.comment(" Seconds of noClip per chorus_spectral").defineInRange("chorus_spectral.ticks", 20 * 30, 1, 20 * 1000);
     MBALL_IGNORE_LIST = CFG.comment(" Entity ids that cannot be picked up with the Monster all").defineList("monster_ball.ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment(" Wand settings").push("scepter_teleport");

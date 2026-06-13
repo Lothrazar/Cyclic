@@ -5,14 +5,14 @@
       "item": "minecraft:gold_block"
     },
     {
-      "item": "minecraft:nether_star"
+      "item": "minecraft:breeze_rod"
     },
     {
       "item": "minecraft:sculk"
     }
   ],
   "mix": {
-    "tag": "c:biomass",
+    "tag": "c:wax",
     "amount": 4000
   },
   "energy": {

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:quartz_block"
+    },
+    {
+      "item": "minecraft:redstone_lamp"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
+  "energy": {
+    "rfpertick": 3000,
+    "ticks": 400
+  },
+  "mix": {
+    "tag": "c:ender",
+    "amount": 2000
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:scepter_elevation"
+  }
+}

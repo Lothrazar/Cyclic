@@ -1,0 +1,23 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:lime_dye"
+    },
+    {
+      "item": "minecraft:magma_cream"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 60
+  },
+  "mix": {
+    "tag": "c:glowstone",
+    "amount": 100
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:verdant_froglight"
+  }
+}

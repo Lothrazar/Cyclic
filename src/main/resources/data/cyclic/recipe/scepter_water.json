@@ -1,7 +1,7 @@
 ﻿{
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ofo",
+    "o o",
     "beb",
     "ofo"
   ],
@@ -16,7 +16,7 @@
       "item": "minecraft:magma_block"
     },
     "f": {
-      "item": "minecraft:ice"
+      "item": "minecraft:breeze_rod"
     }
   },
   "result": {

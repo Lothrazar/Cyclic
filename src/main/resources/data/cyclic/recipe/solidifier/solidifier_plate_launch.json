@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:ingots/copper"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "cyclic:obsidian_pressure_plate"
+    }
+  ],
+  "energy": {
+    "rfpertick": 1000,
+    "ticks": 80
+  },
+  "mix": {
+    "tag": "c:slime",
+    "amount": 1500
+  },
+  "result": {
+    "count": 8,
+    "id": "cyclic:plate_launch"
+  }
+}

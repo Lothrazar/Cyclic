@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    }
+  ],
+  "energy": {
+    "rfpertick": 300,
+    "ticks": 150
+  },
+  "mix": {
+    "tag": "c:glowstone",
+    "amount": 1000
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:scepter_lightning"
+  }
+}

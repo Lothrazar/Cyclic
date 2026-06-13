@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "cyclic:fireball"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "tag": "c:nuggets/gold"
+    }
+  ],
+  "energy": {
+    "rfpertick": 300,
+    "ticks": 150
+  },
+  "mix": {
+    "tag": "c:magma",
+    "amount": 500
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:scepter_fire"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "cyclic:gem_obsidian"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    },
+    {
+      "tag": "c:nuggets/netherite"
+    }
+  ],
+  "energy": {
+    "rfpertick": 5000,
+    "ticks": 200
+  },
+  "mix": {
+    "tag": "c:ender",
+    "amount": 8000
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:scepter_teleport"
+  }
+}

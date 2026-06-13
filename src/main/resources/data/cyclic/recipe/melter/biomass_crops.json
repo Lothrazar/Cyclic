@@ -2,7 +2,7 @@
   "type": "cyclic:melter",
   "ingredients": [
     {
-      "tag": "c:crop_blocks"
+      "tag": "c:crops"
     }
   ],
   "energy": {

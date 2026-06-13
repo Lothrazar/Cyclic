@@ -1,0 +1,20 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:fishing_rod"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 80
+  },
+  "mix": {
+    "tag": "c:ender",
+    "amount": 250
+  },
+  "result": {
+    "count": 32,
+    "id": "cyclic:ender_fishing"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:nuggets/iron"
+    },
+    {
+      "tag": "c:nuggets/iron"
+    },
+    {
+      "tag": "c:nuggets/iron"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 80
+  },
+  "mix": {
+    "tag": "c:redstone",
+    "amount": 1000
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:clock"
+  }
+}

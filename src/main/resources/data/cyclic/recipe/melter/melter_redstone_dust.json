@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 60
+  },
+  "result": {
+    "id": "cyclic:redstone",
+    "amount": 100
+  }
+}

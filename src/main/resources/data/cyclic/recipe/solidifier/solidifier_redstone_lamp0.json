@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 120
+  },
+  "mix": {
+    "tag": "c:glowstone",
+    "amount": 1000
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:redstone_lamp"
+  }
+}

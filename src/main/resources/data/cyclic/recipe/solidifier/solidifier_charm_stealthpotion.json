@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "tag": "c:nuggets/copper"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "energy": {
+    "rfpertick": 200,
+    "ticks": 100
+  },
+  "mix": {
+    "tag": "c:redstone",
+    "amount": 200
+  },
+  "result": {
+    "count": 1,
+    "id": "cyclic:charm_stealthpotion"
+  }
+}

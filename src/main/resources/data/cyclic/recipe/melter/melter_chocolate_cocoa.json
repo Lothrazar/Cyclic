@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:cocoa_beans"
+    }
+  ],
+  "energy": {
+    "rfpertick": 1000,
+    "ticks": 300
+  },
+  "result": {
+    "id": "cyclic:chocolate",
+    "amount": 250
+  }
+}

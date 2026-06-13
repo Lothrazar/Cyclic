@@ -1,0 +1,16 @@
+{
+  "type": "cyclic:melter",
+  "ingredients": [
+    {
+      "item": "minecraft:sculk_vein"
+    }
+  ],
+  "energy": {
+    "rfpertick": 80,
+    "ticks": 30
+  },
+  "result": {
+    "id": "cyclic:sculk",
+    "amount": 50
+  }
+}

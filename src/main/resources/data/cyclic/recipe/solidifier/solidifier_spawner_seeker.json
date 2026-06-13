@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    {
+      "tag": "c:dyes/purple"
+    }
+  ],
+  "energy": {
+    "rfpertick": 500,
+    "ticks": 120
+  },
+  "mix": {
+    "tag": "c:ender",
+    "amount": 250
+  },
+  "result": {
+    "count": 8,
+    "id": "cyclic:spawner_seeker"
+  }
+}
