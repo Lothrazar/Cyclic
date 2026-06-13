@@ -937,6 +937,13 @@
 			# Range: 2 ~ 32
 			height = 8
 
+		# conveyor belt settings
+		[cyclic.blocks.conveyor]
+			# How many ticks between each item extracted from an adjacent inventory (20 = 1 per second, 1 = 20 per second)
+			# Default: 10
+			# Range: 1 ~ 1200
+			extract_rate = 10
+
 		# glass_terra settings
 		[cyclic.blocks.glass_terra]
 			# ticks between growth cycles

@@ -100,7 +100,7 @@ public class EntityRegistry {
       .setShouldReceiveVelocityUpdates(true)
       .setUpdateInterval(1)
       .setTrackingRange(128)
-      .sized(.6F, .6F)
+      .sized(.25F, .25F)
       .build("conveyor_item"));
   public static final DeferredHolder<EntityType<?>, EntityType<FishingEnderEntity>> ENDER_FISHING = ENTITIES.register("ender_fishing", () -> EntityType.Builder.<FishingEnderEntity> of(FishingEnderEntity::new, MobCategory.MISC)
       .setShouldReceiveVelocityUpdates(true)

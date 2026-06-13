@@ -120,6 +120,7 @@ public class ConfigRegistry {
   private static ConfigValue<List<? extends String>> DISARM_IGNORE_LIST;
   public static ConfigValue<List<? extends String>> GLOOM_IGNORE_LIST;
   private static final String WALL = "####################################################################################";
+  public static IntValue CONVEYOR_EXTRACT_RATE;
   public static IntValue CHARM_LUCK;
   public static DoubleValue CHARM_SPEED;
   public static DoubleValue CHARM_ATTACK_SPEED;
@@ -569,6 +570,9 @@ public class ConfigRegistry {
     TileTerraPreta.CHANCE = CFG.comment(" Chance that the crop will grow after the interval").defineInRange("growth_chance", 0.5, 0, 1);
     TileTerraPreta.HEIGHT = CFG.comment(" growth height above the soil").defineInRange("height", 8, 2, 32);
     CFG.pop(); // terra_preta
+    CFG.comment(" conveyor belt settings").push("conveyor");
+    ConfigRegistry.CONVEYOR_EXTRACT_RATE = CFG.comment(" How many ticks between each item extracted from an adjacent inventory (20 = 1 per second, 1 = 20 per second)").defineInRange("extract_rate", 10, 1, 1200);
+    CFG.pop(); // conveyor
     CFG.comment(" glass_terra settings").push("glass_terra");
     TileTerraGlass.TIMER_FULL = CFG.comment(" ticks between growth cycles").defineInRange("timer", 100, 1, 10000);
     TileTerraGlass.HEIGHT = CFG.comment(" growth height below the glass").defineInRange("height", 8, 0, 32);

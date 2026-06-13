@@ -7,11 +7,16 @@ import java.util.stream.Collectors;
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.data.DataTags;
 import com.lothrazar.cyclic.registry.TileRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -229,6 +234,19 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
   @Override
   public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
     ItemStack heldStack = player.getMainHandItem();
+    // Empty-handed right-click: pick up one stack from the belt
+    if (heldStack.isEmpty()) {
+      if (!world.isClientSide) {
+        List<ConveyorItemEntity> beltItems = world.getEntitiesOfClass(ConveyorItemEntity.class,
+            new net.minecraft.world.phys.AABB(pos).expandTowards(0, 0.5, 0));
+        if (!beltItems.isEmpty()) {
+          ConveyorItemEntity target = beltItems.get(0);
+          player.addItem(target.getItem().copy());
+          target.discard();
+        }
+      }
+      return InteractionResult.SUCCESS;
+    }
     Item heldItem = heldStack.getItem();
     if (heldItem instanceof DyeItem) {
       //
@@ -332,6 +350,13 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
     world.setBlock(pos, state.setValue(BlockStateProperties.HORIZONTAL_FACING, facing).setValue(SPEED, speed).setValue(TYPE, type).setValue(COLOUR, col), 2);
     super.setPlacedBy(world, pos, state, placer, stack);
   }
+  @Override
+  public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    super.appendHoverText(stack, context, tooltip, flag);
+    tooltip.add(Component.translatable("block.cyclic.conveyor.tooltip").withStyle(ChatFormatting.GRAY));
+    tooltip.add(Component.translatable("block.cyclic.conveyor.tooltip1").withStyle(ChatFormatting.GRAY));
+  }
+
   @Override
   public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
     if (!world.isClientSide) {

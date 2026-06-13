@@ -9,12 +9,11 @@ import net.minecraft.world.level.Level;
 
 public class ConveyorItemEntity extends ItemEntity {
 
-  // TODO: use or delete
   public ConveyorItemEntity(Level worldIn, double x, double y, double z, ItemStack stack) {
     super(EntityRegistry.CONVEYOR_ITEM.get(), worldIn);
+    this.lifespan = Integer.MAX_VALUE;
     this.setPos(x, y, z);
     this.setItem(stack);
-    this.lifespan = Integer.MAX_VALUE;
     this.setExtendedLifetime();
     this.setNeverPickUp();
   }
@@ -28,10 +27,10 @@ public class ConveyorItemEntity extends ItemEntity {
     return true;
   }
 
-  @Override
-  public void setNeverPickUp() {
-    super.setNeverPickUp();
-  }
+//  @Override
+//  public void setNeverPickUp() {
+//    super.setNeverPickUp();
+//  }
 
   @Override
   public float getSpin(float partialTicks) {
@@ -40,14 +39,15 @@ public class ConveyorItemEntity extends ItemEntity {
 
   @Override
   public void tick() {
-    if (!(level().getBlockState(this.blockPosition()).getBlock() instanceof BlockConveyor)) {
-      this.spawnRegularStack();
+    if (!level().isClientSide && !(level().getBlockState(this.blockPosition()).getBlock() instanceof BlockConveyor)) {
+      spawnRegularStack();
+      return;
     }
     super.tick();
   }
 
   private void spawnRegularStack() {
-    ItemEntity e = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), this.getItem());
+    ItemEntity e = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), this.getItem().copy());
     this.level().addFreshEntity(e);
     this.setItem(ItemStack.EMPTY);
     this.remove(RemovalReason.DISCARDED);
@@ -56,6 +56,7 @@ public class ConveyorItemEntity extends ItemEntity {
   @Override
   public void playerTouch(Player entityIn) {
     //Do nothing
+    //player can pickup from the block when empty handed
   }
 
 }

@@ -373,6 +373,7 @@
   "block.cyclic.unbreakable_reactive.guide": "By default this can be mined as normal.  If it ever has a redstone signal given to it, then it becomes unbreakable by the block state. Unlike the other unbreakable block, this one uses a Tile Entity. ",
   "block.cyclic.conveyor": "Conveyor Belt",
   "block.cyclic.conveyor.tooltip": "Set speed with redstone torch, rotation type with wrench, color with dye",
+  "block.cyclic.conveyor.tooltip1": "Extracts and carries items between any container",
   "block.cyclic.conveyor.guide": "Moves all entities standing on it.   Many properties of this block are stored in the blockstate such as type, speed, and dye color.  Types include straight, corner, and up/down ramps.  To toggle the type, place in world and use the Wooden Wrench on the placed rail, this toggles the type.",
   "block.cyclic.conveyor.guide0": "Hold a redstone torch and interact to toggle the speed.   Hold dye and use it on the block to toggle the color.  These updates propogate to nearby connected rails.  (check F3 to view these properties in detail) ",
   "block.cyclic.shelf": "Item Shelf",
