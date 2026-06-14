@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:boomerang_carry"
+    },
+    "title": {
+      "translate": "advancements.cyclic.storage.boomerang_carry.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.storage.boomerang_carry.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:storage/storage_bag",
+  "criteria": {
+    "get_boomerang_carry": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:boomerang_carry"]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -5,10 +5,11 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.fluid.GenericFluidBlock;
+import com.lothrazar.library.util.EnchantUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.enchantment.Enchantments;
 import com.lothrazar.library.item.BucketItemFlib;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -37,13 +38,14 @@ public class FluidWaxHolder {
 
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
       () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).noLootTable(),
-          List.of(
-              ent -> ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, false)),
-              ent -> {
-                if (!ent.isOnFire()) {
-                  ent.igniteForSeconds(1);
-                }
-              })));
+          List.of(ent -> {
+            if (!ent.isOnFire() && !ent.fireImmune()) {
+              int lvl = EnchantUtil.getCurrentArmorLevel(EnchantUtil.holder(Enchantments.FIRE_PROTECTION, ent), ent);
+              if (lvl < 4) {
+                ent.igniteForSeconds(Mth.floor(ent.level().random.nextDouble() * 10));
+              }
+            }
+          })));
 
   public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
       () -> new BucketItemFlib(STILL.get()));

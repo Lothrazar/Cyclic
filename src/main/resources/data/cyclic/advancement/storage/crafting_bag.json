@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:crafting_bag"
+    },
+    "title": {
+      "translate": "advancements.cyclic.storage.crafting_bag.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.storage.crafting_bag.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:storage/storage_bag",
+  "criteria": {
+    "get_crafting_bag": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:crafting_bag"]
+          }
+        ]
+      }
+    }
+  }
+}

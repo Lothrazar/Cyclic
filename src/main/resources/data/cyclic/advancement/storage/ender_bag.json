@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:ender_bag"
+    },
+    "title": {
+      "translate": "advancements.cyclic.storage.ender_bag.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.storage.ender_bag.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:storage/crafting_bag",
+  "criteria": {
+    "get_ender_bag": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:ender_bag"]
+          }
+        ]
+      }
+    }
+  }
+}

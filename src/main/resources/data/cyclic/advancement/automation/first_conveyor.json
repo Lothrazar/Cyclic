@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:conveyor"
+    },
+    "title": {
+      "translate": "advancements.cyclic.automation.first_conveyor.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.automation.first_conveyor.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:automation/pipes",
+  "criteria": {
+    "get_conveyor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:conveyor"]
+          }
+        ]
+      }
+    }
+  }
+}

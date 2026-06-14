@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:harvester"
+    },
+    "title": {
+      "translate": "advancements.cyclic.automation.harvester.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.automation.harvester.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:automation/pipes",
+  "criteria": {
+    "get_harvester": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:harvester"]
+          }
+        ]
+      }
+    }
+  }
+}

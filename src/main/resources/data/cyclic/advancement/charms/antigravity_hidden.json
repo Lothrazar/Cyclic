@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:charm_antigravity"
+    },
+    "title": {
+      "translate": "advancements.cyclic.charms.antigravity_hidden.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.charms.antigravity_hidden.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "cyclic:charms/first_charm",
+  "criteria": {
+    "get_antigravity": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:charm_antigravity"]
+          }
+        ]
+      }
+    }
+  }
+}

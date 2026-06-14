@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:soulstone"
+    },
+    "title": {
+      "translate": "advancements.cyclic.charms.soulstone.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.charms.soulstone.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:charms/first_charm",
+  "criteria": {
+    "get_soulstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:soulstone"]
+          }
+        ]
+      }
+    }
+  }
+}

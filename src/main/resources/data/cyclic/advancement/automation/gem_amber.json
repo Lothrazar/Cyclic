@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:gem_amber"
+    },
+    "title": {
+      "translate": "advancements.cyclic.automation.gem_amber.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.automation.gem_amber.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:automation/harvester",
+  "criteria": {
+    "get_gem_amber": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:gem_amber"]
+          }
+        ]
+      }
+    }
+  }
+}

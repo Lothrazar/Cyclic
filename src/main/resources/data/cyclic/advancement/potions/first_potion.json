@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:milk_bottle"
+    },
+    "title": {
+      "translate": "advancements.cyclic.potions.first_potion.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.potions.first_potion.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:root",
+  "criteria": {
+    "has_waterwalk": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "cyclic:waterwalk": {}
+        }
+      }
+    }
+  }
+}

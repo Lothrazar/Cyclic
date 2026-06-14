@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:disenchanter"
+    },
+    "title": {
+      "translate": "advancements.cyclic.enchanting.disenchanter_hidden.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.enchanting.disenchanter_hidden.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "cyclic:enchanting/soulbound",
+  "criteria": {
+    "place_disenchanter": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": {
+          "block": {
+            "blocks": ["cyclic:disenchanter"]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:plate_launch"
+    },
+    "title": {
+      "translate": "advancements.cyclic.automation.launch_hidden.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.automation.launch_hidden.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "cyclic:automation/first_conveyor",
+  "criteria": {
+    "place_launch_plate": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": {
+          "block": {
+            "blocks": ["cyclic:plate_launch"]
+          }
+        }
+      }
+    }
+  }
+}

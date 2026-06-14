@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:crystal_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.cyclic.enchanting.excavate.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.enchanting.excavate.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:enchanting/soulbound",
+  "criteria": {
+    "has_excavate_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "minecraft:enchantments": [
+                {
+                  "enchantment": "cyclic:excavate",
+                  "levels": {"min": 1}
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

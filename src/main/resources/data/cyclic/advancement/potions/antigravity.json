@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:beacon"
+    },
+    "title": {
+      "translate": "advancements.cyclic.potions.antigravity.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.potions.antigravity.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:potions/chocolate_apple",
+  "criteria": {
+    "has_antigravity": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "cyclic:antigravity": {}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:charm_longfall"
+    },
+    "title": {
+      "translate": "advancements.cyclic.charms.first_charm.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.charms.first_charm.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:root",
+  "criteria": {
+    "get_charm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "cyclic:charm_longfall",
+              "cyclic:charm_creeper",
+              "cyclic:charm_stone",
+              "cyclic:charm_antipotion",
+              "cyclic:charm_stealthpotion",
+              "cyclic:charm_boostpotion",
+              "cyclic:charm_crit",
+              "cyclic:charm_antigravity",
+              "cyclic:charm_void",
+              "cyclic:charm_antidote",
+              "cyclic:charm_fire",
+              "cyclic:charm_wither",
+              "cyclic:charm_ultimate",
+              "cyclic:charm_magicdefense",
+              "cyclic:charm_starvation",
+              "cyclic:charm_venom",
+              "cyclic:charm_water",
+              "cyclic:charm_speed",
+              "cyclic:charm_knockback_resistance",
+              "cyclic:charm_luck",
+              "cyclic:charm_attack_speed",
+              "cyclic:charm_xp_speed",
+              "cyclic:charm_xp_blocker",
+              "cyclic:charm_torch",
+              "cyclic:charm_torch_cave",
+              "cyclic:charm_home",
+              "cyclic:charm_world",
+              "cyclic:charm_wing",
+              "cyclic:charm_invisible",
+              "cyclic:glove_climb",
+              "cyclic:flippers"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

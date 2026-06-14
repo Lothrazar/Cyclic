@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancements.cyclic.enchanting.soulbound.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.enchanting.soulbound.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:root",
+  "criteria": {
+    "has_soulbound_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "minecraft:enchantments": [
+                {
+                  "enchantment": "cyclic:soulbound",
+                  "levels": {"min": 1}
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

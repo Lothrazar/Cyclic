@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:crafter"
+    },
+    "title": {
+      "translate": "advancements.cyclic.automation.crafter.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.automation.crafter.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:automation/gem_amber",
+  "criteria": {
+    "get_crafter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:crafter"]
+          }
+        ]
+      }
+    }
+  }
+}

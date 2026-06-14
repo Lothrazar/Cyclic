@@ -1,0 +1,43 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:charm_void"
+    },
+    "title": {
+      "translate": "advancements.cyclic.charms.triple_immunity.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.charms.triple_immunity.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:charms/first_charm",
+  "criteria": {
+    "get_charm_void": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{"items": ["cyclic:charm_void"]}]
+      }
+    },
+    "get_charm_fire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{"items": ["cyclic:charm_fire"]}]
+      }
+    },
+    "get_charm_wither": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{"items": ["cyclic:charm_wither"]}]
+      }
+    }
+  },
+  "requirements": [
+    ["get_charm_void"],
+    ["get_charm_fire"],
+    ["get_charm_wither"]
+  ]
+}

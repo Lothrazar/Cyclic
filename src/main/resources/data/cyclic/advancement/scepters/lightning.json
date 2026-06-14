@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:scepter_lightning"
+    },
+    "title": {
+      "translate": "advancements.cyclic.scepters.lightning.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.scepters.lightning.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:scepters/first_scepter",
+  "criteria": {
+    "get_lightning_scepter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:scepter_lightning"]
+          }
+        ]
+      }
+    }
+  }
+}

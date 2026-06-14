@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:compass_gps"
+    },
+    "title": {
+      "translate": "advancements.cyclic.storage.gps_compass.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.storage.gps_compass.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:storage/ender_bag",
+  "criteria": {
+    "get_gps_compass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:compass_gps"]
+          }
+        ]
+      }
+    }
+  }
+}

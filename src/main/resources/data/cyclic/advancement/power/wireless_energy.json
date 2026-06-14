@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:wireless_energy"
+    },
+    "title": {
+      "translate": "advancements.cyclic.power.wireless_energy.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.power.wireless_energy.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:power/fill_battery",
+  "criteria": {
+    "get_wireless_energy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:wireless_energy"]
+          }
+        ]
+      }
+    }
+  }
+}

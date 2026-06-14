@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:spikes_iron"
+    },
+    "title": {
+      "translate": "advancements.cyclic.power.spikes_iron.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.power.spikes_iron.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:power/first_generator",
+  "criteria": {
+    "get_spikes_iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:spikes_iron"]
+          }
+        ]
+      }
+    }
+  }
+}

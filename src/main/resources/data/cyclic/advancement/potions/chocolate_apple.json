@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:apple_chocolate"
+    },
+    "title": {
+      "translate": "advancements.cyclic.potions.chocolate_apple.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.potions.chocolate_apple.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:potions/first_potion",
+  "criteria": {
+    "get_chocolate_apple": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["cyclic:apple_chocolate"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:storage_bag"
+    },
+    "title": {
+      "translate": "advancements.cyclic.storage.storage_bag.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.storage.storage_bag.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:root",
+  "criteria": {
+    "get_storage_bag": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:storage_bag"]
+          }
+        ]
+      }
+    }
+  }
+}

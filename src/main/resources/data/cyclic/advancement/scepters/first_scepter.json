@@ -1,0 +1,46 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:scepter_fire"
+    },
+    "title": {
+      "translate": "advancements.cyclic.scepters.first_scepter.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.scepters.first_scepter.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:root",
+  "criteria": {
+    "get_scepter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "cyclic:scepter_fire",
+              "cyclic:scepter_lightning",
+              "cyclic:scepter_snow",
+              "cyclic:scepter_ice",
+              "cyclic:scepter_water",
+              "cyclic:scepter_build",
+              "cyclic:scepter_replace",
+              "cyclic:scepter_offset",
+              "cyclic:scepter_antimatter",
+              "cyclic:scepter_elevation",
+              "cyclic:scepter_teleport",
+              "cyclic:scepter_hypno",
+              "cyclic:scepter_missile",
+              "cyclic:scepter_randomize",
+              "cyclic:scepter_rotation"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

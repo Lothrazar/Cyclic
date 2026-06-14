@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:wrench"
+    },
+    "title": {
+      "translate": "advancements.cyclic.root.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "get_wrench": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:wrench"]
+          }
+        ]
+      }
+    }
+  }
+}

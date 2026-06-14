@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:scepter_antimatter"
+    },
+    "title": {
+      "translate": "advancements.cyclic.scepters.antimatter.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.scepters.antimatter.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:scepters/builder",
+  "criteria": {
+    "get_antimatter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:scepter_antimatter"]
+          }
+        ]
+      }
+    }
+  }
+}

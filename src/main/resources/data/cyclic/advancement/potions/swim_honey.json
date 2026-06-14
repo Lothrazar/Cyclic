@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:honey_bucket"
+    },
+    "title": {
+      "translate": "advancements.cyclic.potions.swim_honey.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.potions.swim_honey.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:potions/first_potion",
+  "criteria": {
+    "in_honey": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "fluid": {
+            "fluids": ["cyclic:honey"]
+          }
+        }
+      }
+    }
+  }
+}

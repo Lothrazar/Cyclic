@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:generator_fuel"
+    },
+    "title": {
+      "translate": "advancements.cyclic.power.first_generator.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.power.first_generator.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:root",
+  "criteria": {
+    "get_generator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "cyclic:generator_fuel",
+              "cyclic:generator_food",
+              "cyclic:generator_fluid",
+              "cyclic:generator_item",
+              "cyclic:generator_solar"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

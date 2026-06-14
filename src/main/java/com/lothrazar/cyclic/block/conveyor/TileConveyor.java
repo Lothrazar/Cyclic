@@ -41,16 +41,17 @@ public class TileConveyor extends TileBlockEntityCyclic {
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileConveyor e) {
     e.tick();
-    // Convert any regular ItemEntities on the belt to ConveyorItemEntities
-    List<ItemEntity> regularItems = level.getEntitiesOfClass(ItemEntity.class, new AABB(blockPos).expandTowards(0.0F, 0.5F, 0.0F));
+    // Convert any regular ItemEntities on the belt
+    final double edgeBuf = 0.02;
+    List<ItemEntity> regularItems = level.getEntitiesOfClass(ItemEntity.class, new AABB(blockPos).inflate(-edgeBuf, 0, -edgeBuf).expandTowards(0.0F, 0.5F, 0.0F));
     for (ItemEntity item : regularItems) {
-      if (!(item instanceof ConveyorItemEntity)) {
+      if (!(item instanceof ConveyorItemEntity) && item.getY() <= blockPos.getY() + 0.5) {
         ConveyorItemEntity wrapped = new ConveyorItemEntity(level, item.getX(), item.getY(), item.getZ(), item.getItem().copy());
         level.addFreshEntity(wrapped);
         item.discard();
       }
     }
-    // Try to insert ConveyorItemEntities at the exit edge into the adjacent block
+    //try to insert at the exit edge into the adjacent block
     List<ConveyorItemEntity> beltItems = level.getEntitiesOfClass(ConveyorItemEntity.class, new AABB(blockPos).expandTowards(0.0F, 0.5F, 0.0F));
     for (ConveyorItemEntity item : beltItems) {
       tryInsertIntoOutput(item, blockState, blockPos, level);
@@ -64,6 +65,7 @@ public class TileConveyor extends TileBlockEntityCyclic {
     }
   }
 
+  //push into container(chest), if the direction is good
   private static void tryInsertIntoOutput(ConveyorItemEntity item, BlockState bs, BlockPos pos, Level world) {
     Direction facing = bs.getValue(BlockStateProperties.HORIZONTAL_FACING);
     double nX = item.getX() - pos.getX();
@@ -95,6 +97,7 @@ public class TileConveyor extends TileBlockEntityCyclic {
     }
   }
 
+  //pull like a hopper
   private static void tryExtractFromInput(BlockState bs, BlockPos pos, Level world) {
     if (world.hasNeighborSignal(pos)) {
       return;

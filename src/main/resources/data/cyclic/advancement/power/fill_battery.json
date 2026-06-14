@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:battery"
+    },
+    "title": {
+      "translate": "advancements.cyclic.power.fill_battery.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.power.fill_battery.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:power/spikes_iron",
+  "criteria": {
+    "get_battery": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:battery"]
+          }
+        ]
+      }
+    }
+  }
+}

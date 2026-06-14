@@ -1,0 +1,55 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:miner"
+    },
+    "title": {
+      "translate": "advancements.cyclic.automation.full_chain.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.automation.full_chain.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:automation/crafter",
+  "criteria": {
+    "get_miner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:miner"]
+          }
+        ]
+      }
+    },
+    "get_harvester": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:harvester"]
+          }
+        ]
+      }
+    },
+    "get_crafter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:crafter"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["get_miner"],
+    ["get_harvester"],
+    ["get_crafter"]
+  ]
+}

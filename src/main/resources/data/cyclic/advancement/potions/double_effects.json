@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:cloud"
+    },
+    "title": {
+      "translate": "advancements.cyclic.potions.double_effects.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.potions.double_effects.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:potions/antigravity",
+  "criteria": {
+    "has_noclip": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "minecraft:speed": {},
+          "cyclic:swimspeed": {}
+        }
+      }
+    }
+  }
+}

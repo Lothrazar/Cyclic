@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:charm_speed"
+    },
+    "title": {
+      "translate": "advancements.cyclic.potions.triple_effects.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.potions.triple_effects.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:potions/noclip",
+  "criteria": {
+    "speed_demon": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "minecraft:haste": {},
+          "cyclic:noclip": {},
+          "cyclic:antigravity": {}
+        }
+      }
+    }
+  }
+}

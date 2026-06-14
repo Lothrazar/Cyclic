@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "cyclic:scepter_teleport"
+    },
+    "title": {
+      "translate": "advancements.cyclic.scepters.scepter_teleport.title"
+    },
+    "description": {
+      "translate": "advancements.cyclic.scepters.scepter_teleport.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "cyclic:scepters/first_scepter",
+  "criteria": {
+    "get_teleport_scepter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["cyclic:scepter_teleport"]
+          }
+        ]
+      }
+    }
+  }
+}
