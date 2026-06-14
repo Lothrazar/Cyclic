@@ -49,7 +49,7 @@ public class WorldEventHandler {
       //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.CANDLE_PEACE.get().defaultBlockState().setValue(BlockCyclic.LIT, true), radius, height)
       ) {
         //default range 32 and filtered
-        ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by CacheCandle " + mob.getType());
+        ModCyclic.LOGGER.debug(mob.blockPosition() + " Spawn cancelled by CacheCandle " + mob.getType());
         event.setSpawnCancelled(true);
       }
       //next block
@@ -61,7 +61,7 @@ public class WorldEventHandler {
           && ServerCacheHolder.ALTAR_SOLICITING.hasCollision(mob.level(), mob.blockPosition(), radius.intValue(), height.intValue())
       //          && LevelWorldUtil.doesBlockExist(mob.level, mob.blockPosition(), BlockRegistry.ALTAR_SOLICITING.get().defaultBlockState().setValue(BlockAltarNoTraders.LIT, true), radius, height)
       ) {
-        ModCyclic.LOGGER.info(mob.blockPosition() + " Spawn cancelled by cache-altar " + mob.getType());
+        ModCyclic.LOGGER.debug(mob.blockPosition() + " Spawn cancelled by cache-altar " + mob.getType());
         event.setSpawnCancelled(true);
       }
     }

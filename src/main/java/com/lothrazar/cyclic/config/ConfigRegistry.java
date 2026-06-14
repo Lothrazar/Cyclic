@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.lothrazar.cyclic.CyclicLogger;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.CandleWaterBlock;
 import com.lothrazar.cyclic.block.LavaSpongeBlock;
@@ -326,10 +325,10 @@ public class ConfigRegistry {
     CommandRegistry.COMMANDDEV = CFG.comment(" True means only players with OP can use this /cyclic command").define(CyclicCommands.DEV.toString(), false);
     CommandRegistry.COMMANDPING = CFG.comment(" True means only players with OP can use this /cyclic command").define(CyclicCommands.PING.toString(), false);
     CFG.pop(); //command
-    CFG.comment(WALL, " Logging related configs", WALL)
-        .push("logging");
-    CyclicLogger.LOGINFO = CFG.comment(" Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
-    CFG.pop(); //logging  
+//    CFG.comment(WALL, " Logging related configs", WALL)
+//        .push("logging");
+//    CyclicLogger.LOGINFO = CFG.comment(" Unblock info logs; very spammy; can be useful for testing certain issues").define("info", false);
+//    CFG.pop(); //logging
     CFG.comment(WALL, " Item specific configs", WALL)
         .push("items");
     //

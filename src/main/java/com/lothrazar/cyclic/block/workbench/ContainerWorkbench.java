@@ -121,7 +121,6 @@ public class ContainerWorkbench extends RecipeBookMenu<CraftingInput, CraftingRe
 
   @Override
   public boolean shouldMoveToInventory(int s) {
-    //LOGGER.info("WAT is this shouldMoveToInventory" + s);
     return false;
   }
 

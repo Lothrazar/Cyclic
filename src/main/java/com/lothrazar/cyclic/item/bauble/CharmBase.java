@@ -145,7 +145,6 @@ public abstract class CharmBase extends ItemBaseToggle {
         double baseVal = attrPlayer.getBaseValue();
         AttributeModifier newValue = new AttributeModifier(ResourceLocation.fromNamespaceAndPath("cyclic", id.toString().replace("-","_").substring(0,20)), baseVal * factor + flatIncrease, op);
         attrPlayer.addPermanentModifier(newValue);
-        //        ModCyclic.LOGGER.info(baseSpeed + " becinesNEW value " + newValue.getAmount() + " -> " + attrPlayer.getValue());
         ItemStackUtil.damageItem(player, charmStack);
       }
       //not newly triggered so countdown tick damage  

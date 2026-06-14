@@ -41,7 +41,6 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
   }
 
   public void setTarget(LivingEntity target) {
-    ModCyclic.LOGGER.info("Magic missile target found " + target);
     //    targetId = target == null ? null : target.getUUID();
     targetEntity = target;
   }
@@ -54,7 +53,6 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
     if (!level.isClientSide && lifetime <= 0) {
       this.kill();
       //no target found
-      ModCyclic.LOGGER.info(" server side Self I took too long " + targetEntity);
       return;
     }
     //ModCyclic.logger.error("UPDATE ET  isclient==" + this.world.isRemote);
@@ -62,7 +60,6 @@ public class MagicMissileEntity extends ThrowableItemProjectile {
         (targetEntity == null || !targetEntity.isAlive())) {
       this.kill();
       //no target found
-      ModCyclic.LOGGER.info(" - erase self dead entity  " + targetEntity);
       return;
     }
     moveTowardsTarget();

@@ -27,12 +27,11 @@ public class MilkSpongeBlock extends BlockCyclic {
 
   private void absorbPotions(Level world, BlockPos pos) {
     List<LivingEntity> all = world.getEntitiesOfClass(LivingEntity.class, EntityUtil.makeBoundingBox(pos, 3, 3));
-    ModCyclic.LOGGER.info("SPONGE try absorb potions on " + all.size());
+
     for (LivingEntity e : all) {
       if (!e.getActiveEffects().isEmpty()) {
         e.removeAllEffects();
         SoundUtil.playSound(e, SoundEvents.GENERIC_DRINK);
-        ModCyclic.LOGGER.info("try absorb potions on " + e);
       }
     }
   }

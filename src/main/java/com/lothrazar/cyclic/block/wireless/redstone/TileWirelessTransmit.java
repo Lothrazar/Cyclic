@@ -88,11 +88,11 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     BlockPos targetPos = dimPos.getPos();
     ServerLevel serverLevel = dimPos.getTargetLevel(level);
     if (serverLevel == null) {
-      ModCyclic.LOGGER.info("Dimension not found " + dimPos.getDimension());
+      ModCyclic.LOGGER.debug("Dimension not found " + dimPos.getDimension());
       return;
     }
     if (!serverLevel.isLoaded(targetPos)) {
-      ModCyclic.LOGGER.info("DimPos is unloaded" + dimPos);
+      ModCyclic.LOGGER.debug("DimPos is unloaded" + dimPos);
       return;
     }
     boolean isPowered = level.hasNeighborSignal(worldPosition);
@@ -100,17 +100,15 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
     if (serverLevel.getBlockEntity(targetPos) instanceof TileWirelessRec receiver) {
       //am I powered?
       if (isPowered) {
-        ModCyclic.LOGGER.info(" POWER UP target" + dimPos);
         receiver.putPowerSender(this.id);
       }
       else {
-        ModCyclic.LOGGER.info(" turn off target" + dimPos);
         receiver.removePowerSender(this.id);
       }
     }
     if (level.isLoaded(worldPosition) && level.getBlockState(worldPosition).getBlock() == this.getBlockState().getBlock()) {
       level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).setValue(BlockStateProperties.POWERED, isPowered));
-      //    world.setBlockState(pos, world.getBlockState(pos).with(BlockStateProperties.POWERED, isPowered));
+
     }
   }
 

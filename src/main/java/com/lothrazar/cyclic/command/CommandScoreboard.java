@@ -29,7 +29,6 @@ public class CommandScoreboard {
     for (ScoreHolder holder : scoreHolderTargets) {
       ScoreAccess score = scoreboard.getOrCreatePlayerScore(holder, objective);
       score.set(score.get() + integer);
-      ModCyclic.LOGGER.info("objective add " + score.get());
       i += score.get();
     }
     return i;
@@ -45,14 +44,12 @@ public class CommandScoreboard {
       ScoreAccess scoreMax = scoreboard.getOrCreatePlayerScore(holder, omax);
       int min = scoreMin.get();
       int max = scoreMax.get();
-      ModCyclic.LOGGER.info("objective dependency detected: " + min + " ?<? " + max);
       if (min < max) {
         score.set(CommandRegistry.RAND.nextInt(min, max));
       }
       else {
         score.set(min);
       }
-      ModCyclic.LOGGER.info("objective rng " + score.get());
       i += score.get();
     }
     return i;
@@ -69,7 +66,6 @@ public class CommandScoreboard {
       else {
         score.set(min);
       }
-      ModCyclic.LOGGER.info("objective rng " + score.get());
       i += score.get();
     }
     return i;

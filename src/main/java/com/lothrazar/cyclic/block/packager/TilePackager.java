@@ -106,7 +106,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
     if (outputSlots.insertItem(0, recipe.getResultItem(level.registryAccess()).copy(), true).isEmpty()) {
       final int total = UtilPackager.getIngredientsInRecipe(recipe);
       final ItemStack output = recipe.getResultItem(level.registryAccess()).copy();
-      ModCyclic.LOGGER.info("Packager recipe match of size " + total + " producing -> " + output);
       //consume items, produce output
       inputSlots.extractItem(0, total, false);
       outputSlots.insertItem(0, output, false);
@@ -114,7 +113,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
       this.updateComparatorOutputLevel();
     }
   }
-
+  // TODO: unused??
   public static boolean isRecipeValid(CraftingRecipe recipe, Level level) {
     int total = 0, matched = 0;
     Ingredient first = null;

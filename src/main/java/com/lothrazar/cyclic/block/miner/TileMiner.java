@@ -187,10 +187,9 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
         placePlayerBehindBlock(fakePlayer, targetPos);
         boolean harvested = fakePlayer.gameMode.destroyBlock(targetPos);
         if (!harvested) {
-          //            world.destroyBlock(targetPos, true, fakePlayer.get());
           //removedByPlayer
           harvested = level.getBlockState(targetPos).onDestroyedByPlayer(level, targetPos, fakePlayer, true, level.getFluidState(targetPos));
-          //   ModCyclic.LOGGER.info("Miner:removedByPlayer hacky workaround " + targetPos);
+
         }
         if (harvested) {
           // success 
@@ -235,14 +234,13 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     }
     //check the tag ignore list so modpack/datapack can filter this
     if (targetState.is(DataTags.MINER_IGNORED)) {
-      ModCyclic.LOGGER.info("miner/ignored tag skips " + targetPos);
       return false;
     }
     //water logged is 
     if (targetState.getFluidState() != null && targetState.getFluidState().isEmpty() == false) {
       //am i PURE liquid? or just a WATERLOGGED block
       if (targetState.hasProperty(BlockStateProperties.WATERLOGGED) == false) {
-        //    ModCyclic.LOGGER.info(targetPos + " Mining FLUID is not valid  " + blockSt);
+
         //pure liquid. but this will make canHarvestBlock go true , which is a lie actually so, no. dont get stuck here
         return false;
       }
@@ -253,7 +251,7 @@ public class TileMiner extends TileBlockEntityCyclic implements MenuProvider {
     //its a solid non-air, non-fluid block (but might be like waterlogged stairs or something)
     boolean canHarvest = targetState.canHarvestBlock(level, targetPos, fakePlayer.get());
     if (!canHarvest) {
-      //      ModCyclic.LOGGER.info(targetPos + " Mining target is not valid  " + blockSt);
+      ModCyclic.LOGGER.debug(targetPos + " Mining target is not valid  ");
     }
     return canHarvest;
   }

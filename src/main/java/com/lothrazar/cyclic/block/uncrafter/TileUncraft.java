@@ -112,9 +112,7 @@ public class TileUncraft extends TileBlockEntityCyclic implements MenuProvider {
       this.status = status;
       if (status == UncraftStatusEnum.MATCH) {
         //pay cost
-        // ModCyclic.LOGGER.info("before extract cost" + inputSlots.getStackInSlot(0));
         inputSlots.extractItem(0, match.value().getResultItem(level.registryAccess()).getCount(), false);
-        // ModCyclic.LOGGER.info("AFTER  extract cost" + inputSlots.getStackInSlot(0));
         energy.extractEnergy(cost, false);
       }
     }

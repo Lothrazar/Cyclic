@@ -20,13 +20,7 @@ public class GrowthUtil {
       return false;
     }
     if (bState.getBlock() instanceof BonemealableBlock crop) {
-      //      BonemealableBlock crop = ((BonemealableBlock) bState.getBlock());
-      //      if (!crop.isValidBonemealTarget(world, current, bState, world.isClientSide)) { // canCrow
-      //        ModCyclic.LOGGER.info("terra-grow crop cannot grow right now " + bState.getBlock());
-      //        return false; //cant grow, or cant bonemeal. no
-      //      }
-      if (!crop.isValidBonemealTarget(world, current, bState)) {//canUseBonemeal // canGrow
-        // ModCyclic.LOGGER.info("terra-grow canUseBonemeal is false  " + bState.getBlock());
+      if (!crop.isValidBonemealTarget(world, current, bState)) {
         return false; //cant grow, or cant bonemeal. no
       }
     }
@@ -65,6 +59,5 @@ public class GrowthUtil {
         bm.performBonemeal(world, world.random, current, bState);
       }
     }
-    ModCyclic.LOGGER.info("terra-grow Successful growth: " + block);
   }
 }

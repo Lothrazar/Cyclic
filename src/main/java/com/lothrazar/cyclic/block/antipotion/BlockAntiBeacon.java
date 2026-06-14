@@ -124,7 +124,7 @@ public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
     if (serverLevel.hasNeighborSignal(closestAntiBeacon) != isPowered) {
       return;
     }
-    ModCyclic.LOGGER.info("[potion blocked] " + event.getEffectInstance());
+    ModCyclic.LOGGER.debug("[potion blocked] " + event.getEffectInstance());
     event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
   }
 
@@ -136,7 +136,7 @@ public class BlockAntiBeacon extends BlockCyclic implements BeaconBeamBlock {
       }
     }
     for (Holder<MobEffect> curedEffect : cureMe) {
-      ModCyclic.LOGGER.info("[potion cured] " + curedEffect);
+      ModCyclic.LOGGER.debug("[potion cured] " + curedEffect);
       e.removeEffect(curedEffect);
     }
   }

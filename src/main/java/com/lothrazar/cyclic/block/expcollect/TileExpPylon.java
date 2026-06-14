@@ -141,7 +141,6 @@ public class TileExpPylon extends TileBlockEntityCyclic implements MenuProvider 
         if (tank.getFluidAmount() + addMeFluid <= tank.getCapacity()) {
           p.giveExperiencePoints(-1 * addMeXp);
           tank.fill(new FluidStack(FluidXpJuiceHolder.STILL.get(), addMeFluid), IFluidHandler.FluidAction.EXECUTE);
-          //  ModCyclic.LOGGER.info("tank.getFluidAmount() = " + tank.getFluidAmount());
           SoundUtil.playSound(p, SoundEvents.EXPERIENCE_ORB_PICKUP);
           this.setChanged();
         }

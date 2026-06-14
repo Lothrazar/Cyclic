@@ -73,7 +73,6 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
     if (!(shapeCard.getItem() instanceof ShapeCard)) {
       return;
     }
-    //ModCyclic.LOGGER.info("apply " + cmd + " to " + shapeCard.getTag());
     RelativeShape cardShape = RelativeShape.read(shapeCard);
     switch (cmd) {
       case READ:
@@ -100,7 +99,6 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
           //
           shapeCard.remove(DataComponents.CUSTOM_DATA); //paste and not merge so overwrite
           this.copiedShape.write(shapeCard);
-          ModCyclic.LOGGER.info(cmd + " success");
         }
       break;
       case MERGE:
@@ -110,8 +108,6 @@ public class TileShapedata extends TileBlockEntityCyclic implements MenuProvider
           //  
           cardShape.merge(this.copiedShape);
           cardShape.write(shapeCard);
-          ModCyclic.LOGGER.info(cmd + " success");
-          //          this.copiedShape = null;
         }
       break;
     }

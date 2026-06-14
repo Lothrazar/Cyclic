@@ -164,7 +164,6 @@ public class ItemEventHandler {
       //      ply.isSprinting()
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.QUIVER_DMG.get());
       if (!find.isEmpty() && arrow instanceof AbstractArrow) {
-        //        ModCyclic.LOGGER.info("before " + event.getArrow().getDamage());
         AbstractArrow arroww = (AbstractArrow) arrow;
         double boost = arroww.getBaseDamage() / 2;
         arroww.setBaseDamage(arroww.getBaseDamage() + boost);
@@ -175,7 +174,6 @@ public class ItemEventHandler {
         if (hit == HitResult.Type.ENTITY && ((EntityHitResult) event.getRayTraceResult()).getEntity() instanceof LivingEntity) {
           LivingEntity target = (LivingEntity) ((EntityHitResult) event.getRayTraceResult()).getEntity();
           target.setGlowingTag(true);
-          //          ModCyclic.LOGGER.info(event.getEntity() + " eeeee" + event.getArrow().getDamage());
           BlockPos p = target.blockPosition();
           // lightning? 
           LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
@@ -288,9 +286,7 @@ public class ItemEventHandler {
         event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 20 * seconds, 0, false, false, false));
         ItemStackUtil.damageItem(ply, find);
       }
-      if (ply.getUsedItemHand() != null && ply.getItemInHand(ply.getUsedItemHand()).isEmpty()) {
-        //            ModCyclic.LOGGER.info("EMPTY hand damage");
-      }
+
     }
   }
 
@@ -607,7 +603,7 @@ public class ItemEventHandler {
         }
       }
       if (!ConfigRegistry.isFacadeAllowed(held)) {
-        ModCyclic.LOGGER.info("not allowed to use this item as a facade from config: " + held.getItem());
+        ModCyclic.LOGGER.debug("not allowed to use this item as a facade from config: " + held.getItem());
         return;
       }
       if (event.getLevel().isClientSide()) {

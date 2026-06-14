@@ -23,11 +23,9 @@ public class CommandHome {
       Vec3 thanksMojang = optional.get();
       BlockPos bedLocation = new BlockPos((int) thanksMojang.x, (int) thanksMojang.y, (int) thanksMojang.z);
       EntityUtil.enderTeleportEvent(player, player.level(), bedLocation);
-      ModCyclic.LOGGER.info("[home]" + bedLocation + " | " + player.getUUID());
     }
     else {
       ChatUtil.addServerChatMessage(player, Component.translatable("command.cyclic.gethome.bed"));
-      //      ModCyclic.LOGGER.error(ChatUtil.lang("command.cyclic.gethome.bed"));
     }
   }
 

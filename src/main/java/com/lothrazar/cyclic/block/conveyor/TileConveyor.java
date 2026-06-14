@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import java.util.List;
+import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -43,9 +45,13 @@ public class TileConveyor extends TileBlockEntityCyclic {
     e.tick();
     // Convert any regular ItemEntities on the belt
     final double edgeBuf = 0.02;
+    boolean isRamp = blockState.getValue(BlockConveyor.TYPE).isVertical();
+    double conversionCeiling = isRamp ? blockPos.getY() + 1.5 : blockPos.getY() + 0.5;
     List<ItemEntity> regularItems = level.getEntitiesOfClass(ItemEntity.class, new AABB(blockPos).inflate(-edgeBuf, 0, -edgeBuf).expandTowards(0.0F, 0.5F, 0.0F));
     for (ItemEntity item : regularItems) {
-      if (!(item instanceof ConveyorItemEntity) && item.getY() <= blockPos.getY() + 0.5) {
+      boolean centerInBlock = item.getX() >= blockPos.getX() && item.getX() <= blockPos.getX() + 1
+          && item.getZ() >= blockPos.getZ() && item.getZ() <= blockPos.getZ() + 1;
+      if (!(item instanceof ConveyorItemEntity) && item.getY() <= conversionCeiling && centerInBlock) {
         ConveyorItemEntity wrapped = new ConveyorItemEntity(level, item.getX(), item.getY(), item.getZ(), item.getItem().copy());
         level.addFreshEntity(wrapped);
         item.discard();
@@ -140,9 +146,18 @@ public class TileConveyor extends TileBlockEntityCyclic {
     if (level == null || worldPosition == null) {
       return;
     }
-    List<Entity> entities = level.getEntitiesOfClass(Entity.class, new AABB(worldPosition).expandTowards(0.0F, 0.5F, 0.0F));
+    BlockState bs = this.getBlockState();
+    AABB scanArea = new AABB(worldPosition).expandTowards(0.0F, 0.5F, 0.0F);
+    ConveyorType ctype = bs.getValue(BlockConveyor.TYPE);
+    if (ctype.isVertical()) {
+      // Reach back toward the approach belt so ySpeed is applied before items
+      // physically hit the ramp entry geometry and stall at the seam
+      Direction facing = bs.getValue(BlockStateProperties.HORIZONTAL_FACING);
+      scanArea = scanArea.expandTowards(-facing.getStepX() * 0.3, 0.0, -facing.getStepZ() * 0.3);
+    }
+    List<Entity> entities = level.getEntitiesOfClass(Entity.class, scanArea);
     for (Entity e : entities) {
-      makeEntitiesTravel(e, this.getBlockState(), this.worldPosition, level);
+      makeEntitiesTravel(e, bs, this.worldPosition, level);
     }
   }
 
@@ -159,9 +174,13 @@ public class TileConveyor extends TileBlockEntityCyclic {
     //if the normalized values are >1 or <0, they entity is right at the border so dont apply it now
     Direction facing = bs.getValue(BlockStateProperties.HORIZONTAL_FACING);
     if (facing.getAxis() == Axis.Z && (normalizedX > 1 - offside || normalizedX < 0 + offside)) {
+
       return;
     }
     if (facing.getAxis() == Axis.X && (normalizedZ > 1 - offside || normalizedZ < 0 + offside)) {
+
+//        ModCyclic.LOGGER.info("[conveyor-dirt] SKIP offside-Z  pos={} nX={} nZ={} vel={}", pos, String.format("%.3f", normalizedX), String.format("%.3f", normalizedZ), entity.getDeltaMovement());
+
       return;
     }
     ConveyorType type = bs.getValue(BlockConveyor.TYPE);
@@ -170,14 +189,28 @@ public class TileConveyor extends TileBlockEntityCyclic {
     double xSpeed = 0.0D, zSpeed = 0.0D, ySpeed = 0.0D;
     boolean isItem = entity instanceof ItemEntity;
     if (isItem) {
-      // Let items fall naturally until they are near the belt surface before applying horizontal push.
-      // The extraction spawn is pos.getY()+0.25, so 0.4 gives a small buffer above that.
-      if (entity.getY() > pos.getY() + 0.4) {
+      // For ramps, items need the full heightLimit; for flat belts use a low threshold
+      // so items still in the air fall naturally before being pushed horizontally.
+      double itemHeightLimit = type.isVertical() ? heightLimit : pos.getY() + 0.4;
+      if (entity.getY() > itemHeightLimit) {
+//        if (isDirtDebug(entity)) {
+//          ModCyclic.LOGGER.info("[conveyor-dirt] SKIP height  pos={} type={} facing={} entityY={} limit={} nX={} nZ={} vel={}",
+//              pos, type, facing, String.format("%.4f", entity.getY()), String.format("%.4f", itemHeightLimit),
+//              String.format("%.3f", normalizedX), String.format("%.3f", normalizedZ), entity.getDeltaMovement());
+//        }
         return;
       }
     } else if (entity.getY() > heightLimit) {
       return;
     }
+//    if (isDirtDebug(entity)) {
+//      BlockState above = world.getBlockState(pos.above());
+//      BlockState inFacing = world.getBlockState(pos.relative(facing));
+//      ModCyclic.LOGGER.info("[conveyor-dirt] APPLY  pos={} type={} facing={} entityY={} nX={} nZ={} vel={} | above={} next={}",
+//          pos, type, facing, String.format("%.4f", entity.getY()),
+//          String.format("%.3f", normalizedX), String.format("%.3f", normalizedZ),
+//          entity.getDeltaMovement(), above.getBlock().getDescriptionId(), inFacing.getBlock().getDescriptionId());
+//    }
     xSpeed = facing.getStepX() * speed;
     ySpeed = 0.0D;
     zSpeed = facing.getStepZ() * speed;
@@ -186,7 +219,7 @@ public class TileConveyor extends TileBlockEntityCyclic {
       //
       //      if (Math.random() < 0.1)
       //      if ((facing == Direction.NORTH && normalizedZ < 0.5D) || (facing == Direction.SOUTH && normalizedZ > 0.5D)) {
-      //        ModCyclic.LOGGER.info("first half");
+
       //        xSpeed = rotated.getXOffset() * speed;
       //                zSpeed = 0.0D;
       //      }
@@ -204,11 +237,13 @@ public class TileConveyor extends TileBlockEntityCyclic {
       }
     }
     if (type.isVertical()) {
-      double hackEdge = 0.1;
-      if (normalizedX < hackEdge || normalizedZ < hackEdge
-          || normalizedX > 1 - hackEdge || normalizedZ > 1 - hackEdge) {
-        // ?? : investigate jump hacks here
-        entity.setPos(entity.getX(), entity.getY() + .2, entity.getZ());
+      if (!isItem) {
+        double hackEdge = 0.1;
+        if (normalizedX < hackEdge || normalizedZ < hackEdge
+            || normalizedX > 1 - hackEdge || normalizedZ > 1 - hackEdge) {
+          // ?? : investigate jump hacks here
+          entity.setPos(entity.getX(), entity.getY() + .2, entity.getZ());
+        }
       }
       ySpeed = speed * 1.3;
       if (type == ConveyorType.DOWN) {

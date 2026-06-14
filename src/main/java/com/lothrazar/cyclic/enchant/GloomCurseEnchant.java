@@ -59,7 +59,7 @@ public class GloomCurseEnchant {
         if (effect == null) {continue;}
         ResourceLocation effectKey = BuiltInRegistries.MOB_EFFECT.getKey(effect);
         if (StringParseUtil.isInList(ConfigRegistry.getGloomIgnoreList(), effectKey)) {
-          ModCyclic.LOGGER.info("Gloom(curse) effect cannot apply " + effectKey);
+          ModCyclic.LOGGER.debug("Gloom(curse) effect cannot apply " + effectKey);
           continue;
         }
         if (appliedEffects < MIN_EFFECTS || BASE_APPLY_CHANCE > user.level().random.nextDouble()) {

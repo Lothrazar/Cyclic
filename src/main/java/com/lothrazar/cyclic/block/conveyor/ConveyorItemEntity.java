@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.conveyor;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -39,9 +40,14 @@ public class ConveyorItemEntity extends ItemEntity {
 
   @Override
   public void tick() {
-    if (!level().isClientSide && !(level().getBlockState(this.blockPosition()).getBlock() instanceof BlockConveyor)) {
-      spawnRegularStack();
-      return;
+    if (!level().isClientSide) {
+      BlockPos bp = this.blockPosition();
+      boolean onConveyor = level().getBlockState(bp).getBlock() instanceof BlockConveyor
+          || level().getBlockState(bp.below()).getBlock() instanceof BlockConveyor;
+      if (!onConveyor) {
+        spawnRegularStack();
+        return;
+      }
     }
     super.tick();
   }

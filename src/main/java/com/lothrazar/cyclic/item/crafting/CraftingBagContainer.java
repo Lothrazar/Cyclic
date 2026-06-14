@@ -35,7 +35,6 @@ public class CraftingBagContainer extends ContainerBase implements IContainerCra
   public CraftingBagContainer(int id, Inventory playerInventory, Player player, int slot) {
     super(MenuTypeRegistry.CRAFTING_BAG.get(), id);
     this.slot = slot;
-    ModCyclic.LOGGER.info("bag slot " + slot);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
     this.endInv = 10;

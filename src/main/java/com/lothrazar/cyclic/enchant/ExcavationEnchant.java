@@ -59,11 +59,10 @@ public class ExcavationEnchant {
     int level = EnchantUtil.getCurrentLevelTool(EnchantUtil.holder(EnchantRegistry.EXCAVATE, player), stackHarvestingWith);
     if (level <= 0) { return; }
     if (effectiveToolRequired && !player.hasCorrectToolForDrops(eventState)) {
-      ModCyclic.LOGGER.info("excavate trigger cancelled; tool not effective");
       return;
     }
     if (eventState.is(DataTags.EXCAVATE_IGNORED)) {
-      ModCyclic.LOGGER.info("excavate trigger cancelled; see blocktag " + DataTags.EXCAVATE_IGNORED.toString());
+      ModCyclic.LOGGER.debug("excavate trigger cancelled; see blocktag " + DataTags.EXCAVATE_IGNORED);
       return;
     }
     if (EventHooks.doPlayerHarvestCheck(player, eventState, world, pos)) {

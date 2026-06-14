@@ -89,7 +89,7 @@ public class TileBreaker extends TileBlockEntityCyclic implements MenuProvider {
     }
     //check the tag ignore list so modpack/datapack can filter this
     if (targetState.is(DataTags.BREAKER_IGNORED)) {
-      ModCyclic.LOGGER.info("breaker/ignored tag skips " + targetPos);
+      ModCyclic.LOGGER.debug("breaker/ignored tag skips " + targetPos);
       return false;
     }
     if (targetState.getFluidState() != null && targetState.getFluidState().isEmpty() == false) {

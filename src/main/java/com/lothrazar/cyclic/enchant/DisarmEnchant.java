@@ -69,7 +69,7 @@ public class DisarmEnchant {
   private boolean canDisarm(LivingEntity target) {
     String id = EntityType.getKey(target.getType()).toString();
     if (StringParseUtil.isInList(ConfigRegistry.getDisarmIgnoreList(), EntityType.getKey(target.getType()))) {
-      ModCyclic.LOGGER.info("disenchant ignored by: CONFIG LIST" + id);
+      ModCyclic.LOGGER.debug("disenchant ignored by: CONFIG LIST" + id);
       return false;
     }
     return true;

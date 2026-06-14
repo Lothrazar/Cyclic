@@ -100,8 +100,7 @@ public class EnderApple extends ItemBaseCyclic {
         distanceStructNames.entrySet().stream()
             .sorted(Map.Entry.comparingByValue())
             .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-        //
-        //      ModCyclic.LOGGER.info("Sorted Map   : " + sortedMap); 
+
         int count = 0;
         for (Map.Entry<String, Integer> e : sortedMap.entrySet()) {
           ChatUtil.addServerChatMessage(player, e.getValue() + "m | " + e.getKey());

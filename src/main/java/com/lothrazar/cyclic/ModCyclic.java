@@ -30,12 +30,13 @@ import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.cyclic.registry.AttachmentRegistry;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.lothrazar.cyclic.registry.PacketRegistry;
+import org.apache.logging.log4j.Logger;
 
 @Mod(ModCyclic.MODID)
 public class ModCyclic {
 
   public static final String MODID = "cyclic";
-  public static final CyclicLogger LOGGER = new CyclicLogger(LogManager.getLogger());
+  public static final Logger LOGGER = LogManager.getLogger();
 
   public ModCyclic(IEventBus bus, Dist dist, ModContainer container) {
 

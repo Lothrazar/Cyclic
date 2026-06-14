@@ -89,7 +89,7 @@ public class EntityMagicNetEmpty extends ThrowableItemProjectile {
       }
       String id = EntityType.getKey(target.getType()).toString();
       if (StringParseUtil.isInList(ConfigRegistry.getMobContainerEmptyList(), EntityType.getKey(target.getType()))) {
-        ModCyclic.LOGGER.info("ignored by: CONFIG LIST" + id);
+        ModCyclic.LOGGER.debug("ignored by: CONFIG LIST" + id);
         return;
       }
       //

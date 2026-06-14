@@ -146,16 +146,12 @@ public class TileUser extends TileBlockEntityCyclic implements MenuProvider, Wor
   private void interactEntities(BlockPos target) {
     AABB ab = getEntityRange(target);
     this.level.getEntities(fakePlayer.get(), ab, EntitySelector.NO_SPECTATORS).forEach((entityFound) -> {
-      //      ModCyclic.LOGGER.info(worldPosition + "| ??   " + fakePlayer.get().getMainHandItem());
       if (doHitBreak) {
         fakePlayer.get().attack(entityFound);
-        //        ModCyclic.LOGGER.info(worldPosition + "| interactEntities ATTACK  " + e);
       }
       else { // interact 
         InteractionResult res = fakePlayer.get().interactOn(entityFound, InteractionHand.MAIN_HAND);
-        if (res.consumesAction()) {
-          ModCyclic.LOGGER.info(worldPosition + "| entity consume result detected " + res);
-        }
+
       }
     });
   }

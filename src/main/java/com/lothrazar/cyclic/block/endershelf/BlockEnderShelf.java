@@ -136,7 +136,6 @@ public class BlockEnderShelf extends BlockCyclic {
     if (controllerPos != null) {
       TileEnderCtrl controller = (TileEnderCtrl) world.getBlockEntity(controllerPos);
       if (controllerPos != null && controller != null) {
-        ModCyclic.LOGGER.info("ctrl add new shelf " + pos);
         controller.getShelves().add(pos);
       }
     }

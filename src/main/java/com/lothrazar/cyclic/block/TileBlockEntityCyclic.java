@@ -179,7 +179,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     //processRightClick
     ItemStack itemInHand = fakePlayer.get().getItemInHand(hand);
     InteractionResult result = fakePlayer.get().gameMode.useItemOn(fakePlayer.get(), world, itemInHand, hand, blockraytraceresult);
-    // ModCyclic.LOGGER.info(targetPos + " gameMode.useItemOn() result = " + result + "  itemInHand = " + itemInHand);
+
     //it becomes CONSUME result 1 bucket. then later i guess it doesnt save, and then its water_bucket again
     return result;
   }
@@ -194,8 +194,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
     try {
       fakePlayer.get().gameMode.handleBlockBreakAction(targetPos, ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK,
-          facing, world.getMaxBuildHeight(), 0); // 0 == getSequence?
-      ModCyclic.LOGGER.info("handle handleBlockBreakAction rightclick i guess");
+          facing, world.getMaxBuildHeight(), 0);
       return InteractionResult.SUCCESS;
     }
     catch (Exception e) {
