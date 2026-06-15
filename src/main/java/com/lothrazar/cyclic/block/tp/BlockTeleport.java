@@ -49,9 +49,7 @@ public class BlockTeleport extends BlockCyclic {
         tile.energy.extractEnergy(pay, false);
         //tp now
         player.teleportTo(dimpos.getTargetLevel(worldIn),dimpos.getX(),dimpos.getY(),dimpos.getZ(),player.getYRot(),player.getXRot());
-//        DimensionTransitionWrapper transit = new DimensionTransitionWrapper((ServerLevel) worldIn, dimpos);
-//        transit.teleport(player);
-//        player.changeDimension(transit.getTargetLevel(), transit);
+
       }
     }
   }

@@ -47,11 +47,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
       btnShape.setTooltip(Tooltip.create(Component.translatable("block.cyclic.computer_shape.command")));
       map.put(shape, btnShape);
       y += 20;
-      //
-      //      if (shape.ordinal() == 1) {
-      //        x += width;
-      //        y = guiTop + 6;
-      //      }
+
     }
   }
 
@@ -65,8 +61,7 @@ public class ScreenShapedata extends ScreenBase<ContainerShapedata> {
   @Override
   protected void renderLabels(GuiGraphics ms, int mouseX, int mouseY) {
     this.drawButtonTooltips(ms, mouseX, mouseY);
-    //    this.drawName(ms, title.getString());
-    //    this.drawName(ms, "" + container.tile.getField(TileShapedata.Fields.STASH.ordinal()));
+
     btnRender.onValueUpdate(menu.tile);
     for (StructCommands shape : StructCommands.values()) {
       ButtonMachine btnShape = map.get(shape);

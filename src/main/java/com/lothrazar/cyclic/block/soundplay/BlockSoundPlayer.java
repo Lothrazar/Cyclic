@@ -42,9 +42,5 @@ public class BlockSoundPlayer extends BlockCyclic {
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileSoundPlayer(pos, state);
   }
-  //
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type, TileRegistry.SOUND_PLAYER, world.isClientSide ? TileSoundPlayer::clientTick : TileSoundPlayer::serverTick);
-  //  }
+
 }

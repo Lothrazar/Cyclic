@@ -23,8 +23,7 @@ public class LightningScepter extends ItemBaseCyclic {
       return super.use(worldIn, player, handIn);
     }
     shootMe(worldIn, player, new LightningEntity(player, worldIn), 0, ItemBaseCyclic.VELOCITY_MAX);
-    //    ent.shoot(player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
-    //    worldIn.addEntity(ent);
+
     player.getCooldowns().addCooldown(stack.getItem(), 20);
     ItemStackUtil.damageItem(player, stack);
     SoundUtil.playSound(player, SoundRegistry.LIGHTNING_STAFF_LAUNCH.get());

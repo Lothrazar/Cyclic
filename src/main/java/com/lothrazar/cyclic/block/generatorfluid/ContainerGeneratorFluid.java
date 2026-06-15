@@ -18,8 +18,7 @@ public class ContainerGeneratorFluid extends ContainerBase {
     tile = (TileGeneratorFluid) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    //    addSlot(new SlotItemHandler(tile.inputSlots, 0, 75, 35));
-    //    addSlot(new SlotItemHandler(tile.outputSlots, 0, 109, 35));
+
     this.endInv = tile.inputSlots.getSlots();
     layoutPlayerInventorySlots(8, 84);
     this.trackAllIntFields(tile, TileGeneratorFluid.Fields.values().length);

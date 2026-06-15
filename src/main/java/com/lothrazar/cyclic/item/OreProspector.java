@@ -21,8 +21,6 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.Tags;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
-//import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
-//import net.neoforged.neoforge.common.Tags;
 
 public class OreProspector extends ItemBaseCyclic {
 

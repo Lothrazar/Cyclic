@@ -25,18 +25,17 @@ package com.lothrazar.cyclic.item.elemental;
 
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
-import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
-import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class IceWand extends ItemBaseCyclic {
 
@@ -48,29 +47,25 @@ public class IceWand extends ItemBaseCyclic {
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
-    Player player = context.getPlayer();
     BlockPos pos = context.getClickedPos();
     Direction side = context.getClickedFace();
     if (side != null) {
       pos = pos.relative(side);
     }
-    if (spreadWaterFromCenter(context.getLevel(), pos.relative(side))) {
-      //but the real sound
-      SoundUtil.playSound(player, Blocks.PACKED_ICE.defaultBlockState().getSoundType().getBreakSound());
-      ItemStackUtil.damageItem(player, context.getItemInHand());
+    if (context.getLevel().isClientSide) {
+      PacketDistributor.sendToServer(new PacketFreezeWater(pos, side, context.getHand()));
+      return InteractionResult.SUCCESS;
     }
     return super.useOn(context);
   }
 
-  private boolean spreadWaterFromCenter(Level world, BlockPos posCenter) {
+  public static boolean spreadWaterFromCenter(Level world, BlockPos posCenter) {
     int count = 0;
     List<BlockPos> water = LevelWorldUtil.findBlocks(world, posCenter, Blocks.WATER, RADIUS.get());
     for (BlockPos pos : water) {
       FluidState fluidState = world.getBlockState(pos).getFluidState();
-      if (fluidState != null &&
-      //          fluidState.getFluidState() != null &&
-          fluidState.getAmount() >= 8) { // .getFluidState()
-        world.setBlock(pos, Blocks.ICE.defaultBlockState(), 3);
+      if (fluidState != null && fluidState.isSource()) {
+        world.setBlock(pos, Blocks.ICE.defaultBlockState(), Block.UPDATE_ALL);
       }
       count++;
     }

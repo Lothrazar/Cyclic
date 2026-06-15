@@ -2,6 +2,8 @@ package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.builder.PacketSwapBlock;
+import com.lothrazar.cyclic.item.elemental.PacketFreezeWater;
+import com.lothrazar.cyclic.item.elemental.PacketWaterFlow;
 import com.lothrazar.cyclic.item.crafting.PacketItemGui;
 import com.lothrazar.cyclic.item.datacard.filter.PacketFilterCard;
 import com.lothrazar.cyclic.item.datacard.fluid.PacketFluidFilterCard;
@@ -40,6 +42,8 @@ public class PacketRegistry {
     registrar.playToServer(PacketTileData.TYPE, PacketTileData.STREAM_CODEC, PacketTileData::handle);
     registrar.playToServer(PacketChestSack.TYPE, PacketChestSack.STREAM_CODEC, PacketChestSack::handle);
     registrar.playToServer(PacketSwapBlock.TYPE, PacketSwapBlock.STREAM_CODEC, PacketSwapBlock::handle);
+    registrar.playToServer(PacketFreezeWater.TYPE, PacketFreezeWater.STREAM_CODEC, PacketFreezeWater::handle);
+    registrar.playToServer(PacketWaterFlow.TYPE, PacketWaterFlow.STREAM_CODEC, PacketWaterFlow::handle);
     registrar.playToServer(PacketRandomize.TYPE, PacketRandomize.STREAM_CODEC, PacketRandomize::handle);
     registrar.playToServer(PacketTileString.TYPE, PacketTileString.STREAM_CODEC, PacketTileString::handle);
     registrar.playToClient(PacketTileInventoryToClient.TYPE, PacketTileInventoryToClient.STREAM_CODEC, PacketTileInventoryToClient::handle);

@@ -108,13 +108,5 @@ public class BlockAltarNoTraders extends BlockCyclic implements SimpleWaterlogge
         || mob.getType() == EntityType.WANDERING_TRADER
         || mob.getType() == EntityType.BAT;
   }
-  //  public static boolean isExplosive(LivingEntity mob, MobSpawnType res) {
-  //    return mob.getType() == EntityType.CREEPER
-  //        || mob instanceof Creeper;
-  //  }
-  //
-  //  public static boolean isFlight(LivingEntity mob, MobSpawnType res) {
-  //    return mob.getType() == EntityType.PHANTOM
-  //        || mob.getType() == EntityType.BAT;
-  //  }
+
 }

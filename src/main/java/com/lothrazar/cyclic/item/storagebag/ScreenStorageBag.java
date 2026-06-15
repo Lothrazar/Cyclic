@@ -112,11 +112,6 @@ public class ScreenStorageBag extends ScreenBase<ContainerStorageBag> {
       nbtValues.add(defaultValue);
       this.setTooltip(Tooltip.create(defaultTooltip));
     }
-    //
-    //    @Override
-    //    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
-    //      ScreenStorageBag.this.renderTooltip(matrixStack, tooltips.get(index), mouseX, mouseY);
-    //    }
 
     @Override
     public void onPress() {

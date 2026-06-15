@@ -25,11 +25,7 @@ public class LavaSpongeBlock extends BlockCyclic {
       this.tryAbsorbLava(world, pos);
     }
   }
-  //  @Override
-  //  public void neighborChanged(BlockState p_56801_, Level world, BlockPos pos, Block bl, BlockPos oPos, boolean flag) {
-  //    this.tryAbsorbLava(world, oPos);
-  //    super.neighborChanged(p_56801_, world, oPos, bl, oPos, flag);
-  //  }
+
 
   public void tryAbsorbLava(Level world, BlockPos pos) {
     int r = RADIUS.get();

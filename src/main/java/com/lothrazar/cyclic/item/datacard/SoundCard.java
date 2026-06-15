@@ -25,8 +25,7 @@ public class SoundCard extends ItemBaseCyclic {
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
-    //    BlockPos pos = context.getPos();
-    //    World world = context.getWorld();
+
     Player player = context.getPlayer();
     if (player.getCooldowns().isOnCooldown(this)) {
       return InteractionResult.PASS;

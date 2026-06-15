@@ -409,9 +409,7 @@ public class ItemEventHandler {
       if (liv.fallDistance > 12
           && !liv.hasEffect(MobEffects.SLOW_FALLING)) {
         liv.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20 * 60, 4, false, false, false));
-        //        if (liv.getPassengers().size() > 0) {
-        //          liv.getPassengers().get(0).addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 20 * 60, 1));
-        //        }
+
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.getHealth() < 6

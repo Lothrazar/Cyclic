@@ -101,30 +101,23 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
    *
    * @param shape
    *          The shape to rotate
-   * @param rotationDir
-   *          The rotation direction
    * @return The rotated shape
    */
   public static VoxelShape rot(final VoxelShape shape) {
     double x1 = shape.min(Direction.Axis.X), x2 = shape.max(Direction.Axis.X);
     double y1 = shape.min(Direction.Axis.Y), y2 = shape.max(Direction.Axis.Y);
     double z1 = shape.min(Direction.Axis.Z), z2 = shape.max(Direction.Axis.Z);
-    //    if (rotationDir == Rotation.CLOCKWISE_90 || rotationDir == Rotation.COUNTERCLOCKWISE_90) {
+
     double temp = z1; // ]
     z1 = x1; // ] x1 <-> z1
     x1 = temp; // ]
     temp = z2; // ]
     z2 = x2; // ] x2 <-> z2
     x2 = temp; // ]
-    //    }
-    //    if (rotationDir == Rotation.CLOCKWISE_90 || rotationDir == Rotation.CLOCKWISE_180) {
+
     x1 = 1 - x1; // clockwise
     x2 = 1 - x2;
-    //    }
-    //    if (rotationDir == Rotation.COUNTERCLOCKWISE_90 || rotationDir == Rotation.CLOCKWISE_180) {
-    //      z1 = 1 - z1; // counterclockwise
-    //      z2 = 1 - z2;
-    //    }
+
     return safeShapeBox(x1, x2, y1, y2, z1, z2);
   }
 
@@ -353,7 +346,6 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
   @Override
   public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
     super.appendHoverText(stack, context, tooltip, flag);
-    tooltip.add(Component.translatable("block.cyclic.conveyor.tooltip").withStyle(ChatFormatting.GRAY));
     tooltip.add(Component.translatable("block.cyclic.conveyor.tooltip1").withStyle(ChatFormatting.GRAY));
   }
 

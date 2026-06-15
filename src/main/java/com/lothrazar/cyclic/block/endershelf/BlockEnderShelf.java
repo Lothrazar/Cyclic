@@ -53,16 +53,10 @@ public class BlockEnderShelf extends BlockCyclic {
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileEnderShelf(pos, state);
   }
-  //  @Override
-  //  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-  //    return createTickerHelper(type,TileRegistry.ender_shelf, world.isClientSide ? TileEnderShelf::clientTick : TileEnderShelf::serverTick);
-  //  }
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    //    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
-    //      worldIn.removeBlockEntity(pos);
-    //    }
+
     if (!state.is(newState.getBlock())) {
       worldIn.removeBlockEntity(pos);
     }

@@ -48,12 +48,10 @@ public class CloudBlock extends BlockCyclic {
     if (!worldIn.isClientSide && entityIn instanceof LivingEntity) {
       LivingEntity e = (LivingEntity) entityIn;
       MobEffectInstance eff = new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 5, false, false, false);
-      // eff.visible = false; // private in 1.21.1
-      // eff.showIcon = false; // private in 1.21.1
+
       e.addEffect(eff);
       eff = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 5, false, false, false);
-      // eff.visible = false; // private in 1.21.1
-      // eff.showIcon = false; // private in 1.21.1
+
       e.addEffect(eff);
     }
   }

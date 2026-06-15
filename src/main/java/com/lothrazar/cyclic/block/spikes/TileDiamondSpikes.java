@@ -45,11 +45,7 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
       fakePlayer = setupBeforeTrigger((ServerLevel) level, "spikes_diamond");
       if (fakePlayer.get().getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
         ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
-//        Map<Enchantment, Integer> map = Maps.newHashMap();
-//        map.put(Enchantments.BANE_OF_ARTHROPODS, 2);
-//        map.put(Enchantments.SWEEPING_EDGE, 3);
-//        map.put(Enchantments.SHARPNESS, 1);
-//        EnchantmentHelper.setEnchantments(map, sword);
+
         fakePlayer.get().setItemInHand(InteractionHand.MAIN_HAND, sword);
       }
       if (level.random.nextDouble() < 0.001F) {

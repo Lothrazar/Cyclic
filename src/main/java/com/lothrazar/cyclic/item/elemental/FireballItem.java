@@ -38,9 +38,8 @@ public class FireballItem extends ItemBaseCyclic {
           player.level().random.nextDouble() < 0.03) {
         //i am holding fireball in my main hand
         //i am not on fire right now, i have no fire prot
-        player.setRemainingFireTicks(30); // 20 ticks is one secondfireProt
-//        player.getCooldowns().addCooldown(ItemRegistry.FIREBALL_ORANGE.get(), 5);
-        //          player.hurt(DamageSource.IN_FIRE, 0.5F);
+        player.setRemainingFireTicks(30);
+
       }
     }
   }

@@ -97,35 +97,4 @@ public class CrusherRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
       builder.addSlot(RecipeIngredientRole.OUTPUT, 34, 31).addItemStack(recipe.randOutput.bonus);
     }
   }
-  //keep old code for reference
-  //  @Override
-  //  public void setIngredients(RecipeCrusher recipe, IIngredients ingredients) {
-  //    List<List<ItemStack>> in = new ArrayList<>();
-  //    List<ItemStack> stuff = new ArrayList<>();
-  //    Collections.addAll(stuff, recipe.ingredientAt(0));
-  //    in.add(stuff);
-  //    ingredients.setInputLists(VanillaTypes.ITEM, in);
-  //    if (recipe.randOutput.bonus.isEmpty()) {
-  //      ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-  //    }
-  //    else if (recipe.getResultItem().isEmpty()) {
-  //      ingredients.setOutput(VanillaTypes.ITEM, recipe.randOutput.bonus);
-  //    }
-  //    else {
-  //      ingredients.setOutputs(VanillaTypes.ITEM, Arrays.asList(recipe.getResultItem(), recipe.randOutput.bonus));
-  //    }
-  //  }
-  //  @Override
-  //  public void setRecipe(IRecipeLayout recipeLayout, RecipeCrusher recipe, IIngredients ingredients) {
-  //    IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-  //    guiItemStacks.init(0, true, 2, 13);
-  //    List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
-  //    guiItemStacks.set(0, inputs.get(0));
-  //    guiItemStacks.init(1, false, 34, 5);
-  //    guiItemStacks.set(1, recipe.getResultItem());
-  //    if (!recipe.randOutput.bonus.isEmpty() && recipe.randOutput.percent > 0) {
-  //      guiItemStacks.init(2, false, 33, 30);
-  //      guiItemStacks.set(2, recipe.randOutput.bonus);
-  //    }
-  //  }
 }

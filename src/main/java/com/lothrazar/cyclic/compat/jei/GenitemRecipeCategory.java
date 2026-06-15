@@ -73,20 +73,4 @@ public class GenitemRecipeCategory implements IRecipeCategory<RecipeHolder<Recip
     RecipeGeneratorItem recipe = recipeHolder.value();
     builder.addSlot(RecipeIngredientRole.INPUT, 6, 7).addIngredients(recipe.at(0));
   }
-  //  @Override
-  //  public void setIngredients(RecipeGeneratorItem recipe, IIngredients ingredients) { 
-  //    List<List<ItemStack>> in = new ArrayList<>();
-  //    List<ItemStack> stuff = new ArrayList<>();
-  //    Collections.addAll(stuff, recipe.ingredientAt(0));
-  //    in.add(stuff);
-  //    ingredients.setInputLists(VanillaTypes.ITEM, in);
-  //  }
-  //
-  //  @Override
-  //  public void setRecipe(IRecipeLayout recipeLayout, RecipeGeneratorItem recipe, IIngredients ingredients) {
-  //    IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-  //    guiItemStacks.init(0, true, 5, 6);
-  //    List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
-  //    guiItemStacks.set(0, inputs.get(0));
-  //  }
 }

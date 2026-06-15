@@ -73,9 +73,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
   }
 
   public void tick() {
-    //    if (world == null || world.isRemote) {
-    //      return;
-    //    }
     this.syncEnergy();
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);
@@ -113,46 +110,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
       this.updateComparatorOutputLevel();
     }
   }
-  // TODO: unused??
-  public static boolean isRecipeValid(CraftingRecipe recipe, Level level) {
-    int total = 0, matched = 0;
-    Ingredient first = null;
-    ItemStack[] firstItems = null;
-    for (Ingredient ingr : recipe.getIngredients()) {
-      ItemStack[] ingrItemList = ingr.getItems();
-      if (ingr == Ingredient.EMPTY || ingrItemList.length == 0) {
-        continue;
-      }
-      total++;
-      if (first == null) {
-        first = ingr;
-        firstItems = ingrItemList;
-        matched = 1;
-        continue;
-      }
-      if (first.test(ingrItemList[0])) {
-        matched++;
-      }
-    }
-    if (first == null || firstItems == null || firstItems.length == 0) {
-      return false; //nothing here
-    }
-    boolean outIsStorage = recipe.getResultItem(level.registryAccess()).is(Tags.Items.STORAGE_BLOCKS);
-    boolean inIsIngot = firstItems[0].is(Tags.Items.INGOTS);
-    if (!outIsStorage && inIsIngot) {
-      //ingots can only go to storage blocks, nothing else
-      //avoids armor/ iron trap doors. kinda hacky
-      return false;
-    }
-    if (total > 0 && total == matched &&
-        recipe.getResultItem(level.registryAccess()).getMaxStackSize() > 1 && //aka not tools/boots/etc
-        //        stack.getCount() >= total &&
-        (total == 4 || total == 9) &&
-        (recipe.getResultItem(level.registryAccess()).getCount() == 1 || recipe.getResultItem(level.registryAccess()).getCount() == total)) {
-      return true;
-    }
-    return false;
-  }
 
   @Override
   public Component getDisplayName() {
@@ -163,7 +120,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
   public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
     return new ContainerPackager(i, level, worldPosition, playerInventory, playerEntity);
   }
-
 
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
@@ -209,10 +165,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
         this.burnTimeMax = value;
       break;
     }
-  }
-
-  public int getEnergyMax() {
-    return TilePackager.MAX;
   }
 
   @Override

@@ -11,11 +11,11 @@
   ],
   "type": "cyclic:generator_fluid",
   "fuel": {
-    "tag": "c:biomass",
+    "fluid": "cyclic:amethyst",
     "amount": 1000
   },
   "energy": {
-    "ticks": 400,
-    "rfpertick": 100
+    "ticks": 1000,
+    "rfpertick": 120
   }
 }

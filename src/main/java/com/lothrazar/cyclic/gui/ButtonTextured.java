@@ -24,7 +24,7 @@ public class ButtonTextured extends ExtendedButton implements IHasTooltip {
   }
 
   public ButtonTextured(int xPos, int yPos, int width, int height, TextureEnum tid, String tooltip, OnPress handler) {
-    super(xPos, yPos, width, height, Component.translatable(""), handler);
+    super(xPos, yPos, width, height, Component.literal(""), handler);
     this.setTooltip(tooltip);
     this.setTextureId(tid);
   }

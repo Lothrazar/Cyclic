@@ -34,13 +34,7 @@ public class RenderMelter implements BlockEntityRenderer<TileMelter> {
         Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, 0x111111, 200, matrixStack, buffer, level, light);
         matrixStack.popPose();
       }
-//      stack = itemHandler.getStackInSlot(1);
-//      if (!stack.isEmpty()) {
-//        matrixStack.pushPose();
-//        matrixStack.translate(0.5, 0.10, 0.5);
-//        Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, 0x999999, 0, matrixStack, buffer, level, light);
-//        matrixStack.popPose();
-//      }
+
     }
     IFluidHandler handler = CapabilityUtil.fluid(tankHere.getLevel(),tankHere.getBlockPos());//tankHere.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
     if (handler == null || handler.getFluidInTank(0) == null) {

@@ -49,8 +49,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
     SoundUtil.playSound(liv, SoundEvents.GENERIC_DRINK);
     ParticleUtil.spawnParticle(liv.level(), ParticleTypes.CRIT, liv.blockPosition(), 3);
     increment(liv, -1);
-    //    int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
-    //    UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang("cyclic.carrot_ender.count") + current);
+
   }
 
   private static void increment(LivingEntity ahorse, int val) {
@@ -76,11 +75,7 @@ public class ItemHorseEnder extends ItemBaseCyclic implements IEntityInteractabl
       HorseFeedUtil.finishFeed(event, ahorse);
       int current = ahorse.getPersistentData().getInt(NBT_KEYACTIVE);
       ChatUtil.addChatMessage(event.getEntity(), ChatUtil.lang("item.cyclic.carrot_ender.count") + current);
-      //
-      //test
-      //      if (ahorse.getType() == EntityType.ZOMBIE_HORSE) {
-      //        ahorse.setTamedBy(event.getPlayer());
-      //      }
+
     }
   }
 }

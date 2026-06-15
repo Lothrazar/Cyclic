@@ -1,7 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
 import java.util.UUID;
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CharmUtil;
@@ -172,11 +171,6 @@ public abstract class CharmBase extends ItemBaseToggle {
     toggleAttribute(player, ItemRegistry.FLIPPERS.get(), NeoForgeMod.SWIM_SPEED, ID_SPEED, mult, 0, MUL);
   }
 
-  static void charmGravity(Player player) {
-    //    toggleAttribute(player, ItemRegistry.LESS_GRAVITY.get(), ForgeMod.ENTITY_GRAVITY.get(), ID_GRAVITY, -1, 0, ADD);
-    //    toggleAttribute(player, ItemRegistry.MORE_GRAVITY.get(), ForgeMod.ENTITY_GRAVITY.get(), ID_GRAVITY, 4, 0, ADD);
-  }
-
   static void charmExpSpeed(Player player) {
     ItemStack charmStack = CharmUtil.getIfEnabled(player, ItemRegistry.CHARM_XP_SPEED.get());
     if (!charmStack.isEmpty()) {
@@ -185,7 +179,6 @@ public abstract class CharmBase extends ItemBaseToggle {
   }
 
   public static void onEntityUpdate(Player player) {
-    CharmBase.charmGravity(player);
     CharmBase.charmSwimming(player);
     CharmBase.charmSpeed(player);
     CharmBase.charmLuck(player);

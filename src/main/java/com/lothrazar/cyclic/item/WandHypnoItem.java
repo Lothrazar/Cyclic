@@ -76,8 +76,7 @@ public class WandHypnoItem extends ItemHasEnergy {
       int j = world.random.nextInt(trimmedTargets.size());
       if (j != i) { // not self
         curTarget = trimmedTargets.get(j);
-        //        cur.setRevengeTarget(curTarget);
-        //        cur.setLastAttackedEntity(curTarget);
+
         cur.setLastHurtMob(curTarget);
         cur.setTarget(curTarget); // this leads to forge hook onLivingSetAttackTarget
         ParticleUtil.spawnParticle(world, ParticleTypes.DRAGON_BREATH, cur.blockPosition(), 15);

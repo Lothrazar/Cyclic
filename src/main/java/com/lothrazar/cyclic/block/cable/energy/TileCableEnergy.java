@@ -66,13 +66,9 @@ public class TileCableEnergy extends TileCableBase {
       return;
     }
     final BlockPos posTarget = this.worldPosition.relative(extractSide);
-//    final BlockEntity tile = level.getBlockEntity(posTarget);
-//    if (tile == null) {
-//      return;
-//    }
+
     final IEnergyStorage itemHandlerFrom = CapabilityUtil.energy(level, posTarget, extractSide.getOpposite());
-//        .getCapability(ForgeCapabilities.ENERGY, extractSide.getOpposite())
-//        .orElse(null);
+
     if (itemHandlerFrom == null) {
       return;
     }

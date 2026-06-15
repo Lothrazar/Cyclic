@@ -37,14 +37,7 @@ public class MultiBowEnchant {
     if (j > 0) {
       abstractarrowentity.setBaseDamage(abstractarrowentity.getBaseDamage() + j * 0.5D + 0.5D);
     }
-    //
-//    int k = EnchantmentHelper.getTagEnchantmentLevel(lookup.getOrThrow(Enchantments.PUNCH), stackBow);
-//    if (k > 0) {
-//      abstractarrowentity.setKnockback(k);
-//    }
-//    if (EnchantmentHelper.getTagEnchantmentLevel(lookup.getOrThrow(Enchantments.FLAME), stackBow) > 0) {
-//      abstractarrowentity.setSecondsOnFire(100);
-//    }
+
     worldIn.addFreshEntity(abstractarrowentity);
   }
 }

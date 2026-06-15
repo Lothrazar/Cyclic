@@ -74,8 +74,6 @@ public class CraftingStickContainer extends ContainerBase implements IContainerC
   @Override
   public boolean stillValid(Player playerIn) {
     return true;
-    //    return hand == null
-    //        || playerIn.getItemInHand(hand).getItem() instanceof CraftingStickItem;
   }
 
   @Override

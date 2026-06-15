@@ -51,8 +51,7 @@ public class BoomerangItem extends ItemBaseCyclic {
     if (percentageCharged < 0.1) {
       return; //not enough force to go with any realistic path 
     }
-    //    float amountCharged = percentageCharged * MAX_CHARGE;
-    //    float velocityFactor = percentageCharged * 1.5F;
+
     if (entity instanceof Player == false) {
       return;
     }

@@ -3,7 +3,7 @@
 	"elements": [
 		{
 			"name": "RailW",
-			"from": [0.25, 10.5, -4],
+			"from": [0.25, 10.5, -2.6],
 			"to": [2, 13.5, 20],
 			"rotation": {"angle": 45, "axis": "x", "origin": [1, 12, 4]},
 			"faces": {
@@ -17,7 +17,7 @@
 		},
 		{
 			"name": "RailE",
-			"from": [14, 10.5, -4],
+			"from": [14, 10.5, -2.6],
 			"to": [15.75, 13.5, 20],
 			"rotation": {"angle": 45, "axis": "x", "origin": [15, 12, 4]},
 			"faces": {
@@ -46,8 +46,6 @@
 			"to": [14, 12.5, 20],
 			"rotation": {"angle": 45, "axis": "x", "origin": [8, 12, 5]},
 			"faces": {
-				"north": {"uv": [2, 15, 14, 16], "texture": "#3"},
-				"south": {"uv": [2, 15, 14, 16], "texture": "#3"},
 				"down": {"uv": [2, 0, 14, 16], "texture": "#0"}
 			}
 		}

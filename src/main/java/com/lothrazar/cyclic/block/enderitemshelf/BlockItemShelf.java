@@ -59,9 +59,7 @@ public class BlockItemShelf extends BlockCyclic {
 
   @Override
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    //    if (state.hasTileEntity() && (!state.is(newState.getBlock()) || !newState.hasTileEntity())) {
-    //      worldIn.removeBlockEntity(pos);
-    //    }
+
     if (!state.is(newState.getBlock())) {
       worldIn.removeBlockEntity(pos);
     }
@@ -94,8 +92,7 @@ public class BlockItemShelf extends BlockCyclic {
           player.setItemInHand(InteractionHand.MAIN_HAND, remaining);
           player.swing(InteractionHand.MAIN_HAND);
           SoundUtil.playSound(player, SoundRegistry.CRACKLE.get(), oldEmpty ? 0.3F : 0.1F, 0.3F);
-          //          UtilSound.playSound(player, SoundRegistry.POW, 0.06F, 0.3F);
-          //          UtilSound.playSound(player, SoundRegistry.GUITAR, 0.1F, 0.3F);
+
           return InteractionResult.CONSUME;
         }
       }

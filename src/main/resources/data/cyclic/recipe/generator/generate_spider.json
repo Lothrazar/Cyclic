@@ -14,7 +14,7 @@
     "item": "minecraft:spider_eye"
   },
   "energy": {
-    "ticks": 1200,
+    "ticks": 800,
     "rfpertick": 60
   }
 }

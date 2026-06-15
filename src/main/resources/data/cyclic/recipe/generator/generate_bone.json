@@ -14,7 +14,7 @@
     "item": "minecraft:rotten_flesh"
   },
   "energy": {
-    "ticks": 400,
+    "ticks": 320,
     "rfpertick": 20
   }
 }

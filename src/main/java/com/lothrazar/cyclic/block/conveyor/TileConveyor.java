@@ -193,40 +193,18 @@ public class TileConveyor extends TileBlockEntityCyclic {
       // so items still in the air fall naturally before being pushed horizontally.
       double itemHeightLimit = type.isVertical() ? heightLimit : pos.getY() + 0.4;
       if (entity.getY() > itemHeightLimit) {
-//        if (isDirtDebug(entity)) {
-//          ModCyclic.LOGGER.info("[conveyor-dirt] SKIP height  pos={} type={} facing={} entityY={} limit={} nX={} nZ={} vel={}",
-//              pos, type, facing, String.format("%.4f", entity.getY()), String.format("%.4f", itemHeightLimit),
-//              String.format("%.3f", normalizedX), String.format("%.3f", normalizedZ), entity.getDeltaMovement());
-//        }
+
         return;
       }
     } else if (entity.getY() > heightLimit) {
       return;
     }
-//    if (isDirtDebug(entity)) {
-//      BlockState above = world.getBlockState(pos.above());
-//      BlockState inFacing = world.getBlockState(pos.relative(facing));
-//      ModCyclic.LOGGER.info("[conveyor-dirt] APPLY  pos={} type={} facing={} entityY={} nX={} nZ={} vel={} | above={} next={}",
-//          pos, type, facing, String.format("%.4f", entity.getY()),
-//          String.format("%.3f", normalizedX), String.format("%.3f", normalizedZ),
-//          entity.getDeltaMovement(), above.getBlock().getDescriptionId(), inFacing.getBlock().getDescriptionId());
-//    }
+
     xSpeed = facing.getStepX() * speed;
     ySpeed = 0.0D;
     zSpeed = facing.getStepZ() * speed;
     if (type.isCorner()) {
-      //      Direction rotated = type == ConveyorType.CORNER_RIGHT ? facing.rotateYCCW() : facing.rotateY();
-      //
-      //      if (Math.random() < 0.1)
-      //      if ((facing == Direction.NORTH && normalizedZ < 0.5D) || (facing == Direction.SOUTH && normalizedZ > 0.5D)) {
 
-      //        xSpeed = rotated.getXOffset() * speed;
-      //                zSpeed = 0.0D;
-      //      }
-      //      if ((facing == Direction.WEST && normalizedX < 0.5D) || (facing == Direction.EAST && normalizedX > 0.5D)) {
-      //        xSpeed = 0.0D;
-      //        zSpeed = rotated.getZOffset() * speed;
-      //      }
       //FIX their centering when going around corners
       if (facing.getAxis() == Axis.Z && (normalizedX < 0.4 || normalizedX > 0.6)) {
         syncEntityPos(entity, Math.floor(entity.getX()) + 0.5, entity.getY(), entity.getZ());

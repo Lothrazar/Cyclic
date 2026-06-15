@@ -5,16 +5,17 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:generator_item",
+      "item": "cyclic:generator_fluid",
       "type": "neoforge:item_exists"
     }
   ],
-  "type": "cyclic:generator_item",
+  "type": "cyclic:generator_fluid",
   "fuel": {
-    "item": "minecraft:fermented_spider_eye"
+    "fluid": "cyclic:wax",
+    "amount": 1000
   },
   "energy": {
-    "ticks": 1000,
-    "rfpertick": 100
+    "ticks": 600,
+    "rfpertick": 35
   }
 }

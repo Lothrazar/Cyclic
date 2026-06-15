@@ -46,15 +46,6 @@ public class ButterEffect extends CyclicMobEffect {
       ItemStackUtil.drop(level, living.blockPosition(), dropMe);
       living.setItemSlot(slots.get(slotix), ItemStack.EMPTY);
     }
-    //    for (EquipmentSlot slot : slots) {
-    //      stack = entity.getItemStackFromSlot(slot);
-    //      if (stack.isEmpty() == false && world.rand.nextDouble() < DROP_CHANCE) {
-    //        if (world.isRemote) {
-    //          ModCyclic.network.sendToServer(new PacketEntityDropRandom(entity.getEntityId(), slot.ordinal()));
-    //        }
-    //        //          entity.setItemStackToSlot(slot, ItemStack.EMPTY);
-    //        break;
-    //      }
-    //    }
+
   }
 }

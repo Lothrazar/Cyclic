@@ -65,10 +65,6 @@ public class ScreenScreentext extends ScreenBase<ContainerScreentext> {
     offset.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.offset")));
     pad.setTooltip(Tooltip.create(Component.translatable("cyclic.screen.padding")));
   }
-  //  @Override
-  //  public void tick() {
-  //    this.txtString.tick();
-  //  }
 
   @Override
   public void render(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {

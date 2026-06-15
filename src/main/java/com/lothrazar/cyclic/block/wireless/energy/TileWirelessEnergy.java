@@ -130,7 +130,7 @@ public class TileWirelessEnergy extends TileBlockEntityCyclic implements MenuPro
       case RENDER:
         this.render = value % PreviewOutlineType.values().length;
       break;
-      case TRANSFER_RATE:
+      case TRANSFER_RATE: // TODO: transfer rate GUI slider screen
         //        transferRate = value;
         //      break;
     }

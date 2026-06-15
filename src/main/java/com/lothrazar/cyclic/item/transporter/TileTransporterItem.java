@@ -129,11 +129,6 @@ public class TileTransporterItem extends ItemBaseCyclic {
         list.add(t);
       }
     }
-//    else {
-//      MutableComponent t = Component.translatable(ChatUtil.lang("invalid"));
-//      t.withStyle(ChatFormatting.DARK_RED);
-//      list.add(t);
-//    }
   }
 
   @Override

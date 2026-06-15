@@ -14,7 +14,7 @@
     "item": "minecraft:tnt"
   },
   "energy": {
-    "ticks": 3200,
+    "ticks": 2000,
     "rfpertick": 120
   }
 }

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.elemental;
 
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -14,6 +15,9 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -49,8 +53,7 @@ public class SnowEntity extends ThrowableItemProjectile {
         target.hurt(level.damageSources().dryOut(), Mth.nextInt(level.random, 2, 3));
         LivingEntity living = (LivingEntity) target;
         living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, 60, 1, false, false, false));
-        //        if (world.isAirBlock(living.getPosition()))
-        //          this.world.setBlockState(living.getPosition(), Blocks.SNOW.getDefaultState());
+
       }
     }
     else if (type == HitResult.Type.BLOCK) {
@@ -58,27 +61,20 @@ public class SnowEntity extends ThrowableItemProjectile {
       if (ray.getBlockPos() == null || ray.getDirection() == null) {
         return;
       }
-      //      BlockPos pos = ray.getPos().offset(ray.getFace());
-      //      if (world.isAirBlock(pos))
-      //        this.world.setBlockState(pos, Blocks.SNOW.getDefaultState());
-      //      else {
-      //        BlockState here = world.getBlockState(ray.getPos());
-      //        if (here.getBlock() == Blocks.SNOW) {
-      //          //inc
-      //          int newy = here.get(SnowBlock.LAYERS).intValue() + 1;
-      //          world.setBlockState(ray.getPos(), here.with(SnowBlock.LAYERS, newy));
-      //          //
-      //        }
-      //        here = world.getBlockState(pos);
-      //        if (here.getBlock() == Blocks.WATER) {
-      //          if (world.rand.nextDouble() < 0.25)
-      //            world.setBlockState(pos, Blocks.BLUE_ICE.getDefaultState());
-      //          else
-      //            world.setBlockState(pos, Blocks.PACKED_ICE.getDefaultState());
-      //        }
-      //      }
+      // check the block directly hit (e.g. water surface)
+      freezeIfWater(ray.getBlockPos());
+      // projectiles clip through water since it has no collision shape, so also
+      // check the face the projectile arrived from - that block is the water it was traveling through
+      freezeIfWater(ray.getBlockPos().relative(ray.getDirection()));
     }
     this.remove(RemovalReason.DISCARDED);
+  }
+
+  private void freezeIfWater(BlockPos pos) {
+    BlockState state = level().getBlockState(pos);
+    if (state.is(Blocks.WATER) && state.getValue(LiquidBlock.LEVEL) == 0) {
+      level().setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
+    }
   }
 
   @Override

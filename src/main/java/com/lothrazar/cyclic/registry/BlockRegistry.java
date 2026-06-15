@@ -379,9 +379,4 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> ALTAR_DESTRUCTION = BLOCKS.register("altar_destruction", () -> new BlockDestruction(Block.Properties.of()));
   public static final DeferredBlock<Block> WAXED_REDSTONE = BLOCKS.register("waxed_redstone", () -> new BlockWaxedRedstone(Block.Properties.of())); // , MaterialColor.FIRE
 
-  //
-  // TODO: or delete
-  //  public static final DeferredBlock<Block> PLATE_VECTOR= BLOCKS.register("plate_vector", () -> new Block(Block.Properties.of()));
-  //  public static final DeferredBlock<Block> ENCHANTER = BLOCKS.register("enchanter", () -> new Block(Block.Properties.of()));
-
 }

@@ -23,13 +23,7 @@ public class TileItemShelf extends TileBlockEntityCyclic {
     super(TileRegistry.SHELF.get(), pos, state);
   }
 
-  //  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileItemShelf e) {
-  //    e.tick();
-  //  }
-  //
-  //  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileItemShelf e) {
-  //    e.tick();
-  //  }
+
   @Override
   public void setField(int field, int value) {}
 

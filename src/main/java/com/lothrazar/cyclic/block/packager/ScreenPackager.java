@@ -36,7 +36,6 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     energy.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getEnergy());
-    //    timer.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
     btnRedstone.onValueUpdate(menu.tile);
   }
 
@@ -52,9 +51,6 @@ public class ScreenPackager extends ScreenBase<ContainerPackager> {
     this.drawSlot(ms, 50, 40);
     this.drawSlotLarge(ms, 90, 36);
     energy.draw(ms, menu.tile.getEnergy());
-    //    timer.capacity = menu.tile.getField(TilePackager.Fields.BURNMAX.ordinal());
-    //    timer.visible = (timer.capacity > 0);
-    //    timer.draw(ms, menu.tile.getField(TilePackager.Fields.TIMER.ordinal()));
-    // 
+
   }
 }

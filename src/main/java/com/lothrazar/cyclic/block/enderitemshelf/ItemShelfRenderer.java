@@ -52,17 +52,9 @@ public class ItemShelfRenderer implements BlockEntityRenderer<TileItemShelf> {
       ms.popPose();
     }
     else if (tile.renderStyle == RenderTextType.TEXT) {
-      //      if (tile.inventory.nameCache[slot] == null || tile.inventory.nameCache[slot].isEmpty()) {
-      //        Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(EnchantedBookItem.getEnchantments(stack));
-      //        for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-      //          tile.inventory.nameCache[slot] = entry.getKey().getDisplayName(entry.getValue()).getString();
-      //          break;
-      //        }
-      //      }
+
       String displayName = stack.getHoverName().getString();
-      //      if (displayName.isEmpty()) {
-      //        displayName = stack.getDisplayName().getString();
-      //      }
+
       final float scaleName = 0.02832999F + 0.1F * getScaleFactor(displayName);
       ms.pushPose();
       ms.translate(x - 0.02, y + 0.06, z);

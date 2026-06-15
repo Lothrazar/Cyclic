@@ -54,18 +54,7 @@ public class ScreenStructure extends ScreenBase<ContainerStructure> {
     GuiSliderInteger sizeslider = this.addRenderableWidget(new GuiSliderInteger(x, y, w, h, f, menu.tile.getBlockPos(),
         1, 64, menu.tile.getField(f)));
     sizeslider.setTooltip(Tooltip.create(Component.translatable("buildertype.size.tooltip")));
-    //
-    //
-    //    txtHeight = new TextboxInteger(this.font, guiLeft + 120, guiTop + 20, 20,
-    //        container.tile.getPos(), TileStructure.Fields.HEIGHT.ordinal());
-    //    txtHeight.setText("" + container.tile.getField(TileStructure.Fields.HEIGHT.ordinal()));
-    //    txtHeight.setTooltip(UtilChat.lang("buildertype.height.tooltip"));
-    //    this.children.add(txtHeight);
-    //    txtSize = new TextboxInteger(this.font, guiLeft + 90, guiTop + 20, 20,
-    //        container.tile.getPos(), TileStructure.Fields.SIZE.ordinal());
-    //    txtSize.setTooltip(UtilChat.lang("buildertype.size.tooltip"));
-    //    txtSize.setText("" + container.tile.getField(TileStructure.Fields.SIZE.ordinal()));
-    //    this.children.add(txtSize);
+
     TileStructure.Fields fld = TileStructure.Fields.BUILDTYPE;
     int numInRow = 0;
     x = this.leftPos + 8;

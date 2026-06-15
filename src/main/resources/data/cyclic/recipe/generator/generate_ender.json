@@ -5,16 +5,17 @@
       "type": "neoforge:mod_loaded"
     },
     {
-      "item": "cyclic:generator_item",
+      "item": "cyclic:generator_fluid",
       "type": "neoforge:item_exists"
     }
   ],
-  "type": "cyclic:generator_item",
+  "type": "cyclic:generator_fluid",
   "fuel": {
-    "item": "cyclic:biomass"
+    "fluid": "cyclic:ender",
+    "amount": 1000
   },
   "energy": {
-    "ticks": 100,
-    "rfpertick": 10
+    "ticks": 800,
+    "rfpertick": 70
   }
 }

@@ -49,10 +49,6 @@ public class TilePlacer extends TileBlockEntityCyclic implements MenuProvider {
       setLitProperty(false);
       return;
     }
-    //    Integer cost = POWERCONF.get();
-    //    if (energy.getEnergyStored() < cost && (cost > 0)) {
-    //      return;
-    //    }
     setLitProperty(true);
     ItemStack stack = inventory.getStackInSlot(0);
     if (stack.isEmpty() || Block.byItem(stack.getItem()) == Blocks.AIR) {

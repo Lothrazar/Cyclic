@@ -148,12 +148,7 @@ public class EntityDungeonEye extends ThrowableItemProjectile {
         this.remove(RemovalReason.DISCARDED);
       }
       this.setDeltaMovement(motionX, motionY, motionZ);
-      //      int particleCount = (this.ticksExisted < 100) ? 30 : 14;
-      //      float f3 = 0.25F;
-      //      for (int i = 0; i < particleCount; ++i) {
-      //        this.getEntityWorld().spawnParticle(EnumParticleTypes.PORTAL, this.posX - this.motionX * f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.posY - this.motionY * f3 - 0.5D,
-      //            this.posZ - this.motionZ * f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.motionX, this.motionY, this.motionZ, new int[0]);
-      //      }
+
     }
   }
 

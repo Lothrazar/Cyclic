@@ -28,10 +28,6 @@ public class ConveyorItemEntity extends ItemEntity {
     return true;
   }
 
-//  @Override
-//  public void setNeverPickUp() {
-//    super.setNeverPickUp();
-//  }
 
   @Override
   public float getSpin(float partialTicks) {

@@ -36,11 +36,7 @@ public class SleepingMatItem extends ItemBaseCyclic {
   }
 
   public Either<Player.BedSleepingProblem, Unit> trySleep(Player player, BlockPos at, ItemStack itemstack) {
-    // Optional<BlockPos> optAt = Optional.of(at);
-    // Player.BedSleepingProblem ret = net.neoforged.neoforge.event.ForgeEventFactory.onPlayerSleepInBed(player, optAt);
-    // if (ret != null) {
-    //   return Either.left(ret);
-    // }
+
     Level world = player.level();
     if (!world.isClientSide) {
       if (player.isSleeping() || !player.isAlive()) {
@@ -50,10 +46,7 @@ public class SleepingMatItem extends ItemBaseCyclic {
       if (!isoverworld) {
         return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_HERE);
       }
-      // if (!net.neoforged.neoforge.event.ForgeEventFactory.fireSleepingTimeCheck(player, optAt)) {
-      //   player.setSleepingPos(at);
-      //   return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
-      // }
+
       player.startSleeping(at);
       player.getPersistentData().putBoolean(SleepingMatItem.CYCLIC_SLEEPING, true);
       // player.getSleepTimer() = 0; //    ObfuscationReflectionHelper.setPrivateValue(Player.class, player, 0, "sleepCounter");

@@ -15,8 +15,8 @@
     }
   ],
   "energy": {
-    "rfpertick": 500,
-    "ticks": 180
+    "rfpertick": 80,
+    "ticks": 20
   },
   "result": {
     "id": "cyclic:slime",

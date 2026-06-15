@@ -138,9 +138,7 @@ public class OutlineRenderer {
       }
     }
     stack = player.getMainHandItem();
-    //    if (EntityDataCard.hasEntity(stack)) {
-    //      Entity etar = EntityDataCard.matchesEntity(etar, stack);
-    //    }
+
     ///////////////////// LocationGpsItem
     if (stack.getItem() instanceof LocationGpsCard) {
       BlockPosDim loc = LocationGpsCard.getPosition(stack);

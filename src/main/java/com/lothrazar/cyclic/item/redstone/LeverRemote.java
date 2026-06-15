@@ -113,8 +113,7 @@ public class LeverRemote extends ItemBaseCyclic {
       boolean hasPowerHere = blockState.getValue(LeverBlock.POWERED).booleanValue();
       LevelWorldUtil.toggleLeverPowerState(world, blockPos, blockState);
       ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".powered." + (!hasPowerHere));
-      //      UtilSound.playSound(player, SoundEvents.BLOCK_LEVER_CLICK);
-      //      UtilEntity.setCooldownItem(player, this, COOLDOWN);
+
       return true;
     }
     return false;
