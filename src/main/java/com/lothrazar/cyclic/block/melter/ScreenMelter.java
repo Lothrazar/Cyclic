@@ -58,7 +58,7 @@ public class ScreenMelter extends ScreenBase<ContainerMelter> {
     this.drawBackground(ms, TextureRegistry.INVENTORY);
     energy.draw(ms, menu.tile.getEnergy());
     this.progress.max = menu.tile.getField(TileMelter.Fields.BURNMAX.ordinal());
-    progress.draw(ms, menu.tile.getField(TileMelter.Fields.TIMER.ordinal()));
+    progress.draw(ms,  menu.tile.getField(TileMelter.Fields.TIMER.ordinal()));
     fluid.draw(ms, menu.tile.getFluid());
     this.drawSlot(ms, 25, 30);
   }

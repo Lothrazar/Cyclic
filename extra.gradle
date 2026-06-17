@@ -17,6 +17,7 @@ dependencies {
   //deps outside of tmpl
   implementation "curse.maven:jeed-532286:${jeed_file}"
 
+  localRuntime "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE"
 // EMI for testing
 //  compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
 //  runtimeOnly "dev.emi:emi-neoforge:${emi_version}"

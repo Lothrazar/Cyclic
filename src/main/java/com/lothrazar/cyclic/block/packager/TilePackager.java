@@ -1,6 +1,5 @@
 package com.lothrazar.cyclic.block.packager;
 
-import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.battery.TileBattery;
 import com.lothrazar.cyclic.registry.BlockRegistry;
@@ -18,12 +17,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -38,7 +35,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
 
   static final int MAX = TileBattery.MENERGY * 10;
   public static ModConfigSpec.IntValue POWERCONF;
-  public static final int TICKS = 10;
+  public static ModConfigSpec.IntValue TIMERCONF;
   EnergyStorageWrapper energy = new EnergyStorageWrapper(MAX, MAX);
   ItemStackHandler inputSlots = new ItemStackHandler(1) {
 
@@ -49,8 +46,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
   };
   ItemStackHandler outputSlots = new ItemStackHandler(1);
   final ItemStackHandlerWrapper inventory = new ItemStackHandlerWrapper(inputSlots, outputSlots);
-  private int burnTimeMax = 0; //only non zero if processing
-  private int burnTime = 0; //how much of current fuel is left
 
   public TilePackager(BlockPos pos, BlockState state) {
     super(TileRegistry.PACKAGER.get(), pos, state);
@@ -78,32 +73,35 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
       setLitProperty(false);
       return;
     }
-    this.burnTime--;
-    if (burnTime <= 0) {
-      burnTime = TICKS;
-      tryDoPackage();
+    ItemStack stack = inputSlots.getStackInSlot(0);
+    if (stack.isEmpty()) {
+      timer = TIMERCONF.get();
+      setLitProperty(false);
+      return;
     }
+    if (POWERCONF.get() > 0 && energy.getEnergyStored() < POWERCONF.get()) {
+      return;
+    }
+    setLitProperty(true);
+    if (--timer > 0) {
+      return;
+    }
+    timer = TIMERCONF.get();
+    tryDoPackage();
   }
 
   private void tryDoPackage() {
-    if (POWERCONF.get() > 0 && energy.getEnergyStored() < POWERCONF.get()) {
-      return; //not enough pow
-    }
-    setLitProperty(true);
-    //pull in new fuel
     ItemStack stack = inputSlots.getStackInSlot(0);
     if (level == null) {
       return;
     }
-    //shapeless recipes / shaped check either 
-    final CraftingRecipe recipe = UtilPackager.getRecipeForItemStack(level.getRecipeManager(), level.registryAccess(), stack); // level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
+    final CraftingRecipe recipe = UtilPackager.getRecipeForItemStack(level.getRecipeManager(), level.registryAccess(), stack);
     if (recipe == null) {
       return;
     }
     if (outputSlots.insertItem(0, recipe.getResultItem(level.registryAccess()).copy(), true).isEmpty()) {
       final int total = UtilPackager.getIngredientsInRecipe(recipe);
       final ItemStack output = recipe.getResultItem(level.registryAccess()).copy();
-      //consume items, produce output
       inputSlots.extractItem(0, total, false);
       outputSlots.insertItem(0, output, false);
       energy.extractEnergy(POWERCONF.get(), false);
@@ -127,14 +125,14 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
       energy.deserializeNBT(registries, tag.get(NBTENERGY));
     }
     inventory.deserializeNBT(registries, tag.getCompound(NBTINV));
-    super.loadAdditional(tag,registries);
+    super.loadAdditional(tag, registries);
   }
 
   @Override
   public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     tag.put(NBTENERGY, energy.serializeNBT(registries));
     tag.put(NBTINV, inventory.serializeNBT(registries));
-    super.saveAdditional(tag,registries);
+    super.saveAdditional(tag, registries);
   }
 
   @Override
@@ -143,9 +141,9 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
       case REDSTONE:
         return this.needsRedstone;
       case TIMER:
-        return this.burnTime;
+        return this.timer;
       case BURNMAX:
-        return this.burnTimeMax;
+        return TIMERCONF.get();
       default:
       break;
     }
@@ -159,10 +157,9 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
         this.needsRedstone = value % 2;
       break;
       case TIMER:
-        this.burnTime = value;
+        this.timer = value;
       break;
       case BURNMAX:
-        this.burnTimeMax = value;
       break;
     }
   }
@@ -171,7 +168,6 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
   public IItemHandler getItemHandler(Direction side) {
     return inventory;
   }
-
 
   @Override
   public IEnergyStorage getEnergyHandler(Direction side) {
@@ -184,7 +180,7 @@ public class TilePackager extends TileBlockEntityCyclic implements MenuProvider,
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack,  Direction direction) {
+  public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, Direction direction) {
     return inventory.canPlaceItemThroughFace(i, itemStack, direction);
   }
 

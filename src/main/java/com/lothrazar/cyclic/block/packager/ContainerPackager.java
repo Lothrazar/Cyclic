@@ -26,7 +26,7 @@ public class ContainerPackager extends ContainerBase {
         tile.setChanged();
       }
     });
-    addSlot(new SlotItemHandler(tile.outputSlots, 0, 91 + 4, 37 + 4) {
+    addSlot(new SlotItemHandler(tile.outputSlots, 0, 112, 41) {
 
       @Override
       public void setChanged() {

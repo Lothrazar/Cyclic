@@ -255,13 +255,6 @@
 		ping = false
 
 	#####################################################################################
-	# Logging related configs
-	#####################################################################################
-	[cyclic.logging]
-		# Unblock info logs; very spammy; can be useful for testing certain issues
-		info = false
-
-	#####################################################################################
 	# Item specific configs
 	#####################################################################################
 	[cyclic.items]
@@ -769,6 +762,10 @@
 			# Default: 50
 			# Range: > 0
 			energy_cost = 50
+			# Ticks required per operation in the packager
+			# Default: 40
+			# Range: > 1
+			ticks = 40
 
 		[cyclic.blocks.user]
 			# Power per use user

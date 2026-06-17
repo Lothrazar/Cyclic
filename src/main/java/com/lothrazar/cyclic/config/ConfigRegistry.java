@@ -518,6 +518,7 @@ public class ConfigRegistry {
     CandleWaterBlock.RADIUS = CFG.comment(" Reach of the candle").defineInRange("candle_water.radius", 8, 1, 64);
     CandleWaterBlock.TICK_RATE = CFG.comment(" Tick rate of the candle").defineInRange("candle_water.tick_rate", 60, 1, Integer.MAX_VALUE);
     TilePackager.POWERCONF = CFG.comment(" Power per recipe in the packager").defineInRange("packager.energy_cost", 50, 0, Integer.MAX_VALUE);
+    TilePackager.TIMERCONF = CFG.comment(" Ticks required per operation in the packager").defineInRange("packager.ticks", 40, 1, Integer.MAX_VALUE);
     TileUser.POWERCONF = CFG.comment(" Power per use user").defineInRange("user.energy_cost", 0, 0, Integer.MAX_VALUE);
     TileAnvilAuto.POWERCONF = CFG.comment(" Power per repair anvil").defineInRange("anvil.energy_cost", 250, 0, Integer.MAX_VALUE);
     TileDropper.POWERCONF = CFG.comment(" Power per use dropper").defineInRange("dropper.energy_cost", 50, 0, Integer.MAX_VALUE);
