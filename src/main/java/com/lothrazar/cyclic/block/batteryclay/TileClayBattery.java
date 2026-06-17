@@ -27,6 +27,7 @@ public class TileClayBattery extends TileBlockEntityCyclic implements MenuProvid
 
   public TileClayBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY_CLAY.get(), pos, state);
+    this.needsRedstone = 0;
     energy = new EnergyStorageWrapper(MAX.get(), MAX.get() / 4);
   }
 

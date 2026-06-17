@@ -23,6 +23,7 @@ public class TileCrate extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileCrate(BlockPos pos, BlockState state) {
     super(TileRegistry.CRATE.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   @Override

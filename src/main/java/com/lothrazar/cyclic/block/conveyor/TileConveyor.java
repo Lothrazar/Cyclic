@@ -31,6 +31,7 @@ public class TileConveyor extends TileBlockEntityCyclic {
 
   public TileConveyor(BlockPos pos, BlockState state) {
     super(TileRegistry.CONVEYOR.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   @Override

@@ -21,6 +21,7 @@ public class TileItemShelf extends TileBlockEntityCyclic {
 
   public TileItemShelf(BlockPos pos, BlockState state) {
     super(TileRegistry.SHELF.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
 

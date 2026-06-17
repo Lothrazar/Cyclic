@@ -50,6 +50,7 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic implements MenuPr
 
   public TileInsertingMagnet(BlockPos pos, BlockState state) {
     super(TileRegistry.MAGNET.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   @Override

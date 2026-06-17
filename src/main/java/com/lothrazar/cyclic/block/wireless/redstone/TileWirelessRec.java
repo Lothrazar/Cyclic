@@ -14,6 +14,7 @@ public class TileWirelessRec extends TileBlockEntityCyclic {
 
   public TileWirelessRec(BlockPos pos, BlockState state) {
     super(TileRegistry.WIRELESS_RECEIVER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   @Override

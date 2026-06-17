@@ -85,6 +85,7 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
 
   public TileDisenchant(BlockPos pos, BlockState state) {
     super(TileRegistry.DISENCHANTER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDisenchant e) {

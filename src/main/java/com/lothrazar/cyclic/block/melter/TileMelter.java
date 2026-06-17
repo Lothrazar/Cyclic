@@ -52,6 +52,7 @@ public class TileMelter extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileMelter(BlockPos pos, BlockState state) {
     super(TileRegistry.MELTER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileMelter e) {

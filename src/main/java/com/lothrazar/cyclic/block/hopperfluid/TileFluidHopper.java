@@ -52,6 +52,7 @@ public class TileFluidHopper extends TileBlockEntityCyclic implements MenuProvid
 
   public TileFluidHopper(BlockPos pos, BlockState state) {
     super(TileRegistry.HOPPER_FLUID.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public ItemStackHandler getFilterSlot() {

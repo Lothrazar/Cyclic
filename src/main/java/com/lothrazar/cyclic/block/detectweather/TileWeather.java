@@ -11,6 +11,7 @@ public class TileWeather extends TileBlockEntityCyclic {
 
   public TileWeather(BlockPos pos, BlockState state) {
     super(TileRegistry.DETECTOR_WEATHER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWeather e) {

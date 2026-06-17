@@ -40,6 +40,7 @@ public class TileGoldHopper extends TileSimpleHopper implements MenuProvider {
 
   public TileGoldHopper(BlockPos pos, BlockState state) {
     super(TileRegistry.HOPPER_GOLD.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileGoldHopper e) {

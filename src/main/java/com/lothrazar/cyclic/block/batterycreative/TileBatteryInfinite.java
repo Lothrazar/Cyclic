@@ -28,6 +28,7 @@ public class TileBatteryInfinite extends TileBlockEntityCyclic {
 
   public TileBatteryInfinite(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY_INFINITE.get(), pos, state);
+    this.needsRedstone = 0;
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {
       poweredSides.put(f, true);

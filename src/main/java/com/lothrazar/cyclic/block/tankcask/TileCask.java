@@ -36,6 +36,7 @@ public class TileCask extends TileBlockEntityCyclic {
 
   public TileCask(BlockPos pos, BlockState state) {
     super(TileRegistry.CASK.get(), pos, state);
+    this.needsRedstone = 0;
     flowing = 0;
     poweredSides = new HashMap<Direction, Boolean>();
     for (Direction f : Direction.values()) {

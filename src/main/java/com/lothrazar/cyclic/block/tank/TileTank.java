@@ -23,6 +23,7 @@ public class TileTank extends TileBlockEntityCyclic {
 
   public TileTank(BlockPos pos, BlockState state) {
     super(TileRegistry.TANK.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileTank e) {

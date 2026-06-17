@@ -97,6 +97,7 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
 
   public TileCrafter(BlockPos pos, BlockState state) {
     super(TileRegistry.CRAFTER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   @Override

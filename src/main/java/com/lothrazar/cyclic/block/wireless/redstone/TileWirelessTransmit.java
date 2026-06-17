@@ -50,6 +50,7 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
 
   public TileWirelessTransmit(BlockPos pos, BlockState state) {
     super(TileRegistry.WIRELESS_TRANSMITTER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   @Override

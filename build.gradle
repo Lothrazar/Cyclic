@@ -117,7 +117,7 @@ neoForge {
             // "SCAN": For mods scan.
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            systemProperty 'neoforge.logging.markers', 'REGISTRIES'
 
             // Recommended logging level for the console
             // You can set various levels here.
@@ -147,8 +147,11 @@ configurations {
 
 
 dependencies {
-  // core future library
-  implementation "curse.maven:flib-661261:${flib_file}"
+
+    // for other mods depending on THIS FLIB library, use either a local copy or a maven
+    //   implementation "local.mods:flib:${minecraft_version}-${flib_version}"
+       implementation "curse.maven:flib-661261:${flib_file}"
+
 
   //these mods have API jars for compile as well as the full mod for local
   compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
@@ -159,8 +162,6 @@ dependencies {
 
   // no APIs
   compileOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE"
-
-  localRuntime "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE"
 
   compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${minecraft_version}:${crafttweaker_version}"
 

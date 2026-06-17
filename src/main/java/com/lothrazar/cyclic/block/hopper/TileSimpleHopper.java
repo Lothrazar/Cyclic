@@ -27,6 +27,7 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
 
   public TileSimpleHopper(BlockPos pos, BlockState state) {
     super(TileRegistry.HOPPER.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public TileSimpleHopper(BlockEntityType<TileGoldHopper> t, BlockPos pos, BlockState state) {

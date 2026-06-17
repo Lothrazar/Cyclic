@@ -57,6 +57,7 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
 
   public TileAnvilAuto(BlockPos pos, BlockState state) {
     super(TileRegistry.ANVIL.get(), pos, state);
+    this.needsRedstone = 0;
   }
 
   public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilAuto tileAnvilAuto) {

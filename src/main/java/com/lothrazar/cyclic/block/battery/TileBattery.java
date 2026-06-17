@@ -52,6 +52,7 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
 
   public TileBattery(BlockPos pos, BlockState state) {
     super(TileRegistry.BATTERY.get(), pos, state);
+    this.needsRedstone = 0;
     energy = new EnergyStorageWrapper(MAX.get(), MAX.get());
     flowing = 0;
     poweredSides = new ConcurrentHashMap<Direction, Boolean>();
