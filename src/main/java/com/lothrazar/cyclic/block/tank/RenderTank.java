@@ -6,6 +6,7 @@ import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -27,13 +28,17 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
     if (fluid.isEmpty()) {
       return;
     }
-    VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.RESIZABLE);
-    //skip when the block is being broken: the breaking overlay wraps the buffer in a
-    //SheetedDecalTextureGenerator that requires UV0+Normal vertex elements, but the
-    //fluid RenderType doesn't include them and crashes BufferBuilder.endLastVertex
-    if (buffer.getClass().getName().equals("com.mojang.blaze3d.vertex.VertexMultiConsumer$Double")) {
-      return;
+    //when the block is being broken, the passed MultiBufferSource wraps each consumer in a
+    //SheetedDecalTextureGenerator that requires a Normal vertex element. Our render type uses
+    //POSITION_COLOR_TEX_LIGHTMAP which has no Normal, so writing to the wrapped consumer crashes.
+    //Bypass it by going directly to the main buffer source - the fluid stays visible during
+    //breaking without the crack overlay (cracks are on the glass frame, not on the fluid inside).
+    MultiBufferSource bufferSource = renderer;
+    if (renderer.getBuffer(FluidTankRenderType.RESIZABLE).getClass().getName()
+        .equals("com.mojang.blaze3d.vertex.VertexMultiConsumer$Double")) {
+      bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
     }
+    VertexConsumer buffer = bufferSource.getBuffer(FluidTankRenderType.RESIZABLE);
     matrix.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);
     RenderBlockUtils.renderObject(FluidHelpers.getFluidModel(fluid, FluidHelpers.STAGES - 1),
         matrix, buffer, RenderBlockUtils.getColorARGB(fluid),

@@ -59,9 +59,8 @@ public class RenderSolidifier implements BlockEntityRenderer<TileSolidifier> {
       return;
     }
     VertexConsumer vertexBuffer = buffer.getBuffer(FluidTankRenderType.RESIZABLE);
-    //skip during block-breaking overlay (vertex format mismatch with SheetedDecalTextureGenerator)
     if (vertexBuffer.getClass().getName().equals("com.mojang.blaze3d.vertex.VertexMultiConsumer$Double")) {
-      return;
+      vertexBuffer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(FluidTankRenderType.RESIZABLE);
     }
     matrixStack.pushPose();
     matrixStack.scale(1F, FluidHelpers.getScale(tankHere.tank), 1F);

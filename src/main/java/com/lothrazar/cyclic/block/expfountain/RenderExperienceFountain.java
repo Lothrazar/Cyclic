@@ -7,6 +7,7 @@ import com.lothrazar.library.render.type.FluidTankRenderType;
 import com.lothrazar.library.util.RenderBlockUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -35,7 +36,7 @@ public class RenderExperienceFountain implements BlockEntityRenderer<TileExperie
     }
     VertexConsumer buffer = renderer.getBuffer(FluidTankRenderType.RESIZABLE);
     if (buffer.getClass().getName().equals("com.mojang.blaze3d.vertex.VertexMultiConsumer$Double")) {
-      return;
+      buffer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(FluidTankRenderType.RESIZABLE);
     }
     matrix.scale(1F, FluidHelpers.getScale(tankHere.tank) / 4F, 1F);
     float f = 0.5F;
