@@ -1,6 +1,7 @@
 {
     "parent":"cyclic:parent/cable_pump",
     "textures": {
+        "1": "cyclic:block/cable/cable_extractor_base",
         "particle": "cyclic:block/cable/cable_bundled",
         "texture": "cyclic:block/cable/cable_bundled"
     }
