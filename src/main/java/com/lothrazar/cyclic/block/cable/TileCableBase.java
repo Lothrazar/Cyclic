@@ -297,6 +297,10 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   private void tickFluidNormalFlow() {
     for (Direction incomingSide : Direction.values()) {
       final FluidTankBase sideHandler = mapFluidFlow.get(incomingSide);
+      if (sideHandler.getFluidAmount() <= 0) {
+        continue;
+      }
+      int amountBefore = sideHandler.getFluidAmount();
       for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
@@ -305,10 +309,14 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
         if (connection.isExtraction() || connection.isBlocked()) {
           continue;
         }
-        if (sideHandler.getFluidAmount() <= 0) {
-          continue;
-        }
         this.moveFluids(outgoingSide, worldPosition.relative(outgoingSide), TileCableFluid.TRANSFER_RATE.get(), sideHandler);
+      }
+      // dead-end fallback: if nothing drained forward, allow flowing back
+      if (sideHandler.getFluidAmount() == amountBefore) {
+        EnumConnectType incomingConn = getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(incomingSide));
+        if (!incomingConn.isExtraction() && !incomingConn.isBlocked()) {
+          this.moveFluids(incomingSide, worldPosition.relative(incomingSide), TileCableFluid.TRANSFER_RATE.get(), sideHandler);
+        }
       }
     }
   }
