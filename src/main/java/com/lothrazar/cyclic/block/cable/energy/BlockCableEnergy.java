@@ -77,14 +77,13 @@ public class BlockCableEnergy extends CableBase {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.getValue(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
-      //      updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (world instanceof Level && CapabilityUtil.isEnergy(facing, (Level) world, facingPos)) {
+    if (world instanceof Level lvl && CapabilityUtil.isEnergy(facing, lvl, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
-        ((Level) world).setBlockAndUpdate(currentPos, with);
+        lvl.setBlockAndUpdate(currentPos, with);
       }
       return with;
     }

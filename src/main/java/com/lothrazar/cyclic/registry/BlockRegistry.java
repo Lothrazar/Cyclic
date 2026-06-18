@@ -359,7 +359,7 @@ public class BlockRegistry {
   public static final DeferredBlock<Block> ENERGY_PIPE = BLOCKS.register("energy_pipe", () -> new BlockCableEnergy(Block.Properties.of().sound(SoundType.STONE).forceSolidOn()));
   public static final DeferredBlock<Block> ITEM_PIPE = BLOCKS.register("item_pipe", () -> new BlockCableItem(Block.Properties.of().sound(SoundType.STONE).forceSolidOn()));
   public static final DeferredBlock<Block> FLUID_PIPE = BLOCKS.register("fluid_pipe", () -> new BlockCableFluid(Block.Properties.of().sound(SoundType.STONE).forceSolidOn()));
-  public static final DeferredBlock<Block> BUDNLED_PIPE = BLOCKS.register("bundled_pipe", () -> new BlockCableBundled(Block.Properties.of().sound(SoundType.STONE).forceSolidOn()));
+  public static final DeferredBlock<Block> BUNDLED_PIPE = BLOCKS.register("bundled_pipe", () -> new BlockCableBundled(Block.Properties.of().sound(SoundType.STONE).forceSolidOn()));
   public static final DeferredBlock<Block> PLATE_LAUNCH = BLOCKS.register("plate_launch", () -> new LaunchBlock(Block.Properties.of(), false));
   public static final DeferredBlock<Block> PLATE_LAUNCH_REDSTONE = BLOCKS.register("plate_launch_redstone", () -> new LaunchBlock(Block.Properties.of(), true));
   public static final DeferredBlock<Block> BATTERY_INFINITE = BLOCKS.register("battery_infinite", () -> new BlockBatteryInfinite(Block.Properties.of()));

@@ -510,6 +510,7 @@ public static final DeferredItem<Item> SHEARING = ITEMS.register("shearing", () 
   public static final DeferredItem<Item> ENERGY_PIPE = ITEMS.register("energy_pipe", () -> new BlockItem(BlockRegistry.ENERGY_PIPE.get(), new Item.Properties()));
   public static final DeferredItem<Item> ITEM_PIPE = ITEMS.register("item_pipe", () -> new BlockItem(BlockRegistry.ITEM_PIPE.get(), new Item.Properties()));
   public static final DeferredItem<Item> FLUID_PIPE = ITEMS.register("fluid_pipe", () -> new BlockItem(BlockRegistry.FLUID_PIPE.get(), new Item.Properties()));
+  public static final DeferredItem<Item> BUNDLED_PIPE = ITEMS.register("bundled_pipe", () -> new BlockItem(BlockRegistry.BUNDLED_PIPE.get(), new Item.Properties()));
   public static final DeferredItem<Item> WRENCH = ITEMS.register("wrench", () -> new CableWrench(new Item.Properties()));
 
   public static final DeferredItem<Item> WIRELESS_ENERGY = ITEMS.register("wireless_energy", () -> new BlockItem(BlockRegistry.WIRELESS_ENERGY.get(), new Item.Properties()));

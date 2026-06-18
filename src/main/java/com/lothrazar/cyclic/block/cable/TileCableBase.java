@@ -5,13 +5,14 @@ import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
 import com.lothrazar.cyclic.block.cable.fluid.TileCableFluid;
-import com.lothrazar.cyclic.block.cable.item.TileCableItem;
 import com.lothrazar.cyclic.capabilities.block.FluidTankBase;
+import com.lothrazar.cyclic.item.datacard.fluid.FluidFilterCardItem;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
 import com.lothrazar.library.core.ITileFacade;
+import com.lothrazar.library.util.DirectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,8 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.HolderLookup;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -34,11 +35,16 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
   protected final Map<Direction, FluidTankBase> mapFluidFlow = new ConcurrentHashMap<>();
   protected final Map<Direction, IItemHandler> mapItemFlow = new ConcurrentHashMap<>();
 
-  protected boolean isEnergyCable = false;
-  protected boolean isItemCable = false;
-  protected boolean isFluidCable = false;
-  protected static final int FLOW_QTY = 64; // fixed, for non-extract motion
+  private boolean isEnergyCable = false;
+  private boolean isItemCable = false;
+  private boolean isFluidCable = false;
 
+  public boolean isEnergyCable() { return isEnergyCable; }
+  public boolean isItemCable() { return isItemCable; }
+  public boolean isFluidCable() { return isFluidCable; }
+  // energy has no filter
+  // item has no flow configs
+  protected static final int FLOW_QTY = 64; // fixed, for non-extract motion
   protected EnergyStorageWrapper energy;
 
   public ItemStackHandler itemFilter = new ItemStackHandler(1) {
@@ -79,7 +85,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
         energy.deserializeNBT(registries, tag.get(NBTENERGY));
       }
     }
-    if(this.isItemCable) {
+    if(this.isItemCable()) {
       IItemHandler item;
       for (Direction f : Direction.values()) {
         item = mapItemFlow.get(f);
@@ -90,7 +96,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
       }
       itemFilter.deserializeNBT(registries,tag.getCompound("itemFilter"));
     }
-    if(this.isFluidCable) {
+    if(this.isFluidCable()) {
 
       fluidFilter.deserializeNBT(registries,tag.getCompound("filter"));
       FluidTankBase fluidh;
@@ -112,7 +118,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
       }
       tag.put(NBTENERGY, energy.serializeNBT(registries));
     }
-    if(this.isItemCable) {
+    if(this.isItemCable()) {
 
       tag.put("itemFilter", itemFilter.serializeNBT(registries));
       IItemHandler item;
@@ -124,7 +130,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
         }
       }
     }
-    if(this.isFluidCable) {
+    if(this.isFluidCable()) {
 
       tag.put("filter", fluidFilter.serializeNBT(registries));
       FluidTankBase fluidh;
@@ -183,6 +189,129 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
     mapIncomingEnergy.put(inputFrom, TIMER_SIDE_INPUT);
   }
 
+  // --- shared tick methods called by subclasses and TileCableBundled ---
+
+  protected void tickEnergy() {
+    this.syncEnergy();
+    this.tickDownIncomingPowerFaces();
+    this.tickEnergyCableFlow();
+    for (final Direction extractSide : Direction.values()) {
+      final EnumConnectType connection = getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
+      if (connection.isExtraction()) {
+        tryExtractEnergyFrom(extractSide);
+      }
+    }
+  }
+
+  protected void tickDownIncomingPowerFaces() {
+    for (final Direction incomingDirection : Direction.values()) {
+      mapIncomingEnergy.computeIfPresent(incomingDirection, (direction, amount) -> {
+        if (amount > 0) {
+          amount -= 1;
+        }
+        return amount;
+      });
+    }
+  }
+
+  private void tickEnergyCableFlow() {
+    for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+      if (connection.isExtraction() || connection.isBlocked()) {
+        continue;
+      }
+      if (!this.isEnergyIncomingFromFace(outgoingSide)) {
+        moveEnergy(outgoingSide, TileCableEnergy.TRANSFER_RATE.get());
+      }
+    }
+  }
+
+  protected void tickItem() {
+    for (Direction extractSide : Direction.values()) {
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
+      if (connection.isExtraction()) {
+        final IItemHandler sideHandler = mapItemFlow.get(extractSide);
+        tryExtract(sideHandler, extractSide, FLOW_QTY, itemFilter);
+      }
+    }
+    tickItemNormalFlow();
+  }
+
+  private void tickItemNormalFlow() {
+    incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
+      final IItemHandler sideHandler = mapItemFlow.get(incomingSide);
+      for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
+        if (outgoingSide == incomingSide) {
+          continue;
+        }
+        if (!itemCanPushToSide(outgoingSide)) {
+          continue;
+        }
+        if (this.moveItems(outgoingSide, FLOW_QTY, sideHandler)) {
+          continue incomingSideLoop;
+        }
+      }
+      if (itemCanPushToSide(incomingSide)) {
+        this.moveItems(incomingSide, FLOW_QTY, sideHandler);
+      }
+    }
+  }
+
+  private boolean itemCanPushToSide(Direction outgoingSide) {
+    EnumConnectType outgoingConnection = getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+    return !outgoingConnection.isExtraction() && !outgoingConnection.isBlocked();
+  }
+
+  protected void tickFluid() {
+    for (Direction extractSide : Direction.values()) {
+      EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
+      if (connection.isExtraction()) {
+        tryExtractFluidFrom(extractSide, fluidFilter);
+      }
+    }
+    tickFluidNormalFlow();
+  }
+
+  private void tryExtractFluidFrom(Direction extractSide, ItemStackHandler filterIn) {
+    if (extractSide == null) {
+      return;
+    }
+    ItemStack filterSta = filterIn == null ? ItemStack.EMPTY : filterIn.getStackInSlot(0);
+    final BlockPos target = this.worldPosition.relative(extractSide);
+    final Direction incomingSide = extractSide.getOpposite();
+    final IFluidHandler tankTarget = CapabilityUtil.fluid(level, target, incomingSide);
+    if (tankTarget != null
+        && tankTarget.getTanks() > 0
+        && !FluidFilterCardItem.filterAllowsExtract(filterSta, tankTarget.getFluidInTank(0))) {
+      return;
+    }
+    if (FluidHelpers.tryFillPositionFromTank(level, worldPosition, extractSide, tankTarget, TileCableFluid.TRANSFER_RATE.get())) {
+      return;
+    }
+    FluidTankBase sideHandler = mapFluidFlow.get(extractSide);
+    if (sideHandler != null && sideHandler.getSpace() >= FluidType.BUCKET_VOLUME) {
+      FluidHelpers.extractSourceWaterloggedCauldron(level, target, sideHandler, filterSta);
+    }
+  }
+
+  private void tickFluidNormalFlow() {
+    for (Direction incomingSide : Direction.values()) {
+      final FluidTankBase sideHandler = mapFluidFlow.get(incomingSide);
+      for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
+        if (outgoingSide == incomingSide) {
+          continue;
+        }
+        EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(outgoingSide));
+        if (connection.isExtraction() || connection.isBlocked()) {
+          continue;
+        }
+        if (sideHandler.getFluidAmount() <= 0) {
+          continue;
+        }
+        this.moveFluids(outgoingSide, worldPosition.relative(outgoingSide), TileCableFluid.TRANSFER_RATE.get(), sideHandler);
+      }
+    }
+  }
 
   protected void tryExtractEnergyFrom(Direction extractSide) {
     if (extractSide == null) {
@@ -218,7 +347,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
 
   @Override
   public IItemHandler getItemHandler(Direction side) {
-    if (this.isItemCable &&
+    if (this.isItemCable() &&
         side != null &&
         !CableBase.isCableBlocked(this.getBlockState(), side)) {
       return mapItemFlow.get(side);
@@ -228,7 +357,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
 
   @Override
   public IFluidHandler getFluidHandler(Direction side) {
-    if (this.isFluidCable &&
+    if (this.isFluidCable() &&
         side != null &&
         !CableBase.isCableBlocked(this.getBlockState(), side)) {
       return mapFluidFlow.get(side);
@@ -238,7 +367,7 @@ public abstract class TileCableBase extends TileBlockEntityCyclic implements ITi
 
   @Override
   public IEnergyStorage getEnergyHandler(Direction side) {
-    if (this.isEnergyCable &&
+    if (this.isEnergyCable() &&
         side != null &&
         !CableBase.isCableBlocked(this.getBlockState(), side)) {
       return energy;

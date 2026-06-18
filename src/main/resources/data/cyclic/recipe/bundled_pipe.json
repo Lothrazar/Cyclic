@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "cyclic:energy_pipe" },
+    { "item": "cyclic:item_pipe" },
+    { "item": "cyclic:fluid_pipe" }
+  ],
+  "result": {
+    "count": 1,
+    "id": "cyclic:bundled_pipe"
+  }
+}

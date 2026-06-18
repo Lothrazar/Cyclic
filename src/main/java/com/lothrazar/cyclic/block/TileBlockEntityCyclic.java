@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.block.breaker.BlockBreaker;
-import com.lothrazar.cyclic.block.cable.energy.TileCableEnergy;
+import com.lothrazar.cyclic.block.cable.TileCableBase;
 import com.lothrazar.cyclic.util.CapabilityUtil;
 import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.PacketRegistry;
@@ -476,8 +476,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (drained != filled) {
       ModCyclic.LOGGER.error("Imbalance moving energy, extracted " + drained + " received " + filled);
     }
-    if (tileTarget instanceof TileCableEnergy cable) {
-      // not so compatible with other fluid systems. it will do i guess
+    if (tileTarget instanceof TileCableBase cable && cable.isEnergyCable()) {
       cable.updateIncomingEnergyFace(themFacingMe);
     }
     return true;

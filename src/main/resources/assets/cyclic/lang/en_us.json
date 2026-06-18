@@ -1607,6 +1607,7 @@
   "block.cyclic.fluid_pipe.guide": "Pipe liquid between blocks.  Has extraction mode with a filter GUI, and a yellow blocked state to disable the flow.  Also collects fluid from the world.  Sneak + left-click with a block to apply it as a facade; sneak + left-click with an empty hand to clear it.",
   "block.cyclic.bundled_pipe": "Bundled Cable",
   "block.cyclic.bundled_pipe.tooltip": "Transfer items, fluids, and energy",
+  "block.cyclic.bundled_pipe.guide": "Combines item, fluid, and energy cable in one block. Craft with one of each cable type. Use a Cable Wrench to configure sides: extraction mode pulls from machines, blocked mode disables a side.",
   "block.cyclic.energy_pipe": "Energy Cable",
   "block.cyclic.energy_pipe.tooltip": "Pipe energy between blocks; use a Cable Wrench to customize",
   "block.cyclic.energy_pipe.guide": "Pipe energy between blocks.  Has extraction mode with a filter GUI, and a yellow blocked state to disable the flow.  Sneak + left-click with a block to apply it as a facade; sneak + left-click with an empty hand to clear it.",

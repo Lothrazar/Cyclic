@@ -112,9 +112,9 @@ public class BlockCableFluid extends CableBase {
     }
     if (CapabilityUtil.isFluid( facing,  (Level)world, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
-      if (world instanceof Level && world.getBlockState(currentPos).getBlock() == this) {
+      if (world instanceof Level lvl && world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
-        ((Level) world).setBlockAndUpdate(currentPos, with);
+        lvl.setBlockAndUpdate(currentPos, with);
       }
       return with;
     }

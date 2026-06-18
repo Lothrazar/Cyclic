@@ -21,6 +21,11 @@
       "type": "crafting",
       "recipe": "cyclic:energy_pipe",
       "text": "block.cyclic.energy_pipe.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:bundled_pipe",
+      "text": "block.cyclic.bundled_pipe.guide"
     }
   ]
 }

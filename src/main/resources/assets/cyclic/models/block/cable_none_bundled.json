@@ -1,0 +1,7 @@
+{
+    "parent":"cyclic:parent/cable_none",
+    "textures": {
+        "particle": "cyclic:block/cable/cable_bundled",
+        "texture": "cyclic:block/cable/cable_bundled"
+    }
+}

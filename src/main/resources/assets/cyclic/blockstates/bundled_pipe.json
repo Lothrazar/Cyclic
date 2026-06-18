@@ -1,0 +1,100 @@
+{
+    "multipart": [
+        {
+            "when": { "down": "none" },
+            "apply": { "model": "cyclic:block/cable_none_bundled", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "down": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "down": "inventory" },
+            "apply": { "model": "cyclic:block/cable_side_bundled", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "up": "none" },
+            "apply": { "model": "cyclic:block/cable_none_bundled", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "up": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "up": "inventory" },
+            "apply": { "model": "cyclic:block/cable_side_bundled", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "north": "none" },
+            "apply": { "model": "cyclic:block/cable_none_bundled" }
+        },
+        {
+            "when": { "north": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked" }
+        },
+        {
+            "when": { "north": "inventory" },
+            "apply": { "model": "cyclic:block/cable_side_bundled" }
+        },
+        {
+            "when": { "south": "none" },
+            "apply": { "model": "cyclic:block/cable_none_bundled", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "south": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "south": "inventory" },
+            "apply": { "model": "cyclic:block/cable_side_bundled", "y": 180, "uvlock": true }
+        },
+        {
+            "when": { "west": "none" },
+            "apply": { "model": "cyclic:block/cable_none_bundled", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "west": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "west": "inventory" },
+            "apply": { "model": "cyclic:block/cable_side_bundled", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "east": "none" },
+            "apply": { "model": "cyclic:block/cable_none_bundled", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "east": "blocked" },
+            "apply": { "model": "cyclic:block/cable_blocked", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "east": "inventory" },
+            "apply": { "model": "cyclic:block/cable_side_bundled", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "east": "cable" },
+            "apply": { "model": "cyclic:block/cable_pump_bundled", "y": 90, "uvlock": true }
+        },
+        {
+            "when": { "down": "cable" },
+            "apply": { "model": "cyclic:block/cable_pump_bundled", "x": 90, "uvlock": true }
+        },
+        {
+            "when": { "up": "cable" },
+            "apply": { "model": "cyclic:block/cable_pump_bundled", "x": 270, "uvlock": true }
+        },
+        {
+            "when": { "north": "cable" },
+            "apply": { "model": "cyclic:block/cable_pump_bundled" }
+        },
+        {
+            "when": { "west": "cable" },
+            "apply": { "model": "cyclic:block/cable_pump_bundled", "y": 270, "uvlock": true }
+        },
+        {
+            "when": { "south": "cable" },
+            "apply": { "model": "cyclic:block/cable_pump_bundled", "y": 180, "uvlock": true }
+        }
+    ]
+}

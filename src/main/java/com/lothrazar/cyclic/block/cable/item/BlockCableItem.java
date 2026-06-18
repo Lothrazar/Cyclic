@@ -85,7 +85,7 @@ public class BlockCableItem extends CableBase {
   @Override
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
-      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
+//      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
       IItemHandler cap = CapabilityUtil.item(worldIn,pos.relative(d),d.getOpposite()); //= facingTile == null ? null : facingTile.getCapability(ForgeCapabilities.ITEM_HANDLER, d.getOpposite()).orElse(null);
       if (cap != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);
@@ -100,14 +100,13 @@ public class BlockCableItem extends CableBase {
     EnumProperty<EnumConnectType> property = FACING_TO_PROPERTY_MAP.get(facing);
     EnumConnectType oldProp = stateIn.getValue(property);
     if (oldProp.isBlocked() || oldProp.isExtraction()) {
-      //  updateConnection(world, currentPos, facing, oldProp);
       return stateIn;
     }
-    if (world instanceof Level && CapabilityUtil.isItem(facing, (Level) world, facingPos)) {
+    if (world instanceof Level lvl && CapabilityUtil.isItem(facing, lvl, facingPos)) {
       BlockState with = stateIn.setValue(property, EnumConnectType.INVENTORY);
       if (world.getBlockState(currentPos).getBlock() == this) {
         //hack to force {any} -> inventory IF its here
-        ((Level) world).setBlockAndUpdate(currentPos, with);
+        lvl.setBlockAndUpdate(currentPos, with);
       }
       return with;
     }
