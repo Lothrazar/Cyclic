@@ -19,16 +19,16 @@ public class ContainerCableItem extends ContainerBase {
     tile = (TileCableItem) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.endInv = tile.filter.getSlots();
+    this.endInv = tile.itemFilter.getSlots();
     //dont show 0 thats the actual thing in the slot 
-    addSlot(new SlotItemHandler(tile.filter, 0, 80, 29) {
+    addSlot(new SlotItemHandler(tile.itemFilter, 0, 80, 29) {
 
       @Override
       public void setChanged() {
         tile.setChanged();
       }
     });
-    addSlot(new SlotItemHandler(tile.filter, 0, 80, 29));
+    addSlot(new SlotItemHandler(tile.itemFilter, 0, 80, 29));
     layoutPlayerInventorySlots(8, 84);
     this.trackEnergy(tile);
   }

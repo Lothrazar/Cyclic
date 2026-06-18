@@ -19,9 +19,9 @@ public class ContainerCableFluid extends ContainerBase {
     tile = (TileCableFluid) world.getBlockEntity(pos);
     this.playerEntity = player;
     this.playerInventory = playerInventory;
-    this.endInv = tile.filter.getSlots();
+    this.endInv = tile.fluidFilter.getSlots();
     //dont show 0 thats the actual thing in the slot
-    addSlot(new SlotItemHandler(tile.filter, 0, 80, 29) {
+    addSlot(new SlotItemHandler(tile.fluidFilter, 0, 80, 29) {
 
       @Override
       public void setChanged() {

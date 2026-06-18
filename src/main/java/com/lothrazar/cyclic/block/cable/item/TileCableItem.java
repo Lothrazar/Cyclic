@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.cable.item;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
@@ -26,38 +24,22 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class TileCableItem extends TileCableBase implements MenuProvider {
 
-  private static final int FLOW_QTY = 64; // fixed, for non-extract motion
-  private int extractQty = FLOW_QTY; // default
-  ItemStackHandler filter = new ItemStackHandler(1) {
-
-    @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem() == ItemRegistry.FILTER_DATA.get();
-    }
-  };
-  private Map<Direction, IItemHandler>flow = new ConcurrentHashMap<>();
-
   public TileCableItem(BlockPos pos, BlockState state) {
     super(TileRegistry.ITEM_PIPE.get(), pos, state);
-    for (Direction f : Direction.values()) {
-      flow.put(f, TileCableItem.createHandler());
-    }
+    setIsItem();
   }
+
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableItem e) {
-    e.tick();
+    e.tickItem();
   }
 
-  private static ItemStackHandler createHandler() {
-    return new ItemStackHandler(1);
-  }
-
-  public void tick() {
+  public void tickItem() {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
       if (connection.isExtraction()) {
-        final IItemHandler sideHandler = flow.get(extractSide);
-        tryExtract(sideHandler, extractSide, extractQty, filter);
+        final IItemHandler sideHandler = mapItemFlow.get(extractSide);
+        tryExtract(sideHandler, extractSide, FLOW_QTY, itemFilter);
       }
     }
     normalFlow();
@@ -67,7 +49,7 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     // Label for loop for shortcutting, used to continue after items have been moved
     incomingSideLoop: for (final Direction incomingSide : Direction.values()) {
       //in all cases sideHandler is required
-      final IItemHandler sideHandler = flow.get(incomingSide);//.orElse(null);
+      final IItemHandler sideHandler = mapItemFlow.get(incomingSide);//.orElse(null);
       for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
@@ -91,47 +73,6 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     return !outgoingConnection.isExtraction() && !outgoingConnection.isBlocked();
   }
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    extractQty = tag.getInt("extractCount");
-    IItemHandler item;
-    for (Direction f : Direction.values()) {
-      item = flow.get(f);
-      if(item !=null){ //item.ifPresent(h -> {
-        CompoundTag itemTag = tag.getCompound("item" + f.toString());
-        ((ItemStackHandler)item).deserializeNBT(registries, itemTag);
-      }
-    }
-    filter.deserializeNBT(registries,tag.getCompound("filter"));
-    super.loadAdditional(tag, registries);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put("filter", filter.serializeNBT(registries));
-    tag.putInt("extractCount", extractQty);
-    IItemHandler item;
-    for (Direction f : Direction.values()) {
-      item = flow.get(f);
-      if(item !=null){ //item.ifPresent(h -> {
-        CompoundTag compound = ((ItemStackHandler)item).serializeNBT(registries);
-        tag.put("item" + f.toString(), compound);
-      }
-    }
-    super.saveAdditional(tag, registries);
-  }
-
-  @Override
-  public void setField(int field, int value) {
-    this.extractQty = value;
-  }
-
-  @Override
-  public int getField(int field) {
-    return this.extractQty;
-  }
 
   @Override
   public Component getDisplayName() {
@@ -143,11 +84,4 @@ public class TileCableItem extends TileCableBase implements MenuProvider {
     return new ContainerCableItem(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public IItemHandler getItemHandler(Direction side) {
-    if (side != null && !CableBase.isCableBlocked(this.getBlockState(), side)) {
-      return flow.get(side);
-    }
-    return null;
-  }
 }

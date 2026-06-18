@@ -94,8 +94,8 @@ public class BlockCableFluid extends CableBase {
   public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileCableFluid tileentity = (TileCableFluid) worldIn.getBlockEntity(pos);
-      if (tileentity != null && tileentity.filter != null) {
-        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
+      if (tileentity != null && tileentity.fluidFilter != null) {
+        Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.fluidFilter.getStackInSlot(0));
       }
       worldIn.updateNeighbourForOutputSignal(pos, this);
     }

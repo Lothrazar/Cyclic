@@ -62,7 +62,7 @@ public class BlockCableEnergy extends CableBase {
   @Override
   public void setPlacedBy(Level worldIn, BlockPos pos, BlockState stateIn, LivingEntity placer, ItemStack stack) {
     for (Direction d : Direction.values()) {
-      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
+//      BlockEntity facingTile = worldIn.getBlockEntity(pos.relative(d));
       IEnergyStorage energy = CapabilityUtil.energy(worldIn,pos.relative(d));
       if (energy != null) {
         stateIn = stateIn.setValue(FACING_TO_PROPERTY_MAP.get(d), EnumConnectType.INVENTORY);

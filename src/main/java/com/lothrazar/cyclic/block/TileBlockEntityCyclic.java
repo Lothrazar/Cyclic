@@ -597,12 +597,17 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     }
   }
 
+  protected int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
     if (level.isClientSide == false && level.getGameTime() % 20 == 0) { //if serverside then 
       var energy = CapabilityUtil.energy(level,worldPosition);
       if (energy != null) {
-        PacketRegistry.sendToAllClients(this.getLevel(), new PacketSyncEnergy(this.getBlockPos(), energy.getEnergyStored()));
+        final int currentEnergy = energy.getEnergyStored();
+        if (currentEnergy != energyLastSynced) {
+          PacketRegistry.sendToAllClients(this.getLevel(), new PacketSyncEnergy(this.getBlockPos(), energy.getEnergyStored()));
+          energyLastSynced = currentEnergy;
+        }
       }
     }
   }

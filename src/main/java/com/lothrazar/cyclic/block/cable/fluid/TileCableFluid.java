@@ -1,7 +1,5 @@
 package com.lothrazar.cyclic.block.cable.fluid;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.cyclic.block.cable.EnumConnectType;
 import com.lothrazar.cyclic.block.cable.TileCableBase;
@@ -35,41 +33,32 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
 
   public static ModConfigSpec.IntValue BUFFERSIZE;
   public static ModConfigSpec.IntValue TRANSFER_RATE;
-  final ItemStackHandler filter = new ItemStackHandler(1) {
-
-    @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
-      return stack.getItem() == ItemRegistry.FILTER_FLUID.get();
-    }
-  };
-  private final Map<Direction, FluidTankBase> flow = new ConcurrentHashMap<>();
 
   public TileCableFluid(BlockPos pos, BlockState state) {
     super(TileRegistry.FLUID_PIPE.get(), pos, state);
-    for (Direction f : Direction.values()) {
-      flow.put(f, new FluidTankBase(this, BUFFERSIZE.get() * FluidAttributes.BUCKET_VOLUME, p -> true));
-    }
+    setIsFluid();
   }
+
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCableFluid e) {
-    e.tick();
+    e.tickFluid();
   }
 
-  public void tick() {
+  public void tickFluid() {
     for (Direction extractSide : Direction.values()) {
       EnumConnectType connection = this.getBlockState().getValue(CableBase.FACING_TO_PROPERTY_MAP.get(extractSide));
       if (connection.isExtraction()) {
-        tryExtract(extractSide);
+        tryExtractFluidFrom(extractSide, fluidFilter);
       }
     }
     normalFlow();
   }
 
-  private void tryExtract(Direction extractSide) {
+  private void tryExtractFluidFrom(Direction extractSide,ItemStackHandler filterIn) {
     if (extractSide == null) {
       return;
     }
-    var filterSta = filter.getStackInSlot(0);
+    ItemStack filterSta = filterIn==null?ItemStack.EMPTY: filterIn.getStackInSlot(0);
     final BlockPos target = this.worldPosition.relative(extractSide); // .offset(
     final Direction incomingSide = extractSide.getOpposite();
     //when draining from a tank (instead of a source/waterlogged block) check the filter
@@ -86,7 +75,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     //handle special cases 
     //waterlogged
     //cauldron
-    FluidTankBase sideHandler = flow.get(extractSide);//.orElse(null);
+    FluidTankBase sideHandler = mapFluidFlow.get(extractSide);
     if (sideHandler != null && sideHandler.getSpace() >= FluidType.BUCKET_VOLUME) {
 
       FluidHelpers.extractSourceWaterloggedCauldron(level, target, sideHandler, filterSta);
@@ -95,7 +84,7 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
 
   private void normalFlow() {
     for (Direction incomingSide : Direction.values()) {
-      final FluidTankBase sideHandler = flow.get(incomingSide);//.orElse(null);
+      final FluidTankBase sideHandler = mapFluidFlow.get(incomingSide);//.orElse(null);
       for (final Direction outgoingSide : DirectionUtil.getAllInDifferentOrder()) {
         if (outgoingSide == incomingSide) {
           continue;
@@ -112,41 +101,6 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     }
   }
 
-  @Override
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    filter.deserializeNBT(registries,tag.getCompound("filter"));
-    FluidTankBase fluidh;
-    for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir);
-      if (tag.contains("fluid" + dir.toString())) {
-        fluidh.readFromNBT(registries,tag.getCompound("fluid" + dir.toString()));
-      }
-    }
-    super.loadAdditional(tag, registries);
-  }
-
-  @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    tag.put("filter", filter.serializeNBT(registries));
-    FluidTankBase fluidh;
-    for (Direction dir : Direction.values()) {
-      fluidh = flow.get(dir);
-      CompoundTag fluidtag = new CompoundTag();
-      if (fluidh != null) {
-        fluidh.writeToNBT(registries, fluidtag);
-      }
-      tag.put("fluid" + dir.toString(), fluidtag);
-    }
-    super.saveAdditional(tag, registries);
-  }
-
-  @Override
-  public void setField(int field, int value) {}
-
-  @Override
-  public int getField(int field) {
-    return 0;
-  }
 
   @Override
   public Component getDisplayName() {
@@ -158,11 +112,4 @@ public class TileCableFluid extends TileCableBase implements MenuProvider {
     return new ContainerCableFluid(i, level, worldPosition, playerInventory, playerEntity);
   }
 
-  @Override
-  public IFluidHandler getFluidHandler(Direction side) {
-    if (side != null && !CableBase.isCableBlocked(this.getBlockState(), side)) {
-      return flow.get(side);
-    }
-    return null;
-  }
 }

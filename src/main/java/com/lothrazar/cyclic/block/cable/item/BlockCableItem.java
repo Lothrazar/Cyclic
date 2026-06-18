@@ -49,11 +49,11 @@ public class BlockCableItem extends CableBase {
     if (state.getBlock() != newState.getBlock()) {
       TileCableItem tileentity = (TileCableItem) worldIn.getBlockEntity(pos);
       if (tileentity != null) {
-        if (tileentity.filter != null) {
-          Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.filter.getStackInSlot(0));
+        if (tileentity.itemFilter != null) {
+          Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.itemFilter.getStackInSlot(0));
         }
         for (Direction dir : Direction.values()) {
-          IItemHandler items = CapabilityUtil.item(worldIn,pos);// tileentity.getCapability(ForgeCapabilities.ITEM_HANDLER, dir).orElse(null);
+          IItemHandler items = CapabilityUtil.item(worldIn,pos, dir);
           if (items != null) {
             for (int i = 0; i < items.getSlots(); ++i) {
               Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), items.getStackInSlot(i));
