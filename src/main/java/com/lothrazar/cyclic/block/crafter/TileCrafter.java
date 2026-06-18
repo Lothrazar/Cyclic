@@ -49,7 +49,6 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -110,10 +109,6 @@ public class TileCrafter extends TileBlockEntityCyclic implements MenuProvider, 
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter tile) {
-    tile.serverTick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrafter tile) {
     tile.serverTick();
   }
 

@@ -45,6 +45,6 @@ public class BlockGeneratorFood extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.GENERATOR_FOOD.get(), world.isClientSide ? TileGeneratorFood::clientTick : TileGeneratorFood::serverTick);
+    return createTickerHelper(type, TileRegistry.GENERATOR_FOOD.get(), world.isClientSide ? null : TileGeneratorFood::serverTick);
   }
 }

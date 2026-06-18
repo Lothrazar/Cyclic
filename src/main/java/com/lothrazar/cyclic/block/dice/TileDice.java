@@ -18,10 +18,6 @@ public class TileDice extends TileBlockEntityCyclic {
   private static final int TICKS_PER_CHANGE = 4;
   private int spinningIfZero = 1;
 
-  public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDice tile) {
-    tile.tick();
-  }
-
   public static <E extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDice e) {
     e.tick();
   }

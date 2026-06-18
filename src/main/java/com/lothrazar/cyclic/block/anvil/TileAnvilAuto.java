@@ -60,9 +60,9 @@ public class TileAnvilAuto extends TileBlockEntityCyclic implements MenuProvider
     this.needsRedstone = 0;
   }
 
-  public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilAuto tileAnvilAuto) {
-    tileAnvilAuto.tick();
-  }
+//  public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilAuto tileAnvilAuto) {
+//    tileAnvilAuto.tick();
+//  }
 
   public static <E extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilAuto e) {
     e.tick();

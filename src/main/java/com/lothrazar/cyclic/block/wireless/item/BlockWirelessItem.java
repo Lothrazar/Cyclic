@@ -52,7 +52,7 @@ public class BlockWirelessItem extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.WIRELESS_ITEM.get(), world.isClientSide ? TileWirelessItem::clientTick : TileWirelessItem::serverTick);
+    return createTickerHelper(type, TileRegistry.WIRELESS_ITEM.get(), world.isClientSide ? null : TileWirelessItem::serverTick);
   }
 
   @Override // was onReplaced

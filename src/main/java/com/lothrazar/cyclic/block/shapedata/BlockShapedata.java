@@ -25,6 +25,6 @@ public class BlockShapedata extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.COMPUTER_SHAPE.get(), world.isClientSide ? TileShapedata::clientTick : TileShapedata::serverTick);
+    return createTickerHelper(type, TileRegistry.COMPUTER_SHAPE.get(), world.isClientSide ? null : TileShapedata::serverTick);
   }
 }

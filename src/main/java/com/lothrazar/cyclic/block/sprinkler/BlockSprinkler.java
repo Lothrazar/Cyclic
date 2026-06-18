@@ -54,6 +54,6 @@ public class BlockSprinkler extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.SPRINKLER.get(), world.isClientSide ? TileSprinkler::clientTick : TileSprinkler::serverTick);
+    return createTickerHelper(type, TileRegistry.SPRINKLER.get(), world.isClientSide ? null : TileSprinkler::serverTick);
   }
 }

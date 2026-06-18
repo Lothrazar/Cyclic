@@ -44,11 +44,7 @@ public class TileCrusher extends TileBlockEntityCyclic implements MenuProvider, 
     this.needsRedstone = 0;
   }
 
-  public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCrusher e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCrusher e) {
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileCrusher e) {
     e.tick();
   }
 

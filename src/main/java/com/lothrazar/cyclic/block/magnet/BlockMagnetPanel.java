@@ -111,6 +111,6 @@ public class BlockMagnetPanel extends BlockCyclic implements SimpleWaterloggedBl
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.MAGNET.get(), world.isClientSide ? TileInsertingMagnet::clientTick : TileInsertingMagnet::serverTick);
+    return createTickerHelper(type, TileRegistry.MAGNET.get(), world.isClientSide ? null : TileInsertingMagnet::serverTick);
   }
 }

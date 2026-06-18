@@ -25,7 +25,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -60,10 +59,6 @@ public class TileFisher extends TileBlockEntityCyclic implements MenuProvider {
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFisher e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileFisher e) {
     e.tick();
   }
 

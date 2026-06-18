@@ -7,7 +7,6 @@ import com.lothrazar.library.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TileRotator extends TileBlockEntityCyclic {
@@ -17,10 +16,6 @@ public class TileRotator extends TileBlockEntityCyclic {
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileRotator e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileRotator e) {
     e.tick();
   }
 

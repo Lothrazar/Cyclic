@@ -90,8 +90,9 @@ public class BlockCyclic extends EntityBlockFlib {
 //breakpoint shows handler is null, even when blockhere is tileTank from a "Block{cyclic:tank}[above=false,below=false]"
           if (handler != null) {
             if (FluidUtil.interactWithFluidHandler(player, hand, handler)) {
-              if (player instanceof ServerPlayer) {
-                SoundUtil.playSoundFromServer((ServerPlayer) player, SoundEvents.BUCKET_FILL, 1F, 1F);
+              if (player instanceof ServerPlayer sp) {
+                SoundUtil.playSoundFromServer(sp, SoundEvents.BUCKET_FILL, 1F, 1F);
+                sp.inventoryMenu.broadcastChanges();
               }
               //success so display new amount
               if (handler.getFluidInTank(0) != null) {

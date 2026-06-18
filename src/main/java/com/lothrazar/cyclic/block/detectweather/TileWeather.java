@@ -4,7 +4,6 @@ import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TileWeather extends TileBlockEntityCyclic {
@@ -16,10 +15,6 @@ public class TileWeather extends TileBlockEntityCyclic {
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileWeather e) {
     e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileWeather e) {
-    //    e.tick();
   }
 
   public void tick() {

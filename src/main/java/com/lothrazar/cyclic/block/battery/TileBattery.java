@@ -65,9 +65,6 @@ public class TileBattery extends TileBlockEntityCyclic implements MenuProvider {
     e.tick();
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileBattery e) {
-    e.tick();
-  }
 
   public void tick() {
     this.syncEnergy();

@@ -73,9 +73,6 @@ public class TileAnvilVoid extends TileBlockEntityCyclic implements MenuProvider
     e.tick();
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilVoid e) {
-    e.tick();
-  }
 
   @Override
   public Component getDisplayName() {

@@ -14,7 +14,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
@@ -28,10 +27,6 @@ public class TileDiamondSpikes extends TileBlockEntityCyclic {
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDiamondSpikes e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDiamondSpikes e) {
     e.tick();
   }
 

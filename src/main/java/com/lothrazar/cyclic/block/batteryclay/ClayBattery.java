@@ -75,7 +75,7 @@ public class ClayBattery extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.BATTERY_CLAY.get(), world.isClientSide ? TileClayBattery::clientTick : TileClayBattery::serverTick);
+    return createTickerHelper(type, TileRegistry.BATTERY_CLAY.get(), world.isClientSide ? null : TileClayBattery::serverTick);
   }
 
   @Override

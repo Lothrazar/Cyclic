@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
@@ -35,10 +34,6 @@ public class TileSimpleHopper extends TileBlockEntityCyclic implements Hopper {
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileSimpleHopper e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileSimpleHopper e) {
     e.tick();
   }
 

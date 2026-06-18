@@ -32,6 +32,6 @@ public class BlockLaser extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.LASER.get(), world.isClientSide ? TileLaser::clientTick : TileLaser::serverTick);
+    return createTickerHelper(type, TileRegistry.LASER.get(), world.isClientSide ? null : TileLaser::serverTick);
   }
 }

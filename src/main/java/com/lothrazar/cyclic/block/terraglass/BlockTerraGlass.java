@@ -65,7 +65,7 @@ public class BlockTerraGlass extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.GLASS_TERRA.get(), world.isClientSide ? TileTerraGlass::clientTick : TileTerraGlass::serverTick);
+    return createTickerHelper(type, TileRegistry.GLASS_TERRA.get(), world.isClientSide ? null : TileTerraGlass::serverTick);
   }
 
   @Override

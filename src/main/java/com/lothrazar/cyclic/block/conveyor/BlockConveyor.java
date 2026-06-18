@@ -322,7 +322,7 @@ public class BlockConveyor extends BlockCyclic implements SimpleWaterloggedBlock
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.CONVEYOR.get(), world.isClientSide ? TileConveyor::clientTick : TileConveyor::serverTick);
+    return createTickerHelper(type, TileRegistry.CONVEYOR.get(), world.isClientSide ? null : TileConveyor::serverTick);
   }
 
   @Override

@@ -61,7 +61,7 @@ public class BlockAnvilAuto extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.ANVIL.get(), world.isClientSide ? TileAnvilAuto::clientTick : TileAnvilAuto::serverTick);
+    return createTickerHelper(type, TileRegistry.ANVIL.get(), world.isClientSide ? null : TileAnvilAuto::serverTick);
   }
 
   @Override

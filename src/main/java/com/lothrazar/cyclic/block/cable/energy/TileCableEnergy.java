@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -28,8 +27,7 @@ public class TileCableEnergy extends TileCableBase {
   public static ModConfigSpec.IntValue TRANSFER_RATE;
   //  
   // //  private final ConcurrentHashMap<Direction, LazyOptional<IEnergyStorage>> flow = new ConcurrentHashMap<>();
-  private final Map<Direction, Integer> mapIncomingEnergy = Maps.newHashMap();
-  private int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
+
 
   public TileCableEnergy(BlockPos pos, BlockState state) {
     super(TileRegistry.ENERGY_PIPE.get(), pos, state);
@@ -43,11 +41,7 @@ public class TileCableEnergy extends TileCableBase {
     e.tick();
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileCableEnergy e) {
-    e.tick();
-  }
-
-  //  @Override 
+  //  @Override
   public void tick() {
     this.syncEnergy();
     this.tickDownIncomingPowerFaces();
@@ -137,7 +131,7 @@ public class TileCableEnergy extends TileCableBase {
 
   private static final int TIMER_SIDE_INPUT = 15;
 
-  private boolean isEnergyIncomingFromFace(Direction face) {
+  protected boolean isEnergyIncomingFromFace(Direction face) {
     return mapIncomingEnergy.get(face) > 0;
   }
 

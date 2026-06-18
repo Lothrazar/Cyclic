@@ -476,9 +476,8 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
     if (drained != filled) {
       ModCyclic.LOGGER.error("Imbalance moving energy, extracted " + drained + " received " + filled);
     }
-    if (tileTarget instanceof TileCableEnergy) {
+    if (tileTarget instanceof TileCableEnergy cable) {
       // not so compatible with other fluid systems. it will do i guess
-      TileCableEnergy cable = (TileCableEnergy) tileTarget;
       cable.updateIncomingEnergyFace(themFacingMe);
     }
     return true;

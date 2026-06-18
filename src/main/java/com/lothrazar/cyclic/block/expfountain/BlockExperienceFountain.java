@@ -53,6 +53,6 @@ public class BlockExperienceFountain extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.EXPERIENCE_FOUNTAIN.get(), world.isClientSide ? TileExperienceFountain::clientTick : TileExperienceFountain::serverTick);
+    return createTickerHelper(type, TileRegistry.EXPERIENCE_FOUNTAIN.get(), world.isClientSide ? null : TileExperienceFountain::serverTick);
   }
 }

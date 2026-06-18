@@ -20,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -135,10 +134,6 @@ public class TileInsertingMagnet extends TileBlockEntityCyclic implements MenuPr
     double motionY = finalVector.y * modifier;
     double motionZ = finalVector.z * modifier;
     entity.setDeltaMovement(motionX, motionY, motionZ);
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileInsertingMagnet e) {
-    //
   }
 
   @Override

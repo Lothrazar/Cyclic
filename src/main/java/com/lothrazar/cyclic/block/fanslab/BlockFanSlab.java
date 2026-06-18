@@ -118,7 +118,7 @@ public class BlockFanSlab extends BlockCyclic implements SimpleWaterloggedBlock 
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.FAN_SLAB.get(), world.isClientSide ? TileFanSlab::clientTick : TileFanSlab::serverTick);
+    return createTickerHelper(type, TileRegistry.FAN_SLAB.get(), world.isClientSide ? null : TileFanSlab::serverTick);
   }
 
   @Override

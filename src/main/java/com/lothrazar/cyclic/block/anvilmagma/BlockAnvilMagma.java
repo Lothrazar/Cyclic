@@ -50,7 +50,7 @@ public class BlockAnvilMagma extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.ANVIL_MAGMA.get(), world.isClientSide ? TileAnvilMagma::clientTick : TileAnvilMagma::serverTick);
+    return createTickerHelper(type, TileRegistry.ANVIL_MAGMA.get(), world.isClientSide ? null : TileAnvilMagma::serverTick);
   }
 
   @Override

@@ -15,7 +15,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -41,10 +40,6 @@ public class TileExperienceFountain extends TileBlockEntityCyclic {
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileExperienceFountain e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileExperienceFountain e) {
     e.tick();
   }
 

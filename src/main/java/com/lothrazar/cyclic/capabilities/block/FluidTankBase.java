@@ -28,9 +28,6 @@ public class FluidTankBase extends FluidTank {
       return;
     }
     FluidStack f = handler.getFluidInTank(0);
-    if (f.isEmpty()) {
-      return;
-    }
     PacketRegistry.sendToAllClients(tile.getLevel(), new PacketSyncFluid(tile.getBlockPos(), f));
   }
 }

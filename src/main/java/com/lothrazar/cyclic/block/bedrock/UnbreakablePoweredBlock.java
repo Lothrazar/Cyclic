@@ -29,7 +29,7 @@ public class UnbreakablePoweredBlock extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.UNBREAKABLE_REACTIVE.get(), world.isClientSide ? UnbreakablePoweredTile::clientTick : UnbreakablePoweredTile::serverTick);
+    return createTickerHelper(type, TileRegistry.UNBREAKABLE_REACTIVE.get(), world.isClientSide ? null : UnbreakablePoweredTile::serverTick);
   }
 
   public static void setBreakable(BlockState blockState, Level world, BlockPos pos, boolean isBreakable) {

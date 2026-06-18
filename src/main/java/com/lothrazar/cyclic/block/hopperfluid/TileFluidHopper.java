@@ -20,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -70,10 +69,6 @@ public class TileFluidHopper extends TileBlockEntityCyclic implements MenuProvid
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidHopper e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileFluidHopper e) {
     e.tick();
   }
 

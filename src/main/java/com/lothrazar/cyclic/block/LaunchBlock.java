@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.block;
 
+import com.lothrazar.library.packet.PacketPlayerFalldamage;
 import com.lothrazar.library.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class LaunchBlock extends BlockCyclic {
 
@@ -43,14 +45,17 @@ public class LaunchBlock extends BlockCyclic {
 
   @Override
   public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
-    if (sneakPlayerAvoid && entity instanceof Player && ((Player) entity).isCrouching()) {
+    if (sneakPlayerAvoid && entity instanceof Player && entity.isCrouching()) {
+      if (worldIn.isClientSide && entity instanceof Player) {
+        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+      }
       return;
     }
     if (worldIn.isClientSide) {
+      if (entity instanceof Player) {
+        PacketDistributor.sendToServer(new PacketPlayerFalldamage());
+      }
       EntityUtil.launch(entity, ANGLE, getPower(worldIn, pos));
-    }
-    else if (entity instanceof Player) {
-      //          ((EntityPlayer) entity).addPotionEffect(new PotionEffect(PotionEffects.BOUNCE, 300, 0));
     }
   }
 

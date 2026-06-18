@@ -6,7 +6,6 @@ import com.lothrazar.cyclic.cache.ServerCacheHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TilePeace extends TileBlockEntityCyclic {
@@ -30,10 +29,6 @@ public class TilePeace extends TileBlockEntityCyclic {
     else {
       ServerCacheHolder.CANDLE_PEACE.unload(level, blockPos);
     }
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TilePeace e) {
-    //NOOP client ticker
   }
 
   @Override

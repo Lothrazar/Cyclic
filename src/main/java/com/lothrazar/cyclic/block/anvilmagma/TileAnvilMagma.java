@@ -74,11 +74,6 @@ public class TileAnvilMagma extends TileBlockEntityCyclic implements MenuProvide
     e.tick();
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileAnvilMagma e) {
-    e.tick();
-  }
-
-  //  @Override
   public void tick() {
     if (this.requiresRedstone() && !this.isPowered()) {
       setLitProperty(false);

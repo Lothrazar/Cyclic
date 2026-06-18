@@ -27,7 +27,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -89,10 +88,6 @@ public class TileDisenchant extends TileBlockEntityCyclic implements MenuProvide
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileDisenchant e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileDisenchant e) {
     e.tick();
   }
 

@@ -28,7 +28,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -69,10 +68,6 @@ public class TileForester extends TileBlockEntityCyclic implements MenuProvider 
   }
 
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileForester e) {
-    e.tick();
-  }
-
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileForester e) {
     e.tick();
   }
 

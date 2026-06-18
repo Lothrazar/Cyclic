@@ -30,10 +30,6 @@ public class TileTank extends TileBlockEntityCyclic {
     e.tick();
   }
 
-  public static <E extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState, TileTank e) {
-    //    e.tick();
-  }
-
   @Override
   public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     CompoundTag fluid = tag.getCompound(NBTFLUID);

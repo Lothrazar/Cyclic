@@ -50,7 +50,7 @@ public class BlockExpPylon extends BlockCyclic {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-    return createTickerHelper(type, TileRegistry.EXPERIENCE_PYLON.get(), world.isClientSide ? TileExpPylon::clientTick : TileExpPylon::serverTick);
+    return createTickerHelper(type, TileRegistry.EXPERIENCE_PYLON.get(), world.isClientSide ? null : TileExpPylon::serverTick);
   }
 
   @Override
