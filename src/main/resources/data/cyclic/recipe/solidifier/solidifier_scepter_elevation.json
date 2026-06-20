@@ -12,8 +12,8 @@
     }
   ],
   "energy": {
-    "rfpertick": 3000,
-    "ticks": 400
+    "rfpertick": 100,
+    "ticks": 500
   },
   "mix": {
     "tag": "c:ender",

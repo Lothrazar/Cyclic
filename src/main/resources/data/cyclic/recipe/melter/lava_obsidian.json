@@ -6,7 +6,7 @@
     }
   ],
   "energy": {
-    "rfpertick": 2000,
+    "rfpertick": 100,
     "ticks": 560
   },
   "result": {

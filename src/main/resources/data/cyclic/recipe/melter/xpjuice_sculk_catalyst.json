@@ -6,8 +6,8 @@
     }
   ],
   "energy": {
-    "rfpertick": 500,
-    "ticks": 2000
+    "rfpertick": 50,
+    "ticks": 900
   },
   "result": {
     "id": "cyclic:xpjuice",

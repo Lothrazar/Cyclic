@@ -12,8 +12,8 @@
     }
   ],
   "energy": {
-    "rfpertick": 5000,
-    "ticks": 2000
+    "rfpertick": 1000,
+    "ticks": 200
   },
   "mix": {
     "tag": "c:amethyst",
