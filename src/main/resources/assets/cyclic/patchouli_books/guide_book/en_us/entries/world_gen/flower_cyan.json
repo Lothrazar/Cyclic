@@ -1,0 +1,17 @@
+{
+  "name": "block.cyclic.flower_cyan",
+  "icon": "cyclic:flower_cyan",
+  "category": "cyclic:world_gen",
+  "pages": [
+    {
+      "type": "spotlight",
+      "text": "block.cyclic.flower_cyan.guide",
+      "item": "cyclic:flower_cyan",
+      "link_recipe": true
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:flower_cyan"
+    }
+  ]
+}

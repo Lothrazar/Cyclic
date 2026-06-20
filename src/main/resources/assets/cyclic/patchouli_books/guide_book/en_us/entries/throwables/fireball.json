@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.fireball",
+  "icon": "cyclic:fireball",
+  "category": "cyclic:throwables",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.fireball.guide"
+    },
+    {
+      "type": "smelting",
+      "recipe": "cyclic:smelting/fireball"
+    }
+  ]
+}

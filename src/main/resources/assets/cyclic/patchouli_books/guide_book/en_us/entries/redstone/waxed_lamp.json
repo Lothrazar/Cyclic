@@ -1,0 +1,16 @@
+{
+  "name": "block.cyclic.lamp",
+  "icon": "cyclic:lamp",
+  "category": "cyclic:redstone",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.lamp.guide"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:lamp",
+      "link_recipe": true
+    }
+  ]
+}

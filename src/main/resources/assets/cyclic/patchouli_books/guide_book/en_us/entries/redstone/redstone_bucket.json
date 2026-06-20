@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.redstone_bucket",
+  "icon": "cyclic:redstone_bucket",
+  "category": "cyclic:redstone",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:redstone_bucket",
+      "text": "guide.fluid.redstone"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.redstone.obtain"
+    }
+  ]
+}

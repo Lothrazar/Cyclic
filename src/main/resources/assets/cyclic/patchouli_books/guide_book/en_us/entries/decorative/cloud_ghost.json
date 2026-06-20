@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.cloud_ghost",
+  "icon": "cyclic:cloud_ghost",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.cloud_ghost.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:cloud_ghost"
+    }
+  ]
+}

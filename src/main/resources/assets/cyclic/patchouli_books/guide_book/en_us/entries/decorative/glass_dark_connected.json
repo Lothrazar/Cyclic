@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.glass_dark_connected",
+  "icon": "cyclic:glass_dark_connected",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.glass_dark_connected.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:glass_dark_connected"
+    }
+  ]
+}

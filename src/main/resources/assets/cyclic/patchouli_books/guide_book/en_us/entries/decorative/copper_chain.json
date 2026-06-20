@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.copper_chain",
+  "icon": "cyclic:copper_chain",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.copper_chain.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:copper_chain"
+    }
+  ]
+}
