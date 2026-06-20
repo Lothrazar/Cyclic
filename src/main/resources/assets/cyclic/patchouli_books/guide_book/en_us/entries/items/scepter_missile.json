@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "item.cyclic.scepter_missile",
   "icon": "cyclic:scepter_missile",
   "category": "cyclic:items",
@@ -8,8 +8,8 @@
       "text": "item.cyclic.scepter_missile.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:scepter_missile"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_scepter_missile"
     }
   ]
 }

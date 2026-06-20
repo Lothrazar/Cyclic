@@ -8,9 +8,8 @@
       "text": "block.cyclic.lamp.guide"
     },
     {
-      "type": "patchouli:spotlight",
-      "item": "cyclic:lamp",
-      "link_recipe": true
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/waxed_lamp"
     }
   ]
 }

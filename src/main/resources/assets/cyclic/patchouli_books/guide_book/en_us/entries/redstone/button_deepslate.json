@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:button_deepslate"
+      "recipe": "cyclic:shapeless/button_deepslate"
     }
   ]
 }

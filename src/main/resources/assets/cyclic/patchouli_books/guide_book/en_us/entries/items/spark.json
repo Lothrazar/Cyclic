@@ -10,6 +10,10 @@
     {
       "type": "crafting",
       "recipe": "cyclic:shapeless/spark"
+    },
+    {
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/spark"
     }
   ]
 }

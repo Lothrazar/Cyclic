@@ -1,0 +1,12 @@
+{
+  "processor": "com.lothrazar.cyclic.compat.patchouli.MelterRecipeProcessor",
+  "components": [
+    {
+      "type": "patchouli:custom",
+      "class": "com.lothrazar.cyclic.compat.patchouli.MelterRecipeComponent",
+      "x": 0,
+      "y": 10,
+      "recipe": "#recipe#"
+    }
+  ]
+}

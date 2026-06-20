@@ -1,0 +1,12 @@
+{
+  "processor": "com.lothrazar.cyclic.compat.patchouli.SolidifierRecipeProcessor",
+  "components": [
+    {
+      "type": "patchouli:custom",
+      "class": "com.lothrazar.cyclic.compat.patchouli.SolidifierRecipeComponent",
+      "x": 10,
+      "y": 10,
+      "recipe": "#recipe#"
+    }
+  ]
+}

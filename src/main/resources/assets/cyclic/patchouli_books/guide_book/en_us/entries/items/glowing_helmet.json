@@ -8,8 +8,8 @@
       "text": "item.cyclic.glowing_helmet.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:glowing_helmet"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_glowing_helmet"
     }
   ]
 }

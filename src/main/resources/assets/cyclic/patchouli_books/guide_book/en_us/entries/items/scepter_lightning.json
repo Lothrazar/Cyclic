@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "item.cyclic.scepter_lightning",
   "icon": "cyclic:scepter_lightning",
   "category": "cyclic:items",
@@ -8,8 +8,8 @@
       "text": "item.cyclic.scepter_lightning.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:scepter_lightning"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_scepter_lightning"
     }
   ]
 }

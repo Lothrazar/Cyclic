@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:workbench"
+      "recipe": "cyclic:shapeless/workbench"
     }
   ]
 }

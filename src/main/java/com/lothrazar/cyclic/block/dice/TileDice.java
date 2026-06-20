@@ -62,9 +62,24 @@ public class TileDice extends TileBlockEntityCyclic {
         BlockState stateold = level.getBlockState(worldPosition);
         BlockState newstate = stateold.setValue(BlockStateProperties.FACING, fac);
         level.setBlockAndUpdate(worldPosition, newstate);
-        //        world.notifyBlockUpdate(pos, stateold, newstate, 3);
       }
     }
+  }
+
+  public int getComparatorSignal() {
+    if (spinningIfZero == 0) {
+      return 0;
+    }
+    Direction facing = this.getBlockState().getValue(BlockStateProperties.FACING);
+    int face = switch (facing) {
+      case NORTH -> 1;
+      case SOUTH -> 2;
+      case UP -> 3;
+      case DOWN -> 4;
+      case WEST -> 5;
+      case EAST -> 6;
+    };
+    return face * 2;
   }
 
   @Override

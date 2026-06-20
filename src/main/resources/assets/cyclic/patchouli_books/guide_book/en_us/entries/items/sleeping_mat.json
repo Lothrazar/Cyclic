@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:sleeping_mat"
+      "recipe": "cyclic:shapeless/sleeping_mat"
     }
   ]
 }

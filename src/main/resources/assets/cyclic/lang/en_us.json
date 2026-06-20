@@ -427,9 +427,11 @@
   "item.cyclic.scepter_replace.guide": "The Exchange Scepter replaces existing blocks in an area with your selected block type. Left-click to cycle the area size. Sneak-left-click a block to select it as the replacement block. Right-click on a target block to swap all matching blocks in the area.",
   "scepter.cyclic.nothing": "Sneak-left-click to pick block",
   "scepter.cyclic.empty": "Out of materials",
+  "item.cyclic.scepter_randomize.guide": "This will mixup the blocks in the nearby area, to help you vary the texture of your wall or pathway.  Use the attack (Left-Click) to change size.  It affects a flat area along the face of whatever you hit.  Tile entities are ignored (chests and so on).",
   "item.cyclic.scepter_randomize": "Block Randomizer",
-  "item.cyclic.scepter_randomize.tooltip": "Randomly shuffle around the blocks in a 5x5x1 area around the target block",
-  "item.cyclic.scepter_randomize.guide": "Randomly shuffle around the blocks in a 5x5x1 area around the target block",
+  "item.cyclic.scepter_randomize.tooltip": "Randomize selected blocks.  Left click to resize.",
+
+
   "buildertype.height.tooltip": "Height",
   "buildertype.size.tooltip": "Size",
   "builder.toggle": "Toggle",
@@ -1106,9 +1108,7 @@
   "item.cyclic.prospector.tooltip": "Detects ores nearby",
   "item.cyclic.push.guide": "This tool has three modes: Push, Pull, Rotate.  Change mode using attack (Left-Click).  Push and pull work similar to a piston, moving the block as long as there is an air block where it is moving; and it also moves tile entities with their data (full chests/furnaces/etc).  Rotate mode will try to spin the block around on its axis, such as log positioning, or halfslabs and stairs moving to alternate orientations.",
   "item.cyclic.push": "Piston Scepter",
-  "item.cyclic.randomize.guide": "This will mixup the blocks in the nearby area, to help you vary the texture of your wall or pathway.  Use the attack (Left-Click) to change size.  It affects a flat area along the face of whatever you hit.  Tile entities are ignored (chests and so on).",
-  "item.cyclic.randomize": "Block Randomizer",
-  "item.cyclic.randomize.tooltip": "Randomize selected blocks.  Left click to resize.",
+
   "item.cyclic.rotate.guide": "Attempts to rotate the targeted block while respecting the same material type.  So it will turn a log to a different angle, but will not turn oak planks into spruce planks.  This can be used to get vanilla only blocks that are otherwise un-obainable blocks, like smooth stone double slabs with the flat side, extra smooth sandstone, and a log with bark on all six sides.",
   "item.cyclic.rotate": "Wooden Wrench",
   "item.cyclic.rotate.tooltip": "Rotates simple blocks/machines if they are able",

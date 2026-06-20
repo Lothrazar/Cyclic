@@ -8,8 +8,8 @@
       "text": "item.cyclic.charm_wing.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:charm_wing"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_charm_wing"
     }
   ]
 }

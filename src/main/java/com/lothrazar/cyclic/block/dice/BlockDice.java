@@ -46,6 +46,20 @@ public class BlockDice extends BlockCyclic {
   }
 
   @Override
+  public boolean hasAnalogOutputSignal(BlockState bs) {
+    return true;
+  }
+
+  @Override
+  public int getAnalogOutputSignal(BlockState st, Level level, BlockPos pos) {
+    BlockEntity tile = level.getBlockEntity(pos);
+    if (tile instanceof TileDice) {
+      return ((TileDice) tile).getComparatorSignal();
+    }
+    return 0;
+  }
+
+  @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new TileDice(pos, state);
   }

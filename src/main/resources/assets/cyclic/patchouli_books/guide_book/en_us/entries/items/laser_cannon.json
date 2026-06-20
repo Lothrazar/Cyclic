@@ -6,6 +6,10 @@
     {
       "type": "text",
       "text": "item.cyclic.laser_cannon.guide"
+    },
+    {
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_laser_cannon"
     }
   ]
 }

@@ -8,8 +8,8 @@
       "text": "block.cyclic.plate_launch_redstone.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:plate_launch_redstone"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_plate_launch_redstone"
     }
   ]
 }

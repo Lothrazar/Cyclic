@@ -8,9 +8,8 @@
       "text": "item.cyclic.charm_stealthpotion.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:charm_stealthpotion",
-      "text": "item.iscurios.guide"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_charm_stealthpotion"
     }
   ]
 }

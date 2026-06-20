@@ -1,0 +1,15 @@
+{
+  "name": "item.cyclic.scepter_randomize",
+  "icon": "cyclic:scepter_randomize",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.scepter_randomize.guide"
+    },
+    {
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_scepter_randomize"
+    }
+  ]
+}

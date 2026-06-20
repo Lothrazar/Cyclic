@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:cloud_membrane"
+      "recipe": "cyclic:shapeless/cloud_membrane"
     }
   ]
 }

@@ -9,7 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "cyclic:button_blackstone"
+      "recipe": "cyclic:shapeless/button_blackstone"
     }
   ]
 }

@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "item.cyclic.scepter_elevation",
   "icon": "cyclic:scepter_elevation",
   "category": "cyclic:items",
@@ -8,8 +8,8 @@
       "text": "item.cyclic.scepter_elevation.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:scepter_elevation"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_scepter_elevation"
     }
   ]
 }

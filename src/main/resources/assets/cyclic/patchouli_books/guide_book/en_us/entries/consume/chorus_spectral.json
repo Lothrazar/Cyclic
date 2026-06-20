@@ -8,8 +8,8 @@
       "text": "item.cyclic.chorus_spectral.guide"
     },
     {
-      "type": "crafting",
-      "recipe": "cyclic:chorus_spectral"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_chorus_spectral"
     }
   ]
 }
