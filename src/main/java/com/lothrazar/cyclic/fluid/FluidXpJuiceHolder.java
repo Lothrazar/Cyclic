@@ -26,10 +26,12 @@ public class FluidXpJuiceHolder {
   public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
 
   public static final int COLOR = 0xFFFFFF;
+  public static final int LIGHT_LEVEL = 15; // TODO: cyclic-client config? if no load errors
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
-          FluidType.Properties.create().density(1024).viscosity(1024).lightLevel(15)
+          FluidType.Properties.create().density(FluidRegistry.DENSITY_WATER - 800).viscosity(FluidRegistry.VISCOSITY_WATER - 500).temperature(FluidRegistry.TEMP_WATER + 200)
+              .lightLevel(LIGHT_LEVEL)
               .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 

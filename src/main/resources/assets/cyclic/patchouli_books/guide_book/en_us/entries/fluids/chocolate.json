@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.chocolate_bucket",
+  "icon": "cyclic:chocolate_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:chocolate_bucket",
+      "text": "guide.fluid.chocolate"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.chocolate.obtain"
+    }
+  ]
+}

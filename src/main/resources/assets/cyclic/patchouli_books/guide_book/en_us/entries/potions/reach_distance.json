@@ -1,19 +1,19 @@
 ﻿{
   "name": "item.minecraft.potion.effect.cyclic_reach_distance",
-  "icon": "minecraft:potion",
+  "icon": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:reach_distance\"}]",
   "category": "cyclic:potions",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:reach_distance\"}]",
-      "text":"effect.cyclic.reach_distance"
+      "item": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:reach_distance\"}]",
+      "text":"effect.cyclic.reach_distance.description"
     },
     {
       "type": "cyclic:brewing",
       "text":"item.minecraft.potion.effect.cyclic_reach_distance",
       "ingredient": "minecraft:amethyst_shard",
-      "base_potion": "minecraft:potion#1[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
-      "output": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:reach_distance\"}]"
+      "base_potion": "minecraft:potion[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
+      "output": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:reach_distance\"}]"
     }
   ]
 }

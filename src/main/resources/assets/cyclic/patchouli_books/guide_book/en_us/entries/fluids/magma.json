@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.magma_bucket",
+  "icon": "cyclic:magma_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:magma_bucket",
+      "text": "guide.fluid.magma"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.magma.obtain"
+    }
+  ]
+}

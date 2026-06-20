@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.xpjuice_bucket",
+  "icon": "cyclic:xpjuice_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:xpjuice_bucket",
+      "text": "guide.fluid.xpjuice"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.xpjuice.obtain"
+    }
+  ]
+}

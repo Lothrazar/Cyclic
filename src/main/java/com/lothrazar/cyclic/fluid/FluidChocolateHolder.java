@@ -30,7 +30,7 @@ public class FluidChocolateHolder {
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
-          FluidType.Properties.create().density(1200).viscosity(1200)
+          FluidType.Properties.create().density(FluidRegistry.DENSITY_WATER + 100).viscosity(FluidRegistry.VISCOSITY_WATER + 500).temperature(FluidRegistry.TEMP_WATER - 20)
               .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 

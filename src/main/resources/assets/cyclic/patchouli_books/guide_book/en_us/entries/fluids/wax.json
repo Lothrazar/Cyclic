@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.wax_bucket",
+  "icon": "cyclic:wax_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:wax_bucket",
+      "text": "guide.fluid.wax"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.wax.obtain"
+    }
+  ]
+}

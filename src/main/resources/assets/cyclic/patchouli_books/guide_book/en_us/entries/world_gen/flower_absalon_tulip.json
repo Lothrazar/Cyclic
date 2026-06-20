@@ -1,0 +1,12 @@
+{
+  "name": "block.cyclic.flower_absalon_tulip",
+  "icon": "cyclic:flower_absalon_tulip",
+  "category": "cyclic:world_gen",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "cyclic:flower_absalon_tulip",
+      "text": "block.cyclic.flower_absalon_tulip.guide"
+    }
+  ]
+}

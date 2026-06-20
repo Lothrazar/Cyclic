@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.slime_bucket",
+  "icon": "cyclic:slime_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:slime_bucket",
+      "text": "guide.fluid.slime"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.slime.obtain"
+    }
+  ]
+}

@@ -29,7 +29,7 @@ public class FluidWaxHolder {
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
-          FluidType.Properties.create().density(1024).viscosity(1024)
+          FluidType.Properties.create().density(FluidRegistry.DENSITY_WATER + 200).viscosity(FluidRegistry.VISCOSITY_WATER + 500).temperature(FluidRegistry.TEMP_LAVA - 300)
               .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 

@@ -1,0 +1,12 @@
+{
+  "name": "block.cyclic.flower_lime_carnation",
+  "icon": "cyclic:flower_lime_carnation",
+  "category": "cyclic:world_gen",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "cyclic:flower_lime_carnation",
+      "text": "block.cyclic.flower_lime_carnation.guide"
+    }
+  ]
+}

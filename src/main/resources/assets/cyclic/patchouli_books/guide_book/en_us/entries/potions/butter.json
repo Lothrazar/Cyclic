@@ -1,19 +1,19 @@
 ﻿{
   "name": "item.minecraft.potion.effect.cyclic_butter",
-  "icon": "minecraft:potion",
+  "icon": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:butter\"}]",
   "category": "cyclic:potions",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:butter\"}]",
-      "text":"effect.cyclic.butter"
+      "item": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:butter\"}]",
+      "text":"effect.cyclic.butter.description"
     },
     {
       "type": "cyclic:brewing",
       "text":"item.minecraft.potion.effect.cyclic_butter",
       "ingredient": "minecraft:gold_ingot",
-      "base_potion": "minecraft:potion#1[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
-      "output": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:butter\"}]"
+      "base_potion": "minecraft:potion[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
+      "output": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:butter\"}]"
     }
   ]
 }

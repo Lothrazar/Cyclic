@@ -38,6 +38,10 @@
 			#Enabling this will show the energy of any held item in the top left of your screen
 			Energy_HUD = true
 
+			[cyclic.blocks.fluids.sculk]
+				# Play an XP pickup sound occasionally when standing in liquid sculk fluid (10% chance per drain tick)
+				xp_sound = true
+
 	#####################################################################################
 	#Item Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF
 	#####################################################################################

@@ -31,7 +31,9 @@ public class FluidEnderHolder {
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
-          FluidType.Properties.create().density(1050).viscosity(1050).lightLevel(LIGHT_LEVEL)
+          FluidType.Properties.create()
+              .density(FluidRegistry.DENSITY_WATER + 600).viscosity(FluidRegistry.VISCOSITY_WATER + 100).temperature(FluidRegistry.TEMP_WATER - 10)
+              .lightLevel(LIGHT_LEVEL)
               .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 

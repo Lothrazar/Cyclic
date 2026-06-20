@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.honey_bucket",
+  "icon": "cyclic:honey_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:honey_bucket",
+      "text": "guide.fluid.honey"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.honey.obtain"
+    }
+  ]
+}

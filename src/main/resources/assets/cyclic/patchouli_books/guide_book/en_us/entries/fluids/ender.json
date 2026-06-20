@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.ender_bucket",
+  "icon": "cyclic:ender_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:ender_bucket",
+      "text": "guide.fluid.ender"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.ender.obtain"
+    }
+  ]
+}

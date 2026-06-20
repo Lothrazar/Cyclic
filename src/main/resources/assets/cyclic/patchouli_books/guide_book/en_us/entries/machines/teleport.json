@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.teleport",
+  "icon": "cyclic:teleport",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.teleport.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:teleport"
+    }
+  ]
+}

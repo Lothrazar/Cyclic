@@ -1,0 +1,25 @@
+{
+  "name": "item.cyclic.amethyst_gear",
+  "icon": "cyclic:amethyst_sword",
+  "category": "cyclic:gear",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.amethyst_gear.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:amethyst_sword",
+      "recipe2": "cyclic:amethyst_pickaxe"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:amethyst_axe",
+      "recipe2": "cyclic:amethyst_shovel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:amethyst_hoe"
+    }
+  ]
+}

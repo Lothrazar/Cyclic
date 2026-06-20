@@ -133,6 +133,7 @@ public class ConfigRegistry {
   public static IntValue LaserItemEnergy;
   public static IntValue LaserItemEnergyMax;
   public static BooleanValue LaserRenderMisses;
+  public static IntValue AMETHYST_FLUID_GROWTH_RADIUS;
   static {
     buildDefaults();
     initConfig();
@@ -488,6 +489,10 @@ public class ConfigRegistry {
          + " namespace wildcards (e.g. cyclic:*, minecraft:trial_omen, minecraft:glowing)."
          + "  ")
          .defineList("beacon_sponge.potion_list", Arrays.asList("cyclic:gravity"), it -> it instanceof String);
+    CFG.push("fluids");
+    ConfigRegistry.AMETHYST_FLUID_GROWTH_RADIUS = CFG.comment(" Liquid amethyst fluid: radius (in blocks) to search for budding amethyst close to source fluid and accelerate their crystal growth on random tick")
+        .defineInRange("amethyst.growth_radius", 2, 0, 8);
+    CFG.pop(); // fluids
     TileCableFluid.BUFFERSIZE = CFG.comment(" How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)")
         .defineInRange("cables.fluid.buffer", 16, 1, 32);
     TileCableFluid.TRANSFER_RATE = CFG.comment(" How many fluid units per tick can flow through these cables each tick (1 bucket = 1000) including normal flow and extraction mode")
@@ -648,11 +653,14 @@ public class ConfigRegistry {
     ClientConfigCyclic.FORESTER = CFGC.comment(" Specify hex color of preview mode.  default #11BB00").define("forester", "#11BB00");
     ClientConfigCyclic.HARVESTER = CFGC.comment(" Specify hex color of preview mode.  default #00EE00").define("harvester", "#00EE00");
     ClientConfigCyclic.STRUCTURE = CFGC.comment(" Specify hex color of preview mode.  default #FF0000").define("structure", "#FF0000");
-    CFGC.pop();
+    CFGC.pop(); // end of colors
     CFGC.push("text");
     ClientConfigCyclic.FLUID_BLOCK_STATUS = CFGC.comment(" True means this will hide the fluid contents chat message (right click) on relevant blocks (pylon, fluid generator, fluid hopper, solidifier, sprinkler, tank, cask)").define("FluidContents", true);
     ClientConfigCyclic.ENERGY_HUD = CFGC.comment("Enabling this will show the energy of any held item in the top left of your screen").define("Energy_HUD", true);
-    CFGC.pop();
+    CFGC.pop(); // ends text
+    CFGC.push("fluids");
+    ClientConfigCyclic.SCULK_FLUID_XP_SOUND = CFGC.comment(" Play an XP pickup sound occasionally when standing in liquid sculk fluid (10% chance per drain tick)").define("sculk.xp_sound", true);
+    CFGC.pop(); //end of fluids
     CFGC.pop(); //end of blocks
     CFGC.comment(WALL, "Item Rendering properties.  Color MUST have one # symbol and then six spots after so #000000 up to #FFFFFF", WALL)
         .push("items");

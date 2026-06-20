@@ -26,11 +26,10 @@ public class FluidMagmaHolder {
   public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
   public static final int COLOR = 0xFFFFFF;
 
-  public static final int LIGHT_LEVEL = 8;
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
-          FluidType.Properties.create().density(1024).viscosity(1024)
-              .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).lightLevel(LIGHT_LEVEL)
+          FluidType.Properties.create().density(FluidRegistry.DENSITY_LAVA - 500).viscosity(FluidRegistry.VISCOSITY_LAVA - 500).temperature(FluidRegistry.TEMP_LAVA - 100)
+              .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).lightLevel(FluidRegistry.LIGHT_LEVELMAGMA)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 
   public static final DeferredHolder<Fluid, ConfigurableFlowingFluid.Source> STILL = FluidRegistry.FLUID.register(ID,
@@ -39,7 +38,7 @@ public class FluidMagmaHolder {
       () -> new ConfigurableFlowingFluid.Flowing(makeProperties(), 2, 7));
 
   public static final DeferredBlock<MagmaFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
-      () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable()));
+      () -> new MagmaFluidBlock(STILL, Block.Properties.of().liquid().strength(100.0F).lightLevel(s -> FluidRegistry.LIGHT_LEVELMAGMA).noLootTable()));
 
   public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",
       () -> new BucketItemFlib(STILL.get()));

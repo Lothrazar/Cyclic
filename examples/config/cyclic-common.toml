@@ -659,6 +659,12 @@
 			# List of extra effects to clear. Any effect marked harmfil, or in this list, will be cured. Supports exact ids (e.g. 'minecraft:poison'), namespace wildcards (e.g. cyclic:*, minecraft:trial_omen, minecraft:glowing).  
 			potion_list = ["cyclic:gravity"]
 
+			[cyclic.blocks.fluids.amethyst]
+				# Liquid amethyst fluid: radius (in blocks) to search for budding amethyst close to source fluid and accelerate their crystal growth on random tick
+				# Default: 2
+				# Range: 0 ~ 8
+				growth_radius = 2
+
 			[cyclic.blocks.cables.fluid]
 				# How many buckets of buffer fluid the fluid cable can hold (for each direction. for example 2 here means 2000ub in each face)
 				# Default: 16

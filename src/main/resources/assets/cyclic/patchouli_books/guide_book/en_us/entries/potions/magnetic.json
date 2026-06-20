@@ -1,19 +1,19 @@
 ﻿{
   "name": "item.minecraft.potion.effect.cyclic_magnetic",
-  "icon": "minecraft:potion",
+  "icon": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:magnetic\"}]",
   "category": "cyclic:potions",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:magnetic\"}]",
-      "text":"effect.cyclic.magnetic"
+      "item": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:magnetic\"}]",
+      "text":"effect.cyclic.magnetic.description"
     },
     {
       "type": "cyclic:brewing",
       "text":"item.minecraft.potion.effect.cyclic_magnetic",
       "ingredient": "minecraft:lapis_lazuli",
-      "base_potion": "minecraft:potion#1[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
-      "output": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:magnetic\"}]"
+      "base_potion": "minecraft:potion[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
+      "output": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:magnetic\"}]"
     }
   ]
 }

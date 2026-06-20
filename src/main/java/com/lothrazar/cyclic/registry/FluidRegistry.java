@@ -23,6 +23,13 @@ public class FluidRegistry {
   public static final DeferredRegister<Fluid> FLUID = DeferredRegister.create(Registries.FLUID, ModCyclic.MODID);
   public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, ModCyclic.MODID);
 
+  public static final int LIGHT_LEVELMAGMA = 8;
+  public static final int TEMP_WATER = 300;
+  public static final int DENSITY_WATER = 1000;
+  public static final int VISCOSITY_WATER = 1000;
+  public static final int TEMP_LAVA = 1300;
+  public static final int DENSITY_LAVA = 3000;
+  public static final int VISCOSITY_LAVA = 3000;
 
   public static final FluidXpJuiceHolder XPJUICE = new FluidXpJuiceHolder();
   public static final FluidSlimeHolder SLIME = new FluidSlimeHolder();

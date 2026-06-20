@@ -6,11 +6,10 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.FluidRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.library.fluid.GenericFluidBlock;
-import com.lothrazar.library.util.EnchantUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import com.lothrazar.library.item.BucketItemFlib;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -28,11 +27,12 @@ public class FluidGlowstoneHolder {
   public static final ResourceLocation FLUID_STILL = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_still");
   public static final ResourceLocation FLUID_FLOW = ResourceLocation.fromNamespaceAndPath(ModCyclic.MODID, "block/fluid/" + ID + "_flow");
   public static final int COLOR = 0xFFFFFF;
-  public static final int LIGHT_LEVEL = 15;
+  public static final int LIGHT_LEVEL = 15; // TODO: cyclic-client config
 
   public static final DeferredHolder<FluidType, FluidType> TYPE = FluidRegistry.FLUID_TYPES.register(ID,
       () -> new FluidType(
-          FluidType.Properties.create().density(1024).viscosity(1024).lightLevel(LIGHT_LEVEL)
+          FluidType.Properties.create().density(FluidRegistry.DENSITY_WATER + 300).viscosity(FluidRegistry.VISCOSITY_WATER + 300).temperature(FluidRegistry.TEMP_WATER + 50)
+              .lightLevel(LIGHT_LEVEL)
               .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
               .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
 
@@ -42,12 +42,7 @@ public class FluidGlowstoneHolder {
   public static final DeferredBlock<GenericFluidBlock> BLOCK = BlockRegistry.BLOCKS.register(ID + "_block",
       () -> new GenericFluidBlock(STILL, Block.Properties.of().liquid().replaceable().noCollission().strength(100.0F).lightLevel(s -> LIGHT_LEVEL).noLootTable(),
           List.of(ent -> {
-            if (!ent.isOnFire() && !ent.fireImmune()) {
-              int lvl = EnchantUtil.getCurrentArmorLevel(EnchantUtil.holder(Enchantments.FIRE_PROTECTION, ent), ent);
-              if (lvl < 4) {
-                ent.igniteForSeconds(Mth.floor(ent.level().random.nextDouble() * 10));
-              }
-            }
+            ent.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60, 0, false, false));
           })));
 
   public static final DeferredItem<Item> BUCKET = ItemRegistry.ITEMS.register(ID + "_bucket",

@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.amethyst_bucket",
+  "icon": "cyclic:amethyst_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:amethyst_bucket",
+      "text": "guide.fluid.amethyst"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.amethyst.obtain"
+    }
+  ]
+}

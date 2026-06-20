@@ -1,7 +1,7 @@
 {
   "name": "block.cyclic.flower_cyan",
   "icon": "cyclic:flower_cyan",
-  "category": "cyclic:blocks",
+  "category": "cyclic:world_gen",
   "pages": [
     {
       "type": "spotlight",

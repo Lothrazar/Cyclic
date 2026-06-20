@@ -1,0 +1,12 @@
+{
+  "name": "item.cyclic.chocolate_milk",
+  "icon": "cyclic:chocolate_milk",
+  "category": "cyclic:consume",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "cyclic:chocolate_milk",
+      "text": "item.cyclic.chocolate_milk.guide"
+    }
+  ]
+}

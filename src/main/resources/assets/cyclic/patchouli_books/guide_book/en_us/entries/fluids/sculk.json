@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.sculk_bucket",
+  "icon": "cyclic:sculk_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:sculk_bucket",
+      "text": "guide.fluid.sculk"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.sculk.obtain"
+    }
+  ]
+}

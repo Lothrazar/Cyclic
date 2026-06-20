@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.biomass_bucket",
+  "icon": "cyclic:biomass_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:biomass_bucket",
+      "text": "guide.fluid.biomass"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.biomass.obtain"
+    }
+  ]
+}

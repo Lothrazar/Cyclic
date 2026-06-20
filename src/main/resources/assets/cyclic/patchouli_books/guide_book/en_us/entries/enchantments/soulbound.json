@@ -1,0 +1,16 @@
+{
+  "name": "enchantment.cyclic.soulbound",
+  "icon": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:soulbound\":1}}]",
+  "category": "cyclic:enchantments",
+  "pages": [
+    {
+      "type": "text",
+      "text": "enchantment.cyclic.soulbound.guide"
+    },
+    {
+      "type": "spotlight",
+      "item": "minecraft:enchanted_book[minecraft:stored_enchantments={levels:{\"cyclic:soulbound\":1}}]",
+      "link_recipe": true
+    }
+  ]
+}

@@ -1,19 +1,19 @@
 ﻿{
   "name": "item.minecraft.potion.effect.cyclic_haste",
-  "icon": "minecraft:potion",
+  "icon": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:haste\"}]",
   "category": "cyclic:potions",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:haste\"}]",
-      "text":"effect.cyclic.haste"
+      "item": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:haste\"}]",
+      "text":"effect.cyclic.haste.description"
     },
     {
       "type": "cyclic:brewing",
       "text":"item.minecraft.potion.effect.cyclic_haste",
       "ingredient": "minecraft:emerald",
-      "base_potion": "minecraft:potion#1[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
-      "output": "minecraft:potion#1[minecraft:potion_contents={potion:\"cyclic:haste\"}]"
+      "base_potion": "minecraft:potion[minecraft:potion_contents={potion:\"minecraft:awkward\"}]",
+      "output": "minecraft:potion[minecraft:potion_contents={potion:\"cyclic:haste\"}]"
     }
   ]
 }

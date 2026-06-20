@@ -1,0 +1,16 @@
+{
+  "name": "item.cyclic.glowstone_bucket",
+  "icon": "cyclic:glowstone_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "cyclic:glowstone_bucket",
+      "text": "guide.fluid.glowstone"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "guide.fluid.glowstone.obtain"
+    }
+  ]
+}

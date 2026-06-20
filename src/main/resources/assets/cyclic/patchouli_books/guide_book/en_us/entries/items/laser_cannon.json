@@ -1,0 +1,11 @@
+{
+  "name": "item.cyclic.laser_cannon",
+  "icon": "cyclic:laser_cannon",
+  "category": "cyclic:items",
+  "pages": [
+    {
+      "type": "text",
+      "text": "item.cyclic.laser_cannon.guide"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.crusher",
+  "icon": "cyclic:crusher",
+  "category": "cyclic:machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.crusher.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:crusher"
+    }
+  ]
+}
