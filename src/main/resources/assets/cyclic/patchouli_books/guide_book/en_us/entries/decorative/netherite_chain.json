@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.netherite_chain",
+  "icon": "cyclic:netherite_chain",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.netherite_chain.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:netherite_chain"
+    }
+  ]
+}

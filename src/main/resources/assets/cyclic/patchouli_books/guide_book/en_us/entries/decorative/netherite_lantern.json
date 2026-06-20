@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.netherite_lantern",
+  "icon": "cyclic:netherite_lantern",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.netherite_lantern.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:netherite_lantern"
+    }
+  ]
+}

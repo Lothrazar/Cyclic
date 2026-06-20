@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.gold_lantern",
+  "icon": "cyclic:gold_lantern",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.gold_lantern.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:gold_lantern"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.flint_block",
+  "icon": "cyclic:flint_block",
+  "category": "cyclic:blocks",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.flint_block.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/flint_block"
+    }
+  ]
+}

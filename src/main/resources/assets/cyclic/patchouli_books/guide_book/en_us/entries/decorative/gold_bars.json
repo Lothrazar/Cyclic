@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.gold_bars",
+  "icon": "cyclic:gold_bars",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.gold_bars.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:gold_bars"
+    }
+  ]
+}

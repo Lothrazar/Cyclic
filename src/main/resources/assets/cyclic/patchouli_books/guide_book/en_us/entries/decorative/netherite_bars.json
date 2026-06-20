@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.netherite_bars",
+  "icon": "cyclic:netherite_bars",
+  "category": "cyclic:decorative",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.netherite_bars.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:netherite_bars"
+    }
+  ]
+}

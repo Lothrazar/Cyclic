@@ -1,0 +1,15 @@
+{
+  "name": "block.cyclic.obsidian_pressure_plate",
+  "icon": "cyclic:obsidian_pressure_plate",
+  "category": "cyclic:redstone",
+  "pages": [
+    {
+      "type": "text",
+      "text": "block.cyclic.obsidian_pressure_plate.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:obsidian_pressure_plate"
+    }
+  ]
+}
