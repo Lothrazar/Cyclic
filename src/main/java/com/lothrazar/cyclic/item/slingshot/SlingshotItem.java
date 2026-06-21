@@ -44,11 +44,9 @@ public class SlingshotItem extends ItemBaseCyclic {
     if (percentageCharged < 0.1) {
       return; //not enough force to go with any realistic path 
     }
-    if (entity instanceof Player == false) {
-      return;
+    if (entity instanceof Player player) {
+      shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBaseCyclic.VELOCITY_MAX);
+      ItemStackUtil.damageItem(player, stack);
     }
-    Player player = (Player) entity;
-    shootMe(world, player, new StoneEntity(entity, world), 0, percentageCharged * ItemBaseCyclic.VELOCITY_MAX);
-    ItemStackUtil.damageItem(player, stack);
   }
 }

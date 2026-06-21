@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.ItemStackUtil;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -26,11 +27,11 @@ public class CharmInvisible extends ItemBaseToggle {
     if (!this.isOn(stack)) {
       return;
     }
-    if (worldIn.getGameTime() % 20 == 0 && entityIn instanceof LivingEntity) {
+    if (worldIn.getGameTime() % Const.TICKS_PER_SEC == 0 && entityIn instanceof LivingEntity) {
       LivingEntity living = (LivingEntity) entityIn;
       if (living.getEffect(MobEffects.INVISIBILITY) == null) {
         int sec = SECONDS == null ? SECONDS_DEFAULT : SECONDS.get();
-        MobEffectInstance eff = new MobEffectInstance(MobEffects.INVISIBILITY, 20 * sec, 0, false, false, false);
+        MobEffectInstance eff = new MobEffectInstance(MobEffects.INVISIBILITY, Const.TICKS_PER_SEC * sec, 0, false, false, false);
         living.addEffect(eff);
         ItemStackUtil.damageItem(living, stack);
       }

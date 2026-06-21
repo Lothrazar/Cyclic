@@ -13,12 +13,20 @@
       "text": "guide.fluid.slime.obtain"
     },
     {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/slime_slimeballs"
+    },
+    {
       "type": "cyclic:solidifier_recipe",
       "recipe": "cyclic:solidifier/solidifier_slime"
     },
     {
-      "type": "cyclic:melter_recipe",
-      "recipe": "cyclic:melter/slime_slimeballs"
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/lead"
+    },
+    {
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/sticky_piston"
     }
   ]
 }

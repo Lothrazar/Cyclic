@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.slingshot;
 
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EntityRegistry;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.library.core.Const;
@@ -20,8 +21,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.server.level.ServerEntity;
 
 public class StoneEntity extends ThrowableItemProjectile {
-
-  private static final float CHANCE_STUN = 0.5F;
 
   public StoneEntity(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
     super(entityType, world);
@@ -47,11 +46,8 @@ public class StoneEntity extends ThrowableItemProjectile {
       Entity owner = getOwner();
       var level = level();
       if (target.isAlive()) {
-        target.hurt(level.damageSources().thrown(this, owner), Mth.nextInt(level.random, 2, 6));
-        if (level.random.nextDouble() < CHANCE_STUN && !level.isClientSide && target instanceof LivingEntity) {
-          LivingEntity living = (LivingEntity) target;
-          living.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, Const.TICKS_PER_SEC * 2, 1, false, false, false));
-        }
+        target.hurt(level.damageSources().thrown(this, owner), Mth.nextInt(level.random, ConfigRegistry.SLINGSHOT_DAMAGE_MIN.get(), ConfigRegistry.SLINGSHOT_DAMAGE_MAX.get()));
+
       }
     }
     this.remove(RemovalReason.DISCARDED);

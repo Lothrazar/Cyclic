@@ -23,8 +23,10 @@
  ******************************************************************************/
 package com.lothrazar.cyclic.item.ender;
 
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
@@ -43,8 +45,6 @@ public class EnderWingSp extends ItemBaseCyclic implements IHasClickToggle {
     super(properties);
   }
 
-  private static final int cooldown = 600;
-
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
     if (playerIn.getCooldowns().isOnCooldown(this)) {
@@ -62,7 +62,7 @@ public class EnderWingSp extends ItemBaseCyclic implements IHasClickToggle {
         EntityUtil.enderTeleportEvent(playerIn, worldIn, spawn);
         SoundUtil.playSound(playerIn, SoundRegistry.WARP_ECHO.get());
         ItemStackUtil.damageItem(playerIn, held);
-        playerIn.getCooldowns().addCooldown(this, cooldown);
+        playerIn.getCooldowns().addCooldown(this, ConfigRegistry.CHARM_SPAWN_COOLDOWN_SECONDS.get() * Const.TICKS_PER_SEC);
       }
     }
   }

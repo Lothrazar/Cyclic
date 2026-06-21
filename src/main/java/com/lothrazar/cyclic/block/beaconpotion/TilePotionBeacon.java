@@ -11,6 +11,7 @@ import com.lothrazar.cyclic.registry.BlockRegistry;
 import com.lothrazar.cyclic.registry.ItemRegistry;
 import com.lothrazar.cyclic.registry.TileRegistry;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.data.EntityFilterType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -45,7 +46,7 @@ public class TilePotionBeacon extends TileBlockEntityCyclic implements MenuProvi
   private static final int TICKS_FIRE_PER = 60;
   //so if a potion has a duration of 1 second, use this many ticks
   static final int TICKS_PER_DURATION = 160000;
-  private static final int POTION_TICKS = 20 * 20; //cant be too low BC night vision flicker
+  private static final int POTION_TICKS = Const.TICKS_PER_SEC * 20; //cant be too low BC night vision flicker
   private static final int MAX_RADIUS = 64;
   private int radius = MAX_RADIUS;
   public static ModConfigSpec.IntValue POWERCONF;

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.event;
 
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.item.elemental.FireballItem;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.core.IEntityInteractable;
 import com.lothrazar.cyclic.block.cable.CableBase;
 import com.lothrazar.library.core.IBlockFacade;
@@ -267,7 +268,7 @@ public class ItemEventHandler {
       else if (src.is(DamageTypes.DROWN)) {
         if (this.damageFinder(event, player, ItemRegistry.CHARM_WATER.get(), 0)) {
           //and a holdover bonus
-          MobEffectInstance eff = new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 10, 1, false, false, false);
+          MobEffectInstance eff = new MobEffectInstance(MobEffects.WATER_BREATHING, Const.TICKS_PER_SEC * 10, 1, false, false, false);
           
           player.addEffect(eff);
         }
@@ -283,7 +284,7 @@ public class ItemEventHandler {
       ItemStack find = CharmUtil.getIfEnabled(ply, ItemRegistry.CHARM_VENOM.get());
       if (!find.isEmpty() && ply.level().random.nextDouble() < 0.25F) {
         int seconds = 2 + ply.level().random.nextInt(4);
-        event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 20 * seconds, 0, false, false, false));
+        event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, Const.TICKS_PER_SEC * seconds, 0, false, false, false));
         ItemStackUtil.damageItem(ply, find);
       }
 
@@ -379,7 +380,7 @@ public class ItemEventHandler {
     if (horse.getPersistentData().getBoolean(ItemHorseCopperRadar.NBT_KEY)
         && horse.isVehicle()
         && !horse.level().isClientSide()
-        && horse.tickCount % 20 == 0) {
+        && horse.tickCount % Const.TICKS_PER_SEC == 0) {
       AABB box = horse.getBoundingBox().inflate(16);
       for (Monster mob : horse.level().getEntitiesOfClass(Monster.class, box)) {
         mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, false, false, true));
@@ -396,26 +397,26 @@ public class ItemEventHandler {
           
           && liv.getAirSupply() < liv.getMaxAirSupply()
           && !liv.hasEffect(MobEffects.WATER_BREATHING)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 60, 4, false, false, false));
-        liv.addEffect(new MobEffectInstance(PotionEffectRegistry.SWIMSPEED, 20 * 60, 1, false, false, false));
+        liv.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+        liv.addEffect(new MobEffectInstance(PotionEffectRegistry.SWIMSPEED, Const.TICKS_PER_SEC * 60, 1, false, false, false));
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.isOnFire()
           && !liv.hasEffect(MobEffects.FIRE_RESISTANCE)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20 * 60, 4, false, false, false));
+        liv.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
         liv.clearFire();
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.fallDistance > 12
           && !liv.hasEffect(MobEffects.SLOW_FALLING)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20 * 60, 4, false, false, false));
+        liv.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Const.TICKS_PER_SEC * 60, 4, false, false, false));
 
         ItemHorseEnder.onSuccess(liv);
       }
       if (liv.getHealth() < 6
           && !liv.hasEffect(MobEffects.ABSORPTION)) {
-        liv.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 20 * 60, 4, false, false, false));
-        liv.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20 * 60, 4, false, false, false));
+        liv.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, Const.TICKS_PER_SEC * 60, 4, false, false, false));
+        liv.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, Const.TICKS_PER_SEC * 60, 4, false, false, false));
         ItemHorseEnder.onSuccess(liv);
       }
     }

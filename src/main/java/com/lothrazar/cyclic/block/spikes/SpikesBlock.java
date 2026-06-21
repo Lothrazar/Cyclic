@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.spikes;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,8 +30,8 @@ public class SpikesBlock extends BlockCyclic implements SimpleWaterloggedBlock {
 
   public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
   public static final double CURSE_CHANCE = 0.2;
-  public static final int CURSE_TIME = 8 * 20;
-  public static final int FIRE_TIME = 20;
+  public static final int CURSE_TIME = 8 * Const.TICKS_PER_SEC;
+  public static final int FIRE_TIME = Const.TICKS_PER_SEC;
   public static final BooleanProperty ACTIVATED = BooleanProperty.create("lit");
   private static final float LARGE = 0.9375F;
   private static final float SMALL = 0.0625F;

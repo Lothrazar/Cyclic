@@ -2,19 +2,19 @@
   "type": "cyclic:solidifier",
   "ingredients": [
     {
-      "item": "minecraft:string"
+      "item": "minecraft:glass_bottle"
     }
   ],
-  "mix": {
-    "tag": "c:slime",
-    "amount": 250
-  },
   "energy": {
     "rfpertick": 100,
-    "ticks": 240
+    "ticks": 20
+  },
+  "mix": {
+    "tag": "c:milk",
+    "amount": 250
   },
   "result": {
     "count": 1,
-    "id": "minecraft:lead"
+    "id": "cyclic:milk_bottle"
   }
 }

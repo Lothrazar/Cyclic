@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.enchant;
 
 import com.lothrazar.cyclic.registry.EnchantRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.SoundUtil;
@@ -17,7 +18,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class EnderPearlEnchant {
 
-  public static final int COOLDOWN = 6 * 20;
+  public static final int COOLDOWN = 6 * Const.TICKS_PER_SEC;
   private static final float VELOCITY = 1.5F;
   private static final float INNACCURACY = 1F;
   public static final String ID = "ender";

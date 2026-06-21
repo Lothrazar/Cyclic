@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.item.enderbook;
 import java.util.List;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.item.datacard.LocationGpsCard;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.EntityUtil;
@@ -96,6 +97,11 @@ public class EnderBookItem extends ItemBaseCyclic {
     if (!tag.contains(TELEPORT_COUNTDOWN) || !(entityIn instanceof LivingEntity)) {
       return;
     }
+    if (entityIn instanceof Player player && !player.onGround()) {
+      cancelTeleport(stack);
+      ChatUtil.sendStatusMessage(player, Component.translatable("item.cyclic.ender_book.cancel"));
+      return;
+    }
     int ct = tag.getInt(TELEPORT_COUNTDOWN);
     if (ct < 0) {
       cancelTeleport(stack);
@@ -116,7 +122,7 @@ public class EnderBookItem extends ItemBaseCyclic {
         return;
       }
     }
-    else if (ct % 20 == 0 && entityIn instanceof Player player) {
+    else if (ct % Const.TICKS_PER_SEC == 0 && entityIn instanceof Player player) {
       ChatUtil.sendStatusMessage(player, Component.translatable("item.cyclic.ender_book.countdown").append("" + (ct / 20)));
     }
     ct--;

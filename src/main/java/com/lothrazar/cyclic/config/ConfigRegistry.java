@@ -79,6 +79,7 @@ import com.lothrazar.cyclic.registry.CommandRegistry;
 import com.lothrazar.cyclic.registry.CommandRegistry.CyclicCommands;
 import com.lothrazar.cyclic.registry.MaterialRegistry;
 import com.lothrazar.cyclic.registry.PotionRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.StringParseUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -436,8 +437,8 @@ public class ConfigRegistry {
     AutoCaveTorchItem.PREFER_WALLS = CFG.comment(" Whether to prioritise placing torches on walls").define("prefer_walls", true);
     AutoCaveTorchItem.PREFER_LEFT_WALL = CFG.comment(" Which wall to place torches on when digging a 1-wide tunnel", "True means left, False means right").define("prefer_left_wall", false);
     CFG.pop(); // caving_torch 
-    EdibleFlightItem.TICKS = CFG.comment(" Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", 20 * 600, 1, 20 * 1000);
-    EdibleSpecItem.TICKS = CFG.comment(" Seconds of noClip per chorus_spectral").defineInRange("chorus_spectral.ticks", 20 * 30, 1, 20 * 1000);
+    EdibleFlightItem.TICKS = CFG.comment(" Seconds of flight per chorus_flight").defineInRange("chorus_flight.ticks", Const.TICKS_PER_SEC * 600, 1, Const.TICKS_PER_SEC * 1000);
+    EdibleSpecItem.TICKS = CFG.comment(" Seconds of noClip per chorus_spectral").defineInRange("chorus_spectral.ticks", Const.TICKS_PER_SEC * 30, 1, Const.TICKS_PER_SEC * 1000);
     MBALL_IGNORE_LIST = CFG.comment(" Entity ids that cannot be picked up with the Monster all").defineList("monster_ball.ignore_list", MBALL_IGNORE, it -> it instanceof String);
     CFG.comment(" Wand settings").push("scepter_teleport");
     TeleporterWandItem.RANGE = CFG.comment(" Maximum distance to activate").defineInRange("range", 256, 8, 1024);
@@ -454,6 +455,10 @@ public class ConfigRegistry {
     HeartToxicItem.HEARTXPMINUS = CFG.comment(" Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
     HeartItem.MAX = CFG.comment(" Maximum number of hearts that can be attained (including initial 10)").defineInRange("maximum", 100, 1, 200);
     CFG.pop(); //heart
+    CFG.comment(WALL, " slingshot settings", WALL).push("slingshot");
+    SLINGSHOT_DAMAGE_MIN = CFG.comment(" Minimum damage dealt on hit (inclusive)").defineInRange("damage_min", 2, 0, Integer.MAX_VALUE);
+    SLINGSHOT_DAMAGE_MAX = CFG.comment(" Maximum damage dealt on hit (inclusive)").defineInRange("damage_max", 6, 1, Integer.MAX_VALUE);
+    CFG.pop(); // slingshot
     CFG.comment(WALL, " boomerang_stun settings", WALL).push("boomerang_stun");
     BOOMERANG_STUN_SECONDS = CFG.comment(" Seconds of stun effect applied on hit").defineInRange("stun_seconds", 7, 1, 120);
     CFG.pop(); // boomerang_stun
@@ -461,6 +466,12 @@ public class ConfigRegistry {
     BOOMERANG_DAMAGE_MIN = CFG.comment(" Minimum damage dealt on hit (inclusive)").defineInRange("damage_min", 1.5, 0.0, 1000.0);
     BOOMERANG_DAMAGE_MAX = CFG.comment(" Maximum damage dealt on hit (exclusive upper bound for the random roll)").defineInRange("damage_max", 3.8, 0.1, 1000.0);
     CFG.pop(); // boomerang_damage
+    CFG.comment(WALL, " charm_home settings", WALL).push("charm_home");
+    CHARM_HOME_COOLDOWN_SECONDS = CFG.comment(" Cooldown in seconds after using the charm").defineInRange("cooldown_seconds", 30, 1, 3600);
+    CFG.pop(); // charm_home
+    CFG.comment(WALL, " charm_spawn settings", WALL).push("charm_spawn");
+    CHARM_SPAWN_COOLDOWN_SECONDS = CFG.comment(" Cooldown in seconds after using the charm").defineInRange("cooldown_seconds", 30, 1, 3600);
+    CFG.pop(); // charm_spawn
     CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     CFG.push("facades");
@@ -722,6 +733,10 @@ public class ConfigRegistry {
   }
 
   public static IntValue BOOMERANG_STUN_SECONDS;
+  public static IntValue SLINGSHOT_DAMAGE_MIN;
+  public static IntValue SLINGSHOT_DAMAGE_MAX;
+  public static IntValue CHARM_HOME_COOLDOWN_SECONDS;
+  public static IntValue CHARM_SPAWN_COOLDOWN_SECONDS;
   public static DoubleValue BOOMERANG_DAMAGE_MIN;
   public static DoubleValue BOOMERANG_DAMAGE_MAX;
   public static BooleanValue CABLE_FACADES;

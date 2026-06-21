@@ -24,16 +24,18 @@
 package com.lothrazar.cyclic.item.ender;
 
 import java.util.Optional;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.ItemBaseCyclic;
 import com.lothrazar.cyclic.registry.SoundRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.core.IHasClickToggle;
 import com.lothrazar.library.util.ChatUtil;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
+import com.lothrazar.library.util.PlayerUtil;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -44,7 +46,6 @@ import net.minecraft.world.phys.Vec3;
 
 public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
 
-  private static final int COOLDOWN = 600; //ticks not seconds 
 
   public EnderWingItem(Properties properties) {
     super(properties);
@@ -61,49 +62,32 @@ public class EnderWingItem extends ItemBaseCyclic implements IHasClickToggle {
   }
 
   private void attemptTeleport(Level worldIn, Player playerIn, ItemStack held) {
-    ServerLevel serverWorld = worldIn.getServer().getLevel(Level.OVERWORLD);
-    ServerPlayer serverPlayerEntity = playerIn instanceof ServerPlayer ? (ServerPlayer) playerIn : null;
-    if (serverWorld != null && serverPlayerEntity != null) {
-      /* get the player's respawn point. This will be one of the following: -- null: Player has not slept in a bed, or their bed has been destroyed, and they are not tied to a Respawn Anchor -- the
-       * location of their bed, if they've set the respawn point with a bed -- the location of their Respawn Anchor in the Nether */
-      BlockPos respawnPos = serverPlayerEntity.getRespawnPosition();
-      if (respawnPos != null) {
-        //This Optional checks that the player has a valid respawn point, and that it's safe to spawn there
-        Optional<Vec3> optional = java.util.Optional.empty();
-        BlockPos pos;
-        boolean needsTeleport = false;
-        if (optional.isPresent()) {
-          pos = new BlockPos((int) optional.get().x(), (int) optional.get().y(), (int) optional.get().z());
-          ResourceKey<Level> spawnWorldKey = serverPlayerEntity.getRespawnDimension();
-          ServerLevel spawnWorld = worldIn.getServer().getLevel(spawnWorldKey);
-          if (spawnWorld != null && spawnWorldKey == Level.NETHER) {
-            if (worldIn.dimension() == Level.NETHER) {
-              needsTeleport = true;
-            }
-            else {
-              ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.nether");
-            }
-          }
-          else if (spawnWorld != null && spawnWorldKey == Level.OVERWORLD) {
-            if (worldIn.dimension() == Level.OVERWORLD) {
-              needsTeleport = true;
-            }
-            else {
-              ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.overworld");
-            }
-          }
-          if (needsTeleport) {
-            ItemStackUtil.damageItem(playerIn, held);
-            playerIn.getCooldowns().addCooldown(this, COOLDOWN);
-            EntityUtil.enderTeleportEvent(playerIn, spawnWorld, pos);
-            SoundUtil.playSound(playerIn, SoundRegistry.WARP_ECHO.get());
-          }
-        }
-        else {
-          ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.obstructed");
-        }
-      }
+    if (!(playerIn instanceof ServerPlayer serverPlayerEntity)) {
+      return;
     }
+    if (serverPlayerEntity.getRespawnPosition() == null) {
+      ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.none");
+      return;
+    }
+    ResourceKey<Level> spawnWorldKey = serverPlayerEntity.getRespawnDimension();
+    if (spawnWorldKey == Level.NETHER && worldIn.dimension() != Level.NETHER) {
+      ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.nether");
+      return;
+    }
+    if (spawnWorldKey == Level.OVERWORLD && worldIn.dimension() != Level.OVERWORLD) {
+      ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.overworld");
+      return;
+    }
+    Optional<Vec3> optional = PlayerUtil.getPlayerHome(serverPlayerEntity);
+    if (optional.isEmpty()) {
+      ChatUtil.sendStatusMessage(playerIn, "command.cyclic.home.obstructed");
+      return;
+    }
+    BlockPos pos = BlockPos.containing(optional.get());
+    ItemStackUtil.damageItem(playerIn, held);
+    playerIn.getCooldowns().addCooldown(this, ConfigRegistry.CHARM_HOME_COOLDOWN_SECONDS.get() * Const.TICKS_PER_SEC);
+    EntityUtil.enderTeleportEvent(playerIn, worldIn, pos);
+    SoundUtil.playSound(playerIn, SoundRegistry.WARP_ECHO.get());
   }
 
   @Override

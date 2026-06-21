@@ -17,6 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -66,15 +67,12 @@ public class FishingEnderEntity extends ThrowableItemProjectile {
       if (TileFisher.isWater(level, pos)) {
         //fish!
         if (!level.isClientSide) {
-          LootTable table = null;
-          if (level.random.nextDouble() < 0.10) { // 10% junk, match current values unlike 1.10.2
-            table = null; // getLootTable stub
+          LootTable table;
+          if (level.random.nextDouble() < 0.10) { // 10% junk
+            table = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING_JUNK);
           }
-          else {// remaining 90% fish. ignore the 5% for treasure , this item just dont get that too bad
-            table = null; // getLootTable stub
-          }
-          if (table == null) {
-            return;
+          else { // 90% fish (ignoring treasure tier)
+            table = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING_FISH);
           }
           final int luck = 2;
           final ItemStack fishingRod = new ItemStack(Items.FISHING_ROD);

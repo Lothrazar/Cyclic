@@ -1,0 +1,23 @@
+{
+  "name": "item.minecraft.milk_bucket",
+  "icon": "minecraft:milk_bucket",
+  "category": "cyclic:fluids",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:milk_bucket"
+    },
+    {
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_milk_bottle"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/milk_bottle"
+    },
+    {
+      "type": "cyclic:solidifier_recipe",
+      "recipe": "cyclic:solidifier/solidifier_milkcake"
+    }
+  ]
+}

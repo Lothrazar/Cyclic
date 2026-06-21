@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.registry;
 
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.cyclic.block.battery.ItemBlockBattery;
 import com.lothrazar.cyclic.block.batteryclay.ItemBlockClayBattery;
 import com.lothrazar.cyclic.block.cable.CableWrench;
@@ -136,8 +137,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ItemRegistry {
 
   public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ModCyclic.MODID);
-  static final int SMALLPOTIONDUR = 20 * 90; // 1:30
-  static final int LARGEPOTIONDUR = 3 * 20 * 60; // 3:00 
+  static final int SMALLPOTIONDUR = Const.TICKS_PER_SEC * 90; // 1:30
+  static final int LARGEPOTIONDUR = 3 * Const.TICKS_PER_SEC * 60; // 3:00
   static final float APPLESATUR = Foods.APPLE.saturation();
   static final int APPLENUT = Foods.APPLE.nutrition();
   public static final DeferredItem<Item> GEM_OBSIDIAN = ITEMS.register("gem_obsidian", () -> new GemstoneItem(new Item.Properties()));

@@ -1,0 +1,26 @@
+{
+  "type": "cyclic:solidifier",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "energy": {
+    "rfpertick": 100,
+    "ticks": 40
+  },
+  "mix": {
+    "tag": "c:milk",
+    "amount": 750
+  },
+  "result": {
+    "count": 3,
+    "id": "cyclic:milk_bottle"
+  }
+}

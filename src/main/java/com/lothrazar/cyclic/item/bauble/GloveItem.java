@@ -1,5 +1,6 @@
 package com.lothrazar.cyclic.item.bauble;
 
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.SoundUtil;
@@ -30,7 +31,7 @@ public class GloveItem extends ItemBaseToggle {
         Level world = player.getCommandSenderWorld();
         EntityUtil.tryMakeEntityClimb(world, player, CLIMB_SPEED);
         ItemStackUtil.damageItem(player, stack);
-        if (worldIn.getGameTime() % 20 == 0) {
+        if (worldIn.getGameTime() % Const.TICKS_PER_SEC == 0) {
           SoundUtil.playSound(player, SoundEvents.LADDER_STEP);
         }
       }

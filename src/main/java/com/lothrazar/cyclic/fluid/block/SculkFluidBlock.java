@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.fluid.block;
 
 import com.lothrazar.cyclic.config.ClientConfigCyclic;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.fluid.GenericFluidBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -20,7 +21,7 @@ public class SculkFluidBlock extends GenericFluidBlock {
 
   @Override
   public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-    if (entity instanceof Player player && entity.tickCount % 20 == 0) {
+    if (entity instanceof Player player && entity.tickCount % Const.TICKS_PER_SEC == 0) {
       if (level.isClientSide) {
         if (level.random.nextDouble() < 0.10 && ClientConfigCyclic.SCULK_FLUID_XP_SOUND.get()) {
           level.playLocalSound(pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 0.4F, 0.8F + level.random.nextFloat() * 0.4F, false);

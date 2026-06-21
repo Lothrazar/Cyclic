@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.phantom;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.library.core.Const;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -85,10 +86,10 @@ public class MembraneBlock extends BlockCyclic {
       LivingEntity player = (Player) entityIn;
       if (player.isSprinting()) {
         //zscaler
-        MobEffectInstance eff = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 4 * 20, 5, false, false, true);
+        MobEffectInstance eff = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 4 * Const.TICKS_PER_SEC, 5, false, false, true);
 
         player.addEffect(eff);
-        eff = new MobEffectInstance(MobEffects.JUMP, 4 * 20, 5, false, false, true);
+        eff = new MobEffectInstance(MobEffects.JUMP, 4 * Const.TICKS_PER_SEC, 5, false, false, true);
 
         player.addEffect(eff);
       }

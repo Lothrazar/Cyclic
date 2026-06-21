@@ -631,6 +631,19 @@
 			maximum = 100
 
 		#####################################################################################
+		# slingshot settings
+		#####################################################################################
+		[cyclic.items.slingshot]
+			# Minimum damage dealt on hit (inclusive)
+			# Default: 2
+			# Range: > 0
+			damage_min = 2
+			# Maximum damage dealt on hit (inclusive)
+			# Default: 6
+			# Range: > 1
+			damage_max = 6
+
+		#####################################################################################
 		# boomerang_stun settings
 		#####################################################################################
 		[cyclic.items.boomerang_stun]
@@ -651,6 +664,24 @@
 			# Default: 3.8
 			# Range: 0.1 ~ 1000.0
 			damage_max = 3.8
+
+		#####################################################################################
+		# charm_home settings
+		#####################################################################################
+		[cyclic.items.charm_home]
+			# Cooldown in seconds after using the charm
+			# Default: 30
+			# Range: 1 ~ 3600
+			cooldown_seconds = 30
+
+		#####################################################################################
+		# charm_spawn settings
+		#####################################################################################
+		[cyclic.items.charm_spawn]
+			# Cooldown in seconds after using the charm
+			# Default: 30
+			# Range: 1 ~ 3600
+			cooldown_seconds = 30
 
 	#####################################################################################
 	# Block specific configs

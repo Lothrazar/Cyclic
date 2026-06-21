@@ -5,6 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
 import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.registry.EnchantRegistry;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.EnchantUtil;
 import com.lothrazar.library.util.FakePlayerUtil;
 import com.lothrazar.library.util.StringParseUtil;
@@ -27,7 +28,7 @@ public class GloomCurseEnchant {
   public static final double BASE_APPLY_CHANCE = 0.3;
   public static final double MIN_EFFECTS = 1;
   public static final double MAX_EFFECTS = 3;
-  public static final int EFFECT_DURATION = 20 * 5;
+  public static final int EFFECT_DURATION = Const.TICKS_PER_SEC * 5;
 
   public static BooleanValue CFG;
   public static final String ID = "curse";

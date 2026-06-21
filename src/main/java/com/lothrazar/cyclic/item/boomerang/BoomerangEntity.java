@@ -8,6 +8,7 @@ import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.library.util.EntityUtil;
 import com.lothrazar.library.util.ItemStackUtil;
 import com.lothrazar.library.util.LevelWorldUtil;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.util.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -292,7 +293,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             && !(entityHit instanceof Player)) {
           LivingEntity live = (LivingEntity) entityHit;
           if (!live.hasEffect(PotionEffectRegistry.STUN)) {
-            live.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, ConfigRegistry.BOOMERANG_STUN_SECONDS.get() * 20, 1, false, false, false));
+            live.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, ConfigRegistry.BOOMERANG_STUN_SECONDS.get() * Const.TICKS_PER_SEC, 1, false, true, true));
             SoundUtil.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }

@@ -14,6 +14,7 @@ import com.lothrazar.cyclic.item.datacard.filter.FilterCardItem;
 import com.lothrazar.cyclic.registry.PacketRegistry;
 import com.lothrazar.cyclic.util.FluidHelpers;
 import com.lothrazar.library.cap.EnergyStorageWrapper;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.core.IHasEnergy;
 import com.lothrazar.library.core.IHasFluid;
@@ -599,7 +600,7 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   protected int energyLastSynced = -1; //fluid tanks have 'onchanged', energy caps do not
   //fluid tanks have 'onchanged', energy caps do not
   protected void syncEnergy() {
-    if (level.isClientSide == false && level.getGameTime() % 20 == 0) { //if serverside then 
+    if (level.isClientSide == false && level.getGameTime() % Const.TICKS_PER_SEC == 0) { //if serverside then
       var energy = CapabilityUtil.energy(level,worldPosition);
       if (energy != null) {
         final int currentEnergy = energy.getEnergyStored();

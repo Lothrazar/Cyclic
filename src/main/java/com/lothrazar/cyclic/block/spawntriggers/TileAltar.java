@@ -1,6 +1,7 @@
 package com.lothrazar.cyclic.block.spawntriggers;
 
 import com.lothrazar.cyclic.block.BlockCyclic;
+import com.lothrazar.library.core.Const;
 import com.lothrazar.cyclic.block.TileBlockEntityCyclic;
 import com.lothrazar.cyclic.cache.ServerCacheHolder;
 import com.lothrazar.cyclic.registry.TileRegistry;
@@ -17,7 +18,7 @@ public class TileAltar extends TileBlockEntityCyclic {
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, TileAltar tile) {
     tile.timer--;
     if (tile.timer <= 0) {
-      tile.timer = 20 * 30; // ping cache and restart
+      tile.timer = Const.TICKS_PER_SEC * 30; // ping cache and restart
       pingCache(level, blockPos, blockState);
     }
   }

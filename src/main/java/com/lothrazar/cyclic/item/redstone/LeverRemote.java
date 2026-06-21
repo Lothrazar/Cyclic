@@ -20,12 +20,25 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.component.CustomData;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraft.world.item.component.CustomData;
-
 
 public class LeverRemote extends ItemBaseCyclic {
+
+  private static final String LEVER_DIM = "LeverDim";
+
+  private static String getDim(ItemStack stack) {
+    return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getString(LEVER_DIM);
+  }
+
+  private static void setDim(ItemStack stack, String dim) {
+    CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+    tag.putString(LEVER_DIM, dim);
+    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+  }
 
   public LeverRemote(Properties properties) {
     super(properties);
@@ -36,7 +49,7 @@ public class LeverRemote extends ItemBaseCyclic {
   public void appendHoverText(ItemStack stack, Item.TooltipContext worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     BlockPos pointer = TagDataUtil.getItemStackBlockPos(stack);
     if (pointer != null) {
-      int dimensionTarget = CustomData.EMPTY.copyTag().getInt("LeverDim");
+      String dimensionTarget = getDim(stack);
       tooltip.add(Component.translatable(ChatFormatting.RED + ChatUtil.blockPosToString(pointer) + " [" + dimensionTarget + "]"));
     }
     super.appendHoverText(stack, worldIn, tooltip, flagIn);
@@ -45,8 +58,7 @@ public class LeverRemote extends ItemBaseCyclic {
   @Override
   public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand hand) {
     ItemStack stack = playerIn.getItemInHand(hand);
-    boolean success = false;
-    success = trigger(stack, worldIn, playerIn);
+    boolean success = trigger(stack, worldIn, playerIn);
     if (success) {
       playerIn.swing(hand);
       return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
@@ -68,7 +80,7 @@ public class LeverRemote extends ItemBaseCyclic {
     if (world.getBlockState(pos).getBlock() instanceof LeverBlock) {
       TagDataUtil.setItemStackBlockPos(stack, pos);
       //and save dimension
-      CustomData.EMPTY.copyTag().putString("LeverDim", LevelWorldUtil.dimensionToString(player.level()));
+      setDim(stack, LevelWorldUtil.dimensionToString(player.level()));
       //      UtilNBT.setItemStackNBTVal(stack, "LeverDim", player.dimension.getId());
       if (world.isClientSide) {
         ChatUtil.sendStatusMessage(player, this.getDescriptionId() + ".saved");
@@ -98,7 +110,7 @@ public class LeverRemote extends ItemBaseCyclic {
       }
       return false;
     }
-    String dimensionTarget = CustomData.EMPTY.copyTag().getString("LeverDim");
+    String dimensionTarget = getDim(stack);
     //check if we can avoid crossing dimensions
     String currentDim = LevelWorldUtil.dimensionToString(player.level());
     if (dimensionTarget.equalsIgnoreCase(currentDim)) { //same dim eh
