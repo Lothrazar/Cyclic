@@ -23,6 +23,7 @@ import com.lothrazar.cyclic.block.beaconredstone.RenderBeaconRedstone;
 import com.lothrazar.cyclic.block.collectfluid.RenderFluidCollect;
 import com.lothrazar.cyclic.block.collectitem.RenderItemCollect;
 import com.lothrazar.cyclic.block.conveyor.ConveyorItemRenderer;
+import com.lothrazar.cyclic.item.boomerang.BoomerangRenderer;
 import com.lothrazar.cyclic.block.detectorentity.RenderDetector;
 import com.lothrazar.cyclic.block.detectoritem.RenderDetectorItem;
 import com.lothrazar.cyclic.block.disenchant.RenderDisenchant;
@@ -431,9 +432,9 @@ public class ClientRegistryCyclic {
   @SubscribeEvent
   public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
     event.registerEntityRenderer(EntityRegistry.SNOW_BOLT.get(), ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.BOOMERANG_STUN.get(), ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.BOOMERANG_CARRY.get(), ThrownItemRenderer::new);
-    event.registerEntityRenderer(EntityRegistry.BOOMERANG_DAMAGE.get(), ThrownItemRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_STUN.get(), BoomerangRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_CARRY.get(), BoomerangRenderer::new);
+    event.registerEntityRenderer(EntityRegistry.BOOMERANG_DAMAGE.get(), BoomerangRenderer::new);
     event.registerEntityRenderer(EntityRegistry.MOB_CONTAINER_EMPTY.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.TORCH_BOLT.get(), ThrownItemRenderer::new);
     event.registerEntityRenderer(EntityRegistry.DUNGEON.get(), ThrownItemRenderer::new);

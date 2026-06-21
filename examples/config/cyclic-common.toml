@@ -630,6 +630,28 @@
 			# Range: 1 ~ 200
 			maximum = 100
 
+		#####################################################################################
+		# boomerang_stun settings
+		#####################################################################################
+		[cyclic.items.boomerang_stun]
+			# Seconds of stun effect applied on hit
+			# Default: 7
+			# Range: 1 ~ 120
+			stun_seconds = 7
+
+		#####################################################################################
+		# boomerang_damage settings
+		#####################################################################################
+		[cyclic.items.boomerang_damage]
+			# Minimum damage dealt on hit (inclusive)
+			# Default: 1.5
+			# Range: 0.0 ~ 1000.0
+			damage_min = 1.5
+			# Maximum damage dealt on hit (exclusive upper bound for the random roll)
+			# Default: 3.8
+			# Range: 0.1 ~ 1000.0
+			damage_max = 3.8
+
 	#####################################################################################
 	# Block specific configs
 	#####################################################################################

@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.item.boomerang;
 
 import java.util.List;
 import com.lothrazar.cyclic.ModCyclic;
+import com.lothrazar.cyclic.config.ConfigRegistry;
 import com.lothrazar.cyclic.item.boomerang.BoomerangItem.Boomer;
 import com.lothrazar.cyclic.registry.PotionEffectRegistry;
 import com.lothrazar.library.util.EntityUtil;
@@ -58,12 +59,9 @@ public class BoomerangEntity extends ThrowableItemProjectile {
     builder.define(OWNER, "");
   }
 
-  private static final int STUN_SECONDS = 7;
   private static final int TICKS_UNTIL_RETURN = 15;
   private static final int TICKS_UNTIL_DEATH = 900;
   private static final double SPEED = 0.95;
-  static final float DAMAGE_MIN = 1.5F;
-  static final float DAMAGE_MAX = 3.8F;
   private static final EntityDataAccessor<Byte> IS_RETURNING = SynchedEntityData.defineId(BoomerangEntity.class, EntityDataSerializers.BYTE);
   private static final EntityDataAccessor<Byte> REDSTONE_TRIGGERED = SynchedEntityData.defineId(BoomerangEntity.class, EntityDataSerializers.BYTE);
   private static final EntityDataAccessor<String> OWNER = SynchedEntityData.defineId(BoomerangEntity.class, EntityDataSerializers.STRING);
@@ -281,7 +279,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
       case DAMAGE:
         if (entityHit instanceof LivingEntity) {
           LivingEntity live = (LivingEntity) entityHit;
-          float damage = Mth.nextFloat(level().random, DAMAGE_MIN, DAMAGE_MAX);
+          float damage = Mth.nextFloat(level().random, ConfigRegistry.BOOMERANG_DAMAGE_MIN.get().floatValue(), ConfigRegistry.BOOMERANG_DAMAGE_MAX.get().floatValue());
           boolean attackSucc = live.hurt(level().damageSources().thrown(this, owner), damage);
           if (attackSucc && live.isAlive() == false) {
             //           ("killed one");
@@ -294,7 +292,7 @@ public class BoomerangEntity extends ThrowableItemProjectile {
             && !(entityHit instanceof Player)) {
           LivingEntity live = (LivingEntity) entityHit;
           if (!live.hasEffect(PotionEffectRegistry.STUN)) {
-            live.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, STUN_SECONDS * 20, 1, false, false, false));
+            live.addEffect(new MobEffectInstance(PotionEffectRegistry.STUN, ConfigRegistry.BOOMERANG_STUN_SECONDS.get() * 20, 1, false, false, false));
             SoundUtil.playSound(live, SoundEvents.IRON_GOLEM_ATTACK);
           }
         }

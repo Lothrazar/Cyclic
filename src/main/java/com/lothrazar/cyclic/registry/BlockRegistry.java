@@ -146,7 +146,7 @@ public class BlockRegistry {
   public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModCyclic.MODID);
 
 
-  public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB_BLOCKS = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
+  public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
           .icon(() -> new ItemStack(BlockRegistry.TRASH.get()))
           .title(Component.translatable("itemGroup." + ModCyclic.MODID))
           .displayItems((displayParameters, output) -> {
@@ -166,7 +166,9 @@ public class BlockRegistry {
             }
             // Next add all items (includes blocks that have an item version)
             List<ItemStack> stacks = ItemRegistry.ITEMS.getEntries().stream()
-                .map(reg -> new ItemStack(reg.get())).toList();
+                .map(reg -> new ItemStack(reg.get()))
+                .filter(stack -> !stack.is(ItemRegistry.MOB_CONTAINER.get()))
+                .toList();
             output.acceptAll(stacks);
             // all potion and enchantments at the end
             HolderLookup.Provider lookup = displayParameters.holders();

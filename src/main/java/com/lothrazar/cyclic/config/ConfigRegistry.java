@@ -454,7 +454,14 @@ public class ConfigRegistry {
     HeartToxicItem.HEARTXPMINUS = CFG.comment(" Experience given when eating a poisoned heart").defineInRange("experience", 500, 0, 99999);
     HeartItem.MAX = CFG.comment(" Maximum number of hearts that can be attained (including initial 10)").defineInRange("maximum", 100, 1, 200);
     CFG.pop(); //heart
-    CFG.pop(); //items 
+    CFG.comment(WALL, " boomerang_stun settings", WALL).push("boomerang_stun");
+    BOOMERANG_STUN_SECONDS = CFG.comment(" Seconds of stun effect applied on hit").defineInRange("stun_seconds", 7, 1, 120);
+    CFG.pop(); // boomerang_stun
+    CFG.comment(WALL, " boomerang_damage settings", WALL).push("boomerang_damage");
+    BOOMERANG_DAMAGE_MIN = CFG.comment(" Minimum damage dealt on hit (inclusive)").defineInRange("damage_min", 1.5, 0.0, 1000.0);
+    BOOMERANG_DAMAGE_MAX = CFG.comment(" Maximum damage dealt on hit (exclusive upper bound for the random roll)").defineInRange("damage_max", 3.8, 0.1, 1000.0);
+    CFG.pop(); // boomerang_damage
+    CFG.pop(); //items
     CFG.comment(WALL, " Block specific configs", WALL).push("blocks"); //////////////////////////////////////////////////////////////////////////////////// blocks
     CFG.push("facades");
     CABLE_FACADES = CFG.comment("\r\n Allow cables to have blocks placed in them as facades (sneak-left-click to set; use empty hand to remove).  Set to false to disable facades")
@@ -714,6 +721,9 @@ public class ConfigRegistry {
     return mappedBeheading;
   }
 
+  public static IntValue BOOMERANG_STUN_SECONDS;
+  public static DoubleValue BOOMERANG_DAMAGE_MIN;
+  public static DoubleValue BOOMERANG_DAMAGE_MAX;
   public static BooleanValue CABLE_FACADES;
   private static ConfigValue<List<? extends String>> FACADE_IGNORELIST;
 
