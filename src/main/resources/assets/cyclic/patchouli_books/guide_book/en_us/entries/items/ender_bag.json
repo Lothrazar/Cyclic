@@ -4,7 +4,8 @@
   "category": "cyclic:items",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:ender_bag",
       "text": "item.cyclic.ender_bag.guide"
     },
     {

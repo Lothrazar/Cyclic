@@ -4,7 +4,8 @@
   "category": "cyclic:redstone",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:waxed_redstone",
       "text": "block.cyclic.waxed_redstone.guide"
     },
     {

@@ -7,6 +7,10 @@
       "type": "spotlight",
       "item": "cyclic:flower_absalon_tulip",
       "text": "block.cyclic.flower_absalon_tulip.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/flower_absalon_tulip"
     }
   ]
 }

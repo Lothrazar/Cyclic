@@ -4,7 +4,8 @@
   "category": "cyclic:consume",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:chorus_spectral",
       "text": "item.cyclic.chorus_spectral.guide"
     },
     {

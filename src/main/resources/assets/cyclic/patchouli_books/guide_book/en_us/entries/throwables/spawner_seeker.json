@@ -4,7 +4,8 @@
   "category": "cyclic:throwables",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:spawner_seeker",
       "text": "item.cyclic.spawner_seeker.guide"
     },
     {

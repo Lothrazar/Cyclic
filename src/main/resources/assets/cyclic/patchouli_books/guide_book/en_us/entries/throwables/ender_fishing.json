@@ -4,7 +4,8 @@
   "category": "cyclic:throwables",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:ender_fishing",
       "text": "item.cyclic.ender_fishing.guide"
     },
     {

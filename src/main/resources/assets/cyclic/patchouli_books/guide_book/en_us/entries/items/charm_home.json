@@ -4,7 +4,8 @@
   "category": "cyclic:items",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:charm_home",
       "text": "item.cyclic.charm_home.guide"
     },
     {

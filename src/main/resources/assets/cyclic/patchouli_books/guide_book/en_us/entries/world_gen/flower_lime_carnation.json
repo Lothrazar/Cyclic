@@ -7,6 +7,10 @@
       "type": "spotlight",
       "item": "cyclic:flower_lime_carnation",
       "text": "block.cyclic.flower_lime_carnation.guide"
+    },
+    {
+      "type": "crafting",
+      "recipe": "cyclic:shapeless/flower_lime_carnation"
     }
   ]
 }

@@ -4,7 +4,8 @@
   "category": "cyclic:blocks",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:laser",
       "text": "block.cyclic.laser.guide"
     },
     {

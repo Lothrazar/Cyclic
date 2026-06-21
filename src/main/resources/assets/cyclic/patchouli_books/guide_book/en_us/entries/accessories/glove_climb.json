@@ -4,7 +4,8 @@
   "category": "cyclic:accessories",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:glove_climb",
       "text": "item.cyclic.glove_climb.guide"
     },
     {

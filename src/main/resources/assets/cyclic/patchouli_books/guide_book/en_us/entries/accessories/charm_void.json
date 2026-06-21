@@ -4,7 +4,8 @@
   "category": "cyclic:accessories",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:charm_void",
       "text": "item.cyclic.charm_void.guide"
     },
     {

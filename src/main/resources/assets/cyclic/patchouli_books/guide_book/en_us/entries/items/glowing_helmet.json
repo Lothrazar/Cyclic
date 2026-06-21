@@ -4,7 +4,8 @@
   "category": "cyclic:gear",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:glowing_helmet",
       "text": "item.cyclic.glowing_helmet.guide"
     },
     {

@@ -4,7 +4,8 @@
   "category": "cyclic:blocks",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:plate_launch",
       "text": "block.cyclic.plate_launch.guide"
     },
     {

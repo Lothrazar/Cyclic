@@ -4,7 +4,8 @@
   "category": "cyclic:items",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:spotlight",
+      "item": "cyclic:scepter_lightning",
       "text": "item.cyclic.scepter_lightning.guide"
     },
     {
