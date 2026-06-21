@@ -11,6 +11,14 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.glowstone.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_glowstone_block"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_glowstone_dust"
     }
   ]
 }

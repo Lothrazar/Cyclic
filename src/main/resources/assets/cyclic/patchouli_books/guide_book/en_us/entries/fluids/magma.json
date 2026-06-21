@@ -11,6 +11,22 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.magma.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/magma_fire_charge"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/magma_magma_block"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/magma_magma_cream"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/magma_nether_bricks"
     }
   ]
 }

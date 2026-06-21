@@ -11,6 +11,14 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.redstone.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_redstone_block"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_redstone_dust"
     }
   ]
 }

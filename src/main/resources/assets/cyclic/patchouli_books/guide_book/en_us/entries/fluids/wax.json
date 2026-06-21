@@ -11,6 +11,18 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.wax.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/wax_candles"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/wax_honeycomb"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/wax_honeycomb_block"
     }
   ]
 }

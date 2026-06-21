@@ -54,16 +54,28 @@ public class MelterRecipeComponent implements ICustomComponent {
       return;
     }
     Font font = Minecraft.getInstance().font;
-    ctx.renderIngredient(graphics, x + 2, y + 10, mouseX, mouseY, resolvedRecipe.at(0));
-    graphics.drawString(font, "->", x + 22, y + 14, 0xFF404040, false);
+    // center of the 116px page content area
+    int cx = x + 58;
+    // row 1: item -> fluid centered
+    int itemX = cx - 26;
+    int fluidX = cx + 10;
+    ctx.renderIngredient(graphics, itemX, y, mouseX, mouseY, resolvedRecipe.at(0));
+    graphics.drawString(font, "->", itemX + 18, y + 4, 0xFF404040, false);
     FluidStack outFluid = resolvedRecipe.getRecipeFluid();
-    renderFluidSlot(graphics, x + 38, y + 10, outFluid);
+    renderFluidSlot(graphics, fluidX, y, outFluid);
+    // row 2: fluid name centered
+    // row 3: amount centered
+    // row 4: energy centered
     if (!outFluid.isEmpty()) {
-      graphics.drawString(font, outFluid.getHoverName().getString() + " x" + outFluid.getAmount() + "mB", x + 58, y + 14, 0xFF404040, false);
+      String name = outFluid.getHoverName().getString();
+      String amount = "x" + outFluid.getAmount() + "mB";
+      graphics.drawString(font, name, cx - font.width(name) / 2, y + 22, 0xFF404040, false);
+      graphics.drawString(font, amount, cx - font.width(amount) / 2, y + 32, 0xFF404040, false);
     }
     int rfpt = resolvedRecipe.getEnergy().getRfPertick();
     int total = resolvedRecipe.getEnergy().getEnergyTotal();
-    graphics.drawString(font, rfpt + " RF/t  " + total + " RF", x + 2, y + 34, 0xFF404040, false);
+    String energy = rfpt + " RF/t  " + total + " RF";
+    graphics.drawString(font, energy, cx - font.width(energy) / 2, y + 43, 0xFF404040, false);
   }
 
   private void renderFluidSlot(GuiGraphics graphics, int fx, int fy, FluidStack fluid) {

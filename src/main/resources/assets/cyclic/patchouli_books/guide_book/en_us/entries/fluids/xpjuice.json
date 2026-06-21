@@ -11,6 +11,30 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.xpjuice.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/xpjuice_blaze_rod"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/xpjuice_bones"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/xpjuice_experience_bottle"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/xpjuice_experience_food"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/xpjuice_ghast_tear"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/xpjuice_sculk_catalyst"
     }
   ]
 }

@@ -15,6 +15,22 @@
     {
       "type": "cyclic:solidifier_recipe",
       "recipe": "cyclic:solidifier/solidifier_sculk"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_sculk_catalyst"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_sculk_echo_shard"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_sculk_sculk"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_sculk_vein"
     }
   ]
 }

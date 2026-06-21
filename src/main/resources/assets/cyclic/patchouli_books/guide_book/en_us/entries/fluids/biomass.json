@@ -15,6 +15,30 @@
     {
       "type": "cyclic:solidifier_recipe",
       "recipe": "cyclic:solidifier/solidifier_biomass"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/biomass_biomass"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/biomass_cactus"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/biomass_crops"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/biomass_plants"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/biomass_rotten_flesh"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/biomass_seeds"
     }
   ]
 }

@@ -15,6 +15,10 @@
     {
       "type": "cyclic:solidifier_recipe",
       "recipe": "cyclic:solidifier/solidifier_slime"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/slime_slimeballs"
     }
   ]
 }

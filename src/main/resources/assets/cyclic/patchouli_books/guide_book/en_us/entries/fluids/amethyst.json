@@ -11,6 +11,18 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.amethyst.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_amethyst_block"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_amethyst_cluster"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_amethyst_shard"
     }
   ]
 }

@@ -11,6 +11,14 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.honey.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/honey_honey_block"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/honey_honey_bottle"
     }
   ]
 }

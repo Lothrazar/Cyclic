@@ -11,6 +11,10 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.chocolate.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_chocolate_cocoa"
     }
   ]
 }

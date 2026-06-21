@@ -11,6 +11,18 @@
     {
       "type": "patchouli:text",
       "text": "guide.fluid.ender.obtain"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_ender_chorus"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_ender_eye"
+    },
+    {
+      "type": "cyclic:melter_recipe",
+      "recipe": "cyclic:melter/melter_ender_pearl"
     }
   ]
 }
