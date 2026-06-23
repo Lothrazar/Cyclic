@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -101,13 +102,21 @@ public abstract class CableBase extends BlockCyclic implements SimpleWaterlogged
 
   public CableBase(Properties properties) {
     super(properties);
-    registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+    registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(IBlockFacade.HAS_FACADE, false));
+  }
+
+  @Override
+  public RenderShape getRenderShape(BlockState state) {
+    if (state.getValue(IBlockFacade.HAS_FACADE)) {
+      return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+    return RenderShape.MODEL;
   }
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     super.createBlockStateDefinition(builder);
-    builder.add(WATERLOGGED);
+    builder.add(WATERLOGGED, IBlockFacade.HAS_FACADE);
   }
 
   @Override

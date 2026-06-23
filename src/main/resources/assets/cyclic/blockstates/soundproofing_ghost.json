@@ -1,5 +1,6 @@
 {
     "variants": {
-        "": { "model": "cyclic:block/soundproofing_ghost" }
+        "has_facade=false": { "model": "cyclic:block/soundproofing_ghost" },
+        "has_facade=true": { "model": "cyclic:block/soundproofing_ghost" }
     }
 }

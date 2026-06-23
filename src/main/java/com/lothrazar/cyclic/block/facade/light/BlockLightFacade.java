@@ -5,8 +5,10 @@ import com.lothrazar.library.core.IBlockFacade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -17,6 +19,21 @@ public class BlockLightFacade extends BlockCyclic implements IBlockFacade {
 
   public BlockLightFacade(Properties properties) {
     super(properties.lightLevel(state -> 15).strength(1F).noOcclusion());
+    registerDefaultState(defaultBlockState().setValue(IBlockFacade.HAS_FACADE, false));
+  }
+
+  @Override
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    super.createBlockStateDefinition(builder);
+    builder.add(IBlockFacade.HAS_FACADE);
+  }
+
+  @Override
+  public RenderShape getRenderShape(BlockState state) {
+    if (state.getValue(IBlockFacade.HAS_FACADE)) {
+      return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+    return RenderShape.MODEL;
   }
 
   @Override
