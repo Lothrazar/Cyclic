@@ -213,6 +213,7 @@ public class ClientRegistryCyclic {
     event.registerBlockEntityRenderer(TileRegistry.ENERGY_PIPE.get(), RenderCableFacade::new);
     event.registerBlockEntityRenderer(TileRegistry.ITEM_PIPE.get(), RenderCableFacade::new);
     event.registerBlockEntityRenderer(TileRegistry.FLUID_PIPE.get(), RenderCableFacade::new);
+    event.registerBlockEntityRenderer(TileRegistry.BUNDLED_PIPE.get(), RenderCableFacade::new);
   }
 
   public static void setupClient(final FMLClientSetupEvent event) {
