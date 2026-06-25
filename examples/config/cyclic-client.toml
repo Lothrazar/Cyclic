@@ -31,6 +31,12 @@
 			harvester = "#00EE00"
 			# Specify hex color of preview mode.  default #FF0000
 			structure = "#FF0000"
+			# Specify hex color of preview mode.  default #FF8800
+			wireless_item = "#FF8800"
+			# Specify hex color of preview mode.  default #00AAFF
+			wireless_fluid = "#00AAFF"
+			# Specify hex color of preview mode.  default #FFFF00
+			wireless_energy = "#FFFF00"
 
 		[cyclic.blocks.text]
 			# True means this will hide the fluid contents chat message (right click) on relevant blocks (pylon, fluid generator, fluid hopper, solidifier, sprinkler, tank, cask)

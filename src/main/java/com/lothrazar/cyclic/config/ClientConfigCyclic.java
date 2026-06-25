@@ -21,6 +21,9 @@ public class ClientConfigCyclic {
   public static ModConfigSpec.ConfigValue<String> MINER;
   public static ModConfigSpec.ConfigValue<String> PEAT_FARM;
   public static ModConfigSpec.ConfigValue<String> STRUCTURE;
+  public static ModConfigSpec.ConfigValue<String> WIRELESS_ITEM;
+  public static ModConfigSpec.ConfigValue<String> WIRELESS_FLUID;
+  public static ModConfigSpec.ConfigValue<String> WIRELESS_ENERGY;
   public static ModConfigSpec.ConfigValue<String> LASER_COLOR;
   public static ModConfigSpec.ConfigValue<String> LOCATION;
   public static ModConfigSpec.ConfigValue<String> SHAPE_DATA;
@@ -64,6 +67,15 @@ public class ClientConfigCyclic {
     }
     else if (tile.getType() == TileRegistry.STRUCTURE.get()) {
       return parseColor(STRUCTURE.get());
+    }
+    else if (tile.getType() == TileRegistry.WIRELESS_ITEM.get()) {
+      return parseColor(WIRELESS_ITEM.get());
+    }
+    else if (tile.getType() == TileRegistry.WIRELESS_FLUID.get()) {
+      return parseColor(WIRELESS_FLUID.get());
+    }
+    else if (tile.getType() == TileRegistry.WIRELESS_ENERGY.get()) {
+      return parseColor(WIRELESS_ENERGY.get());
     }
     else {
       ModCyclic.LOGGER.error("Default color for tile " + tile);

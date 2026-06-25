@@ -54,7 +54,7 @@ public class TileWirelessTransmit extends TileBlockEntityCyclic implements MenuP
 
   @Override
   public Component getDisplayName() {
-    return BlockRegistry.WIRELESS_ITEM.get().getName();
+    return BlockRegistry.WIRELESS_TRANSMITTER.get().getName();
   }
 
   @Override

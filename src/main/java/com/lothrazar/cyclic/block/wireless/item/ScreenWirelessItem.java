@@ -2,6 +2,7 @@ package com.lothrazar.cyclic.block.wireless.item;
 
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class ScreenWirelessItem extends ScreenBase<ContainerWirelessItem> {
 
   private ButtonMachineField btnRedstone;
+  private ButtonMachineField btnRender;
 
   public ScreenWirelessItem(ContainerWirelessItem screenContainer, Inventory inv, Component titleIn) {
     super(screenContainer, inv, titleIn);
@@ -22,6 +24,9 @@ public class ScreenWirelessItem extends ScreenBase<ContainerWirelessItem> {
     x = leftPos + 6;
     y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileWirelessItem.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    y += 20;
+    btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileWirelessItem.Fields.RENDER.ordinal(),
+        menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 
   @Override
@@ -30,6 +35,7 @@ public class ScreenWirelessItem extends ScreenBase<ContainerWirelessItem> {
     super.render(ms, mouseX, mouseY, partialTicks);
     this.renderTooltip(ms, mouseX, mouseY);
     btnRedstone.onValueUpdate(menu.tile);
+    btnRender.onValueUpdate(menu.tile);
   }
 
   @Override

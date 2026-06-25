@@ -3,6 +3,7 @@ package com.lothrazar.cyclic.block.wireless.fluid;
 import com.lothrazar.cyclic.block.melter.TileMelter;
 import com.lothrazar.cyclic.gui.ButtonMachineField;
 import com.lothrazar.cyclic.gui.ScreenBase;
+import com.lothrazar.cyclic.gui.TextureEnum;
 import com.lothrazar.cyclic.registry.TextureRegistry;
 import com.lothrazar.library.gui.FluidBar;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
 
   private ButtonMachineField btnRedstone;
+  private ButtonMachineField btnRender;
   private FluidBar fluid;
 
   public ScreenWirelessFluid(ContainerWirelessFluid screenContainer, Inventory inv, Component titleIn) {
@@ -28,6 +30,9 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
     x = leftPos + 6;
     y = topPos + 6;
     btnRedstone = addRenderableWidget(new ButtonMachineField(x, y, TileWirelessFluid.Fields.REDSTONE.ordinal(), menu.tile.getBlockPos()));
+    y += 20;
+    btnRender = addRenderableWidget(new ButtonMachineField(x, y, TileWirelessFluid.Fields.RENDER.ordinal(),
+        menu.tile.getBlockPos(), TextureEnum.RENDER_HIDE, TextureEnum.RENDER_SHOW, "gui.cyclic.render"));
   }
 
   @Override
@@ -37,6 +42,7 @@ public class ScreenWirelessFluid extends ScreenBase<ContainerWirelessFluid> {
     this.renderTooltip(ms, mouseX, mouseY);
     fluid.renderHoveredToolTip(ms, mouseX, mouseY, menu.tile.getFluid());
     btnRedstone.onValueUpdate(menu.tile);
+    btnRender.onValueUpdate(menu.tile);
   }
 
   @Override

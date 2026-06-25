@@ -671,6 +671,9 @@ public class ConfigRegistry {
     ClientConfigCyclic.FORESTER = CFGC.comment(" Specify hex color of preview mode.  default #11BB00").define("forester", "#11BB00");
     ClientConfigCyclic.HARVESTER = CFGC.comment(" Specify hex color of preview mode.  default #00EE00").define("harvester", "#00EE00");
     ClientConfigCyclic.STRUCTURE = CFGC.comment(" Specify hex color of preview mode.  default #FF0000").define("structure", "#FF0000");
+    ClientConfigCyclic.WIRELESS_ITEM = CFGC.comment(" Specify hex color of preview mode.  default #FF8800").define("wireless_item", "#FF8800");
+    ClientConfigCyclic.WIRELESS_FLUID = CFGC.comment(" Specify hex color of preview mode.  default #00AAFF").define("wireless_fluid", "#00AAFF");
+    ClientConfigCyclic.WIRELESS_ENERGY = CFGC.comment(" Specify hex color of preview mode.  default #FFFF00").define("wireless_energy", "#FFFF00");
     CFGC.pop(); // end of colors
     CFGC.push("text");
     ClientConfigCyclic.FLUID_BLOCK_STATUS = CFGC.comment(" True means this will hide the fluid contents chat message (right click) on relevant blocks (pylon, fluid generator, fluid hopper, solidifier, sprinkler, tank, cask)").define("FluidContents", true);

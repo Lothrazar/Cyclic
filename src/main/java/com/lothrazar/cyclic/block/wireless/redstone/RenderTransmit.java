@@ -5,6 +5,7 @@ import java.util.List;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import com.lothrazar.cyclic.block.laser.RenderLaser;
+import com.lothrazar.cyclic.config.ClientConfigCyclic;
 import com.lothrazar.cyclic.data.PreviewOutlineType;
 import com.lothrazar.library.data.BlockPosDim;
 import com.lothrazar.library.render.type.FakeBlockRenderTypes;
@@ -75,15 +76,13 @@ public class RenderTransmit implements BlockEntityRenderer<TileWirelessTransmit>
       }
       //        draw(slot, te, matrixStack, iRenderTypeBuffer);
     }
-    if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
+    if (PreviewOutlineType.SHADOW.ordinal() == previewType) {
+      RenderBlockUtils.renderOutline(te.getBlockPos(), shape, matrixStack, 0.9F, ClientConfigCyclic.getColor(te));
+    } else if (PreviewOutlineType.WIREFRAME.ordinal() == previewType) {
       for (BlockPos crd : shape) {
         RenderBlockUtils.createBox(matrixStack, crd, Vec3.atLowerCornerOf(te.getBlockPos()));
       }
     }
-    else
-      for (int slot = 0; slot < te.inventory.getSlots(); slot++) {
-        draw(slot, te, matrixStack, iRenderTypeBuffer);
-      }
   }
   //  @Override
   //  public void render(TileWirelessTransmit te, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int partialTicks, int destroyStage) {
