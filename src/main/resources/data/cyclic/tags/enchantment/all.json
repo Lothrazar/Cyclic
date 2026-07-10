@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "cyclic:auto_smelt",
+    "cyclic:beekeeper",
+    "cyclic:beheading",
+    "cyclic:curse",
+    "cyclic:disarm",
+    "cyclic:ender",
+    "cyclic:excavate",
+    "cyclic:experience_boost",
+    "cyclic:growth",
+    "cyclic:laststand",
+    "cyclic:launch",
+    "cyclic:life_leech",
+    "cyclic:magnet",
+    "cyclic:multishot",
+    "cyclic:quickshot",
+    "cyclic:reach",
+    "cyclic:soulbound",
+    "cyclic:steady",
+    "cyclic:step",
+    "cyclic:traveler",
+    "cyclic:venom"
+  ]
+}
