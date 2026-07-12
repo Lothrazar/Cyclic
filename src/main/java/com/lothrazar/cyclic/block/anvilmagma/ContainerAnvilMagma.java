@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
@@ -32,6 +33,11 @@ public class ContainerAnvilMagma extends ContainerBase {
       @Override
       public void setChanged() {
         tile.setChanged();
+      }
+
+      @Override
+      public boolean mayPlace(ItemStack stack) {
+        return false;
       }
     });
     this.endInv = 2;

@@ -51,6 +51,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public abstract class TileBlockEntityCyclic extends BlockEntity implements Container, IHasEnergy, IHasFluid {
@@ -550,28 +551,52 @@ public abstract class TileBlockEntityCyclic extends BlockEntity implements Conta
   @Deprecated
   @Override
   public ItemStack removeItem(int index, int count) {
+    IItemHandler invo = CapabilityUtil.item(level, worldPosition);
+    if (invo != null && index < invo.getSlots()) {
+      return invo.extractItem(index, count, false);
+    }
     return ItemStack.EMPTY;
   }
 
   @Deprecated
   @Override
   public ItemStack removeItemNoUpdate(int index) {
+    IItemHandler invo = CapabilityUtil.item(level, worldPosition);
+    if (invo != null && index < invo.getSlots()) {
+      ItemStack stack = invo.getStackInSlot(index);
+      return invo.extractItem(index, stack.getCount(), false);
+    }
     return ItemStack.EMPTY;
   }
 
-  @Deprecated
   @Override
-  public void setItem(int index, ItemStack stack) {}
-
-  @Deprecated
-  @Override
-  public boolean stillValid(Player player) {
-    return false;
+  public void setItem(int index, ItemStack stack) {
+    IItemHandler invo = CapabilityUtil.item(level, worldPosition);
+    if (invo instanceof IItemHandlerModifiable modifiable && index < invo.getSlots()) {
+      modifiable.setStackInSlot(index, stack);
+    }
   }
 
-  @Deprecated
   @Override
-  public void clearContent() {}
+  public boolean canPlaceItem(int index, ItemStack stack) {
+    IItemHandler invo = CapabilityUtil.item(level, worldPosition);
+    return invo != null && index < invo.getSlots() && invo.isItemValid(index, stack);
+  }
+
+  @Override
+  public boolean stillValid(Player player) {
+    return player != null && Container.stillValidBlockEntity(this, player);
+  }
+
+  @Override
+  public void clearContent() {
+    IItemHandler invo = CapabilityUtil.item(level, worldPosition);
+    if (invo instanceof IItemHandlerModifiable modifiable) {
+      for (int i = 0; i < invo.getSlots(); i++) {
+        modifiable.setStackInSlot(i, ItemStack.EMPTY);
+      }
+    }
+  }
 
   public void setFieldString(int field, String value) {
     //for string field  
