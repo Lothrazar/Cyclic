@@ -150,7 +150,7 @@ dependencies {
 
     // for other mods depending on THIS FLIB library, use either a local copy or a maven
     //   implementation "local.mods:flib:${minecraft_version}-${flib_version}"
-  implementation "curse.maven:flib-661261:${flib_file}"
+       implementation "curse.maven:flib-661261:${flib_file}"
 
 
   //these mods have API jars for compile as well as the full mod for local
