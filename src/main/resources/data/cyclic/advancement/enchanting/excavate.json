@@ -24,7 +24,7 @@
             "predicates": {
               "minecraft:enchantments": [
                 {
-                  "enchantment": "cyclic:excavate",
+                  "enchantments": "cyclic:excavate",
                   "levels": {"min": 1}
                 }
               ]

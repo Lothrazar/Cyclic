@@ -19,9 +19,11 @@
     "in_honey": {
       "trigger": "minecraft:location",
       "conditions": {
-        "location": {
-          "fluid": {
-            "fluids": ["cyclic:honey"]
+        "player": {
+          "location": {
+            "fluid": {
+              "fluids": ["cyclic:honey"]
+            }
           }
         }
       }

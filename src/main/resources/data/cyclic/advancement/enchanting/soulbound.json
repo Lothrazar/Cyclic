@@ -24,7 +24,7 @@
             "predicates": {
               "minecraft:enchantments": [
                 {
-                  "enchantment": "cyclic:soulbound",
+                  "enchantments": "cyclic:soulbound",
                   "levels": {"min": 1}
                 }
               ]
